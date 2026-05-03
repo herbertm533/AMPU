@@ -5,7 +5,7 @@ export function TopBar(): JSX.Element {
   const { snapshot, advance, toggleTheme, theme } = useGame();
   if (!snapshot) return <div />;
   const cur = getPhaseInfo(snapshot.game.phaseId);
-  const next = nextPhaseInfo(snapshot.game.phaseId, snapshot.game.year);
+  const next = nextPhaseInfo(snapshot.game.phaseId, snapshot.game.year, snapshot.game);
   const nextInfo = getPhaseInfo(next.phaseId);
   const playerFaction = snapshot.factions.find((f) => f.id === snapshot.game.playerFactionId);
   const turnYears = `${snapshot.game.year - 1}-${snapshot.game.year + 1}`;

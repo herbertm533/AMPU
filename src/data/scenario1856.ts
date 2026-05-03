@@ -173,6 +173,22 @@ export function build1856Scenario(playerFactionId: string): FullGameSnapshot {
     pendingLegislation: [],
     pendingCourtCases: [],
     lastSavedAt: Date.now(),
+    currentEra: 'nationalism',
+    eraEventsCompleted: [],
+    governorsExist: true,
+    articlesOfConfederation: false,
+    constitutionRatified: true,
+    constitutionalArticles: {
+      legislature: 'bicameral',
+      executive: 'elected_president',
+      judiciary: 'appointed',
+      slaveCompromise: 'three_fifths',
+      amendmentProcess: 'three_fourths',
+      presidentialEligibility: 'natural_born',
+      termLimits: 'no_limits',
+    },
+    continentalCongress: null,
+    revolutionaryWar: null,
   };
 
   return {

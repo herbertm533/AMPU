@@ -12,7 +12,11 @@ export interface PhaseAdvanceResult {
 
 // Run the current phase non-interactively if possible. Returns whether player
 // input is required.
-export function runCurrentPhase(snap: FullGameSnapshot): { needsPlayerInput?: 'draft' | 'eraEvent' | 'cabinet'; payload?: unknown } {
+export function runCurrentPhase(snap: FullGameSnapshot): { needsPlayerInput?: 'draft' | 'eraEvent' | 'cabinet' | 'convention'; payload?: unknown } {
+  // Convention takes priority over phase progression
+  if (snap.game.pendingConvention && !snap.game.pendingConvention.resolved) {
+    return { needsPlayerInput: 'convention', payload: snap.game.pendingConvention };
+  }
   const phaseId = snap.game.phaseId;
   const info = getPhaseInfo(phaseId);
   if (!info) return {};
@@ -79,7 +83,7 @@ export function runCurrentPhase(snap: FullGameSnapshot): { needsPlayerInput?: 'd
 
 export function advancePhase(snap: FullGameSnapshot): { yearChanged: boolean } {
   const cur = snap.game.phaseId;
-  const next = nextPhaseInfo(cur, snap.game.year);
+  const next = nextPhaseInfo(cur, snap.game.year, snap.game);
   snap.game.phaseId = next.phaseId;
   snap.game.year = next.nextYear;
   snap.game.phaseIndex = PHASE_SEQUENCE.findIndex((p) => p.id === next.phaseId);

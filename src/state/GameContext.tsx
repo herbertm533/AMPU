@@ -1,26 +1,31 @@
 import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react';
-import type { FullGameSnapshot, EraEvent, Politician } from '../types';
+import type { FullGameSnapshot, EraEvent, Politician, ConstitutionalConvention } from '../types';
 import { loadSnapshot, saveSnapshot, clearDb, exportJson, importJson } from '../db';
 import { build1856Scenario } from '../data/scenario1856';
+import { build1772Scenario } from '../data/scenario1772';
 import { runCurrentPhase, advancePhase } from '../engine/engine';
 import { playerDraftPick, resolveEraEvent } from '../engine/phaseRunners';
+import { autoFillCPUVotes, applyConvention } from '../engine/constitutionalConvention';
 
 type Modal =
   | { type: 'none' }
   | { type: 'draft'; pool: Politician[] }
-  | { type: 'eraEvent'; event: EraEvent };
+  | { type: 'eraEvent'; event: EraEvent }
+  | { type: 'convention'; convention: ConstitutionalConvention };
 
 interface GameContextValue {
   snapshot: FullGameSnapshot | null;
   loading: boolean;
   modal: Modal;
   hasSave: boolean;
-  startNewGame: (factionId: string) => Promise<void>;
+  startNewGame: (factionId: string, scenarioId?: '1772' | '1856') => Promise<void>;
   loadGame: () => Promise<void>;
   advance: () => Promise<void>;
   draftPick: (politicianId: string) => Promise<void>;
   chooseEraResponse: (eventId: string, responseId: string) => Promise<void>;
   setCareerTrack: (politicianId: string, track: Politician['careerTrack']) => Promise<void>;
+  setConventionVote: (articleKey: string, optionId: string) => void;
+  finalizeConvention: () => Promise<void>;
   toggleTheme: () => void;
   exportSave: () => Promise<string>;
   importSave: (json: string) => Promise<void>;
@@ -68,10 +73,10 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
     setHasSave(true);
   }, []);
 
-  const startNewGame = useCallback(async (factionId: string) => {
+  const startNewGame = useCallback(async (factionId: string, scenarioId: '1772' | '1856' = '1856') => {
     setLoading(true);
     await clearDb();
-    const fresh = build1856Scenario(factionId);
+    const fresh = scenarioId === '1772' ? build1772Scenario(factionId) : build1856Scenario(factionId);
     await saveSnapshot(fresh);
     setSnapshot({ ...fresh });
     setHasSave(true);
@@ -99,6 +104,12 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
     if (result.needsPlayerInput === 'eraEvent') {
       setSnapshot(draft);
       setModal({ type: 'eraEvent', event: result.payload as EraEvent });
+      await persist(draft);
+      return;
+    }
+    if (result.needsPlayerInput === 'convention') {
+      setSnapshot(draft);
+      setModal({ type: 'convention', convention: result.payload as ConstitutionalConvention });
       await persist(draft);
       return;
     }
@@ -130,7 +141,14 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
     if (!snapshot) return;
     const draft: FullGameSnapshot = JSON.parse(JSON.stringify(snapshot));
     resolveEraEvent(draft, eventId, responseId);
-    // Check for additional unresolved era events
+    // First check if a Convention modal popped from the resolution
+    if (draft.game.pendingConvention && !draft.game.pendingConvention.resolved) {
+      setSnapshot(draft);
+      setModal({ type: 'convention', convention: draft.game.pendingConvention });
+      await persist(draft);
+      return;
+    }
+    // Check for additional unresolved era events already queued
     const more = draft.game.pendingEraEvents.find((e) => !e.resolved);
     if (more) {
       setSnapshot(draft);
@@ -138,10 +156,47 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
       await persist(draft);
       return;
     }
+    // Re-run the current phase to surface the next scripted event (1772) or
+    // recompute (1856 won't queue more in the same phase by default).
+    const replay = runCurrentPhase(draft);
+    if (replay.needsPlayerInput === 'eraEvent') {
+      setSnapshot(draft);
+      setModal({ type: 'eraEvent', event: replay.payload as EraEvent });
+      await persist(draft);
+      return;
+    }
+    if (replay.needsPlayerInput === 'convention') {
+      setSnapshot(draft);
+      setModal({ type: 'convention', convention: replay.payload as import('../types').ConstitutionalConvention });
+      await persist(draft);
+      return;
+    }
     setModal({ type: 'none' });
-    // Clear the pending era events for this turn
+    // Clear queue and advance
     draft.game.pendingEraEvents = [];
     advancePhase(draft);
+    setSnapshot(draft);
+    await persist(draft);
+  }, [snapshot, persist]);
+
+  const setConventionVote = useCallback((articleKey: string, optionId: string): void => {
+    if (!snapshot?.game.pendingConvention) return;
+    const draft: FullGameSnapshot = JSON.parse(JSON.stringify(snapshot));
+    const conv = draft.game.pendingConvention!;
+    const vote = conv.votes.find((v) => v.articleKey === articleKey);
+    if (vote) vote.selected = optionId;
+    setSnapshot(draft);
+    setModal({ type: 'convention', convention: conv });
+  }, [snapshot]);
+
+  const finalizeConvention = useCallback(async () => {
+    if (!snapshot?.game.pendingConvention) return;
+    const draft: FullGameSnapshot = JSON.parse(JSON.stringify(snapshot));
+    const conv = draft.game.pendingConvention!;
+    autoFillCPUVotes(draft, conv);
+    applyConvention(draft, conv);
+    draft.game.pendingConvention = null;
+    setModal({ type: 'none' });
     setSnapshot(draft);
     await persist(draft);
   }, [snapshot, persist]);
@@ -186,6 +241,8 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
     draftPick,
     chooseEraResponse,
     setCareerTrack,
+    setConventionVote,
+    finalizeConvention,
     toggleTheme,
     exportSave,
     importSave,

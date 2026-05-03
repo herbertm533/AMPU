@@ -1,4 +1,4 @@
-import type { PhaseId, PhaseInfo } from './types';
+import type { PhaseId, PhaseInfo, GameState } from './types';
 
 export const PHASE_SEQUENCE: PhaseInfo[] = [
   { id: '2.1.1', label: 'Politician Draft', description: 'Rookie politicians enter the pool. Snake-order draft.', category: '2.1 Politician Management' },
@@ -58,11 +58,71 @@ export function isDraftYear(year: number): boolean {
   return year % 4 === 0;
 }
 
-export function shouldRunPhase(phaseId: PhaseId, year: number): boolean {
-  if (phaseId === '2.1.1') return isDraftYear(year);
-  if (phaseId === '2.9.1' || phaseId === '2.9.2' || phaseId === '2.9.3' || phaseId === '2.9.4' || phaseId === '2.9.5')
-    return isPresidentialYear(year);
-  if (phaseId === '2.9.6') return isElectionYear(year);
+// Era-aware phase skip. Returns false if the phase should be silently skipped.
+export function shouldRunPhase(phaseId: PhaseId, year: number, game?: GameState): boolean {
+  // Year-based gating
+  if (phaseId === '2.1.1') {
+    // Special case: 1772 first turn always does the initial draft
+    if (game?.scenarioId === '1772' && game.year === game.startYear) return true;
+    if (!isDraftYear(year)) return false;
+  }
+  if (phaseId === '2.9.1' || phaseId === '2.9.2' || phaseId === '2.9.3' || phaseId === '2.9.4') {
+    if (!isPresidentialYear(year)) return false;
+  }
+  if (phaseId === '2.9.5') {
+    if (!isPresidentialYear(year)) return false;
+  }
+  if (phaseId === '2.9.6') {
+    if (!isElectionYear(year)) return false;
+  }
+
+  // Era-based gating (only matters when game state is supplied)
+  if (game) {
+    const era = game.currentEra;
+    if (era === 'independence') {
+      // First-turn skips per spec
+      const isFirstTurn = game.year === game.startYear;
+
+      // 2.2.4 Party Leaders skipped entirely in independence era
+      if (phaseId === '2.2.4') return false;
+
+      // 2.3 Presidential appointments skipped entirely
+      if (phaseId === '2.3.1' || phaseId === '2.3.2') return false;
+
+      // 2.5.3 Supreme Court skipped until Constitution
+      if (phaseId === '2.5.3') return false;
+
+      // 2.5.2 Governor actions skipped until governors exist
+      if (phaseId === '2.5.2' && !game.governorsExist) return false;
+
+      // 2.8 Executive actions skipped entirely
+      if (phaseId === '2.8.1' || phaseId === '2.8.2') return false;
+
+      // Presidential elections skipped entirely
+      if (phaseId === '2.9.1' || phaseId === '2.9.2' || phaseId === '2.9.3' || phaseId === '2.9.4') return false;
+
+      // Governor elections skipped until Declaration
+      if (phaseId === '2.9.5' && !game.governorsExist) return false;
+
+      // Congressional elections skipped entirely (we use CC delegate appointments instead)
+      if (phaseId === '2.9.6') return false;
+
+      // First-turn skips
+      if (isFirstTurn) {
+        if (phaseId === '2.1.3') return false; // no flip-floppers yet
+        if (phaseId === '2.4.1') return false; // no deaths
+        if (phaseId === '2.4.2') return false; // no anytime events
+        if (phaseId === '2.5.1') return false; // no lingering
+        if (phaseId === '2.6.1' || phaseId === '2.6.2' || phaseId === '2.6.3') return false; // no congress
+        if (phaseId === '2.7.1' || phaseId === '2.7.2') return false; // no military/diplomacy
+        if (phaseId === '2.2.1' || phaseId === '2.2.2') return false; // no CC leadership before delegates
+      }
+
+      // 2.7.2 Military: only run if Rev War is active
+      if (phaseId === '2.7.2' && !isFirstTurn && !game.revolutionaryWar?.active) return false;
+    }
+  }
+
   return true;
 }
 
@@ -74,13 +134,13 @@ export function getPhaseIndex(phaseId: PhaseId): number {
   return PHASE_SEQUENCE.findIndex((p) => p.id === phaseId);
 }
 
-export function nextPhaseInfo(currentPhaseId: PhaseId, year: number): { phaseId: PhaseId; nextYear: number; turnRollover: boolean } {
+export function nextPhaseInfo(currentPhaseId: PhaseId, year: number, game?: GameState): { phaseId: PhaseId; nextYear: number; turnRollover: boolean } {
   const idx = getPhaseIndex(currentPhaseId);
   let next = idx + 1;
   let nextYear = year;
   let rollover = false;
   while (next < PHASE_SEQUENCE.length) {
-    if (shouldRunPhase(PHASE_SEQUENCE[next].id, year)) {
+    if (shouldRunPhase(PHASE_SEQUENCE[next].id, year, game)) {
       return { phaseId: PHASE_SEQUENCE[next].id, nextYear, turnRollover: rollover };
     }
     next++;
@@ -88,8 +148,11 @@ export function nextPhaseInfo(currentPhaseId: PhaseId, year: number): { phaseId:
   // wrap to next turn (advance year by 2)
   nextYear = year + 2;
   rollover = true;
+  // Note: when wrapping, the game state's year hasn't been updated yet, so we
+  // pass the game with a synthetic year via shallow override
+  const wrappedGame = game ? { ...game, year: nextYear } : undefined;
   for (let i = 0; i < PHASE_SEQUENCE.length; i++) {
-    if (shouldRunPhase(PHASE_SEQUENCE[i].id, nextYear)) {
+    if (shouldRunPhase(PHASE_SEQUENCE[i].id, nextYear, wrappedGame)) {
       return { phaseId: PHASE_SEQUENCE[i].id, nextYear, turnRollover: rollover };
     }
   }

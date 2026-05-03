@@ -1,6 +1,7 @@
 import { useGame } from '../state/GameContext';
 import { Meter } from '../components/Meter';
 import { PartyBadge } from '../components/PartyBadge';
+import { EraTimeline } from '../components/EraTimeline';
 import type { MeterKey } from '../types';
 
 const METER_KEYS: MeterKey[] = ['revenue', 'economic', 'military', 'domestic', 'honest', 'quality', 'planet'];
@@ -28,6 +29,7 @@ export function Dashboard(): JSX.Element {
   return (
     <div className="space-y-4">
       <h2 className="text-xl font-bold">Dashboard — {game.year - 1}-{game.year + 1}</h2>
+      {snapshot.game.scenarioId === '1772' && <EraTimeline snapshot={snapshot} />}
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 p-4">
@@ -46,20 +48,41 @@ export function Dashboard(): JSX.Element {
         <div className="rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 p-4">
           <h3 className="text-xs uppercase tracking-wide text-slate-500 mb-2">Government</h3>
           <div className="text-sm space-y-1">
-            <div>President: <span className="font-semibold">{president ? `${president.firstName} ${president.lastName}` : 'Vacant'}</span> {president && <PartyBadge party={president.partyId} />}</div>
-            <div>VP: <span>{vp ? `${vp.firstName} ${vp.lastName}` : 'Vacant'}</span></div>
-            <div>Speaker: <span>{speaker ? `${speaker.firstName} ${speaker.lastName}` : 'Vacant'}</span></div>
-            <div>Pro Tem: <span>{proTem ? `${proTem.firstName} ${proTem.lastName}` : 'Vacant'}</span></div>
+            {game.currentEra === 'independence' ? (
+              <>
+                <div>CC President: <span className="font-semibold">{(() => { const cc = game.continentalCongress; const p = cc?.presidentId ? politicians.find((pp) => pp.id === cc.presidentId) : null; return p ? `${p.firstName} ${p.lastName}` : 'Vacant'; })()}</span></div>
+                <div>Articles in effect: {game.articlesOfConfederation ? 'Yes' : 'No'}</div>
+                <div>Constitution ratified: {game.constitutionRatified ? 'Yes' : 'No'}</div>
+                <div>Governors exist: {game.governorsExist ? 'Yes' : 'No'}</div>
+              </>
+            ) : (
+              <>
+                <div>President: <span className="font-semibold">{president ? `${president.firstName} ${president.lastName}` : 'Vacant'}</span> {president && <PartyBadge party={president.partyId} />}</div>
+                <div>VP: <span>{vp ? `${vp.firstName} ${vp.lastName}` : 'Vacant'}</span></div>
+                <div>Speaker: <span>{speaker ? `${speaker.firstName} ${speaker.lastName}` : 'Vacant'}</span></div>
+                <div>Pro Tem: <span>{proTem ? `${proTem.firstName} ${proTem.lastName}` : 'Vacant'}</span></div>
+              </>
+            )}
           </div>
         </div>
 
         <div className="rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 p-4">
-          <h3 className="text-xs uppercase tracking-wide text-slate-500 mb-2">Congress Composition</h3>
+          <h3 className="text-xs uppercase tracking-wide text-slate-500 mb-2">{game.currentEra === 'independence' ? 'Continental Congress' : 'Congress Composition'}</h3>
           <div className="text-sm">
-            <div>Senate: <span className="text-blue-600 dark:text-blue-400 font-semibold">{senateBlue}D</span> — <span className="text-red-600 dark:text-red-400 font-semibold">{senateRed}R</span></div>
-            <div>House: <span className="text-blue-600 dark:text-blue-400 font-semibold">{houseBlue}D</span> — <span className="text-red-600 dark:text-red-400 font-semibold">{houseRed}R</span></div>
-            <div className="mt-2 text-xs text-slate-500">Active wars: {game.wars.length}</div>
-            <div className="text-xs text-slate-500">National Debt: ${(game.nationalDebt / 1_000_000).toFixed(1)}M</div>
+            {game.currentEra === 'independence' ? (
+              <>
+                <div>Delegates: <span className="font-semibold">{game.continentalCongress?.delegates.length ?? 0}</span></div>
+                <div>Threshold: <span className="font-semibold">{game.articlesOfConfederation ? '2/3 of states' : 'Majority of states'}</span></div>
+                <div className="mt-2 text-xs text-slate-500">Rev War: {game.revolutionaryWar?.active ? 'ACTIVE' : (game.revolutionaryWar?.outcome ?? 'not started')}</div>
+              </>
+            ) : (
+              <>
+                <div>Senate: <span className="text-blue-600 dark:text-blue-400 font-semibold">{senateBlue}D</span> — <span className="text-red-600 dark:text-red-400 font-semibold">{senateRed}R</span></div>
+                <div>House: <span className="text-blue-600 dark:text-blue-400 font-semibold">{houseBlue}D</span> — <span className="text-red-600 dark:text-red-400 font-semibold">{houseRed}R</span></div>
+                <div className="mt-2 text-xs text-slate-500">Active wars: {game.wars.length}</div>
+                <div className="text-xs text-slate-500">National Debt: ${(game.nationalDebt / 1_000_000).toFixed(1)}M</div>
+              </>
+            )}
           </div>
         </div>
       </div>

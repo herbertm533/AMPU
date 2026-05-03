@@ -84,6 +84,8 @@ export type Trait =
   | 'Globalist'
   | 'Reformist'
   | 'Military'
+  | 'Egghead'
+  | 'Leadership'
   | 'Incompetent'
   | 'Passive'
   | 'Unlikable'
@@ -91,7 +93,11 @@ export type Trait =
   | 'Domestic Apathy'
   | 'Flip-Flopper'
   | 'Corrupt'
-  | 'Scandalous';
+  | 'Scandalous'
+  | 'Frail'
+  | 'Controversial'
+  | 'Obscure'
+  | 'Traitor';
 
 export const POSITIVE_TRAITS: Trait[] = [
   'Charismatic',
@@ -118,6 +124,8 @@ export const POSITIVE_TRAITS: Trait[] = [
   'Globalist',
   'Reformist',
   'Military',
+  'Egghead',
+  'Leadership',
 ];
 
 export const NEGATIVE_TRAITS: Trait[] = [
@@ -129,6 +137,10 @@ export const NEGATIVE_TRAITS: Trait[] = [
   'Flip-Flopper',
   'Corrupt',
   'Scandalous',
+  'Frail',
+  'Controversial',
+  'Obscure',
+  'Traitor',
 ];
 
 export type OfficeType =
@@ -225,6 +237,69 @@ export interface State {
   industries: Record<string, number>;
   isSlaveState: boolean;
   admissionYear: number;
+  // 1772 era fields
+  isColony?: boolean;
+  colonySize?: 'large' | 'medium' | 'small';
+  ccDelegateSlots?: number;
+}
+
+export type Era = 'independence' | 'federalism' | 'nationalism' | 'modern';
+
+export interface CCDelegate {
+  stateId: string;
+  politicianId: string;
+  factionId: string;
+  servedLastTerm?: boolean;
+}
+
+export interface ContinentalCongress {
+  delegates: CCDelegate[];
+  presidentId: string | null;
+  committeeChairs: {
+    domestic: string | null;
+    foreignMilitary: string | null;
+    economic: string | null;
+    judicial: string | null;
+  };
+}
+
+export interface BattleRecord {
+  year: number;
+  type: 'naval' | 'ground';
+  difficulty?: 'easy' | 'moderate' | 'difficult';
+  outcome: 'win' | 'loss' | 'draw';
+  text: string;
+  name?: string;
+  killed?: string[];
+  wounded?: string[];
+}
+
+export interface RevolutionaryWar {
+  active: boolean;
+  groundWinsNeeded: number;
+  groundLossesRemaining: number;
+  currentGroundWins: number;
+  currentGroundLosses: number;
+  navalWins: number;
+  navalLosses: number;
+  seniorGeneralId: string | null;
+  generalIds: string[];
+  seniorAdmiralId: string | null;
+  admiralIds: string[];
+  frenchAlliance: boolean;
+  battleLog: BattleRecord[];
+  endYear?: number;
+  outcome?: 'win' | 'loss';
+}
+
+export interface ConstitutionalArticles {
+  legislature: 'bicameral' | 'unicameral';
+  executive: 'elected_president' | 'congressional_president' | 'executive_council';
+  judiciary: 'appointed' | 'elected';
+  slaveCompromise: 'three_fifths' | 'full' | 'none';
+  amendmentProcess: 'three_fourths' | 'two_thirds' | 'unanimous';
+  presidentialEligibility: 'natural_born' | 'any_citizen';
+  termLimits: 'two_terms' | 'no_limits';
 }
 
 export interface NationalMeters {
@@ -295,13 +370,17 @@ export interface EraEventResponse {
 
 export interface EraEvent {
   id: string;
+  templateId?: string; // for scripted scenarios; tracked in game.eraEventsCompleted
   year: number;
   title: string;
   description: string;
   responses: EraEventResponse[];
-  decider: 'president' | 'congress' | 'cabinet';
+  decider: 'president' | 'congress' | 'cabinet' | 'cc-president' | 'auto';
   resolved?: boolean;
   chosenResponseId?: string;
+  triggersGameEnd?: boolean;
+  unlocks?: ('governors' | 'congress' | 'presidency' | 'court' | 'continentalArmy')[];
+  postEffects?: { type: 'startWar' | 'unlockGovernors' | 'unlockArticles' | 'startConvention' | 'endWar' | 'addPolitician'; payload?: unknown }[];
 }
 
 export interface Legislation {
@@ -387,6 +466,32 @@ export interface GameState {
   pendingLegislation: string[]; // legislation ids in current session
   pendingCourtCases: SupremeCourtCase[];
   lastSavedAt: number;
+  // Era system
+  currentEra: Era;
+  eraEventsCompleted: string[]; // event template ids that have already fired
+  governorsExist: boolean; // unlocked when Declaration of Independence passes
+  articlesOfConfederation: boolean;
+  constitutionRatified: boolean;
+  constitutionalArticles: ConstitutionalArticles | null;
+  continentalCongress: ContinentalCongress | null;
+  revolutionaryWar: RevolutionaryWar | null;
+  pendingConvention?: ConstitutionalConvention | null;
+}
+
+export interface ConventionVote {
+  articleKey: keyof ConstitutionalArticles;
+  options: { id: string; label: string; description: string; value: string }[];
+  selected: string | null;
+}
+
+export interface ConstitutionalConvention {
+  id: string;
+  year: number;
+  votes: ConventionVote[];
+  fatherOfConstitutionId: string | null;
+  federalistAuthorIds: string[];
+  ratified: boolean;
+  resolved: boolean;
 }
 
 export interface FullGameSnapshot {

@@ -4,12 +4,23 @@ import { addLog } from './log';
 import { uid, chance, d100, pick, clamp, shuffle } from '../rng';
 import { refreshPv } from '../pv';
 import { buildEraEventsForYear } from '../data/eraEvents1856';
+import { SCRIPTED_1772 } from '../data/eraEvents1772';
+import { FACTIONS_1772 } from '../data/factions1772';
+import { appointDelegates, electCCPresident, appointCCCommittees, generateCCBills, voteCC } from './continentalCongress';
+import { startRevWar, runRevWarBattles, applyTreatyOfParis, applyFrenchAlliance } from './revolutionaryWar';
+import { makeConvention } from './constitutionalConvention';
 
 // ============================================================================
 // 2.1.1 Draft
 // ============================================================================
+function getEligibleIdeologies(factionId: string): Ideology[] | null {
+  const f = FACTIONS_1772.find((x) => x.id === factionId);
+  return f?.eligibleIdeologies ?? null;
+}
+
 export function runPhase_2_1_1_Draft(snap: FullGameSnapshot, autoOnly: boolean): { needsPlayer: boolean; draftPool: Politician[] } {
-  if (snap.game.pendingDraftPool.length === 0) {
+  const isExpansion1772 = snap.game.scenarioId === '1772' && snap.game.year === snap.game.startYear;
+  if (snap.game.pendingDraftPool.length === 0 && !isExpansion1772) {
     // Generate new rookie pool
     const pool: Politician[] = [];
     const stateIds = snap.states.map((s) => s.id);
@@ -88,19 +99,26 @@ export function runPhase_2_1_1_Draft(snap: FullGameSnapshot, autoOnly: boolean):
       snap.game.draftRoundOrder.shift();
       continue;
     }
-    const scored = eligible.map((p) => {
+    // 1772 expansion draft: hard ideology constraint per faction; fall back to nearest if exhausted
+    const eligIdeos = isExpansion1772 ? getEligibleIdeologies(factionId) : null;
+    let pool = eligible;
+    if (eligIdeos) {
+      const strict = eligible.filter((p) => eligIdeos.includes(p.ideology));
+      pool = strict.length > 0 ? strict : eligible;
+    }
+    const scored = pool.map((p) => {
       const ideoMatch = faction.personality === 'LW' ? (p.ideology === 'LW Populist' || p.ideology === 'Progressive' || p.ideology === 'Liberal') :
         faction.personality === 'RW' ? (p.ideology === 'Conservative' || p.ideology === 'Traditionalist' || p.ideology === 'RW Populist') :
         (p.ideology === 'Moderate' || p.ideology === 'Liberal' || p.ideology === 'Conservative');
-      return { p, score: p.pvCache + (ideoMatch ? 25 : 0) };
+      return { p, score: p.pvCache + (ideoMatch ? 25 : 0) + (eligIdeos?.includes(p.ideology) ? 50 : 0) };
     });
     scored.sort((a, b) => b.score - a.score);
-    const pick = scored[0].p;
-    pick.factionId = faction.id;
-    pick.partyId = faction.partyId;
-    snap.game.pendingDraftPool = snap.game.pendingDraftPool.filter((id) => id !== pick.id);
+    const picked = scored[0].p;
+    picked.factionId = faction.id;
+    picked.partyId = faction.partyId;
+    snap.game.pendingDraftPool = snap.game.pendingDraftPool.filter((id) => id !== picked.id);
     snap.game.draftRoundOrder.shift();
-    addLog(snap, '2.1.1', 'draft', `${faction.name} drafted ${pick.firstName} ${pick.lastName} (${pick.state.toUpperCase()}, ${pick.ideology}, PV ${pick.pvCache}).`);
+    addLog(snap, '2.1.1', 'draft', `${faction.name} drafted ${picked.firstName} ${picked.lastName} (${picked.state.toUpperCase()}, ${picked.ideology}, PV ${picked.pvCache}).`);
   }
   // Pool empty
   snap.game.pendingDraftPool = [];
@@ -279,6 +297,11 @@ export function runPhase_2_1_8_FactionPersonalities(snap: FullGameSnapshot): voi
 // 2.2.1 Congressional Leadership (auto)
 // ============================================================================
 export function runPhase_2_2_1_CongressLeadership(snap: FullGameSnapshot): void {
+  if (snap.game.currentEra === 'independence') {
+    // Election of CC President
+    electCCPresident(snap);
+    return;
+  }
   // Determine majority party: count senators per party
   const senateMembers = snap.states.flatMap((s) => s.senators.map((sn) => snap.politicians.find((p) => p.id === sn.politicianId))).filter(Boolean) as Politician[];
   const houseMembers = snap.states.flatMap((s) => s.representativeIds.map((id) => snap.politicians.find((p) => p.id === id))).filter(Boolean) as Politician[];
@@ -310,6 +333,10 @@ export function runPhase_2_2_1_CongressLeadership(snap: FullGameSnapshot): void 
 // 2.2.2 Committee chairs (auto)
 // ============================================================================
 export function runPhase_2_2_2_Committees(snap: FullGameSnapshot): void {
+  if (snap.game.currentEra === 'independence') {
+    appointCCCommittees(snap);
+    return;
+  }
   const committees: ('Domestic' | 'Foreign' | 'Economic' | 'Justice')[] = ['Domestic', 'Foreign', 'Economic', 'Justice'];
   const senateMembers = snap.states.flatMap((s) => s.senators.map((sn) => snap.politicians.find((p) => p.id === sn.politicianId))).filter(Boolean) as Politician[];
   const houseMembers = snap.states.flatMap((s) => s.representativeIds.map((id) => snap.politicians.find((p) => p.id === id))).filter(Boolean) as Politician[];
@@ -478,12 +505,32 @@ export function runPhase_2_4_2_Anytime(snap: FullGameSnapshot): void {
 // 2.4.3 Era events
 // ============================================================================
 export function runPhase_2_4_3_Era(snap: FullGameSnapshot): EraEvent | null {
+  if (snap.game.scenarioId === '1772') {
+    return next1772Event(snap);
+  }
   if (snap.game.pendingEraEvents.length === 0) {
     const fresh = buildEraEventsForYear(snap.game.year);
     snap.game.pendingEraEvents = fresh;
   }
   const next = snap.game.pendingEraEvents.find((e) => !e.resolved);
   return next ?? null;
+}
+
+function next1772Event(snap: FullGameSnapshot): EraEvent | null {
+  // Fire scripted events in order, gated by year and prior templateId
+  const completed = new Set(snap.game.eraEventsCompleted);
+  // Cap how many events fire per turn (so they don't all stack at once)
+  const firedThisTurn = (snap.game.pendingEraEvents ?? []).filter((e) => !e.resolved).length;
+  if (firedThisTurn >= 1) return snap.game.pendingEraEvents.find((e) => !e.resolved) ?? null;
+  for (const s of SCRIPTED_1772) {
+    if (completed.has(s.templateId)) continue;
+    if (s.gateYear && snap.game.year < s.gateYear) continue;
+    if (s.requiresTemplate && !completed.has(s.requiresTemplate)) continue;
+    const event = s.build(snap.game.year);
+    snap.game.pendingEraEvents.push(event);
+    return event;
+  }
+  return null;
 }
 
 export function resolveEraEvent(snap: FullGameSnapshot, eventId: string, responseId: string): void {
@@ -495,6 +542,97 @@ export function resolveEraEvent(snap: FullGameSnapshot, eventId: string, respons
   event.resolved = true;
   event.chosenResponseId = responseId;
   addLog(snap, '2.4.3', 'event', `${event.title}: ${resp.label}. ${resp.effect.text}`);
+  // Track completion for scripted scenarios
+  if (event.templateId) snap.game.eraEventsCompleted.push(event.templateId);
+
+  // Handle 1772-specific consequences
+  if (snap.game.scenarioId === '1772') {
+    handleScripted1772Consequences(snap, event, responseId);
+  }
+
+  // Generic unlocks
+  if (event.unlocks?.includes('governors')) {
+    snap.game.governorsExist = true;
+    // Promote colonies to states
+    for (const s of snap.states) s.isColony = false;
+    addLog(snap, '2.4.3', 'system', 'Governors will now be elected. The colonies are now states.');
+  }
+}
+
+function handleScripted1772Consequences(snap: FullGameSnapshot, event: EraEvent, responseId: string): void {
+  switch (event.templateId) {
+    case 'boston_tea_party': {
+      // Sam Adams (LW Blue faction leader) gains Celebrity
+      const samAdams = snap.politicians.find((p) => p.firstName === 'Samuel' && p.lastName === 'Adams');
+      if (samAdams && !samAdams.traits.includes('Celebrity')) {
+        samAdams.traits.push('Celebrity');
+        addLog(snap, '2.4.3', 'event', 'Samuel Adams gains the Celebrity trait.');
+      }
+      break;
+    }
+    case 'common_sense': {
+      const paine = snap.politicians.find((p) => p.firstName === 'Thomas' && p.lastName === 'Paine');
+      if (paine) {
+        if (!paine.traits.includes('Celebrity')) paine.traits.push('Celebrity');
+        paine.traits = paine.traits.filter((t) => t !== 'Obscure');
+      }
+      break;
+    }
+    case 'lexington_concord': {
+      if (responseId === 'a') {
+        startRevWar(snap);
+      }
+      break;
+    }
+    case 'declaration_of_independence': {
+      snap.game.governorsExist = true;
+      for (const s of snap.states) s.isColony = false;
+      break;
+    }
+    case 'articles_of_confederation': {
+      snap.game.articlesOfConfederation = true;
+      break;
+    }
+    case 'french_alliance': {
+      applyFrenchAlliance(snap);
+      break;
+    }
+    case 'treaty_of_paris': {
+      applyTreatyOfParis(snap);
+      // Add western territories: OH KY TN MS AL as undeveloped territories
+      const territories: { id: string; name: string; abbr: string; region: 'Northeast' | 'Midwest' | 'South' | 'West' | 'Border' }[] = [
+        { id: 'oh', name: 'Ohio Territory', abbr: 'OH', region: 'Midwest' },
+        { id: 'ky', name: 'Kentucky Territory', abbr: 'KY', region: 'Border' },
+        { id: 'tn', name: 'Tennessee Territory', abbr: 'TN', region: 'South' },
+        { id: 'ms', name: 'Mississippi Territory', abbr: 'MS', region: 'South' },
+        { id: 'al', name: 'Alabama Territory', abbr: 'AL', region: 'South' },
+      ];
+      for (const t of territories) {
+        if (snap.states.find((s) => s.id === t.id)) continue;
+        snap.states.push({
+          id: t.id,
+          name: t.name,
+          abbr: t.abbr,
+          region: t.region,
+          electoralVotes: 0,
+          bias: 0,
+          governorId: null,
+          senators: [],
+          representativeIds: [],
+          industries: { agriculture: 1 },
+          isSlaveState: t.region === 'South' || t.region === 'Border',
+          admissionYear: snap.game.year,
+          isColony: false,
+        });
+      }
+      break;
+    }
+    case 'constitutional_convention_kickoff': {
+      // Open the Convention as a pending interactive screen
+      snap.game.pendingConvention = makeConvention(snap.game.year);
+      break;
+    }
+  }
 }
 
 export function applyEffect(snap: FullGameSnapshot, effect: { meters?: Partial<NationalMeters>; partyPreference?: number; enthusiasm?: { ideology: Ideology; party: PartyId; delta: number }[]; interestGroups?: { id: string; delta: number }[]; startWar?: { name: string; against: string }; text?: string }): void {
@@ -633,6 +771,10 @@ const BILL_TEMPLATES = [
 ];
 
 export function runPhase_2_6_1_Proposals(snap: FullGameSnapshot): void {
+  if (snap.game.currentEra === 'independence') {
+    generateCCBills(snap);
+    return;
+  }
   snap.game.pendingLegislation = [];
   for (const f of snap.factions) {
     const members = snap.politicians.filter((p) => p.factionId === f.id);
@@ -660,6 +802,14 @@ export function runPhase_2_6_1_Proposals(snap: FullGameSnapshot): void {
 }
 
 export function runPhase_2_6_2_Committee(snap: FullGameSnapshot): void {
+  if (snap.game.currentEra === 'independence') {
+    // CC has no separate committee step — pass all to floor
+    for (const billId of snap.game.pendingLegislation) {
+      const b = snap.legislation.find((bb) => bb.id === billId);
+      if (b) b.status = 'passed_committee';
+    }
+    return;
+  }
   for (const billId of snap.game.pendingLegislation) {
     const bill = snap.legislation.find((b) => b.id === billId);
     if (!bill) continue;
@@ -684,6 +834,28 @@ export function runPhase_2_6_2_Committee(snap: FullGameSnapshot): void {
 }
 
 export function runPhase_2_6_3_Floor(snap: FullGameSnapshot): void {
+  if (snap.game.currentEra === 'independence') {
+    for (const billId of snap.game.pendingLegislation) {
+      const bill = snap.legislation.find((b) => b.id === billId);
+      if (!bill || bill.status !== 'passed_committee') continue;
+      const result = voteCC(snap, bill);
+      bill.votes = { house: { yea: result.aye, nay: result.nay }, senate: { yea: 0, nay: 0 } };
+      if (result.passed) {
+        bill.status = 'passed';
+        applyEffect(snap, bill.effects);
+        addLog(snap, '2.6.3', 'legislation', `"${bill.title}" PASSED Continental Congress (${result.aye} aye / ${result.nay} nay / ${result.abstain} abstain).`);
+        // Special handling: Establish Continental Army/Navy unlocks military
+        if (bill.title.includes('Continental Army') || bill.title.includes('Continental Navy')) {
+          // appointMilitary will run during Military phase
+        }
+      } else {
+        bill.status = 'failed';
+        addLog(snap, '2.6.3', 'legislation', `"${bill.title}" FAILED Continental Congress (${result.aye} aye / ${result.nay} nay / ${result.abstain} abstain).`);
+      }
+    }
+    snap.game.pendingLegislation = [];
+    return;
+  }
   for (const billId of snap.game.pendingLegislation) {
     const bill = snap.legislation.find((b) => b.id === billId);
     if (!bill || bill.status !== 'passed_committee') continue;
@@ -732,6 +904,10 @@ export function runPhase_2_7_1_Diplomacy(snap: FullGameSnapshot): void {
 }
 
 export function runPhase_2_7_2_Military(snap: FullGameSnapshot): void {
+  if (snap.game.currentEra === 'independence' && snap.game.revolutionaryWar?.active) {
+    runRevWarBattles(snap);
+    return;
+  }
   for (const warId of snap.game.wars) {
     const war = snap.wars.find((w) => w.id === warId);
     if (!war || war.endYear) continue;
@@ -990,6 +1166,10 @@ export function runPhase_2_10_End(snap: FullGameSnapshot): void {
     if (p.careerTrack && p.careerTrackYears < 4) p.careerTrackYears += 2;
   }
   snap.politicians = refreshPv(snap.politicians);
+  // 1772: reappoint Continental Congress delegates each turn
+  if (snap.game.currentEra === 'independence') {
+    appointDelegates(snap);
+  }
   addLog(snap, '2.10', 'system', `End of ${snap.game.year - 2}-${snap.game.year} term.`);
 }
 

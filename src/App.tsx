@@ -6,6 +6,7 @@ import { NewGameScreen } from './components/NewGameScreen';
 import { Pages, type PageId } from './pages/registry';
 import { DraftModal } from './components/DraftModal';
 import { EraEventModal } from './components/EraEventModal';
+import { ConventionModal } from './components/ConventionModal';
 
 function Shell(): JSX.Element {
   const { snapshot, loading, hasSave, modal } = useGame();
@@ -39,6 +40,7 @@ function Shell(): JSX.Element {
       </div>
       {modal.type === 'draft' && <DraftModal pool={modal.pool} />}
       {modal.type === 'eraEvent' && <EraEventModal event={modal.event} />}
+      {modal.type === 'convention' && <ConventionModal convention={modal.convention} />}
     </div>
   );
 }

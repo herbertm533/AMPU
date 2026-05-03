@@ -18,6 +18,8 @@ import { FactionsPage } from './FactionsPage';
 import { EventLog } from './EventLog';
 import { WarsPage } from './WarsPage';
 import { SettingsPage } from './SettingsPage';
+import { ContinentalCongressPage } from './ContinentalCongressPage';
+import { RevWarDashboard } from './RevWarDashboard';
 
 export type PageId =
   | 'dashboard'
@@ -39,7 +41,9 @@ export type PageId =
   | 'factions'
   | 'eventLog'
   | 'wars'
-  | 'settings';
+  | 'settings'
+  | 'continentalCongress'
+  | 'revWar';
 
 export const Pages: Record<PageId, () => JSX.Element> = {
   dashboard: Dashboard,
@@ -62,4 +66,6 @@ export const Pages: Record<PageId, () => JSX.Element> = {
   eventLog: EventLog,
   wars: WarsPage,
   settings: SettingsPage,
+  continentalCongress: ContinentalCongressPage,
+  revWar: RevWarDashboard,
 };
