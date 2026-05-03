@@ -198,6 +198,7 @@ export interface Politician {
   flipFlopperPenalty: number;
   pvCache: number;
   isHistorical: boolean;
+  draftedYear?: number;
 }
 
 export interface Faction {
@@ -476,6 +477,7 @@ export interface GameState {
   continentalCongress: ContinentalCongress | null;
   revolutionaryWar: RevolutionaryWar | null;
   pendingConvention?: ConstitutionalConvention | null;
+  lastDraftYear?: number | null;
 }
 
 export interface ConventionVote {

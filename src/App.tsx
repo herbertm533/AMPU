@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { GameProvider, useGame } from './state/GameContext';
 import { Sidebar } from './components/Sidebar';
 import { TopBar } from './components/TopBar';
@@ -11,6 +11,21 @@ import { ConventionModal } from './components/ConventionModal';
 function Shell(): JSX.Element {
   const { snapshot, loading, hasSave, modal } = useGame();
   const [page, setPage] = useState<PageId>('dashboard');
+  const lastSeenDraftYear = useRef<number | null>(null);
+
+  // When a draft just concluded, auto-navigate to the Draft Summary page
+  useEffect(() => {
+    const cur = snapshot?.game.lastDraftYear ?? null;
+    if (cur != null && cur !== lastSeenDraftYear.current) {
+      // First snapshot tick after init: don't auto-redirect, just record
+      if (lastSeenDraftYear.current === null) {
+        lastSeenDraftYear.current = cur;
+        return;
+      }
+      lastSeenDraftYear.current = cur;
+      setPage('draftSummary');
+    }
+  }, [snapshot?.game.lastDraftYear]);
 
   if (loading) {
     return (

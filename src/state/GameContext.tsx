@@ -69,13 +69,19 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
   const repair = useCallback((s: FullGameSnapshot): FullGameSnapshot => {
     let dirty = false;
     // Stuck-draft repair: a draft schedule with no eligible politicians left.
-    if (s.game.phaseId === '2.1.1') {
-      const eligible = s.politicians.filter((p) => s.game.pendingDraftPool.includes(p.id));
-      if (eligible.length === 0 && s.game.draftRoundOrder.length > 0) {
-        s.game.draftRoundOrder = [];
-        s.game.pendingDraftPool = [];
-        dirty = true;
-      }
+    const eligible = s.politicians.filter((p) => s.game.pendingDraftPool.includes(p.id));
+    if (eligible.length === 0 && s.game.draftRoundOrder.length > 0) {
+      s.game.draftRoundOrder = [];
+      s.game.pendingDraftPool = [];
+      dirty = true;
+    }
+    // Backfill draftedYear for politicians who already have a faction but no
+    // draftedYear (saved before that field existed).
+    const haveFaction = s.politicians.filter((p) => p.factionId && p.draftedYear == null);
+    if (haveFaction.length > 0) {
+      for (const p of haveFaction) p.draftedYear = s.game.startYear;
+      if (s.game.lastDraftYear == null) s.game.lastDraftYear = s.game.startYear;
+      dirty = true;
     }
     return dirty ? { ...s } : s;
   }, []);

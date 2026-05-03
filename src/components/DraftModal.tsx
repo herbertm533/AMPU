@@ -8,7 +8,10 @@ export function DraftModal({ pool }: { pool: Politician[] }): JSX.Element {
 
   if (!snapshot) return <div />;
 
-  if (pool.length === 0) {
+  const livePool = snapshot.politicians.filter((p) => snapshot.game.pendingDraftPool.includes(p.id));
+  const effectivePool = livePool.length === 0 ? livePool : pool;
+
+  if (effectivePool.length === 0 || snapshot.game.draftRoundOrder.length === 0) {
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
         <div className="w-full max-w-md rounded-lg bg-white dark:bg-slate-800 shadow-xl border border-slate-300 dark:border-slate-700 p-4">
@@ -25,7 +28,7 @@ export function DraftModal({ pool }: { pool: Politician[] }): JSX.Element {
     );
   }
 
-  const sorted = [...pool].sort((a, b) => {
+  const sorted = [...effectivePool].sort((a, b) => {
     switch (sortKey) {
       case 'pv': return b.pvCache - a.pvCache;
       case 'admin': return b.skills.admin - a.skills.admin;

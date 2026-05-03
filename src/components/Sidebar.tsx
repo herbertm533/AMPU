@@ -33,6 +33,7 @@ export function Sidebar({ current, onNavigate }: { current: PageId; onNavigate: 
         { id: 'factionLeader', label: 'Faction Leader' },
         { id: 'careers', label: 'Career Tracks' },
         { id: 'kingmakers', label: 'Kingmakers & Protégés' },
+        ...(snapshot?.game.lastDraftYear != null ? [{ id: 'draftSummary' as const, label: 'Draft Summary' }] : []),
       ],
     },
     {

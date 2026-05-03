@@ -118,13 +118,15 @@ export function runPhase_2_1_1_Draft(snap: FullGameSnapshot, autoOnly: boolean):
     const picked = scored[0].p;
     picked.factionId = faction.id;
     picked.partyId = faction.partyId;
+    picked.draftedYear = snap.game.year;
     snap.game.pendingDraftPool = snap.game.pendingDraftPool.filter((id) => id !== picked.id);
     snap.game.draftRoundOrder.shift();
     addLog(snap, '2.1.1', 'draft', `${faction.name} drafted ${picked.firstName} ${picked.lastName} (${picked.state.toUpperCase()}, ${picked.ideology}, PV ${picked.pvCache}).`);
   }
-  // Pool empty
+  // Pool empty — finalize draft
   snap.game.pendingDraftPool = [];
   snap.game.draftRoundOrder = [];
+  snap.game.lastDraftYear = snap.game.year;
   return { needsPlayer: false, draftPool: [] };
 }
 
@@ -137,6 +139,7 @@ export function playerDraftPick(snap: FullGameSnapshot, politicianId: string): v
   const faction = snap.factions.find((f) => f.id === factionId)!;
   p.factionId = faction.id;
   p.partyId = faction.partyId;
+  p.draftedYear = snap.game.year;
   snap.game.pendingDraftPool = snap.game.pendingDraftPool.filter((id) => id !== p.id);
   snap.game.draftRoundOrder.shift();
   addLog(snap, '2.1.1', 'draft', `${faction.name} drafted ${p.firstName} ${p.lastName} (${p.state.toUpperCase()}, ${p.ideology}, PV ${p.pvCache}).`);
