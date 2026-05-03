@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - claude/build-ampu-game-ziNkq
   workflow_dispatch:
 
 permissions:
