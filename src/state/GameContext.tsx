@@ -59,19 +59,41 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
     localStorage.setItem('ampu-theme', theme);
   }, [theme]);
 
-  useEffect(() => {
-    (async () => {
-      const snap = await loadSnapshot();
-      setHasSave(!!snap);
-      setSnapshot(snap);
-      setLoading(false);
-    })();
-  }, []);
-
   const persist = useCallback(async (s: FullGameSnapshot) => {
     await saveSnapshot(s);
     setHasSave(true);
   }, []);
+
+  // Repair any stuck states left behind by an older buggy build before
+  // surfacing the snapshot to the UI.
+  const repair = useCallback((s: FullGameSnapshot): FullGameSnapshot => {
+    let dirty = false;
+    // Stuck-draft repair: a draft schedule with no eligible politicians left.
+    if (s.game.phaseId === '2.1.1') {
+      const eligible = s.politicians.filter((p) => s.game.pendingDraftPool.includes(p.id));
+      if (eligible.length === 0 && s.game.draftRoundOrder.length > 0) {
+        s.game.draftRoundOrder = [];
+        s.game.pendingDraftPool = [];
+        dirty = true;
+      }
+    }
+    return dirty ? { ...s } : s;
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      const snap = await loadSnapshot();
+      setHasSave(!!snap);
+      if (snap) {
+        const repaired = repair(snap);
+        setSnapshot(repaired);
+        if (repaired !== snap) await saveSnapshot(repaired);
+      } else {
+        setSnapshot(null);
+      }
+      setLoading(false);
+    })();
+  }, [repair]);
 
   const startNewGame = useCallback(async (factionId: string, scenarioId: '1772' | '1856' = '1856') => {
     setLoading(true);

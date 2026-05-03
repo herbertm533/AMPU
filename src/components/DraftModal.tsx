@@ -3,10 +3,27 @@ import { useGame } from '../state/GameContext';
 import type { Politician } from '../types';
 
 export function DraftModal({ pool }: { pool: Politician[] }): JSX.Element {
-  const { snapshot, draftPick } = useGame();
+  const { snapshot, draftPick, advance } = useGame();
   const [sortKey, setSortKey] = useState<'pv' | 'admin' | 'leg' | 'mil' | 'jud' | 'gov' | 'back' | 'age'>('pv');
 
   if (!snapshot) return <div />;
+
+  if (pool.length === 0) {
+    return (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+        <div className="w-full max-w-md rounded-lg bg-white dark:bg-slate-800 shadow-xl border border-slate-300 dark:border-slate-700 p-4">
+          <h2 className="text-lg font-bold mb-2">Draft Pool Empty</h2>
+          <p className="text-sm text-slate-600 dark:text-slate-400 mb-3">There are no politicians left to draft. Continue to the next phase.</p>
+          <button
+            onClick={() => advance()}
+            className="rounded bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-1.5 text-sm font-semibold"
+          >
+            Continue
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   const sorted = [...pool].sort((a, b) => {
     switch (sortKey) {
