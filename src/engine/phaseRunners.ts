@@ -85,20 +85,22 @@ export function runPhase_2_1_1_Draft(snap: FullGameSnapshot, autoOnly: boolean):
   }
   // Have CPU make picks until it's player's turn (or pool empty)
   while (snap.game.draftRoundOrder.length > 0) {
+    const eligible = snap.politicians.filter((p) => snap.game.pendingDraftPool.includes(p.id));
+    if (eligible.length === 0) {
+      // Pool exhausted — drain remaining scheduled picks and end the draft
+      const dropped = snap.game.draftRoundOrder.length;
+      snap.game.draftRoundOrder = [];
+      snap.game.pendingDraftPool = [];
+      if (dropped > 0) addLog(snap, '2.1.1', 'draft', `Draft pool exhausted; ${dropped} scheduled picks skipped.`);
+      break;
+    }
     const factionId = snap.game.draftRoundOrder[0];
     const isPlayer = factionId === snap.game.playerFactionId;
     if (isPlayer && !autoOnly) {
-      // Wait for player input
-      const draftPool = snap.politicians.filter((p) => snap.game.pendingDraftPool.includes(p.id));
-      return { needsPlayer: true, draftPool };
+      return { needsPlayer: true, draftPool: eligible };
     }
     // CPU pick: best PV in faction's ideological lane
     const faction = snap.factions.find((f) => f.id === factionId)!;
-    const eligible = snap.politicians.filter((p) => snap.game.pendingDraftPool.includes(p.id));
-    if (eligible.length === 0) {
-      snap.game.draftRoundOrder.shift();
-      continue;
-    }
     // 1772 expansion draft: hard ideology constraint per faction; fall back to nearest if exhausted
     const eligIdeos = isExpansion1772 ? getEligibleIdeologies(factionId) : null;
     let pool = eligible;
