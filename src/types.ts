@@ -478,6 +478,21 @@ export interface GameState {
   revolutionaryWar: RevolutionaryWar | null;
   pendingConvention?: ConstitutionalConvention | null;
   lastDraftYear?: number | null;
+  customDraftClasses?: ImportedDraftee[];
+}
+
+// A draftee imported from the user's CSV dataset. Persisted on the game state
+// so it travels with the save and is included in export/import.
+export interface ImportedDraftee {
+  draftYear: number;
+  firstName: string;
+  lastName: string;
+  state: string; // state id (lowercase abbreviation, e.g. "ny")
+  ideology: Ideology;
+  age: number;
+  skills: Skills;
+  command: number;
+  traits: Trait[];
 }
 
 export interface ConventionVote {

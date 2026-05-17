@@ -9,6 +9,7 @@ import { FACTIONS_1772 } from '../data/factions1772';
 import { appointDelegates, electCCPresident, appointCCCommittees, generateCCBills, voteCC } from './continentalCongress';
 import { startRevWar, runRevWarBattles, applyTreatyOfParis, applyFrenchAlliance } from './revolutionaryWar';
 import { makeConvention } from './constitutionalConvention';
+import { instantiateDraftees } from '../data/draftImport';
 
 // ============================================================================
 // 2.1.1 Draft
@@ -21,6 +22,27 @@ function getEligibleIdeologies(factionId: string): Ideology[] | null {
 export function runPhase_2_1_1_Draft(snap: FullGameSnapshot, autoOnly: boolean): { needsPlayer: boolean; draftPool: Politician[] } {
   const isExpansion1772 = snap.game.scenarioId === '1772' && snap.game.year === snap.game.startYear;
   if (snap.game.pendingDraftPool.length === 0 && !isExpansion1772) {
+    // Prefer a user-supplied draft class for this year, if any.
+    const custom = (snap.game.customDraftClasses ?? []).filter((d) => d.draftYear === snap.game.year);
+    if (custom.length > 0) {
+      const imported = instantiateDraftees(snap.game.customDraftClasses ?? [], snap.game.year);
+      snap.politicians.push(...imported);
+      snap.politicians = refreshPv(snap.politicians);
+      snap.game.pendingDraftPool = imported.map((p) => p.id);
+      const factionPvSum = snap.factions.map((f) => ({
+        id: f.id,
+        sum: snap.politicians.filter((p) => p.factionId === f.id).reduce((s, p) => s + p.pvCache, 0),
+      }));
+      factionPvSum.sort((a, b) => a.sum - b.sum);
+      const order = factionPvSum.map((x) => x.id);
+      // Enough snake rounds to drain the imported class
+      const rounds = Math.max(2, Math.ceil(imported.length / Math.max(1, snap.factions.length)));
+      snap.game.draftRoundOrder = [];
+      for (let r = 0; r < rounds; r++) {
+        snap.game.draftRoundOrder.push(...(r % 2 === 0 ? order : [...order].reverse()));
+      }
+      addLog(snap, '2.1.1', 'draft', `Imported draft class for ${snap.game.year}: ${imported.length} politicians entered the pool.`);
+    } else {
     // Generate new rookie pool
     const pool: Politician[] = [];
     const stateIds = snap.states.map((s) => s.id);
@@ -82,6 +104,7 @@ export function runPhase_2_1_1_Draft(snap: FullGameSnapshot, autoOnly: boolean):
     const order = factionPvSum.map((x) => x.id);
     snap.game.draftRoundOrder = [...order, ...order.slice().reverse()];
     addLog(snap, '2.1.1', 'draft', `Draft pool generated: ${pool.length} rookies. Snake order set.`);
+    }
   }
   // Have CPU make picks until it's player's turn (or pool empty)
   while (snap.game.draftRoundOrder.length > 0) {

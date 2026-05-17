@@ -6,6 +6,7 @@ import { build1772Scenario } from '../data/scenario1772';
 import { runCurrentPhase, advancePhase } from '../engine/engine';
 import { playerDraftPick, resolveEraEvent } from '../engine/phaseRunners';
 import { autoFillCPUVotes, applyConvention } from '../engine/constitutionalConvention';
+import { parseDraftCsv, type ParseResult } from '../data/draftImport';
 
 type Modal =
   | { type: 'none' }
@@ -29,6 +30,8 @@ interface GameContextValue {
   toggleTheme: () => void;
   exportSave: () => Promise<string>;
   importSave: (json: string) => Promise<void>;
+  importDraftDataset: (csv: string, mode: 'replace' | 'merge') => Promise<ParseResult>;
+  clearDraftDataset: () => Promise<void>;
   resetGame: () => Promise<void>;
   theme: 'light' | 'dark';
 }
@@ -252,6 +255,25 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
     await loadGame();
   }, [loadGame]);
 
+  const importDraftDataset = useCallback(async (csv: string, mode: 'replace' | 'merge'): Promise<ParseResult> => {
+    const result = parseDraftCsv(csv);
+    if (!snapshot || result.draftees.length === 0) return result;
+    const draft: FullGameSnapshot = JSON.parse(JSON.stringify(snapshot));
+    const existing = mode === 'merge' ? (draft.game.customDraftClasses ?? []) : [];
+    draft.game.customDraftClasses = [...existing, ...result.draftees];
+    setSnapshot(draft);
+    await persist(draft);
+    return result;
+  }, [snapshot, persist]);
+
+  const clearDraftDataset = useCallback(async () => {
+    if (!snapshot) return;
+    const draft: FullGameSnapshot = JSON.parse(JSON.stringify(snapshot));
+    draft.game.customDraftClasses = [];
+    setSnapshot(draft);
+    await persist(draft);
+  }, [snapshot, persist]);
+
   const resetGame = useCallback(async () => {
     await clearDb();
     setSnapshot(null);
@@ -274,6 +296,8 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
     toggleTheme,
     exportSave,
     importSave,
+    importDraftDataset,
+    clearDraftDataset,
     resetGame,
     theme,
   };
