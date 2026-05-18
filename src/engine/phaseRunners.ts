@@ -22,6 +22,35 @@ function getEligibleIdeologies(factionId: string): Ideology[] | null {
 
 export function runPhase_2_1_1_Draft(snap: FullGameSnapshot, autoOnly: boolean): { needsPlayer: boolean; draftPool: Politician[] } {
   const isExpansion1772 = snap.game.scenarioId === '1772' && snap.game.year === snap.game.startYear;
+
+  // 1772 inaugural draft is CSV-driven: merge the dataset's start-year class
+  // (user import takes precedence over the bundled standard) into the filler
+  // bench, then rebuild the snake order over the full pool. Done once.
+  if (isExpansion1772 && !snap.game.inauguralDraftSeeded) {
+    const userClass = (snap.game.customDraftClasses ?? []).filter((d) => d.draftYear === snap.game.year);
+    const source = userClass.length > 0 ? (snap.game.customDraftClasses ?? []) : DEFAULT_DRAFT_CLASSES;
+    const validStateIds = new Set(snap.states.map((s) => s.id));
+    const imported = instantiateDraftees(source, snap.game.year, validStateIds);
+    if (imported.length > 0) {
+      snap.politicians.push(...imported);
+      snap.politicians = refreshPv(snap.politicians);
+      snap.game.pendingDraftPool = [...snap.game.pendingDraftPool, ...imported.map((p) => p.id)];
+      const factionPvSum = snap.factions.map((f) => ({
+        id: f.id,
+        sum: snap.politicians.filter((p) => p.factionId === f.id).reduce((s, p) => s + p.pvCache, 0),
+      }));
+      factionPvSum.sort((a, b) => a.sum - b.sum);
+      const order = factionPvSum.map((x) => x.id);
+      const rounds = Math.max(2, Math.ceil(snap.game.pendingDraftPool.length / Math.max(1, snap.factions.length)));
+      snap.game.draftRoundOrder = [];
+      for (let r = 0; r < rounds; r++) {
+        snap.game.draftRoundOrder.push(...(r % 2 === 0 ? order : [...order].reverse()));
+      }
+      addLog(snap, '2.1.1', 'draft', `Inaugural draft class (${userClass.length > 0 ? 'imported' : 'standard'}): ${imported.length} historical figures entered the pool.`);
+    }
+    snap.game.inauguralDraftSeeded = true;
+  }
+
   if (snap.game.pendingDraftPool.length === 0 && !isExpansion1772) {
     // Source precedence for this year's class:
     //   1. player's per-game imported dataset (Settings)

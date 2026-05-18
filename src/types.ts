@@ -479,6 +479,7 @@ export interface GameState {
   pendingConvention?: ConstitutionalConvention | null;
   lastDraftYear?: number | null;
   customDraftClasses?: ImportedDraftee[];
+  inauguralDraftSeeded?: boolean;
 }
 
 // A draftee imported from the user's CSV dataset. Persisted on the game state

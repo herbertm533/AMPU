@@ -38,7 +38,10 @@ function buildInterestScores(): InterestGroupScores {
 }
 
 export function build1772Scenario(playerFactionId: string): FullGameSnapshot {
-  let politicians = buildPoliticians1772();
+  // Only the filler bench is pre-seeded; the historical founding figures enter
+  // through the CSV-driven inaugural draft (the bundled dataset is the source
+  // of truth).
+  let politicians = buildPoliticians1772(false);
   politicians = refreshPv(politicians);
 
   // States from colonies

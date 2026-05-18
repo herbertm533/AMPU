@@ -67,8 +67,11 @@ const LAST_FILLER = ['Sullivan', 'Pickens', 'Reed', 'Pendleton', 'Mifflin', 'Gib
 const ALL_IDEOLOGIES: Ideology[] = ['LW Populist', 'Progressive', 'Liberal', 'Moderate', 'Conservative', 'Traditionalist', 'RW Populist'];
 const STATE_IDS = ['nh', 'ma', 'ri', 'ct', 'ny', 'nj', 'pa', 'de', 'md', 'va', 'nc', 'sc', 'ga'];
 
-export function buildPoliticians1772(): Politician[] {
-  const out: Politician[] = SEEDS.map((s) => {
+// includeHistorical=false seeds only the filler bench; the historical founding
+// figures then come from the bundled draft dataset via the inaugural draft, so
+// the CSV dataset is the single source of truth.
+export function buildPoliticians1772(includeHistorical = true): Politician[] {
+  const seeded: Politician[] = includeHistorical ? SEEDS.map((s) => {
     const skills: Skills = {
       admin: s.skills[0],
       legislative: s.skills[1],
@@ -99,7 +102,8 @@ export function buildPoliticians1772(): Politician[] {
       pvCache: 0,
       isHistorical: true,
     };
-  });
+  }) : [];
+  const out: Politician[] = seeded;
 
   // Filler colonial-era politicians distributed across states for the draft pool.
   // Each colony needs a respectable bench so factions can fill delegate slots.

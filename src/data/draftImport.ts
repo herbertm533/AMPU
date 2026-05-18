@@ -57,6 +57,8 @@ export function buildCsvTemplate(): string {
     '# skills    : admin, legislative, judicial, military, governing,',
     '#             backroom — each an integer 0 to 5',
     '# command   : integer 0 to 5',
+    '# party / wikiUrl : optional, ignored by the importer (kept only for',
+    '#             your own review/reference).',
     '# traits    : zero or more, separated by a pipe |  (NOT commas)',
     '#             Valid: ' + ALL_TRAITS.join(' | '),
     '# ---------------------------------------------------------------------',

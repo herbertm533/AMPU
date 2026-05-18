@@ -1,0 +1,136 @@
+draftYear,firstName,lastName,state,ideology,birthYear,age,admin,legislative,judicial,military,governing,backroom,command,traits,party,wikiUrl
+1772,Samuel,Adams,ma,LW Populist,1722,,2,3,1,0,2,4,1,Orator,BLUE,https://en.wikipedia.org/wiki/Samuel_Adams
+1772,Thomas,Jefferson,va,RW Populist,1743,,3,4,2,0,2,2,1,Egghead,BLUE,https://en.wikipedia.org/wiki/Thomas_Jefferson
+1772,Patrick,Henry,va,Traditionalist,1736,,1,4,2,1,3,3,1,Orator|Debater,BLUE,https://en.wikipedia.org/wiki/Patrick_Henry
+1772,John,Hancock,ma,Moderate,1737,,3,2,1,0,3,3,1,Celebrity,BLUE,https://en.wikipedia.org/wiki/John_Hancock
+1772,George,Clinton,ny,Moderate,1739,,2,3,1,1,3,3,0,,BLUE,https://en.wikipedia.org/wiki/George_Clinton
+1772,Richard Henry,Lee,va,Conservative,1732,,2,4,2,0,2,3,0,Debater,BLUE,https://en.wikipedia.org/wiki/Richard_Henry_Lee
+1772,John,Dickinson,de,Conservative,1732,,3,4,3,0,2,2,0,Egghead,BLUE,https://en.wikipedia.org/wiki/John_Dickinson
+1772,Thomas,Paine,pa,Progressive,1737,,1,2,0,0,0,1,0,Propagandist|Obscure,BLUE,https://en.wikipedia.org/wiki/Thomas_Paine
+1772,Elias,Boudinot,nj,Progressive,1740,,2,2,2,0,1,2,0,,BLUE,https://en.wikipedia.org/wiki/Elias_Boudinot
+1772,George,Mason,va,Traditionalist,1725,,2,3,2,0,2,3,0,,BLUE,https://en.wikipedia.org/wiki/George_Mason
+1772,Francis,Marion,sc,Traditionalist,1732,,0,0,0,4,0,1,0,Military,BLUE,https://en.wikipedia.org/wiki/Francis_Marion
+1772,Ethan,Allen,nh,Moderate,1738,,0,0,0,3,0,2,0,Celebrity,BLUE,https://en.wikipedia.org/wiki/Ethan_Allen
+1772,Horatio,Gates,va,Moderate,1727,,1,0,0,3,0,1,0,Military,BLUE,https://en.wikipedia.org/wiki/Horatio_Gates
+1772,Daniel,Boone,nc,Traditionalist,1734,,0,0,0,2,0,0,0,Celebrity,BLUE,https://en.wikipedia.org/wiki/Daniel_Boone
+1772,Elbridge,Gerry,ma,Moderate,1744,,2,2,1,0,1,3,0,Manipulative,BLUE,https://en.wikipedia.org/wiki/Elbridge_Gerry
+1772,George,Washington,va,Moderate,1732,,2,1,0,4,2,2,1,Leadership,RED,https://en.wikipedia.org/wiki/George_Washington
+1772,John,Adams,ma,Moderate,1735,,3,3,3,0,2,2,1,Egghead|Debater,RED,https://en.wikipedia.org/wiki/John_Adams
+1772,Benjamin,Franklin,pa,Moderate,1706,,4,3,1,0,2,4,1,Celebrity|Egghead,RED,https://en.wikipedia.org/wiki/Benjamin_Franklin
+1772,John,Jay,ny,Moderate,1745,,3,3,3,0,2,3,0,,RED,https://en.wikipedia.org/wiki/John_Jay
+1772,Henry,Laurens,sc,Traditionalist,1724,,3,2,1,1,2,3,0,,RED,https://en.wikipedia.org/wiki/Henry_Laurens
+1772,Samuel,Huntington,ct,Conservative,1731,,2,3,2,0,3,2,0,Efficient,RED,https://en.wikipedia.org/wiki/Samuel_Huntington
+1772,Roger,Sherman,ct,Moderate,1721,,2,3,3,0,2,2,0,,RED,https://en.wikipedia.org/wiki/Roger_Sherman
+1772,James,Wilson,pa,Moderate,1742,,3,3,4,0,1,2,0,Egghead,RED,https://en.wikipedia.org/wiki/James_Wilson
+1772,Caesar,Rodney,de,Moderate,1728,,2,2,1,1,2,2,0,,RED,https://en.wikipedia.org/wiki/Caesar_Rodney
+1772,Israel,Putnam,ct,Moderate,1718,,1,0,0,3,0,1,0,Military,RED,https://en.wikipedia.org/wiki/Israel_Putnam
+1772,Nathanael,Greene,ri,Progressive,1742,,1,0,0,3,0,1,0,Military,RED,https://en.wikipedia.org/wiki/Nathanael_Greene
+1772,Benedict,Arnold,ct,Moderate,1741,,1,0,0,3,0,1,0,Military|Traitor,RED,https://en.wikipedia.org/wiki/Benedict_Arnold
+1772,Daniel,Morgan,va,Conservative,1736,,0,0,0,3,0,0,0,Military,RED,https://en.wikipedia.org/wiki/Daniel_Morgan
+1772,George,Wythe,va,Liberal,1726,,2,3,4,0,1,2,0,Egghead,RED,https://en.wikipedia.org/wiki/George_Wythe
+1772,Robert Treat,Paine,ma,Progressive,1731,,2,2,3,0,1,1,0,,RED,https://en.wikipedia.org/wiki/Robert_Treat_Paine
+1772,Benjamin,Rush,pa,Progressive,1746,,2,2,1,0,1,2,0,Egghead|Reformist,RED,https://en.wikipedia.org/wiki/Benjamin_Rush
+1772,Thomas,McKean,de,Progressive,1734,,2,3,3,0,2,2,0,,RED,https://en.wikipedia.org/wiki/Thomas_McKean
+1772,Oliver,Ellsworth,ct,Progressive,1745,,2,2,3,0,1,2,0,,RED,https://en.wikipedia.org/wiki/Oliver_Ellsworth
+1772,Benjamin,Lincoln,ma,Conservative,1733,,2,1,0,3,2,1,0,Military,RED,https://en.wikipedia.org/wiki/Benjamin_Lincoln
+1772,John Paul,Jones,va,Moderate,1747,,1,0,0,3,0,0,0,Naval,BLUE,https://en.wikipedia.org/wiki/John_Paul_Jones
+1772,John,Barry,pa,Moderate,1745,,1,0,0,2,0,0,0,Naval,RED,https://en.wikipedia.org/wiki/John_Barry
+1772,Esek,Hopkins,ri,Moderate,1718,,1,0,0,3,0,0,0,Naval,RED,https://en.wikipedia.org/wiki/Esek_Hopkins
+1772,William,Moultrie,sc,Conservative,1730,,1,0,0,3,1,1,0,Military,RED,https://en.wikipedia.org/wiki/William_Moultrie
+1772,Arthur,St. Clair,pa,Conservative,1737,,1,0,0,2,1,1,0,Military,RED,https://en.wikipedia.org/wiki/Arthur_St._Clair
+1772,Philip,Schuyler,ny,Conservative,1733,,2,1,0,2,1,2,0,,RED,https://en.wikipedia.org/wiki/Philip_Schuyler
+1772,Timothy,Pickering,ma,Conservative,1745,,2,1,1,1,1,1,0,Puritan,RED,https://en.wikipedia.org/wiki/Timothy_Pickering
+1776,James,Madison,va,Liberal,1751,,3,4,3,0,2,3,1,Egghead|Reformist,BLUE,https://en.wikipedia.org/wiki/James_Madison
+1780,Alexander,Hamilton,ny,Conservative,1755,,4,3,2,2,1,3,1,Egghead,RED,https://en.wikipedia.org/wiki/Alexander_Hamilton
+1780,Aaron,Burr,ny,Moderate,1756,,2,2,2,1,1,4,0,Manipulative,BLUE,https://en.wikipedia.org/wiki/Aaron_Burr
+1780,Rufus,King,ny,Conservative,1755,,3,3,2,0,2,2,0,Debater,RED,https://en.wikipedia.org/wiki/Rufus_King
+1772,Robert,Morris,pa,Conservative,1734,,4,2,1,0,2,3,0,Economics,RED,https://en.wikipedia.org/wiki/Robert_Morris
+1776,Gouverneur,Morris,ny,Conservative,1752,,3,3,3,0,1,3,0,Egghead|Orator,RED,https://en.wikipedia.org/wiki/Gouverneur_Morris
+1772,Charles Cotesworth,Pinckney,sc,Conservative,1746,,2,2,2,2,1,2,0,,RED,https://en.wikipedia.org/wiki/Charles_Cotesworth_Pinckney
+1772,Thomas,Mifflin,pa,Moderate,1744,,2,2,0,2,3,2,0,,RED,https://en.wikipedia.org/wiki/Thomas_Mifflin
+1784,Fisher,Ames,ma,Conservative,1758,,2,4,2,0,1,2,0,Orator,RED,https://en.wikipedia.org/wiki/Fisher_Ames
+1772,Theodore,Sedgwick,ma,Conservative,1746,,2,3,2,0,1,2,0,,RED,https://en.wikipedia.org/wiki/Theodore_Sedgwick
+1772,Jonathan,Trumbull,ct,Conservative,1740,,2,3,1,0,2,2,0,,RED,https://en.wikipedia.org/wiki/Jonathan_Trumbull
+1776,Frederick,Muhlenberg,pa,Moderate,1750,,2,3,1,0,2,2,0,,RED,https://en.wikipedia.org/wiki/Frederick_Muhlenberg
+1780,Abraham,Baldwin,ga,Liberal,1754,,2,3,2,0,1,2,0,Education,BLUE,https://en.wikipedia.org/wiki/Abraham_Baldwin
+1784,James,Jackson,ga,LW Populist,1757,,1,3,1,2,1,2,0,Orator,BLUE,https://en.wikipedia.org/wiki/James_Jackson
+1772,William,Maclay,pa,Progressive,1737,,2,3,1,0,1,2,0,Reformist,BLUE,https://en.wikipedia.org/wiki/William_Maclay
+1772,Robert,Livingston,ny,Liberal,1746,,3,2,3,0,2,3,0,,BLUE,https://en.wikipedia.org/wiki/Robert_Livingston
+1780,Edmund,Randolph,va,Moderate,1753,,3,3,3,0,2,2,0,,BLUE,https://en.wikipedia.org/wiki/Edmund_Randolph
+1776,Henry,Knox,ma,Moderate,1750,,2,1,0,4,1,1,0,Military,RED,https://en.wikipedia.org/wiki/Henry_Knox
+1772,Pierce,Butler,sc,Traditionalist,1744,,2,2,1,1,2,2,0,,BLUE,https://en.wikipedia.org/wiki/Pierce_Butler
+1772,Ralph,Izard,sc,Conservative,1742,,2,2,1,0,1,2,0,,RED,https://en.wikipedia.org/wiki/Ralph_Izard
+1772,William,Few,ga,Moderate,1748,,2,2,1,0,2,2,0,,BLUE,https://en.wikipedia.org/wiki/William_Few
+1772,Richard,Bassett,de,Moderate,1745,,2,2,1,0,2,1,0,,RED,https://en.wikipedia.org/wiki/Richard_Bassett
+1772,George,Read,de,Conservative,1733,,2,3,3,0,2,1,0,,RED,https://en.wikipedia.org/wiki/George_Read
+1772,John,Langdon,nh,Moderate,1741,,2,2,0,0,3,2,0,,BLUE,https://en.wikipedia.org/wiki/John_Langdon
+1772,Paine,Wingate,nh,Conservative,1739,,1,2,1,0,1,1,0,,RED,https://en.wikipedia.org/wiki/Paine_Wingate
+1772,Caleb,Strong,ma,Conservative,1745,,2,3,2,0,2,1,0,,RED,https://en.wikipedia.org/wiki/Caleb_Strong
+1772,Tristram,Dalton,ma,Moderate,1738,,2,2,1,0,2,1,0,,RED,https://en.wikipedia.org/wiki/Tristram_Dalton
+1772,William Samuel,Johnson,ct,Conservative,1727,,2,3,3,0,1,2,0,Egghead,RED,https://en.wikipedia.org/wiki/William_Samuel_Johnson
+1772,Charles,Carroll,md,Conservative,1737,,3,2,1,0,2,3,0,Economics,RED,https://en.wikipedia.org/wiki/Charles_Carroll
+1776,John,Henry,md,Moderate,1750,,2,2,1,0,1,2,0,,BLUE,https://en.wikipedia.org/wiki/John_Henry
+1772,William,Grayson,va,Progressive,1740,,2,3,1,1,1,2,0,Debater,BLUE,https://en.wikipedia.org/wiki/William_Grayson
+1772,Samuel,Johnston,nc,Conservative,1733,,2,3,2,0,2,2,0,,RED,https://en.wikipedia.org/wiki/Samuel_Johnston
+1780,Benjamin,Hawkins,nc,Moderate,1754,,2,2,1,0,2,2,0,,BLUE,https://en.wikipedia.org/wiki/Benjamin_Hawkins
+1772,Joseph,Stanton,ri,Progressive,1739,,1,2,0,1,1,2,0,,BLUE,https://en.wikipedia.org/wiki/Joseph_Stanton
+1776,Theodore,Foster,ri,Moderate,1752,,2,2,2,0,1,1,0,,RED,https://en.wikipedia.org/wiki/Theodore_Foster
+1772,John,Walker,va,Moderate,1744,,1,2,1,0,1,1,0,,BLUE,https://en.wikipedia.org/wiki/John_Walker
+1784,John,Beckley,va,Moderate,1757,,1,2,1,0,1,3,0,Manipulative,BLUE,https://en.wikipedia.org/wiki/John_Beckley
+1816,James,Buchanan,pa,Conservative,1791,,4,3,2,0,3,3,4,Efficient,BLUE,https://en.wikipedia.org/wiki/James_Buchanan
+1848,John C.,Breckinridge,ky,Conservative,1821,,3,3,1,1,2,3,3,Orator,BLUE,https://en.wikipedia.org/wiki/John_C._Breckinridge
+1832,Jefferson,Davis,ms,Traditionalist,1808,,4,3,1,4,2,3,4,Nationalist|Military,BLUE,https://en.wikipedia.org/wiki/Jefferson_Davis
+1824,James M.,Mason,va,Traditionalist,1798,,2,3,2,0,2,3,2,Nationalist,BLUE,https://en.wikipedia.org/wiki/James_M._Mason
+1836,Robert,Toombs,ga,Traditionalist,1810,,2,4,1,1,2,3,3,Orator|Debater,BLUE,https://en.wikipedia.org/wiki/Robert_Toombs
+1840,Howell,Cobb,ga,Conservative,1815,,3,3,1,0,3,3,3,Economics,BLUE,https://en.wikipedia.org/wiki/Howell_Cobb
+1832,John B.,Floyd,va,Conservative,1806,,2,1,0,2,3,1,2,Corrupt,BLUE,https://en.wikipedia.org/wiki/John_B._Floyd
+1848,James L.,Orr,sc,Conservative,1822,,2,3,1,0,1,2,2,,BLUE,https://en.wikipedia.org/wiki/James_L._Orr
+1840,Stephen A.,Douglas,il,Moderate,1813,,3,4,2,0,2,4,4,Orator|Debater,BLUE,https://en.wikipedia.org/wiki/Stephen_A._Douglas
+1808,Lewis,Cass,mi,Moderate,1782,,3,3,2,1,3,2,3,Globalist,BLUE,https://en.wikipedia.org/wiki/Lewis_Cass
+1812,William L.,Marcy,ny,Moderate,1786,,3,2,1,1,3,3,2,,BLUE,https://en.wikipedia.org/wiki/William_L._Marcy
+1828,Franklin,Pierce,nh,Moderate,1804,,2,2,1,1,2,2,2,Passive,BLUE,https://en.wikipedia.org/wiki/Franklin_Pierce
+1824,Daniel S.,Dickinson,ny,Moderate,1800,,2,3,1,0,2,3,2,,BLUE,https://en.wikipedia.org/wiki/Daniel_S._Dickinson
+1832,Andrew,Johnson,tn,Conservative,1808,,2,3,1,0,2,2,2,Unlikable,BLUE,https://en.wikipedia.org/wiki/Andrew_Johnson
+1820,John,Bell,tn,Moderate,1796,,3,3,2,0,2,3,3,Crisis Manager,BLUE,https://en.wikipedia.org/wiki/John_Bell
+1820,Edward,Everett,ma,Moderate,1794,,3,2,2,0,2,2,2,Orator|Education,BLUE,https://en.wikipedia.org/wiki/Edward_Everett
+1820,Sam,Houston,tx,Moderate,1793,,2,2,1,4,3,2,4,Celebrity|Military,BLUE,https://en.wikipedia.org/wiki/Sam_Houston
+1820,James K.,Polk,tn,Liberal,1795,,3,3,1,1,2,3,3,Efficient,BLUE,https://en.wikipedia.org/wiki/James_K._Polk
+1808,Thomas H.,Benton,mo,Liberal,1782,,3,4,1,1,2,3,4,Orator|Reformist,BLUE,https://en.wikipedia.org/wiki/Thomas_H._Benton
+1840,David,Wilmot,pa,Progressive,1814,,2,3,2,0,1,2,2,Reformist,BLUE,https://en.wikipedia.org/wiki/David_Wilmot
+1808,Martin,Van Buren,ny,Liberal,1782,,4,3,1,0,3,5,4,Manipulative|Magician,BLUE,https://en.wikipedia.org/wiki/Martin_Van_Buren
+1824,John A.,Dix,ny,Liberal,1798,,3,2,1,2,3,2,2,,BLUE,https://en.wikipedia.org/wiki/John_A._Dix
+1812,John J.,Crittenden,ky,Conservative,1787,,3,4,3,0,2,3,3,Crisis Manager,RED,https://en.wikipedia.org/wiki/John_J._Crittenden
+1820,Edward,Bates,mo,Conservative,1793,,3,2,4,0,2,2,2,Integrity,RED,https://en.wikipedia.org/wiki/Edward_Bates
+1832,Orville H.,Browning,il,Moderate,1806,,2,3,2,0,1,2,2,,RED,https://en.wikipedia.org/wiki/Orville_H._Browning
+1836,Abraham,Lincoln,il,Moderate,1809,,2,3,2,0,1,2,2,Orator|Integrity,RED,https://en.wikipedia.org/wiki/Abraham_Lincoln
+1832,William P.,Fessenden,me,Moderate,1806,,3,4,2,0,2,2,3,Economics,RED,https://en.wikipedia.org/wiki/William_P._Fessenden
+1840,Lyman,Trumbull,il,Moderate,1813,,3,4,3,0,1,2,3,Integrity,RED,https://en.wikipedia.org/wiki/Lyman_Trumbull
+1836,Hannibal,Hamlin,me,Moderate,1809,,3,3,1,0,3,2,2,,RED,https://en.wikipedia.org/wiki/Hannibal_Hamlin
+1844,John A.,Andrew,ma,Liberal,1818,,3,3,2,0,4,2,3,Reformist|Integrity,RED,https://en.wikipedia.org/wiki/John_A._Andrew
+1828,William H.,Seward,ny,Liberal,1801,,3,4,2,0,3,4,5,Manipulative|Magician,RED,https://en.wikipedia.org/wiki/William_H._Seward
+1832,Salmon P.,Chase,oh,Progressive,1808,,3,3,3,0,4,2,3,Integrity|Reformist,RED,https://en.wikipedia.org/wiki/Salmon_P._Chase
+1840,John C.,Frémont,ca,Liberal,1813,,2,1,0,3,1,1,3,Celebrity,RED,https://en.wikipedia.org/wiki/John_C._Fr%C3%A9mont
+1836,Henry,Wilson,ma,Progressive,1812,,2,3,1,0,1,3,2,Reformist,RED,https://en.wikipedia.org/wiki/Henry_Wilson
+1848,Schuyler,Colfax,in,Liberal,1823,,2,3,1,0,2,3,2,Charismatic,RED,https://en.wikipedia.org/wiki/Schuyler_Colfax
+1836,Charles,Sumner,ma,LW Populist,1811,,2,4,3,0,2,1,4,Orator|Reformist|Puritan,RED,https://en.wikipedia.org/wiki/Charles_Sumner
+1816,Thaddeus,Stevens,pa,LW Populist,1792,,2,5,3,0,1,4,4,Orator|Reformist|Manipulative,RED,https://en.wikipedia.org/wiki/Thaddeus_Stevens
+1824,Benjamin,Wade,oh,LW Populist,1800,,2,4,2,0,1,2,3,Reformist,RED,https://en.wikipedia.org/wiki/Benjamin_Wade
+1820,Joshua,Giddings,oh,LW Populist,1795,,2,3,2,0,1,1,2,Reformist,RED,https://en.wikipedia.org/wiki/Joshua_Giddings
+1836,Owen,Lovejoy,il,LW Populist,1811,,2,3,1,0,1,1,2,Reformist,RED,https://en.wikipedia.org/wiki/Owen_Lovejoy
+1824,Millard,Fillmore,ny,Conservative,1800,,3,2,1,0,2,2,2,Passive,RED,https://en.wikipedia.org/wiki/Millard_Fillmore
+1840,Nathaniel P.,Banks,ma,Moderate,1816,,2,3,1,1,2,3,3,Charismatic,RED,https://en.wikipedia.org/wiki/Nathaniel_P._Banks
+1844,Anson,Burlingame,ma,Moderate,1820,,2,2,1,0,1,2,2,Globalist,RED,https://en.wikipedia.org/wiki/Anson_Burlingame
+1812,Winfield,Scott,va,Moderate,1786,,2,0,0,5,0,1,3,Military|Celebrity,RED,https://en.wikipedia.org/wiki/Winfield_Scott
+1832,Robert E.,Lee,va,Conservative,1807,,2,0,0,5,1,1,3,Military,RED,https://en.wikipedia.org/wiki/Robert_E._Lee
+1848,Ulysses S.,Grant,oh,Moderate,1822,,1,0,0,4,0,0,1,Military,RED,https://en.wikipedia.org/wiki/Ulysses_S._Grant
+1844,William T.,Sherman,oh,Moderate,1820,,1,0,0,4,0,0,1,Military,RED,https://en.wikipedia.org/wiki/William_T._Sherman
+1852,George B.,McClellan,pa,Conservative,1826,,2,0,0,3,0,0,2,Military|Passive,BLUE,https://en.wikipedia.org/wiki/George_B._McClellan
+1804,Roger B.,Taney,md,Traditionalist,1777,,3,2,5,0,0,2,3,,BLUE,https://en.wikipedia.org/wiki/Roger_B._Taney
+1812,John,Catron,tn,Conservative,1786,,2,1,4,0,0,1,1,,BLUE,https://en.wikipedia.org/wiki/John_Catron
+1808,Peter V.,Daniel,va,Traditionalist,1784,,2,1,4,0,0,1,1,,BLUE,https://en.wikipedia.org/wiki/Peter_V._Daniel
+1816,Samuel,Nelson,ny,Conservative,1792,,2,1,4,0,0,1,1,,BLUE,https://en.wikipedia.org/wiki/Samuel_Nelson
+1820,Robert C.,Grier,pa,Conservative,1794,,2,1,4,0,0,1,1,,BLUE,https://en.wikipedia.org/wiki/Robert_C._Grier
+1836,Benjamin R.,Curtis,ma,Liberal,1809,,2,1,4,0,0,1,2,Integrity,RED,https://en.wikipedia.org/wiki/Benjamin_R._Curtis
+1836,John A.,Campbell,al,Traditionalist,1811,,2,1,4,0,0,1,1,,BLUE,https://en.wikipedia.org/wiki/John_A._Campbell
+1816,James M.,Wayne,ga,Conservative,1790,,2,1,4,0,0,1,1,,BLUE,https://en.wikipedia.org/wiki/James_M._Wayne
+1812,John,McLean,oh,Liberal,1785,,2,1,4,0,0,1,2,Integrity,RED,https://en.wikipedia.org/wiki/John_McLean
