@@ -93,11 +93,15 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
   }, []);
 
   useEffect(() => {
-    void loadStandardDraftClasses();
-  }, []);
-
-  useEffect(() => {
     (async () => {
+      // Load the full standard dataset before the game is interactive so the
+      // 1772 inaugural draft (and every later draft) is built off the same
+      // data. Race a timeout so a slow/failed fetch can't hang startup — the
+      // curated built-in then serves as the resilience fallback.
+      await Promise.race([
+        loadStandardDraftClasses(),
+        new Promise((r) => setTimeout(r, 12000)),
+      ]);
       const snap = await loadSnapshot();
       setHasSave(!!snap);
       if (snap) {
