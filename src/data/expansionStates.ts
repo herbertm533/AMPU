@@ -79,6 +79,34 @@ const DEFS: ExpansionDef[] = [
   { id: 'venezuela', name: 'Venezuela', abbr: 'VEN', region: 'Latin America' },
   { id: 'visayas', name: 'Visayas', abbr: 'VIS', region: 'Pacific' },
   { id: 'yucatan', name: 'Yucatan', abbr: 'YUC', region: 'Latin America' },
+
+  // Current U.S. states not in the base scenario roster
+  { id: 'alaska', name: 'Alaska', abbr: 'AK', region: 'West' },
+  { id: 'arizona', name: 'Arizona', abbr: 'AZ', region: 'West' },
+  { id: 'colorado', name: 'Colorado', abbr: 'CO', region: 'West' },
+  { id: 'hawaii', name: 'Hawaii', abbr: 'HI', region: 'Pacific' },
+  { id: 'idaho', name: 'Idaho', abbr: 'ID', region: 'West' },
+  { id: 'kansas', name: 'Kansas', abbr: 'KS', region: 'Midwest' },
+  { id: 'minnesota', name: 'Minnesota', abbr: 'MN', region: 'Midwest' },
+  { id: 'montana', name: 'Montana', abbr: 'MT', region: 'West' },
+  { id: 'nebraska', name: 'Nebraska', abbr: 'NE', region: 'Midwest' },
+  { id: 'nevada', name: 'Nevada', abbr: 'NV', region: 'West' },
+  { id: 'new_mexico', name: 'New Mexico', abbr: 'NM', region: 'West' },
+  { id: 'north_dakota', name: 'North Dakota', abbr: 'ND', region: 'Midwest' },
+  { id: 'oklahoma', name: 'Oklahoma', abbr: 'OK', region: 'South' },
+  { id: 'oregon', name: 'Oregon', abbr: 'OR', region: 'West' },
+  { id: 'south_dakota', name: 'South Dakota', abbr: 'SD', region: 'Midwest' },
+  { id: 'utah', name: 'Utah', abbr: 'UT', region: 'West' },
+  { id: 'washington', name: 'Washington', abbr: 'WA', region: 'West' },
+  { id: 'west_virginia', name: 'West Virginia', abbr: 'WV', region: 'Border' },
+  { id: 'wyoming', name: 'Wyoming', abbr: 'WY', region: 'West' },
+
+  // Current U.S. territories + D.C. (Puerto Rico already listed above)
+  { id: 'guam', name: 'Guam', abbr: 'GUM', region: 'Pacific' },
+  { id: 'us_virgin_islands', name: 'U.S. Virgin Islands', abbr: 'USV', region: 'Caribbean' },
+  { id: 'american_samoa', name: 'American Samoa', abbr: 'ASM', region: 'Pacific' },
+  { id: 'northern_marianas', name: 'Northern Mariana Islands', abbr: 'NMI', region: 'Pacific' },
+  { id: 'district_of_columbia', name: 'District of Columbia', abbr: 'DC', region: 'Northeast' },
 ];
 
 export const EXPANSION_STATES: StateSeed[] = DEFS.map((d) => ({
