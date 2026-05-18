@@ -269,12 +269,32 @@ for (const c of CURATED_ROWS) {
   out.set(key, c);
 }
 
-// Founding-era figures / notable early losers — additive only (never clobber
-// a distinct same-named member who actually served).
+// Founding-era figures / notable early losers — era-aware additive merge.
+// A name match is only treated as "same person, skip" when an existing
+// same-named entry was born within a generation of the era figure. If every
+// same-named person is from a far-off era, it's a DIFFERENT historical person
+// (e.g. Gen. John Sullivan b.1740 vs. a Congressman John Sullivan b.1868), so
+// we add them under a distinct key and never overwrite the later member.
+const ERA_SAME_PERSON_WINDOW = 25; // years; ~one generation
+const nameBirthIndex = new Map(); // "first last" -> [birthYear, ...]
+for (const v of out.values()) {
+  const k = `${v.firstName} ${v.lastName}`.toLowerCase();
+  const arr = nameBirthIndex.get(k);
+  if (arr) arr.push(v.birthYear);
+  else nameBirthIndex.set(k, [v.birthYear]);
+}
 let eraAdded = 0;
+let eraSkipped = 0;
 for (const e of ERA_FIGURES) {
   const key = `${e.firstName} ${e.lastName}`.toLowerCase();
-  if (!out.has(key)) { out.set(key, e); eraAdded++; }
+  const sameName = nameBirthIndex.get(key);
+  const sameEra = sameName && sameName.some((by) => Math.abs(by - e.birthYear) <= ERA_SAME_PERSON_WINDOW);
+  if (sameEra) { eraSkipped++; continue; } // likely the same person / already covered
+  const uniqueKey = sameName ? `${key}#${e.birthYear}` : key;
+  out.set(uniqueKey, e);
+  if (sameName) sameName.push(e.birthYear);
+  else nameBirthIndex.set(key, [e.birthYear]);
+  eraAdded++;
 }
 
 // Add serious failed challengers — only if the name isn't already present
@@ -321,4 +341,4 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = ${JSON.stringify(fallbac
 `;
 writeFileSync(new URL('../src/data/defaultDraftClasses.ts', import.meta.url), banner);
 
-console.log(`Scanned ${scanned} people; added ${eraAdded} era figures, ${losersAdded} failed challengers; emitted ${list.length} unique to public/standard-draft-classes.json and politicians-dataset.csv`);
+console.log(`Scanned ${scanned} people; added ${eraAdded} era figures (${eraSkipped} skipped as same-era name match), ${losersAdded} failed challengers; emitted ${list.length} unique to public/standard-draft-classes.json and politicians-dataset.csv`);
