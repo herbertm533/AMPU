@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { useGame } from '../state/GameContext';
 import { buildCsvTemplate, type ParseResult } from '../data/draftImport';
+import { DEFAULT_DRAFT_CLASSES } from '../data/defaultDraftClasses';
 
 export function SettingsPage(): JSX.Element {
   const { snapshot, exportSave, importSave, importDraftDataset, clearDraftDataset, resetGame } = useGame();
@@ -114,10 +115,17 @@ export function SettingsPage(): JSX.Element {
           <input ref={csvRef} type="file" accept=".csv,text/csv" hidden onChange={doCsvImport} />
         </div>
 
-        <div className="text-xs text-slate-500">
-          {customCount > 0
-            ? <>Loaded: <span className="font-semibold">{customCount}</span> politicians across draft years {customYears.join(', ')}.</>
-            : <>No custom draft classes loaded. Future drafts use random rookie generation.</>}
+        <div className="text-xs text-slate-500 space-y-0.5">
+          <div>
+            Standard bundled classes: <span className="font-semibold">{DEFAULT_DRAFT_CLASSES.length}</span>
+            {DEFAULT_DRAFT_CLASSES.length > 0 && <> across years {[...new Set(DEFAULT_DRAFT_CLASSES.map((d) => d.draftYear))].sort((a, b) => a - b).join(', ')}</>}
+            {' '}— used by all players unless overridden below.
+          </div>
+          <div>
+            {customCount > 0
+              ? <>Your imported override: <span className="font-semibold">{customCount}</span> politicians across years {customYears.join(', ')}. Imported years take precedence over the standard set.</>
+              : <>No personal override loaded. {DEFAULT_DRAFT_CLASSES.length > 0 ? 'The standard classes apply.' : 'Future drafts use random rookie generation.'}</>}
+          </div>
         </div>
 
         {importReport && (

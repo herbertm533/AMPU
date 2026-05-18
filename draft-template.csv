@@ -1,8 +1,8 @@
-draftYear,firstName,lastName,state,ideology,age,admin,legislative,judicial,military,governing,backroom,command,traits
-1860,Ulysses,Grant,oh,Moderate,38,2,1,1,5,2,3,Military|Crisis Manager
-1860,Mark,Twain,mo,Liberal,25,1,2,1,0,1,2,Celebrity|Media
-1776,Alexander,Hamilton,ny,Conservative,21,4,3,2,2,1,3,Egghead
-1776,James,Madison,va,Liberal,25,3,4,3,0,2,3,Egghead|Reformist
+draftYear,firstName,lastName,state,ideology,birthYear,age,admin,legislative,judicial,military,governing,backroom,command,traits
+1860,Ulysses,Grant,oh,Moderate,1822,,2,1,1,5,2,3,3,Military|Crisis Manager
+1860,Mark,Twain,mo,Liberal,1835,,1,2,1,0,1,2,2,Celebrity|Media
+1776,Alexander,Hamilton,ny,Conservative,1755,,4,3,2,2,1,3,3,Egghead
+1776,James,Madison,va,Liberal,1751,,3,4,3,0,2,3,3,Egghead|Reformist
 
 # ---------------------------------------------------------------------
 # REFERENCE — delete these comment lines before importing if you like;
@@ -15,7 +15,9 @@ draftYear,firstName,lastName,state,ideology,age,admin,legislative,judicial,milit
 #             FL AL MS LA TX AR TN KY MO OH IN IL MI WI IA CA
 #             1772 colonies: NH MA RI CT NY NJ PA DE MD VA NC SC GA
 # ideology  : one of — LW Populist | Progressive | Liberal | Moderate | Conservative | Traditionalist | RW Populist
-# age       : integer (e.g. 25-70)
+# birthYear : year of birth. Age is derived as draftYear - birthYear.
+#             Preferred. Leave the age column blank if you set this.
+# age       : optional fallback if birthYear is blank (integer 25-70).
 # skills    : admin, legislative, judicial, military, governing,
 #             backroom — each an integer 0 to 5
 # command   : integer 0 to 5

@@ -489,6 +489,7 @@ export interface ImportedDraftee {
   lastName: string;
   state: string; // state id (lowercase abbreviation, e.g. "ny")
   ideology: Ideology;
+  birthYear: number;
   age: number;
   skills: Skills;
   command: number;

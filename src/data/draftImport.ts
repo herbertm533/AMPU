@@ -12,6 +12,7 @@ export const CSV_COLUMNS = [
   'lastName',
   'state',
   'ideology',
+  'birthYear',
   'age',
   'admin',
   'legislative',
@@ -28,10 +29,10 @@ export const CSV_COLUMNS = [
 export function buildCsvTemplate(): string {
   const header = CSV_COLUMNS.join(',');
   const examples = [
-    '1860,Ulysses,Grant,oh,Moderate,38,2,1,1,5,2,3,Military|Crisis Manager',
-    '1860,Mark,Twain,mo,Liberal,25,1,2,1,0,1,2,Celebrity|Media',
-    '1776,Alexander,Hamilton,ny,Conservative,21,4,3,2,2,1,3,Egghead',
-    '1776,James,Madison,va,Liberal,25,3,4,3,0,2,3,Egghead|Reformist',
+    '1860,Ulysses,Grant,oh,Moderate,1822,,2,1,1,5,2,3,3,Military|Crisis Manager',
+    '1860,Mark,Twain,mo,Liberal,1835,,1,2,1,0,1,2,2,Celebrity|Media',
+    '1776,Alexander,Hamilton,ny,Conservative,1755,,4,3,2,2,1,3,3,Egghead',
+    '1776,James,Madison,va,Liberal,1751,,3,4,3,0,2,3,3,Egghead|Reformist',
   ];
   const reference = [
     '',
@@ -46,7 +47,9 @@ export function buildCsvTemplate(): string {
     '#             FL AL MS LA TX AR TN KY MO OH IN IL MI WI IA CA',
     '#             1772 colonies: NH MA RI CT NY NJ PA DE MD VA NC SC GA',
     '# ideology  : one of — ' + IDEOLOGY_ORDER.join(' | '),
-    '# age       : integer (e.g. 25-70)',
+    '# birthYear : year of birth. Age is derived as draftYear - birthYear.',
+    '#             Preferred. Leave the age column blank if you set this.',
+    '# age       : optional fallback if birthYear is blank (integer 25-70).',
     '# skills    : admin, legislative, judicial, military, governing,',
     '#             backroom — each an integer 0 to 5',
     '# command   : integer 0 to 5',
@@ -119,9 +122,12 @@ export function parseDraftCsv(csv: string): ParseResult {
   const header = splitCsvLine(lines[0]).map((h) => h.trim().toLowerCase());
   const idx = (name: string): number => header.indexOf(name.toLowerCase());
 
-  const required = ['draftyear', 'firstname', 'lastname', 'state', 'ideology', 'age'];
+  const required = ['draftyear', 'firstname', 'lastname', 'state', 'ideology'];
   for (const r of required) {
     if (idx(r) === -1) errors.push(`Missing required column: ${r}`);
+  }
+  if (idx('birthyear') === -1 && idx('age') === -1) {
+    errors.push('Need at least one of: birthYear or age column.');
   }
   if (errors.length > 0) return { draftees, errors, warnings };
 
@@ -149,7 +155,28 @@ export function parseDraftCsv(csv: string): ParseResult {
     if (!ideology) {
       warnings.push(`Row ${rowNum} (${firstName} ${lastName}): unknown ideology "${get('ideology')}", defaulting to Moderate.`);
     }
-    const age = parseInt(get('age'), 10) || 35;
+    // Resolve birthYear/age. birthYear is primary; age derived as
+    // draftYear - birthYear. If only age given, derive birthYear.
+    const birthYearRaw = parseInt(get('birthYear'), 10);
+    const ageRaw = parseInt(get('age'), 10);
+    let birthYear: number;
+    let age: number;
+    if (!Number.isNaN(birthYearRaw)) {
+      birthYear = birthYearRaw;
+      age = draftYear - birthYearRaw;
+      if (age < 0) {
+        warnings.push(`Row ${rowNum} (${firstName} ${lastName}): birthYear ${birthYearRaw} is after draftYear ${draftYear}; age clamped to 25.`);
+        age = 25;
+        birthYear = draftYear - 25;
+      }
+    } else if (!Number.isNaN(ageRaw)) {
+      age = ageRaw;
+      birthYear = draftYear - ageRaw;
+    } else {
+      age = 35;
+      birthYear = draftYear - 35;
+      warnings.push(`Row ${rowNum} (${firstName} ${lastName}): no birthYear or age, defaulting to age 35.`);
+    }
     const skills: Skills = {
       admin: clampSkill(get('admin')),
       legislative: clampSkill(get('legislative')),
@@ -174,6 +201,7 @@ export function parseDraftCsv(csv: string): ParseResult {
       lastName,
       state: state || 'ny',
       ideology: ideology ?? 'Moderate',
+      birthYear,
       age,
       skills,
       command,
@@ -200,7 +228,7 @@ export function instantiateDraftees(draftees: ImportedDraftee[], year: number): 
       partyId: null,
       ideology: d.ideology,
       age: d.age,
-      birthYear: year - d.age,
+      birthYear: d.birthYear,
       skills: { ...d.skills },
       traits: [...d.traits],
       currentOffice: null,
