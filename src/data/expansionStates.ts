@@ -107,6 +107,66 @@ const DEFS: ExpansionDef[] = [
   { id: 'american_samoa', name: 'American Samoa', abbr: 'ASM', region: 'Pacific' },
   { id: 'northern_marianas', name: 'Northern Mariana Islands', abbr: 'NMI', region: 'Pacific' },
   { id: 'district_of_columbia', name: 'District of Columbia', abbr: 'DC', region: 'Northeast' },
+
+  // --- Bloc-level Western Hemisphere + Pacific completion ---
+
+  // Canada — finish the provinces
+  { id: 'prince_edward_island', name: 'Prince Edward Island', abbr: 'PEI', region: 'Canada' },
+
+  // Mexico — full regional carve-up (Old Mexico/Durango/Monterrey/Baja
+  // Sonora/Toluca/Yucatan already exist)
+  { id: 'chihuahua', name: 'Chihuahua', abbr: 'CHH', region: 'Latin America' },
+  { id: 'sinaloa', name: 'Sinaloa', abbr: 'SIN', region: 'Latin America' },
+  { id: 'coahuila', name: 'Coahuila', abbr: 'COA', region: 'Latin America' },
+  { id: 'tamaulipas', name: 'Tamaulipas', abbr: 'TAM', region: 'Latin America' },
+  { id: 'jalisco', name: 'Jalisco', abbr: 'JAL', region: 'Latin America' },
+  { id: 'veracruz', name: 'Veracruz', abbr: 'VER', region: 'Latin America' },
+  { id: 'oaxaca', name: 'Oaxaca', abbr: 'OAX', region: 'Latin America' },
+  { id: 'chiapas', name: 'Chiapas', abbr: 'CPS', region: 'Latin America' },
+  { id: 'guerrero', name: 'Guerrero', abbr: 'GRO', region: 'Latin America' },
+  { id: 'michoacan', name: 'Michoacan', abbr: 'MIC', region: 'Latin America' },
+  { id: 'puebla', name: 'Puebla', abbr: 'PUE', region: 'Latin America' },
+
+  // Caribbean — non-Hispanic islands
+  { id: 'trinidad_tobago', name: 'Trinidad & Tobago', abbr: 'TTO', region: 'Caribbean' },
+  { id: 'barbados', name: 'Barbados', abbr: 'BRB', region: 'Caribbean' },
+  { id: 'windward_islands', name: 'Windward Islands', abbr: 'WIN', region: 'Caribbean' },
+  { id: 'leeward_islands', name: 'Leeward Islands', abbr: 'LEE', region: 'Caribbean' },
+  { id: 'cayman_turks', name: 'Cayman & Turks/Caicos', abbr: 'CTC', region: 'Caribbean' },
+  { id: 'dutch_caribbean', name: 'Dutch Caribbean (Aruba & Curaçao)', abbr: 'DCB', region: 'Caribbean' },
+  { id: 'french_antilles', name: 'French Antilles (Guadeloupe & Martinique)', abbr: 'FWI', region: 'Caribbean' },
+
+  // South America — remaining
+  { id: 'falkland_islands', name: 'Falkland Islands', abbr: 'FLK', region: 'Latin America' },
+
+  // Pacific — Micronesia
+  { id: 'marshall_islands', name: 'Marshall Islands', abbr: 'MHL', region: 'Pacific' },
+  { id: 'micronesia', name: 'Federated States of Micronesia', abbr: 'FSM', region: 'Pacific' },
+  { id: 'palau', name: 'Palau', abbr: 'PLW', region: 'Pacific' },
+  { id: 'kiribati', name: 'Kiribati', abbr: 'KIR', region: 'Pacific' },
+  { id: 'nauru', name: 'Nauru', abbr: 'NRU', region: 'Pacific' },
+
+  // Pacific — Melanesia
+  { id: 'fiji', name: 'Fiji', abbr: 'FJI', region: 'Pacific' },
+  { id: 'vanuatu', name: 'Vanuatu', abbr: 'VUT', region: 'Pacific' },
+  { id: 'new_caledonia', name: 'New Caledonia', abbr: 'NCD', region: 'Pacific' },
+  { id: 'solomon_islands', name: 'Solomon Islands', abbr: 'SLB', region: 'Pacific' },
+  { id: 'papua_new_guinea', name: 'Papua New Guinea', abbr: 'PNG', region: 'Pacific' },
+
+  // Pacific — Polynesia
+  { id: 'samoa', name: 'Samoa', abbr: 'WSM', region: 'Pacific' },
+  { id: 'tonga', name: 'Tonga', abbr: 'TON', region: 'Pacific' },
+  { id: 'tuvalu', name: 'Tuvalu', abbr: 'TUV', region: 'Pacific' },
+  { id: 'french_polynesia', name: 'French Polynesia', abbr: 'PYF', region: 'Pacific' },
+  { id: 'cook_islands', name: 'Cook Islands', abbr: 'COK', region: 'Pacific' },
+  { id: 'niue', name: 'Niue', abbr: 'NIU', region: 'Pacific' },
+  { id: 'tokelau', name: 'Tokelau', abbr: 'TKL', region: 'Pacific' },
+  { id: 'wallis_futuna', name: 'Wallis & Futuna', abbr: 'WLF', region: 'Pacific' },
+  { id: 'pitcairn', name: 'Pitcairn', abbr: 'PCN', region: 'Pacific' },
+  { id: 'easter_island', name: 'Easter Island', abbr: 'EAS', region: 'Pacific' },
+
+  // Pacific — bundled U.S. minor outlying islands
+  { id: 'us_pacific_outlying', name: 'U.S. Pacific Outlying Islands', abbr: 'UPO', region: 'Pacific' },
 ];
 
 export const EXPANSION_STATES: StateSeed[] = DEFS.map((d) => ({
