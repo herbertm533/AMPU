@@ -8,6 +8,7 @@ import { playerDraftPick, resolveEraEvent } from '../engine/phaseRunners';
 import { autoFillCPUVotes, applyConvention } from '../engine/constitutionalConvention';
 import { parseDraftCsv, type ParseResult } from '../data/draftImport';
 import { admitState } from '../engine/territories';
+import { loadStandardDraftClasses } from '../data/standardDraftClasses';
 
 type Modal =
   | { type: 'none' }
@@ -89,6 +90,10 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
       dirty = true;
     }
     return dirty ? { ...s } : s;
+  }, []);
+
+  useEffect(() => {
+    void loadStandardDraftClasses();
   }, []);
 
   useEffect(() => {

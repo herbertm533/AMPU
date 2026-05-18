@@ -1,0 +1,173 @@
+#!/usr/bin/env node
+// Convert the open `unitedstates/congress-legislators` dataset (+ executives)
+// into the AMPU draft schema.
+//
+// Inputs (download first into .legis/ — see scripts/fetchLegislators.sh):
+//   .legis/legislators-current.yaml
+//   .legis/legislators-historical.yaml
+//   .legis/executive.yaml
+//
+// Outputs:
+//   public/standard-draft-classes.json   (full set, runtime-loaded)
+//   politicians-dataset.csv               (human-reviewable, full set)
+//
+// The hand-curated Phase-1 rows (scripts/seedDataset.mjs ROWS) override the
+// bulk-derived rows for the same person, so marquee in-game figures keep their
+// tuned stats. Stats for everyone else are heuristic (party->ideology,
+// tenure->skills) — explicitly approximate, as agreed for the mass set.
+
+import { readFileSync, writeFileSync } from 'node:fs';
+import yaml from 'js-yaml';
+import { CURATED_ROWS } from './seedDataset.mjs';
+
+const FLOOR = 1772;
+const clamp = (n, lo, hi) => Math.max(lo, Math.min(hi, n));
+const draftYearFor = (b) => Math.max(FLOOR, Math.round((b + 25) / 4) * 4);
+const wiki = (t, first, last) =>
+  'https://en.wikipedia.org/wiki/' +
+  encodeURIComponent((t || `${first} ${last}`).replace(/\s+/g, '_'));
+
+// postal -> our canonical state id (base 1856 ids are postal-lowercased and
+// already match; only the later-added states/territories need remapping)
+const STATE_MAP = {
+  AK: 'alaska', AZ: 'arizona', CO: 'colorado', HI: 'hawaii', ID: 'idaho',
+  KS: 'kansas', MN: 'minnesota', MT: 'montana', NE: 'nebraska', NV: 'nevada',
+  NM: 'new_mexico', ND: 'north_dakota', OK: 'oklahoma', OR: 'oregon',
+  SD: 'south_dakota', UT: 'utah', WA: 'washington', WV: 'west_virginia',
+  WY: 'wyoming', DC: 'district_of_columbia', PR: 'puerto_rico', GU: 'guam',
+  VI: 'us_virgin_islands', AS: 'american_samoa', MP: 'northern_marianas',
+};
+const stateId = (postal) => {
+  if (!postal) return 'ny';
+  const up = postal.toUpperCase();
+  return STATE_MAP[up] ?? postal.toLowerCase();
+};
+
+function ideologyFor(party) {
+  const p = (party || '').toLowerCase();
+  if (/federalist|pro-administration/.test(p)) return 'Conservative';
+  if (/anti-administration|democratic-republican|jeffersonian/.test(p)) return 'Liberal';
+  if (/^republican|^national republican|gop/.test(p)) return 'Conservative';
+  if (/democrat/.test(p)) return 'Liberal';
+  if (/whig/.test(p)) return 'Moderate';
+  if (/anti-jackson|adams|nullifier|states.?rights|constitutional union/.test(p)) return 'Traditionalist';
+  if (/jackson/.test(p)) return 'Liberal';
+  if (/free soil|readjuster|liberal republican/.test(p)) return 'Progressive';
+  if (/populist|greenback|farmer|labor|socialist|progressive|silver/.test(p)) return 'LW Populist';
+  if (/conservative|dixiecrat|states/.test(p)) return 'Traditionalist';
+  return 'Moderate';
+}
+
+function record(person, isExec) {
+  const name = person.name || {};
+  const bio = person.bio || {};
+  const terms = person.terms || [];
+  const first = (name.first || '').trim();
+  const last = (name.last || '').trim();
+  if (!first || !last) return null;
+
+  let birthYear = null;
+  if (bio.birthday && /^\d{4}/.test(bio.birthday)) birthYear = parseInt(bio.birthday.slice(0, 4), 10);
+
+  // total years served (sum term spans)
+  let years = 0;
+  let lastParty = '';
+  let lastState = '';
+  let anySenate = false;
+  for (const t of terms) {
+    const s = t.start ? parseInt(t.start.slice(0, 4), 10) : null;
+    const e = t.end ? parseInt(t.end.slice(0, 4), 10) : null;
+    if (s && e) years += Math.max(1, e - s);
+    if (t.party) lastParty = t.party;
+    if (t.state) lastState = t.state;
+    if (t.type === 'sen') anySenate = true;
+  }
+  if (birthYear == null) {
+    // estimate from first term: assume ~age 35 at first election
+    const firstStart = terms[0]?.start ? parseInt(terms[0].start.slice(0, 4), 10) : null;
+    const execStart = isExec && person.terms?.[0]?.start ? parseInt(person.terms[0].start.slice(0, 4), 10) : null;
+    const ref = firstStart ?? execStart;
+    if (ref) birthYear = ref - 35;
+  }
+  if (birthYear == null || birthYear < 1700 || birthYear > 2005) return null;
+
+  const draftYear = draftYearFor(birthYear);
+  const leg = clamp(2 + Math.floor(years / 8), 1, 5);
+  const back = clamp(1 + Math.floor(years / 12), 0, 4);
+  let admin = 1, gov = 1, jud = 1, mil = 0, cmd = clamp(Math.floor(years / 14), 0, 3);
+  if (anySenate) cmd = clamp(cmd + 1, 0, 4);
+  if (isExec) { admin = 4; cmd = clamp(cmd + 2, 1, 5); gov = 3; }
+
+  return {
+    draftYear,
+    firstName: first,
+    lastName: last,
+    state: stateId(isExec ? lastState || 'ny' : lastState),
+    ideology: ideologyFor(lastParty),
+    birthYear,
+    age: draftYear - birthYear,
+    skills: { admin, legislative: leg, judicial: jud, military: mil, governing: gov, backroom: back },
+    command: cmd,
+    traits: isExec ? ['Leadership'] : [],
+    party: lastParty || (isExec ? 'President' : ''),
+    wikiUrl: wiki(person.id?.wikipedia, first, last),
+  };
+}
+
+const load = (f) => yaml.load(readFileSync(new URL(`../.legis/${f}`, import.meta.url), 'utf8'));
+
+const out = new Map(); // key: lowercase "first last"
+let scanned = 0;
+for (const [file, isExec] of [['legislators-historical.yaml', false], ['legislators-current.yaml', false], ['executive.yaml', true]]) {
+  for (const person of load(file)) {
+    scanned++;
+    const r = record(person, isExec);
+    if (!r) continue;
+    const key = `${r.firstName} ${r.lastName}`.toLowerCase();
+    if (!out.has(key)) out.set(key, r); // first occurrence (historical before current)
+  }
+}
+
+// Overlay curated rows (in-game marquee figures keep tuned stats/ideology)
+for (const c of CURATED_ROWS) {
+  const key = `${c.firstName} ${c.lastName}`.toLowerCase();
+  out.set(key, c);
+}
+
+const list = [...out.values()].sort((a, b) => a.draftYear - b.draftYear || a.lastName.localeCompare(b.lastName));
+
+// JSON (runtime asset) — drop review-only fields the engine doesn't use
+const jsonList = list.map(({ party, wikiUrl, age, ...keep }) => keep);
+writeFileSync(new URL('../public/standard-draft-classes.json', import.meta.url), JSON.stringify(jsonList));
+
+// CSV (human review) — full, with party + wikiUrl
+const header = ['draftYear','firstName','lastName','state','ideology','birthYear','age','admin','legislative','judicial','military','governing','backroom','command','traits','party','wikiUrl'];
+const lines = [header.join(',')];
+for (const r of list) {
+  lines.push([
+    r.draftYear, csv(r.firstName), csv(r.lastName), r.state, r.ideology, r.birthYear, '',
+    r.skills.admin, r.skills.legislative, r.skills.judicial, r.skills.military, r.skills.governing, r.skills.backroom,
+    r.command, r.traits.join('|'), csv(r.party), r.wikiUrl,
+  ].join(','));
+}
+function csv(v) { const s = String(v ?? ''); return /[",]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; }
+writeFileSync(new URL('../politicians-dataset.csv', import.meta.url), lines.join('\n') + '\n');
+
+// Curated built-in fallback (founders + marquee in-game figures) — small,
+// bundled, guarantees the 1772 inaugural draft works offline / pre-fetch.
+const fallback = CURATED_ROWS.map(({ party, wikiUrl, ...keep }) => keep);
+const banner = `import type { ImportedDraftee } from '../types';
+
+// =============================================================================
+// CURATED BUILT-IN FALLBACK — small set (founders + marquee in-game figures).
+// AUTO-GENERATED by scripts/legislatorsToDataset.mjs from the curated rows in
+// scripts/seedDataset.mjs. The FULL ~12k historical set is loaded at runtime
+// from public/standard-draft-classes.json; this is the offline fallback that
+// keeps the 1772 inaugural draft working before/without that fetch.
+// =============================================================================
+
+export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = ${JSON.stringify(fallback, null, 2)};
+`;
+writeFileSync(new URL('../src/data/defaultDraftClasses.ts', import.meta.url), banner);
+
+console.log(`Scanned ${scanned} people; emitted ${list.length} unique to public/standard-draft-classes.json and politicians-dataset.csv`);

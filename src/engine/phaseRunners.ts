@@ -10,7 +10,7 @@ import { appointDelegates, electCCPresident, appointCCCommittees, generateCCBill
 import { startRevWar, runRevWarBattles, applyTreatyOfParis, applyFrenchAlliance } from './revolutionaryWar';
 import { makeConvention } from './constitutionalConvention';
 import { instantiateDraftees } from '../data/draftImport';
-import { DEFAULT_DRAFT_CLASSES } from '../data/defaultDraftClasses';
+import { STANDARD_DRAFT_CLASSES } from '../data/standardDraftClasses';
 
 // ============================================================================
 // 2.1.1 Draft
@@ -28,7 +28,7 @@ export function runPhase_2_1_1_Draft(snap: FullGameSnapshot, autoOnly: boolean):
   // bench, then rebuild the snake order over the full pool. Done once.
   if (isExpansion1772 && !snap.game.inauguralDraftSeeded) {
     const userClass = (snap.game.customDraftClasses ?? []).filter((d) => d.draftYear === snap.game.year);
-    const source = userClass.length > 0 ? (snap.game.customDraftClasses ?? []) : DEFAULT_DRAFT_CLASSES;
+    const source = userClass.length > 0 ? (snap.game.customDraftClasses ?? []) : STANDARD_DRAFT_CLASSES;
     const validStateIds = new Set(snap.states.map((s) => s.id));
     const imported = instantiateDraftees(source, snap.game.year, validStateIds);
     if (imported.length > 0) {
@@ -59,7 +59,7 @@ export function runPhase_2_1_1_Draft(snap: FullGameSnapshot, autoOnly: boolean):
     const userClass = (snap.game.customDraftClasses ?? []).filter((d) => d.draftYear === snap.game.year);
     const effectiveSource = userClass.length > 0
       ? (snap.game.customDraftClasses ?? [])
-      : DEFAULT_DRAFT_CLASSES;
+      : STANDARD_DRAFT_CLASSES;
     const custom = effectiveSource.filter((d) => d.draftYear === snap.game.year);
     if (custom.length > 0) {
       const validStateIds = new Set(snap.states.map((s) => s.id));

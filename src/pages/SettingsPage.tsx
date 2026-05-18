@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { useGame } from '../state/GameContext';
 import { buildCsvTemplate, type ParseResult } from '../data/draftImport';
-import { DEFAULT_DRAFT_CLASSES } from '../data/defaultDraftClasses';
+import { STANDARD_DRAFT_CLASSES } from '../data/standardDraftClasses';
 
 export function SettingsPage(): JSX.Element {
   const { snapshot, exportSave, importSave, importDraftDataset, clearDraftDataset, resetGame } = useGame();
@@ -117,14 +117,14 @@ export function SettingsPage(): JSX.Element {
 
         <div className="text-xs text-slate-500 space-y-0.5">
           <div>
-            Standard bundled classes: <span className="font-semibold">{DEFAULT_DRAFT_CLASSES.length}</span>
-            {DEFAULT_DRAFT_CLASSES.length > 0 && <> across years {[...new Set(DEFAULT_DRAFT_CLASSES.map((d) => d.draftYear))].sort((a, b) => a - b).join(', ')}</>}
+            Standard classes: <span className="font-semibold">{STANDARD_DRAFT_CLASSES.length.toLocaleString()}</span> politicians
+            {STANDARD_DRAFT_CLASSES.length > 0 && <> ({Math.min(...STANDARD_DRAFT_CLASSES.map((d) => d.draftYear))}–{Math.max(...STANDARD_DRAFT_CLASSES.map((d) => d.draftYear))})</>}
             {' '}— used by all players unless overridden below.
           </div>
           <div>
             {customCount > 0
               ? <>Your imported override: <span className="font-semibold">{customCount}</span> politicians across years {customYears.join(', ')}. Imported years take precedence over the standard set.</>
-              : <>No personal override loaded. {DEFAULT_DRAFT_CLASSES.length > 0 ? 'The standard classes apply.' : 'Future drafts use random rookie generation.'}</>}
+              : <>No personal override loaded. {STANDARD_DRAFT_CLASSES.length > 0 ? 'The standard classes apply.' : 'Future drafts use random rookie generation.'}</>}
           </div>
         </div>
 

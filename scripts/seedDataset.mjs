@@ -169,23 +169,34 @@ const ROWS = [
   ['John','McLean','oh','Liberal',1785,[2,1,4,0,0,1],2,['Integrity'],'RED'],
 ];
 
-const SK = ['admin', 'legislative', 'judicial', 'military', 'governing', 'backroom'];
 const header = ['draftYear','firstName','lastName','state','ideology','birthYear','age','admin','legislative','judicial','military','governing','backroom','command','traits','party','wikiUrl'];
 
+// Normalized curated rows (consumed by legislatorsToDataset.mjs as overrides).
 const seen = new Set();
-const lines = [header.join(',')];
+export const CURATED_ROWS = [];
 for (const [first, last, state, ideo, birth, sk, cmd, traits, party] of ROWS) {
   const key = (first + ' ' + last).toLowerCase();
   if (seen.has(key)) continue;
   seen.add(key);
-  const dy = draftYearFor(birth);
-  const row = [
-    dy, first, last, state, ideo, birth, '',
-    sk[0], sk[1], sk[2], sk[3], sk[4], sk[5], cmd,
-    traits.join('|'), party, wiki(first, last),
-  ];
-  lines.push(row.join(','));
+  const draftYear = draftYearFor(birth);
+  CURATED_ROWS.push({
+    draftYear, firstName: first, lastName: last, state, ideology: ideo,
+    birthYear: birth, age: draftYear - birth,
+    skills: { admin: sk[0], legislative: sk[1], judicial: sk[2], military: sk[3], governing: sk[4], backroom: sk[5] },
+    command: cmd, traits, party, wikiUrl: wiki(first, last),
+  });
 }
 
-writeFileSync(new URL('../politicians-dataset.csv', import.meta.url), lines.join('\n') + '\n');
-console.log(`Wrote ${lines.length - 1} unique politicians to politicians-dataset.csv`);
+// Only write the standalone curated CSV when executed directly.
+if (process.argv[1] && process.argv[1].endsWith('seedDataset.mjs')) {
+  const lines = [header.join(',')];
+  for (const r of CURATED_ROWS) {
+    lines.push([
+      r.draftYear, r.firstName, r.lastName, r.state, r.ideology, r.birthYear, '',
+      r.skills.admin, r.skills.legislative, r.skills.judicial, r.skills.military, r.skills.governing, r.skills.backroom,
+      r.command, r.traits.join('|'), r.party, r.wikiUrl,
+    ].join(','));
+  }
+  writeFileSync(new URL('../politicians-dataset.csv', import.meta.url), lines.join('\n') + '\n');
+  console.log(`Wrote ${CURATED_ROWS.length} curated politicians to politicians-dataset.csv`);
+}
