@@ -229,7 +229,7 @@ export interface State {
   id: string;
   name: string;
   abbr: string;
-  region: 'Northeast' | 'Midwest' | 'South' | 'West' | 'Border';
+  region: 'Northeast' | 'Midwest' | 'South' | 'West' | 'Border' | 'Canada' | 'Caribbean' | 'Latin America' | 'Pacific' | 'Atlantic';
   electoralVotes: number;
   bias: number;
   governorId?: string | null;

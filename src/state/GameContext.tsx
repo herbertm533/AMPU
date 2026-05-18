@@ -7,6 +7,7 @@ import { runCurrentPhase, advancePhase } from '../engine/engine';
 import { playerDraftPick, resolveEraEvent } from '../engine/phaseRunners';
 import { autoFillCPUVotes, applyConvention } from '../engine/constitutionalConvention';
 import { parseDraftCsv, type ParseResult } from '../data/draftImport';
+import { admitState } from '../engine/territories';
 
 type Modal =
   | { type: 'none' }
@@ -32,6 +33,7 @@ interface GameContextValue {
   importSave: (json: string) => Promise<void>;
   importDraftDataset: (csv: string, mode: 'replace' | 'merge') => Promise<ParseResult>;
   clearDraftDataset: () => Promise<void>;
+  admitTerritory: (stateId: string) => Promise<void>;
   resetGame: () => Promise<void>;
   theme: 'light' | 'dark';
 }
@@ -274,6 +276,16 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
     await persist(draft);
   }, [snapshot, persist]);
 
+  const admitTerritory = useCallback(async (stateId: string) => {
+    if (!snapshot) return;
+    const draft: FullGameSnapshot = JSON.parse(JSON.stringify(snapshot));
+    const ok = admitState(draft, stateId);
+    if (ok) {
+      setSnapshot(draft);
+      await persist(draft);
+    }
+  }, [snapshot, persist]);
+
   const resetGame = useCallback(async () => {
     await clearDb();
     setSnapshot(null);
@@ -298,6 +310,7 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
     importSave,
     importDraftDataset,
     clearDraftDataset,
+    admitTerritory,
     resetGame,
     theme,
   };

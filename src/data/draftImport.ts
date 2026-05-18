@@ -1,6 +1,7 @@
 import type { Ideology, Trait, Politician, ImportedDraftee, Skills } from '../types';
 import { IDEOLOGY_ORDER, POSITIVE_TRAITS, NEGATIVE_TRAITS } from '../types';
 import { uid } from '../rng';
+import { resolveStateId } from './expansionStates';
 
 export type { ImportedDraftee };
 
@@ -46,6 +47,9 @@ export function buildCsvTemplate(): string {
     '#             1856 states: ME NH VT MA RI CT NY NJ PA DE MD VA NC SC GA',
     '#             FL AL MS LA TX AR TN KY MO OH IN IL MI WI IA CA',
     '#             1772 colonies: NH MA RI CT NY NJ PA DE MD VA NC SC GA',
+    '#             Territories (full name or abbr, e.g. Cuba / CUB) are also',
+    '#             valid. Such draftees only enter the game once that',
+    '#             territory has been admitted (Tools -> Territories).',
     '# ideology  : one of — ' + IDEOLOGY_ORDER.join(' | '),
     '# birthYear : year of birth. Age is derived as draftYear - birthYear.',
     '#             Preferred. Leave the age column blank if you set this.',
@@ -150,7 +154,9 @@ export function parseDraftCsv(csv: string): ParseResult {
       warnings.push(`Row ${rowNum}: missing name, row skipped.`);
       continue;
     }
-    const state = get('state').toLowerCase();
+    const stateRaw = get('state');
+    const resolved = resolveStateId(stateRaw);
+    const state = resolved ?? stateRaw.trim().toLowerCase().replace(/[\s-]+/g, '_');
     const ideology = normalizeIdeology(get('ideology'));
     if (!ideology) {
       warnings.push(`Row ${rowNum} (${firstName} ${lastName}): unknown ideology "${get('ideology')}", defaulting to Moderate.`);
@@ -216,9 +222,17 @@ export function parseDraftCsv(csv: string): ParseResult {
 }
 
 // Instantiate Politicians from the imported draftees that match a given year.
-export function instantiateDraftees(draftees: ImportedDraftee[], year: number): Politician[] {
+// A draftee only enters the game if its home state currently exists (has been
+// admitted to the Union). `validStateIds` is the set of state ids in play; pass
+// undefined to skip the gate (e.g. when previewing).
+export function instantiateDraftees(
+  draftees: ImportedDraftee[],
+  year: number,
+  validStateIds?: Set<string>
+): Politician[] {
   return draftees
     .filter((d) => d.draftYear === year)
+    .filter((d) => !validStateIds || validStateIds.has(d.state))
     .map((d) => ({
       id: uid('pol'),
       firstName: d.firstName,

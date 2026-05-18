@@ -77,7 +77,10 @@ export function Sidebar({ current, onNavigate }: { current: PageId; onNavigate: 
     },
     {
       title: 'Tools',
-      items: [{ id: 'settings', label: 'Settings & Save' }],
+      items: [
+        { id: 'territories', label: 'Territories' },
+        { id: 'settings', label: 'Settings & Save' },
+      ],
     },
   ];
 

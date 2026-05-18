@@ -14,6 +14,9 @@ draftYear,firstName,lastName,state,ideology,birthYear,age,admin,legislative,judi
 #             1856 states: ME NH VT MA RI CT NY NJ PA DE MD VA NC SC GA
 #             FL AL MS LA TX AR TN KY MO OH IN IL MI WI IA CA
 #             1772 colonies: NH MA RI CT NY NJ PA DE MD VA NC SC GA
+#             Territories (full name or abbr, e.g. Cuba / CUB) are also
+#             valid. Such draftees only enter the game once that
+#             territory has been admitted (Tools -> Territories).
 # ideology  : one of — LW Populist | Progressive | Liberal | Moderate | Conservative | Traditionalist | RW Populist
 # birthYear : year of birth. Age is derived as draftYear - birthYear.
 #             Preferred. Leave the age column blank if you set this.

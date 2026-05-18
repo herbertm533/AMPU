@@ -33,7 +33,12 @@ export function runPhase_2_1_1_Draft(snap: FullGameSnapshot, autoOnly: boolean):
       : DEFAULT_DRAFT_CLASSES;
     const custom = effectiveSource.filter((d) => d.draftYear === snap.game.year);
     if (custom.length > 0) {
-      const imported = instantiateDraftees(effectiveSource, snap.game.year);
+      const validStateIds = new Set(snap.states.map((s) => s.id));
+      const imported = instantiateDraftees(effectiveSource, snap.game.year, validStateIds);
+      const heldBack = custom.length - imported.length;
+      if (heldBack > 0) {
+        addLog(snap, '2.1.1', 'draft', `${heldBack} draftee(s) held back — their home state is not yet part of the Union.`);
+      }
       snap.politicians.push(...imported);
       snap.politicians = refreshPv(snap.politicians);
       snap.game.pendingDraftPool = imported.map((p) => p.id);

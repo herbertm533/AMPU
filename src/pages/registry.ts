@@ -21,6 +21,7 @@ import { SettingsPage } from './SettingsPage';
 import { ContinentalCongressPage } from './ContinentalCongressPage';
 import { RevWarDashboard } from './RevWarDashboard';
 import { DraftSummary } from './DraftSummary';
+import { TerritoriesPage } from './TerritoriesPage';
 
 export type PageId =
   | 'dashboard'
@@ -45,7 +46,8 @@ export type PageId =
   | 'settings'
   | 'continentalCongress'
   | 'revWar'
-  | 'draftSummary';
+  | 'draftSummary'
+  | 'territories';
 
 export const Pages: Record<PageId, () => JSX.Element> = {
   dashboard: Dashboard,
@@ -71,4 +73,5 @@ export const Pages: Record<PageId, () => JSX.Element> = {
   continentalCongress: ContinentalCongressPage,
   revWar: RevWarDashboard,
   draftSummary: DraftSummary,
+  territories: TerritoriesPage,
 };
