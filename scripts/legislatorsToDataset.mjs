@@ -18,7 +18,7 @@
 
 import { readFileSync, writeFileSync } from 'node:fs';
 import yaml from 'js-yaml';
-import { CURATED_ROWS } from './seedDataset.mjs';
+import { CURATED_ROWS, ERA_FIGURES } from './seedDataset.mjs';
 
 const FLOOR = 1772;
 const clamp = (n, lo, hi) => Math.max(lo, Math.min(hi, n));
@@ -269,6 +269,14 @@ for (const c of CURATED_ROWS) {
   out.set(key, c);
 }
 
+// Founding-era figures / notable early losers — additive only (never clobber
+// a distinct same-named member who actually served).
+let eraAdded = 0;
+for (const e of ERA_FIGURES) {
+  const key = `${e.firstName} ${e.lastName}`.toLowerCase();
+  if (!out.has(key)) { out.set(key, e); eraAdded++; }
+}
+
 // Add serious failed challengers — only if the name isn't already present
 // (anyone who ever served, or a curated figure, keeps their stronger record).
 let losersAdded = 0;
@@ -313,4 +321,4 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = ${JSON.stringify(fallbac
 `;
 writeFileSync(new URL('../src/data/defaultDraftClasses.ts', import.meta.url), banner);
 
-console.log(`Scanned ${scanned} people; added ${losersAdded} failed challengers; emitted ${list.length} unique to public/standard-draft-classes.json and politicians-dataset.csv`);
+console.log(`Scanned ${scanned} people; added ${eraAdded} era figures, ${losersAdded} failed challengers; emitted ${list.length} unique to public/standard-draft-classes.json and politicians-dataset.csv`);

@@ -36,7 +36,7 @@ const ROWS = [
   ['Richard Henry','Lee','va','Conservative',1732,[2,4,2,0,2,3],0,['Debater'],'BLUE'],
   ['John','Dickinson','de','Conservative',1732,[3,4,3,0,2,2],0,['Egghead'],'BLUE'],
   ['Thomas','Paine','pa','Progressive',1737,[1,2,0,0,0,1],0,['Propagandist','Obscure'],'BLUE'],
-  ['Elias','Boudinot','nj','Progressive',1740,[2,2,2,0,1,2],0,[],'BLUE'],
+  ['Elias','Boudinot','nj','Conservative',1740,[3,3,2,0,2,2],1,['Leadership'],'RED'],
   ['George','Mason','va','Traditionalist',1725,[2,3,2,0,2,3],0,[],'BLUE'],
   ['Francis','Marion','sc','Traditionalist',1732,[0,0,0,4,0,1],0,['Military'],'BLUE'],
   ['Ethan','Allen','nh','Moderate',1738,[0,0,0,3,0,2],0,['Celebrity'],'BLUE'],
@@ -79,10 +79,10 @@ const ROWS = [
   ['Gouverneur','Morris','ny','Conservative',1752,[3,3,3,0,1,3],0,['Egghead','Orator'],'RED'],
   ['Charles Cotesworth','Pinckney','sc','Conservative',1746,[2,2,2,2,1,2],0,[],'RED'],
   ['Thomas','Mifflin','pa','Moderate',1744,[2,2,0,2,3,2],0,[],'RED'],
-  ['Fisher','Ames','ma','Conservative',1758,[2,4,2,0,1,2],0,['Orator'],'RED'],
-  ['Theodore','Sedgwick','ma','Conservative',1746,[2,3,2,0,1,2],0,[],'RED'],
+  ['Fisher','Ames','ma','Conservative',1758,[2,4,2,0,1,3],1,['Orator','Debater'],'RED'],
+  ['Theodore','Sedgwick','ma','Conservative',1746,[2,3,2,0,2,2],1,['Debater'],'RED'],
   ['Jonathan','Trumbull','ct','Conservative',1740,[2,3,1,0,2,2],0,[],'RED'],
-  ['Frederick','Muhlenberg','pa','Moderate',1750,[2,3,1,0,2,2],0,[],'RED'],
+  ['Frederick','Muhlenberg','pa','Moderate',1750,[2,3,1,0,3,2],1,['Leadership'],'RED'],
   ['Abraham','Baldwin','ga','Liberal',1754,[2,3,2,0,1,2],0,['Education'],'BLUE'],
   ['James','Jackson','ga','LW Populist',1757,[1,3,1,2,1,2],0,['Orator'],'BLUE'],
   ['William','Maclay','pa','Progressive',1737,[2,3,1,0,1,2],0,['Reformist'],'BLUE'],
@@ -169,6 +169,40 @@ const ROWS = [
   ['John','McLean','oh','Liberal',1785,[2,1,4,0,0,1],2,['Integrity'],'RED'],
 ];
 
+// Founding-era figures & notable DEFEATED candidates from the early House
+// elections (1788-89 reviewed first) who never served in the U.S. Congress and
+// so aren't in congress-legislators. Merged ADDITIVELY (only if the name isn't
+// already present) so they never clobber a distinct same-named member. Per the
+// established balance rule, electoral skills are sub-floor (legislative <= 1,
+// modest command) — defining traits give historical color without making them
+// likely to win.
+const ERA_ROWS = [
+  // 1788-89 House: notable losers / Continental-era figures (never in Congress)
+  ['John','Sullivan','nh','Moderate',1740,[1,1,1,4,2,1],2,['Military','Leadership'],'Pro-Administration'],
+  ['Joshua','Atherton','nh','Traditionalist',1737,[1,1,2,0,1,1],0,['Debater'],'Anti-Administration'],
+  ['Gunning','Bedford Jr.','de','Conservative',1747,[1,1,3,0,1,1],0,['Egghead'],'Pro-Administration'],
+  ['William','Houstoun','ga','Conservative',1755,[1,1,1,0,1,1],0,[],'Pro-Administration'],
+  ['Nathaniel','Gorham','ma','Conservative',1738,[2,1,1,0,2,1],1,['Leadership','Egghead'],'Pro-Administration'],
+  ['Nathan','Dane','ma','Liberal',1752,[1,1,2,0,1,1],0,['Egghead','Reformist'],'Anti-Administration'],
+  ['Jonathan','Jackson','ma','Conservative',1743,[1,1,1,0,1,1],0,[],'Pro-Administration'],
+  ['Samuel A.','Otis','ma','Moderate',1740,[1,1,1,0,1,3],0,['Efficient'],'Pro-Administration'],
+  ['Benjamin','Austin','ma','LW Populist',1752,[1,1,0,0,1,1],0,['Propagandist'],'Anti-Administration'],
+  ['David','Ramsay','sc','Moderate',1749,[1,1,1,0,1,1],0,['Egghead'],'Pro-Administration'],
+  ['Abraham','Ten Broeck','ny','Conservative',1734,[1,1,0,3,1,1],1,['Military'],'Pro-Administration'],
+  ['Charles','Pettit','pa','Liberal',1736,[2,1,0,0,1,1],0,[],'Anti-Administration'],
+  ['Arthur','Lee','va','Liberal',1740,[1,1,2,0,1,1],0,['Egghead','Debater'],'Anti-Administration'],
+  ['Spencer','Roane','va','Traditionalist',1762,[1,1,4,0,1,1],0,['Egghead'],'Anti-Administration'],
+  ['Edward','Carrington','va','Conservative',1748,[1,1,1,2,1,1],1,['Military'],'Pro-Administration'],
+  ['Benjamin','Harrison V','va','Traditionalist',1726,[1,1,1,0,2,1],1,['Leadership'],'Anti-Administration'],
+  ['Meriwether','Smith','va','Liberal',1730,[1,1,1,0,1,1],0,[],'Anti-Administration'],
+  ['James','Winthrop','ma','Liberal',1752,[1,1,1,0,1,1],0,['Egghead'],'Anti-Administration'],
+  ['John','Broome','ny','Liberal',1738,[1,1,1,0,1,1],0,[],'Anti-Administration'],
+  ['Matthew','Adgate','ny','Liberal',1737,[1,1,0,0,1,1],0,[],'Anti-Administration'],
+  ['Timothy','Paine','ma','Conservative',1730,[1,1,1,0,1,1],0,[],'Pro-Administration'],
+  ['William','Whiting','ma','Traditionalist',1730,[1,1,1,0,1,1],0,[],'Anti-Administration'],
+  ['John','Worthington','ma','Conservative',1719,[1,1,1,0,1,1],0,[],'Pro-Administration'],
+];
+
 const header = ['draftYear','firstName','lastName','state','ideology','birthYear','age','admin','legislative','judicial','military','governing','backroom','command','traits','party','wikiUrl'];
 
 // Normalized curated rows (consumed by legislatorsToDataset.mjs as overrides).
@@ -180,6 +214,19 @@ for (const [first, last, state, ideo, birth, sk, cmd, traits, party] of ROWS) {
   seen.add(key);
   const draftYear = draftYearFor(birth);
   CURATED_ROWS.push({
+    draftYear, firstName: first, lastName: last, state, ideology: ideo,
+    birthYear: birth, age: draftYear - birth,
+    skills: { admin: sk[0], legislative: sk[1], judicial: sk[2], military: sk[3], governing: sk[4], backroom: sk[5] },
+    command: cmd, traits, party, wikiUrl: wiki(first, last),
+  });
+}
+
+// Normalized additive era figures (consumed by legislatorsToDataset.mjs only
+// when the name isn't already present).
+export const ERA_FIGURES = [];
+for (const [first, last, state, ideo, birth, sk, cmd, traits, party] of ERA_ROWS) {
+  const draftYear = draftYearFor(birth);
+  ERA_FIGURES.push({
     draftYear, firstName: first, lastName: last, state, ideology: ideo,
     birthYear: birth, age: draftYear - birth,
     skills: { admin: sk[0], legislative: sk[1], judicial: sk[2], military: sk[3], governing: sk[4], backroom: sk[5] },

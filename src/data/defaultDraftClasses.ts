@@ -182,19 +182,21 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "firstName": "Elias",
     "lastName": "Boudinot",
     "state": "nj",
-    "ideology": "Progressive",
+    "ideology": "Conservative",
     "birthYear": 1740,
     "age": 32,
     "skills": {
-      "admin": 2,
-      "legislative": 2,
+      "admin": 3,
+      "legislative": 3,
       "judicial": 2,
       "military": 0,
-      "governing": 1,
+      "governing": 2,
       "backroom": 2
     },
-    "command": 0,
-    "traits": []
+    "command": 1,
+    "traits": [
+      "Leadership"
+    ]
   },
   {
     "draftYear": 1772,
@@ -1034,11 +1036,12 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
       "judicial": 2,
       "military": 0,
       "governing": 1,
-      "backroom": 2
+      "backroom": 3
     },
-    "command": 0,
+    "command": 1,
     "traits": [
-      "Orator"
+      "Orator",
+      "Debater"
     ]
   },
   {
@@ -1054,11 +1057,13 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
       "legislative": 3,
       "judicial": 2,
       "military": 0,
-      "governing": 1,
+      "governing": 2,
       "backroom": 2
     },
-    "command": 0,
-    "traits": []
+    "command": 1,
+    "traits": [
+      "Debater"
+    ]
   },
   {
     "draftYear": 1772,
@@ -1092,11 +1097,13 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
       "legislative": 3,
       "judicial": 1,
       "military": 0,
-      "governing": 2,
+      "governing": 3,
       "backroom": 2
     },
-    "command": 0,
-    "traits": []
+    "command": 1,
+    "traits": [
+      "Leadership"
+    ]
   },
   {
     "draftYear": 1780,

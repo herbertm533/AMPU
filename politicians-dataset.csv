@@ -1,27 +1,32 @@
 draftYear,firstName,lastName,state,ideology,birthYear,age,admin,legislative,judicial,military,governing,backroom,command,traits,party,wikiUrl
 1772,John,Adams,ma,Moderate,1735,,3,3,3,0,2,2,1,Egghead|Debater,RED,https://en.wikipedia.org/wiki/John_Adams
 1772,Samuel,Adams,ma,LW Populist,1722,,2,3,1,0,2,4,1,Orator,BLUE,https://en.wikipedia.org/wiki/Samuel_Adams
+1772,Matthew,Adgate,ny,Liberal,1737,,1,1,0,0,1,1,0,,Anti-Administration,https://en.wikipedia.org/wiki/Matthew_Adgate
 1772,Ethan,Allen,nh,Moderate,1738,,0,0,0,3,0,2,0,Celebrity,BLUE,https://en.wikipedia.org/wiki/Ethan_Allen
 1772,John,Archer,md,Conservative,1741,,1,2,1,0,1,1,0,,Republican,https://en.wikipedia.org/wiki/John_Archer_(American_politician)
 1772,James,Armstrong,pa,Moderate,1748,,1,2,1,0,1,1,0,,,https://en.wikipedia.org/wiki/James_Armstrong_(Pennsylvania_politician)
 1772,Benedict,Arnold,ct,Moderate,1741,,1,0,0,3,0,1,0,Military|Traitor,RED,https://en.wikipedia.org/wiki/Benedict_Arnold
+1772,Joshua,Atherton,nh,Traditionalist,1737,,1,1,2,0,1,1,0,Debater,Anti-Administration,https://en.wikipedia.org/wiki/Joshua_Atherton
 1772,John,Bacon,ma,Conservative,1738,,1,2,1,0,1,1,0,,Republican,https://en.wikipedia.org/wiki/John_Bacon_(Massachusetts_politician)
 1772,John,Barry,pa,Moderate,1745,,1,0,0,2,0,0,0,Naval,RED,https://en.wikipedia.org/wiki/John_Barry
 1772,Richard,Bassett,de,Moderate,1745,,2,2,1,0,2,1,0,,RED,https://en.wikipedia.org/wiki/Richard_Bassett
+1772,Gunning,Bedford Jr.,de,Conservative,1747,,1,1,3,0,1,1,0,Egghead,Pro-Administration,https://en.wikipedia.org/wiki/Gunning_Bedford_Jr.
 1772,Egbert,Benson,ny,Conservative,1746,,1,2,1,0,1,1,0,,Federalist,https://en.wikipedia.org/wiki/Egbert_Benson
 1772,Phanuel,Bishop,ma,Conservative,1739,,1,3,1,0,1,1,0,,Republican,https://en.wikipedia.org/wiki/Phanuel_Bishop
 1772,Theodorick,Bland,va,Moderate,1742,,1,2,1,0,1,1,0,,,https://en.wikipedia.org/wiki/Theodorick_Bland_(congressman)
 1772,Daniel,Boone,nc,Traditionalist,1734,,0,0,0,2,0,0,0,Celebrity,BLUE,https://en.wikipedia.org/wiki/Daniel_Boone
-1772,Elias,Boudinot,nj,Progressive,1740,,2,2,2,0,1,2,0,,BLUE,https://en.wikipedia.org/wiki/Elias_Boudinot
+1772,Elias,Boudinot,nj,Conservative,1740,,3,3,2,0,2,2,1,Leadership,RED,https://en.wikipedia.org/wiki/Elias_Boudinot
 1772,Shearjashub,Bourne,ma,Moderate,1746,,1,2,1,0,1,1,0,,,https://en.wikipedia.org/wiki/Shearjashub_Bourne
 1772,Adam,Boyd,nj,Conservative,1746,,1,3,1,0,1,1,0,,Republican,https://en.wikipedia.org/wiki/Adam_Boyd_(politician)
 1772,Theophilus,Bradbury,ma,Conservative,1739,,1,2,1,0,1,1,0,,Federalist,https://en.wikipedia.org/wiki/Theophilus_Bradbury
 1772,William,Bradford,ri,Conservative,1729,,1,2,1,0,1,1,1,,Federalist,https://en.wikipedia.org/wiki/William_Bradford_(Rhode_Island_politician)
+1772,John,Broome,ny,Liberal,1738,,1,1,1,0,1,1,0,,Anti-Administration,https://en.wikipedia.org/wiki/John_Broome
 1772,John,Brown,ri,Conservative,1736,,1,2,1,0,1,1,0,,Federalist,https://en.wikipedia.org/wiki/John_Brown_(Rhode_Island_politician)
 1772,Robert,Brown,pa,Conservative,1744,,1,4,1,0,1,2,1,,Republican,https://en.wikipedia.org/wiki/Robert_Brown_(Pennsylvania_politician)
 1772,Stephen,Bullock,ma,Conservative,1735,,1,2,1,0,1,1,0,,Federalist,https://en.wikipedia.org/wiki/Stephen_Bullock
 1772,Aedanus,Burke,sc,Moderate,1743,,1,2,1,0,1,1,0,,,https://en.wikipedia.org/wiki/Aedanus_Burke
 1772,Pierce,Butler,sc,Traditionalist,1744,,2,2,1,1,2,2,0,,BLUE,https://en.wikipedia.org/wiki/Pierce_Butler
+1772,Edward,Carrington,va,Conservative,1748,,1,1,1,2,1,1,1,Military,Pro-Administration,https://en.wikipedia.org/wiki/Edward_Carrington
 1772,Daniel,Carroll,md,Moderate,1730,,1,2,1,0,1,1,0,,,https://en.wikipedia.org/wiki/Daniel_Carroll
 1772,Charles,Carroll,md,Conservative,1737,,3,2,1,0,2,3,0,Economics,RED,https://en.wikipedia.org/wiki/Charles_Carroll
 1772,John,Chapman,pa,Conservative,1740,,1,2,1,0,1,1,0,,Federalist,https://en.wikipedia.org/wiki/John_Chapman_(Pennsylvania_politician)
@@ -49,12 +54,14 @@ draftYear,firstName,lastName,state,ideology,birthYear,age,admin,legislative,judi
 1772,Henry,Glen,ny,Conservative,1739,,1,3,1,0,1,1,0,,Federalist,https://en.wikipedia.org/wiki/Henry_Glen
 1772,Benjamin,Goodhue,ma,Conservative,1748,,1,3,1,0,1,1,1,,Federalist,https://en.wikipedia.org/wiki/Benjamin_Goodhue
 1772,James,Gordon,ny,Moderate,1739,,1,2,1,0,1,1,0,,,https://en.wikipedia.org/wiki/James_Gordon_(New_York_politician)
+1772,Nathaniel,Gorham,ma,Conservative,1738,,2,1,1,0,2,1,1,Leadership|Egghead,Pro-Administration,https://en.wikipedia.org/wiki/Nathaniel_Gorham
 1772,Edwin,Gray,va,Conservative,1743,,1,3,1,0,1,2,1,,Republican,https://en.wikipedia.org/wiki/Edwin_Gray
 1772,William,Grayson,va,Progressive,1740,,2,3,1,1,1,2,0,Debater,BLUE,https://en.wikipedia.org/wiki/William_Grayson
 1772,Nathanael,Greene,ri,Progressive,1742,,1,0,0,3,0,1,0,Military,RED,https://en.wikipedia.org/wiki/Nathanael_Greene
 1772,Jonathan,Grout,ma,Moderate,1737,,1,2,1,0,1,1,0,,,https://en.wikipedia.org/wiki/Jonathan_Grout
 1772,Silas,Halsey,ny,Conservative,1743,,1,2,1,0,1,1,0,,Republican,https://en.wikipedia.org/wiki/Silas_Halsey
 1772,John,Hancock,ma,Moderate,1737,,3,2,1,0,3,3,1,Celebrity,BLUE,https://en.wikipedia.org/wiki/John_Hancock
+1772,Benjamin,Harrison V,va,Traditionalist,1726,,1,1,1,0,2,1,1,Leadership,Anti-Administration,https://en.wikipedia.org/wiki/Benjamin_Harrison_V
 1772,Thomas,Hartley,pa,Conservative,1748,,1,3,1,0,1,2,0,,Federalist,https://en.wikipedia.org/wiki/Thomas_Hartley
 1772,Thomas,Henderson,nj,Conservative,1743,,1,2,1,0,1,1,0,,Federalist,https://en.wikipedia.org/wiki/Thomas_Henderson_(New_Jersey_politician)
 1772,Patrick,Henry,va,Traditionalist,1736,,1,4,2,1,3,3,1,Orator|Debater,BLUE,https://en.wikipedia.org/wiki/Patrick_Henry
@@ -85,6 +92,7 @@ draftYear,firstName,lastName,state,ideology,birthYear,age,admin,legislative,judi
 1772,Henry,Laurens,sc,Traditionalist,1724,,3,2,1,1,2,3,0,,RED,https://en.wikipedia.org/wiki/Henry_Laurens
 1772,Richard,Lee,va,Liberal,1732,,1,2,1,0,1,1,1,,Anti-Administration,https://en.wikipedia.org/wiki/Richard_Henry_Lee
 1772,Richard Henry,Lee,va,Conservative,1732,,2,4,2,0,2,3,0,Debater,BLUE,https://en.wikipedia.org/wiki/Richard_Henry_Lee
+1772,Arthur,Lee,va,Liberal,1740,,1,1,2,0,1,1,0,Egghead|Debater,Anti-Administration,https://en.wikipedia.org/wiki/Arthur_Lee
 1772,George,Leonard,ma,Conservative,1729,,1,2,1,0,1,1,0,,Federalist,https://en.wikipedia.org/wiki/George_Leonard_(congressman)
 1772,Benjamin,Lincoln,ma,Conservative,1733,,2,1,0,3,2,1,0,Military,RED,https://en.wikipedia.org/wiki/Benjamin_Lincoln
 1772,Samuel,Livermore,nh,Conservative,1732,,1,3,1,0,1,2,1,,Federalist,https://en.wikipedia.org/wiki/Samuel_Livermore
@@ -109,13 +117,16 @@ draftYear,firstName,lastName,state,ideology,birthYear,age,admin,legislative,judi
 1772,Nathaniel,Niles,vt,Moderate,1741,,1,2,1,0,1,1,0,,,https://en.wikipedia.org/wiki/Nathaniel_Niles_(politician)
 1772,Simeon,Olcott,nh,Conservative,1735,,1,2,1,0,1,1,1,,Federalist,https://en.wikipedia.org/wiki/Simeon_Olcott
 1772,Gideon,Olin,vt,Conservative,1743,,1,2,1,0,1,1,0,,Republican,https://en.wikipedia.org/wiki/Gideon_Olin
+1772,Samuel A.,Otis,ma,Moderate,1740,,1,1,1,0,1,3,0,Efficient,Pro-Administration,https://en.wikipedia.org/wiki/Samuel_A._Otis
 1772,John,Page,va,Conservative,1743,,1,3,1,0,1,1,0,,Republican,https://en.wikipedia.org/wiki/John_Page_(Virginia_politician)
 1772,Thomas,Paine,pa,Progressive,1737,,1,2,0,0,0,1,0,Propagandist|Obscure,BLUE,https://en.wikipedia.org/wiki/Thomas_Paine
 1772,Robert Treat,Paine,ma,Progressive,1731,,2,2,3,0,1,1,0,,RED,https://en.wikipedia.org/wiki/Robert_Treat_Paine
+1772,Timothy,Paine,ma,Conservative,1730,,1,1,1,0,1,1,0,,Pro-Administration,https://en.wikipedia.org/wiki/Timothy_Paine
 1772,George,Partridge,ma,Moderate,1740,,1,2,1,0,1,1,0,,,https://en.wikipedia.org/wiki/George_Partridge
 1772,William,Paterson,nj,Conservative,1745,,1,2,1,0,1,1,1,,Pro-Administration,https://en.wikipedia.org/wiki/William_Paterson_(judge)
 1772,John,Patten,de,Conservative,1746,,1,2,1,0,1,1,0,,Republican,https://en.wikipedia.org/wiki/John_Patten_(American_politician)
 1772,Joseph,Peirce,nh,Conservative,1748,,1,2,1,0,1,1,0,,Federalist,https://en.wikipedia.org/wiki/Joseph_Peirce
+1772,Charles,Pettit,pa,Liberal,1736,,2,1,0,0,1,1,0,,Anti-Administration,https://en.wikipedia.org/wiki/Charles_Pettit
 1772,Andrew,Pickens,sc,Moderate,1739,,1,2,1,0,1,1,0,,,https://en.wikipedia.org/wiki/Andrew_Pickens_(congressman)
 1772,Timothy,Pickering,ma,Conservative,1745,,2,1,1,1,1,1,0,Puritan,RED,https://en.wikipedia.org/wiki/Timothy_Pickering
 1772,Charles Cotesworth,Pinckney,sc,Conservative,1746,,2,2,2,2,1,2,0,,RED,https://en.wikipedia.org/wiki/Charles_Cotesworth_Pinckney
@@ -128,7 +139,7 @@ draftYear,firstName,lastName,state,ideology,birthYear,age,admin,legislative,judi
 1772,Benjamin,Rush,pa,Progressive,1746,,2,2,1,0,1,2,0,Egghead|Reformist,RED,https://en.wikipedia.org/wiki/Benjamin_Rush
 1772,Robert,Rutherford,va,Conservative,1728,,1,2,1,0,1,1,0,,Republican,https://en.wikipedia.org/wiki/Robert_Rutherford_(congressman)
 1772,Philip,Schuyler,ny,Conservative,1733,,2,1,0,2,1,2,0,,RED,https://en.wikipedia.org/wiki/Philip_Schuyler
-1772,Theodore,Sedgwick,ma,Conservative,1746,,2,3,2,0,1,2,0,,RED,https://en.wikipedia.org/wiki/Theodore_Sedgwick
+1772,Theodore,Sedgwick,ma,Conservative,1746,,2,3,2,0,2,2,1,Debater,RED,https://en.wikipedia.org/wiki/Theodore_Sedgwick
 1772,John,Sevier,tn,Conservative,1745,,1,3,1,0,1,1,0,,Republican,https://en.wikipedia.org/wiki/John_Sevier
 1772,William,Shepard,ma,Conservative,1737,,1,2,1,0,1,1,0,,Federalist,https://en.wikipedia.org/wiki/William_Shepard
 1772,Roger,Sherman,ct,Moderate,1721,,2,3,3,0,2,2,0,,RED,https://en.wikipedia.org/wiki/Roger_Sherman
@@ -136,12 +147,14 @@ draftYear,firstName,lastName,state,ideology,birthYear,age,admin,legislative,judi
 1772,William,Smith,md,Moderate,1728,,1,2,1,0,1,1,0,,,https://en.wikipedia.org/wiki/William_Smith_(Maryland_politician)
 1772,Josiah,Smith,ma,Conservative,1738,,1,2,1,0,1,1,0,,Republican,https://en.wikipedia.org/wiki/Josiah_Smith
 1772,Daniel,Smith,tn,Conservative,1748,,1,2,1,0,1,1,1,,Republican,https://en.wikipedia.org/wiki/Daniel_Smith_(surveyor)
+1772,Meriwether,Smith,va,Liberal,1730,,1,1,1,0,1,1,0,,Anti-Administration,https://en.wikipedia.org/wiki/Meriwether_Smith
 1772,Henry,Southard,nj,Conservative,1747,,1,4,1,0,1,2,1,,Republican,https://en.wikipedia.org/wiki/Henry_Southard
 1772,Arthur,St. Clair,pa,Conservative,1737,,1,0,0,2,1,1,0,Military,RED,https://en.wikipedia.org/wiki/Arthur_St._Clair
 1772,Joseph,Stanton,ri,Progressive,1739,,1,2,0,1,1,2,0,,BLUE,https://en.wikipedia.org/wiki/Joseph_Stanton
 1772,Caleb,Strong,ma,Conservative,1745,,2,3,2,0,2,1,0,,RED,https://en.wikipedia.org/wiki/Caleb_Strong
 1772,Jonathan,Sturges,ct,Moderate,1740,,1,2,1,0,1,1,0,,,https://en.wikipedia.org/wiki/Jonathan_Sturges
 1772,Thomas,Sumter,sc,Conservative,1734,,1,4,1,0,1,2,2,,Republican,https://en.wikipedia.org/wiki/Thomas_Sumter
+1772,Abraham,Ten Broeck,ny,Conservative,1734,,1,1,0,3,1,1,1,Military,Pro-Administration,https://en.wikipedia.org/wiki/Abraham_Ten_Broeck
 1772,Samuel,Tenney,nh,Conservative,1748,,1,3,1,0,1,1,0,,Federalist,https://en.wikipedia.org/wiki/Samuel_Tenney
 1772,Richard,Thomas,pa,Conservative,1744,,1,2,1,0,1,1,0,,Federalist,https://en.wikipedia.org/wiki/Richard_Thomas_(Pennsylvania_politician)
 1772,Thomas,Tillinghast,ri,Conservative,1742,,1,2,1,0,1,1,0,,Republican,https://en.wikipedia.org/wiki/Thomas_Tillinghast
@@ -166,6 +179,7 @@ draftYear,firstName,lastName,state,ideology,birthYear,age,admin,legislative,judi
 1772,Henry,Wynkoop,pa,Moderate,1737,,1,2,1,0,1,1,0,,,https://en.wikipedia.org/wiki/Henry_Wynkoop
 1772,George,Wythe,va,Liberal,1726,,2,3,4,0,1,2,0,Egghead,RED,https://en.wikipedia.org/wiki/George_Wythe
 1776,Joseph,Allen,ma,Conservative,1749,,1,2,1,0,1,1,0,,Federalist,https://en.wikipedia.org/wiki/Joseph_Allen_(congressman)
+1776,Benjamin,Austin,ma,LW Populist,1752,,1,1,0,0,1,1,0,Propagandist,Anti-Administration,https://en.wikipedia.org/wiki/Benjamin_Austin
 1776,Joseph,Barker,ma,Conservative,1751,,1,2,1,0,1,1,0,,Republican,https://en.wikipedia.org/wiki/Joseph_Barker_(Massachusetts_politician)
 1776,Bailey,Bartlett,ma,Conservative,1750,,1,2,1,0,1,1,0,,Federalist,https://en.wikipedia.org/wiki/Bailey_Bartlett
 1776,John,Beatty,nj,Moderate,1749,,1,2,1,0,1,1,0,,,https://en.wikipedia.org/wiki/John_Beatty_(New_Jersey_politician)
@@ -178,6 +192,7 @@ draftYear,firstName,lastName,state,ideology,birthYear,age,admin,legislative,judi
 1776,Francis,Carr,ma,Conservative,1751,,1,2,1,0,1,1,0,,Republican,https://en.wikipedia.org/wiki/Francis_Carr_(District_of_Maine_politician)
 1776,Nathaniel,Chipman,vt,Conservative,1752,,1,2,1,0,1,1,1,,Federalist,https://en.wikipedia.org/wiki/Nathaniel_Chipman
 1776,Thomas,Claiborne,va,Conservative,1749,,1,3,1,0,1,1,0,,Republican,https://en.wikipedia.org/wiki/Thomas_Claiborne_(1749%E2%80%931812)
+1776,Nathan,Dane,ma,Liberal,1752,,1,1,2,0,1,1,0,Egghead|Reformist,Anti-Administration,https://en.wikipedia.org/wiki/Nathan_Dane
 1776,John,Davenport,ct,Conservative,1752,,1,4,1,0,1,2,1,,Federalist,https://en.wikipedia.org/wiki/John_Davenport_(Connecticut_politician)
 1776,Henry,Dearborn,ma,Conservative,1751,,1,2,1,0,1,1,0,,Republican,https://en.wikipedia.org/wiki/Henry_Dearborn
 1776,Gabriel,Duvall,md,Conservative,1752,,1,2,1,0,1,1,0,,Republican,https://en.wikipedia.org/wiki/Gabriel_Duvall
@@ -195,11 +210,12 @@ draftYear,firstName,lastName,state,ideology,birthYear,age,admin,legislative,judi
 1776,Matthew,Lyon,ky,Conservative,1749,,1,3,1,0,1,2,0,,Republican,https://en.wikipedia.org/wiki/Matthew_Lyon
 1776,James,Madison,va,Liberal,1751,,3,4,3,0,2,3,1,Egghead|Reformist,BLUE,https://en.wikipedia.org/wiki/James_Madison
 1776,Gouverneur,Morris,ny,Conservative,1752,,3,3,3,0,1,3,0,Egghead|Orator,RED,https://en.wikipedia.org/wiki/Gouverneur_Morris
-1776,Frederick,Muhlenberg,pa,Moderate,1750,,2,3,1,0,2,2,0,,RED,https://en.wikipedia.org/wiki/Frederick_Muhlenberg
+1776,Frederick,Muhlenberg,pa,Moderate,1750,,2,3,1,0,3,2,1,Leadership,RED,https://en.wikipedia.org/wiki/Frederick_Muhlenberg
 1776,Josiah,Parker,va,Conservative,1751,,1,3,1,0,1,2,0,,Federalist,https://en.wikipedia.org/wiki/Josiah_Parker
 1776,Oliver,Phelps,ny,Conservative,1749,,1,2,1,0,1,1,0,,Republican,https://en.wikipedia.org/wiki/Oliver_Phelps_(politician)
 1776,Thomas,Pinckney,sc,Conservative,1750,,1,2,1,0,1,1,0,,Federalist,https://en.wikipedia.org/wiki/Thomas_Pinckney
 1776,Thomas,Posey,la,Conservative,1750,,1,2,1,0,1,1,1,,Republican,https://en.wikipedia.org/wiki/Thomas_Posey
+1776,David,Ramsay,sc,Moderate,1749,,1,1,1,0,1,1,0,Egghead,Pro-Administration,https://en.wikipedia.org/wiki/David_Ramsay
 1776,John,Reed,ma,Conservative,1751,,1,2,1,0,1,1,0,,Federalist,https://en.wikipedia.org/wiki/John_Reed_Sr.
 1776,Thomson,Skinner,ma,Conservative,1752,,1,2,1,0,1,1,0,,Republican,https://en.wikipedia.org/wiki/Thomson_J._Skinner
 1776,Peter,Swart,ny,Conservative,1752,,1,2,1,0,1,1,0,,Republican,https://en.wikipedia.org/wiki/Peter_Swart
@@ -214,6 +230,7 @@ draftYear,firstName,lastName,state,ideology,birthYear,age,admin,legislative,judi
 1776,James,White,tn,Moderate,1749,,1,2,1,0,1,1,0,,,https://en.wikipedia.org/wiki/James_White_(Southwest_Territory_politician)
 1776,Benjamin,Williams,nc,Moderate,1751,,1,2,1,0,1,1,0,,,https://en.wikipedia.org/wiki/Benjamin_Williams
 1776,Jonathan,Williams,pa,Moderate,1750,,1,2,1,0,1,1,0,,,https://en.wikipedia.org/wiki/Jonathan_Williams_(engineer)
+1776,James,Winthrop,ma,Liberal,1752,,1,1,1,0,1,1,0,Egghead,Anti-Administration,https://en.wikipedia.org/wiki/James_Winthrop
 1776,Robert,Wright,md,Conservative,1752,,1,4,1,0,1,2,2,,Republican,https://en.wikipedia.org/wiki/Robert_Wright_(Maryland_politician)
 1780,Nathaniel,Alexander,nc,Conservative,1756,,1,2,1,0,1,1,0,,Republican,https://en.wikipedia.org/wiki/Nathaniel_Alexander_(governor)
 1780,John,Ashe,nc,Moderate,1754,,1,2,1,0,1,1,0,,,https://en.wikipedia.org/wiki/John_Baptist_Ashe
@@ -267,6 +284,7 @@ draftYear,firstName,lastName,state,ideology,birthYear,age,admin,legislative,judi
 1780,Samuel,Hopkins,ky,Conservative,1753,,1,2,1,0,1,1,0,,Republican,https://en.wikipedia.org/wiki/Samuel_Hopkins_(congressman)
 1780,Jacob,Hostetter,pa,Conservative,1754,,1,2,1,0,1,1,0,,Republican,https://en.wikipedia.org/wiki/Jacob_Hostetter
 1780,David,Hough,nh,Conservative,1753,,1,2,1,0,1,1,0,,Federalist,https://en.wikipedia.org/wiki/David_Hough_(politician)
+1780,William,Houstoun,ga,Conservative,1755,,1,1,1,0,1,1,0,,Pro-Administration,https://en.wikipedia.org/wiki/William_Houstoun
 1780,Benjamin,Howland,ri,Conservative,1755,,1,2,1,0,1,1,1,,Republican,https://en.wikipedia.org/wiki/Benjamin_Howland
 1780,Ebenezer,Huntington,ct,Conservative,1754,,1,2,1,0,1,1,0,,Federalist,https://en.wikipedia.org/wiki/Ebenezer_Huntington
 1780,Philip,Key,md,Moderate,1756,,1,2,1,0,1,1,0,,,https://en.wikipedia.org/wiki/Philip_Key_(American_politician)
@@ -319,7 +337,7 @@ draftYear,firstName,lastName,state,ideology,birthYear,age,admin,legislative,judi
 1780,Laban,Wheaton,ma,Conservative,1754,,1,3,1,0,1,1,0,,Federalist,https://en.wikipedia.org/wiki/Laban_Wheaton
 1780,Alexander,White,va,Moderate,1754,,1,2,1,0,1,1,0,,,https://en.wikipedia.org/wiki/Alexander_White_(Virginia_politician)
 1784,John,Adair,ky,Liberal,1757,,1,2,1,0,1,1,1,,Jackson,https://en.wikipedia.org/wiki/John_Adair
-1784,Fisher,Ames,ma,Conservative,1758,,2,4,2,0,1,2,0,Orator,RED,https://en.wikipedia.org/wiki/Fisher_Ames
+1784,Fisher,Ames,ma,Conservative,1758,,2,4,2,0,1,3,1,Orator|Debater,RED,https://en.wikipedia.org/wiki/Fisher_Ames
 1784,Isaac,Anderson,pa,Conservative,1760,,1,2,1,0,1,1,0,,Republican,https://en.wikipedia.org/wiki/Isaac_Anderson_(congressman)
 1784,Joseph,Anderson,tn,Conservative,1757,,1,4,1,0,1,2,2,,Republican,https://en.wikipedia.org/wiki/Joseph_Anderson_(Tennessee_politician)
 1784,John,Armstrong,ny,Conservative,1758,,1,2,1,0,1,1,1,,Republican,https://en.wikipedia.org/wiki/John_Armstrong_Jr.
@@ -531,6 +549,7 @@ draftYear,firstName,lastName,state,ideology,birthYear,age,admin,legislative,judi
 1788,Elisha,Potter,ri,Conservative,1764,,1,3,1,0,1,1,0,,Federalist,https://en.wikipedia.org/wiki/Elisha_Reynolds_Potter
 1788,Leven,Powell,va,Conservative,1764,,1,2,1,0,1,1,0,,Federalist,https://en.wikipedia.org/wiki/Leven_Powell
 1788,John,Pugh,pa,Conservative,1761,,1,2,1,0,1,1,0,,Republican,https://en.wikipedia.org/wiki/John_Pugh_(Pennsylvania_politician)
+1788,Spencer,Roane,va,Traditionalist,1762,,1,1,4,0,1,1,0,Egghead,Anti-Administration,https://en.wikipedia.org/wiki/Spencer_Roane
 1788,Asher,Robbins,ri,Moderate,1761,,1,3,1,0,1,2,2,,Whig,https://en.wikipedia.org/wiki/Asher_Robbins
 1788,Daniel,Rodney,de,Traditionalist,1764,,1,2,1,0,1,1,1,,Adams,https://en.wikipedia.org/wiki/Daniel_Rodney
 1788,James,Ross,pa,Conservative,1762,,1,3,1,0,1,1,1,,Federalist,https://en.wikipedia.org/wiki/James_Ross_(Pennsylvania_politician)
