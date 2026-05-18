@@ -114,6 +114,141 @@ function record(person, isExec) {
   };
 }
 
+// ---- MEDSL failed-candidate ingestion -------------------------------------
+// Serious challengers who LOST (runner-up, >=15% share) for House/Senate/
+// President 1976-2018. No birth dates in this data -> estimate. Stats are
+// deliberately BELOW the elected baseline (elected get legislative>=2 via the
+// tenure heuristic; losers get legislative 1, command 0, no positive traits)
+// so their PV stays under anyone who actually served and they rarely win.
+function splitCsv(line) {
+  const o = []; let c = '', q = false;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (q) { if (ch === '"' && line[i + 1] === '"') { c += '"'; i++; } else if (ch === '"') q = false; else c += ch; }
+    else if (ch === '"') q = true;
+    else if (ch === ',') { o.push(c); c = ''; }
+    else c += ch;
+  }
+  o.push(c); return o;
+}
+const BAD_NAME = /write|scatter|blank|^others?$|void|under ?vote|over ?vote|all ?other|none of|^n\/?a$|^total$|unknown|^#|tbd|withdrew|no candidate|^vacan/i;
+const title = (s) => s.replace(/\w\S*/g, (w) => w[0].toUpperCase() + w.slice(1).toLowerCase());
+const SUFFIX = new Set(['jr', 'sr', 'ii', 'iii', 'iv', 'v']);
+function parseName(raw) {
+  let s = (raw || '').replace(/\s+/g, ' ').trim();
+  if (!s || s.length < 3 || BAD_NAME.test(s) || !/[a-z]/i.test(s)) return null;
+  s = s.replace(/\([^)]*\)/g, '').trim();
+  let first, last;
+  if (s.includes(',')) {
+    const p = s.split(',');
+    last = p[0].trim();
+    first = (p[1] || '').trim().split(' ')[0];
+  } else {
+    const t = s.split(' ').filter((x) => !SUFFIX.has(x.replace(/\./g, '').toLowerCase()));
+    if (t.length < 2) return null;
+    first = t[0];
+    last = t[t.length - 1];
+  }
+  first = title(first.replace(/[^A-Za-z'.-]/g, ''));
+  last = title(last.replace(/[^A-Za-z'.-]/g, ''));
+  if (!first || !last) return null;
+  return { first, last };
+}
+function medslLosers() {
+  const recs = [];
+  const num = (x) => { const n = parseInt(x, 10); return Number.isNaN(n) ? 0 : n; };
+
+  for (const [file, office] of [['1976-2018-house.csv', 'H'], ['1976-2018-senate.csv', 'S']]) {
+    let lines;
+    try { lines = readFileSync(new URL(`../.legis/${file}`, import.meta.url), 'utf8').split(/\r?\n/); }
+    catch { continue; }
+    const head = splitCsv(lines[0]).map((h) => h.replace(/"/g, ''));
+    const ix = (n) => head.indexOf(n);
+    const races = new Map();
+    for (let i = 1; i < lines.length; i++) {
+      if (!lines[i]) continue;
+      const r = splitCsv(lines[i]).map((v) => v.replace(/^"|"$/g, ''));
+      if (r[ix('stage')] !== 'gen') continue;
+      if (String(r[ix('writein')]).toUpperCase() === 'TRUE') continue;
+      const nm = parseName(r[ix('candidate')]);
+      if (!nm) continue;
+      const year = num(r[ix('year')]);
+      const po = r[ix('state_po')];
+      const dist = office === 'H' ? r[ix('district')] : 'sw';
+      const special = r[ix('special')];
+      const rk = `${year}|${po}|${dist}|${special}`;
+      const ck = `${nm.first} ${nm.last}`.toLowerCase();
+      if (!races.has(rk)) races.set(rk, { year, po, total: 0, cands: new Map() });
+      const race = races.get(rk);
+      race.total = Math.max(race.total, num(r[ix('totalvotes')]));
+      const cur = race.cands.get(ck) || { nm, party: r[ix('party')], votes: 0 };
+      cur.votes += num(r[ix('candidatevotes')]);
+      race.cands.set(ck, cur);
+    }
+    for (const race of races.values()) {
+      const ranked = [...race.cands.values()].sort((a, b) => b.votes - a.votes);
+      const runnerUp = ranked[1];
+      if (!runnerUp || race.total <= 0) continue;
+      if (runnerUp.votes / race.total < 0.15) continue; // serious challenger only
+      recs.push(mkLoser(runnerUp.nm, runnerUp.party, race.po, race.year, office));
+    }
+  }
+
+  // President: aggregate national votes per candidate per year
+  try {
+    const lines = readFileSync(new URL('../.legis/1976-2016-president.csv', import.meta.url), 'utf8').split(/\r?\n/);
+    const head = splitCsv(lines[0]).map((h) => h.replace(/"/g, ''));
+    const ix = (n) => head.indexOf(n);
+    const byYear = new Map();
+    for (let i = 1; i < lines.length; i++) {
+      if (!lines[i]) continue;
+      const r = splitCsv(lines[i]).map((v) => v.replace(/^"|"$/g, ''));
+      if (String(r[ix('writein')]).toUpperCase() === 'TRUE') continue;
+      const nm = parseName(r[ix('candidate')]);
+      if (!nm) continue;
+      const year = num(r[ix('year')]);
+      const ck = `${nm.first} ${nm.last}`.toLowerCase();
+      if (!byYear.has(year)) byYear.set(year, { total: 0, cands: new Map() });
+      const y = byYear.get(year);
+      y.total += num(r[ix('candidatevotes')]);
+      const cur = y.cands.get(ck) || { nm, party: r[ix('party')], votes: 0 };
+      cur.votes += num(r[ix('candidatevotes')]);
+      y.cands.set(ck, cur);
+    }
+    for (const [year, y] of byYear) {
+      const ranked = [...y.cands.values()].sort((a, b) => b.votes - a.votes);
+      for (let i = 1; i < ranked.length; i++) {
+        if (y.total > 0 && ranked[i].votes / y.total >= 0.15) {
+          recs.push(mkLoser(ranked[i].nm, ranked[i].party, 'us', year, 'P'));
+        }
+      }
+    }
+  } catch { /* file missing */ }
+  return recs;
+}
+function mkLoser(nm, party, po, year, office) {
+  const birthYear = year - (office === 'P' ? 57 : 53);
+  const draftYear = draftYearFor(birthYear);
+  // Strictly below the elected baseline (elected: legislative>=2, tenure cmd).
+  const skills = { admin: 1, legislative: 1, judicial: 0, military: 0, governing: 1, backroom: 1 };
+  const command = office === 'P' ? 1 : 0;
+  return {
+    draftYear,
+    firstName: nm.first,
+    lastName: nm.last,
+    state: office === 'P' ? 'ny' : stateId(po),
+    ideology: ideologyFor(party),
+    birthYear,
+    age: draftYear - birthYear,
+    skills,
+    command,
+    traits: [],
+    party: party ? title(party) : '',
+    wikiUrl: wiki(null, nm.first, nm.last),
+  };
+}
+// ---------------------------------------------------------------------------
+
 const load = (f) => yaml.load(readFileSync(new URL(`../.legis/${f}`, import.meta.url), 'utf8'));
 
 const out = new Map(); // key: lowercase "first last"
@@ -132,6 +267,14 @@ for (const [file, isExec] of [['legislators-historical.yaml', false], ['legislat
 for (const c of CURATED_ROWS) {
   const key = `${c.firstName} ${c.lastName}`.toLowerCase();
   out.set(key, c);
+}
+
+// Add serious failed challengers — only if the name isn't already present
+// (anyone who ever served, or a curated figure, keeps their stronger record).
+let losersAdded = 0;
+for (const l of medslLosers()) {
+  const key = `${l.firstName} ${l.lastName}`.toLowerCase();
+  if (!out.has(key)) { out.set(key, l); losersAdded++; }
 }
 
 const list = [...out.values()].sort((a, b) => a.draftYear - b.draftYear || a.lastName.localeCompare(b.lastName));
@@ -170,4 +313,4 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = ${JSON.stringify(fallbac
 `;
 writeFileSync(new URL('../src/data/defaultDraftClasses.ts', import.meta.url), banner);
 
-console.log(`Scanned ${scanned} people; emitted ${list.length} unique to public/standard-draft-classes.json and politicians-dataset.csv`);
+console.log(`Scanned ${scanned} people; added ${losersAdded} failed challengers; emitted ${list.length} unique to public/standard-draft-classes.json and politicians-dataset.csv`);
