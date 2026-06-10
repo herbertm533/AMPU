@@ -478,8 +478,21 @@ export interface GameState {
   revolutionaryWar: RevolutionaryWar | null;
   pendingConvention?: ConstitutionalConvention | null;
   lastDraftYear?: number | null;
+  draftHistory?: DraftHistoryYear[];
   customDraftClasses?: ImportedDraftee[];
   inauguralDraftSeeded?: boolean;
+}
+
+export interface DraftHistoryPick {
+  pickNumber: number;
+  round: number;
+  factionId: string;
+  politicianId: string;
+}
+
+export interface DraftHistoryYear {
+  year: number;
+  picks: DraftHistoryPick[];
 }
 
 // A draftee imported from the user's CSV dataset. Persisted on the game state

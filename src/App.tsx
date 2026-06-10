@@ -4,28 +4,34 @@ import { Sidebar } from './components/Sidebar';
 import { TopBar } from './components/TopBar';
 import { NewGameScreen } from './components/NewGameScreen';
 import { Pages, type PageId } from './pages/registry';
-import { DraftModal } from './components/DraftModal';
+import { NavigationProvider } from './state/NavigationContext';
 import { EraEventModal } from './components/EraEventModal';
 import { ConventionModal } from './components/ConventionModal';
 
 function Shell(): JSX.Element {
   const { snapshot, loading, hasSave, modal } = useGame();
   const [page, setPage] = useState<PageId>('dashboard');
-  const lastSeenDraftYear = useRef<number | null>(null);
+  const lastDraftEntryKey = useRef<string | null>(null);
 
-  // When a draft just concluded, auto-navigate to the Draft Summary page
+  // Auto-navigate to Draft once per draft phase entry. The entry key combines
+  // year + phaseId so leaving the page and returning during the same draft
+  // doesn't yank you back, but the next year's draft does.
   useEffect(() => {
-    const cur = snapshot?.game.lastDraftYear ?? null;
-    if (cur != null && cur !== lastSeenDraftYear.current) {
-      // First snapshot tick after init: don't auto-redirect, just record
-      if (lastSeenDraftYear.current === null) {
-        lastSeenDraftYear.current = cur;
-        return;
+    const g = snapshot?.game;
+    const inLiveDraft = !!g
+      && g.phaseId === '2.1.1'
+      && g.pendingDraftPool.length > 0
+      && g.draftRoundOrder.length > 0;
+    if (inLiveDraft) {
+      const key = `${g.year}:${g.phaseId}`;
+      if (lastDraftEntryKey.current !== key) {
+        lastDraftEntryKey.current = key;
+        setPage('draft');
       }
-      lastSeenDraftYear.current = cur;
-      setPage('draftSummary');
+    } else {
+      lastDraftEntryKey.current = null;
     }
-  }, [snapshot?.game.lastDraftYear]);
+  }, [snapshot?.game.phaseId, snapshot?.game.year, snapshot?.game.pendingDraftPool.length, snapshot?.game.draftRoundOrder.length]);
 
   if (loading) {
     return (
@@ -50,10 +56,11 @@ function Shell(): JSX.Element {
       <div className="flex flex-1 flex-col overflow-hidden">
         <TopBar />
         <main className="flex-1 overflow-auto p-4">
-          <PageComponent />
+          <NavigationProvider page={page} navigateTo={setPage}>
+            <PageComponent />
+          </NavigationProvider>
         </main>
       </div>
-      {modal.type === 'draft' && <DraftModal pool={modal.pool} />}
       {modal.type === 'eraEvent' && <EraEventModal event={modal.event} />}
       {modal.type === 'convention' && <ConventionModal convention={modal.convention} />}
     </div>

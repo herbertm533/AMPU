@@ -20,6 +20,80 @@ function getEligibleIdeologies(factionId: string): Ideology[] | null {
   return f?.eligibleIdeologies ?? null;
 }
 
+function pickBestForFaction(snap: FullGameSnapshot, factionId: string): Politician | null {
+  const eligible = snap.politicians.filter((p) => snap.game.pendingDraftPool.includes(p.id));
+  if (eligible.length === 0) return null;
+  const faction = snap.factions.find((f) => f.id === factionId);
+  if (!faction) return null;
+  const isExpansion1772 = snap.game.scenarioId === '1772' && snap.game.year === snap.game.startYear;
+  const eligIdeos = isExpansion1772 ? getEligibleIdeologies(factionId) : null;
+  let pool = eligible;
+  if (eligIdeos) {
+    const strict = eligible.filter((p) => eligIdeos.includes(p.ideology));
+    pool = strict.length > 0 ? strict : eligible;
+  }
+  const scored = pool.map((p) => {
+    const ideoMatch = faction.personality === 'LW' ? (p.ideology === 'LW Populist' || p.ideology === 'Progressive' || p.ideology === 'Liberal') :
+      faction.personality === 'RW' ? (p.ideology === 'Conservative' || p.ideology === 'Traditionalist' || p.ideology === 'RW Populist') :
+      (p.ideology === 'Moderate' || p.ideology === 'Liberal' || p.ideology === 'Conservative');
+    return { p, score: p.pvCache + (ideoMatch ? 25 : 0) + (eligIdeos?.includes(p.ideology) ? 50 : 0) };
+  });
+  scored.sort((a, b) => b.score - a.score);
+  return scored[0].p;
+}
+
+function recordDraftPick(snap: FullGameSnapshot, factionId: string, politicianId: string): void {
+  const faction = snap.factions.find((f) => f.id === factionId);
+  const p = snap.politicians.find((pp) => pp.id === politicianId);
+  if (!faction || !p) return;
+  p.factionId = faction.id;
+  p.partyId = faction.partyId;
+  p.draftedYear = snap.game.year;
+  snap.game.pendingDraftPool = snap.game.pendingDraftPool.filter((id) => id !== p.id);
+  snap.game.draftRoundOrder.shift();
+  addLog(snap, '2.1.1', 'draft', `${faction.name} drafted ${p.firstName} ${p.lastName} (${p.state.toUpperCase()}, ${p.ideology}, PV ${p.pvCache}).`);
+  if (!snap.game.draftHistory) snap.game.draftHistory = [];
+  let yearEntry = snap.game.draftHistory.find((y) => y.year === snap.game.year);
+  if (!yearEntry) {
+    yearEntry = { year: snap.game.year, picks: [] };
+    snap.game.draftHistory.push(yearEntry);
+  }
+  const pickNumber = yearEntry.picks.length + 1;
+  const factionCount = Math.max(1, snap.factions.length);
+  const round = Math.ceil(pickNumber / factionCount);
+  yearEntry.picks.push({ pickNumber, round, factionId, politicianId });
+}
+
+export function simOneDraftPick(snap: FullGameSnapshot): { needsPlayer: boolean } {
+  if (snap.game.draftRoundOrder.length === 0) return { needsPlayer: false };
+  const eligible = snap.politicians.filter((p) => snap.game.pendingDraftPool.includes(p.id));
+  if (eligible.length === 0) {
+    const dropped = snap.game.draftRoundOrder.length;
+    snap.game.draftRoundOrder = [];
+    snap.game.pendingDraftPool = [];
+    if (dropped > 0) addLog(snap, '2.1.1', 'draft', `Draft pool exhausted; ${dropped} scheduled picks skipped.`);
+    snap.game.lastDraftYear = snap.game.year;
+    return { needsPlayer: false };
+  }
+  const factionId = snap.game.draftRoundOrder[0];
+  if (factionId === snap.game.playerFactionId) return { needsPlayer: true };
+  const picked = pickBestForFaction(snap, factionId);
+  if (!picked) return { needsPlayer: false };
+  recordDraftPick(snap, factionId, picked.id);
+  if (snap.game.draftRoundOrder.length === 0) snap.game.lastDraftYear = snap.game.year;
+  return { needsPlayer: false };
+}
+
+export function autoPickForPlayer(snap: FullGameSnapshot): { needsPlayer: boolean } {
+  if (snap.game.draftRoundOrder.length === 0) return { needsPlayer: false };
+  const factionId = snap.game.draftRoundOrder[0];
+  const picked = pickBestForFaction(snap, factionId);
+  if (!picked) return { needsPlayer: false };
+  recordDraftPick(snap, factionId, picked.id);
+  if (snap.game.draftRoundOrder.length === 0) snap.game.lastDraftYear = snap.game.year;
+  return { needsPlayer: false };
+}
+
 export function runPhase_2_1_1_Draft(snap: FullGameSnapshot, autoOnly: boolean): { needsPlayer: boolean; draftPool: Politician[] } {
   const isExpansion1772 = snap.game.scenarioId === '1772' && snap.game.year === snap.game.startYear;
 
@@ -165,29 +239,9 @@ export function runPhase_2_1_1_Draft(snap: FullGameSnapshot, autoOnly: boolean):
     if (isPlayer && !autoOnly) {
       return { needsPlayer: true, draftPool: eligible };
     }
-    // CPU pick: best PV in faction's ideological lane
-    const faction = snap.factions.find((f) => f.id === factionId)!;
-    // 1772 expansion draft: hard ideology constraint per faction; fall back to nearest if exhausted
-    const eligIdeos = isExpansion1772 ? getEligibleIdeologies(factionId) : null;
-    let pool = eligible;
-    if (eligIdeos) {
-      const strict = eligible.filter((p) => eligIdeos.includes(p.ideology));
-      pool = strict.length > 0 ? strict : eligible;
-    }
-    const scored = pool.map((p) => {
-      const ideoMatch = faction.personality === 'LW' ? (p.ideology === 'LW Populist' || p.ideology === 'Progressive' || p.ideology === 'Liberal') :
-        faction.personality === 'RW' ? (p.ideology === 'Conservative' || p.ideology === 'Traditionalist' || p.ideology === 'RW Populist') :
-        (p.ideology === 'Moderate' || p.ideology === 'Liberal' || p.ideology === 'Conservative');
-      return { p, score: p.pvCache + (ideoMatch ? 25 : 0) + (eligIdeos?.includes(p.ideology) ? 50 : 0) };
-    });
-    scored.sort((a, b) => b.score - a.score);
-    const picked = scored[0].p;
-    picked.factionId = faction.id;
-    picked.partyId = faction.partyId;
-    picked.draftedYear = snap.game.year;
-    snap.game.pendingDraftPool = snap.game.pendingDraftPool.filter((id) => id !== picked.id);
-    snap.game.draftRoundOrder.shift();
-    addLog(snap, '2.1.1', 'draft', `${faction.name} drafted ${picked.firstName} ${picked.lastName} (${picked.state.toUpperCase()}, ${picked.ideology}, PV ${picked.pvCache}).`);
+    const picked = pickBestForFaction(snap, factionId);
+    if (!picked) break;
+    recordDraftPick(snap, factionId, picked.id);
   }
   // Pool empty — finalize draft
   snap.game.pendingDraftPool = [];
@@ -202,13 +256,7 @@ export function playerDraftPick(snap: FullGameSnapshot, politicianId: string): v
   const p = snap.politicians.find((pp) => pp.id === politicianId);
   if (!p) return;
   if (!snap.game.pendingDraftPool.includes(p.id)) return;
-  const faction = snap.factions.find((f) => f.id === factionId)!;
-  p.factionId = faction.id;
-  p.partyId = faction.partyId;
-  p.draftedYear = snap.game.year;
-  snap.game.pendingDraftPool = snap.game.pendingDraftPool.filter((id) => id !== p.id);
-  snap.game.draftRoundOrder.shift();
-  addLog(snap, '2.1.1', 'draft', `${faction.name} drafted ${p.firstName} ${p.lastName} (${p.state.toUpperCase()}, ${p.ideology}, PV ${p.pvCache}).`);
+  recordDraftPick(snap, factionId, politicianId);
 }
 
 // ============================================================================

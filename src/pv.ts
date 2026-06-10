@@ -9,7 +9,7 @@ const POSITIVE: Trait[] = [
 
 const NEGATIVE: Trait[] = ['Incompetent', 'Passive', 'Unlikable', 'Puritan', 'Domestic Apathy', 'Flip-Flopper', 'Corrupt', 'Scandalous'];
 
-const OFFICE_PRESTIGE: Record<string, number> = {
+export const OFFICE_PRESTIGE: Record<string, number> = {
   President: 30,
   VicePresident: 12,
   ChiefJustice: 18,

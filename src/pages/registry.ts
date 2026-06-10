@@ -20,7 +20,9 @@ import { WarsPage } from './WarsPage';
 import { SettingsPage } from './SettingsPage';
 import { ContinentalCongressPage } from './ContinentalCongressPage';
 import { RevWarDashboard } from './RevWarDashboard';
-import { DraftSummary } from './DraftSummary';
+import { Draft } from './Draft';
+import { DraftScouting } from './DraftScouting';
+import { DraftHistory } from './DraftHistory';
 import { TerritoriesPage } from './TerritoriesPage';
 
 export type PageId =
@@ -46,7 +48,9 @@ export type PageId =
   | 'settings'
   | 'continentalCongress'
   | 'revWar'
-  | 'draftSummary'
+  | 'draft'
+  | 'draftScouting'
+  | 'draftHistory'
   | 'territories';
 
 export const Pages: Record<PageId, () => JSX.Element> = {
@@ -72,6 +76,8 @@ export const Pages: Record<PageId, () => JSX.Element> = {
   settings: SettingsPage,
   continentalCongress: ContinentalCongressPage,
   revWar: RevWarDashboard,
-  draftSummary: DraftSummary,
+  draft: Draft,
+  draftScouting: DraftScouting,
+  draftHistory: DraftHistory,
   territories: TerritoriesPage,
 };

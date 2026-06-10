@@ -1,10 +1,10 @@
 import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react';
-import type { FullGameSnapshot, EraEvent, Politician, ConstitutionalConvention } from '../types';
+import type { FullGameSnapshot, EraEvent, ConstitutionalConvention, Politician } from '../types';
 import { loadSnapshot, saveSnapshot, clearDb, exportJson, importJson } from '../db';
 import { build1856Scenario } from '../data/scenario1856';
 import { build1772Scenario } from '../data/scenario1772';
 import { runCurrentPhase, advancePhase } from '../engine/engine';
-import { playerDraftPick, resolveEraEvent } from '../engine/phaseRunners';
+import { playerDraftPick, resolveEraEvent, simOneDraftPick, autoPickForPlayer } from '../engine/phaseRunners';
 import { autoFillCPUVotes, applyConvention } from '../engine/constitutionalConvention';
 import { parseDraftCsv, type ParseResult } from '../data/draftImport';
 import { admitState } from '../engine/territories';
@@ -12,7 +12,6 @@ import { loadStandardDraftClasses } from '../data/standardDraftClasses';
 
 type Modal =
   | { type: 'none' }
-  | { type: 'draft'; pool: Politician[] }
   | { type: 'eraEvent'; event: EraEvent }
   | { type: 'convention'; convention: ConstitutionalConvention };
 
@@ -25,6 +24,9 @@ interface GameContextValue {
   loadGame: () => Promise<void>;
   advance: () => Promise<void>;
   draftPick: (politicianId: string) => Promise<void>;
+  simOnePick: () => Promise<void>;
+  simToMyNextPick: () => Promise<void>;
+  simToEndOfDraft: () => Promise<void>;
   chooseEraResponse: (eventId: string, responseId: string) => Promise<void>;
   setCareerTrack: (politicianId: string, track: Politician['careerTrack']) => Promise<void>;
   setConventionVote: (articleKey: string, optionId: string) => void;
@@ -89,6 +91,35 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
       if (s.game.lastDraftYear == null) s.game.lastDraftYear = s.game.startYear;
       dirty = true;
     }
+    // Backfill draftHistory for legacy saves. Pick order is unrecoverable, so
+    // sort by pvCache desc within each year as a best-effort proxy.
+    if (s.game.draftHistory == null) {
+      const byYear = new Map<number, typeof s.politicians>();
+      for (const p of s.politicians) {
+        if (p.factionId && p.draftedYear != null) {
+          const arr = byYear.get(p.draftedYear) ?? [];
+          arr.push(p);
+          byYear.set(p.draftedYear, arr);
+        }
+      }
+      const factionCount = Math.max(1, s.factions.length);
+      const years: { year: number; picks: { pickNumber: number; round: number; factionId: string; politicianId: string }[] }[] = [];
+      for (const [year, group] of byYear) {
+        group.sort((a, b) => b.pvCache - a.pvCache);
+        years.push({
+          year,
+          picks: group.map((p, i) => ({
+            pickNumber: i + 1,
+            round: Math.ceil((i + 1) / factionCount),
+            factionId: p.factionId!,
+            politicianId: p.id,
+          })),
+        });
+      }
+      years.sort((a, b) => a.year - b.year);
+      s.game.draftHistory = years;
+      dirty = true;
+    }
     return dirty ? { ...s } : s;
   }, []);
 
@@ -139,7 +170,6 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
     const result = runCurrentPhase(draft);
     if (result.needsPlayerInput === 'draft') {
       setSnapshot(draft);
-      setModal({ type: 'draft', pool: result.payload as Politician[] });
       await persist(draft);
       return;
     }
@@ -169,12 +199,48 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
     const result = runCurrentPhase(draft);
     if (result.needsPlayerInput === 'draft') {
       setSnapshot(draft);
-      setModal({ type: 'draft', pool: result.payload as Politician[] });
       await persist(draft);
       return;
     }
-    setModal({ type: 'none' });
+    // If that was the last pick, leave the snapshot at phase 2.1.1 with empty
+    // pool/order so the Draft page can show the "complete" banner and the
+    // player explicitly clicks Continue. Avoids skipping past the result view.
+    if (draft.game.phaseId === '2.1.1' && draft.game.pendingDraftPool.length === 0 && draft.game.draftRoundOrder.length === 0) {
+      setSnapshot(draft);
+      await persist(draft);
+      return;
+    }
     advancePhase(draft);
+    setSnapshot(draft);
+    await persist(draft);
+  }, [snapshot, persist]);
+
+  const simOnePick = useCallback(async () => {
+    if (!snapshot) return;
+    const draft: FullGameSnapshot = JSON.parse(JSON.stringify(snapshot));
+    simOneDraftPick(draft);
+    setSnapshot(draft);
+    await persist(draft);
+  }, [snapshot, persist]);
+
+  const simToMyNextPick = useCallback(async () => {
+    if (!snapshot) return;
+    const draft: FullGameSnapshot = JSON.parse(JSON.stringify(snapshot));
+    while (draft.game.draftRoundOrder.length > 0) {
+      const r = simOneDraftPick(draft);
+      if (r.needsPlayer) break;
+    }
+    setSnapshot(draft);
+    await persist(draft);
+  }, [snapshot, persist]);
+
+  const simToEndOfDraft = useCallback(async () => {
+    if (!snapshot) return;
+    const draft: FullGameSnapshot = JSON.parse(JSON.stringify(snapshot));
+    while (draft.game.draftRoundOrder.length > 0) {
+      const r = simOneDraftPick(draft);
+      if (r.needsPlayer) autoPickForPlayer(draft);
+    }
     setSnapshot(draft);
     await persist(draft);
   }, [snapshot, persist]);
@@ -310,6 +376,9 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
     loadGame,
     advance,
     draftPick,
+    simOnePick,
+    simToMyNextPick,
+    simToEndOfDraft,
     chooseEraResponse,
     setCareerTrack,
     setConventionVote,
