@@ -37,6 +37,11 @@ and steer era events.
 The bundled "standard draft classes" are **generated**, not hand-written. Do NOT
 hand-edit `src/data/defaultDraftClasses.ts`, `public/standard-draft-classes.json`,
 or `politicians-dataset.csv` — edit the scripts and regenerate.
+
+> **Adding politicians from historical sources** (the user sends Wikipedia
+> election pages, etc.): read **`docs/draft-class-authoring.md`** first — it's
+> the playbook with the established conventions, the who-to-include bar, the
+> sub-floor balance rule, stat/ideology heuristics, and a progress tracker.
 - `scripts/seedDataset.mjs` — curated authoring source:
   - `CURATED_ROWS` — marquee in-game figures; **override** same-named dataset entries
   - `ERA_FIGURES` — founding-era notables who never served in Congress; **additive-only**
