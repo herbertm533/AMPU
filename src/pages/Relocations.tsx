@@ -204,10 +204,18 @@ export function Relocations(): JSX.Element {
                 </option>
               ))}
             </select>
-            {movingOdds && (
+            {movingOdds && movingDest && (
               <span className="text-xs">
                 Success: <span className="font-semibold">{pct(movingOdds.success)}%</span>
                 {' · '}Carpetbagger risk: <span className="font-semibold text-rose-600 dark:text-rose-400">{pct(movingOdds.carpetbagger)}%</span>
+                {' · '}Bias:{' '}
+                <span className={`font-semibold ${movingDest.bias > 0 ? 'text-red-600 dark:text-red-400' : movingDest.bias < 0 ? 'text-blue-600 dark:text-blue-400' : 'text-slate-500'}`}>
+                  {movingDest.bias > 0 ? `+${movingDest.bias.toFixed(1)}R` : movingDest.bias < 0 ? `${(-movingDest.bias).toFixed(1)}D` : 'Neutral'}
+                </span>
+                {' · '}Governor:{' '}
+                {movingDest.governorId
+                  ? <span className="font-semibold">{polName(movingDest.governorId)}</span>
+                  : <span className="text-slate-400">Vacant</span>}
               </span>
             )}
             <button
