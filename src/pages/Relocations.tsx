@@ -274,29 +274,6 @@ export function Relocations(): JSX.Element {
         </div>
       </details>
 
-      <div className="flex gap-2 flex-wrap items-center text-xs">
-        <label className="flex items-center gap-1">
-          <span className="text-slate-500">Status:</span>
-          <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value as StatusFilter)} className="rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-2 py-1">
-            <option value="all">All</option>
-            <option value="free">Free</option>
-            <option value="cooldown">On cooldown</option>
-            <option value="inOffice">In office</option>
-          </select>
-        </label>
-      </div>
-
-      {rows.length === 0 && base.length === 0 ? (
-        <p className="text-sm text-slate-500">{isPlayerView ? 'No free politicians to relocate.' : 'This faction has no active politicians.'}</p>
-      ) : (
-        <SortableTable
-          rows={rows}
-          columns={columns}
-          rowKey={(p) => p.id}
-          initialSort={{ key: 'pv', dir: 'desc' }}
-        />
-      )}
-
       <div className="rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800">
         <div className="px-3 py-2 border-b border-slate-300 dark:border-slate-700">
           <h3 className="font-semibold text-sm">Recent moves {faction ? `— ${faction.name}` : ''}</h3>
@@ -323,6 +300,29 @@ export function Relocations(): JSX.Element {
           </ul>
         )}
       </div>
+
+      <div className="flex gap-2 flex-wrap items-center text-xs">
+        <label className="flex items-center gap-1">
+          <span className="text-slate-500">Status:</span>
+          <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value as StatusFilter)} className="rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-2 py-1">
+            <option value="all">All</option>
+            <option value="free">Free</option>
+            <option value="cooldown">On cooldown</option>
+            <option value="inOffice">In office</option>
+          </select>
+        </label>
+      </div>
+
+      {rows.length === 0 && base.length === 0 ? (
+        <p className="text-sm text-slate-500">{isPlayerView ? 'No free politicians to relocate.' : 'This faction has no active politicians.'}</p>
+      ) : (
+        <SortableTable
+          rows={rows}
+          columns={columns}
+          rowKey={(p) => p.id}
+          initialSort={{ key: 'pv', dir: 'desc' }}
+        />
+      )}
     </div>
   );
 }
