@@ -13,6 +13,7 @@ function Shell(): JSX.Element {
   const [page, setPage] = useState<PageId>('dashboard');
   const lastDraftEntryKey = useRef<string | null>(null);
   const lastCareerEntryKey = useRef<string | null>(null);
+  const lastRelocationEntryKey = useRef<string | null>(null);
 
   // Auto-navigate to Draft once per draft phase entry. The entry key combines
   // year + phaseId so leaving the page and returning during the same draft
@@ -47,6 +48,21 @@ function Shell(): JSX.Element {
       }
     } else {
       lastCareerEntryKey.current = null;
+    }
+  }, [snapshot?.game.phaseId, snapshot?.game.year]);
+
+  // Auto-navigate to Relocations once per 2.1.4 resting window (the move
+  // window) — same key scheme as the careers effect above.
+  useEffect(() => {
+    const g = snapshot?.game;
+    if (g && g.phaseId === '2.1.4') {
+      const key = `${g.year}:2.1.4`;
+      if (lastRelocationEntryKey.current !== key) {
+        lastRelocationEntryKey.current = key;
+        setPage('relocations');
+      }
+    } else {
+      lastRelocationEntryKey.current = null;
     }
   }, [snapshot?.game.phaseId, snapshot?.game.year]);
 

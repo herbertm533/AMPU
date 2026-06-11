@@ -1,7 +1,7 @@
-import type { FullGameSnapshot, PhaseId, Politician, EraEvent, Legislation, ElectionResult, NationalMeters, Ideology, PartyId, SkillKey, Trait, CareerTrack } from '../types';
-import { IDEOLOGY_ORDER, SKILLS, POSITIVE_TRAITS, TRACK_SKILL, TRACK_THEMED_TRAITS, CAREER_RANDOM_NEGATIVES, CAREER_ODDS, CAREER_TRACK_MAX_YEARS, CAREER_TRACK_CAP, CAREER_GAINS_CAP } from '../types';
+import type { FullGameSnapshot, PhaseId, Politician, EraEvent, Legislation, ElectionResult, NationalMeters, Ideology, PartyId, SkillKey, Trait, CareerTrack, State, RelocationEntry, RelocationBand } from '../types';
+import { IDEOLOGY_ORDER, SKILLS, POSITIVE_TRAITS, TRACK_SKILL, TRACK_THEMED_TRAITS, CAREER_RANDOM_NEGATIVES, CAREER_ODDS, CAREER_TRACK_MAX_YEARS, CAREER_TRACK_CAP, CAREER_GAINS_CAP, RELOCATION_ODDS, RELOCATION_ATTEMPTS_PER_TURN, RELOCATIONS_CAP, CARPETBAGGER_LADDER } from '../types';
 import { addLog } from './log';
-import { uid, chance, d100, pick, clamp, shuffle } from '../rng';
+import { uid, chance, d100, pick, clamp, shuffle, rand } from '../rng';
 import { refreshPv } from '../pv';
 import { buildEraEventsForYear } from '../data/eraEvents1856';
 import { SCRIPTED_1772 } from '../data/eraEvents1772';
@@ -437,25 +437,154 @@ export function runPhase_2_1_3_FlipFlopper(snap: FullGameSnapshot): void {
 // ============================================================================
 // 2.1.4 Relocations (auto)
 // ============================================================================
-export function runPhase_2_1_4_Relocations(snap: FullGameSnapshot): void {
-  for (const p of snap.politicians) {
-    if (p.factionId === snap.game.playerFactionId) continue;
-    if (p.currentOffice || !p.altState) continue;
-    if (chance(0.3)) {
-      const fromState = snap.states.find((s) => s.id === p.state);
-      const toState = snap.states.find((s) => s.id === p.altState);
-      if (!fromState || !toState) continue;
-      const target = fromState.region === toState.region ? 70 : 45;
-      const roll = d100();
-      if (roll <= target) {
-        p.state = toState.id;
-        p.altState = undefined;
-        addLog(snap, '2.1.4', 'roll', `${p.firstName} ${p.lastName} relocated to ${toState.abbr}. Roll ${roll} / ${target}.`);
-      } else {
-        addLog(snap, '2.1.4', 'roll', `${p.firstName} ${p.lastName} failed relocation to ${toState.abbr}. Roll ${roll} / ${target}.`);
+// Lazy year normalization — the only counter accessor. Same-year counts always
+// survive (the player's pre-tick attempts already stamped the year).
+function attemptCounts(snap: FullGameSnapshot): Record<string, number> {
+  const g = snap.game;
+  if (!g.relocationAttempts || g.relocationAttempts.year !== g.year) {
+    g.relocationAttempts = { year: g.year, counts: {} };
+  }
+  return g.relocationAttempts.counts;
+}
+
+// Shared band/odds math — used by the resolver AND the page picker, so the
+// odds displayed are structurally the odds rolled.
+export function relocationOdds(p: Politician, from: State, dest: State): { band: RelocationBand; success: number; carpetbagger: number } {
+  const sameRegion = from.region === dest.region;
+  const isAlt = p.altState === dest.id;
+  const band: RelocationBand = sameRegion
+    ? (isAlt ? 'sameRegionAlt' : 'sameRegion')
+    : (isAlt ? 'crossRegionAlt' : 'crossRegion');
+  const carpetBase = sameRegion ? RELOCATION_ODDS.carpetbagger.sameRegion : RELOCATION_ODDS.carpetbagger.crossRegion;
+  return {
+    band,
+    success: RELOCATION_ODDS.success[band],
+    carpetbagger: carpetBase * (isAlt ? RELOCATION_ODDS.carpetbagger.altStateFactor : 1),
+  };
+}
+
+function recordRelocation(snap: FullGameSnapshot, entry: RelocationEntry): void {
+  if (!snap.game.relocations) snap.game.relocations = [];
+  const arr = snap.game.relocations;
+  arr.push(entry);
+  if (arr.length > RELOCATIONS_CAP) arr.splice(0, arr.length - RELOCATIONS_CAP);
+}
+
+// The single attempt path (CPU and player both come through here).
+// Returns null = REJECTED (no attempt happened); non-null = the attempt RAN —
+// counter, cooldown, and feed are mutated whether the roll succeeded or not.
+function resolveRelocation(snap: FullGameSnapshot, p: Politician, destStateId: string): RelocationEntry | null {
+  const g = snap.game;
+  if (g.phaseId !== '2.1.4') return null;
+  if (p.deathYear || p.retiredYear || p.currentOffice || !p.factionId) return null;
+  const from = snap.states.find((s) => s.id === p.state);
+  const dest = snap.states.find((s) => s.id === destStateId);
+  if (!from || !dest || destStateId === p.state) return null;
+  if (p.lastRelocationAttemptYear === g.year) return null;
+  const counts = attemptCounts(snap);
+  if ((counts[p.factionId] ?? 0) >= RELOCATION_ATTEMPTS_PER_TURN) return null;
+
+  counts[p.factionId] = (counts[p.factionId] ?? 0) + 1;
+  p.lastRelocationAttemptYear = g.year;
+  const fromState = p.state;
+
+  const { band, success: pS, carpetbagger: pC } = relocationOdds(p, from, dest);
+  const success = chance(pS);
+  const traitsGained: Trait[] = [];
+  if (success) {
+    p.state = dest.id;
+    if (p.altState === dest.id) p.altState = undefined; // consumed only when used
+    if (chance(pC)) {
+      const t = CARPETBAGGER_LADDER.find((tr) => !p.traits.includes(tr));
+      if (t) {
+        p.traits.push(t);
+        traitsGained.push(t);
       }
     }
   }
+
+  const entry: RelocationEntry = {
+    year: g.year,
+    politicianId: p.id,
+    factionId: p.factionId,
+    fromState,
+    toState: dest.id,
+    band,
+    success,
+    traitsGained,
+  };
+  recordRelocation(snap, entry);
+  return entry;
+}
+
+// Contract differs from setPlayerCareerTrack: TRUE means the attempt RESOLVED —
+// a failed roll returns true and HAS mutated state (cooldown + counter + feed),
+// so the caller must persist. FALSE only for rejected attempts.
+export function attemptPlayerRelocation(snap: FullGameSnapshot, politicianId: string, destStateId: string): boolean {
+  const p = snap.politicians.find((pp) => pp.id === politicianId);
+  if (!p || p.factionId !== snap.game.playerFactionId) return false;
+  const entry = resolveRelocation(snap, p, destStateId);
+  if (!entry) return false;
+  if (entry.traitsGained.length > 0) snap.politicians = refreshPv(snap.politicians);
+  return true;
+}
+
+export function runPhase_2_1_4_Relocations(snap: FullGameSnapshot): void {
+  if (!snap.game.relocations) snap.game.relocations = [];
+
+  // Seed pass — one-shot altState assignment per politician (lazy: covers all
+  // construction paths and legacy saves; never re-rolled, never re-routed).
+  for (const p of snap.politicians) {
+    if (p.deathYear || p.retiredYear || p.altStateSeeded) continue;
+    const home = snap.states.find((s) => s.id === p.state);
+    if (home) {
+      const r = rand();
+      if (r < RELOCATION_ODDS.seed.sameRegion) {
+        const pool = snap.states.filter((s) => s.region === home.region && s.id !== home.id);
+        if (pool.length > 0) p.altState = pick(pool).id;
+      } else if (r < RELOCATION_ODDS.seed.sameRegion + RELOCATION_ODDS.seed.crossRegion) {
+        const pool = snap.states.filter((s) => s.region !== home.region);
+        if (pool.length > 0) p.altState = pick(pool).id;
+      }
+    }
+    p.altStateSeeded = true;
+  }
+
+  attemptCounts(snap); // lazy counter reset for the new year
+
+  // CPU pass. Resident counts snapshot at tick start (deterministic & cheap).
+  const residentCount = new Map<string, number>();
+  for (const p of snap.politicians) {
+    if (p.deathYear || p.retiredYear) continue;
+    residentCount.set(p.state, (residentCount.get(p.state) ?? 0) + 1);
+  }
+  for (const p of snap.politicians) {
+    if (!p.factionId || p.factionId === snap.game.playerFactionId) continue;
+    if (p.deathYear || p.retiredYear || p.currentOffice) continue;
+    if (p.lastRelocationAttemptYear === snap.game.year) continue;
+    if ((attemptCounts(snap)[p.factionId] ?? 0) >= RELOCATION_ATTEMPTS_PER_TURN) continue;
+    const altUsable = p.altState && p.altState !== p.state && snap.states.some((s) => s.id === p.altState);
+    if (altUsable) {
+      if (chance(RELOCATION_ODDS.cpuGate.withAltState)) resolveRelocation(snap, p, p.altState!);
+    } else if (chance(RELOCATION_ODDS.cpuGate.withoutAltState)) {
+      // Thin-state heuristic: same region first, then fewest residents, then id.
+      const home = snap.states.find((s) => s.id === p.state);
+      const candidates = snap.states.filter((s) => s.id !== p.state);
+      if (candidates.length === 0) continue;
+      candidates.sort((a, b) => {
+        const aSame = home && a.region === home.region ? 0 : 1;
+        const bSame = home && b.region === home.region ? 0 : 1;
+        if (aSame !== bSame) return aSame - bSame;
+        const ra = residentCount.get(a.id) ?? 0;
+        const rb = residentCount.get(b.id) ?? 0;
+        if (ra !== rb) return ra - rb;
+        return a.id.localeCompare(b.id);
+      });
+      resolveRelocation(snap, p, candidates[0].id);
+    }
+  }
+
+  snap.politicians = refreshPv(snap.politicians);
 }
 
 // ============================================================================

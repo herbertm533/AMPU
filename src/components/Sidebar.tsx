@@ -32,6 +32,7 @@ export function Sidebar({ current, onNavigate }: { current: PageId; onNavigate: 
         { id: 'roster', label: 'Roster' },
         { id: 'factionLeader', label: 'Faction Leader' },
         { id: 'careers', label: 'Career Tracks' },
+        { id: 'relocations', label: 'Relocations' },
         { id: 'kingmakers', label: 'Kingmakers & Protégés' },
         { id: 'draft', label: 'Draft' },
       ],
