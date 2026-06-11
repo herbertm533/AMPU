@@ -33,6 +33,7 @@ export function Sidebar({ current, onNavigate }: { current: PageId; onNavigate: 
         { id: 'factionLeader', label: 'Faction Leader' },
         { id: 'careers', label: 'Career Tracks' },
         { id: 'relocations', label: 'Relocations' },
+        { id: 'ideology', label: 'Ideology Shifts' },
         { id: 'kingmakers', label: 'Kingmakers & Protégés' },
         { id: 'draft', label: 'Draft' },
       ],

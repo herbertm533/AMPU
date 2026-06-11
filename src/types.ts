@@ -99,7 +99,9 @@ export type Trait =
   | 'Obscure'
   | 'Traitor'
   | 'Carpetbagger'
-  | 'Outsider';
+  | 'Outsider'
+  | 'Ideologue'
+  | 'Impressionable';
 
 export const POSITIVE_TRAITS: Trait[] = [
   'Charismatic',
@@ -128,6 +130,7 @@ export const POSITIVE_TRAITS: Trait[] = [
   'Military',
   'Egghead',
   'Leadership',
+  'Ideologue',
 ];
 
 export const NEGATIVE_TRAITS: Trait[] = [
@@ -145,6 +148,7 @@ export const NEGATIVE_TRAITS: Trait[] = [
   'Traitor',
   'Carpetbagger',
   'Outsider',
+  'Impressionable',
 ];
 
 // Career-track tables — single source for engine rolls AND the page legend.
@@ -193,6 +197,20 @@ export const RELOCATIONS_CAP = 200;
 // Ordered ladder (first not held), not a draw pool.
 export const CARPETBAGGER_LADDER: Trait[] = ['Carpetbagger', 'Outsider', 'Controversial', 'Unlikable'];
 
+// Ideology-shift tables — single source for engine rolls AND the page legend.
+export const IDEOLOGY_SHIFT_ODDS = {
+  drift: { faction: 0.08, stateBias: 0.04, stateBiasMin: 1.0, residual: 0.01 },
+  attempt: { self: 0.65, opposed: 0.15, ffRisk: 0.5 }, // ffRisk is NOT trait-modified
+  traitMods: {
+    Ideologue: { drift: 0, self: 0.5, opposed: 0.25 },
+    Impressionable: { drift: 2, self: 1, opposed: 2 },
+  },
+  seed: { ideologue: 0.1, impressionable: 0.08 }, // remainder = neither
+  cpu: { selfGate: 0.3, selfBudget: 3, opposedGate: 0.1, opposedScan: 10 },
+} as const;
+export const IDEOLOGY_ATTEMPTS_PER_TURN = 5;
+export const IDEOLOGY_SHIFTS_CAP = 200;
+
 export type OfficeType =
   | 'President'
   | 'VicePresident'
@@ -231,6 +249,8 @@ export interface Politician {
   altState?: string;
   altStateSeeded?: boolean;
   lastRelocationAttemptYear?: number;
+  ideologyTraitsSeeded?: boolean;
+  lastIdeologyAttemptYear?: number; // stamps ATTEMPTS incl. failures, not shifts
   factionId: string | null;
   partyId: PartyId | null;
   ideology: Ideology;
@@ -534,6 +554,8 @@ export interface GameState {
   careerGains?: CareerGainEntry[];
   relocations?: RelocationEntry[];
   relocationAttempts?: { year: number; counts: Record<string, number> };
+  ideologyShifts?: IdeologyShiftEntry[];
+  ideologyAttempts?: { year: number; counts: Record<string, number> };
   customDraftClasses?: ImportedDraftee[];
   inauguralDraftSeeded?: boolean;
 }
@@ -572,6 +594,18 @@ export interface RelocationEntry {
   band: RelocationBand;
   success: boolean;
   traitsGained: Trait[]; // empty on failure; at most one entry in v1
+}
+
+export interface IdeologyShiftEntry {
+  year: number;
+  politicianId: string;
+  subjectFactionId: string | null; // subject's faction at shift time (feed: actor OR subject)
+  actorFactionId?: string; // absent on passive drift entries
+  kind: 'drift' | 'stateBias' | 'self' | 'opposed';
+  fromIdeology: Ideology;
+  toIdeology: Ideology; // === fromIdeology on failed attempts
+  success: boolean; // always true on drift entries (movements only)
+  flipFlopper: boolean; // opposed success that also landed the FF roll
 }
 
 // A draftee imported from the user's CSV dataset. Persisted on the game state
