@@ -174,6 +174,7 @@ export const CAREER_ODDS = {
 } as const;
 
 export const CAREER_TRACK_MAX_YEARS = 20;
+export const CAREER_TRACK_CAP = 5; // max politicians per faction on EACH track at one time
 export const CAREER_GAINS_CAP = 200;
 
 export type OfficeType =

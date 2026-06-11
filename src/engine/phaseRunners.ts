@@ -1,5 +1,5 @@
 import type { FullGameSnapshot, PhaseId, Politician, EraEvent, Legislation, ElectionResult, NationalMeters, Ideology, PartyId, SkillKey, Trait, CareerTrack } from '../types';
-import { IDEOLOGY_ORDER, SKILLS, POSITIVE_TRAITS, TRACK_SKILL, TRACK_THEMED_TRAITS, CAREER_RANDOM_NEGATIVES, CAREER_ODDS, CAREER_TRACK_MAX_YEARS, CAREER_GAINS_CAP } from '../types';
+import { IDEOLOGY_ORDER, SKILLS, POSITIVE_TRAITS, TRACK_SKILL, TRACK_THEMED_TRAITS, CAREER_RANDOM_NEGATIVES, CAREER_ODDS, CAREER_TRACK_MAX_YEARS, CAREER_TRACK_CAP, CAREER_GAINS_CAP } from '../types';
 import { addLog } from './log';
 import { uid, chance, d100, pick, clamp, shuffle } from '../rng';
 import { refreshPv } from '../pv';
@@ -326,16 +326,14 @@ function rollThreshold(snap: FullGameSnapshot, p: Politician, thresholdYears: nu
   }
 }
 
-// Best-uncapped rule: highest skill below cap, ties broken by SKILLS order.
-function bestUncappedTrack(p: Politician): CareerTrack | null {
-  let bestKey: SkillKey | null = null;
-  for (const k of SKILLS) {
-    if (p.skills[k] >= 5) continue;
-    if (bestKey === null || p.skills[k] > p.skills[bestKey]) bestKey = k;
-  }
-  if (!bestKey) return null;
-  for (const [track, skill] of Object.entries(TRACK_SKILL) as [CareerTrack, SkillKey | null][]) {
-    if (skill === bestKey) return track;
+// Best-uncapped rule: highest skill below cap, ties broken by SKILLS order
+// (stable sort over the SKILLS-ordered list). Skips tracks that are full so
+// the CPU falls through to its next-best skill with room.
+function bestAvailableTrack(p: Politician, isTrackFull: (t: CareerTrack) => boolean): CareerTrack | null {
+  const candidates = SKILLS.filter((k) => p.skills[k] < 5).sort((a, b) => p.skills[b] - p.skills[a]);
+  for (const k of candidates) {
+    const entry = (Object.entries(TRACK_SKILL) as [CareerTrack, SkillKey | null][]).find(([, s]) => s === k);
+    if (entry && !isTrackFull(entry[0])) return entry[0];
   }
   return null;
 }
@@ -345,24 +343,45 @@ export function runPhase_2_1_2_CareerTracks(snap: FullGameSnapshot): void {
   // migration (gated on careerGains == null) can never fire again.
   if (!snap.game.careerGains) snap.game.careerGains = [];
 
+  // Per-faction per-track live slot count (alive, not retired). Paused
+  // in-office politicians hold their slot.
+  const trackCount = new Map<string, number>();
+  const slotKey = (fid: string, t: CareerTrack): string => `${fid}:${t}`;
+  for (const p of snap.politicians) {
+    if (!p.factionId || p.deathYear || p.retiredYear) continue;
+    if (p.careerTrack) {
+      const k = slotKey(p.factionId, p.careerTrack);
+      trackCount.set(k, (trackCount.get(k) ?? 0) + 1);
+    }
+  }
+
   // Pass 1 — CPU management. Mid-track CPU politicians are never touched.
+  // Cap-aware per track: a full track is skipped and the CPU falls through to
+  // the next-best skill with room; legacy-save overflow drains naturally via
+  // exhaustion (which always clears).
   for (const p of snap.politicians) {
     if (!p.factionId || p.factionId === snap.game.playerFactionId) continue;
     if (p.deathYear || p.retiredYear || p.currentOffice) continue;
+    const fid = p.factionId;
+    const isFull = (t: CareerTrack): boolean => (trackCount.get(slotKey(fid, t)) ?? 0) >= CAREER_TRACK_CAP;
     if (p.careerTrack && p.careerTrackYears >= CAREER_TRACK_MAX_YEARS) {
+      const oldKey = slotKey(fid, p.careerTrack);
+      trackCount.set(oldKey, (trackCount.get(oldKey) ?? 1) - 1);
+      p.careerTrack = null;
+      p.careerTrackYears = 0;
       if (p.age < 60) {
-        const next = bestUncappedTrack(p);
-        p.careerTrack = next;
-        p.careerTrackYears = 0;
-      } else {
-        p.careerTrack = null;
-        p.careerTrackYears = 0;
+        const next = bestAvailableTrack(p, isFull);
+        if (next) {
+          p.careerTrack = next;
+          trackCount.set(slotKey(fid, next), (trackCount.get(slotKey(fid, next)) ?? 0) + 1);
+        }
       }
     } else if (!p.careerTrack && p.age < 50) {
-      const next = bestUncappedTrack(p);
+      const next = bestAvailableTrack(p, isFull);
       if (next) {
         p.careerTrack = next;
         p.careerTrackYears = 0;
+        trackCount.set(slotKey(fid, next), (trackCount.get(slotKey(fid, next)) ?? 0) + 1);
       }
     }
   }
@@ -387,6 +406,16 @@ export function setPlayerCareerTrack(snap: FullGameSnapshot, politicianId: strin
   if (!p || p.factionId !== snap.game.playerFactionId) return false;
   if (p.currentOffice || p.deathYear || p.retiredYear) return false;
   if (track === p.careerTrack) return false; // re-select must not reset the counter
+  // Per-track cap: block assignment to a full track (clearing always allowed;
+  // the no-op check above means p is never counted on the target track).
+  if (track !== null) {
+    const onTarget = snap.politicians.filter((pp) =>
+      pp.factionId === snap.game.playerFactionId
+      && !pp.deathYear && !pp.retiredYear
+      && pp.careerTrack === track
+    ).length;
+    if (onTarget >= CAREER_TRACK_CAP) return false;
+  }
   p.careerTrack = track;
   p.careerTrackYears = 0;
   return true;

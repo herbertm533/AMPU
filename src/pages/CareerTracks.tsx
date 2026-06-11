@@ -4,7 +4,7 @@ import { SortableTable, type Column } from '../components/SortableTable';
 import { PartyBadge } from '../components/PartyBadge';
 import {
   CAREER_TRACKS, TRACK_SKILL, TRACK_THEMED_TRAITS, CAREER_RANDOM_NEGATIVES,
-  CAREER_ODDS, CAREER_TRACK_MAX_YEARS, NEGATIVE_TRAITS, IDEOLOGY_ORDER,
+  CAREER_ODDS, CAREER_TRACK_MAX_YEARS, CAREER_TRACK_CAP, NEGATIVE_TRAITS, IDEOLOGY_ORDER,
 } from '../types';
 import type { CareerTrack, Politician } from '../types';
 
@@ -45,6 +45,10 @@ export function CareerTracks(): JSX.Element {
   ];
 
   const base = snapshot.politicians.filter((p) => p.factionId === activeFactionId && !p.deathYear && !p.retiredYear);
+  const trackUsage = new Map<CareerTrack, number>(CAREER_TRACKS.map((t) => [t, 0]));
+  for (const p of base) {
+    if (p.careerTrack) trackUsage.set(p.careerTrack, (trackUsage.get(p.careerTrack) ?? 0) + 1);
+  }
   const rows = base.filter((p) => {
     if (trackFilter === 'none' && p.careerTrack) return false;
     if (trackFilter !== 'all' && trackFilter !== 'none' && p.careerTrack !== trackFilter) return false;
@@ -147,7 +151,15 @@ export function CareerTracks(): JSX.Element {
             className="rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-2 py-0.5 text-xs disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <option value="">— None —</option>
-            {CAREER_TRACKS.map((t) => <option key={t} value={t}>{t}</option>)}
+            {CAREER_TRACKS.map((t) => {
+              const used = trackUsage.get(t) ?? 0;
+              const full = used >= CAREER_TRACK_CAP && p.careerTrack !== t;
+              return (
+                <option key={t} value={t} disabled={full}>
+                  {t} ({used}/{CAREER_TRACK_CAP}){full ? ' — full' : ''}
+                </option>
+              );
+            })}
           </select>
         );
       },
@@ -172,6 +184,23 @@ export function CareerTracks(): JSX.Element {
         </div>
       </div>
 
+      <div className="flex flex-wrap gap-1.5 text-xs">
+        {CAREER_TRACKS.map((t) => {
+          const used = trackUsage.get(t) ?? 0;
+          const full = used >= CAREER_TRACK_CAP;
+          return (
+            <span
+              key={t}
+              className={`rounded px-1.5 py-0.5 border ${full
+                ? 'border-amber-400 bg-amber-50 text-amber-700 dark:border-amber-600 dark:bg-amber-900/30 dark:text-amber-300 font-semibold'
+                : 'border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300'}`}
+            >
+              {t} {used}/{CAREER_TRACK_CAP}
+            </span>
+          );
+        })}
+      </div>
+
       <p className="text-sm text-slate-500 dark:text-slate-400">
         Politicians on a track roll for skill and trait gains at 4, 8, 12, 16, and 20 years.
         On-track politicians remain eligible for office; progress pauses while they serve.
@@ -194,6 +223,10 @@ export function CareerTracks(): JSX.Element {
           <p>
             Gains are permanent. Switching tracks resets the year counter to 0. Tracks exhaust at {CAREER_TRACK_MAX_YEARS} years.
             Holding office pauses accrual without losing progress.
+          </p>
+          <p>
+            Each faction can have at most <span className="font-semibold">{CAREER_TRACK_CAP} politicians on each track at one time</span>.
+            Paused (in-office) politicians still hold their slot. Clear or switch someone&apos;s track to free a slot.
           </p>
           <table className="mt-1">
             <thead><tr className="text-left"><th className="pr-3">Track</th><th className="pr-3">Skill</th><th>Themed traits</th></tr></thead>
