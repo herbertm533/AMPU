@@ -14,6 +14,7 @@ function Shell(): JSX.Element {
   const lastDraftEntryKey = useRef<string | null>(null);
   const lastCareerEntryKey = useRef<string | null>(null);
   const lastRelocationEntryKey = useRef<string | null>(null);
+  const lastIdeologyEntryKey = useRef<string | null>(null);
 
   // Auto-navigate to Draft once per draft phase entry. The entry key combines
   // year + phaseId so leaving the page and returning during the same draft
@@ -63,6 +64,20 @@ function Shell(): JSX.Element {
       }
     } else {
       lastRelocationEntryKey.current = null;
+    }
+  }, [snapshot?.game.phaseId, snapshot?.game.year]);
+
+  // Auto-navigate to Ideology Shifts once per 2.1.5 resting window.
+  useEffect(() => {
+    const g = snapshot?.game;
+    if (g && g.phaseId === '2.1.5') {
+      const key = `${g.year}:2.1.5`;
+      if (lastIdeologyEntryKey.current !== key) {
+        lastIdeologyEntryKey.current = key;
+        setPage('ideology');
+      }
+    } else {
+      lastIdeologyEntryKey.current = null;
     }
   }, [snapshot?.game.phaseId, snapshot?.game.year]);
 

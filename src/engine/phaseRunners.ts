@@ -1,5 +1,5 @@
-import type { FullGameSnapshot, PhaseId, Politician, EraEvent, Legislation, ElectionResult, NationalMeters, Ideology, PartyId, SkillKey, Trait, CareerTrack, State, RelocationEntry, RelocationBand } from '../types';
-import { IDEOLOGY_ORDER, SKILLS, POSITIVE_TRAITS, TRACK_SKILL, TRACK_THEMED_TRAITS, CAREER_RANDOM_NEGATIVES, CAREER_ODDS, CAREER_TRACK_MAX_YEARS, CAREER_TRACK_CAP, CAREER_GAINS_CAP, RELOCATION_ODDS, RELOCATION_ATTEMPTS_PER_TURN, RELOCATIONS_CAP, CARPETBAGGER_LADDER } from '../types';
+import type { FullGameSnapshot, PhaseId, Politician, EraEvent, Legislation, ElectionResult, NationalMeters, Ideology, PartyId, SkillKey, Trait, CareerTrack, State, RelocationEntry, RelocationBand, IdeologyShiftEntry } from '../types';
+import { IDEOLOGY_ORDER, SKILLS, POSITIVE_TRAITS, TRACK_SKILL, TRACK_THEMED_TRAITS, CAREER_RANDOM_NEGATIVES, CAREER_ODDS, CAREER_TRACK_MAX_YEARS, CAREER_TRACK_CAP, CAREER_GAINS_CAP, RELOCATION_ODDS, RELOCATION_ATTEMPTS_PER_TURN, RELOCATIONS_CAP, CARPETBAGGER_LADDER, IDEOLOGY_SHIFT_ODDS, IDEOLOGY_ATTEMPTS_PER_TURN, IDEOLOGY_SHIFTS_CAP } from '../types';
 import { addLog } from './log';
 import { uid, chance, d100, pick, clamp, shuffle, rand } from '../rng';
 import { refreshPv } from '../pv';
@@ -316,7 +316,8 @@ function rollThreshold(snap: FullGameSnapshot, p: Politician, thresholdYears: nu
   if (chance(CAREER_ODDS.random)) {
     const positive = chance(CAREER_ODDS.randomPositiveShare);
     const pool = positive
-      ? POSITIVE_TRAITS.filter((t) => !TRACK_THEMED_TRAITS[track].includes(t) && !p.traits.includes(t))
+      // Ideologue is seeded only by the 2.1.5 tick, never career-gained.
+      ? POSITIVE_TRAITS.filter((t) => t !== 'Ideologue' && !TRACK_THEMED_TRAITS[track].includes(t) && !p.traits.includes(t))
       : CAREER_RANDOM_NEGATIVES.filter((t) => !p.traits.includes(t));
     if (pool.length > 0) {
       const t = pick(pool);
@@ -590,24 +591,223 @@ export function runPhase_2_1_4_Relocations(snap: FullGameSnapshot): void {
 // ============================================================================
 // 2.1.5 Ideology shifts (auto)
 // ============================================================================
+// Lazy year normalization — the only ideology-attempts counter accessor.
+function ideologyAttemptCounts(snap: FullGameSnapshot): Record<string, number> {
+  const g = snap.game;
+  if (!g.ideologyAttempts || g.ideologyAttempts.year !== g.year) {
+    g.ideologyAttempts = { year: g.year, counts: {} };
+  }
+  return g.ideologyAttempts.counts;
+}
+
+function traitMult(p: Politician, kind: 'drift' | 'self' | 'opposed'): number {
+  let m = 1;
+  if (p.traits.includes('Ideologue')) m *= IDEOLOGY_SHIFT_ODDS.traitMods.Ideologue[kind];
+  if (p.traits.includes('Impressionable')) m *= IDEOLOGY_SHIFT_ODDS.traitMods.Impressionable[kind];
+  return m;
+}
+
+// Living-member mean ideology index, rounded half-up (x.5 rounds toward RW).
+// Deliberately diverges from 2.1.8's unfiltered (dead-counting) rollup.
+export function factionCenter(snap: FullGameSnapshot, factionId: string): number | null {
+  const members = snap.politicians.filter((p) => p.factionId === factionId && !p.deathYear && !p.retiredYear);
+  if (members.length === 0) return null;
+  const mean = members.reduce((s, p) => s + IDEOLOGY_ORDER.indexOf(p.ideology), 0) / members.length;
+  return Math.round(mean);
+}
+
+function stepToward(fromIdx: number, targetIdx: number): number {
+  return fromIdx === targetIdx ? fromIdx : fromIdx + Math.sign(targetIdx - fromIdx);
+}
+
+// Shared odds/step math — used by the resolver AND the page preview, so the
+// odds displayed are structurally the odds rolled.
+export function ideologyShiftOdds(p: Politician, kind: 'self' | 'opposed', actorCenter: number): { success: number; ffRisk: number; from: Ideology; to: Ideology } {
+  const success = clamp(IDEOLOGY_SHIFT_ODDS.attempt[kind] * traitMult(p, kind), 0, 1);
+  const ffRisk = kind === 'opposed' ? IDEOLOGY_SHIFT_ODDS.attempt.ffRisk : 0;
+  const fromIdx = IDEOLOGY_ORDER.indexOf(p.ideology);
+  return { success, ffRisk, from: p.ideology, to: IDEOLOGY_ORDER[stepToward(fromIdx, actorCenter)] };
+}
+
+function recordIdeologyShift(snap: FullGameSnapshot, entry: IdeologyShiftEntry): void {
+  if (!snap.game.ideologyShifts) snap.game.ideologyShifts = [];
+  const arr = snap.game.ideologyShifts;
+  arr.push(entry);
+  if (arr.length > IDEOLOGY_SHIFTS_CAP) arr.splice(0, arr.length - IDEOLOGY_SHIFTS_CAP);
+}
+
+// The single attempt path (CPU and player, self and opposed — kind is DERIVED
+// from actor vs subject faction, never passed). Returns null = REJECTED (no
+// attempt happened); non-null = the attempt RAN — counter, stamp, and feed are
+// mutated whether the roll succeeded or not.
+function resolveIdeologyShift(snap: FullGameSnapshot, actorFactionId: string, p: Politician): IdeologyShiftEntry | null {
+  const g = snap.game;
+  if (g.phaseId !== '2.1.5') return null;
+  if (p.deathYear || p.retiredYear) return null; // in-office IS a valid subject
+  if (!p.factionId) return null;
+  const kind: 'self' | 'opposed' = p.factionId === actorFactionId ? 'self' : 'opposed';
+  const center = factionCenter(snap, actorFactionId);
+  if (center === null) return null;
+  if (IDEOLOGY_ORDER.indexOf(p.ideology) === center) return null; // nothing to gain
+  if (p.lastIdeologyAttemptYear === g.year) return null; // one attempt per subject per turn
+  const counts = ideologyAttemptCounts(snap);
+  if ((counts[actorFactionId] ?? 0) >= IDEOLOGY_ATTEMPTS_PER_TURN) return null;
+
+  counts[actorFactionId] = (counts[actorFactionId] ?? 0) + 1;
+  p.lastIdeologyAttemptYear = g.year; // stamps failures too
+  const from = p.ideology;
+
+  const { success: pS, ffRisk, to } = ideologyShiftOdds(p, kind, center);
+  const success = chance(pS);
+  let flipFlopper = false;
+  if (success) {
+    p.ideology = to;
+    if (kind === 'opposed' && chance(ffRisk)) {
+      p.flipFlopperPenalty += 1;
+      flipFlopper = true;
+    }
+  }
+
+  const entry: IdeologyShiftEntry = {
+    year: g.year,
+    politicianId: p.id,
+    subjectFactionId: p.factionId,
+    actorFactionId,
+    kind,
+    fromIdeology: from,
+    toIdeology: success ? to : from,
+    success,
+    flipFlopper,
+  };
+  recordIdeologyShift(snap, entry);
+  return entry;
+}
+
+// Contract clone of attemptPlayerRelocation: TRUE means the attempt RESOLVED —
+// a failed roll returns true and HAS mutated state (counter + stamp + feed),
+// so the caller must persist. FALSE only for rejected attempts.
+export function attemptPlayerIdeologyShift(snap: FullGameSnapshot, politicianId: string): boolean {
+  const p = snap.politicians.find((pp) => pp.id === politicianId);
+  if (!p) return false;
+  const entry = resolveIdeologyShift(snap, snap.game.playerFactionId, p);
+  if (!entry) return false;
+  if (entry.flipFlopper) snap.politicians = refreshPv(snap.politicians);
+  return true;
+}
+
 export function runPhase_2_1_5_Ideology(snap: FullGameSnapshot): void {
-  let shifts = 0;
+  if (!snap.game.ideologyShifts) snap.game.ideologyShifts = [];
+
+  // Trait-seed pass — one-shot per politician (lazy: covers all construction
+  // paths and legacy saves; mutually exclusive; never re-rolled).
   for (const p of snap.politicians) {
-    if (chance(0.05)) {
-      const idx = IDEOLOGY_ORDER.indexOf(p.ideology);
-      const dir = chance(0.5) ? 1 : -1;
-      const newIdx = clamp(idx + dir, 0, IDEOLOGY_ORDER.length - 1);
-      if (newIdx !== idx) {
-        const old = p.ideology;
-        p.ideology = IDEOLOGY_ORDER[newIdx];
-        shifts++;
-        if (p.factionId === snap.game.playerFactionId || p.isHistorical) {
-          addLog(snap, '2.1.5', 'event', `${p.firstName} ${p.lastName} drifted from ${old} to ${p.ideology}.`);
+    if (p.deathYear || p.retiredYear || p.ideologyTraitsSeeded) continue;
+    if (!p.traits.includes('Ideologue') && !p.traits.includes('Impressionable')) {
+      const r = rand();
+      if (r < IDEOLOGY_SHIFT_ODDS.seed.ideologue) p.traits.push('Ideologue');
+      else if (r < IDEOLOGY_SHIFT_ODDS.seed.ideologue + IDEOLOGY_SHIFT_ODDS.seed.impressionable) p.traits.push('Impressionable');
+    }
+    p.ideologyTraitsSeeded = true;
+  }
+
+  ideologyAttemptCounts(snap); // lazy counter reset for the new year
+
+  // Tick-start center map: the drift pass measures the turn-start environment,
+  // untouched by this tick's CPU successes.
+  const centers = new Map<string, number | null>();
+  for (const f of snap.factions) centers.set(f.id, factionCenter(snap, f.id));
+
+  // CPU pass.
+  let cpuAttempts = 0;
+  for (const f of snap.factions) {
+    if (f.id === snap.game.playerFactionId) continue;
+    const center = factionCenter(snap, f.id);
+    if (center === null) continue;
+    const counts = ideologyAttemptCounts(snap);
+
+    const selfCandidates = snap.politicians
+      .filter((p) => p.factionId === f.id && !p.deathYear && !p.retiredYear
+        && IDEOLOGY_ORDER.indexOf(p.ideology) !== center && p.lastIdeologyAttemptYear !== snap.game.year)
+      .sort((a, b) => {
+        const da = Math.abs(IDEOLOGY_ORDER.indexOf(a.ideology) - center);
+        const db = Math.abs(IDEOLOGY_ORDER.indexOf(b.ideology) - center);
+        if (da !== db) return db - da;
+        if (a.pvCache !== b.pvCache) return b.pvCache - a.pvCache;
+        return a.id.localeCompare(b.id);
+      });
+    let selfUsed = 0;
+    for (const p of selfCandidates) {
+      if ((counts[f.id] ?? 0) >= IDEOLOGY_ATTEMPTS_PER_TURN) break;
+      if (selfUsed >= IDEOLOGY_SHIFT_ODDS.cpu.selfBudget) break;
+      if (!chance(IDEOLOGY_SHIFT_ODDS.cpu.selfGate)) continue;
+      if (resolveIdeologyShift(snap, f.id, p)) {
+        selfUsed++;
+        cpuAttempts++;
+      }
+    }
+
+    const opposedCandidates = snap.politicians
+      .filter((p) => p.factionId && p.factionId !== f.id && !p.deathYear && !p.retiredYear
+        && p.currentOffice && IDEOLOGY_ORDER.indexOf(p.ideology) !== center && p.lastIdeologyAttemptYear !== snap.game.year)
+      .sort((a, b) => (a.pvCache !== b.pvCache ? b.pvCache - a.pvCache : a.id.localeCompare(b.id)))
+      .slice(0, IDEOLOGY_SHIFT_ODDS.cpu.opposedScan);
+    for (const p of opposedCandidates) {
+      if ((counts[f.id] ?? 0) >= IDEOLOGY_ATTEMPTS_PER_TURN) break;
+      if (!chance(IDEOLOGY_SHIFT_ODDS.cpu.opposedGate)) continue;
+      if (resolveIdeologyShift(snap, f.id, p)) cpuAttempts++;
+    }
+  }
+
+  // Passive drift — up to three rolls, at most one move; first success ends
+  // the chain. Skips anyone already attempted this turn.
+  let driftCount = 0;
+  for (const p of snap.politicians) {
+    if (p.deathYear || p.retiredYear) continue;
+    if (p.lastIdeologyAttemptYear === snap.game.year) continue;
+    const dm = traitMult(p, 'drift');
+    if (dm === 0) continue; // Ideologue immunity, zero draws
+    const idx = IDEOLOGY_ORDER.indexOf(p.ideology);
+    let moved: { newIdx: number; kind: 'drift' | 'stateBias' } | null = null;
+
+    const center = p.factionId ? centers.get(p.factionId) ?? null : null;
+    if (center !== null && idx !== center && chance(IDEOLOGY_SHIFT_ODDS.drift.faction * dm)) {
+      moved = { newIdx: stepToward(idx, center), kind: 'drift' };
+    }
+    if (!moved) {
+      const st = snap.states.find((s) => s.id === p.state);
+      if (st && Math.abs(st.bias) >= IDEOLOGY_SHIFT_ODDS.drift.stateBiasMin) {
+        const ni = idx + (st.bias > 0 ? 1 : -1); // positive bias = red = higher index
+        if (ni >= 0 && ni < IDEOLOGY_ORDER.length && chance(IDEOLOGY_SHIFT_ODDS.drift.stateBias * dm)) {
+          moved = { newIdx: ni, kind: 'stateBias' };
         }
       }
     }
+    if (!moved && chance(IDEOLOGY_SHIFT_ODDS.drift.residual * dm)) {
+      const ni = idx + (chance(0.5) ? 1 : -1); // direction drawn after the rate hit
+      if (ni >= 0 && ni < IDEOLOGY_ORDER.length) moved = { newIdx: ni, kind: 'drift' };
+    }
+
+    if (moved) {
+      const from = p.ideology;
+      p.ideology = IDEOLOGY_ORDER[moved.newIdx];
+      recordIdeologyShift(snap, {
+        year: snap.game.year,
+        politicianId: p.id,
+        subjectFactionId: p.factionId ?? null,
+        kind: moved.kind,
+        fromIdeology: from,
+        toIdeology: p.ideology,
+        success: true,
+        flipFlopper: false,
+      });
+      driftCount++;
+    }
   }
-  if (shifts > 0) addLog(snap, '2.1.5', 'system', `${shifts} politicians shifted ideologically.`);
+
+  snap.politicians = refreshPv(snap.politicians);
+  if (driftCount + cpuAttempts > 0) {
+    addLog(snap, '2.1.5', 'system', `Ideological currents: ${driftCount} politicians drifted; ${cpuAttempts} shift attempts resolved.`);
+  }
 }
 
 // ============================================================================
