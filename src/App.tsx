@@ -12,6 +12,7 @@ function Shell(): JSX.Element {
   const { snapshot, loading, hasSave, modal } = useGame();
   const [page, setPage] = useState<PageId>('dashboard');
   const lastDraftEntryKey = useRef<string | null>(null);
+  const lastCareerEntryKey = useRef<string | null>(null);
 
   // Auto-navigate to Draft once per draft phase entry. The entry key combines
   // year + phaseId so leaving the page and returning during the same draft
@@ -32,6 +33,22 @@ function Shell(): JSX.Element {
       lastDraftEntryKey.current = null;
     }
   }, [snapshot?.game.phaseId, snapshot?.game.year, snapshot?.game.pendingDraftPool.length, snapshot?.game.draftRoundOrder.length]);
+
+  // Auto-navigate to Career Tracks once per 2.1.2 resting window (the
+  // assignment window). 2.1.2 rests every turn; the year+phase key means one
+  // navigation per turn, never a yank-back after the player clicks away.
+  useEffect(() => {
+    const g = snapshot?.game;
+    if (g && g.phaseId === '2.1.2') {
+      const key = `${g.year}:2.1.2`;
+      if (lastCareerEntryKey.current !== key) {
+        lastCareerEntryKey.current = key;
+        setPage('careers');
+      }
+    } else {
+      lastCareerEntryKey.current = null;
+    }
+  }, [snapshot?.game.phaseId, snapshot?.game.year]);
 
   if (loading) {
     return (

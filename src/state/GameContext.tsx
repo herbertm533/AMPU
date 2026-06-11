@@ -4,7 +4,7 @@ import { loadSnapshot, saveSnapshot, clearDb, exportJson, importJson } from '../
 import { build1856Scenario } from '../data/scenario1856';
 import { build1772Scenario } from '../data/scenario1772';
 import { runCurrentPhase, advancePhase } from '../engine/engine';
-import { playerDraftPick, resolveEraEvent, simOneDraftPick, autoPickForPlayer } from '../engine/phaseRunners';
+import { playerDraftPick, resolveEraEvent, simOneDraftPick, autoPickForPlayer, setPlayerCareerTrack } from '../engine/phaseRunners';
 import { autoFillCPUVotes, applyConvention } from '../engine/constitutionalConvention';
 import { parseDraftCsv, type ParseResult } from '../data/draftImport';
 import { admitState } from '../engine/territories';
@@ -120,6 +120,22 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
       s.game.draftHistory = years;
       dirty = true;
     }
+    // Legacy career-track migration, gated on the careerGains sentinel: the
+    // old system stalled at years >= 4 with no payoff; restart those at 2 so
+    // threshold #1 fires on the next accruing tick. Must NEVER run on a
+    // post-feature save (the 2.1.2 tick eagerly inits careerGains).
+    if (s.game.careerGains == null) {
+      s.game.careerGains = [];
+      for (const p of s.politicians) {
+        if (p.careerTrack && !p.factionId) {
+          p.careerTrack = null;
+          p.careerTrackYears = 0;
+        } else if (p.careerTrack && p.careerTrackYears >= 4) {
+          p.careerTrackYears = 2;
+        }
+      }
+      dirty = true;
+    }
     return dirty ? { ...s } : s;
   }, []);
 
@@ -159,9 +175,15 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
   const loadGame = useCallback(async () => {
     setLoading(true);
     const snap = await loadSnapshot();
-    setSnapshot(snap);
+    if (snap) {
+      const repaired = repair(snap);
+      setSnapshot(repaired);
+      if (repaired !== snap) await saveSnapshot(repaired);
+    } else {
+      setSnapshot(null);
+    }
     setLoading(false);
-  }, []);
+  }, [repair]);
 
   const advance = useCallback(async () => {
     if (!snapshot) return;
@@ -312,12 +334,7 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
   const setCareerTrack = useCallback(async (politicianId: string, track: Politician['careerTrack']) => {
     if (!snapshot) return;
     const draft: FullGameSnapshot = JSON.parse(JSON.stringify(snapshot));
-    const p = draft.politicians.find((pp) => pp.id === politicianId);
-    if (!p) return;
-    if (p.factionId !== draft.game.playerFactionId) return;
-    if (p.currentOffice) return;
-    p.careerTrack = track;
-    p.careerTrackYears = 0;
+    if (!setPlayerCareerTrack(draft, politicianId, track)) return;
     setSnapshot(draft);
     await persist(draft);
   }, [snapshot, persist]);

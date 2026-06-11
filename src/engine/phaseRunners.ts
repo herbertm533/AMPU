@@ -1,5 +1,5 @@
-import type { FullGameSnapshot, PhaseId, Politician, EraEvent, Legislation, ElectionResult, NationalMeters, Ideology, PartyId } from '../types';
-import { IDEOLOGY_ORDER } from '../types';
+import type { FullGameSnapshot, PhaseId, Politician, EraEvent, Legislation, ElectionResult, NationalMeters, Ideology, PartyId, SkillKey, Trait, CareerTrack } from '../types';
+import { IDEOLOGY_ORDER, SKILLS, POSITIVE_TRAITS, TRACK_SKILL, TRACK_THEMED_TRAITS, CAREER_RANDOM_NEGATIVES, CAREER_ODDS, CAREER_TRACK_MAX_YEARS, CAREER_GAINS_CAP } from '../types';
 import { addLog } from './log';
 import { uid, chance, d100, pick, clamp, shuffle } from '../rng';
 import { refreshPv } from '../pv';
@@ -262,46 +262,134 @@ export function playerDraftPick(snap: FullGameSnapshot, politicianId: string): v
 // ============================================================================
 // 2.1.2 Career Tracks (auto-process: CPU assigns; player UI handles theirs)
 // ============================================================================
-export function runPhase_2_1_2_CareerTracks(snap: FullGameSnapshot): void {
-  const tracks = ['Private', 'Military', 'Governing', 'Administration', 'Legislative', 'Judicial', 'Backroom'] as const;
-  for (const p of snap.politicians) {
-    if (p.factionId === snap.game.playerFactionId) continue;
-    if (p.currentOffice) continue;
-    if (p.careerTrack && p.careerTrackYears < 4) {
-      p.careerTrackYears += 2;
-      continue;
+function recordCareerGain(snap: FullGameSnapshot, p: Politician, thresholdYears: number, kind: 'skill' | 'trait', detail: SkillKey | Trait, negative: boolean): void {
+  if (!snap.game.careerGains) snap.game.careerGains = [];
+  const arr = snap.game.careerGains;
+  arr.push({
+    year: snap.game.year,
+    politicianId: p.id,
+    factionId: p.factionId!,
+    track: p.careerTrack!,
+    thresholdYears,
+    kind,
+    detail,
+    negative,
+  });
+  if (arr.length > CAREER_GAINS_CAP) arr.splice(0, arr.length - CAREER_GAINS_CAP);
+}
+
+// Three independent rolls at a threshold (N = thresholdYears / 4). Pool
+// selection happens only on a successful roll; failed/wasted rolls are silent.
+function rollThreshold(snap: FullGameSnapshot, p: Politician, thresholdYears: number): void {
+  const track = p.careerTrack!;
+  const n = thresholdYears / 4;
+
+  // 1. Skill (50%). Private draws a random skill, re-drawing once from the
+  // below-cap set if the first draw is capped.
+  if (chance(CAREER_ODDS.skill)) {
+    let k = TRACK_SKILL[track];
+    if (track === 'Private') {
+      k = pick(SKILLS);
+      if (p.skills[k] >= 5) {
+        const below = SKILLS.filter((s) => p.skills[s] < 5);
+        k = below.length > 0 ? pick(below) : null;
+      }
     }
-    if (p.careerTrack && p.careerTrackYears >= 4) {
-      // Graduate from track
-      const skillKey = p.careerTrack === 'Military' ? 'military' :
-        p.careerTrack === 'Governing' ? 'governing' :
-        p.careerTrack === 'Administration' ? 'admin' :
-        p.careerTrack === 'Legislative' ? 'legislative' :
-        p.careerTrack === 'Judicial' ? 'judicial' :
-        p.careerTrack === 'Backroom' ? 'backroom' : null;
-      if (skillKey) p.skills[skillKey] = clamp(p.skills[skillKey] + 1, 0, 5);
-      p.careerTrack = null;
-      p.careerTrackYears = 0;
-    } else if (p.age < 50 && chance(0.3)) {
-      // best skill -> matching track
-      const best = (Object.entries(p.skills) as [keyof typeof p.skills, number][]).sort((a, b) => b[1] - a[1])[0][0];
-      const trackMap: Record<string, typeof tracks[number]> = {
-        military: 'Military', governing: 'Governing', admin: 'Administration',
-        legislative: 'Legislative', judicial: 'Judicial', backroom: 'Backroom',
-      };
-      p.careerTrack = trackMap[best] ?? 'Private';
-      p.careerTrackYears = 0;
+    if (k && p.skills[k] < 5) {
+      p.skills[k] = clamp(p.skills[k] + 1, 0, 5);
+      recordCareerGain(snap, p, thresholdYears, 'skill', k, false);
     }
   }
+
+  // 2. Themed trait (rising curve, capped 75%). Filtering out held traits IS
+  // the dedup rule — no re-roll loops.
+  if (chance(CAREER_ODDS.themedByThreshold[n - 1])) {
+    const pool = TRACK_THEMED_TRAITS[track].filter((t) => !p.traits.includes(t));
+    if (pool.length > 0) {
+      const t = pick(pool);
+      p.traits.push(t);
+      recordCareerGain(snap, p, thresholdYears, 'trait', t, false);
+    }
+  }
+
+  // 3. Random off-track trait (flat), 75/25 positive/negative.
+  if (chance(CAREER_ODDS.random)) {
+    const positive = chance(CAREER_ODDS.randomPositiveShare);
+    const pool = positive
+      ? POSITIVE_TRAITS.filter((t) => !TRACK_THEMED_TRAITS[track].includes(t) && !p.traits.includes(t))
+      : CAREER_RANDOM_NEGATIVES.filter((t) => !p.traits.includes(t));
+    if (pool.length > 0) {
+      const t = pick(pool);
+      p.traits.push(t);
+      recordCareerGain(snap, p, thresholdYears, 'trait', t, !positive);
+    }
+  }
+}
+
+// Best-uncapped rule: highest skill below cap, ties broken by SKILLS order.
+function bestUncappedTrack(p: Politician): CareerTrack | null {
+  let bestKey: SkillKey | null = null;
+  for (const k of SKILLS) {
+    if (p.skills[k] >= 5) continue;
+    if (bestKey === null || p.skills[k] > p.skills[bestKey]) bestKey = k;
+  }
+  if (!bestKey) return null;
+  for (const [track, skill] of Object.entries(TRACK_SKILL) as [CareerTrack, SkillKey | null][]) {
+    if (skill === bestKey) return track;
+  }
+  return null;
+}
+
+export function runPhase_2_1_2_CareerTracks(snap: FullGameSnapshot): void {
+  // Eager init: once a save has run one new-code tick, repair()'s legacy
+  // migration (gated on careerGains == null) can never fire again.
+  if (!snap.game.careerGains) snap.game.careerGains = [];
+
+  // Pass 1 — CPU management. Mid-track CPU politicians are never touched.
+  for (const p of snap.politicians) {
+    if (!p.factionId || p.factionId === snap.game.playerFactionId) continue;
+    if (p.deathYear || p.retiredYear || p.currentOffice) continue;
+    if (p.careerTrack && p.careerTrackYears >= CAREER_TRACK_MAX_YEARS) {
+      if (p.age < 60) {
+        const next = bestUncappedTrack(p);
+        p.careerTrack = next;
+        p.careerTrackYears = 0;
+      } else {
+        p.careerTrack = null;
+        p.careerTrackYears = 0;
+      }
+    } else if (!p.careerTrack && p.age < 50) {
+      const next = bestUncappedTrack(p);
+      if (next) {
+        p.careerTrack = next;
+        p.careerTrackYears = 0;
+      }
+    }
+  }
+
+  // Pass 2 — accrual + thresholds, all factions (player included). Office
+  // pauses accrual but keeps track+years.
+  for (const p of snap.politicians) {
+    if (!p.careerTrack || !p.factionId) continue;
+    if (p.deathYear || p.retiredYear || p.currentOffice) continue;
+    p.careerTrackYears += 2;
+    if (p.careerTrackYears % 4 === 0 && p.careerTrackYears <= CAREER_TRACK_MAX_YEARS) {
+      rollThreshold(snap, p, p.careerTrackYears);
+    }
+  }
+
   snap.politicians = refreshPv(snap.politicians);
 }
 
-export function setPlayerCareerTrack(snap: FullGameSnapshot, politicianId: string, track: Politician['careerTrack']): void {
+export function setPlayerCareerTrack(snap: FullGameSnapshot, politicianId: string, track: Politician['careerTrack']): boolean {
+  if (snap.game.phaseId !== '2.1.2') return false;
   const p = snap.politicians.find((pp) => pp.id === politicianId);
-  if (!p || p.factionId !== snap.game.playerFactionId) return;
-  if (p.currentOffice) return;
+  if (!p || p.factionId !== snap.game.playerFactionId) return false;
+  if (p.currentOffice || p.deathYear || p.retiredYear) return false;
+  if (track === p.careerTrack) return false; // re-select must not reset the counter
   p.careerTrack = track;
   p.careerTrackYears = 0;
+  return true;
 }
 
 // ============================================================================
@@ -1282,7 +1370,6 @@ export function runPhase_2_10_End(snap: FullGameSnapshot): void {
   for (const p of snap.politicians) {
     if (p.deathYear || p.retiredYear) continue;
     p.age += 2;
-    if (p.careerTrack && p.careerTrackYears < 4) p.careerTrackYears += 2;
   }
   snap.politicians = refreshPv(snap.politicians);
   // 1772: reappoint Continental Congress delegates each turn

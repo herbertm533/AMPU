@@ -143,6 +143,39 @@ export const NEGATIVE_TRAITS: Trait[] = [
   'Traitor',
 ];
 
+// Career-track tables — single source for engine rolls AND the page legend.
+export const TRACK_SKILL: Record<CareerTrack, SkillKey | null> = {
+  Private: null,
+  Military: 'military',
+  Governing: 'governing',
+  Administration: 'admin',
+  Legislative: 'legislative',
+  Judicial: 'judicial',
+  Backroom: 'backroom',
+};
+
+export const TRACK_THEMED_TRAITS: Record<CareerTrack, Trait[]> = {
+  Private: ['Celebrity', 'Business', 'Media'],
+  Military: ['Military', 'Naval', 'Crisis Manager'],
+  Governing: ['Leadership', 'Charismatic', 'Agriculture'],
+  Administration: ['Efficient', 'Economics', 'Education'],
+  Legislative: ['Orator', 'Debater', 'Reformist'],
+  Judicial: ['Integrity', 'Egghead', 'Harmonious'],
+  Backroom: ['Manipulative', 'Kingmaker', 'Numberfudger'],
+};
+
+export const CAREER_RANDOM_NEGATIVES: Trait[] = ['Corrupt', 'Scandalous', 'Controversial', 'Flip-Flopper'];
+
+export const CAREER_ODDS = {
+  skill: 0.5,
+  themedByThreshold: [0.15, 0.3, 0.45, 0.6, 0.75], // index = threshold N-1
+  random: 0.12,
+  randomPositiveShare: 0.75,
+} as const;
+
+export const CAREER_TRACK_MAX_YEARS = 20;
+export const CAREER_GAINS_CAP = 200;
+
 export type OfficeType =
   | 'President'
   | 'VicePresident'
@@ -479,6 +512,7 @@ export interface GameState {
   pendingConvention?: ConstitutionalConvention | null;
   lastDraftYear?: number | null;
   draftHistory?: DraftHistoryYear[];
+  careerGains?: CareerGainEntry[];
   customDraftClasses?: ImportedDraftee[];
   inauguralDraftSeeded?: boolean;
 }
@@ -493,6 +527,17 @@ export interface DraftHistoryPick {
 export interface DraftHistoryYear {
   year: number;
   picks: DraftHistoryPick[];
+}
+
+export interface CareerGainEntry {
+  year: number;
+  politicianId: string;
+  factionId: string; // faction at time of gain (feed filters on this)
+  track: CareerTrack;
+  thresholdYears: number; // 4 | 8 | 12 | 16 | 20
+  kind: 'skill' | 'trait';
+  detail: SkillKey | Trait;
+  negative: boolean;
 }
 
 // A draftee imported from the user's CSV dataset. Persisted on the game state

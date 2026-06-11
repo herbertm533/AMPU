@@ -1,13 +1,8 @@
-import type { Politician, OfficeRef, Trait } from './types';
+import type { Politician, OfficeRef } from './types';
+import { POSITIVE_TRAITS, NEGATIVE_TRAITS } from './types';
 
-const POSITIVE: Trait[] = [
-  'Charismatic', 'Integrity', 'Efficient', 'Orator', 'Debater', 'Propagandist',
-  'Crisis Manager', 'Kingmaker', 'Numberfudger', 'Harmonious', 'Manipulative',
-  'Celebrity', 'Magician', 'Naval', 'Education', 'Economics', 'Business',
-  'Agriculture', 'Environment', 'Media', 'Nationalist', 'Globalist', 'Reformist', 'Military',
-];
-
-const NEGATIVE: Trait[] = ['Incompetent', 'Passive', 'Unlikable', 'Puritan', 'Domestic Apathy', 'Flip-Flopper', 'Corrupt', 'Scandalous'];
+const POSITIVE = POSITIVE_TRAITS;
+const NEGATIVE = NEGATIVE_TRAITS;
 
 export const OFFICE_PRESTIGE: Record<string, number> = {
   President: 30,
