@@ -97,7 +97,9 @@ export type Trait =
   | 'Frail'
   | 'Controversial'
   | 'Obscure'
-  | 'Traitor';
+  | 'Traitor'
+  | 'Carpetbagger'
+  | 'Outsider';
 
 export const POSITIVE_TRAITS: Trait[] = [
   'Charismatic',
@@ -141,6 +143,8 @@ export const NEGATIVE_TRAITS: Trait[] = [
   'Controversial',
   'Obscure',
   'Traitor',
+  'Carpetbagger',
+  'Outsider',
 ];
 
 // Career-track tables — single source for engine rolls AND the page legend.
@@ -176,6 +180,18 @@ export const CAREER_ODDS = {
 export const CAREER_TRACK_MAX_YEARS = 20;
 export const CAREER_TRACK_CAP = 5; // max politicians per faction on EACH track at one time
 export const CAREER_GAINS_CAP = 200;
+
+// Relocation tables — single source for engine rolls AND the page legend.
+export const RELOCATION_ODDS = {
+  success: { sameRegionAlt: 0.75, sameRegion: 0.5, crossRegionAlt: 0.4, crossRegion: 0.2 },
+  carpetbagger: { sameRegion: 0.05, crossRegion: 0.3, altStateFactor: 0.5 },
+  seed: { sameRegion: 0.4, crossRegion: 0.15 }, // remainder (0.45) = no altState
+  cpuGate: { withAltState: 0.3, withoutAltState: 0.1 },
+} as const;
+export const RELOCATION_ATTEMPTS_PER_TURN = 5;
+export const RELOCATIONS_CAP = 200;
+// Ordered ladder (first not held), not a draw pool.
+export const CARPETBAGGER_LADDER: Trait[] = ['Carpetbagger', 'Outsider', 'Controversial', 'Unlikable'];
 
 export type OfficeType =
   | 'President'
@@ -213,6 +229,8 @@ export interface Politician {
   lastName: string;
   state: string;
   altState?: string;
+  altStateSeeded?: boolean;
+  lastRelocationAttemptYear?: number;
   factionId: string | null;
   partyId: PartyId | null;
   ideology: Ideology;
@@ -514,6 +532,8 @@ export interface GameState {
   lastDraftYear?: number | null;
   draftHistory?: DraftHistoryYear[];
   careerGains?: CareerGainEntry[];
+  relocations?: RelocationEntry[];
+  relocationAttempts?: { year: number; counts: Record<string, number> };
   customDraftClasses?: ImportedDraftee[];
   inauguralDraftSeeded?: boolean;
 }
@@ -539,6 +559,19 @@ export interface CareerGainEntry {
   kind: 'skill' | 'trait';
   detail: SkillKey | Trait;
   negative: boolean;
+}
+
+export type RelocationBand = 'sameRegionAlt' | 'sameRegion' | 'crossRegionAlt' | 'crossRegion';
+
+export interface RelocationEntry {
+  year: number;
+  politicianId: string;
+  factionId: string; // faction at move time (feed filters on this)
+  fromState: string;
+  toState: string;
+  band: RelocationBand;
+  success: boolean;
+  traitsGained: Trait[]; // empty on failure; at most one entry in v1
 }
 
 // A draftee imported from the user's CSV dataset. Persisted on the game state
