@@ -3,6 +3,7 @@ import { Roster } from './Roster';
 import { CareerTracks } from './CareerTracks';
 import { Relocations } from './Relocations';
 import { IdeologyShifts } from './IdeologyShifts';
+import { Conversions } from './Conversions';
 import { Kingmakers } from './Kingmakers';
 import { FactionLeaderPage } from './FactionLeaderPage';
 import { CabinetPage } from './CabinetPage';
@@ -33,6 +34,7 @@ export type PageId =
   | 'careers'
   | 'relocations'
   | 'ideology'
+  | 'conversions'
   | 'kingmakers'
   | 'factionLeader'
   | 'cabinet'
@@ -63,6 +65,7 @@ export const Pages: Record<PageId, () => JSX.Element> = {
   careers: CareerTracks,
   relocations: Relocations,
   ideology: IdeologyShifts,
+  conversions: Conversions,
   kingmakers: Kingmakers,
   factionLeader: FactionLeaderPage,
   cabinet: CabinetPage,

@@ -4,7 +4,7 @@ import { loadSnapshot, saveSnapshot, clearDb, exportJson, importJson } from '../
 import { build1856Scenario } from '../data/scenario1856';
 import { build1772Scenario } from '../data/scenario1772';
 import { runCurrentPhase, advancePhase } from '../engine/engine';
-import { playerDraftPick, resolveEraEvent, simOneDraftPick, autoPickForPlayer, setPlayerCareerTrack, attemptPlayerRelocation, attemptPlayerIdeologyShift } from '../engine/phaseRunners';
+import { playerDraftPick, resolveEraEvent, simOneDraftPick, autoPickForPlayer, setPlayerCareerTrack, attemptPlayerRelocation, attemptPlayerIdeologyShift, attemptPlayerConversion } from '../engine/phaseRunners';
 import { autoFillCPUVotes, applyConvention } from '../engine/constitutionalConvention';
 import { parseDraftCsv, type ParseResult } from '../data/draftImport';
 import { admitState } from '../engine/territories';
@@ -31,6 +31,7 @@ interface GameContextValue {
   setCareerTrack: (politicianId: string, track: Politician['careerTrack']) => Promise<void>;
   attemptRelocation: (politicianId: string, destStateId: string) => Promise<void>;
   attemptIdeologyShift: (politicianId: string) => Promise<void>;
+  attemptConversion: (politicianId: string) => Promise<void>;
   setConventionVote: (articleKey: string, optionId: string) => void;
   finalizeConvention: () => Promise<void>;
   toggleTheme: () => void;
@@ -352,6 +353,16 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
     await persist(draft);
   }, [snapshot, persist]);
 
+  const attemptConversion = useCallback(async (politicianId: string) => {
+    if (!snapshot) return;
+    const draft: FullGameSnapshot = JSON.parse(JSON.stringify(snapshot));
+    // Same contract: failed rolls persist (counter + stamp + feed mutated).
+    // Kind (sign vs poach) is derived inside the resolver from subject state.
+    if (!attemptPlayerConversion(draft, politicianId)) return;
+    setSnapshot(draft);
+    await persist(draft);
+  }, [snapshot, persist]);
+
   const setCareerTrack = useCallback(async (politicianId: string, track: Politician['careerTrack']) => {
     if (!snapshot) return;
     const draft: FullGameSnapshot = JSON.parse(JSON.stringify(snapshot));
@@ -421,6 +432,7 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
     setCareerTrack,
     attemptRelocation,
     attemptIdeologyShift,
+    attemptConversion,
     setConventionVote,
     finalizeConvention,
     toggleTheme,

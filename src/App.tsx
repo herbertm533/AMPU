@@ -15,6 +15,7 @@ function Shell(): JSX.Element {
   const lastCareerEntryKey = useRef<string | null>(null);
   const lastRelocationEntryKey = useRef<string | null>(null);
   const lastIdeologyEntryKey = useRef<string | null>(null);
+  const lastConversionEntryKey = useRef<string | null>(null);
 
   // Auto-navigate to Draft once per draft phase entry. The entry key combines
   // year + phaseId so leaving the page and returning during the same draft
@@ -78,6 +79,20 @@ function Shell(): JSX.Element {
       }
     } else {
       lastIdeologyEntryKey.current = null;
+    }
+  }, [snapshot?.game.phaseId, snapshot?.game.year]);
+
+  // Auto-navigate to Faction Conversions once per 2.1.6 resting window.
+  useEffect(() => {
+    const g = snapshot?.game;
+    if (g && g.phaseId === '2.1.6') {
+      const key = `${g.year}:2.1.6`;
+      if (lastConversionEntryKey.current !== key) {
+        lastConversionEntryKey.current = key;
+        setPage('conversions');
+      }
+    } else {
+      lastConversionEntryKey.current = null;
     }
   }, [snapshot?.game.phaseId, snapshot?.game.year]);
 
