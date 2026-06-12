@@ -101,7 +101,9 @@ export type Trait =
   | 'Carpetbagger'
   | 'Outsider'
   | 'Ideologue'
-  | 'Impressionable';
+  | 'Impressionable'
+  | 'Loyal'
+  | 'Opportunist';
 
 export const POSITIVE_TRAITS: Trait[] = [
   'Charismatic',
@@ -131,6 +133,7 @@ export const POSITIVE_TRAITS: Trait[] = [
   'Egghead',
   'Leadership',
   'Ideologue',
+  'Loyal',
 ];
 
 export const NEGATIVE_TRAITS: Trait[] = [
@@ -149,6 +152,7 @@ export const NEGATIVE_TRAITS: Trait[] = [
   'Carpetbagger',
   'Outsider',
   'Impressionable',
+  'Opportunist',
 ];
 
 // Career-track tables — single source for engine rolls AND the page legend.
@@ -211,6 +215,34 @@ export const IDEOLOGY_SHIFT_ODDS = {
 export const IDEOLOGY_ATTEMPTS_PER_TURN = 5;
 export const IDEOLOGY_SHIFTS_CAP = 200;
 
+// Faction-conversion tables — single source for engine rolls AND the page legend.
+// Matrix access: poach.matrix[crossParty ? 'cross' : 'same'][inOffice ? 'inOffice' : 'notInOffice']
+export const CONVERSION_ODDS = {
+  passive: { rate: 0.02, oneAway: 0.9, anyFaction: 0.1, lossCapPerFaction: 2 },
+  poach: {
+    matrix: {
+      same: { notInOffice: 0.2, inOffice: 0.05 },
+      cross: { notInOffice: 0.1, inOffice: 0.02 },
+    },
+  },
+  sign: { base: 0.2, fitBandClose: 1.5, fitBandFar: 0.5, fitCloseMax: 1, fitFarMin: 3 },
+  willingness: {
+    fitBetter: 1.5, fitWorse: 0.5,
+    ffHistory: 1.25, mentorBond: 0.5,
+    highPv: 0.75, highPvThreshold: 50,
+    flipFlopperTrait: 1.25,
+  },
+  traits: {
+    Loyal: { passive: 0, attempt: 0.25 },
+    Opportunist: { passive: 2, attempt: 1.5 },
+  },
+  ffStacks: { same: 1, cross: 2 }, // poach success and passive defection
+  seed: { loyal: 0.08, opportunist: 0.08 }, // remainder = neither
+  cpu: { signGate: 0.35, signScan: 6, signBudget: 2, poachGate: 0.15, poachScan: 8 },
+} as const;
+export const CONVERSION_ATTEMPTS_PER_TURN = 5;
+export const CONVERSIONS_CAP = 200;
+
 export type OfficeType =
   | 'President'
   | 'VicePresident'
@@ -251,6 +283,8 @@ export interface Politician {
   lastRelocationAttemptYear?: number;
   ideologyTraitsSeeded?: boolean;
   lastIdeologyAttemptYear?: number; // stamps ATTEMPTS incl. failures, not shifts
+  conversionTraitsSeeded?: boolean;
+  lastConversionAttemptYear?: number; // stamps ATTEMPTS incl. failures; blocks the passive pass too
   factionId: string | null;
   partyId: PartyId | null;
   ideology: Ideology;
@@ -556,6 +590,8 @@ export interface GameState {
   relocationAttempts?: { year: number; counts: Record<string, number> };
   ideologyShifts?: IdeologyShiftEntry[];
   ideologyAttempts?: { year: number; counts: Record<string, number> };
+  conversions?: ConversionEntry[];
+  conversionAttempts?: { year: number; counts: Record<string, number> };
   customDraftClasses?: ImportedDraftee[];
   inauguralDraftSeeded?: boolean;
 }
@@ -606,6 +642,20 @@ export interface IdeologyShiftEntry {
   toIdeology: Ideology; // === fromIdeology on failed attempts
   success: boolean; // always true on drift entries (movements only)
   flipFlopper: boolean; // opposed success that also landed the FF roll
+}
+
+export interface ConversionEntry {
+  year: number;
+  politicianId: string;
+  fromFactionId: string | null; // null on sign rows
+  toFactionId: string; // destination faction; on failed attempts = actor's faction
+  fromPartyId: PartyId | null; // null on sign rows
+  toPartyId: PartyId; // always populated; destination faction's party
+  actorFactionId?: string; // absent on passive 'defect' entries
+  kind: 'defect' | 'poach' | 'sign';
+  crossParty: boolean;
+  success: boolean;
+  ffGained: number; // 0 on failures and signs; 1 same-party / 2 cross-party on success
 }
 
 // A draftee imported from the user's CSV dataset. Persisted on the game state

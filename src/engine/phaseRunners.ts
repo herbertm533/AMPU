@@ -1,5 +1,5 @@
-import type { FullGameSnapshot, PhaseId, Politician, EraEvent, Legislation, ElectionResult, NationalMeters, Ideology, PartyId, SkillKey, Trait, CareerTrack, State, RelocationEntry, RelocationBand, IdeologyShiftEntry } from '../types';
-import { IDEOLOGY_ORDER, SKILLS, POSITIVE_TRAITS, TRACK_SKILL, TRACK_THEMED_TRAITS, CAREER_RANDOM_NEGATIVES, CAREER_ODDS, CAREER_TRACK_MAX_YEARS, CAREER_TRACK_CAP, CAREER_GAINS_CAP, RELOCATION_ODDS, RELOCATION_ATTEMPTS_PER_TURN, RELOCATIONS_CAP, CARPETBAGGER_LADDER, IDEOLOGY_SHIFT_ODDS, IDEOLOGY_ATTEMPTS_PER_TURN, IDEOLOGY_SHIFTS_CAP } from '../types';
+import type { FullGameSnapshot, PhaseId, Politician, EraEvent, Legislation, ElectionResult, NationalMeters, Ideology, PartyId, SkillKey, Trait, CareerTrack, State, RelocationEntry, RelocationBand, IdeologyShiftEntry, ConversionEntry } from '../types';
+import { IDEOLOGY_ORDER, SKILLS, POSITIVE_TRAITS, TRACK_SKILL, TRACK_THEMED_TRAITS, CAREER_RANDOM_NEGATIVES, CAREER_ODDS, CAREER_TRACK_MAX_YEARS, CAREER_TRACK_CAP, CAREER_GAINS_CAP, RELOCATION_ODDS, RELOCATION_ATTEMPTS_PER_TURN, RELOCATIONS_CAP, CARPETBAGGER_LADDER, IDEOLOGY_SHIFT_ODDS, IDEOLOGY_ATTEMPTS_PER_TURN, IDEOLOGY_SHIFTS_CAP, CONVERSION_ODDS, CONVERSION_ATTEMPTS_PER_TURN, CONVERSIONS_CAP } from '../types';
 import { addLog } from './log';
 import { uid, chance, d100, pick, clamp, shuffle, rand } from '../rng';
 import { refreshPv } from '../pv';
@@ -316,8 +316,9 @@ function rollThreshold(snap: FullGameSnapshot, p: Politician, thresholdYears: nu
   if (chance(CAREER_ODDS.random)) {
     const positive = chance(CAREER_ODDS.randomPositiveShare);
     const pool = positive
-      // Ideologue is seeded only by the 2.1.5 tick, never career-gained.
-      ? POSITIVE_TRAITS.filter((t) => t !== 'Ideologue' && !TRACK_THEMED_TRAITS[track].includes(t) && !p.traits.includes(t))
+      // Ideologue (2.1.5) and Loyal (2.1.6) are seeded by their tick only,
+      // never career-gained.
+      ? POSITIVE_TRAITS.filter((t) => t !== 'Ideologue' && t !== 'Loyal' && !TRACK_THEMED_TRAITS[track].includes(t) && !p.traits.includes(t))
       : CAREER_RANDOM_NEGATIVES.filter((t) => !p.traits.includes(t));
     if (pool.length > 0) {
       const t = pick(pool);
@@ -811,21 +812,299 @@ export function runPhase_2_1_5_Ideology(snap: FullGameSnapshot): void {
 }
 
 // ============================================================================
-// 2.1.6 Faction conversions (auto)
+// 2.1.6 Faction conversions
 // ============================================================================
-export function runPhase_2_1_6_Conversions(snap: FullGameSnapshot): void {
-  for (const p of snap.politicians) {
-    if (p.factionId === snap.game.playerFactionId) continue;
-    if (!p.factionId || p.currentOffice) continue;
-    if (chance(0.02)) {
-      const sameParty = snap.factions.filter((f) => f.partyId === p.partyId && f.id !== p.factionId);
-      if (sameParty.length === 0) continue;
-      const newFact = pick(sameParty);
-      const old = snap.factions.find((f) => f.id === p.factionId);
-      p.factionId = newFact.id;
-      p.flipFlopperPenalty += 1;
-      if (old) addLog(snap, '2.1.6', 'event', `${p.firstName} ${p.lastName} switched from ${old.name} to ${newFact.name}.`);
+
+// Lazy year normalization — the only conversion-attempts counter accessor.
+function conversionAttemptCounts(snap: FullGameSnapshot): Record<string, number> {
+  const g = snap.game;
+  if (!g.conversionAttempts || g.conversionAttempts.year !== g.year) {
+    g.conversionAttempts = { year: g.year, counts: {} };
+  }
+  return g.conversionAttempts.counts;
+}
+
+// Loyal short-circuits to 0; else 2% × Opportunist factor. Read by both the
+// passive pass AND the own-roster Risk % column (preview === roll).
+export function passiveConversionChance(p: Politician): number {
+  if (p.traits.includes('Loyal')) return 0;
+  const mult = p.traits.includes('Opportunist') ? CONVERSION_ODDS.traits.Opportunist.passive : 1;
+  return CONVERSION_ODDS.passive.rate * mult;
+}
+
+// Anchored mentor bond requires partner to share the politician's CURRENT
+// faction and be alive/non-retired. Bonds to defected partners do NOT anchor.
+export function mentorBondAnchored(snap: FullGameSnapshot, p: Politician): boolean {
+  if (!p.factionId) return false;
+  if (p.protegeId) {
+    const partner = snap.politicians.find((q) => q.id === p.protegeId);
+    if (partner && partner.factionId === p.factionId && !partner.deathYear && !partner.retiredYear) return true;
+  }
+  return snap.politicians.some((m) => m.protegeId === p.id && m.factionId === p.factionId && !m.deathYear && !m.retiredYear);
+}
+
+// Shared odds/factor composition — used by the resolver AND the page confirm
+// card so the itemized preview is structurally what the engine rolls.
+export interface ConversionOdds {
+  kind: 'sign' | 'poach';
+  crossParty: boolean;
+  inOffice: boolean;
+  base: number;
+  factors: { fit: number; ffHistory: number; mentorBond: number; highPv: number; flipFlopperTrait: number; loyal: number; opportunist: number };
+  success: number;
+  ffOnSuccess: number;
+}
+
+export function conversionOdds(snap: FullGameSnapshot, actorFactionId: string, p: Politician): ConversionOdds {
+  const actor = snap.factions.find((f) => f.id === actorFactionId)!;
+  const kind: 'sign' | 'poach' = !p.factionId ? 'sign' : 'poach';
+  const current = kind === 'poach' ? snap.factions.find((f) => f.id === p.factionId) : undefined;
+  const crossParty = kind === 'poach' && !!current && current.partyId !== actor.partyId;
+  const inOffice = !!p.currentOffice;
+  const base = kind === 'sign'
+    ? CONVERSION_ODDS.sign.base
+    : CONVERSION_ODDS.poach.matrix[crossParty ? 'cross' : 'same'][inOffice ? 'inOffice' : 'notInOffice'];
+
+  let fit = 1;
+  const idx = IDEOLOGY_ORDER.indexOf(p.ideology);
+  if (kind === 'poach') {
+    const actorC = factionCenter(snap, actorFactionId);
+    const currentC = factionCenter(snap, p.factionId!);
+    if (actorC !== null && currentC !== null) {
+      const dA = Math.abs(idx - actorC);
+      const dC = Math.abs(idx - currentC);
+      fit = dA < dC ? CONVERSION_ODDS.willingness.fitBetter : dA > dC ? CONVERSION_ODDS.willingness.fitWorse : 1;
     }
+  } else {
+    const actorC = factionCenter(snap, actorFactionId);
+    if (actorC !== null) {
+      const d = Math.abs(idx - actorC);
+      fit = d <= CONVERSION_ODDS.sign.fitCloseMax ? CONVERSION_ODDS.sign.fitBandClose
+        : d >= CONVERSION_ODDS.sign.fitFarMin ? CONVERSION_ODDS.sign.fitBandFar
+        : 1;
+    }
+  }
+
+  const ffHistory = p.flipFlopperPenalty > 0 ? CONVERSION_ODDS.willingness.ffHistory : 1;
+  const mentorBond = kind === 'poach' && mentorBondAnchored(snap, p) ? CONVERSION_ODDS.willingness.mentorBond : 1;
+  const highPv = p.pvCache >= CONVERSION_ODDS.willingness.highPvThreshold ? CONVERSION_ODDS.willingness.highPv : 1;
+  const flipFlopperTrait = p.traits.includes('Flip-Flopper') ? CONVERSION_ODDS.willingness.flipFlopperTrait : 1;
+  const loyal = p.traits.includes('Loyal') ? CONVERSION_ODDS.traits.Loyal.attempt : 1;
+  const opportunist = p.traits.includes('Opportunist') ? CONVERSION_ODDS.traits.Opportunist.attempt : 1;
+
+  const success = clamp(base * fit * ffHistory * mentorBond * highPv * flipFlopperTrait * loyal * opportunist, 0, 1);
+  const ffOnSuccess = kind === 'poach' ? CONVERSION_ODDS.ffStacks[crossParty ? 'cross' : 'same'] : 0;
+
+  return {
+    kind, crossParty, inOffice, base,
+    factors: { fit, ffHistory, mentorBond, highPv, flipFlopperTrait, loyal, opportunist },
+    success, ffOnSuccess,
+  };
+}
+
+// Tick-start within-party rank: factions sorted by living-center ascending,
+// id tiebreak. Empty-centered factions are excluded from their party's ranks.
+function factionRankMap(snap: FullGameSnapshot): Map<string, { rank: number; partyRanks: string[] }> {
+  const result = new Map<string, { rank: number; partyRanks: string[] }>();
+  for (const partyId of ['BLUE', 'RED'] as const) {
+    const list = snap.factions
+      .filter((f) => f.partyId === partyId)
+      .map((f) => ({ id: f.id, center: factionCenter(snap, f.id) }))
+      .filter((x): x is { id: string; center: number } => x.center !== null)
+      .sort((a, b) => (a.center !== b.center ? a.center - b.center : a.id.localeCompare(b.id)));
+    const partyRanks = list.map((x) => x.id);
+    list.forEach((x, i) => result.set(x.id, { rank: i, partyRanks }));
+  }
+  return result;
+}
+
+function defectionDestination(
+  snap: FullGameSnapshot,
+  p: Politician,
+  rankMap: Map<string, { rank: number; partyRanks: string[] }>,
+  partyId: PartyId,
+  oneAway: boolean,
+): { toFactionId: string; crossParty: boolean } | null {
+  if (oneAway) {
+    const entry = rankMap.get(p.factionId!);
+    if (!entry || entry.partyRanks.length <= 1) return null;
+    const last = entry.partyRanks.length - 1;
+    // Edges forced inward; interior 50/50.
+    const dir = entry.rank === 0 ? 1 : entry.rank === last ? -1 : (chance(0.5) ? 1 : -1);
+    return { toFactionId: entry.partyRanks[entry.rank + dir], crossParty: false };
+  }
+  const pool = snap.factions.filter((f) => f.id !== p.factionId && factionCenter(snap, f.id) !== null);
+  if (pool.length === 0) return null;
+  const dest = pick(pool);
+  return { toFactionId: dest.id, crossParty: dest.partyId !== partyId };
+}
+
+function recordConversion(snap: FullGameSnapshot, entry: ConversionEntry): void {
+  if (!snap.game.conversions) snap.game.conversions = [];
+  const arr = snap.game.conversions;
+  arr.push(entry);
+  if (arr.length > CONVERSIONS_CAP) arr.splice(0, arr.length - CONVERSIONS_CAP);
+}
+
+// The single active attempt path (CPU and player, sign and poach — kind is
+// DERIVED from subject state, never passed). Returns null = REJECTED (no
+// attempt happened); non-null = the attempt RAN — counter, stamp, and feed
+// are mutated whether the roll succeeded or not.
+function resolveConversion(snap: FullGameSnapshot, actorFactionId: string, p: Politician): ConversionEntry | null {
+  const g = snap.game;
+  if (g.phaseId !== '2.1.6') return null;
+  if (p.deathYear || p.retiredYear) return null;
+  if (p.factionId === actorFactionId) return null; // own members rejected
+  const kind: 'sign' | 'poach' = !p.factionId ? 'sign' : 'poach';
+  if (p.lastConversionAttemptYear === g.year) return null;
+  const actor = snap.factions.find((f) => f.id === actorFactionId);
+  if (!actor) return null;
+  if (kind === 'poach') {
+    const current = snap.factions.find((f) => f.id === p.factionId);
+    if (!current) return null;
+  }
+  const counts = conversionAttemptCounts(snap);
+  if ((counts[actorFactionId] ?? 0) >= CONVERSION_ATTEMPTS_PER_TURN) return null;
+
+  counts[actorFactionId] = (counts[actorFactionId] ?? 0) + 1;
+  p.lastConversionAttemptYear = g.year;
+  const fromFactionId = p.factionId;
+  const fromPartyId = p.partyId;
+
+  const odds = conversionOdds(snap, actorFactionId, p);
+  const success = chance(odds.success);
+  if (success) {
+    p.factionId = actor.id;
+    p.partyId = actor.partyId; // always rewrite — same-party is identity-safe
+    if (kind === 'poach') p.flipFlopperPenalty += odds.ffOnSuccess;
+  }
+
+  const entry: ConversionEntry = {
+    year: g.year,
+    politicianId: p.id,
+    fromFactionId,
+    toFactionId: actor.id,
+    fromPartyId,
+    toPartyId: actor.partyId,
+    actorFactionId,
+    kind,
+    crossParty: odds.crossParty,
+    success,
+    ffGained: success ? odds.ffOnSuccess : 0,
+  };
+  recordConversion(snap, entry);
+  return entry;
+}
+
+// Contract clone of attemptPlayerIdeologyShift: TRUE means the attempt
+// RESOLVED — a failed roll returns true and HAS mutated state
+// (counter + stamp + feed), so the caller must persist. FALSE only for
+// rejected attempts.
+export function attemptPlayerConversion(snap: FullGameSnapshot, politicianId: string): boolean {
+  const p = snap.politicians.find((pp) => pp.id === politicianId);
+  if (!p) return false;
+  const entry = resolveConversion(snap, snap.game.playerFactionId, p);
+  if (!entry) return false;
+  if (entry.ffGained > 0) snap.politicians = refreshPv(snap.politicians);
+  return true;
+}
+
+export function runPhase_2_1_6_Conversions(snap: FullGameSnapshot): void {
+  if (!snap.game.conversions) snap.game.conversions = [];
+
+  // Trait-seed pass — Loyal/Opportunist, mutually exclusive, one-shot per
+  // politician (lazy: covers all construction paths and legacy saves). Free
+  // agents and in-office politicians ARE seeded; only dead/retired skipped.
+  for (const p of snap.politicians) {
+    if (p.deathYear || p.retiredYear || p.conversionTraitsSeeded) continue;
+    if (!p.traits.includes('Loyal') && !p.traits.includes('Opportunist')) {
+      const r = rand();
+      if (r < CONVERSION_ODDS.seed.loyal) p.traits.push('Loyal');
+      else if (r < CONVERSION_ODDS.seed.loyal + CONVERSION_ODDS.seed.opportunist) p.traits.push('Opportunist');
+    }
+    p.conversionTraitsSeeded = true;
+  }
+
+  conversionAttemptCounts(snap); // lazy counter reset for the new year
+  const rankMap = factionRankMap(snap);
+
+  // CPU pass — sign first (cheap growth), then poach.
+  let cpuAttempts = 0;
+  for (const f of snap.factions) {
+    if (f.id === snap.game.playerFactionId) continue;
+    const counts = conversionAttemptCounts(snap);
+
+    const signCandidates = snap.politicians
+      .filter((p) => !p.factionId && !p.deathYear && !p.retiredYear && p.lastConversionAttemptYear !== snap.game.year)
+      .map((p) => ({ p, odds: conversionOdds(snap, f.id, p).success }))
+      .sort((a, b) => (a.odds !== b.odds ? b.odds - a.odds : (a.p.pvCache !== b.p.pvCache ? b.p.pvCache - a.p.pvCache : a.p.id.localeCompare(b.p.id))))
+      .slice(0, CONVERSION_ODDS.cpu.signScan);
+    let signUsed = 0;
+    for (const { p } of signCandidates) {
+      if ((counts[f.id] ?? 0) >= CONVERSION_ATTEMPTS_PER_TURN) break;
+      if (signUsed >= CONVERSION_ODDS.cpu.signBudget) break;
+      if (!chance(CONVERSION_ODDS.cpu.signGate)) continue;
+      if (resolveConversion(snap, f.id, p)) {
+        signUsed++;
+        cpuAttempts++;
+      }
+    }
+
+    const poachCandidates = snap.politicians
+      .filter((p) => p.factionId && p.factionId !== f.id && !p.deathYear && !p.retiredYear && p.lastConversionAttemptYear !== snap.game.year)
+      .map((p) => ({ p, odds: conversionOdds(snap, f.id, p).success }))
+      .sort((a, b) => (a.odds !== b.odds ? b.odds - a.odds : (a.p.pvCache !== b.p.pvCache ? b.p.pvCache - a.p.pvCache : a.p.id.localeCompare(b.p.id))))
+      .slice(0, CONVERSION_ODDS.cpu.poachScan);
+    for (const { p } of poachCandidates) {
+      if ((counts[f.id] ?? 0) >= CONVERSION_ATTEMPTS_PER_TURN) break;
+      if (!chance(CONVERSION_ODDS.cpu.poachGate)) continue;
+      if (resolveConversion(snap, f.id, p)) cpuAttempts++;
+    }
+  }
+
+  // Passive defection pass — own loss-cap counter; passive entries never
+  // write the subject stamp (the pass is the turn's last actor). Iteration
+  // order matters: earlier politicians leave before the source-faction cap
+  // closes the gate.
+  let defects = 0;
+  const lossCounter = new Map<string, number>();
+  for (const p of snap.politicians) {
+    if (p.deathYear || p.retiredYear || !p.factionId) continue;
+    if (p.lastConversionAttemptYear === snap.game.year) continue;
+    const chanceNow = passiveConversionChance(p);
+    if (chanceNow === 0) continue; // Loyal short-circuit, zero RNG draws
+    if ((lossCounter.get(p.factionId) ?? 0) >= CONVERSION_ODDS.passive.lossCapPerFaction) continue;
+    if (!chance(chanceNow)) continue;
+
+    const oneAway = chance(CONVERSION_ODDS.passive.oneAway);
+    const dest = defectionDestination(snap, p, rankMap, p.partyId!, oneAway);
+    if (!dest) continue;
+    const destFaction = snap.factions.find((f) => f.id === dest.toFactionId)!;
+    const fromFactionId = p.factionId;
+    const fromPartyId = p.partyId;
+    p.factionId = destFaction.id;
+    p.partyId = destFaction.partyId;
+    const ffDelta = CONVERSION_ODDS.ffStacks[dest.crossParty ? 'cross' : 'same'];
+    p.flipFlopperPenalty += ffDelta;
+    lossCounter.set(fromFactionId, (lossCounter.get(fromFactionId) ?? 0) + 1);
+    defects++;
+    recordConversion(snap, {
+      year: snap.game.year,
+      politicianId: p.id,
+      fromFactionId,
+      toFactionId: destFaction.id,
+      fromPartyId,
+      toPartyId: destFaction.partyId,
+      kind: 'defect',
+      crossParty: dest.crossParty,
+      success: true,
+      ffGained: ffDelta,
+    });
+  }
+
+  snap.politicians = refreshPv(snap.politicians);
+  if (defects + cpuAttempts > 0) {
+    addLog(snap, '2.1.6', 'system', `Realignment currents: ${defects} defections; ${cpuAttempts} recruitment attempts resolved.`);
   }
 }
 
