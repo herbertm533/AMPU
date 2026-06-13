@@ -1,5 +1,5 @@
-import type { FullGameSnapshot, PhaseId, Politician, EraEvent, Legislation, ElectionResult, NationalMeters, Ideology, PartyId, SkillKey, Trait, CareerTrack, State, RelocationEntry, RelocationBand, IdeologyShiftEntry, ConversionEntry } from '../types';
-import { IDEOLOGY_ORDER, SKILLS, POSITIVE_TRAITS, TRACK_SKILL, TRACK_THEMED_TRAITS, CAREER_RANDOM_NEGATIVES, CAREER_ODDS, CAREER_TRACK_MAX_YEARS, CAREER_TRACK_CAP, CAREER_GAINS_CAP, RELOCATION_ODDS, RELOCATION_ATTEMPTS_PER_TURN, RELOCATIONS_CAP, CARPETBAGGER_LADDER, IDEOLOGY_SHIFT_ODDS, IDEOLOGY_ATTEMPTS_PER_TURN, IDEOLOGY_SHIFTS_CAP, CONVERSION_ODDS, CONVERSION_ATTEMPTS_PER_TURN, CONVERSIONS_CAP } from '../types';
+import type { FullGameSnapshot, PhaseId, Politician, EraEvent, Legislation, ElectionResult, NationalMeters, Ideology, PartyId, SkillKey, Trait, CareerTrack, State, RelocationEntry, RelocationBand, IdeologyShiftEntry, ConversionEntry, KingmakerEntry } from '../types';
+import { IDEOLOGY_ORDER, SKILLS, POSITIVE_TRAITS, TRACK_SKILL, TRACK_THEMED_TRAITS, CAREER_RANDOM_NEGATIVES, CAREER_ODDS, CAREER_TRACK_MAX_YEARS, CAREER_TRACK_CAP, CAREER_GAINS_CAP, RELOCATION_ODDS, RELOCATION_ATTEMPTS_PER_TURN, RELOCATIONS_CAP, CARPETBAGGER_LADDER, IDEOLOGY_SHIFT_ODDS, IDEOLOGY_ATTEMPTS_PER_TURN, IDEOLOGY_SHIFTS_CAP, CONVERSION_ODDS, CONVERSION_ATTEMPTS_PER_TURN, CONVERSIONS_CAP, KINGMAKER_RULES, KINGMAKERS_CAP } from '../types';
 import { addLog } from './log';
 import { uid, chance, d100, pick, clamp, shuffle, rand } from '../rng';
 import { refreshPv } from '../pv';
@@ -199,7 +199,6 @@ export function runPhase_2_1_1_Draft(snap: FullGameSnapshot, autoOnly: boolean):
         careerTrackYears: 0,
         command: 0,
         interests: [],
-        isKingmaker: false,
         flipFlopperPenalty: 0,
         pvCache: 0,
         isHistorical: false,
@@ -247,6 +246,7 @@ export function runPhase_2_1_1_Draft(snap: FullGameSnapshot, autoOnly: boolean):
   snap.game.pendingDraftPool = [];
   snap.game.draftRoundOrder = [];
   snap.game.lastDraftYear = snap.game.year;
+  runDraftKingmakerTopUp(snap);
   return { needsPlayer: false, draftPool: [] };
 }
 
@@ -396,6 +396,13 @@ export function runPhase_2_1_2_CareerTracks(snap: FullGameSnapshot): void {
     p.careerTrackYears += 2;
     if (p.careerTrackYears % 4 === 0 && p.careerTrackYears <= CAREER_TRACK_MAX_YEARS) {
       rollThreshold(snap, p, p.careerTrackYears);
+      // Mentor acceleration: LIVE predicate. A mentor who died at last turn's
+      // 2.4.1 (NOT yet swept until next turn's 2.1.7) does NOT accelerate —
+      // hasMentor requires alive, non-retired, same-faction. Do not optimize
+      // into a raw protegeId lookup; the live read is the ordering invariant.
+      if (hasMentor(snap, p)) {
+        rollMentorBonusSkill(snap, p, p.careerTrackYears);
+      }
     }
   }
 
@@ -1109,17 +1116,253 @@ export function runPhase_2_1_6_Conversions(snap: FullGameSnapshot): void {
 }
 
 // ============================================================================
-// 2.1.7 Kingmakers (auto)
+// 2.1.7 Kingmakers & Protégés
 // ============================================================================
+
+function eraCommandGate(scenarioId: string): number {
+  return KINGMAKER_RULES.commandGateByScenario[scenarioId] ?? KINGMAKER_RULES.commandGateDefault;
+}
+
+// Prodigy-direction only: someone in p's CURRENT faction mentors p.
+// Used by 2.1.2 acceleration — must be a LIVE read (ordering invariant).
+export function hasMentor(snap: FullGameSnapshot, p: Politician): boolean {
+  if (!p.factionId) return false;
+  return snap.politicians.some((m) => m.protegeId === p.id && m.factionId === p.factionId && !m.deathYear && !m.retiredYear);
+}
+
+// One extra skill roll for bonded protégés. Mirrors the skill block of
+// rollThreshold exactly — re-resolves below-cap from scratch because the
+// primary roll may have raised this politician's chosen skill.
+function rollMentorBonusSkill(snap: FullGameSnapshot, p: Politician, thresholdYears: number): void {
+  const track = p.careerTrack;
+  if (!track) return;
+  if (!chance(CAREER_ODDS.skill)) return;
+  let k: SkillKey | null = TRACK_SKILL[track];
+  if (track === 'Private') {
+    k = pick(SKILLS);
+    if (p.skills[k] >= 5) {
+      const below = SKILLS.filter((s) => p.skills[s] < 5);
+      k = below.length > 0 ? pick(below) : null;
+    }
+  }
+  if (k && p.skills[k] < 5) {
+    p.skills[k] = clamp(p.skills[k] + 1, 0, 5);
+    recordCareerGain(snap, p, thresholdYears, 'skill', k, false);
+  }
+}
+
+export function protegeCandidates(snap: FullGameSnapshot, kingmakerId: string): Politician[] {
+  const k = snap.politicians.find((p) => p.id === kingmakerId);
+  if (!k || !k.factionId || k.deathYear || k.retiredYear) return [];
+  if (!k.traits.includes('Kingmaker')) return [];
+  return snap.politicians.filter((c) => {
+    if (c.id === k.id) return false;
+    if (c.factionId !== k.factionId || !c.factionId) return false;
+    if (c.state !== k.state) return false;
+    if (c.deathYear || c.retiredYear) return false;
+    // one-mentor-per-prodigy
+    if (snap.politicians.some((m) => m.protegeId === c.id && !m.deathYear && !m.retiredYear)) return false;
+    if (c.traits.includes('Kingmaker')) return false;
+    if (c.age >= KINGMAKER_RULES.protegeMaxAge) return false;
+    const t = c.currentOffice?.type;
+    if (t && t !== 'Representative' && t !== 'Governor') return false;
+    if (c.pvCache < KINGMAKER_RULES.protegeMinPv) return false;
+    return true;
+  });
+}
+
+function recordKingmaker(snap: FullGameSnapshot, entry: KingmakerEntry): void {
+  if (!snap.game.kingmakers) snap.game.kingmakers = [];
+  const arr = snap.game.kingmakers;
+  arr.push(entry);
+  if (arr.length > KINGMAKERS_CAP) arr.splice(0, arr.length - KINGMAKERS_CAP);
+}
+
+// Contract clone of attemptPlayerConversion: TRUE means the assignment APPLIED
+// (mutation + feed written, caller must persist); FALSE means rejected.
+export function assignProtege(snap: FullGameSnapshot, kingmakerId: string, protegeId: string): boolean {
+  const g = snap.game;
+  if (g.phaseId !== '2.1.7') return false;
+  const k = snap.politicians.find((p) => p.id === kingmakerId);
+  if (!k || k.deathYear || k.retiredYear || !k.factionId) return false;
+  if (!k.traits.includes('Kingmaker')) return false;
+  if (k.protegeId) return false;
+  const candidates = protegeCandidates(snap, kingmakerId);
+  const c = candidates.find((cc) => cc.id === protegeId);
+  if (!c) return false;
+  k.protegeId = c.id;
+  c.bondedYear = g.year;
+  recordKingmaker(snap, {
+    year: g.year, kind: 'bonded',
+    politicianId: c.id, mentorId: k.id, protegeId: c.id,
+    factionId: k.factionId, actor: 'player',
+  });
+  return true;
+}
+
+export function releaseProtege(snap: FullGameSnapshot, kingmakerId: string): boolean {
+  const g = snap.game;
+  if (g.phaseId !== '2.1.7') return false;
+  const k = snap.politicians.find((p) => p.id === kingmakerId);
+  if (!k || !k.protegeId || !k.factionId) return false;
+  const c = snap.politicians.find((p) => p.id === k.protegeId);
+  const protegeId = k.protegeId;
+  k.protegeId = null;
+  if (c) c.bondedYear = undefined;
+  recordKingmaker(snap, {
+    year: g.year, kind: 'dissolved',
+    politicianId: protegeId, mentorId: k.id, protegeId,
+    factionId: k.factionId, reason: 'released', actor: 'player',
+  });
+  return true;
+}
+
+// Draft-year per-faction floor top-up. Called from runPhase_2_1_1_Draft AFTER
+// the pool finalizes — every rookie has a factionId by then. The floor is a
+// faction-count guarantee, not a command gate (era trait-grant lives in 2.1.7).
+function runDraftKingmakerTopUp(snap: FullGameSnapshot): void {
+  let granted = 0;
+  for (const f of snap.factions) {
+    const members = snap.politicians.filter((p) => p.factionId === f.id && !p.deathYear && !p.retiredYear);
+    const haveTrait = members.filter((p) => p.traits.includes('Kingmaker')).length;
+    const needed = KINGMAKER_RULES.factionFloor - haveTrait;
+    if (needed <= 0) continue;
+    const noTrait = members.filter((p) => !p.traits.includes('Kingmaker'));
+    if (noTrait.length === 0) continue;
+    // Uniform-random from the top half by PV — higher-value but not strictly highest.
+    const sorted = [...noTrait].sort((a, b) => b.pvCache - a.pvCache || a.id.localeCompare(b.id));
+    const topHalf = sorted.slice(0, Math.ceil(sorted.length / 2));
+    const shuffled = shuffle(topHalf);
+    const grants = shuffled.slice(0, Math.min(needed, shuffled.length));
+    for (const g of grants) {
+      g.traits.push('Kingmaker');
+      recordKingmaker(snap, {
+        year: snap.game.year, kind: 'anointed',
+        politicianId: g.id,
+        factionId: f.id, reason: 'draft-floor',
+      });
+      granted++;
+    }
+  }
+  if (granted > 0) snap.politicians = refreshPv(snap.politicians);
+}
+
 export function runPhase_2_1_7_Kingmakers(snap: FullGameSnapshot): void {
+  // Phase 1: eager init
+  if (!snap.game.kingmakers) snap.game.kingmakers = [];
+
+  const gate = eraCommandGate(snap.game.scenarioId);
+  let anointed = 0;
+  let bonded = 0;
+  let graduated = 0;
+  let dissolved = 0;
+
+  // Phase 2: trait-grant pass — newly-minted Kingmakers can assign this tick.
   for (const p of snap.politicians) {
-    if (!p.isKingmaker || p.protegeId) continue;
-    if (p.factionId === snap.game.playerFactionId) continue;
-    const candidates = snap.politicians.filter((c) => c.factionId === p.factionId && c.id !== p.id && !c.protegeId && c.age < 45 && c.pvCache > 20);
+    if (p.deathYear || p.retiredYear) continue;
+    if (!p.factionId) continue;
+    if (p.command < gate) continue;
+    if (p.traits.includes('Kingmaker')) continue;
+    p.traits.push('Kingmaker');
+    recordKingmaker(snap, {
+      year: snap.game.year, kind: 'anointed',
+      politicianId: p.id,
+      factionId: p.factionId,
+    });
+    anointed++;
+  }
+
+  // Phase 3: lifecycle sweep — break dead/retired/cross-faction bonds.
+  for (const k of snap.politicians) {
+    if (!k.protegeId) continue;
+    const c = snap.politicians.find((q) => q.id === k.protegeId);
+    let reason: 'death' | 'retire' | 'defect' | null = null;
+    if (!c) reason = 'defect';
+    else if (k.deathYear) reason = 'death';
+    else if (c.deathYear) reason = 'death';
+    else if (k.retiredYear) reason = 'retire';
+    else if (c.retiredYear) reason = 'retire';
+    else if (c.factionId !== k.factionId) reason = 'defect';
+    if (!reason) continue;
+    const protegeId = k.protegeId;
+    k.protegeId = null;
+    if (c) c.bondedYear = undefined;
+    recordKingmaker(snap, {
+      year: snap.game.year, kind: 'dissolved',
+      politicianId: protegeId, mentorId: k.id, protegeId,
+      factionId: k.factionId ?? c?.factionId ?? '',
+      reason,
+    });
+    dissolved++;
+  }
+
+  // Phase 4: graduation pass — dual trigger; weighted legacy roll.
+  for (const k of snap.politicians) {
+    if (!k.protegeId) continue;
+    if (k.deathYear || k.retiredYear || !k.factionId) continue;
+    const c = snap.politicians.find((q) => q.id === k.protegeId);
+    if (!c || c.deathYear || c.retiredYear) continue;
+    const bondYear = c.bondedYear ?? snap.game.year;
+    const tenure = snap.game.year - bondYear >= KINGMAKER_RULES.graduationYears;
+    const officeTrigger = c.currentOffice?.type === 'Senator' || c.currentOffice?.type === 'President';
+    if (!tenure && !officeTrigger) continue;
+    const trigger: 'tenure' | 'office' = officeTrigger ? 'office' : 'tenure';
+
+    // Single weighted rand() across the 0.45 / 0.45 / 0.10 split.
+    const r = rand();
+    const commandBranch = r < KINGMAKER_RULES.graduationOdds.command;
+    const traitBranch = !commandBranch && r < KINGMAKER_RULES.graduationOdds.command + KINGMAKER_RULES.graduationOdds.trait;
+    const bothBranch = !commandBranch && !traitBranch;
+
+    if (commandBranch || bothBranch) {
+      c.command = Math.min(KINGMAKER_RULES.commandCap, c.command + 1);
+    }
+    if (traitBranch || bothBranch) {
+      const inheritable = k.traits.filter((t) => POSITIVE_TRAITS.includes(t) && !c.traits.includes(t));
+      if (inheritable.length > 0) {
+        c.traits.push(pick(inheritable));
+      }
+    }
+
+    // Mentor reward — independent of which branch fired for the protégé.
+    if (!k.traits.includes('Leadership')) k.traits.push('Leadership');
+
+    const factionId = k.factionId;
+    k.protegeId = null;
+    c.bondedYear = undefined;
+    recordKingmaker(snap, {
+      year: snap.game.year, kind: 'graduated',
+      politicianId: c.id, mentorId: k.id, protegeId: c.id,
+      factionId, trigger,
+    });
+    graduated++;
+  }
+
+  // Phase 5: CPU auto-assign — CPU factions only; same-state-gated; free.
+  for (const k of snap.politicians) {
+    if (!k.factionId || k.deathYear || k.retiredYear) continue;
+    if (!k.traits.includes('Kingmaker')) continue;
+    if (k.protegeId) continue;
+    if (k.factionId === snap.game.playerFactionId) continue;
+    const candidates = protegeCandidates(snap, k.id);
     if (candidates.length === 0) continue;
-    const chosen = pick(candidates);
-    p.protegeId = chosen.id;
-    addLog(snap, '2.1.7', 'event', `${p.firstName} ${p.lastName} took ${chosen.firstName} ${chosen.lastName} as a protégé.`);
+    const c = pick(candidates);
+    k.protegeId = c.id;
+    c.bondedYear = snap.game.year;
+    recordKingmaker(snap, {
+      year: snap.game.year, kind: 'bonded',
+      politicianId: c.id, mentorId: k.id, protegeId: c.id,
+      factionId: k.factionId, actor: 'cpu',
+    });
+    bonded++;
+  }
+
+  // Phase 6: PV refresh — trait grants + command/trait graduation payoffs.
+  snap.politicians = refreshPv(snap.politicians);
+
+  // Phase 7: conditional summary log.
+  if (anointed + bonded + graduated + dissolved > 0) {
+    addLog(snap, '2.1.7', 'system', `Mentorship: ${anointed} anointed; ${bonded} bonds formed; ${graduated} graduated; ${dissolved} dissolved.`);
   }
 }
 

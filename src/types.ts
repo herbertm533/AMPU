@@ -243,6 +243,22 @@ export const CONVERSION_ODDS = {
 export const CONVERSION_ATTEMPTS_PER_TURN = 5;
 export const CONVERSIONS_CAP = 200;
 
+// Kingmaker tables — single source for engine rolls AND the page legend.
+export const KINGMAKER_RULES = {
+  commandGateByScenario: { '1772': 1, '1856': 4 } as Record<string, number>,
+  commandGateDefault: 4,
+  factionFloor: 10,
+  protegeMaxAge: 45,
+  protegeMinPv: 20,
+  graduationYears: 20,
+  eligibleProtegeOffices: ['Representative', 'Governor'] as const,
+  graduationOffices: ['Senator', 'President'] as const,
+  graduationOdds: { command: 0.45, trait: 0.45, both: 0.1 },
+  commandCap: 5,
+  poachResistance: 0.5, // legend cross-reference to CONVERSION_ODDS.willingness.mentorBond
+} as const;
+export const KINGMAKERS_CAP = 200;
+
 export type OfficeType =
   | 'President'
   | 'VicePresident'
@@ -285,6 +301,7 @@ export interface Politician {
   lastIdeologyAttemptYear?: number; // stamps ATTEMPTS incl. failures, not shifts
   conversionTraitsSeeded?: boolean;
   lastConversionAttemptYear?: number; // stamps ATTEMPTS incl. failures; blocks the passive pass too
+  bondedYear?: number; // year the current bond on this PROTÉGÉ was formed; drives the 20-year graduation clock
   factionId: string | null;
   partyId: PartyId | null;
   ideology: Ideology;
@@ -299,7 +316,6 @@ export interface Politician {
   careerTrackYears: number;
   command: number;
   interests: string[];
-  isKingmaker: boolean;
   protegeId?: string | null;
   flipFlopperPenalty: number;
   pvCache: number;
@@ -592,6 +608,7 @@ export interface GameState {
   ideologyAttempts?: { year: number; counts: Record<string, number> };
   conversions?: ConversionEntry[];
   conversionAttempts?: { year: number; counts: Record<string, number> };
+  kingmakers?: KingmakerEntry[];
   customDraftClasses?: ImportedDraftee[];
   inauguralDraftSeeded?: boolean;
 }
@@ -656,6 +673,18 @@ export interface ConversionEntry {
   crossParty: boolean;
   success: boolean;
   ffGained: number; // 0 on failures and signs; 1 same-party / 2 cross-party on success
+}
+
+export interface KingmakerEntry {
+  year: number;
+  kind: 'anointed' | 'bonded' | 'graduated' | 'dissolved';
+  politicianId: string; // for 'anointed' = the newly-trait-granted politician
+  mentorId?: string;
+  protegeId?: string;
+  factionId: string;
+  reason?: 'death' | 'retire' | 'defect' | 'released' | 'draft-floor';
+  trigger?: 'tenure' | 'office';
+  actor?: 'player' | 'cpu';
 }
 
 // A draftee imported from the user's CSV dataset. Persisted on the game state

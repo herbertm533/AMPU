@@ -72,7 +72,7 @@ export function computePV(p: Politician): number {
     if (POSITIVE.includes(t)) total += 4;
     else if (NEGATIVE.includes(t)) total -= 5;
   }
-  if (p.isKingmaker) total += 6;
+  if (p.traits.includes('Kingmaker')) total += 6;
   if (p.currentOffice) {
     total += OFFICE_PRESTIGE[p.currentOffice.type] ?? 0;
   }
