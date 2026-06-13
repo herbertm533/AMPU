@@ -53,7 +53,7 @@ export const SCRIPTED_1772: ScriptedEvent[] = [
       description: 'Parliament responds with the Coercive Acts: closing Boston Harbor, restructuring the Massachusetts government, expanding quartering of troops. Anger sweeps the colonies.',
       decider: 'auto',
       responses: [{ id: 'ok', label: 'Convene the First Continental Congress', description: 'The colonies will meet in Philadelphia to coordinate a response.', effect: { text: 'The First Continental Congress is called to meet.', meters: { domestic: -2 } } }],
-      postEffects: [],
+      postEffects: [{ type: 'assembleCC' }],
     }),
     requiresTemplate: 'boston_tea_party',
   },

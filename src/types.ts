@@ -343,6 +343,7 @@ export type OfficeType =
   | 'CommitteeChair'
   | 'FactionLeader'
   | 'PartyLeader'
+  | 'CCPresident'
   | 'Ambassador';
 
 export interface OfficeRef {
@@ -447,6 +448,8 @@ export interface ContinentalCongress {
     economic: string | null;
     judicial: string | null;
   };
+  delegateTermStartYear?: number;
+  assemblyOrdinal?: number;
 }
 
 export interface BattleRecord {
@@ -566,7 +569,7 @@ export interface EraEvent {
   chosenResponseId?: string;
   triggersGameEnd?: boolean;
   unlocks?: ('governors' | 'congress' | 'presidency' | 'court' | 'continentalArmy')[];
-  postEffects?: { type: 'startWar' | 'unlockGovernors' | 'unlockArticles' | 'startConvention' | 'endWar' | 'addPolitician'; payload?: unknown }[];
+  postEffects?: { type: 'startWar' | 'unlockGovernors' | 'unlockArticles' | 'startConvention' | 'endWar' | 'addPolitician' | 'assembleCC'; payload?: unknown }[];
 }
 
 export interface Legislation {

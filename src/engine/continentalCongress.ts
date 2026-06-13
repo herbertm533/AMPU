@@ -3,6 +3,13 @@ import { addLog } from './log';
 import { uid, chance, pick, clamp } from '../rng';
 import { cardVoteBias } from './phaseRunners';
 
+export const CC_TERM_YEARS = 4;
+
+export function numberToOrdinal(n: number): string {
+  const map = ['', 'First', 'Second', 'Third', 'Fourth', 'Fifth', 'Sixth', 'Seventh', 'Eighth', 'Ninth', 'Tenth'];
+  return map[n] ?? `${n}-th`;
+}
+
 // Appoint Continental Congress delegates.
 // Before governors exist: each state's largest faction (by # of politicians in
 // that state) nominates delegates from its members in the state. Each
@@ -87,6 +94,7 @@ export function appointDelegates(snap: FullGameSnapshot): void {
     }
   }
   addLog(snap, '2.10', 'appointment', `Continental Congress delegates appointed: ${cc.delegates.length} delegates from ${snap.states.length} states.`);
+  cc.delegateTermStartYear = snap.game.year;
 }
 
 export function ensureCC(snap: FullGameSnapshot): NonNullable<FullGameSnapshot['game']['continentalCongress']> {
@@ -100,8 +108,8 @@ export function ensureCC(snap: FullGameSnapshot): NonNullable<FullGameSnapshot['
   return snap.game.continentalCongress;
 }
 
-// Elect CC President: faction with most delegates picks. If tied, the lowest-PV
-// faction in the tie chooses. President must be a current delegate.
+// Elect CC President: faction with most delegates picks. If tied, the
+// highest-PV faction in the tie chooses. President must be a current delegate.
 export function electCCPresident(snap: FullGameSnapshot): void {
   const cc = ensureCC(snap);
   if (cc.delegates.length === 0) return;
@@ -113,12 +121,12 @@ export function electCCPresident(snap: FullGameSnapshot): void {
   const tied = ranked.filter(([, c]) => c === top).map(([f]) => f);
   let chooserFaction = tied[0];
   if (tied.length > 1) {
-    // pick the tied faction with lowest total PV (an underdog tiebreak)
+    // pick the tied faction with highest total PV (dominant-faction)
     const sums = tied.map((f) => ({
       f,
       sum: snap.politicians.filter((p) => p.factionId === f).reduce((s, p) => s + p.pvCache, 0),
     }));
-    sums.sort((a, b) => a.sum - b.sum);
+    sums.sort((a, b) => b.sum - a.sum);
     chooserFaction = sums[0].f;
   }
   // President: highest-PV delegate from chooser faction
@@ -135,7 +143,7 @@ export function electCCPresident(snap: FullGameSnapshot): void {
   winner.skills.legislative = Math.min(5, winner.skills.legislative + 1);
   winner.command = Math.min(5, winner.command + 1);
   if (chance(0.2) && !winner.traits.includes('Leadership')) winner.traits.push('Leadership');
-  winner.currentOffice = { type: 'SpeakerOfHouse' }; // re-using closest existing OfficeType
+  winner.currentOffice = { type: 'CCPresident' };
   addLog(snap, '2.2.1', 'appointment', `${winner.firstName} ${winner.lastName} elected President of the Continental Congress.`);
 }
 

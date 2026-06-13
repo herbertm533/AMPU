@@ -6,7 +6,7 @@ import { refreshPv } from '../pv';
 import { buildEraEventsForYear } from '../data/eraEvents1856';
 import { SCRIPTED_1772 } from '../data/eraEvents1772';
 import { FACTIONS_1772 } from '../data/factions1772';
-import { appointDelegates, electCCPresident, appointCCCommittees, generateCCBills, voteCC } from './continentalCongress';
+import { appointDelegates, electCCPresident, appointCCCommittees, generateCCBills, voteCC, CC_TERM_YEARS, numberToOrdinal } from './continentalCongress';
 import { startRevWar, runRevWarBattles, applyTreatyOfParis, applyFrenchAlliance } from './revolutionaryWar';
 import { makeConvention } from './constitutionalConvention';
 import { instantiateDraftees } from '../data/draftImport';
@@ -1611,6 +1611,7 @@ export function runPhase_2_1_8_FactionPersonalities(snap: FullGameSnapshot): voi
 // ============================================================================
 export function runPhase_2_2_1_CongressLeadership(snap: FullGameSnapshot): void {
   if (snap.game.currentEra === 'independence') {
+    if (snap.game.continentalCongress === null) return;
     // Election of CC President
     electCCPresident(snap);
     return;
@@ -1647,6 +1648,7 @@ export function runPhase_2_2_1_CongressLeadership(snap: FullGameSnapshot): void 
 // ============================================================================
 export function runPhase_2_2_2_Committees(snap: FullGameSnapshot): void {
   if (snap.game.currentEra === 'independence') {
+    if (snap.game.continentalCongress === null) return;
     appointCCCommittees(snap);
     return;
   }
@@ -1789,6 +1791,9 @@ function vacateOffice(snap: FullGameSnapshot, p: Politician): void {
       if (s.governorId === p.id) s.governorId = null;
     }
   }
+  if (t === 'CCPresident' && snap.game.continentalCongress) {
+    snap.game.continentalCongress.presidentId = null;
+  }
   // cabinet
   for (const k of Object.keys(snap.game.cabinet) as (keyof typeof snap.game.cabinet)[]) {
     if (snap.game.cabinet[k] === p.id) snap.game.cabinet[k] = null;
@@ -1863,12 +1868,37 @@ export function resolveEraEvent(snap: FullGameSnapshot, eventId: string, respons
     handleScripted1772Consequences(snap, event, responseId);
   }
 
+  // Generic engine-side postEffects dispatcher.
+  applyPostEffects(snap, event);
+
   // Generic unlocks
   if (event.unlocks?.includes('governors')) {
     snap.game.governorsExist = true;
     // Promote colonies to states
     for (const s of snap.states) s.isColony = false;
     addLog(snap, '2.4.3', 'system', 'Governors will now be elected. The colonies are now states.');
+  }
+}
+
+function applyPostEffects(snap: FullGameSnapshot, event: EraEvent): void {
+  if (!event.postEffects || event.postEffects.length === 0) return;
+  for (const pe of event.postEffects) {
+    switch (pe.type) {
+      case 'assembleCC': {
+        const ccExisting = snap.game.continentalCongress;
+        if (ccExisting && ccExisting.delegates.length > 0) break;
+        appointDelegates(snap);
+        electCCPresident(snap);
+        appointCCCommittees(snap);
+        const cc = snap.game.continentalCongress;
+        if (cc) cc.assemblyOrdinal = 1;
+        addLog(snap, '2.4.3', 'appointment', `First Continental Congress convenes in Philadelphia. Delegates from ${snap.states.length} colonies.`);
+        break;
+      }
+      default:
+        addLog(snap, '2.4.3', 'system', `Unhandled postEffect type: ${pe.type}.`);
+        break;
+    }
   }
 }
 
@@ -1904,6 +1934,14 @@ function handleScripted1772Consequences(snap: FullGameSnapshot, event: EraEvent,
     }
     case 'articles_of_confederation': {
       snap.game.articlesOfConfederation = true;
+      const cc = snap.game.continentalCongress;
+      if (cc) {
+        const oldPres = cc.presidentId ? snap.politicians.find((p) => p.id === cc.presidentId) : null;
+        if (oldPres && oldPres.currentOffice?.type === 'CCPresident') oldPres.currentOffice = null;
+        cc.presidentId = null;
+        electCCPresident(snap);
+        addLog(snap, '2.4.3', 'appointment', 'The Confederation Congress elects its first President.');
+      }
       break;
     }
     case 'french_alliance': {
@@ -2085,6 +2123,7 @@ export const BILL_TEMPLATES = [
 
 export function runPhase_2_6_1_Proposals(snap: FullGameSnapshot): void {
   if (snap.game.currentEra === 'independence') {
+    if (snap.game.continentalCongress === null) return;
     generateCCBills(snap);
     return;
   }
@@ -2151,6 +2190,7 @@ export function runPhase_2_6_2_Committee(snap: FullGameSnapshot): void {
 
 export function runPhase_2_6_3_Floor(snap: FullGameSnapshot): void {
   if (snap.game.currentEra === 'independence') {
+    if (snap.game.continentalCongress === null) return;
     for (const billId of snap.game.pendingLegislation) {
       const bill = snap.legislation.find((b) => b.id === billId);
       if (!bill || bill.status !== 'passed_committee') continue;
@@ -2483,9 +2523,21 @@ export function runPhase_2_10_End(snap: FullGameSnapshot): void {
     p.age += 2;
   }
   snap.politicians = refreshPv(snap.politicians);
-  // 1772: reappoint Continental Congress delegates each turn
-  if (snap.game.currentEra === 'independence') {
-    appointDelegates(snap);
+  // 1772: scheduled CC reassembly when the term clock has elapsed (First CC
+  // assembled by the Intolerable Acts postEffect; subsequent reassemblies fire
+  // here every CC_TERM_YEARS).
+  if (snap.game.currentEra === 'independence' && snap.game.continentalCongress) {
+    const cc = snap.game.continentalCongress;
+    const termStart = cc.delegateTermStartYear ?? snap.game.year;
+    if (snap.game.year - termStart >= CC_TERM_YEARS) {
+      appointDelegates(snap);
+      cc.assemblyOrdinal = (cc.assemblyOrdinal ?? 1) + 1;
+      const ordinal = numberToOrdinal(cc.assemblyOrdinal);
+      addLog(snap, '2.10', 'appointment', `${ordinal} Continental Congress convenes in Philadelphia.`);
+      if (cc.presidentId && !cc.delegates.find((d) => d.politicianId === cc.presidentId)) {
+        electCCPresident(snap);
+      }
+    }
   }
   addLog(snap, '2.10', 'system', `End of ${snap.game.year - 2}-${snap.game.year} term.`);
 }

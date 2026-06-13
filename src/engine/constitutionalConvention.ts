@@ -186,6 +186,11 @@ export function applyConvention(snap: FullGameSnapshot, conv: ConstitutionalConv
   if (conv.ratified) {
     snap.game.constitutionRatified = true;
     snap.game.currentEra = 'federalism';
+    const oldCc = snap.game.continentalCongress;
+    if (oldCc) {
+      const pres = oldCc.presidentId ? snap.politicians.find((p) => p.id === oldCc.presidentId) : null;
+      if (pres && pres.currentOffice?.type === 'CCPresident') pres.currentOffice = null;
+    }
     snap.game.continentalCongress = null;
     snap.game.articlesOfConfederation = false;
     addLog(snap, '2.4.3', 'system', 'The Constitution takes effect. The Confederation Congress is dissolved. Federalism begins.');
