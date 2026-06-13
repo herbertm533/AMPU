@@ -16,6 +16,7 @@ function Shell(): JSX.Element {
   const lastRelocationEntryKey = useRef<string | null>(null);
   const lastIdeologyEntryKey = useRef<string | null>(null);
   const lastConversionEntryKey = useRef<string | null>(null);
+  const lastKingmakerEntryKey = useRef<string | null>(null);
 
   // Auto-navigate to Draft once per draft phase entry. The entry key combines
   // year + phaseId so leaving the page and returning during the same draft
@@ -93,6 +94,20 @@ function Shell(): JSX.Element {
       }
     } else {
       lastConversionEntryKey.current = null;
+    }
+  }, [snapshot?.game.phaseId, snapshot?.game.year]);
+
+  // Auto-navigate to Kingmakers & Protégés once per 2.1.7 resting window.
+  useEffect(() => {
+    const g = snapshot?.game;
+    if (g && g.phaseId === '2.1.7') {
+      const key = `${g.year}:2.1.7`;
+      if (lastKingmakerEntryKey.current !== key) {
+        lastKingmakerEntryKey.current = key;
+        setPage('kingmakers');
+      }
+    } else {
+      lastKingmakerEntryKey.current = null;
     }
   }, [snapshot?.game.phaseId, snapshot?.game.year]);
 

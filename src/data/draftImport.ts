@@ -252,7 +252,6 @@ export function instantiateDraftees(
       careerTrackYears: 0,
       command: d.command,
       interests: [],
-      isKingmaker: d.command >= 4,
       flipFlopperPenalty: 0,
       pvCache: 0,
       isHistorical: false,
