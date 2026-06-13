@@ -18,6 +18,7 @@ export const OFFICE_PRESTIGE: Record<string, number> = {
   GeneralInChief: 12,
   Admiral: 10,
   SpeakerOfHouse: 12,
+  CCPresident: 25,
   SenateProTem: 10,
   CommitteeChair: 6,
   FactionLeader: 8,
@@ -44,6 +45,7 @@ export function officeWeights(office: OfficeRef | null): Record<string, number> 
     case 'SenateProTem':
     case 'Representative':
     case 'CommitteeChair':
+    case 'CCPresident':
       return { admin: 0.5, legislative: 2.5, judicial: 0.5, military: 0, governing: 0.5, backroom: 1 };
     case 'Governor':
       return { admin: 1, legislative: 0.5, judicial: 0.5, military: 0.5, governing: 2.5, backroom: 1 };
