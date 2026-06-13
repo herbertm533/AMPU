@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react';
 import type { FullGameSnapshot, EraEvent, ConstitutionalConvention, Politician } from '../types';
+import { ALIGNMENT_RULES } from '../types';
 import { loadSnapshot, saveSnapshot, clearDb, exportJson, importJson } from '../db';
 import { build1856Scenario } from '../data/scenario1856';
 import { build1772Scenario } from '../data/scenario1772';
@@ -140,6 +141,18 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
         }
       }
       dirty = true;
+    }
+    // Defensive card-id filter — strip unknown ids so drift reads never resolve undefined.
+    const validInterest = new Set(Object.keys(ALIGNMENT_RULES.interestCardBucket));
+    const validLobby = new Set(Object.keys(ALIGNMENT_RULES.lobbyToInterest));
+    const validIdeology = new Set(Object.keys(ALIGNMENT_RULES.ideologyCardBucket));
+    for (const f of s.factions) {
+      const ic = f.interestCards.filter((c) => validInterest.has(c));
+      const lc = f.lobbyCards.filter((c) => validLobby.has(c));
+      const ig = f.ideologyCards.filter((c) => validIdeology.has(c));
+      if (ic.length !== f.interestCards.length) { f.interestCards = ic as typeof f.interestCards; dirty = true; }
+      if (lc.length !== f.lobbyCards.length) { f.lobbyCards = lc as typeof f.lobbyCards; dirty = true; }
+      if (ig.length !== f.ideologyCards.length) { f.ideologyCards = ig as typeof f.ideologyCards; dirty = true; }
     }
     return dirty ? { ...s } : s;
   }, []);

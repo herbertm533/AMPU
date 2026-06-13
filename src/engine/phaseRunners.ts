@@ -1,5 +1,5 @@
-import type { FullGameSnapshot, PhaseId, Politician, EraEvent, Legislation, ElectionResult, NationalMeters, Ideology, PartyId, SkillKey, Trait, CareerTrack, State, RelocationEntry, RelocationBand, IdeologyShiftEntry, ConversionEntry, KingmakerEntry } from '../types';
-import { IDEOLOGY_ORDER, SKILLS, POSITIVE_TRAITS, TRACK_SKILL, TRACK_THEMED_TRAITS, CAREER_RANDOM_NEGATIVES, CAREER_ODDS, CAREER_TRACK_MAX_YEARS, CAREER_TRACK_CAP, CAREER_GAINS_CAP, RELOCATION_ODDS, RELOCATION_ATTEMPTS_PER_TURN, RELOCATIONS_CAP, CARPETBAGGER_LADDER, IDEOLOGY_SHIFT_ODDS, IDEOLOGY_ATTEMPTS_PER_TURN, IDEOLOGY_SHIFTS_CAP, CONVERSION_ODDS, CONVERSION_ATTEMPTS_PER_TURN, CONVERSIONS_CAP, KINGMAKER_RULES, KINGMAKERS_CAP } from '../types';
+import type { FullGameSnapshot, PhaseId, Politician, EraEvent, Legislation, ElectionResult, NationalMeters, Ideology, PartyId, SkillKey, Trait, CareerTrack, State, RelocationEntry, RelocationBand, IdeologyShiftEntry, ConversionEntry, KingmakerEntry, FactionAlignmentDriftEntry, InterestCardId, LobbyCardId, IdeologyCardId } from '../types';
+import { IDEOLOGY_ORDER, SKILLS, POSITIVE_TRAITS, TRACK_SKILL, TRACK_THEMED_TRAITS, CAREER_RANDOM_NEGATIVES, CAREER_ODDS, CAREER_TRACK_MAX_YEARS, CAREER_TRACK_CAP, CAREER_GAINS_CAP, RELOCATION_ODDS, RELOCATION_ATTEMPTS_PER_TURN, RELOCATIONS_CAP, CARPETBAGGER_LADDER, IDEOLOGY_SHIFT_ODDS, IDEOLOGY_ATTEMPTS_PER_TURN, IDEOLOGY_SHIFTS_CAP, CONVERSION_ODDS, CONVERSION_ATTEMPTS_PER_TURN, CONVERSIONS_CAP, KINGMAKER_RULES, KINGMAKERS_CAP, ALIGNMENT_RULES, ALIGNMENT_DRIFT_CAP } from '../types';
 import { addLog } from './log';
 import { uid, chance, d100, pick, clamp, shuffle, rand } from '../rng';
 import { refreshPv } from '../pv';
@@ -1367,16 +1367,242 @@ export function runPhase_2_1_7_Kingmakers(snap: FullGameSnapshot): void {
 }
 
 // ============================================================================
-// 2.1.8 Faction personalities (auto - already set, recompute personality)
+// 2.1.8 Faction Alignment Drift
 // ============================================================================
+
+// Additive per-voter bias when a bill's interest-group impacts overlap the
+// faction's held interest cards (or lobby cards via lobbyToInterest proxy).
+export function cardVoteBias(
+  snap: FullGameSnapshot,
+  factionId: string | null,
+  impacts: { id: string; delta: number }[] | undefined,
+): number {
+  if (!factionId || !impacts || impacts.length === 0) return 0;
+  const faction = snap.factions.find((f) => f.id === factionId);
+  if (!faction) return 0;
+  let total = 0;
+  for (const imp of impacts) {
+    const heldAsInterest = (faction.interestCards as readonly string[]).includes(imp.id);
+    const heldAsLobby = faction.lobbyCards.some(
+      (l) => ALIGNMENT_RULES.lobbyToInterest[l] === imp.id,
+    );
+    if (heldAsInterest || heldAsLobby) {
+      total += ALIGNMENT_RULES.cardBiasPerDelta * imp.delta;
+    }
+  }
+  return total;
+}
+
+// Per-candidate election-share bias from faction's currently-held cards,
+// summed over live interestGroup scores; capped ±electionBiasCap.
+export function electionFactionBias(snap: FullGameSnapshot, factionId: string | null): number {
+  if (!factionId) return 0;
+  const faction = snap.factions.find((f) => f.id === factionId);
+  if (!faction) return 0;
+  let score = 0;
+  for (const ic of faction.interestCards) {
+    score += snap.game.interestGroups[ic] ?? 0;
+  }
+  for (const lc of faction.lobbyCards) {
+    const proxy = ALIGNMENT_RULES.lobbyToInterest[lc];
+    if (proxy) score += snap.game.interestGroups[proxy] ?? 0;
+  }
+  const raw = ALIGNMENT_RULES.electionBiasPerScore * score;
+  return clamp(raw, -ALIGNMENT_RULES.electionBiasCap, ALIGNMENT_RULES.electionBiasCap);
+}
+
+function recordAlignmentDrift(snap: FullGameSnapshot, entry: FactionAlignmentDriftEntry): void {
+  if (!snap.game.factionAlignmentDrift) snap.game.factionAlignmentDrift = [];
+  const arr = snap.game.factionAlignmentDrift;
+  arr.push(entry);
+  if (arr.length > ALIGNMENT_DRIFT_CAP) arr.splice(0, arr.length - ALIGNMENT_DRIFT_CAP);
+}
+
 export function runPhase_2_1_8_FactionPersonalities(snap: FullGameSnapshot): void {
+  if (!snap.game.factionAlignmentDrift) snap.game.factionAlignmentDrift = [];
+  if (!snap.game.alignmentStability) snap.game.alignmentStability = {};
+  const stability = snap.game.alignmentStability;
+  const year = snap.game.year;
+  const K = ALIGNMENT_RULES.stableTurns;
+  let personalityShifts = 0, added = 0, dropped = 0, swapped = 0;
+
+  // Step 1: personality refresh from living-only factionCenter (bug fix).
   for (const f of snap.factions) {
-    const members = snap.politicians.filter((p) => p.factionId === f.id);
-    if (members.length === 0) continue;
-    const ideoSum = members.reduce((s, p) => s + IDEOLOGY_ORDER.indexOf(p.ideology), 0) / members.length;
-    if (ideoSum < 2.5) f.personality = 'LW';
-    else if (ideoSum > 4.5) f.personality = 'RW';
-    else f.personality = 'Center';
+    const center = factionCenter(snap, f.id);
+    if (center === null) continue;
+    const before = f.personality;
+    const next: 'LW' | 'Center' | 'RW' =
+      center < ALIGNMENT_RULES.personalityBuckets.lwMax ? 'LW' :
+      center >= ALIGNMENT_RULES.personalityBuckets.rwMin ? 'RW' : 'Center';
+    if (next !== before) {
+      f.personality = next;
+      delete stability[`${f.id}|__personality`]; // bucket change resets the ideology-swap clock
+      recordAlignmentDrift(snap, {
+        year, factionId: f.id, kind: 'personality-shift',
+        fromPersonality: before, toPersonality: next,
+      });
+      personalityShifts++;
+    }
+  }
+
+  // Step 2: per-faction card drift — ideology swap → interest drop+add → lobby drop+add.
+  for (const f of snap.factions) {
+    const center = factionCenter(snap, f.id);
+    if (center === null) continue;
+    const bucket: 'LW' | 'Center' | 'RW' =
+      center < ALIGNMENT_RULES.personalityBuckets.lwMax ? 'LW' :
+      center >= ALIGNMENT_RULES.personalityBuckets.rwMin ? 'RW' : 'Center';
+
+    // 2a. IdeologyCard drift — K-stable bucket triggers one swap.
+    const persoKey = `${f.id}|__personality`;
+    const persoEntry = stability[persoKey];
+    if (!persoEntry) {
+      stability[persoKey] = { firstSeenYear: year };
+    } else if (year - persoEntry.firstSeenYear >= K) {
+      const outOfBucket = [...f.ideologyCards]
+        .filter((c) => ALIGNMENT_RULES.ideologyCardBucket[c] !== bucket)
+        .sort();
+      const candidatesIn = (Object.keys(ALIGNMENT_RULES.ideologyCardBucket) as IdeologyCardId[])
+        .filter((c) => ALIGNMENT_RULES.ideologyCardBucket[c] === bucket && !f.ideologyCards.includes(c))
+        .sort();
+      if (outOfBucket.length > 0 && candidatesIn.length > 0) {
+        const fromCardId = outOfBucket[0];
+        const cardId = candidatesIn[0];
+        f.ideologyCards = f.ideologyCards.filter((c) => c !== fromCardId);
+        f.ideologyCards.push(cardId);
+        recordAlignmentDrift(snap, {
+          year, factionId: f.id, kind: 'card-swapped', cardType: 'ideology',
+          fromCardId, cardId, reason: 'realigned',
+        });
+        swapped++;
+      }
+    }
+
+    // 2b. InterestCard drift — DROP then ADD.
+    for (const c of [...f.interestCards]) {
+      const score = snap.game.interestGroups[c] ?? 0;
+      const key = `${f.id}|interest:${c}`;
+      if (score <= ALIGNMENT_RULES.dropThreshold) {
+        const entry = stability[key];
+        if (!entry) {
+          stability[key] = { firstSeenYear: year };
+        } else if (year - entry.firstSeenYear >= K) {
+          f.interestCards = f.interestCards.filter((x) => x !== c);
+          delete stability[key];
+          recordAlignmentDrift(snap, {
+            year, factionId: f.id, kind: 'card-dropped', cardType: 'interest',
+            cardId: c, reason: 'crashed',
+          });
+          dropped++;
+        }
+      } else if (stability[key]) {
+        delete stability[key];
+      }
+    }
+    if (f.interestCards.length < ALIGNMENT_RULES.cardCapPerType) {
+      const heldProxy = new Set(f.lobbyCards.map((l) => ALIGNMENT_RULES.lobbyToInterest[l]).filter(Boolean));
+      const candidates = (Object.keys(ALIGNMENT_RULES.interestCardBucket) as InterestCardId[])
+        .filter((cand) => !f.interestCards.includes(cand))
+        .filter((cand) => !heldProxy.has(cand))
+        .filter((cand) => (snap.game.interestGroups[cand] ?? 0) >= ALIGNMENT_RULES.addThreshold)
+        .filter((cand) => ALIGNMENT_RULES.interestCardBucket[cand] === bucket)
+        .sort();
+      for (const cand of candidates) {
+        const key = `${f.id}|interest:${cand}`;
+        const entry = stability[key];
+        if (!entry) {
+          stability[key] = { firstSeenYear: year };
+        } else if (year - entry.firstSeenYear >= K) {
+          f.interestCards.push(cand);
+          delete stability[key];
+          recordAlignmentDrift(snap, {
+            year, factionId: f.id, kind: 'card-added', cardType: 'interest',
+            cardId: cand, reason: 'emerging',
+          });
+          added++;
+          break;
+        }
+      }
+      for (const key of Object.keys(stability)) {
+        if (!key.startsWith(`${f.id}|interest:`)) continue;
+        const cardId = key.slice(`${f.id}|interest:`.length) as InterestCardId;
+        if (f.interestCards.includes(cardId)) continue;
+        const sc = snap.game.interestGroups[cardId] ?? 0;
+        if (sc < ALIGNMENT_RULES.addThreshold && sc > ALIGNMENT_RULES.dropThreshold) {
+          delete stability[key];
+        }
+      }
+    }
+
+    // 2c. LobbyCard drift — identical shape, proxy-scored, namespaced keys.
+    for (const c of [...f.lobbyCards]) {
+      const proxy = ALIGNMENT_RULES.lobbyToInterest[c];
+      const score = snap.game.interestGroups[proxy] ?? 0;
+      const key = `${f.id}|lobby:${c}`;
+      if (score <= ALIGNMENT_RULES.dropThreshold) {
+        const entry = stability[key];
+        if (!entry) {
+          stability[key] = { firstSeenYear: year };
+        } else if (year - entry.firstSeenYear >= K) {
+          f.lobbyCards = f.lobbyCards.filter((x) => x !== c);
+          delete stability[key];
+          recordAlignmentDrift(snap, {
+            year, factionId: f.id, kind: 'card-dropped', cardType: 'lobby',
+            cardId: c, reason: 'crashed',
+          });
+          dropped++;
+        }
+      } else if (stability[key]) {
+        delete stability[key];
+      }
+    }
+    if (f.lobbyCards.length < ALIGNMENT_RULES.cardCapPerType) {
+      const candidates = (Object.keys(ALIGNMENT_RULES.lobbyToInterest) as LobbyCardId[])
+        .filter((cand) => !f.lobbyCards.includes(cand))
+        .filter((cand) => {
+          const proxy = ALIGNMENT_RULES.lobbyToInterest[cand];
+          return (snap.game.interestGroups[proxy] ?? 0) >= ALIGNMENT_RULES.addThreshold;
+        })
+        .filter((cand) => {
+          const proxy = ALIGNMENT_RULES.lobbyToInterest[cand];
+          return ALIGNMENT_RULES.interestCardBucket[proxy] === bucket;
+        })
+        .sort();
+      for (const cand of candidates) {
+        const key = `${f.id}|lobby:${cand}`;
+        const entry = stability[key];
+        if (!entry) {
+          stability[key] = { firstSeenYear: year };
+        } else if (year - entry.firstSeenYear >= K) {
+          f.lobbyCards.push(cand);
+          delete stability[key];
+          recordAlignmentDrift(snap, {
+            year, factionId: f.id, kind: 'card-added', cardType: 'lobby',
+            cardId: cand, reason: 'emerging',
+          });
+          added++;
+          break;
+        }
+      }
+      for (const key of Object.keys(stability)) {
+        if (!key.startsWith(`${f.id}|lobby:`)) continue;
+        const cardId = key.slice(`${f.id}|lobby:`.length) as LobbyCardId;
+        if (f.lobbyCards.includes(cardId)) continue;
+        const proxy = ALIGNMENT_RULES.lobbyToInterest[cardId];
+        const sc = snap.game.interestGroups[proxy] ?? 0;
+        if (sc < ALIGNMENT_RULES.addThreshold && sc > ALIGNMENT_RULES.dropThreshold) {
+          delete stability[key];
+        }
+      }
+    }
+  }
+
+  snap.politicians = refreshPv(snap.politicians);
+
+  const total = personalityShifts + added + dropped + swapped;
+  if (total > 0) {
+    addLog(snap, '2.1.8', 'system',
+      `Alignments: ${personalityShifts} personality shifts; ${added} added; ${dropped} dropped; ${swapped} swapped.`);
   }
 }
 
@@ -1846,7 +2072,7 @@ export function runPhase_2_5_3_Court(snap: FullGameSnapshot): void {
 // ============================================================================
 // 2.6 Congress (proposals, committee, floor)
 // ============================================================================
-const BILL_TEMPLATES = [
+export const BILL_TEMPLATES = [
   { title: 'Tariff Increase', committee: 'Economic' as const, description: 'Raise duties on imported manufactured goods.', effect: { text: 'Tariffs raised.', meters: { revenue: 1, economic: -0.5 }, interestGroups: [{ id: 'Manufacturers', delta: 2 }, { id: 'FreeTrade', delta: -2 }] } },
   { title: 'Tariff Reduction', committee: 'Economic' as const, description: 'Lower duties to encourage trade.', effect: { text: 'Tariffs reduced.', meters: { revenue: -0.5, economic: 0.5 }, interestGroups: [{ id: 'FreeTrade', delta: 2 }, { id: 'Manufacturers', delta: -1 }] } },
   { title: 'Homestead Act', committee: 'Domestic' as const, description: 'Free land to settlers in the West.', effect: { text: 'Homesteads granted.', interestGroups: [{ id: 'Settlers', delta: 3 }, { id: 'Planters', delta: -2 }] } },
@@ -1909,7 +2135,10 @@ export function runPhase_2_6_2_Committee(snap: FullGameSnapshot): void {
     }
     const sponsor = snap.politicians.find((p) => p.id === bill.sponsorId);
     const sameParty = chair.partyId === sponsor?.partyId;
-    const passChance = sameParty ? 0.85 : 0.25;
+    const passChance = clamp(
+      (sameParty ? 0.85 : 0.25) + cardVoteBias(snap, chair.factionId, bill.effects.interestGroups),
+      0, 1,
+    );
     if (chance(passChance)) {
       bill.status = 'passed_committee';
       addLog(snap, '2.6.2', 'legislation', `"${bill.title}" passes ${bill.committee} committee.`);
@@ -1959,6 +2188,7 @@ export function runPhase_2_6_3_Floor(snap: FullGameSnapshot): void {
         // ideology distance
         const dist = Math.abs(IDEOLOGY_ORDER.indexOf(m.ideology) - IDEOLOGY_ORDER.indexOf(sponsor.ideology));
         p -= dist * 0.05;
+        p = clamp(p + cardVoteBias(snap, m.factionId, bill.effects.interestGroups), 0, 1);
         if (chance(p)) yea++;
         else nay++;
       }
@@ -2090,7 +2320,8 @@ function calcStateVote(snap: FullGameSnapshot, stateId: string, candidates: Poli
     const baseLean = partyId === 'BLUE' ? -state.bias : state.bias;
     const partyPref = partyId === 'BLUE' ? -snap.game.partyPreference : snap.game.partyPreference;
     const pv = c.pvCache;
-    const score = 50 + baseLean * 5 + partyPref * 5 + enthusiasm * 2 + pv * 0.1 + (Math.random() - 0.5) * 8;
+    const factionBias = electionFactionBias(snap, c.factionId);
+    const score = 50 + baseLean * 5 + partyPref * 5 + enthusiasm * 2 + pv * 0.1 + factionBias + (Math.random() - 0.5) * 8;
     return { c, score: Math.max(1, score) };
   });
   const total = scores.reduce((s, x) => s + x.score, 0);
