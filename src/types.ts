@@ -259,6 +259,69 @@ export const KINGMAKER_RULES = {
 } as const;
 export const KINGMAKERS_CAP = 200;
 
+export type InterestCardId =
+  | 'Planters' | 'Manufacturers' | 'Settlers' | 'Workers' | 'Reformers'
+  | 'Abolitionists' | 'Nativists' | 'Immigrants' | 'Border' | 'Freedmen'
+  | 'WallStreet' | 'FreeTrade' | 'MilitaryIndustrial' | 'CivilRights'
+  | 'LawAndOrder';
+
+export type LobbyCardId =
+  | 'Patriots' | 'Merchants' | 'NationalUnity' | 'Planters' | 'SmallFarmers'
+  | 'Lawyers' | 'Reformers' | 'SlavePower' | 'Expansionists' | 'ProUnion'
+  | 'UrbanLabor' | 'NorthernIndustry' | 'Abolitionists' | 'EvangelicalReform'
+  | 'Nativists';
+
+export type IdeologyCardId =
+  | 'Independence' | 'Republicanism' | 'Whiggery' | 'Tradition' | 'StatesRights'
+  | 'Reformism' | 'Compromise' | 'Federalism' | 'StrongCenter'
+  | 'SlaveryRights' | 'Manifestdestiny' | 'Populism' | 'Antimonopoly'
+  | 'FreeTrade' | 'GradualEmancipation' | 'FreeSoil' | 'Industry'
+  | 'Antislavery' | 'Abolition' | 'CivilRights' | 'Nativism' | 'Protestantism';
+
+// Faction alignment drift — single source for engine AND legend.
+export const ALIGNMENT_RULES = {
+  dropThreshold: -4,
+  addThreshold: 4,
+  stableTurns: 2, // K
+  cardBiasPerDelta: 0.03,
+  electionBiasPerScore: 0.5,
+  electionBiasCap: 3,
+  personalityBuckets: { lwMax: 2.5, rwMin: 4.5 },
+  cardCapPerType: 4,
+  lobbyToInterest: {
+    Patriots: 'Reformers',
+    Merchants: 'Manufacturers',
+    NationalUnity: 'Border',
+    Planters: 'Planters',
+    SmallFarmers: 'Settlers',
+    Lawyers: 'Manufacturers',
+    Reformers: 'Reformers',
+    SlavePower: 'Planters',
+    Expansionists: 'Settlers',
+    ProUnion: 'Border',
+    UrbanLabor: 'Workers',
+    NorthernIndustry: 'Manufacturers',
+    Abolitionists: 'Abolitionists',
+    EvangelicalReform: 'Reformers',
+    Nativists: 'Nativists',
+  } as Record<LobbyCardId, InterestCardId>,
+  ideologyCardBucket: {
+    Independence: 'LW', Republicanism: 'LW', Reformism: 'LW', Populism: 'LW',
+    Antimonopoly: 'LW', Antislavery: 'LW', Abolition: 'LW', CivilRights: 'LW', FreeSoil: 'LW',
+    Whiggery: 'Center', Compromise: 'Center', Federalism: 'Center', StrongCenter: 'Center',
+    GradualEmancipation: 'Center', Manifestdestiny: 'Center', Industry: 'Center', FreeTrade: 'Center',
+    Tradition: 'RW', StatesRights: 'RW', SlaveryRights: 'RW', Nativism: 'RW', Protestantism: 'RW',
+  } as Record<IdeologyCardId, 'LW' | 'Center' | 'RW'>,
+  interestCardBucket: {
+    Abolitionists: 'LW', Reformers: 'LW', Workers: 'LW', Immigrants: 'LW',
+    Freedmen: 'LW', CivilRights: 'LW',
+    Manufacturers: 'Center', Settlers: 'Center', Border: 'Center',
+    FreeTrade: 'Center', WallStreet: 'Center',
+    Planters: 'RW', Nativists: 'RW', MilitaryIndustrial: 'RW', LawAndOrder: 'RW',
+  } as Record<InterestCardId, 'LW' | 'Center' | 'RW'>,
+};
+export const ALIGNMENT_DRIFT_CAP = 200;
+
 export type OfficeType =
   | 'President'
   | 'VicePresident'
@@ -328,9 +391,9 @@ export interface Faction {
   name: string;
   partyId: PartyId;
   personality: 'LW' | 'Center' | 'RW';
-  ideologyCards: string[];
-  lobbyCards: string[];
-  interestCards: string[];
+  ideologyCards: IdeologyCardId[];
+  lobbyCards: LobbyCardId[];
+  interestCards: InterestCardId[];
   leaderId?: string | null;
   isPlayer: boolean;
 }
@@ -609,6 +672,8 @@ export interface GameState {
   conversions?: ConversionEntry[];
   conversionAttempts?: { year: number; counts: Record<string, number> };
   kingmakers?: KingmakerEntry[];
+  factionAlignmentDrift?: FactionAlignmentDriftEntry[];
+  alignmentStability?: Record<string, { firstSeenYear: number }>;
   customDraftClasses?: ImportedDraftee[];
   inauguralDraftSeeded?: boolean;
 }
@@ -685,6 +750,18 @@ export interface KingmakerEntry {
   reason?: 'death' | 'retire' | 'defect' | 'released' | 'draft-floor';
   trigger?: 'tenure' | 'office';
   actor?: 'player' | 'cpu';
+}
+
+export interface FactionAlignmentDriftEntry {
+  year: number;
+  factionId: string;
+  kind: 'personality-shift' | 'card-added' | 'card-dropped' | 'card-swapped';
+  cardType?: 'interest' | 'lobby' | 'ideology';
+  cardId?: InterestCardId | LobbyCardId | IdeologyCardId;
+  fromCardId?: InterestCardId | LobbyCardId | IdeologyCardId;
+  fromPersonality?: 'LW' | 'Center' | 'RW';
+  toPersonality?: 'LW' | 'Center' | 'RW';
+  reason?: 'crashed' | 'emerging' | 'realigned' | 'composition';
 }
 
 // A draftee imported from the user's CSV dataset. Persisted on the game state

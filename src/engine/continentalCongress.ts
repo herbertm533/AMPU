@@ -1,6 +1,7 @@
 import type { FullGameSnapshot, CCDelegate, Politician, Legislation } from '../types';
 import { addLog } from './log';
-import { uid, chance, pick } from '../rng';
+import { uid, chance, pick, clamp } from '../rng';
+import { cardVoteBias } from './phaseRunners';
 
 // Appoint Continental Congress delegates.
 // Before governors exist: each state's largest faction (by # of politicians in
@@ -173,6 +174,7 @@ export function voteCC(snap: FullGameSnapshot, bill: Legislation): { aye: number
       const sameFaction = dpol.factionId === sponsor.factionId;
       const sameParty = dpol.partyId === sponsor.partyId;
       let p = sameFaction ? 0.92 : sameParty ? 0.6 : 0.2;
+      p = clamp(p + cardVoteBias(snap, dpol.factionId, bill.effects.interestGroups), 0, 1);
       if (chance(p)) aye++; else nay++;
     }
     if (aye > nay) stateVotes[state.id] = 'aye';

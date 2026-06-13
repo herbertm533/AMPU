@@ -36,6 +36,7 @@ export function Sidebar({ current, onNavigate }: { current: PageId; onNavigate: 
         { id: 'ideology', label: 'Ideology Shifts' },
         { id: 'conversions', label: 'Faction Conversions' },
         { id: 'kingmakers', label: 'Kingmakers & Protégés' },
+        { id: 'factionAlignments', label: 'Faction Alignments' },
         { id: 'draft', label: 'Draft' },
       ],
     },
