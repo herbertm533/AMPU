@@ -633,7 +633,7 @@ export function factionCenter(snap: FullGameSnapshot, factionId: string): number
   return Math.round(sum / count);
 }
 
-function getFactionLeader(snap: FullGameSnapshot, factionId: string | null | undefined): Politician | null {
+export function getFactionLeader(snap: FullGameSnapshot, factionId: string | null | undefined): Politician | null {
   if (!factionId) return null;
   const f = snap.factions.find((ff) => ff.id === factionId);
   if (!f || !f.leaderId) return null;
