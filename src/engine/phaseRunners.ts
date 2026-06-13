@@ -1,5 +1,5 @@
-import type { FullGameSnapshot, PhaseId, Politician, EraEvent, Legislation, ElectionResult, NationalMeters, Ideology, PartyId, SkillKey, Trait, CareerTrack, State, RelocationEntry, RelocationBand, IdeologyShiftEntry, ConversionEntry, KingmakerEntry, FactionAlignmentDriftEntry, InterestCardId, LobbyCardId, IdeologyCardId } from '../types';
-import { IDEOLOGY_ORDER, SKILLS, POSITIVE_TRAITS, TRACK_SKILL, TRACK_THEMED_TRAITS, CAREER_RANDOM_NEGATIVES, CAREER_ODDS, CAREER_TRACK_MAX_YEARS, CAREER_TRACK_CAP, CAREER_GAINS_CAP, RELOCATION_ODDS, RELOCATION_ATTEMPTS_PER_TURN, RELOCATIONS_CAP, CARPETBAGGER_LADDER, IDEOLOGY_SHIFT_ODDS, IDEOLOGY_ATTEMPTS_PER_TURN, IDEOLOGY_SHIFTS_CAP, CONVERSION_ODDS, CONVERSION_ATTEMPTS_PER_TURN, CONVERSIONS_CAP, KINGMAKER_RULES, KINGMAKERS_CAP, ALIGNMENT_RULES, ALIGNMENT_DRIFT_CAP } from '../types';
+import type { FullGameSnapshot, PhaseId, Politician, EraEvent, Legislation, ElectionResult, NationalMeters, Ideology, PartyId, SkillKey, Trait, CareerTrack, State, RelocationEntry, RelocationBand, IdeologyShiftEntry, ConversionEntry, KingmakerEntry, FactionAlignmentDriftEntry, FactionLeadershipEntry, InterestCardId, LobbyCardId, IdeologyCardId } from '../types';
+import { IDEOLOGY_ORDER, SKILLS, POSITIVE_TRAITS, TRACK_SKILL, TRACK_THEMED_TRAITS, CAREER_RANDOM_NEGATIVES, CAREER_ODDS, CAREER_TRACK_MAX_YEARS, CAREER_TRACK_CAP, CAREER_GAINS_CAP, RELOCATION_ODDS, RELOCATION_ATTEMPTS_PER_TURN, RELOCATIONS_CAP, CARPETBAGGER_LADDER, IDEOLOGY_SHIFT_ODDS, IDEOLOGY_ATTEMPTS_PER_TURN, IDEOLOGY_SHIFTS_CAP, CONVERSION_ODDS, CONVERSION_ATTEMPTS_PER_TURN, CONVERSIONS_CAP, KINGMAKER_RULES, KINGMAKERS_CAP, ALIGNMENT_RULES, ALIGNMENT_DRIFT_CAP, LEADERSHIP_RULES, LEADERSHIP_FEED_CAP } from '../types';
 import { addLog } from './log';
 import { uid, chance, d100, pick, clamp, shuffle, rand } from '../rng';
 import { refreshPv } from '../pv';
@@ -620,8 +620,27 @@ function traitMult(p: Politician, kind: 'drift' | 'self' | 'opposed'): number {
 export function factionCenter(snap: FullGameSnapshot, factionId: string): number | null {
   const members = snap.politicians.filter((p) => p.factionId === factionId && !p.deathYear && !p.retiredYear);
   if (members.length === 0) return null;
-  const mean = members.reduce((s, p) => s + IDEOLOGY_ORDER.indexOf(p.ideology), 0) / members.length;
-  return Math.round(mean);
+  const faction = snap.factions.find((f) => f.id === factionId);
+  const leaderId = faction?.leaderId ?? null;
+  let sum = 0, count = 0;
+  for (const p of members) {
+    const w = (leaderId !== null && p.id === leaderId)
+      ? LEADERSHIP_RULES.ideologyWeightInFactionCenter
+      : 1;
+    sum += IDEOLOGY_ORDER.indexOf(p.ideology) * w;
+    count += w;
+  }
+  return Math.round(sum / count);
+}
+
+export function getFactionLeader(snap: FullGameSnapshot, factionId: string | null | undefined): Politician | null {
+  if (!factionId) return null;
+  const f = snap.factions.find((ff) => ff.id === factionId);
+  if (!f || !f.leaderId) return null;
+  const leader = snap.politicians.find((p) => p.id === f.leaderId);
+  if (!leader) return null;
+  if (leader.deathYear || leader.retiredYear) return null;
+  return leader;
 }
 
 function stepToward(fromIdx: number, targetIdx: number): number {
@@ -630,8 +649,11 @@ function stepToward(fromIdx: number, targetIdx: number): number {
 
 // Shared odds/step math — used by the resolver AND the page preview, so the
 // odds displayed are structurally the odds rolled.
-export function ideologyShiftOdds(p: Politician, kind: 'self' | 'opposed', actorCenter: number): { success: number; ffRisk: number; from: Ideology; to: Ideology } {
-  const success = clamp(IDEOLOGY_SHIFT_ODDS.attempt[kind] * traitMult(p, kind), 0, 1);
+export function ideologyShiftOdds(p: Politician, kind: 'self' | 'opposed', actorCenter: number, actorLeader?: Politician | null): { success: number; ffRisk: number; from: Ideology; to: Ideology } {
+  const oratorBonus = actorLeader?.traits.includes('Orator')
+    ? LEADERSHIP_RULES.oratorIdeologyShiftBonus
+    : 0;
+  const success = clamp(IDEOLOGY_SHIFT_ODDS.attempt[kind] * traitMult(p, kind) + oratorBonus, 0, 1);
   const ffRisk = kind === 'opposed' ? IDEOLOGY_SHIFT_ODDS.attempt.ffRisk : 0;
   const fromIdx = IDEOLOGY_ORDER.indexOf(p.ideology);
   return { success, ffRisk, from: p.ideology, to: IDEOLOGY_ORDER[stepToward(fromIdx, actorCenter)] };
@@ -665,7 +687,8 @@ function resolveIdeologyShift(snap: FullGameSnapshot, actorFactionId: string, p:
   p.lastIdeologyAttemptYear = g.year; // stamps failures too
   const from = p.ideology;
 
-  const { success: pS, ffRisk, to } = ideologyShiftOdds(p, kind, center);
+  const actorLeader = getFactionLeader(snap, actorFactionId);
+  const { success: pS, ffRisk, to } = ideologyShiftOdds(p, kind, center, actorLeader);
   const success = chance(pS);
   let flipFlopper = false;
   if (success) {
@@ -899,7 +922,11 @@ export function conversionOdds(snap: FullGameSnapshot, actorFactionId: string, p
   const loyal = p.traits.includes('Loyal') ? CONVERSION_ODDS.traits.Loyal.attempt : 1;
   const opportunist = p.traits.includes('Opportunist') ? CONVERSION_ODDS.traits.Opportunist.attempt : 1;
 
-  const success = clamp(base * fit * ffHistory * mentorBond * highPv * flipFlopperTrait * loyal * opportunist, 0, 1);
+  const actorLeader = getFactionLeader(snap, actorFactionId);
+  const manipulativeBonus = actorLeader?.traits.includes('Manipulative')
+    ? LEADERSHIP_RULES.manipulativeConversionBonus
+    : 0;
+  const success = clamp(base * fit * ffHistory * mentorBond * highPv * flipFlopperTrait * loyal * opportunist + manipulativeBonus, 0, 1);
   const ffOnSuccess = kind === 'poach' ? CONVERSION_ODDS.ffStacks[crossParty ? 'cross' : 'same'] : 0;
 
   return {
@@ -1324,6 +1351,11 @@ export function runPhase_2_1_7_Kingmakers(snap: FullGameSnapshot): void {
       }
     }
 
+    const mentorFactionLeader = getFactionLeader(snap, k.factionId);
+    if (mentorFactionLeader?.traits.includes('Kingmaker') && chance(LEADERSHIP_RULES.kingmakerProtegeBonus)) {
+      c.command = Math.min(KINGMAKER_RULES.commandCap, c.command + 1);
+    }
+
     // Mentor reward — independent of which branch fired for the protégé.
     if (!k.traits.includes('Leadership')) k.traits.push('Leadership');
 
@@ -1395,7 +1427,7 @@ export function cardVoteBias(
 
 // Per-candidate election-share bias from faction's currently-held cards,
 // summed over live interestGroup scores; capped ±electionBiasCap.
-export function electionFactionBias(snap: FullGameSnapshot, factionId: string | null): number {
+export function electionFactionBias(snap: FullGameSnapshot, factionId: string | null, candidateId?: string): number {
   if (!factionId) return 0;
   const faction = snap.factions.find((f) => f.id === factionId);
   if (!faction) return 0;
@@ -1408,7 +1440,22 @@ export function electionFactionBias(snap: FullGameSnapshot, factionId: string | 
     if (proxy) score += snap.game.interestGroups[proxy] ?? 0;
   }
   const raw = ALIGNMENT_RULES.electionBiasPerScore * score;
-  return clamp(raw, -ALIGNMENT_RULES.electionBiasCap, ALIGNMENT_RULES.electionBiasCap);
+  let bias = clamp(raw, -ALIGNMENT_RULES.electionBiasCap, ALIGNMENT_RULES.electionBiasCap);
+  if (
+    candidateId != null
+    && faction.leaderId === candidateId
+    && snap.game.currentEra !== 'independence'
+  ) {
+    bias *= LEADERSHIP_RULES.electionOnBallotMul;
+  }
+  return bias;
+}
+
+function recordFactionLeadership(snap: FullGameSnapshot, entry: FactionLeadershipEntry): void {
+  if (!snap.game.factionLeadership) snap.game.factionLeadership = [];
+  const arr = snap.game.factionLeadership;
+  arr.push(entry);
+  if (arr.length > LEADERSHIP_FEED_CAP) arr.splice(0, arr.length - LEADERSHIP_FEED_CAP);
 }
 
 function recordAlignmentDrift(snap: FullGameSnapshot, entry: FactionAlignmentDriftEntry): void {
@@ -1452,6 +1499,9 @@ export function runPhase_2_1_8_FactionPersonalities(snap: FullGameSnapshot): voi
     const bucket: 'LW' | 'Center' | 'RW' =
       center < ALIGNMENT_RULES.personalityBuckets.lwMax ? 'LW' :
       center >= ALIGNMENT_RULES.personalityBuckets.rwMin ? 'RW' : 'Center';
+    const dropK = K + (getFactionLeader(snap, f.id)?.traits.includes('Leadership')
+      ? LEADERSHIP_RULES.leadershipDropStableTurnsBonus
+      : 0);
 
     // 2a. IdeologyCard drift — K-stable bucket triggers one swap.
     const persoKey = `${f.id}|__personality`;
@@ -1486,7 +1536,7 @@ export function runPhase_2_1_8_FactionPersonalities(snap: FullGameSnapshot): voi
         const entry = stability[key];
         if (!entry) {
           stability[key] = { firstSeenYear: year };
-        } else if (year - entry.firstSeenYear >= K) {
+        } else if (year - entry.firstSeenYear >= dropK) {
           f.interestCards = f.interestCards.filter((x) => x !== c);
           delete stability[key];
           recordAlignmentDrift(snap, {
@@ -1543,7 +1593,7 @@ export function runPhase_2_1_8_FactionPersonalities(snap: FullGameSnapshot): voi
         const entry = stability[key];
         if (!entry) {
           stability[key] = { firstSeenYear: year };
-        } else if (year - entry.firstSeenYear >= K) {
+        } else if (year - entry.firstSeenYear >= dropK) {
           f.lobbyCards = f.lobbyCards.filter((x) => x !== c);
           delete stability[key];
           recordAlignmentDrift(snap, {
@@ -1670,11 +1720,164 @@ export function runPhase_2_2_2_Committees(snap: FullGameSnapshot): void {
 // 2.2.3 Faction leaders (auto)
 // ============================================================================
 export function runPhase_2_2_3_FactionLeaders(snap: FullGameSnapshot): void {
+  const year = snap.game.year;
+  const era = snap.game.currentEra;
+  const cfg = LEADERSHIP_RULES.eraConfig[era];
+
+  // Step 0: Failed Bid decay sweep.
+  for (const p of snap.politicians) {
+    if (p.failedBidExpiresYear !== undefined && year >= p.failedBidExpiresYear) {
+      p.traits = p.traits.filter((t) => t !== 'Failed Bid');
+      p.failedBidExpiresYear = undefined;
+    }
+  }
+
+  // Step 1: Ambitious seed pass (one-shot lazy; matches 2.1.5/2.1.6 pattern).
+  for (const p of snap.politicians) {
+    if (p.deathYear || p.retiredYear || p.ambitiousSeeded) continue;
+    if (chance(LEADERSHIP_RULES.ambitiousSeedRate)) {
+      if (!p.traits.includes('Ambitious')) p.traits.push('Ambitious');
+    }
+    p.ambitiousSeeded = true;
+  }
+
+  // Steps 2 & 3: per-faction validation + Election OR Challenge (mutually exclusive).
+  let challenges = 0, unseated = 0, newSeats = 0;
   for (const f of snap.factions) {
-    const members = snap.politicians.filter((p) => p.factionId === f.id);
-    if (members.length === 0) continue;
-    members.sort((a, b) => b.pvCache - a.pvCache);
-    f.leaderId = members[0].id;
+    const current = f.leaderId
+      ? snap.politicians.find((p) => p.id === f.leaderId) ?? null
+      : null;
+    const invalid =
+      !current
+      || !!current.deathYear
+      || !!current.retiredYear
+      || current.factionId !== f.id
+      || current.factionLeaderOf !== f.id;
+
+    if (invalid) {
+      // Step 2 path: Election (no incumbent OR invalidation).
+      if (current && current.factionLeaderOf === f.id) {
+        current.factionLeaderOf = null;
+      }
+      const center = factionCenter(snap, f.id);
+      const eligible = snap.politicians.filter((p) =>
+        !p.deathYear && !p.retiredYear
+        && p.factionId === f.id
+        && !p.traits.includes('Failed Bid'),
+      );
+      const scoreOf = (p: Politician): number => {
+        const idol = IDEOLOGY_ORDER.indexOf(p.ideology);
+        const fitPenalty = center !== null
+          ? LEADERSHIP_RULES.fitPenalty * Math.abs(idol - center)
+          : 0;
+        const posCount = p.traits.filter((t) => POSITIVE_TRAITS.includes(t)).length;
+        const traitBonus = Math.min(
+          LEADERSHIP_RULES.traitBonusCap,
+          LEADERSHIP_RULES.traitBonusPerPositive * posCount,
+        );
+        return p.pvCache - fitPenalty + traitBonus;
+      };
+      eligible.sort((a, b) => {
+        const sa = scoreOf(a), sb = scoreOf(b);
+        if (sa !== sb) return sb - sa;
+        return a.id.localeCompare(b.id);
+      });
+      const winner = eligible[0] ?? null;
+      if (winner) {
+        const formerLeaderId = current?.id;
+        f.leaderId = winner.id;
+        f.leadershipStartYear = year;
+        winner.factionLeaderOf = f.id;
+        recordFactionLeadership(snap, {
+          year, factionId: f.id, kind: 'installed',
+          leaderId: winner.id,
+          formerLeaderId,
+          reason: 'election',
+        });
+        addLog(snap, '2.2.3', 'appointment',
+          `${winner.firstName} ${winner.lastName} elected to lead the ${f.name}.`);
+        newSeats++;
+      } else {
+        f.leaderId = null;
+        f.leadershipStartYear = undefined;
+      }
+      continue;
+    }
+
+    // Step 3 path: Challenge roll (only on valid incumbent).
+    const leader = current!;
+    const pool = snap.politicians.filter((p) =>
+      !p.deathYear && !p.retiredYear
+      && p.factionId === f.id
+      && p.id !== leader.id
+      && p.pvCache >= LEADERSHIP_RULES.challengerPvFloor
+      && !p.traits.includes('Failed Bid'),
+    );
+    if (pool.length === 0) continue;
+    pool.sort((a, b) =>
+      a.pvCache !== b.pvCache ? b.pvCache - a.pvCache : a.id.localeCompare(b.id),
+    );
+    const challenger = pool[0];
+
+    const center = factionCenter(snap, f.id) ?? IDEOLOGY_ORDER.indexOf(leader.ideology);
+    const ideoDist = Math.abs(IDEOLOGY_ORDER.indexOf(leader.ideology) - center);
+    const pvGap = Math.max(0, (challenger.pvCache - leader.pvCache) / LEADERSHIP_RULES.scoreNormalizer);
+    const ideologyTrigger = ideoDist / 6;
+    const patronageTrigger = pvGap;
+    let fireRaw = cfg.baseFireChance
+      + cfg.ideologyTriggerWeight * ideologyTrigger
+      + cfg.patronageTriggerWeight * patronageTrigger;
+    if (challenger.traits.includes('Ambitious')) fireRaw += LEADERSHIP_RULES.ambitiousFireBonus;
+    const fireChance = clamp(fireRaw, 0, LEADERSHIP_RULES.fireCap);
+
+    if (!chance(fireChance)) continue;
+
+    challenges++;
+    const edge = (challenger.pvCache - leader.pvCache) / LEADERSHIP_RULES.scoreNormalizer;
+    const successChance = clamp(0.5 + edge - cfg.incumbencyAdvantage / 100, 0.05, 0.95);
+
+    if (chance(successChance)) {
+      leader.factionLeaderOf = null;
+      challenger.factionLeaderOf = f.id;
+      f.leaderId = challenger.id;
+      f.leadershipStartYear = year;
+      recordFactionLeadership(snap, {
+        year, factionId: f.id, kind: 'challenged',
+        leaderId: challenger.id, formerLeaderId: leader.id,
+        challengerId: challenger.id, success: true, reason: 'challenge-win',
+      });
+      addLog(snap, '2.2.3', 'appointment',
+        `${challenger.firstName} ${challenger.lastName} unseats ${leader.firstName} ${leader.lastName} as leader of the ${f.name}.`);
+      unseated++;
+    } else {
+      if (!challenger.traits.includes('Failed Bid')) challenger.traits.push('Failed Bid');
+      challenger.failedBidExpiresYear = year + 2 * LEADERSHIP_RULES.failedBidDecayTurns;
+      recordFactionLeadership(snap, {
+        year, factionId: f.id, kind: 'challenged',
+        challengerId: challenger.id, success: false, reason: 'challenge-loss',
+      });
+      addLog(snap, '2.2.3', 'appointment',
+        `${challenger.firstName} ${challenger.lastName}'s bid to lead the ${f.name} fails; the chair holds.`);
+    }
+  }
+
+  // Step 4: single refreshPv at end.
+  snap.politicians = refreshPv(snap.politicians);
+
+  // Step 5: end-of-phase invariant check.
+  for (const f of snap.factions) {
+    if (f.leaderId) continue;
+    const hasEligible = snap.politicians.some((p) =>
+      p.factionId === f.id && !p.deathYear && !p.retiredYear && !p.traits.includes('Failed Bid'),
+    );
+    if (hasEligible) {
+      addLog(snap, '2.2.3', 'system', `No eligible leader for ${f.name}.`);
+    }
+  }
+
+  if (challenges + newSeats > 0) {
+    addLog(snap, '2.2.3', 'system',
+      `Leadership: ${challenges} challenges resolved (${unseated} unseated); ${newSeats} new leaders installed.`);
   }
 }
 
@@ -2219,6 +2422,8 @@ export function runPhase_2_6_3_Floor(snap: FullGameSnapshot): void {
     if (!sponsor) continue;
     const senateMembers = snap.states.flatMap((s) => s.senators.map((sn) => snap.politicians.find((p) => p.id === sn.politicianId))).filter(Boolean) as Politician[];
     const houseMembers = snap.states.flatMap((s) => s.representativeIds.map((id) => snap.politicians.find((p) => p.id === id))).filter(Boolean) as Politician[];
+    const sponsorLeader = getFactionLeader(snap, sponsor.factionId);
+    const sponsorIsLeader = !!(sponsorLeader && sponsorLeader.id === sponsor.id);
     const tally = (members: Politician[]) => {
       let yea = 0, nay = 0;
       for (const m of members) {
@@ -2228,7 +2433,10 @@ export function runPhase_2_6_3_Floor(snap: FullGameSnapshot): void {
         // ideology distance
         const dist = Math.abs(IDEOLOGY_ORDER.indexOf(m.ideology) - IDEOLOGY_ORDER.indexOf(sponsor.ideology));
         p -= dist * 0.05;
-        p = clamp(p + cardVoteBias(snap, m.factionId, bill.effects.interestGroups), 0, 1);
+        const leaderSponsorBonus = (sponsorIsLeader && m.factionId === sponsor.factionId)
+          ? LEADERSHIP_RULES.sponsorFloorBias
+          : 0;
+        p = clamp(p + cardVoteBias(snap, m.factionId, bill.effects.interestGroups) + leaderSponsorBonus, 0, 1);
         if (chance(p)) yea++;
         else nay++;
       }
@@ -2360,7 +2568,7 @@ function calcStateVote(snap: FullGameSnapshot, stateId: string, candidates: Poli
     const baseLean = partyId === 'BLUE' ? -state.bias : state.bias;
     const partyPref = partyId === 'BLUE' ? -snap.game.partyPreference : snap.game.partyPreference;
     const pv = c.pvCache;
-    const factionBias = electionFactionBias(snap, c.factionId);
+    const factionBias = electionFactionBias(snap, c.factionId, c.id);
     const score = 50 + baseLean * 5 + partyPref * 5 + enthusiasm * 2 + pv * 0.1 + factionBias + (Math.random() - 0.5) * 8;
     return { c, score: Math.max(1, score) };
   });

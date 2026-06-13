@@ -78,6 +78,7 @@ export function computePV(p: Politician): number {
   if (p.currentOffice) {
     total += OFFICE_PRESTIGE[p.currentOffice.type] ?? 0;
   }
+  if (p.factionLeaderOf != null) total += 8;
   // age penalty over 70
   if (p.age > 70) total -= (p.age - 70) * 1.5;
   if (p.age < 30) total -= (30 - p.age) * 0.8;

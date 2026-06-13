@@ -6,7 +6,7 @@ import {
   IDEOLOGY_SHIFT_ODDS, IDEOLOGY_ATTEMPTS_PER_TURN, NEGATIVE_TRAITS, IDEOLOGY_ORDER,
 } from '../types';
 import type { Politician, IdeologyShiftEntry } from '../types';
-import { factionCenter, ideologyShiftOdds } from '../engine/phaseRunners';
+import { factionCenter, ideologyShiftOdds, getFactionLeader } from '../engine/phaseRunners';
 
 type StatusFilter = 'all' | 'available' | 'attempted' | 'atCenter';
 
@@ -74,7 +74,8 @@ export function IdeologyShifts(): JSX.Element {
   };
 
   const confirmingPol = confirming ? base.find((p) => p.id === confirming.politicianId) : undefined;
-  const confirmingOdds = confirmingPol && playerCenter !== null ? ideologyShiftOdds(confirmingPol, kind, playerCenter) : undefined;
+  const actorLeader = getFactionLeader(snapshot, activeFactionId);
+  const confirmingOdds = confirmingPol && playerCenter !== null ? ideologyShiftOdds(confirmingPol, kind, playerCenter, actorLeader) : undefined;
 
   const columns: Column<Politician>[] = [
     { key: 'name', label: 'Name', sortValue: (p) => `${p.lastName} ${p.firstName}`, render: (p) => <span className="font-semibold">{p.firstName} {p.lastName}</span> },

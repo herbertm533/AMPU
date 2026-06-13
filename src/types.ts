@@ -103,7 +103,9 @@ export type Trait =
   | 'Ideologue'
   | 'Impressionable'
   | 'Loyal'
-  | 'Opportunist';
+  | 'Opportunist'
+  | 'Ambitious'
+  | 'Failed Bid';
 
 export const POSITIVE_TRAITS: Trait[] = [
   'Charismatic',
@@ -134,6 +136,7 @@ export const POSITIVE_TRAITS: Trait[] = [
   'Leadership',
   'Ideologue',
   'Loyal',
+  'Ambitious',
 ];
 
 export const NEGATIVE_TRAITS: Trait[] = [
@@ -153,6 +156,7 @@ export const NEGATIVE_TRAITS: Trait[] = [
   'Outsider',
   'Impressionable',
   'Opportunist',
+  'Failed Bid',
 ];
 
 // Career-track tables — single source for engine rolls AND the page legend.
@@ -322,6 +326,55 @@ export const ALIGNMENT_RULES = {
 };
 export const ALIGNMENT_DRIFT_CAP = 200;
 
+export const LEADERSHIP_FEED_CAP = 200;
+
+export const LEADERSHIP_RULES = {
+  fitPenalty: 1.0,
+  traitBonusPerPositive: 2,
+  traitBonusCap: 6,
+  challengerPvFloor: 30,
+  ideologyWeightInFactionCenter: 1.5,
+
+  fireCap: 0.20,
+  scoreNormalizer: 200,
+  failedBidDecayTurns: 3,
+  failedBidPvStamp: 5,
+  ambitiousSeedRate: 0.05,
+  ambitiousFireBonus: 0.05,
+
+  oratorIdeologyShiftBonus: 0.05,
+  manipulativeConversionBonus: 0.05,
+  kingmakerProtegeBonus: 0.05,
+  leadershipDropStableTurnsBonus: 1,
+
+  electionOnBallotMul: 1.1,
+  sponsorFloorBias: 0.05,
+
+  eraConfig: {
+    independence: {
+      baseFireChance: 0.015, incumbencyAdvantage: 30,
+      ideologyTriggerWeight: 0.20, patronageTriggerWeight: 0.80,
+    },
+    federalism: {
+      baseFireChance: 0.025, incumbencyAdvantage: 20,
+      ideologyTriggerWeight: 0.30, patronageTriggerWeight: 0.70,
+    },
+    nationalism: {
+      baseFireChance: 0.045, incumbencyAdvantage: 15,
+      ideologyTriggerWeight: 0.40, patronageTriggerWeight: 0.60,
+    },
+    modern: {
+      baseFireChance: 0.060, incumbencyAdvantage: 8,
+      ideologyTriggerWeight: 0.80, patronageTriggerWeight: 0.20,
+    },
+  } as const satisfies Record<Era, {
+    baseFireChance: number;
+    incumbencyAdvantage: number;
+    ideologyTriggerWeight: number;
+    patronageTriggerWeight: number;
+  }>,
+} as const;
+
 export type OfficeType =
   | 'President'
   | 'VicePresident'
@@ -385,6 +438,9 @@ export interface Politician {
   pvCache: number;
   isHistorical: boolean;
   draftedYear?: number;
+  ambitiousSeeded?: boolean;
+  failedBidExpiresYear?: number;
+  factionLeaderOf?: string | null;
 }
 
 export interface Faction {
@@ -396,6 +452,7 @@ export interface Faction {
   lobbyCards: LobbyCardId[];
   interestCards: InterestCardId[];
   leaderId?: string | null;
+  leadershipStartYear?: number;
   isPlayer: boolean;
 }
 
@@ -676,6 +733,7 @@ export interface GameState {
   conversionAttempts?: { year: number; counts: Record<string, number> };
   kingmakers?: KingmakerEntry[];
   factionAlignmentDrift?: FactionAlignmentDriftEntry[];
+  factionLeadership?: FactionLeadershipEntry[];
   alignmentStability?: Record<string, { firstSeenYear: number }>;
   customDraftClasses?: ImportedDraftee[];
   inauguralDraftSeeded?: boolean;
@@ -765,6 +823,18 @@ export interface FactionAlignmentDriftEntry {
   fromPersonality?: 'LW' | 'Center' | 'RW';
   toPersonality?: 'LW' | 'Center' | 'RW';
   reason?: 'crashed' | 'emerging' | 'realigned' | 'composition';
+}
+
+export interface FactionLeadershipEntry {
+  year: number;
+  factionId: string;
+  kind: 'installed' | 'challenged' | 'vacated';
+  leaderId?: string;
+  formerLeaderId?: string;
+  challengerId?: string;
+  success?: boolean;
+  reason?: 'death' | 'retire' | 'defect' | 'promoted' | 'replaced' | 'challenge-win'
+         | 'challenge-loss' | 'election';
 }
 
 // A draftee imported from the user's CSV dataset. Persisted on the game state
