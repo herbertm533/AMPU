@@ -1,8 +1,10 @@
-import type { FullGameSnapshot, PhaseId, Politician, EraEvent, Legislation, ElectionResult, NationalMeters, Ideology, PartyId, SkillKey, Trait, CareerTrack, State, RelocationEntry, RelocationBand, IdeologyShiftEntry, ConversionEntry, KingmakerEntry, FactionAlignmentDriftEntry, FactionLeadershipEntry, InterestCardId, LobbyCardId, IdeologyCardId } from '../types';
-import { IDEOLOGY_ORDER, SKILLS, POSITIVE_TRAITS, TRACK_SKILL, TRACK_THEMED_TRAITS, CAREER_RANDOM_NEGATIVES, CAREER_ODDS, CAREER_TRACK_MAX_YEARS, CAREER_TRACK_CAP, CAREER_GAINS_CAP, RELOCATION_ODDS, RELOCATION_ATTEMPTS_PER_TURN, RELOCATIONS_CAP, CARPETBAGGER_LADDER, IDEOLOGY_SHIFT_ODDS, IDEOLOGY_ATTEMPTS_PER_TURN, IDEOLOGY_SHIFTS_CAP, CONVERSION_ODDS, CONVERSION_ATTEMPTS_PER_TURN, CONVERSIONS_CAP, KINGMAKER_RULES, KINGMAKERS_CAP, ALIGNMENT_RULES, ALIGNMENT_DRIFT_CAP, LEADERSHIP_RULES, LEADERSHIP_FEED_CAP, MORTALITY_RULES } from '../types';
+import type { FullGameSnapshot, PhaseId, Politician, EraEvent, Legislation, ElectionResult, NationalMeters, Ideology, PartyId, SkillKey, Trait, CareerTrack, State, RelocationEntry, RelocationBand, IdeologyShiftEntry, ConversionEntry, KingmakerEntry, FactionAlignmentDriftEntry, FactionLeadershipEntry, InterestCardId, LobbyCardId, IdeologyCardId, Era } from '../types';
+import { IDEOLOGY_ORDER, SKILLS, POSITIVE_TRAITS, TRACK_SKILL, TRACK_THEMED_TRAITS, CAREER_RANDOM_NEGATIVES, CAREER_ODDS, CAREER_TRACK_MAX_YEARS, CAREER_TRACK_CAP, CAREER_GAINS_CAP, RELOCATION_ODDS, RELOCATION_ATTEMPTS_PER_TURN, RELOCATIONS_CAP, CARPETBAGGER_LADDER, IDEOLOGY_SHIFT_ODDS, IDEOLOGY_ATTEMPTS_PER_TURN, IDEOLOGY_SHIFTS_CAP, CONVERSION_ODDS, CONVERSION_ATTEMPTS_PER_TURN, CONVERSIONS_CAP, KINGMAKER_RULES, KINGMAKERS_CAP, ALIGNMENT_RULES, ALIGNMENT_DRIFT_CAP, LEADERSHIP_RULES, LEADERSHIP_FEED_CAP, MORTALITY_RULES, ANYTIME_EVENTS_RULES } from '../types';
 import { addLog } from './log';
-import { uid, chance, d100, pick, clamp, shuffle, rand } from '../rng';
+import { uid, chance, d100, pick, pickWeighted, clamp, shuffle, rand } from '../rng';
 import { refreshPv } from '../pv';
+import { ANYTIME_EVENT_TEMPLATES, type AnytimeEventTemplate } from '../data/anytimeEvents';
+import { ANYTIME_NATIONAL_TEMPLATES, type AnytimeNationalTemplate } from '../data/anytimeNationalEvents';
 import { buildEraEventsForYear } from '../data/eraEvents1856';
 import { SCRIPTED_1772 } from '../data/eraEvents1772';
 import { FACTIONS_1772 } from '../data/factions1772';
@@ -1975,6 +1977,17 @@ function cleanupLeadershipAndProtegeChains(snap: FullGameSnapshot, p: Politician
   }
 }
 
+// Shared by 2.4.1 (deaths/retirements) and 2.4.2 (anytime-events death/forceRetire).
+function markPoliticianDead(snap: FullGameSnapshot, p: Politician): void {
+  cleanupLeadershipAndProtegeChains(snap, p);
+  vacateOffice(snap, p);
+}
+
+function markPoliticianRetired(snap: FullGameSnapshot, p: Politician): void {
+  cleanupLeadershipAndProtegeChains(snap, p);
+  vacateOffice(snap, p);
+}
+
 // ============================================================================
 // 2.4.1 Deaths & Retirements
 // ============================================================================
@@ -2004,18 +2017,16 @@ export function runPhase_2_4_1_Deaths(snap: FullGameSnapshot): void {
 
     if (chance(deathChance)) {
       p.deathYear = snap.game.year;
-      cleanupLeadershipAndProtegeChains(snap, p);
       addLog(snap, '2.4.1', 'death', `${p.firstName} ${p.lastName} (${p.state.toUpperCase()}, age ${p.age}) has died.`);
-      vacateOffice(snap, p);
+      markPoliticianDead(snap, p);
       continue;
     }
 
     const retireChance = clamp(retireRateFor(p.age) * cfg.retireMult, 0, 1);
     if (chance(retireChance)) {
       p.retiredYear = snap.game.year;
-      cleanupLeadershipAndProtegeChains(snap, p);
       addLog(snap, '2.4.1', 'retire', `${p.firstName} ${p.lastName} (${p.state.toUpperCase()}, age ${p.age}) has retired.`);
-      vacateOffice(snap, p);
+      markPoliticianRetired(snap, p);
     }
   }
 
@@ -2059,19 +2070,282 @@ function vacateOffice(snap: FullGameSnapshot, p: Politician): void {
 // ============================================================================
 // 2.4.2 Anytime events
 // ============================================================================
-export function runPhase_2_4_2_Anytime(snap: FullGameSnapshot): void {
-  if (chance(0.35)) {
-    const choices = [
-      { text: 'A bumper harvest boosts agricultural states.', effect: () => { snap.game.meters.economic = clamp(snap.game.meters.economic + 1, -5, 5); snap.game.interestGroups.BigAg = (snap.game.interestGroups.BigAg ?? 0) + 1; } },
-      { text: 'A railroad accident kills dozens. Public anger rises.', effect: () => { snap.game.meters.quality = clamp(snap.game.meters.quality - 1, -5, 5); snap.game.partyPreference = clamp(snap.game.partyPreference - 0.2, -5, 5); } },
-      { text: 'A patriotic groundswell sweeps the nation.', effect: () => { snap.game.interestGroups.Nationalists = (snap.game.interestGroups.Nationalists ?? 0) + 2; } },
-      { text: 'An immigration wave reaches Northern ports.', effect: () => { snap.game.interestGroups.Immigrants = (snap.game.interestGroups.Immigrants ?? 0) + 2; snap.game.interestGroups.Nativists = (snap.game.interestGroups.Nativists ?? 0) + 1; } },
-      { text: 'A scandal in the Treasury is uncovered.', effect: () => { snap.game.meters.honest = clamp(snap.game.meters.honest - 1, -5, 5); } },
-    ];
-    const chosen = pick(choices);
-    chosen.effect();
-    addLog(snap, '2.4.2', 'event', chosen.text);
+
+let anytimeValidatorRan = false;
+
+function validateAnytimeTemplates(): void {
+  if (anytimeValidatorRan) return;
+  anytimeValidatorRan = true;
+
+  const FORBIDDEN_TRAITS: Trait[] = [
+    'Ideologue', 'Impressionable', 'Flip-Flopper',
+    'Loyal', 'Opportunist',
+    'Carpetbagger', 'Outsider',
+    'Ambitious', 'Failed Bid',
+    'Kingmaker', 'Manipulative', 'Numberfudger',
+    'Leadership', 'Debater', 'Reformist', 'Integrity',
+    'Efficient', 'Magician', 'Harmonious', 'Egghead',
+    'Propagandist',
+    'Naval', 'Military', 'Education', 'Economics', 'Business',
+    'Agriculture', 'Environment', 'Media', 'Nationalist',
+    'Globalist', 'Celebrity',
+    'Traitor', 'Obscure', 'Puritan',
+  ];
+  const FORBIDDEN_SKILLS: SkillKey[] = ['admin', 'judicial', 'military', 'backroom'];
+  const SCANDAL_CATS = new Set(['scandal-financial', 'scandal-sexual', 'scandal-verbal']);
+
+  for (const t of ANYTIME_EVENT_TEMPLATES) {
+    let hasMutator = false;
+    for (const e of t.effects) {
+      if (e.kind === 'grantTrait' && FORBIDDEN_TRAITS.includes(e.trait)) {
+        throw new Error(`anytime template ${t.id} grants forbidden trait ${e.trait}`);
+      }
+      if (e.kind === 'skillBump' && FORBIDDEN_SKILLS.includes(e.skill)) {
+        throw new Error(`anytime template ${t.id} bumps forbidden skill ${e.skill}`);
+      }
+      if (e.kind === 'grantTrait' || e.kind === 'skillBump' || e.kind === 'commandBump' || e.kind === 'death' || e.kind === 'forceRetire') {
+        hasMutator = true;
+      }
+    }
+    if (SCANDAL_CATS.has(t.category) && !t.scandalScaled) {
+      throw new Error(`scandal template ${t.id} missing scandalScaled: true`);
+    }
+    if (t.scandalScaled && !SCANDAL_CATS.has(t.category)) {
+      throw new Error(`non-scandal template ${t.id} has scandalScaled: true`);
+    }
+    const hasPv = t.effects.some((e) => e.kind === 'pvHit' || e.kind === 'pvBump');
+    if (hasPv && !hasMutator) {
+      throw new Error(`anytime template ${t.id} has pvHit/pvBump without trait/skill/command/death/forceRetire sibling`);
+    }
+    if (t.eras?.length === 1 && t.eras[0] === 'independence') {
+      if (t.category === 'transport-accident' && /\b(auto|train|plane|rail)\b/i.test(t.text)) {
+        throw new Error(`anytime template ${t.id} anachronism: independence transport-accident mentions modern transit`);
+      }
+      if (t.category === 'illness-epidemic' && /\b(polio|flu)\b/i.test(t.text)) {
+        throw new Error(`anytime template ${t.id} anachronism: independence epidemic mentions polio/flu`);
+      }
+    }
+    if (t.eras?.length === 1 && t.eras[0] === 'modern') {
+      if (t.category === 'violence-duel') {
+        throw new Error(`anytime template ${t.id} anachronism: modern duel`);
+      }
+      if (t.category === 'illness-epidemic' && /\b(yellow fever|cholera)\b/i.test(t.text)) {
+        throw new Error(`anytime template ${t.id} anachronism: modern epidemic mentions yellow fever/cholera`);
+      }
+    }
   }
+
+  const NATIONAL_SCANDAL_CATS = new Set(['civic-executive-scandal']);
+  const seedIds = new Set([
+    'national:bumper-harvest',
+    'national:railroad-accident',
+    'national:patriotic-groundswell',
+    'national:immigration-wave',
+    'national:treasury-scandal',
+  ]);
+  for (const t of ANYTIME_NATIONAL_TEMPLATES) {
+    if (t.scandalScaled && !NATIONAL_SCANDAL_CATS.has(t.category)) {
+      throw new Error(`national template ${t.id} has scandalScaled but is not civic-executive-scandal`);
+    }
+    if (t.category === 'cultural-technology' && t.eras?.includes('independence')) {
+      if (/\b(telegraph|radio|tv|internet|automobile|plane|railroad)\b/i.test(t.text)) {
+        throw new Error(`national template ${t.id} anachronism: independence cultural-technology mentions modern tech`);
+      }
+    }
+    if (t.category === 'natural-epidemic' && t.eras?.length === 1 && t.eras[0] === 'independence') {
+      if (/\b(polio|1918 flu|modern pandemic)\b/i.test(t.text)) {
+        throw new Error(`national template ${t.id} anachronism: independence natural-epidemic mentions modern disease`);
+      }
+    }
+    if (t.category === 'economic-panic' && t.eras?.includes('independence')) {
+      throw new Error(`national template ${t.id} anachronism: independence economic-panic`);
+    }
+  }
+  for (const id of seedIds) {
+    if (!ANYTIME_NATIONAL_TEMPLATES.some((t) => t.id === id)) {
+      throw new Error(`national pool missing stub-seed id ${id}`);
+    }
+  }
+}
+
+function applyNationalEffects(
+  snap: FullGameSnapshot,
+  tpl: AnytimeNationalTemplate,
+  cfg: typeof ANYTIME_EVENTS_RULES.eraConfig[Era],
+): void {
+  const scandalMult = tpl.scandalScaled ? cfg.scandalMagnitudeMult : 1;
+  for (const eff of tpl.effects) {
+    switch (eff.kind) {
+      case 'meterTick': {
+        snap.game.meters[eff.meter] = clamp(
+          snap.game.meters[eff.meter] + eff.amount * scandalMult,
+          ANYTIME_EVENTS_RULES.meterClampLow,
+          ANYTIME_EVENTS_RULES.meterClampHigh,
+        );
+        break;
+      }
+      case 'interestTick': {
+        snap.game.interestGroups[eff.group] =
+          (snap.game.interestGroups[eff.group] ?? 0) + eff.amount;
+        break;
+      }
+      case 'partyPref': {
+        snap.game.partyPreference = clamp(
+          snap.game.partyPreference + eff.amount * scandalMult,
+          ANYTIME_EVENTS_RULES.partyPreferenceClampLow,
+          ANYTIME_EVENTS_RULES.partyPreferenceClampHigh,
+        );
+        break;
+      }
+      case 'stateBias': {
+        if (!tpl.regions) break;
+        for (const s of snap.states) {
+          if (tpl.regions.includes(s.region)) {
+            s.bias = clamp(s.bias + eff.amount, -1, 1);
+          }
+        }
+        break;
+      }
+    }
+  }
+}
+
+function rollNationalEvent(
+  snap: FullGameSnapshot,
+  era: Era,
+  cfg: typeof ANYTIME_EVENTS_RULES.eraConfig[Era],
+): void {
+  const fireChance = ANYTIME_EVENTS_RULES.nationalBaseFireChance * cfg.nationalFireMult;
+  if (!chance(fireChance)) return;
+
+  const eligible = ANYTIME_NATIONAL_TEMPLATES.filter((t) => !t.eras || t.eras.includes(era));
+  if (eligible.length === 0) return;
+
+  const tpl = pickWeighted(eligible.map((t) => ({
+    value: t,
+    weight: t.weight * (t.eraWeightMult?.[era] ?? 1),
+  })));
+
+  applyNationalEffects(snap, tpl, cfg);
+
+  const text = tpl.text
+    .replace('{era}', era)
+    .replace('{region}', tpl.regions?.join('/') ?? 'the country');
+
+  addLog(snap, '2.4.2', 'event', text, {
+    templateId: tpl.id,
+    pool: 'national',
+    category: tpl.category,
+  });
+}
+
+function rollPersonalEvents(
+  snap: FullGameSnapshot,
+  era: Era,
+  cfg: typeof ANYTIME_EVENTS_RULES.eraConfig[Era],
+): boolean {
+  const fireChance = ANYTIME_EVENTS_RULES.baseFireChance * cfg.fireMult;
+  let mutated = false;
+
+  for (const p of snap.politicians) {
+    if (p.deathYear || p.retiredYear) continue;
+    if (!chance(fireChance)) continue;
+
+    const region = snap.states.find((s) => s.id === p.state)?.region;
+    const pool = ANYTIME_EVENT_TEMPLATES.filter((t) => {
+      if (t.eras && !t.eras.includes(era)) return false;
+      if (t.regions && (!region || !t.regions.includes(region))) return false;
+      return true;
+    });
+    if (pool.length === 0) continue;
+
+    const tpl = pickWeighted(pool.map((t) => ({
+      value: t,
+      weight: t.weight * (t.eraWeightMult?.[era] ?? 1),
+    })));
+
+    let didMutate = false;
+    for (const eff of tpl.effects) {
+      switch (eff.kind) {
+        case 'grantTrait':
+          if (!p.traits.includes(eff.trait)) {
+            p.traits.push(eff.trait);
+            didMutate = true;
+          }
+          break;
+        case 'skillBump':
+          if (p.skills[eff.skill] < ANYTIME_EVENTS_RULES.skillCap) {
+            p.skills[eff.skill] = clamp(
+              p.skills[eff.skill] + eff.amount, 0, ANYTIME_EVENTS_RULES.skillCap,
+            );
+            didMutate = true;
+          }
+          break;
+        case 'commandBump':
+          if (p.command < ANYTIME_EVENTS_RULES.commandCap) {
+            p.command = clamp(
+              p.command + eff.amount, 0, ANYTIME_EVENTS_RULES.commandCap,
+            );
+            didMutate = true;
+          }
+          break;
+        case 'death':
+          p.deathYear = snap.game.year;
+          markPoliticianDead(snap, p);
+          didMutate = true;
+          break;
+        case 'forceRetire':
+          p.retiredYear = snap.game.year;
+          markPoliticianRetired(snap, p);
+          didMutate = true;
+          break;
+        case 'pvHit':
+        case 'pvBump':
+          break;
+      }
+    }
+
+    if (tpl.scandalScaled) {
+      const mult = cfg.scandalMagnitudeMult;
+      if (mult >= 1.0 && !p.traits.includes('Corrupt')) {
+        p.traits.push('Corrupt');
+        didMutate = true;
+      }
+      if (mult >= 1.2) {
+        p.flipFlopperPenalty += LEADERSHIP_RULES.failedBidPvStamp;
+        didMutate = true;
+      }
+    }
+
+    if (didMutate) mutated = true;
+
+    const pvEff = tpl.effects.find((e) => e.kind === 'pvHit' || e.kind === 'pvBump');
+    const text = tpl.text
+      .replace('{first}', p.firstName)
+      .replace('{last}', p.lastName)
+      .replace('{state}', p.state.toUpperCase());
+
+    addLog(snap, '2.4.2', 'event', text, {
+      templateId: tpl.id,
+      politicianId: p.id,
+      pool: 'personal',
+      category: tpl.category,
+      pvDelta: pvEff && (pvEff.kind === 'pvHit' || pvEff.kind === 'pvBump') ? pvEff.amount : undefined,
+    });
+  }
+
+  return mutated;
+}
+
+export function runPhase_2_4_2_Anytime(snap: FullGameSnapshot): void {
+  if (import.meta.env.DEV) validateAnytimeTemplates();
+  const era = snap.game.currentEra;
+  const cfg = ANYTIME_EVENTS_RULES.eraConfig[era];
+
+  rollNationalEvent(snap, era, cfg);
+  const mutatedAny = rollPersonalEvents(snap, era, cfg);
+
+  if (mutatedAny) snap.politicians = refreshPv(snap.politicians);
 }
 
 // ============================================================================

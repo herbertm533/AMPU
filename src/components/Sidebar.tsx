@@ -77,6 +77,7 @@ export function Sidebar({ current, onNavigate }: { current: PageId; onNavigate: 
       items: [
         { id: 'eventLog', label: 'Event Log' },
         { id: 'wars', label: 'War Dashboard' },
+        { id: 'anytimeEvents', label: 'Anytime Events' },
       ],
     },
     {

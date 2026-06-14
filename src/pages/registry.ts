@@ -28,6 +28,7 @@ import { Draft } from './Draft';
 import { DraftScouting } from './DraftScouting';
 import { DraftHistory } from './DraftHistory';
 import { TerritoriesPage } from './TerritoriesPage';
+import { AnytimeEventsPage } from './AnytimeEventsPage';
 
 export type PageId =
   | 'dashboard'
@@ -59,7 +60,8 @@ export type PageId =
   | 'draft'
   | 'draftScouting'
   | 'draftHistory'
-  | 'territories';
+  | 'territories'
+  | 'anytimeEvents';
 
 export const Pages: Record<PageId, () => JSX.Element> = {
   dashboard: Dashboard,
@@ -92,4 +94,5 @@ export const Pages: Record<PageId, () => JSX.Element> = {
   draftScouting: DraftScouting,
   draftHistory: DraftHistory,
   territories: TerritoriesPage,
+  anytimeEvents: AnytimeEventsPage,
 };
