@@ -375,6 +375,39 @@ export const LEADERSHIP_RULES = {
   }>,
 } as const;
 
+export const MORTALITY_RULES = {
+  // Age-banded base rates (descending; first matching threshold wins).
+  // Anchored to modern (post-1980) US rates; era multipliers shape pre-modern.
+  deathBracket: [
+    { minAge: 80, rate: 0.18 },
+    { minAge: 70, rate: 0.07 },
+    { minAge: 60, rate: 0.025 },
+    { minAge: 0,  rate: 0.005 },
+  ],
+  retireBracket: [
+    { minAge: 70, rate: 0.08 },
+    { minAge: 60, rate: 0.025 },
+    { minAge: 0,  rate: 0.005 },
+  ],
+
+  // Trait multipliers (death only — retire is unaffected by traits in v1).
+  frailDeathMult: 1.5,
+  crisisManagerDeathMult: 0.85,
+
+  // Per-era multipliers applied to base bracket rates.
+  // Pre-1860 mortality ~1.5-2× modern; 1860-1900 ~1.2-1.5×; modern baseline.
+  // retireMult floored at ~25% of modern's 1.5 per user-binding game-feel override.
+  eraConfig: {
+    independence: { deathMult: 1.8, retireMult: 0.5 },
+    federalism:   { deathMult: 1.6, retireMult: 0.6 },
+    nationalism:  { deathMult: 1.3, retireMult: 0.9 },
+    modern:       { deathMult: 1.0, retireMult: 1.5 },
+  } as const satisfies Record<Era, {
+    deathMult: number;
+    retireMult: number;
+  }>,
+} as const;
+
 export type OfficeType =
   | 'President'
   | 'VicePresident'

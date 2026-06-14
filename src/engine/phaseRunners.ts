@@ -1,5 +1,5 @@
 import type { FullGameSnapshot, PhaseId, Politician, EraEvent, Legislation, ElectionResult, NationalMeters, Ideology, PartyId, SkillKey, Trait, CareerTrack, State, RelocationEntry, RelocationBand, IdeologyShiftEntry, ConversionEntry, KingmakerEntry, FactionAlignmentDriftEntry, FactionLeadershipEntry, InterestCardId, LobbyCardId, IdeologyCardId } from '../types';
-import { IDEOLOGY_ORDER, SKILLS, POSITIVE_TRAITS, TRACK_SKILL, TRACK_THEMED_TRAITS, CAREER_RANDOM_NEGATIVES, CAREER_ODDS, CAREER_TRACK_MAX_YEARS, CAREER_TRACK_CAP, CAREER_GAINS_CAP, RELOCATION_ODDS, RELOCATION_ATTEMPTS_PER_TURN, RELOCATIONS_CAP, CARPETBAGGER_LADDER, IDEOLOGY_SHIFT_ODDS, IDEOLOGY_ATTEMPTS_PER_TURN, IDEOLOGY_SHIFTS_CAP, CONVERSION_ODDS, CONVERSION_ATTEMPTS_PER_TURN, CONVERSIONS_CAP, KINGMAKER_RULES, KINGMAKERS_CAP, ALIGNMENT_RULES, ALIGNMENT_DRIFT_CAP, LEADERSHIP_RULES, LEADERSHIP_FEED_CAP } from '../types';
+import { IDEOLOGY_ORDER, SKILLS, POSITIVE_TRAITS, TRACK_SKILL, TRACK_THEMED_TRAITS, CAREER_RANDOM_NEGATIVES, CAREER_ODDS, CAREER_TRACK_MAX_YEARS, CAREER_TRACK_CAP, CAREER_GAINS_CAP, RELOCATION_ODDS, RELOCATION_ATTEMPTS_PER_TURN, RELOCATIONS_CAP, CARPETBAGGER_LADDER, IDEOLOGY_SHIFT_ODDS, IDEOLOGY_ATTEMPTS_PER_TURN, IDEOLOGY_SHIFTS_CAP, CONVERSION_ODDS, CONVERSION_ATTEMPTS_PER_TURN, CONVERSIONS_CAP, KINGMAKER_RULES, KINGMAKERS_CAP, ALIGNMENT_RULES, ALIGNMENT_DRIFT_CAP, LEADERSHIP_RULES, LEADERSHIP_FEED_CAP, MORTALITY_RULES } from '../types';
 import { addLog } from './log';
 import { uid, chance, d100, pick, clamp, shuffle, rand } from '../rng';
 import { refreshPv } from '../pv';
@@ -1948,26 +1948,78 @@ export function runPhase_2_3_2_Military(snap: FullGameSnapshot): void {
   }
 }
 
+// Proactive cleanup invoked at every 2.4.1 death/retire transition.
+// Closes the 1-turn window between this phase and the next 2.2.3 / 2.1.7
+// validation sweeps. Read-site defenses already cover correctness; this
+// keeps DevTools state clean and removes a future-foot-gun.
+function cleanupLeadershipAndProtegeChains(snap: FullGameSnapshot, p: Politician): void {
+  if (p.factionLeaderOf != null) {
+    const f = snap.factions.find((ff) => ff.id === p.factionLeaderOf);
+    if (f) {
+      f.leaderId = null;
+      f.leadershipStartYear = undefined;
+    }
+    p.factionLeaderOf = null;
+  }
+
+  if (p.protegeId) {
+    const protege = snap.politicians.find((q) => q.id === p.protegeId);
+    if (protege) protege.bondedYear = undefined;
+    p.protegeId = null;
+  }
+
+  for (const q of snap.politicians) {
+    if (q.protegeId === p.id) {
+      q.protegeId = null;
+    }
+  }
+}
+
 // ============================================================================
 // 2.4.1 Deaths & Retirements
 // ============================================================================
 export function runPhase_2_4_1_Deaths(snap: FullGameSnapshot): void {
+  const cfg = MORTALITY_RULES.eraConfig[snap.game.currentEra];
+
+  const deathRateFor = (age: number): number => {
+    for (const b of MORTALITY_RULES.deathBracket) {
+      if (age >= b.minAge) return b.rate;
+    }
+    return 0;
+  };
+  const retireRateFor = (age: number): number => {
+    for (const b of MORTALITY_RULES.retireBracket) {
+      if (age >= b.minAge) return b.rate;
+    }
+    return 0;
+  };
+
   for (const p of snap.politicians) {
     if (p.deathYear || p.retiredYear) continue;
-    const deathChance = p.age >= 80 ? 0.18 : p.age >= 70 ? 0.07 : p.age >= 60 ? 0.025 : 0.005;
-    const retireChance = p.age >= 70 ? 0.08 : p.age >= 60 ? 0.025 : 0.005;
+
+    const baseDeath = deathRateFor(p.age);
+    const frailMult = p.traits.includes('Frail') ? MORTALITY_RULES.frailDeathMult : 1;
+    const crisisMult = p.traits.includes('Crisis Manager') ? MORTALITY_RULES.crisisManagerDeathMult : 1;
+    const deathChance = clamp(baseDeath * cfg.deathMult * frailMult * crisisMult, 0, 1);
+
     if (chance(deathChance)) {
       p.deathYear = snap.game.year;
+      cleanupLeadershipAndProtegeChains(snap, p);
       addLog(snap, '2.4.1', 'death', `${p.firstName} ${p.lastName} (${p.state.toUpperCase()}, age ${p.age}) has died.`);
       vacateOffice(snap, p);
       continue;
     }
-    if (p.currentOffice && chance(retireChance)) {
+
+    const retireChance = clamp(retireRateFor(p.age) * cfg.retireMult, 0, 1);
+    if (chance(retireChance)) {
       p.retiredYear = snap.game.year;
+      cleanupLeadershipAndProtegeChains(snap, p);
       addLog(snap, '2.4.1', 'retire', `${p.firstName} ${p.lastName} (${p.state.toUpperCase()}, age ${p.age}) has retired.`);
       vacateOffice(snap, p);
     }
   }
+
+  snap.politicians = refreshPv(snap.politicians);
 }
 
 function vacateOffice(snap: FullGameSnapshot, p: Politician): void {
