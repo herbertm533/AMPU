@@ -408,6 +408,32 @@ export const MORTALITY_RULES = {
   }>,
 } as const;
 
+export const ANYTIME_EVENTS_RULES = {
+  baseFireChance: 0.05,
+  nationalBaseFireChance: 0.70,
+  eraConfig: {
+    independence: { fireMult: 0.8, nationalFireMult: 0.9,  scandalMagnitudeMult: 0.5 },
+    federalism:   { fireMult: 0.9, nationalFireMult: 0.95, scandalMagnitudeMult: 0.7 },
+    nationalism:  { fireMult: 1.0, nationalFireMult: 1.0,  scandalMagnitudeMult: 1.0 },
+    modern:       { fireMult: 1.1, nationalFireMult: 1.1,  scandalMagnitudeMult: 1.3 },
+  } as const satisfies Record<Era, {
+    fireMult: number;
+    nationalFireMult: number;
+    scandalMagnitudeMult: number;
+  }>,
+  skillCap: 5,
+  commandCap: 5,
+  pvHitFloor: -25,
+  pvBumpCeil: 15,
+  careerEndScandalShareOfScandalPool: 0.05,
+  meterClampLow: -5,
+  meterClampHigh: 5,
+  partyPreferenceClampLow: -5,
+  partyPreferenceClampHigh: 5,
+} as const;
+
+export const ANYTIME_EVENTS_FEED_CAP = 500;
+
 export type OfficeType =
   | 'President'
   | 'VicePresident'

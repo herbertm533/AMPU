@@ -110,7 +110,6 @@ export function shouldRunPhase(phaseId: PhaseId, year: number, game?: GameState)
       // First-turn skips
       if (isFirstTurn) {
         if (phaseId === '2.1.3') return false; // no flip-floppers yet
-        if (phaseId === '2.4.2') return false; // no anytime events
         if (phaseId === '2.5.1') return false; // no lingering
         if (phaseId === '2.6.1' || phaseId === '2.6.2' || phaseId === '2.6.3') return false; // no congress
         if (phaseId === '2.7.1' || phaseId === '2.7.2') return false; // no military/diplomacy
