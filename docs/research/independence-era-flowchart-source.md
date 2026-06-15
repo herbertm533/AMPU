@@ -1980,3 +1980,64 @@
 1954. [proposal/decision] Oil Crisis
 1955. [event/path] Call for legislation and actions to deal with crisis. enact Price Controls on Oil & Gas
 1956. [event/path] Stick to rhetoric and try to just wait it out.
+
+## Reconstructed directed edges — Independence era (machine-recovered from Canva connector geometry)
+
+> Recovered by snapping each connector's endpoints to node box perimeters. **Spine verified by hand** against the screenshots; a few cross-era connectors were filtered out. Use this for sequencing, but confirm branch fine-detail against the screenshots.
+
+- **Gaspee Affair**
+    - → Committees of Correspondence
+- **Committees of Correspondence**
+    - → Tax Act
+- **Tax Act**
+    - → Boston Tea Party
+- **Continental Congress**
+    - → Declaration of Resolves
+    - → Lexington and Concord
+    - → Create Continental Army
+- **Lexington and Concord**
+    - → Revolutionary War
+- **Revolutionary War**
+    - → Won but Ind. not proclaimed
+    - → Won
+    - → Won with Independence
+    - → Game End
+- **Won**
+    - → Treaty of Fort Stanwix
+- **Won with Independence**
+    - → Liberty Treaty w/ Spain
+- **Declaration of Independence**
+    - → Won with Independence
+    - → Articles of Confederation
+    - → Treaty of Paris
+- **Create Continental Army**
+    - → King George III Grants America Autonomy as Cost of War Too Much
+- **Articles of Confederation**
+    - → Annapolis Convention
+- **Republic of Vermont Proclaimed**
+    - → Claim Vermont
+- **Claim Vermont**
+    - → Option A: Claim
+    - → Option B: Do not claim
+- **Option A: Claim**
+    - → Vermont statehood
+- **Amb to France Exists**
+    - → Alliance w/ France
+- **Alliance w/ France**
+    - → King George III Grants America Autonomy as Cost of War Too Much
+- **Dutch Recognize the United States**
+    - → Treaty of Paris
+- **Annapolis Convention**
+    - → A: Constitutional Convention follows
+    - → B: Congress of the Confederation remains government
+- **Treaty of Fort Stanwix**
+    - → A: Let's make peace with the Iroquois Confederacy so we can settle all of Pennsylvania without fear.
+    - → B: This is just a manipulative treaty to turn the six Iroquois tribes against each other. Respect their lands and their rights.
+- **Treaty of Hopewell**
+    - → A: We need this treaty to settle boundaries with these three tribes so that we can settle westward in peace.
+    - → B: These three tribes are soon going to learn that we have no intention of keeping these agreed boundaries. Why lead them on? We have enough land.
+
+### Edge-recovery coverage note
+- **31 directed edges machine-recovered** from the Canva connector geometry (type-`U` line elements snapped to node box perimeters). The spine backbone above is **hand-verified against the two screenshots**.
+- **Known gaps** (connectors that didn't snap cleanly — trace from screenshots): `Boston Tea Party → Continental Congress`; the `Declaration of Resolves` continuation; the war-outcome endings (`Won but Ind. not proclaimed`, war-weariness, `Lost war on battlefield → Game End`); the `Carlisle Peace Commission` / `Conciliatory Resolution` / `Liberty Treaty w/ Spain` branch wiring; `Treaty of Paris → Articles of Confederation` direction.
+- Method is geometric, not semantic: treat as a high-confidence **starting graph**, then confirm branch fine-detail on the screenshots before authoring.
