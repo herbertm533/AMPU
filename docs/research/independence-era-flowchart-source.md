@@ -1,0 +1,2208 @@
+# Independence-Era Event Flowchart — Raw Source Extraction
+
+> **Provenance:** machine-extracted from the user's Canva whiteboard "Era Evos Flow Chart" (design `DAGLnKhUNtk`, by Joshua Sweetman), supplied 2026-06-15 as the design contract for the phase 2.4.3 events expansion. Text is pulled from Canva's embedded design JSON; rich-text nodes are sometimes fragmented across lines. **The two screenshots (`IMG_1889.png`, `IMG_1890.png`) are the authoritative spatial structure** — this file is the exact-text companion so agents need not parse the 2.2 MB HTML. Faithful dump; minimal interpretation.
+
+## Node-fill colour legend (from fill-colour histogram)
+
+| Hex | Count | Inferred meaning |
+|-----|------:|------------------|
+| `#00bf63` bright green | 7 | Era start / root node (`Independence`) |
+| `#a8f6b9` light green | 709 | Normal events / path nodes (most common) |
+| `#f6db98` tan/gold | 374 | Proposals / decisions offered |
+| `#34c9e4` cyan | 189 | Secondary outcomes / sub-events |
+| `#ff3131` red | 112 | Conflict / failure / bad-outcome nodes |
+| `#cb6ce6` purple | 49 | Sub-outcomes / modifiers |
+| `#cdbe5d` dark gold | 48 | (variant proposal) |
+| `#b69c75` brown | 6 | Terminal `Game End` nodes |
+| `#b7c9f1` light blue | 6 | (variant outcome) |
+*(Colour→semantics is inferred; historian should confirm against screenshots.)*
+
+## A. Short labels — nodes, options, precondition/connector text
+
+*(document order ≈ Canva element order, NOT spatial order; see screenshots for the tree)*
+
+- Independence
+- Gaspee Affair
+- Committees of Correspondence
+- Tax Act
+- Boston Tea Party
+- Continental Congress
+- LBpjfPjcLXkrzPqq
+- Declaration of Resolves
+- Exists
+- Lexington and Concord
+- Revolutionary War
+- Won but Ind. not proclaimed
+- LBkzRhgBgFGnJPlr
+- Won with Independence
+- Game End
+- Lost war on battlefield
+- Declaration of Independence
+- Proposes
+- Create Continental Army
+- Articles of Confederation
+- Republic of Vermont Proclaimed
+- Claim Vermont
+- Option A: Claim
+- Option B: Do not claim
+- Vermont statehood
+- Has not Ended
+- Amb to France Exists
+- Alliance w/ France
+- LBWrmzjBnGfgZXLq
+- Cannot lose Rev. War
+- Carlisle Peace Commission
+- Option B
+- LBsglPqfWTLSbvRG
+- Conciliatory Resolution
+- Creates
+- Rev War has ended
+- Liberty Treaty w/ Spain
+- LBKgYCNTCjywJTlN
+- Spain meter moves to ally
+- Treaty of Paris
+- Dutch Recognize the United States
+- US can now take out loans
+- Has not ended
+- Without
+- Independence Not Declared
+- Year is 1780
+- Year is 1786
+- Annapolis Convention
+- A: Constitutional Convention follows
+- Constitutional Convention
+- Federalist and Anti-Federalist Papers
+- Rev War Ended
+- Treaty of Fort Stanwix
+- LBDXYPYfFXmWNTnx
+- Iriqois Leage War
+- Also if the implementation fails
+- Treaty of Hopewell
+- Keowee War
+- If implementation fails
+- Era of Independence
+- LBKqDwZPWkXcFbqj
+- Happens in 1786 regardless
+- Federalism
+- French Revolution
+- A: Declare neutrality
+- B: Side with the French
+- US Involvement in French Rev War vs UK
+- LBhFgLHgBCNnTvVD
+- Loses Canada to UK if lost
+- If holds Canada
+- National Gazette and Philadelpha Aurora
+- Enables LW and RW Media
+- Indian Sovereignty
+- Grant it (bans westward expansion)
+- Option A
+- Buttonwood Agreement
+- Enables  Wall Street
+- Assumption of Rev War Debt
+- Congress
+- Enacts
+- Make DC Capital
+- Establishes
+- Without for Comp of 1790
+- Compromise of 1790
+- LBsGjygDTSXMbvFs
+- A: Assume debts and establish a capitol
+- B: keep current city as capitol
+- Washington* D.C.
+- Slavery exists
+- Quaker Petition to Abolish Slavery
+- A: Ignore Petition
+- Amendment to Ban Slavery
+- Federalist Era Civil War
+- Manufacturing Appears
+- Enables Big Corporations
+- Excise Tax on Alcohol
+- LBkYTNlbMyRmyvPX
+- Whiskey Rebellion
+- B: Send state militias
+- A: Repeal the tax
+- LBnzgZJFNkXklyZw
+- if fails, repeat next half term once
+- C: Ignore for now
+- Repeats next half term once
+- A: Victory on the battlefield
+- B: White Peace
+- C: lost on the battlefield with sue for peace
+- Reconstruction turned on in secceeding states
+- LBLPWpxMpYvsfhDc
+- states that succeeded form CSA
+- Tribute to Pirates
+- A: pay tribute
+- B: Refuse tribute but no war
+- Refuse tribute and go to War with Pirates
+- Fires until war is concluded
+- Navy w/ Frigates
+- Barbary War
+- War lost
+- War won
+- D: lost on the battlefield
+- Citizen Genet Stirring up Trouble
+- A: Demand the French recall him
+- UK Rel x3c 5
+- French Rel x3c 5
+- US Involvement in French Rev War vs France
+- Gain rights to Canada (Treaty D)
+- Gain rights to Louisiana Purchase (Treaty D)
+- UK Rel >= 5
+- Jay Treaty
+- B: Refuse to Sign
+- A: Sign Treaty
+- 25% War of 1812 occurs if relations x3c5
+- Gain rights to IN, IL, MI and WI
+- War of 1812
+- Treaty w/ Spain (Pickney’s Treaty)
+- Spain Rel x3c 5
+- B: Refuse and claim Spanish Florida
+- War for Florida
+- Florida territory
+- French Rel x3c=5
+- XYZ Affair
+- A: Send bribe and loan to Tallyrand
+- B: Refuse
+- Quasi-War
+- Virginia and Kentucky Resolutions
+- A: Ignore
+- B: Sympathize with the movement
+- Triggers proposal to repeal law
+- C: Condemn resolution and punish authors
+- LBpfsZCwjsFvhHjg
+- US Not Involved in French revolution
+- LBSNcTGdXPTptQJQ
+- Revolution ends in French Victory
+- The French Bribe
+- Napoleon is a CItizen
+- LBtKHxTCXjNhDcJD
+- Not Occurred
+- UK Declares War on Napoleonic France
+- A: Remain Neutral
+- B: Embargo UK
+- C: Embargo UK and France
+- Napoleon Declares War on US
+- LBjNTXrHWzQVrPvP
+- French Rel x3c5
+- A: Prepare
+- Napoleonic Invasion of Ameria
+- Era of Federalism
+- *D.C. is named after the first president
+- Fails
+- Rel w/ France +1, Party pref +1
+- Succeeds
+- French Rel >5
+- Napoleonic Wars Ended (next era)
+- A: Bribe Napoleon
+- Ignore suggestion
+- Gain Florida
+- French Revolution Ended
+- Louisiana owned by Spain
+- Lousiana Purchase
+- A: Sign treaty, even if it’s unconstitutional
+- LBjsShcLSBwyGxqt
+- Successful
+- Can attempt again
+- Republic of West Florida
+- US does not have Florida
+- A: Occupy and Annex W Florida
+- Barbary Pirates Renew Attacks
+- Repeats until end of Era
+- A: Bribe Pirates
+- B: Go to war with the pirates
+- Rescue Napoleon from St. Helena
+- Napoleon available in next draft
+- No states made from Louisiana Purchase
+- VP, Sec of State, or Mil officer with
+- Burr Conspriacy
+- Conspiracy successful at 25% Chance
+- A: Call for a treason trial
+- Require Unsuccessful
+- B: Ignore rumors
+- LBQlDvYBnQNDxdsL
+- French Revolution Occured
+- Haitian Revolution
+- B: Aid revolt and recognize independent Haiti
+- C: Ignore
+- LBJtYDFMVGSCYHlf
+- 10% chance of Federalist Era Civil War
+- 50% chance of Federalist Era Civil War
+- West America Exists
+- Spain Declares War on West America
+- West America Land Grab
+- LBvNtCxFLFmpLMdr
+- B: Ignore
+- War for West America
+- If the Gov of NY has
+- Succession Occurs
+- A: War for Union
+- Northern Civil War
+- B: Allow to depart in peace
+- LBcKvbpBbhZjBMvs
+- Succession does not occur
+- LBLbFgcwNSgrvMMv
+- C: Condemn talk of the Junto
+- D: Ignore it so that talk does not spread
+- Republicanism
+- Era of Republicanism
+- Napoleonic Wars Active
+- Early Indian Removal
+- Pirates Demand Tribute, Again
+- Tribute to Pirates has occurred
+- B: Appease pirates by payment
+- A: Take out the pirates
+- LBzkrZGJRhLFdSYZ
+- LBWlRSlNKTMnzdGz
+- Indian Sovereignty doesn’t exist
+- UK Rel x3c= 5
+- France Rel > 5
+- Napoleon Requests US Invade Canada
+- UK Rel > 5
+- France Rel x3c= 5
+- US involvement in Napoleonic War against FR
+- US involvement in Napoleonic War against UK
+- Not at War w/ Spain
+- LBmnkYLSdrcHxslD
+- Spain Rel >= 5
+- Spain has Louisiana
+- Purchase Louisiana from Spain
+- US not involved with Napoleonic War
+- Napoleonic Wars End at Waterloo
+- Napoleonic Wars End at Westminster
+- Napoleon Rescued from St. Helena
+- Napoleon Takes Louisiana Forming New Empire
+- 2nd Napoleonic War
+- Napoleon Conquers the United States
+- If lost
+- Not at War w/ UK
+- Chesapeake-Leopard Affair
+- B: This is enough! Declare War on UK
+- A: We will not be tread upon! Declare war!
+- LBfXJhVbPzdTNMrd
+- Req: Does not have Canada
+- War of 1812 and Invasion of Canada
+- Does not own FL
+- Adam-Onis Treaty
+- A: sign the treaty
+- LBxjfWGqMkCcMQkl
+- Gain FL
+- US-Canada Treaty (Treaty of 1818)
+- LBcGBsrCpSfTVnCT
+- LBQqdJqmlWpWTmLl
+- A: Sign treaty
+- OR, ID, WA are disputed US/UK
+- Eventual statehood for MN and ND
+- B: Refuse to sign treaty with sworn enemy
+- Req: Relations x3c5 w/ UK
+- MN, ND, ID, OR, WA are now disputed
+- 25% chance War of 1812
+- War of 1812 Active
+- Star Spangled Banner
+- Washington, D.C. is the capitol
+- LBXTznWnCzxgnZKZ
+- Impressment Continues
+- A: Checkmate. Surrender to the British.
+- IF TRUE
+- C: Vow to retake the capital!
+- Creek Retaliate Against Settlers
+- LBJqhlwCcQMsqJWx
+- A: Send military to deal with the Creek
+- Creek War
+- Tecumseh's Confederation
+- Also
+- Jay Treaty Resolved
+- A: Send Military to deal with the attacks
+- War w/ Tecumseh
+- B: Ignore attacks
+- FL not a part of US
+- A: Send military into Spanish Florida
+- Seminole War
+- An impulsive general invades Spanish Florida
+- if any general has “controversial”
+- Automatic Response
+- Democracy
+- Era of Democracy
+- Armistad
+- A: Give it to SCOTUS
+- B: Bypass courts and return slaves to Spain
+- LBldfKQNmrzjwtDf
+- LBxvjljVYNhlpyfh
+- Armistad SC Case
+- Arikara Attack Encroaching Fur Trappers
+- A: Send the military to punish the Arikara
+- Arikara War
+- LBhHxlQfrQpCCCcj
+- Bank War
+- LBrBLwTgCLKSKPdB
+- US Bank Active
+- IL is a state
+- Black Hawk War
+- LBvfDBzzRBdMJXWR
+- MO is a state
+- Gov is Cons, Trad, or Theocrat
+- Mormon Extermination
+- A: Avoid intervening in MO affairs
+- if blundered: Secession crisis
+- Mormons never reach Utah
+- Jacksonian Civil War?
+- LBMwZXjdcvQKJSZD
+- VA and KY Resolutions Occurred
+- Nullification Crisis
+- LBRrJJcGYLlSmjwB
+- Allows Gov of SC to call secession convention
+- Indian Removal Act Active
+- Seminole Retaliate, refuse to vacate Florida
+- Seminole War not active
+- LBDXnCdrzfNwgFrq
+- Slavery Legal
+- Slave Rebellion (Nat Turner’s)
+- LBypJgqRSLNxqJfN
+- B: Send in the US military
+- 25% chance VA gov gains “efficient”
+- 25% chance Sec of War gains “efficient”
+- LBZDzRLhtyZMzzRM
+- Oregon Treaty resolved
+- Indian Sovereignty DNE
+- LBBmrfjlfkwQQDKm
+- Yakima War
+- Canada Not Acquired by US
+- Rebellions of 1837-1838 occurred
+- Canada not independent of UK
+- Caroline Affair
+- B: Enough British aggression! Declare War!.
+- Texas Independence has not occurred
+- LBbmFpBpsNTcKcgB
+- Option C from Texas Revolution was taken
+- Purchase Mexican Texas
+- B: Send negotiators to purchase Mexican Texas
+- Force Open Trade Relations with Japan
+- Reduce Relations to 1
+- Blunder
+- if Blunders, Can Retry
+- Canada not yet acquired
+- LBmhtJKFXPbjXyJz
+- if blunder
+- ME goes to UK (or Canada if Independent)
+- Texas Wishes to Join the US has occurred.
+- Texas Again Requests Annexation
+- Texas not part of US
+- Mexican Independence
+- Texas Revolution
+- Mexico Abolishes Slavery
+- Mexican-American War
+- 25% Chance
+- Jacksonian Civil War
+- Deep South Secession
+- LBLpNPcNZwzGFwKJ
+- Texas Wishes to Join the US
+- Texas Annexation
+- Comes up again twice more
+- Independent Texas or joins WESAM if it exists
+- If done 3x
+- Manifest Destiny
+- Era of Manifest Destiny
+- Abolition Movement
+- Slavery Active
+- C: Ignore getting involved in the debate.
+- Abolish Slavery Amendment (double pts)
+- Common School Movement
+- French in Hawaii
+- Monroe Doctrine Active
+- War with France (Hawaii War)
+- Can never annex Hawaii
+- Illinois-Mormon War
+- B: Refrain from intervening in state affairs
+- Deactivate Deseret and Mormon Wars
+- Princeton Disaster
+- No War with European Nation Active
+- Civil War not Active
+- Bill Increasing Mil-Prep  (double pts)
+- Open Trade w/ China
+- Will show up next half-phase if chosen
+- Underground Railroad
+- No Civil War Active
+- A Fugitive Slave Act is Active
+- Oregon Boundary Dispute (Oregon Treaty)
+- Canada Not Acquired
+- Treaty of 1818 Resulted in Disputed Territory
+- B: 54-40 or Fight! Take all our claim!
+- A: Push for most diplomatic land agreement
+- Adds WA, OR, ID as possible states
+- Adds British Columbia, WA, OR, ID
+- War With UK (if blundered)
+- Adds OR, cedes WA and ID to UK
+- Reappears next phase if blundered
+- Provoke Mexico into War
+- Mexico is independent
+- Texas owned by US
+- Free Soil Movement
+- Slavery is Active
+- Texas is a slave state
+- Know Nothing Movement
+- Irish Immigration occurred
+- LBdQJSMlHmmmnxCb
+- Women’s Suffrage Movement
+- Women do not have the right to vote
+- AZ and NM acquired
+- LBfpcWpvRgkwNSJD
+- A: Send in the military
+- Apache Wars
+- Navajo Wars
+- Compromise of 1850
+- Dom Stab x3c 5
+- LBvqVBBSwYZtwmQV
+- Central America not part of US
+- LBmKTmlglQrGCBwB
+- LBHSTfLHgxjDxPgR
+- Cuba not already aquired
+- Narciso Lopez Liberation Movement in Cuba
+- if bumbled, 25% chance war with Spain
+- No national prohibition
+- Prohibition Movement
+- LBzRDrHDlZNqfHpN
+- Crimean War
+- Russian rel set to 1
+- Bleeding Kansas
+- Constitutional Crisis in Kansas Occurred
+- Compel Spain to sell Cuba (Ostend Manifesto)
+- Not at war w/ Spain
+- Cuba not independent
+- US does not own Cuba
+- Canning of a National Politician
+- One member of Congress has Civil Rights
+- LBcBKsQWFXmSLwHD
+- Constitutional Crisis in Kansas
+- Louisiana Purchase acquired
+- Kansas is a territory
+- Popular Sovereignty in territories is active
+- A: Avoid what is strictly a state issue
+- President not trad, rw pop, or rw activist
+- LBsVtMJBcXgTKRyB
+- Slavery Active in at least one state
+- LBHzjFrJLFpZYwhW
+- C: As the publisher of the NY Tribune says,
+- Civil War (Eastern Theater)
+- CIvil War (Western Theater)
+- 25% Chance CSA Rejoins Union
+- leads to Civil War theaters if failed
+- CSA leaves without war
+- {Nation} is considering recognition of CSA
+- Civil War Active and CSA Exists
+- Succession Fervor reaches border states
+- Confederates
+- Mexicans Cross to Retake Texas
+- LBnjKYPCBXMXPLtW
+- Loses rights to TX
+- US acquired TX
+- Texas Secedes from the Confederacy
+- CSA independent or Civil War Active
+- Texas joined CSA
+- Dom Stab = 1
+- France rel x3c 5
+- Spain rel x3c 5
+- UK rel x3c 5
+- Mil prep  x3c 5
+- Nationalism
+- LBCSrBMsSxCXZrsv
+- Era of Nationalism
+- Polygamy and Aggressive Settlers in Utah
+- Mormon Extermination Order occurred
+- LBhqSjWfRPGmHVpn
+- Utah is acquired
+- if bungled, a massacre occurs
+- LBgZDJrwqrryDGBN
+- Utah War
+- Panic of 1857
+- Oil in Titusville
+- Activates Big Oil and Gas Lobby
+- Pig War
+- Oregon Treaty resolved diplomatically
+- Canada not owned by US
+- LBrGGRptzhxLzhkz
+- Mid-Century British War (UK Invasion)
+- French in Mexico
+- US in a major war
+- French-Mexican War
+- if blundered
+- LBbShSpKldcRRJfS
+- Dakotas attack encroaching white settlers
+- SD and ND are acquired
+- A: Send the military to deal with this tribe
+- Dakota War
+- LBGBqqrVjKDwcFKh
+- US has Liberia
+- LBnnxChFVJsSLgDR
+- Anti-War Movement During the Civil War
+- Habeas Corpus Suspended
+- Civil War Active
+- A: Lock up the movement's leader
+- LBQgNhFPwRmtjgxF
+- First KKK
+- Slavery is abolished
+- Reconstruction has occurred
+- B: Let state governors deal with them
+- Plantation Economy Ends
+- South Industrialized has occurred
+- LBDDtFxwHvxpmMMn
+- Canada becomes independent nation
+- LBZqyZZZdBQcKDFP
+- LBtbPDYHWmGsMwFt
+- French intervention in Mexico Result B
+- US does not control Mexico
+- MT and WY acquired
+- Native American citizenship inactive
+- Red Cloud’s War
+- Russian Rel >= 5
+- Purchase Alaska
+- AK acquired
+- John Brown’s Raid
+- Bleeding Kansas occurred
+- Slavery not abolished
+- John Brown’s Uprising not occurred
+- John Brown active
+- John Brown’s Uprising
+- John Brown’s Raid not occurred
+- if blundered, leads to secession convention
+- Black Friday
+- Gold Standard Active
+- LBXDrXSxPlhgdrfm
+- LBhLttDtsqKhMlml
+- Reconstruction Coup
+- Reconstruction is Active
+- Repeal Reconstruction in {State}
+- LBscXBbXNrYfPjLr
+- Unsettled Gov Election in Reconstructed State
+- Ignore the unsettled election
+- Incumbent gov remains
+- Challenger becomes gov
+- Randomize
+- LBHzdTNbfsHLtLfM
+- White Leagues and Red Shirts
+- Slavery Abolished
+- Former slaves can vote
+- Star Route Scandal
+- A: Work to stop leaks of Star Route scandals.
+- LBPmvmnHTpXPtnhg
+- President has expansionist and nationalist
+- War to Unify the English Speaking Peoples
+- [if won] A Continent Rules An Island
+- LBvLRnSyBLBmQPTg
+- LBtLPTGNwCTwqzWl
+- LBnKhJcKMJVlPdRB
+- Triggers Set Average Tariff to 10%
+- State Militias Quell John Brown's Uprising
+- John Brown’s Uprising (A) or (B)
+- LBzTBxxhDgNDMSmT
+- John Brown removed from game
+- LBxmDlvXJbTMsWSQ
+- John Brown’s Uprising (C)
+- LBVKTGKZxmRlXMlk
+- Southern States Vote to Secede
+- A: Prepare for War
+- B: Let them depart in peace
+- Civil War (East) and Civil War (West)
+- France owns all states in “Mexico”
+- Provoke War with Mexican France
+- LBSXGhgTxPwHGQmf
+- France owns Mexico
+- LBjsKDcjlXYNJvJK
+- {if successful} US-French Mexican War
+- PBtlNXvPqNCTFfJv
+- the Gilded Age
+- Trader Post Scandal
+- Cabinet member has “controversial”
+- C: Fire the cabinet officer
+- Fires official and prompts replacement
+- Pres and Sec Navy -1 if blunders
+- Armed Modocs resist settler encroachment
+- CA and OR acquired
+- LBHgPjWYzcqLdwgj
+- Modoc War
+- Mexican Bandits
+- Colfax Massacre
+- Blacks have the right to vote
+- Can be challenged by gov to the Supreme Court
+- Panic of 1873
+- Sets Econ Stab to 4
+- Cuba is not independent
+- Virginius Affair
+- A: This is unforgivable! War with Spain!
+- Cuba is not owned by the US
+- Naval War w/ Spain
+- [if blundered] Naval War w/ Spain
+- Texas acquired
+- Red River War
+- Whiskey Ring Scandal
+- If blunder, Pres can be investigated
+- LBsvJlgdjKmWxNnl
+- SD and ND have been acquired
+- Native American citizen not active
+- Great Sioux War
+- Great Railroad Strike of 1877
+- LBJdfnDMDNCnMVyD
+- LA Purchase acquired
+- Nez Perce refuse to cede territory
+- Naz Perce War
+- Women’s Suffrage worth double
+- Utes attack Indian Agency
+- CO Acquired
+- Native American citizenship not granted
+- LBSSRKdkQPpvdgMV
+- LBlzGlzDxGTWGjzc
+- White River War
+- High Tech Appears
+- Force Open Trade Relations with Korea
+- Event reoccurs if B isn’t successful
+- The Haymarket Affair
+- LBlfnbZtxHJvlRTq
+- Labor Movement occurred
+- Alfred Nobel invents dynamite occurred
+- 8 Hour Workday not active
+- Labor Movement
+- LBzTfNfQsfhLgWqw
+- B: Refrain from taking side
+- Samoan Crisis
+- LBFdKYmZSssYBFFX
+- Gain Samoan Islands
+- [if blunder] German-US Naval War
+- LBYXPwqjDZHSGVlW
+- Lose claims over Samoan Islands
+- LByHskYCRHGdhqmK
+- Gain American Samoa
+- Conservation Movement
+- LBJBKBPZSzJyxtYw
+- Lakota tribe refuses to disarm (Wounded Knee)
+- SD Acquired
+- A: Forcibly disarm the Lakota
+- Era of the Gilded Age
+- Women’s Suffrage Movement occurred
+- Women’s Suffrage in Mountain States
+- Women cannot vote nationally
+- Women’s Suffrage not active in any state
+- Germany Rel x3c 5
+- Embargo War (US Pork vs. German Beet Sugar)
+- A: Threaten retaliatory embargo on Germany
+- [if blunders] US-German Naval War
+- Retaliatory tariff on Germany (worth double)
+- LBSqdLpcGXHzTYTt
+- 20% chance -1 all relations
+- Panic of 1893
+- Hawaii is not owned by France
+- Overthrow the Queen of Hawaii
+- B: Stand opposed to US Imperialism
+- Hawaii has not already been acquired
+- Annexation of Hawaii worth double
+- Socialist Uprising Breaks Out
+- Quality of Life  x3c 5
+- A faction leader is LW Pop
+- Incumbent pres is unlikeable and cons or trad
+- LBHbRVStfVydXCZM
+- Labor Movement has occurred
+- 75% chance Socialist Uprising Quelled
+- War for the Philippines
+- LBwGFGrJHZxtxVpD
+- Spain owns the Philippines
+- [75% chance] War for the Philippines
+- Progressivism
+- Era of Progressivism
+- 2nd KKK
+- KKK has occurred
+- Anti Lynching bill (worth double)
+- President -1 in Deep South and Upper South
+- President +1 in Deep South and Upper South
+- Native American citizenship not active
+- Indian Sovereignty does not exist
+- Native American Citizenship  (double pts)
+- Women cannot vote
+- Women's Suffrage  (double pts)
+- Coal Strike of 1902
+- LBqQKxVMrHCxYNWt
+- [if blunder] Pres -1 in next election
+- Slavery abolished
+- Invite Booker T Washington to the White House
+- Atlanta Compromise has occurred
+- Spain or US do not possess Mexico
+- U.S. has New Mexico
+- Mexican Revolution has occurred
+- Pancho Villa Expedition
+- Prohibition Amendment is not active
+- Prohibition Activism Intensifies
+- Prohibition Amendment (2x points)
+- Wilmington Coup and Massacre
+- NC is part of the US
+- Great White Fleet has occurred
+- Winston Churchill Becomes US Citizen
+- LBlSvdgdLSrdXmZR
+- Winston Churchill becomes active and playable
+- Panic of 1907
+- Einstein Publishes Theory of Relativity
+- Activates Science Lobby
+- Activates Welfare Lobby
+- Activates Big Pharma and Healthcare Lobbies
+- US occupies Cuba
+- Cuba Requests Independence
+- Cuba is a state or territory
+- Cuba granted independence
+- “Annex Occupied Cuba” (2x pts)
+- Venezuela not occupied by US
+- Venezuela Crisis
+- LBFkTGhcshHCqClj
+- LBLVPcfrGjNhsYhN
+- Russo-Japanese War
+- A: Agree to mediate an end to this war
+- LBCStGWslpWXwVSD
+- Earns 500pts (Nobel Peace Prize)
+- Cuba not part of US
+- Cuban Government Collapses
+- LBlfLBCyPXqMTnmn
+- B: We are not an imperialistic nation. No!
+- Cuba not owned by Spain
+- Cuba is not already occupied
+- “Annex Occupied Cuba”
+- Japan Rel x3c 5
+- Gentlemen's Agreement with Japan
+- LBpvyDxJbNdFknyF
+- if blunder 25% chance of US-Japan Naval War
+- 25% chance for US-Japan Naval War
+- Steel Navy
+- Mil Prep >= 8
+- Great White Fleet
+- B: This is just costly showboating
+- Mexican Revolution
+- Spain does not control Mexico
+- Revolution in Nicaragua
+- Nicaragua under US occupation
+- Haiti not occupied by US
+- Coup in Haiti (1914)
+- Haiti not controlled by France or Spain
+- Haiti under US Occupation
+- Italy Declares War on Ottoman Empire
+- Balkan Wars
+- Franz Ferdinand Assassinated & World War I
+- Franz Ferdinand Woos Over Serbs not occurred
+- Tampico Affair
+- LBDkrjcMgTfvnFNr
+- LBkVlmjnyKqlswXw
+- U.S. Intervention in WWI
+- That's it! Enter the World War.
+- Lusitania
+- Germans Introduce Poison Gas Into Warfare
+- LBDvMCrtjZBTRxSR
+- Purchase Danish West Indies
+- A: Purchase Danish West Indies
+- B: Decline the purchase
+- LBMZGVLCVdBlHXzb
+- US Virgin Islands
+- Coup in the Dominican Republic
+- Santo Domingo under US occupation
+- Santo Domingo not occupied by US
+- Zimmerman Telegram
+- LBMnVkfcBRnqLRbL
+- Unrestricted Submarine Warfare
+- 25% chance of Mexican WWI invasion
+- LBhWjYNhJhCLVSyQ
+- WWI has occurred and has not ended
+- Russian Civil War Begins
+- Mexico Enters World War I
+- Mexico not part of the US
+- Mexican Invasion of US during World War I
+- Czar Nicholas II and Family Rescued
+- The Great World War Ends w/ German Victory
+- The Great World War Ends w/ German Defeat
+- UN partitioned Palestine
+- LBflstmZkdhcBYPS
+- Recognize Israel
+- United Nations occurred
+- Normalcy
+- LBGGmfmXrygqKvCF
+- Era of Normalcy
+- Germany loses WWI
+- Russian Civil War occurred
+- Poland Gains Independence from Russia
+- LBwTvrxYFRJPdRZL
+- Czar Nicholas was not rescued
+- Czar Nicholas II and Family Murdered
+- First Red Scare
+- Anarchist Bombings
+- WWI began and ended
+- Great Depression occured
+- Communist Movement
+- League of Nations
+- LBTvxZhffWCwjJng
+- On second thought, this is a bad idea.
+- Will re-occur 5 more times during this era
+- LBfBJHTygsgyqwMC
+- Join the League of Nations
+- League of Nations membership (2x pts)
+- Join the World Court
+- League of Nations Active
+- LBQNMSyHdPsWLtNq
+- WWI ended
+- The Roaring Decade
+- Chinese Communist Party forms
+- Communist Movement has occurred
+- A World War has ended
+- Washington Naval Conference
+- LBkgpVpbGnjJHscn
+- World War I ended in German defeat
+- Fascist Movement has occurred
+- Cabinet member has controversial
+- Teapot Dome Scandal
+- LBWrPmbvzbytFlfY
+- Allow and investigation
+- Investigate Cabinet Member
+- [if blunder] President faces impeachment
+- LBsWlVLdDGdmjlPg
+- Nazi Party has formed
+- LBxNGHTFWgGrFJBC
+- Dawes Plan
+- Reject the plan. Germany will abuse this.
+- LBBCyzrQQtgKlLsT
+- German Rel x3c= 5
+- WWI has ended
+- Kellogg-Briand Pact
+- France Rel >=5
+- London Naval Treaty
+- Sign the treaty
+- Don't sign the treaty
+- Not at war with UK, France, Spain, or Germany
+- Hirohito is emperor of Japan
+- Japan Invades Manchuria
+- Fascist Movement Occurred
+- Russian Civil War has occurred
+- Great Mississippi Flood
+- LBJPvvSkVwMlcKQk
+- Disaster Relief (2x)
+- -1 for re-election in AR, MS, LA
+- Slap retaliatory embargo on Japan (2x)
+- US was involved in WWI
+- Bonus Army
+- LBwhLZQmJGdxJtZZ
+- Econ Stab x3c 5
+- Bonus Bill (2x)
+- Hoovervilles
+- Econ Stab x3c= 3
+- Party pref -2
+- Prohibition Amendment
+- LBdXFXSvzyVJLPWP
+- Prohibition Repeal (2x)
+- Dust Bowl
+- Agriculture bills (2x)
+- Spain is a Republic
+- Spanish Civil War
+- LBnFSHdLjlBrnkYV
+- LBhHZvFYvZRcgCNP
+- Slap retaliatory embargo on Spain (2x)
+- Spanish embargo (exec) [if allowed]
+- Spanish Civil War has occurred
+- Communist Movement occurred and not ended
+- WWII has not occurred
+- Russia is communist
+- Relations with {country} x3c 5
+- {Country} taken over by communists
+- [for Germany] Wilhelm Abdicated
+- NAFTA has not occurred
+- US does not possess Mexico
+- Mexico Becomes Communist
+- Ideologies
+- Era of Ideologies
+- German Economy Crash has occurred
+- Wall Street Crash and Great Depression
+- LBcBfNHBYZdRVKLR
+- US not in a war typed “Major”
+- Econ Stab + or Dom Stab + (2x pts)
+- Soviet Union exists
+- South America is not possessed by US
+- Wave of Coups Hit South American Governments
+- LBbPXyrMfWyQjBgx
+- Spain does not possess South America
+- War for South America
+- Japan Invades Manchuria has occurred
+- Chinese Communist Party formed has occurred
+- Dawes Plan Occurred
+- Lausanne Conference
+- German Economy Crashed
+- World War II has not occurred
+- Great Depression Occurred
+- No! We demand every farthing owed us!
+- Hitler Takes Power in Germany
+- LBCVWKsYzHXFBXWq
+- Hitler is not dead
+- Great Depression occurred
+- LBcyYvyJvtKQbQTn
+- Recession of 1937
+- US not involved in WWII
+- President is Lib, Prog, or LW Pop
+- Conservative Manifesto
+- Social Security is Active
+- Japan Invades China
+- Nanjing Massacre
+- U.S. not at war with Germany
+- The Hindenburg Bursts Into Flames
+- German Rel != 1
+- WWII started and has not ended
+- Soviet Union Invades Finland
+- World War II
+- WWII: European Theater
+- LBknBxtSfJyFQtrw
+- LBLhkGpPMHQjRdSQ
+- Leon Trotsky Assassinated in Mexico
+- US possess SD and LA
+- Mount Rushmore
+- Soviet Union invades Finland has occurred
+- Hitler Invades the Soviet Union
+- Attack at Pearl Harbor
+- Japan Rel x3c= 2
+- WWII: Pacific Theater
+- Declare War on Japan!
+- LBHWNcZlSTLYXQrx
+- Japanese War to Occupy the US
+- -2 in re-election for President
+- Lend Lease Active
+- German Rel x3c= 2
+- Attack at Pearl Harbor occurred
+- Axis Declares War on US
+- Send the troops to Europe and North Africa
+- LBkslCDqzqRWxFKD
+- German War to Occupy the US
+- Defend the military officer's behavior
+- General has controversial
+- Removes general, requiring replacement
+- Greek Civil War
+- Intervene for the Pro-Western force
+- Ignore involvement
+- WWII has not happened
+- Final Solution Exposed
+- WWII: Eastern Theater
+- WWII has occurred
+- LBCTqXKlMNyjLPyp
+- Tito Takes Control in Yugoslavia
+- Communist Movement Ends has not occurred
+- Mussolini Overthrown and Executed
+- LBgyNYLsBwsSKZDY
+- Hitler invades the Soviet Union
+- LBKWmvJJYzGQmnNX
+- Hitler Found Dead in His Bunker
+- WWII: Pacific Theater is active
+- Albert Einstein is in the US
+- Atomic Bombs Ready for Pacific Theatre
+- Activate Bomb on Hiroshima and Nagasaki
+- LBfmjdLCtGKPnHWc
+- Germany Split into Two Nations
+- Amb to Germany becomes Amb to West Germany
+- LBLGqFYFFKbFygLD
+- Pearl Harbor has occurred
+- US is involved in WWII: Pacific Theater
+- WWII Ended in German Defeat
+- LBgztqymyYfwQbfD
+- US-Soviet Korean War
+- League of Nations occurred
+- LBRcYflvxCcDQppT
+- United Nations
+- Creates Amb. to United Nations
+- LBDgvHkSVPNQTVJN
+- WWII has occurred and ended
+- Churchill’s Iron Curtain Speech
+- Soviet Union Exists
+- Triggers Isolationist Foreign Policy
+- LBRvXWfbgTmkypQD
+- WWII Ended
+- China Civil War began
+- Communist Revolution in China
+- Indochina War
+- Ho Chi Minh takes Saigon
+- WWII has ended
+- Holocaust Occurred
+- United Nations exists
+- UN or NATO exists
+- Cold War
+- Soviet Union tests Nuclear Weapons occurred
+- Churchill’s Iron Curtain occurred
+- 100% by any other event that triggers it
+- Senator has manipulative and nationalist
+- McCarthyism
+- is formally censured by Congress. 2)
+- ends.
+- LBRBcDHZKRyDTFfB
+- WWII Active
+- CSA Exists
+- CSA Joins Axis Powers, Invades USA
+- US-CSA WWII
+- Hitler Takes Power
+- Hitler Assassinated
+- Hitler's Assassination Ends World War II
+- WWII has not ended
+- WWII is active
+- Albert Einstein in US
+- Hitler has not died
+- Germany has invaded Russia
+- US has not dropped nukes
+- WWII won by Gemany
+- President is LW Pop or Prog
+- Soviet Alliance
+- German Nukes Ready
+- Manhattan Project active
+- LBKvkFKZNFXNwLYz
+- If US was in defensive war, Game Ends
+- US does not intervene in Korean War
+- USSR Wins the Cold War
+- US does not intervene in WWII
+- World War II Ends in Axis Victory
+- World War II Ends in Allied Victory
+- the Nuclear Age
+- At least one state has a primary
+- Primary Debates
+- Primary Debates Activated
+- Communist Revolution in China has occurred
+- US is in the UN
+- Cold War is active
+- LBpqVwtzkMZBxpyh
+- LBKTnMVcSmzJDHkn
+- Creates Amb to Israel
+- Goes back into the event pool
+- Activates Israel Rel Meter, sets it to 5
+- Manhattan Project has occurred
+- Soviet Union tests Nuclear Weapons
+- Korean War
+- LBzzNZXKYlNrDgWy
+- Cold War has happened
+- US and Russia partition Korea occurred
+- China is communist
+- LBpbrHbrXykSzWxg
+- Cold War is Active
+- Cuban Revolution
+- LBXYMPVVWCsvQDml
+- Cuba is not controlled by US or Spain
+- Iranian Coup
+- Cold War Active
+- UK rel > 5
+- Invasion of Cuba
+- LBCwKkLmnzRvltRk
+- Spain Thaw
+- Spanish Civil War ended with Franco win
+- Fascist Movement Dies occurred
+- Spain is not a monarchy
+- Brown v Board has occurred
+- Civil Rights Movement
+- Indochina War or Vietnam War has occurred
+- Vietnam War has not ended
+- France Requests Aid in Indochina
+- Indochina War or Vietnam War has not ended
+- US is not involved in Vietnam or Indochina
+- LBRnRdBcFdsZZNZJ
+- Guatemalan Coup
+- None of Central America is part of US
+- LBWxwKMlXShnJSWk
+- Mexico is not part of US
+- Operation Wetback
+- LBSSmZLgqXBllnHB
+- Rosa Parks Refuses to Give Up Her Seat
+- Civil Rights Movement has occurred
+- Segregation is not illegal
+- Segregation is not Illegal
+- Rosa Parks gains celebrity and retires
+- LBvYCNRWgHMWxCPl
+- Vietnam War
+- LBCrmQgKrLXZZKKX
+- Lyndon Johnson holds political office
+- Lady Bird Johnson Enters Politics
+- Lady Bird Johnson is activated and playable
+- Lady Bird Johnson is retired from the game
+- Southern Manifesto
+- Poll Tax not Illegal
+- Support the Southern Manifesto
+- LBGgvQxYJgPpMQyl
+- Hungarian Revolution
+- LBZFbcCwwPgkQMZF
+- 50% of triggering WWIII: Iron Curtain
+- [China is Communist] WWIII: China Front
+- [Req UK or FR communist] WWIII: Europe Front
+- US has recognized Israel
+- Suez Crisis
+- Brown v Board occurred
+- Little Rock Nine
+- Civil Rights Movement Active
+- LBWlHBTfpVJTldZm
+- China is Communist
+- China and Taiwan
+- Airstrike Chinese navy and missile sites
+- if any blunder, -1 party pref
+- LBYzCXDZYjnWLKCt
+- Era of the Nuclear Age
+- Great Leap Forward
+- LBbdDXcMyndFpvjS
+- LBmXttrpQlxwztzB
+- Lebanon Crisis
+- Missile Gap Scare
+- Soviet Union Tests Nuclear Weapons occurred
+- Proliferate Nuclear Weapons Policy
+- U-2 Incident
+- LByJxQMjKgytgqWz
+- Cuban Revolution has occurred
+- Castro Takes Cuba
+- Bay of Pigs
+- Berlin Wall Constructed
+- Denounce the Berlin Wall
+- Poll Tax and/or Segregation is still active
+- Brown v. Board of Education has occurred
+- LBpwhZvtmYQYZkKc
+- LBrbtfKYyZTTtfQl
+- Cuban Missile Crisis
+- Russia is Communist
+- [if not active] NASA (2x pts)
+- Vietnam War is Active
+- Gulf of Tonkin
+- U.S. is not at war with Vietnam
+- Vietnam War and Military Draft are active
+- Vietnam War Protests
+- Crack down on protests
+- Let the states deal with the protests
+- LBVTsYgWLWtHgZJH
+- LBTdtKNxCtShxWWR
+- Deactivates Military Draft
+- Sputnik Puts Soviets in the Lead for Space
+- LBGgYHyjzHnTXvyd
+- US Beats Russia into Space has not occurred
+- Outer Space Treaty
+- LBTgJvLvKDltjWvN
+- -1 relations with all nations
+- US recognized Israel and Suez Crisis occurred
+- Six Day War
+- Non-Proliferation Treaty (NPT)
+- Cold War has occurred
+- Russia and US have nukes
+- UN has occurred
+- Sign the Treaty
+- Don't Sign the Treaty
+- NASA is active
+- Man Lands on the Moon
+- McGovern-Fraiser Commission
+- All for the best
+- US is in Vietnam War
+- Expand Vietnam War into Laos
+- LBqJbHZLQNjgxmqR
+- Ignore advice to expand war
+- Expand the war
+- Expand Vietnam War into Cambodia
+- 10% chance increases difficulty of battles
+- 20% decreases difficulty of battles
+- Vietnam War: Cambodia
+- China joins the UN
+- UN Exists
+- Let China join the UN
+- Reoccurs until China Joins
+- ABM Treaty
+- US not at war with Russia
+- Russia Rel != 1
+- Sign treaty
+- Don't sign treaty
+- LBtMdJzVtFTMtXDt
+- [if blunder] 10% - party pref
+- China Thaw
+- China a member of the UN
+- LBCTnfjyNDpNZzPC
+- Hungarian Crisis Leads to Nuclear War
+- LBjqDjslnDsqPWFc
+- [10% Chance] Nuclear War
+- 50% chance of Game End
+- LBtbNphDfBWpTrcj
+- Game Ends
+- LBpttsmcXfWNbjGf
+- President can be investigated or impeached
+- LBcSHpQvQtnGsdsh
+- Neocons
+- Stagflation
+- NAFTA not occurred
+- Call for Legislation to deal with Stagflation
+- Yom Kippur War resolved for A
+- Oil Crisis
+- LBhFQxNCQftQGffb
+- Era of the Neocons
+- Watergate
+- Allow the wiretapping of the opposition party
+- LBMFSqMHPrxYtQWd
+- +1 in every state in re-election
+- LBNxVSMqKqVJBTmT
+- 50% chance of discovery
+- Spain has not fallen to Communism
+- Helsinki Accords
+- Attend the meeeting
+- Invasion of Cambodia has not occurred
+- Mayaguez Incident
+- Invade Cambodia
+- LBvJGgsgbKFqKXjj
+- Invasion of Cambodia
+- Apple Computer Co. is formed
+- First Apple Mac computers released
+- Mao dies
+- Deng Xiaopeng leads China
+- US controls Panama
+- End US Control of Panama Canal
+- Yom Kippur War has occurred
+- Camp David Accords
+- US not at war with Israel
+- Decline to mediate a peace treaty
+- President +100pts (Nobel Peace Prize)
+- Oil Crisis Occurred
+- Iranian Revolution
+- LBpCQYDqqCNgKXdR
+- LBPqDMKcsgzRnGSp
+- Oil Crisis II
+- LBGYRbMxnGlmYSrh
+- Deactivates Oil and Price controls, if active
+- Strategic Arms Limitation Talks
+- Not at War with Russia
+- Sign the treaty and begin complying
+- Iranian Revolution occurred
+- Iran Hostage Crisis
+- Use Diplomatic Approach
+- Attempt rescue mission
+- LBvJztNzyRHKDgrM
+- Airstrike Tehran
+- If successful, 75% + party pref
+- LBMCCzDzsbmjpXVz
+- 25% for Iranian War
+- Soviet-Afghan War has occurred
+- Communist Movement Ends
+- China Thaw has occurred
+- LBbLjBkyMYQLmZmY
+- John Paul II is Pope
+- Detente Policy with Soviet Union is Active
+- Soviet-Afghan War
+- Openly lend arms to the Afghan mujahideen
+- Airstrike Soviet forces, send navy, lend arms
+- Boots on the group in the USSR, send navy
+- Any blunders give 50% -1 party pref
+- 10% Late Cold War Invasion of Russia
+- 25% Late Cold War Invasion of Russia
+- 100% Late Cold War Invasion of Russia
+- Iran-Iraq War
+- Not at War with Iran
+- 50% - party pref if any response is bungled
+- Covertly help Iraq
+- Boots on the group vs Iran, send navy
+- 10% US Intervention in Iran
+- 25% US Intervention in Iran
+- 100% US Intervention in Iran
+- Ignore the war, stick to rhetoric
+- LBXHXzttMhLMcKCc
+- Olympics in Moscow
+- Boycott Olympics
+- Send US olympians to Moscow
+- Religious Right
+- Embrace the Religious Right
+- Ignore the Religious Rights
+- 25% +1 for Theocrats next election
+- Falklands War
+- Aid the British
+- Ignore the War
+- US does not own Argentina
+- LBslKfwkVQXHbnSd
+- 25% UK-Falklands War if UK Rel x3c= 2
+- Beiruit Barracks Bombing
+- Airstrike Lebanon
+- Sanction Lebanon
+- Ignore the attack on US Barracks
+- 40% war with Lebanon
+- 10% war with Lebanon
+- Contra War
+- Ignore the Contra War
+- Grenada not part of US
+- Coup in Grenada
+- Send troops to Grenada
+- Ignore the Coup
+- Invasion of Grenada
+- Gorbachev Leads Soviet Union
+- LBlFjKlDdrwGymXW
+- Iran-Contra Affair
+- Response A from Contra War was selected
+- Iran-Iraq War occurred
+- LBwvDcDFmzfWcjFY
+- Pres, VP, or Cabinet has controversial
+- Challenger Disaster
+- Moon Landing by US has occurred
+- LBKtWgxRPQLyYRTd
+- 25% -1 party pref, unless Pres has charisma
+- Afghan-Soviet War has occurred
+- Detente with USSR not active
+- Solidarity Movement
+- Praise the Movement
+- Refrain from Praise
+- Glasnost and Perestroika in the USSR
+- Solidarity Movement has occurred
+- Strategic Defense Initiative
+- MilPrep is 8 or 9
+- Incumbent party +1 next election
+- Criticize the reform as propaganda
+- Gaddafi Leads Lybia occurred
+- Lybian Bombing in West Berlin
+- LBhKqBgTFcSkRvgS
+- LBrwpyZDYlRBrnRQ
+- Airstrike Libya
+- LBMnsQShHrBjGWlx
+- Sanction Libya
+- 25% Invasion of Lybia
+- LBMfBJwWdykntDrP
+- 10% Invasion of Lybia
+- Apartheid South Africa
+- Invasion of South Africa
+- Communist Government Overthrown in Poland
+- John Paul II is the Pope
+- LBWlDgJhNFrqqmFm
+- US does not own Central America
+- Retaliate against Panama
+- Invasion of Panama
+- Revolutions of 1989
+- Keep rhetorical neutrality
+- Soviet-Afghan War is ongoing
+- Soviet-Afghan War ends
+- Berlin Wall Falls and Germany Reunifies
+- LBZWLmLpHBvRPWNC
+- Revolutions of 1989 have occurred
+- Germany was defeated in WWII
+- Germany is not controversial
+- Iran-Iraq war is not active
+- Iraq Invades Kuwait
+- Saddam Hussein has taken power in Iraq
+- LBQQkZmrYTsyqJkV
+- Lead coalition against Iraq
+- Gulf War
+- Yugoslavia Breaking Apart
+- Yugoslav Wars
+- Haiti not owned by US
+- LBYNBdRNQtFgRzRc
+- Coup in Haiti (1991)
+- Intervene to restore Aristide to power
+- Invasion of Haiti
+- Dissolution of the Soviet Union
+- LBCvhLfQygQynlgh
+- EU is founded
+- Iraq Attempts Assassination
+- Iran is not occupied by the US
+- Sanction Iraq
+- Sanction Iraq and Launch Airstrikes
+- ISIS is not active
+- 1993 WTC Bombing
+- Launch airstrikes into Afghanistan
+- Early War on Terror
+- LBszdTYTCMSQqWGx
+- US is apart of the UN
+- UN Requests Intervention in Somali Civil War
+- Ignore pleas of the United Nations
+- LBbhHZljxTxZJMQb
+- LBLtWQmwTtZnGyCN
+- Agree to send a task force
+- Invasion of Somalia
+- LBkDMxkqFLKvlpSk
+- Rwandan Genocide
+- Ignore pleas to intervene in Rwanda
+- Invasion of Rwanda
+- LBYzlfbwgkqyfMFg
+- Soviet-Afghan War Ends has occurred
+- Taliban Takes Kabul
+- Yugoslav Wars are ongoing
+- Ethnic Cleansing in Yugoslavia
+- Launch airstrikes against Serbs
+- Invasion of Yugoslavia
+- Camp David Summit
+- Recognize Israel resolved for A
+- Israel Rel > 5
+- Camp David Accords occurred
+- Keep out of the Israeli-Palestinian squabble
+- LBKYTBVDqvTjSsFh
+- Terror
+- Era of Terror
+- War on Terror is ongoing
+- Terrorist insurgency in Yemen
+- LBxndkztNlDpggbp
+- Russia joined G8
+- Vladimir Putin takes Power in Russia
+- September 11 Attacks
+- The Taliban have taken Kabul
+- Iraq War: Desert Storm has occurred
+- President -2 for re-election
+- LBvRKfzjSjwzNvlL
+- War on Terror w/ Invasion of Afghanistan
+- President -1 for re-election
+- Iran-Iraq War is not active
+- Iran is Enriching Uranium
+- Iranian Revolution has occurred
+- Ignore affairs in Iran
+- Increase sanctions in Iran
+- 25% -party pref if any blunder
+- 10% chance War with Iran
+- 30% chance War with Iran
+- Iran-Iraq War is Active
+- Saddam Hussein captured
+- Hussein was not removed in Desert Storm
+- Populism
+- Era of Populism
+- Near Future
+- Era of the Near Future
+- LBQnRGrsHctjTnwB
+- Far Future
+- Era of the Far Future
+- rules
+- type
+- principal
+- brand
+- user
+- role
+- allowAnonymousEditAccess
+- origin
+- EXTENSION
+- shareTokens
+- version
+- owner
+- username
+- personalBrand
+- displayName
+- avatar
+- sizes
+- size
+- width
+- height
+- status
+- SUCCEEDED
+- isDefault
+- images
+- bucket
+- document-export.canva.com
+- pageHash
+- Canva Sans
+- style
+- files
+- format
+- sizeBytes
+- metadata
+- head
+- unitsPerEm
+- yMin
+- yMax
+- hhea
+- ascender
+- descender
+- sTypoAscender
+- sTypoDescender
+- sTypoLineGap
+- usWinAscent
+- usWinDescent
+- fsSelection
+- Arimo
+- subsettedFiles
+- start
+- lineGap
+- WINDOWED
+- MICROSOFT
+- token
+- name
+- cfCacheStatus
+- cfEdge
+- cfExtPri
+- cfOrigin
+- cfSpeedBrain
+
+## B. Long text blocks — event descriptions, decision options, endings
+
+- King George III Grants America Autonomy as Cost of War Too Much
+- Rev War Ends Due to War Weariness in the Colonies
+- Rev War Ends Due to War Weariness in the Great Britain
+- Continental Congress Renamed as Confederation Congress
+- B: Congress of the Confederation remains government
+- A: Let's make peace with the Iroquois Confederacy so we can settle all of Pennsylvania without fear.
+- B: This is just a manipulative treaty to turn the six Iroquois tribes against each other. Respect their lands and their rights.
+- A: We need this treaty to settle boundaries with these three tribes so that we can settle westward in peace.
+- B: These three tribes are soon going to learn that we have no intention of keeping these agreed boundaries. Why lead them on? We have enough land.
+- Deactivates DC related legislation, events, and actions besides “moving the capitol there”
+- B: Send petition to Congress (Req: Charisma, Leadership, Iron Fist)
+- CSA forms + Upper South and Deep South joining
+- Same as C w/ KY + MO + MD. DC moved if it is capitol
+- B: Concur with Genet and join the Revolution w/ the French
+- C: get upset about Genet and aim to shore up relations by joining on the side w/ British
+- C: Negotiate for better terms (req4+  Admin UK Amb AND 5 Adm Sec State)
+- Criminalize False, Critical Statements of the Federal Government
+- States can challenge unconstitutional legislation
+- Investigates two people in faction w/ RW Activist, RW Pop, or Trad cards
+- French Revolution Quelled with Bourbon's Restored
+- General Napoleon Bonaparte Dominating in Europe
+- B: Offer land (need 4+ Admin skill) (Lose FL, GA, LA, AR, MO & MS)
+- Chief Justice is optional replacement for UK Amb
+- Bribe France to Pressure Spain to Sell Florida
+- Bribe to Napoleon Leaked to Public (req president who selected A in “Bribe France to Pressure Spain”
+- France Regains former French Louisiana from Spain
+- US gains rights to LA, AR, OK, MO, CO, KS, NE, IA, ND, SD, WY, MT.
+- B: Ignore West Florida, allowing Spain to invade, reclaim, and reabsorb West Florida
+- If successful: TX, LA, AR, AZ, NM, OK, UT form West America
+- C: Send the military to reestablish claim on LA and AR and aid Mexico in destroying the Conspiracy
+- D: Refrain from sending the military as our army and our finances are in no position to force our claim.
+- A: Covertly aid Revolt, embargo Haiti if successful to appease slave owners
+- A:  Spain is attempting to grab land wrongfully stolen from us. Let's intervene in the war, stop Spain, and annex the territory
+- A: Let's take back this land that is rightfully ours and was illegally claimed
+- West America annexed by spain (becomes Mexico if Mexico becomes independent)
+- behavior every New England state has a Red governor and one Red Senator
+- 25% chance that NY + New England secede from US
+- A: This will help reestablish the old French Alliance and knock Great Britain entirely out of North America!
+- B: Why should we risk lives and money helping Napoleon fight the British, even if it might land us Canada
+- UK Requests US Aid in Stopping Napoleon's Conquests
+- A: Aiding Great Britain in this war will better cement our relations with our cousins and make it clear that the French alliance is over.
+- B: Why should we waste money and lives on European Affairs?
+- C: Condemn British aggression, but avoid a declaration of war as the military isn't ready. Call for Congress to pass an embargo on the UK
+- D: The country may hate this, but we must improve relations with the UK if we are to survive. Send diplomats and avoid discussion of the incident
+- Washington DC is Captured and Burned by British Troops
+- 25% Chance POTUS is captured. VP takes over and incumbent cannot run for re-election
+- B: The Vice President is Commander-in-Chief now
+- 25% chance granting Indian Sovereignty in states not created
+- Seminole's Crossing Border to Attack US Settlers
+- C: Bypass courts and move slaves to the free north
+- B: Send the military to stop Fur Trappers from encroaching on Arikara territory.
+- B: [req: US Bank is up for renewal in next legis phase]. Try to kill the US Bank by calling on Congress not to renew the bank
+- A: Kill the US Bank by removing deposits and putting them in pet banks in the states
+- C: Condemn populist cries for killing the US Bank, arguing it is a necessary institution for a sound economy.
+- Frontier Militia Fires on Relocating tribes led by Black Hawk
+- A: Send the military to attack Black Hawk and his allies
+- B: Aim for a diplomatic approach, hoping that Black Hawk and his allies realize a mistake was made
+- B: Even if the Mormons are defying state laws the governor cannot eliminate a people from their state. Call forth militia to prevent the order from being carried out.
+- Tariff gave more pts to Free trade over protectionists
+- B: Stick to rhetoric. Condemn SC and threaten to send troops: Call on Congress to authorize presidential use of troops.
+- A: Cave to secession threats: Call on Congress to pass a tariff with a lower rate
+- C: The Union Must and Shall Be Preserved! Bypass Congress, authorize the military, even if unconstitutional, to enter SC
+- Tariff that gives protectionists more points than Free Trade
+- Proposal to grant president power to enforce revenue laws
+- If tariff not overturned, SC becomes it’s own nation
+- A: Send in the military to force the Seminoles out of Florida
+- A: Let the governor of Virginia handle the rebellion
+- Yakima and tribal allies murder political official
+- A: Send in the military to punish the Yakima. triggers Yakima War
+- B: Ignore the murder, hoping that it won't occur again.
+- A: Condemn British aggression but stop short of antagonizing warfare
+- Mid-Centuty British Invasion w/ Invasion of Canada
+- Mexican Independence has occurred and finished lingering
+- A: Decline suggestions to purchase Texas from Mexico
+- A: Send Naval Officer to force open trade with Japan
+- B: Avoid suggestion to force an isolationist country to trade with us
+- Activate Japan Meter, Set it to Neutral, Create Amb to Japan
+- Maine-Canada Border Confrontation (Aroostook War)
+- A: Use the opportunity as a casus belli for a land grab of Canada
+- B: Resolve issue diplomatically by fixing Maine border among other agreements
+- C: Use the opportunity to greatly improve relations with the UK and diminish the influence of the Free States by offering Maine to Canada.
+- A: The Republic of Texas is welcome to join us. Send the annexation treaty to the US Senate for ratification.
+- B: Adding Texas will only inflame section strife overtime. It's better that we support their continued independence and keep them as an ally until they abolish slavery.
+- A: Stay rhetorically neutral, but do not prevent US volunteers from helping the Texans
+- B: Send aid and naval vessels to Texas to help earn TX Independence
+- C: Send aid and naval vessels to Mexico to help them defeat the Pro-Slavery Texas insurrectionists. Use US military to patrol US-TX border to prevent volunteers
+- A: Avoid taking up the issue of Texas annexation for now
+- B: Call for Congress to vote on Texas annexation
+- Texas Revolution has occurred but option C was not selected
+- B: Condemn the movement as a mob that is attempting to provoke Civil War
+- A: Praise the movement, calling on Congress to pass an amendment to ban slavery.
+- Activates Public Education and Private Education Lobbies
+- B: Why concern ourselves with a distant island in the middle of the ocean? It matters not if the island is French or Hawaiian.
+- A: Extend Monroe Doctrine to Hawaii to protect them from the French, work towards recognizing Hawaiian Independence with the idea of potential annexation or naval base down the road.
+- A: Intervene to protect the Mormons from aggression by state forces
+- B: [req: Naval officer survived] Call on Congress to investigate the naval officer attached to this event for fault
+- A: Call on Congress to improve military preparedness
+- Pres, Faction Leaders, Sec of State, Sec of Navy, Naval Officer with highest score(random if tied) have a 20% chance of being killed in an explosion.
+- A: We must compete with Europe in Eastern trade. Formally open relations with China.
+- B: We are better off not working with people very different from us
+- Activate China Meter, Set it to Neutral, Create Amb to China
+- B: Do not enforce Fugitive Slave Act, even if the president is expected to enforce federal law
+- A: Promise to strictly enforce Fugitive Slave Act considering the act is federal law
+- C: Let's cede territory to improve relations with UK
+- A: Let's take advantage of Mexico's desire to creep over into Texas. Order US troops to get as close to the Mexican border as possible in an attempt to provoke a war.
+- B: If we want more territory, we can purchase it. Mexicans aren't going to fight us to get Texas back as we are too strong. Reject insane idea of provoking war for a land grab.
+- 60% Chance for Mexican troops fire on US troops. if so, trigger Mexican War.
+- 3rd party challenge will occur while lingering if a faction leader has Civil Rights. That politician will run 3rd party.
+- Until lingering expires, politicians with Civil Rights must vote for legislation giving pts to Civil Rights.
+- 3rd Party challenge will occur by the faction leader with Nationalist in the next presidential election, if they are not one of the nominees
+- For the next legislative session, politicians with Nationalist must vote for legislation that favor nationalists and against legislation that does not.
+- A: Praise the Convention at Seneca Falls. Implore Congress to pass a women's suffrage amendment.
+- B: Refrain from taking a stance on the movement.
+- Women's Suffrage is proposed at next legis session, but only Progressives, Reformists, LW Activists, and Human rights gain pts (double points) for passing suffrage legislation, while RW Activists, Conservatives, Traditionalists, and Moderates lose double pts for suffrage. Additionally, for reelection, the incumbent president gets -1 in states that do not have a LW Activist governor, but they get +1 in states with a LW Activist governor. Susan B Anthony and Elizabeth Cady Stanton gain celebrity
+- Apache violently resist encroaching white settlers
+- Navajo violently resist encroaching white settlers
+- B: Relocate settlers and avoid provoking any attacks
+- on the following legis prop phase, all legislation referring to slavery, free states, slave states are worth double in the next legis term and Speaker and Sen Maj leader (or Sen Pro Temp) gain 1,000 pts each if slave/free legis is balance. additionally, dom stab is reset to neutral, if done. All other domestic proposals not referring to slavery, free states, and slave states are inactive for this upcoming legis phase.
+- A: Endorse efforts at Compromise. signal an intention to sign any legislation brought to White House in the next legis phase.
+- B: Signal intention to refuse to sign any legislation or package of legislation that expands Slave Power
+- C: Signal intention to refuse to sign any legislation or package of legislation that further restricts Slavery
+- legislation is worth triple and the president that signs the document gets 1,000 pts.
+- Tension with UK in Central America (Clayton-Bulwer)
+- A: UK power is still strong in our hemisphere and maintains colonies here. They have a right to be in our waters and govern their colonies. Let's sign a treaty that decreases tension and maintains strong trade ties
+- B: The UK has no right to mingle in our hemisphere, even if they have colonies. Use the navy as a show of force in and around their colonies and encourage independence movements and keep them away from any future canal land we may lease.
+- US cannot expand into Central America or South America. Any war with these regions will no longer allow annexation. However, the US can build a canal in Panama.
+- if bumbled 25% Chance war w/ UK without Canadian Invasion
+- if bumbled 75% chance war w/ UK without Canadian Invasion
+- A: Refrain from helping the Independence Movement. We could upset Spain and we might want it for ourselves.
+- B: Let's reduce Spanish influence in our hemisphere. Support the movement
+- A: Take up the banner of prohibition! Call on Congress to pass an amendment to ban this addictive substance!
+- B: Take the stance that prohibition should be left to the states.
+- Prohibition Amendment which will be worth double.
+- B: Avoid a foreign war but send military officer to observe the battles to learn the latest tactics and technologies
+- A: The US is now ready for the Global Stage! Join the UK and France in their war on Russia!
+- B: Send in troops to force the pro-slavery government out of office.
+- A: Even if the people in Kansas are killing each other, I do not believe the Federal Government should intervene
+- C: Send in troops to force the anti-slavery government out of office
+- Free State Kansas proposal is automatically picked up by same-party member of Congress
+- Slave State Kansas proposal is automatically picked up by same-party member of Congress
+- If blundered, Dom Stab -1 and president gets -1 in all future elections
+- A: Use every forceful tactic at our disposal to acquire Cuba for both national security and extension of slavery purposes
+- B: Spain will not sell Cuba and using force will upset Europe and Northern Free states
+- If a blunders, president gets -1 in all elections and the purchase is not made
+- Cuba acquired and made into a slave state if slavery allowed
+- One member of Congress has RW Activist and is from Deep South or Upper South
+- RW Activist pol attacks Civil Rights pol w/ 25% chance of death and 75% living. Civil rights pol is unuseable until next legis phase
+- A: Suggest to allies in Congress that an investigation should occur
+- B: Make no public statement. refrain from meddling in the legislative branch
+- Investigation if the victim dies or both if he survives
+- B: Align yourself with the anti-slavery Topeka Constitution
+- C: Align yourself with the pro-slavery Lecompton Constitution
+- Southern States form the Confederate States of America, following the last elections.
+- VA, NC, SC, TN, GA, FL, MS, AL, LA, AR, and TX leave and form CSA
+- CSA Mobilizing Troops In Anticipation of a Civil War
+- A: Secession is clearly illegal! Call on the military and state governments to form a Napoleonic-sized army to quell the rebellion! We are the UNITED States of America. Don't let these traitors forget about it. For those who have long desired an end to slavery in America, the day will soon come.
+- B: We need to resolve this diplomatically and make it clear that the federal government won't interfere with slavery. As a token gesture, I will strictly enforce the fugitive slave act, if they end their rebellion.
+- if failed, {nation} joins civil war on side of CSA
+- A: Inform the ambassador to use every means necessary to prevent this nation from interfering in this rebellion.
+- if Southern States form the CSA in same phase or later, then border states (KY, MO, MD and DE) join CSA with battles now at “difficult”
+- Plot to provoke Mexico occurred and did not lead to war
+- A: Accept the challenge! Declare war on Mexico!. Trigger Mexican War
+- B: We aren't in a position to defend Texas. Why add deaths and economic costs to the situation? Send diplomat to renounce US rights to Texas
+- Republic of Texas now exists. Creates Amb to Texas
+- A: Send US Army, overthrow Mormon territorial governor, and place new Federal officers
+- B: Allow the Mormons to live as they wish for now. Seek military provisions from other areas.
+- A: [Req: Gold Standard and US Bank or Ind Treasury] Reform. Not Relief! Attempt to ease the panic by forcing state and federal banks to forbid the acceptance of paper currency under $20, and accept gold currency only.
+- B: Relief, not reform! Divert funds to create government jobs to lower unemployment
+- C: Wait it out. It isn't the government's role to bail out anything.
+- If bungled, no meter changes apply for options A or B
+- A: Deescalate the border issue. resolve it diplomatically
+- B: [Req: Relations with UK worse than neutral] Use the opportunity to land grab Canada. Escalate tensions and then invade!
+- A: [Req: Monroe Doctrine] Recognize the Mexican president, send aid to Mexico, put pressure on French to withdraw
+- B: We aren't in a position to force the French out
+- Liberians Demand Recognition of their Independence
+- A: We should have recognized Liberia's independence years ago. Let's be done with it. Depart in peace.
+- B: We can't relinquish an acre of land that is rightfully ours!
+- RW Activist holding office in Midwest (WV, OH, IN, MI, WI)
+- B: Allow their leader to speak out against the government, military, and war effort
+- 25% chance that battle difficulty increases by one.
+- Politician goes inactive until end of Civil War
+- A: Call on Congress to pass a bill allowing the president to use federal force to break up the KKK
+- Grant President Power to Suspend Habeas Corpus to Combat KKK and White Supremacy Organizations *double pts*
+- [if former slaves have right to vote] incumbent pres -1 in Deep South and Upper South + TX
+- Govs can no longer improve or neglect plantation industry
+- All states marked “Canada” now owned by Canada
+- Mexico Compels Their French Occupiers to Surrender
+- All states designated “Mexico” now owned by Mexico
+- Red Cloud and allies battle settlers and US forces over territory
+- A: This is a steal! Who knows how many resources there could be in such a large chunk of land!
+- B: What folly! It's all ice! Besides this will upset the UK who also has claims.
+- A: Respect Virginia decision to hang John Brown for treason
+- B: Use federal force to confiscate John Brown on the premise he was at a federal arsenal. If blunder, it is learned that you intend to pardon him.
+- Repeats twice more if this is selected or A is blundered
+- A: Work to stop leaks of any administrative ties to Black Friday Scandal
+- B: Admit the admin was unaware of the scandal and was at fault for not detecting it. Clean up the executive branch, and call for an investigation of the financiers involved, and fire the Sec of Treasury
+- If Sec of Treasury is admin 4 or higher, then 25% chance of cancelling the econ stab hit. . If Sec of Treasury has controversial, then he or she is investigated by Congress. If A blunders, then pres gains controversial and can be investigated.
+- Gov of a state under Reconstruction has “carpetbagger”
+- A: Send federal troops to reinstate Reconstruction government
+- B: Endorse the state's desire. call for Reconstruction to end in the state
+- Carpetbagger gov is replaced by gov from other party.
+- A: Send federal troops to defend the incumbent
+- B: Send Federal troops to defend the challenger and install him or her as governor
+- Gov who was recently elected and challenger from most recent election
+- A: Send Federal Forces into the South to Breakup paramilitary groups. investigate leaders
+- B: We haven't the Federal manpower or infrastructure to quell this in the South without a full scale invasion. Hopefully, it fizzles out.
+- if blunder occurs on response A, then Dom stab -1 and incumbent Pres entire party gets -1 in all elections in the Deep South and Upper South for the next election period.
+- B: Clean up the postal department and exec branch. call on Congress to launch an investigation of any culprits
+- The incumbent party faction with the highest score has a 10% chance of each of their office-holding controversial politicians being implicated and investigated, if Response B or also if Response A blunders.
+- any incumbent party leader with controversial admin gains 20 pts.
+- All cabinet members with controversial are fired
+- Movement to Unify the English Speaking Peoples
+- A: Those of English tongue must be united in one fatherland!
+- B: This idea might be the highest level of lunacy!
+- The British Isles Declare Independence from the United States
+- Now, they know how we felt. Good! Very well, let them go.
+- B: Let's refrain from calling on the standing army, but let's call on states to send their militia to these various states in the South, even if some Northern states refrain from sending their militia.
+- A: I'll never win a Free State again if I send in the military and I doubt many Northern state will send out their militia. It's best to let the Southern states handle the matter.
+- C: This is a national security issue and my duty is to protect the American voter. Call forth a standing army and state militia to take out the uprising, even if it may result in Northern Secession.
+- D: The only way to peace is to end slavery. Call for an emergency session of Congress to pass an amendment to abolish slavery. Following this, we will do whatever we can to capture John Brown and put him on trial.
+- Holds vote on Abolition immediately. John Brown retired from game.
+- Congress Ends Uprising by Abolishing Slavery amid Southern Secessionist debates.
+- John Brown’s Uprising (D) and Abolition Vote Suceeds
+- John Brown’s Uprising (D) and Abolition Vote Fails
+- Congress Fails to Abolish Slavery amid Northern Secessionist debates and Continued Uprising
+- A: We have nothing to offer the South. They'll just need to evolve.
+- B: We can dilute the call for secession by compensating slaveholders and lowering the tariff to 10%.
+- A: We have nothing to offer the North. They'll just have to cope.
+- B: We can dilute the call for secession by repealing the Fugitive Slave Act and setting the Tariff to 43%.
+- Triggers Set Average Tariff to 43% and Repeal Fugitive Slave Act (if active)
+- We need to consider legislation and actions to quickly diffuse sectional tensions. Otherwise, this is bound to happen again.
+- US military disperses the Uprising amid Northern Secessionist debates.
+- France Compels Mexico to Capitulate, Making Mexico a New Colony
+- Mexico Compels Their French Occupiers to Surrender has not occurred
+- A: We will be viewed as both liberators and benevolent conquerors! Let's put this plan into action
+- B: We're still trying to keep things in order domestically. Why provoke a war against a major power for land occupied by a people that will eventually fight for their own independence? It's senseless!
+- B: Allow Congress to investigate the cabinet member
+- A: Defend cabinet officer, attempting to stop any investigation
+- Cabinet member with “controversial” can be investigated in next congress phase
+- Pres gains trait if blunders and can also be investigated
+- Korea attacks US ship attempting to force open trade
+- A: Retaliate on Korea with Naval bombardment and an invasion to capture forts
+- B: Korea had the right to respond the way they did if we were trying to force open trade. Apologize for US aggression.
+- A: Send US troops to lawless Mexican border to patrol it, crossing into Mexico if necessary
+- B: Send troops to border, but do not cross the border, even if bandits attack US citizens
+- A: Condemn the massacre of blacks by white militia, but do nothing.
+- B: Send in federal troops to intimidate white militia
+- A: Divert federal funds to create government jobs to help reduce unemployment
+- B: Wait out the economic situation. It isn't a government's role to be involved
+- Any change to currency occurred last legis phase
+- 25% chance to avoid the econ stab hit if admin abil for Sec Treas is >= 4
+- B: [Req: State with at least 4 admin] Avoid war with Spain by seeking compensation.
+- Forcibly relocate tribes near the Red River for white settlement
+- A: [Req Controversial] Try to cover up the scandal to prevent it being tied to the administration
+- B: We should work with Congress to crack down on this scandal
+- Sioux and allies refuse to cede lucrative territory
+- A: The trains must keep moving for the sake of consumers and business owners. Ordered the Att Gen to break up the strike!
+- B: Negotiate with strike leaders, and call on Congress to pass a labor-friendly law
+- Subsidize 1st Transcontinental Railroad is active
+- if blundered pres and AG get perm -1 in elections
+- The International Congress of Women's Rights opens in Paris.
+- A: Call on Congress to pass suffrage for women
+- B: Our country is not yet ready for women voters
+- High Tech industry turns on in NY, MA, and West Coast
+- A: Send Naval Officer to force open trade with Korea
+- A random naval officer gains 20 pts if resolve successful. If blunders, reduce rel with Japan and China by 1
+- A: Give speech supporting the rights of workers!
+- B: Give a speech defending the record of the leaders of Big Business!
+- Activates Quality of Life meter at 3 and Labor Union lobby
+- B: We have nothing to gain for risking war with Germany over small islands in the Pacific. Let Germany possess the Samoas.
+- C: The only sensible thing to do is split the islands between Germany and ourselves.
+- A: Send Navy to intimidate the Germans out of Samoa
+- Planet’s Health meter activated at 7 and Environmentalist lobby activated
+- B: This situation is too tense. Let's leave them be and hope they don't attack settlers
+- Govs in Mountain States gain 100 pts if they pass Women's Suffrage next gov phase
+- B: Germany had excellent cause to embargo our pork. We should get our house in order.
+- US not at war with Mexico, Canada, or any Central or South American nation
+- First International Conference of the Americas
+- A: While it may be difficult to organized, let's create this conference
+- B: This is just another step toward interventionism!
+- A: Divert funds to create government jobs to reduce unemployment
+- B: It is not the government's job to bail anyone out.
+- A: Give orders to overthrow the Queen of Hawaii
+- If not proposed next legis phase, proposal is made available for 10 yrs
+- Communist Manifesto has occurred and Communist Movement ends has not
+- A: Send in federal troops and use the muscle of the judicial department to combat the Socialist uprising. It may be organized, but the aren't centralized enough to wage an authentic war. Expect a lot of casualties.
+- B: Address the protesters via all available media, promising to use presidential influence to fast track legislation to deal with concerns of the movement.
+- Quality of Life bills next legis phase worth triple
+- 25% Chance Socialist Takeover of the Government
+- [if triggered] Faction leader of the LW Populist faction is now president. The Supreme Court, cabinet, cabinet-level, VP, military, Governors are now vacant. This faction leader will reappoint these leaders. The governors will reappoint the vacant Senators and US Reps.
+- Faction leader of the LW Populists is put on trial for treason
+- A: We have an opportunity to island grab and dominate Pacific and South East Asian Trade.
+- B: This will likely lead to unnecessary war for islands inhabited by people very different from ourselves.
+- A: Condemn the KKK, call on Congress to pass anti-lynching bill
+- B: Ignore concerns about the resurgence of the KKK
+- Faction leader(s) with Traditionalists, RW Activist, Nationalists gain +1 in Senate and Governor elections.
+- Calls for Native American Suffrage by international activists intensifies
+- A: The people have spoken. Call on Congress to pass legislation to expand suffrage to this demographic.
+- B: Ignore making an official statement, and do not interfere activism or in legislation on the topic
+- Finland grants women the right to vote has occurred
+- Calls for Suffrage for Women intensify throughout the Western World
+- A: Attempt to mediate with Business and Labor. Strikers will stop in exchange for a new federal commission to investigate the conditions for mine workers
+- B: Intervene strongly for the coal companies, sending in troops to break up strikers.
+- A: Invite Booker T Washington to the White House
+- B: An invitation would anger the South! No! Cancel the invitation.
+- Trads move 2 away from incumbent, factions with Civil Rights move 2 towards incumbent. President -1 in Deep S. Upper S. & TX +1 in MD, NY, and IL in reelection
+- Pancho Villa crosses border to raid border towns
+- A: Send military force into Mexico to break up the bandits and capture Pancho Villa
+- B: It's going to be impossible to catch him, and we can't just cross into another country's borders. Increase border presence and nothing more
+- -1 for Pres re-election in Deep South and Great Plains
+- A: The federal government cannot act on something like this without the governor's request. Consider the matter unfortunate.
+- B: This might have been a local election, but the federal government has a duty to protect US citizens, regardless of color. Send in the military to restore fusion government of Wilmington.
+- Reconstruction occurred in NC and Reconstruction has ended
+- Pres party gets -3 in NC, and -1 in Deep South and Upper South for 10 years
+- Winston Churchill Becomes First Lord of the Admiralty has not occurred
+- A: Use the government to ease the panic. Divert funds to create government jobs to reduce unemployment
+- B: It is not the government's job to bail anyone out and it isn't up to a private individual either.
+- avoids econ stab hit if admin abil for Sec Treas is >= 4
+- The UK Begins to Provide Government Welfare for the Public Good
+- UK Parliament Passes National Healthcare Insurance Act
+- Winston Churchill becomes First Lord of the Admiralty
+- Winston Churchill Becomes US citizen has not occurred
+- Winston Churchill can never be draft or becomes unplayable if already
+- A: Use executive muscle to grant Cuban independence
+- B: [Req: Cuba is not a US State or Territory] Reject it and call for annexation of Cuba
+- C: [Req: Cuba is a US State or Territory] Refuse to listen to Cuba's independence request, arguing that it will only be a fleeting feeling.
+- A: Send Navy in full force to compel the European navies away from Venezuela
+- B: Let Venezuela and Europe handle their own affairs, but send the navy and diplomats over to help arbitrate an agreement.
+- 25% chance for German-Venezuelan War if rel 5 or less and 10% chance for UK-Venezuelan War vs UK if rel 5 or less [Blunder needed]
+- B: The US should not attempt to be an interventionist party. decline mediation offer
+- if blundered, 60% -1 with both Russia and Japan
+- Japan Victorious over Russia in War, shocking the western world
+- A: Political and economic instability warrants that we occupy this country
+- A: This agreement will reduce tension, so it's all for the better we agree to it.
+- B: Demand Japan contain their citizens without a compromise. increase immigration restrictions on immigrants. Call on Congress to pass stricter immigration laws
+- Bills that award pts to Nationalists worth double
+- A: Send the new fleet to circumnavigate the world
+- A: Send aid and support of Revolutionaries in Mexico, who are clearly unhappy with their president.
+- B: Refrain from getting involved in the overthrow of the Mexican government or in defending that government. Send troops to the border to block refugees from fleeing here.
+- C: Send aid and support to the current government for now, but consider switching allegiances if it is in our best interest.
+- D: [Req: Controversial President] Use the opportunity to expand America's borders. Send the military into Mexico with the purposes of expansion.
+- [if blunder] party pref -2 and president gets -1 in a reelection bid
+- A: That's it! Send US forces to occupy Veracruz until Dictator is removed from power
+- B: This is too explosive of a situation. try to resettle in US citizens in Mexico back to the US and get out of the region as soon as possible.
+- A: Americans should be fortunate that we have our own continent. I'll tell the people that I promise to keep us out of this mess, so we can continue to live in peace and prosperity.
+- [Req: Relations with UK, Russia, or France at ally. relations with Germany are worse than neutral]: We must join in to help our ally!
+- [if blunders] US-Mexican War (20th Century War)
+- That's Germany's 2nd strike. Let them know that another such incidence will lead to war. tell our citizens we will stay out of the war
+- WWI Occurred and not ended and US is not involved
+- [Req: US involved in WWI] All the better to defeat Germany and her allies. Press on with the war!
+- [Req: US not involved in WWI] All the better to stay out of Europe.
+- [Req: US not involved in WWI] Oh, the humanity! That's the last straw. Call on the US to join the war effort to defeat the evil empire of Germany
+- Santo Domingo not controlled by France or Spain
+- Increase border defense, but stay out of the war
+- Russian Revolution leads to Communist Takeover
+- Zimmerman Telegram occurred, US not involved in WWI
+- Thanks for letting me know. Triggers US intervention in WWI w/ Mexico invasion
+- Russian Royalists Defeat Russian Communists in Civil War
+- Czar Nicholas Agrees to Abdicate in Favor of a Republic
+- WWI has occurred and has not ended. US not involved in WWI
+- A Jewish state is necessary as a safeguard against holocaust and other persecution. Besides, perhaps it is the will of God.
+- I will recognize the state of Israel once they gain recognition from their Arab neighbors, despite the unlikely chance of that occurring.
+- Austria Becomes a Republic as Habsburgs Step Down
+- Kaiser Wilhelm II Abdicates and The Weimar Republic is Proclaimed
+- Russian Revolution Ends and Soviet Union Formed has occurred
+- Order the Attorney General to suppress radical organizations
+- Misinformation is spiraling out of control! Raids will just give the Reds the attention they need!
+- Order the Justice Department to crack down on investigations into potential anarchists nationwide
+- We can't let a few anarchists scare us. No increase in surveillance
+- Fascist Movement Begins As Mussolini Founds Party in Italy
+- These are worrisome developments. Speak out against fascism's attack on liberal democracies and warn against fascist movements in the United States
+- Quietly promote some of the aspects of fascism, suggesting that American government should adopt these.
+- US intervention in WWI was victorious and WWI has ended
+- Use your influence to help build a League of Nations
+- Call on Congress for the US to join the League of Nations!
+- This will only lead to a world government, greatly restricting US interests!
+- Endorse joining the World Court, and send a treaty to the Senate for ratification
+- This will bind us too strongly to world opinions, besides interventionism is spiraling out of control!
+- Remains in Era Evos pool until ratified by the Senate
+- Call for a Congress Aimed for peace and worldwide disarmament! America shall lead the way to the end of war!
+- This is just too symbolic. Countries will just start rebuilding in a few years as if this never happened. Cancel the Conference!
+- Nazi Party Emerges with Adolf Hitler as Leader
+- [Req: President with controversial] Try to cover up the scandal.
+- [Req: President has controversial] What Scandal? Make no attempt to cover it up, and make claims that you're doing an internal investigation.
+- Express shock and dismay. Expose your cabinet officer, condemn the cabinet officer, and fire the cabinet officer
+- Cabinet member is fired and faction ideology -2 for president’s party
+- Beer Hall Putsch Leads to Arrest of Nazi Leader Hitler
+- Hitler Killed in Beer Hall Putsch has not occurred
+- Mussolini and the Fascist Movement has occurred
+- Mussolini and his Fascists Gain Control of Italy
+- Demand World War Reparations Now has not been resolved
+- Submit the plan to stagger war payments to help Germany recover
+- Demand World War Repararations goes inactive. Random member of pres faction with FA expertise gains 100pts (Nobel Prize)
+- Agree to co-sponsor the pact, hoping it isn't just symbolic
+- This is unenforceable and just leaves us easy prey for the first country to violate it.
+- Punish Japanese aggression by slapping a retaliatory embargo on Japan for their overt aggression.
+- We can do nothing. Punishing Japan will only lead them to retaliate on us and we aren't prepared for that.
+- Request aid to those afflicted. call on Congress to send natural disaster relief.
+- The government is not a welfare system! This will set an awful precedence of dependence!
+- Order the Sec of War to disperse the Bonus Army
+- Call on Congress to increase pensions for World War vets
+- random general loses obscure [if blunder] -1 for re-election
+- Anti-Prohibition Protests are Becoming Routine
+- Happy days will soon be here again! Call on Congress to repeal the Prohibition Amendment.
+- Defend prohibition as a common good. Promise to take more federal action in enforcing it.
+- -1 in reelection in New England, Mid-Atlantic and in IL
+- Call on Congress to pass Agriculture relief legislation
+- It is not the government's job to bail out farms
+- Gov and Sens from TX, OK, KS, NE, NM, and CO gain 20 pts
+- KS -1 EVs in the next census. Agriculture -1 in TX, OK, KS, NE, NM, CO.
+- Stay neutral, but allow Americans to volunteer to fight Fascism.
+- Fascist brutality should not go unpunished! Embargo Spain in areas under Fascist control!
+- Spanish Civil War Ends with Franco installed as dictator
+- Spanish Civil War has not ended with defeat of Franco
+- Beer Hall Putsch Leads to Execution of Nazi Leader Hitler
+- The market will recover under its own strength. divert some federal funds to create committees to consider reform
+- Bail out the country! Call on Congress to unleash a welfare program to bail out the people, businesses, and the financial sector.
+- [if pres has charisma] 50% + dom stab and 50% + party pref
+- Josef Stalin Emerges as Soviet Dictator as Rivals Exiled or Killed
+- Stick to rhetoric in condemning the proliferation of coups in South America. Promote the Democratic process, but avoid interfering in these nations.
+- The entire Western Hemisphere could be destabilized if we allow dictators to win control of free governments illegally. Send the US military to establish a protectorate in South America.
+- Fascist Movement Occurred and Communist Movement Occurred
+- Mao Zedong Proclaims Chinese Soviet Republic and Begins Combating the Republic of China for Control
+- Deactivates Dawes Plan and Demand Payment Now!
+- Let's follow Europe and forgive the reparation payments Germany owes us to preserve the peace and strengthen the economy
+- Hitler Removes Civil Rights Protections After Reichstag Building Set Afire
+- Stick to rhetoric, promising that the Recession will pass on its own.
+- Call on Congress to pass legislation to deal with the economic crisis
+- [pres w/ Charisma] Gain 25%+ party pref regardless
+- Traditionalist politicians will automatically vote against any legislation that gives points to Welfare, Labor Unions, or LW Activists.
+- Germany Greatly Restricts the Rights of Jewish Citizens
+- Germany Expands Territory to Take Austria and Czech Lands
+- Josef Stalin is leader of the Soviet Union and hasn’t died
+- [Req: Relation with Germany at worst two levels] Lets jump in and see if we can alter the fate of Europe
+- We can't just jump into a war without cause. besides the people want us to focus on domestic issues
+- The faces on Mount Rushmore are 1) the 1st president, 2) the president that acquired Louisiana, 3) the president the issued the emancipation proclamation or signed legislation abolishing slavery, 4) The president that signed the food and drug administration
+- Japan Launches Invasions Throughout the Pacific
+- Japan invades Manchuria response A resulted in Retaliatory Embargo
+- We aren't in shape to go to war. Condemn Japan. prepare to defend US, but do not go on the offensive
+- We haven't the ability to go on the offensive. dig in and prepare to defend the Homeland.
+- WWII: Eastern Theater and WWII: North African Theater
+- Major Military Officer Slaps Traumatized Soldier, Calling Him a Coward
+- Remove the military officer in question from major command
+- [Req: US not in WWII] We made a promise to stay out of the war. We can only hope that the Nazis are not so cold-hearted.
+- [Req: US not in WWII] Genocide is an international travesty! Join the War for humanitarian reasons!
+- [Req: US already involved in World War II] This gives us even more of a reason to win this war quickly.
+- Soviet Military Invades Crumbling Germany From the East
+- WWII Eastern Theater Battle Phases reduced to Easy
+- These weapons are barbaric and beneath the US! Scrap them!
+- Let's save US lives, even if it costs many more Japanese lives. Drop the bombs!
+- Soviets and Americans Move into Korea, with USSR Occupying the North
+- [Req: Controversial President] Use Korea to contrive a situation to launch a war on the Soviet Union
+- Accept this partitioning of occupational duties in Korea
+- We can't join an organization that might constrain our actions! America First!
+- We are now part of the global community. we must join and lead this community. Activates UN Membership
+- Returns to scripted event pool until A is selected
+- Winston Churchill becomes Prime Minister has occurred
+- We aided in World War II, but it is time for us to withdraw and consider only our own country
+- We must take a permanent interventionist foreign policy to help the good nations of the world
+- Triggers Cold War and Interventionist Foreign Policy
+- Communist control seems so likely. Why should we waste our money?
+- Send Supplies to the Chinese Nationalists to combat combat the Soviet-aided Communist forces
+- Aid France in fighting the Communists, since Communism is worse than European Colonization.
+- Ignore aiding France since we oppose European colonization
+- UN Partition Palestine into sections for Jewish and Arab Inhabitants
+- This will an usher in permanent free trade. For much of our history, we've benefited from high tariff and protectionist policies. Let's politely decline.
+- This trade agreement will ensure peace and cheap consumer goods
+- [Req: Cold War has not yet been activated] We haven't the power to police the world. Let nations fend for themselves against the USSR. Perhaps their intentions are good. We can't give in to our own propaganda.
+- [Req: Cold War has not yet been activated] The USSR's expansion and threats of an arms race must be contained!
+- [Req: Cold War was activated by another event] n/a
+- Soviet Rel and China Rel cannot be > 5 Game ends if Mil Prep x3c 3 [Nuclear Annihilation]
+- Russian Revolution occurred and Soviet Union exists
+- Support McCarthyism and use your influence to be a part of it.
+- Quietly oppose McCarthyism, but avoid getting too involved
+- Condemn McCarthyism as Un-American. Meet the Chief Justice to seek rulings to end it.
+- Required Senator is given the chair of a committee, and picks others for the committee. each legislation phase. the chair targets a politician with
+- for 25% chance -1 in elections until McCarthyism ends. Committee members gain 50 pts. McCarthyism ends when one of the four things occur: 1)
+- is no longer holding political office. 3) Relations with Russia are better than neutral. 4) Soviet Union collapses. If option C, McCarthyism goes to the SC court. If court calls it unconstitutional, then those on Committee are disgrace--losing 100 points each and a permanent -1 in future elections and
+- Hitler removes Civil Rights Protections has occurred
+- Nazi Germany Produces Atomic Bombs and bombs London and Moscow
+- It's best for my party's election chances if I resign as president and shoulder the blame personally.
+- We don't know how many more of these devices we have. We've lost all support for continuing the war.
+- president loses -2 in reelection bid and party pref drops -3
+- party pref is only -2 and the VP becomes president, while the president retires from the game
+- US Overthrows Soviet Government, establishing Republic
+- Early Cold War Invasion of Soviet Union won on battlefield
+- Our constitutional orders are so far at odds that friendship is impossible. Do not sign
+- We're not enemies, but friends. Sign the treaty.
+- Moves Soviet Rel to 9, all other Rel -2. Ends Cold War
+- 50% chance Germany nukes Cleveland and NYC [US is in WWII]
+- President resigns and his or her party -2 in party preference and -1 in all ideologies.
+- WWII won by Gemany if Nukes Ready gotten in same half-term, then neither get used
+- China Tips the Scales in Korea as South Korea Falls
+- All of the following are communist: Russia, China, Vietnam, unified Korea, Germany, France, Iran, and Mexico (if not part of US). Cold War has occurred
+- Chinese Civil War Ends as Communists Seize Control and the Republic of China Flees to an Island
+- Join and lead NATO as a rival organization of the Warsaw Pact
+- The world is fine without our leadership. Soviets aren't a true threat to world peace
+- That the Soviet Union possesses nuclear weapons is a threat to the world. We must ensure that our country has the upper hand in the event the Soviets plan to use those weapons. Use executive power to beef up the military, and call on Congress to focus on defense.
+- [Req: US has nukes] This is bothersome news. However, we also have nukes. It's only fair that other nations can possess them if they are to exist at all. I do not believe they plan to use them so long as we also have them.
+- We are obliged to protect Pro-Western southern Koreans from invasion from Soviet-back northern Koreans
+- Pull our policing force out of Korea and let the South Koreans fend for themselves. We can't police the world or force ourselves into quagmires.
+- Triggers cold war, if not already on. Triggers increase military budget.
+- any legislation that proliferates nuclear weapons or increased military preparedness (2x)
+- If Soviets have nukes before US, -2 Military Preparedness, and Party Preference
+- Embargo Cuba and send aid and arms to the anti-Communist government
+- Ignore the interfering in the Cuban Revolution, especially when it might topple a dictator.
+- Fully intervene and work towards occupying Cuba to prevent anything other than a democratic republican government.
+- Overthrow the Democratically-elected but pro-Soviet government. Aid the Pro-Western Shah in his quest for control of his country
+- We can't start a precedence of overthrowing other governments during peacetime.
+- We should open relations and refrain from isolating them to prevent them from allying with the Soviet Union
+- We can't have relations with a Fascist dictatorship that has executed its own citizens!
+- Support the Civil Rights Movement. call for legislation aiding the Black community
+- Play it neutral by not really responding to the Civil Rights Movement
+- Condemn the Civil Rights movement as a group of thugs trying to undermine the country's stability
+- Civil Rights legislation worth double points until Poll Taxes are made illegal
+- Geneva Conference Formally Divided Vietnam into North Vietnam and South Vietnam
+- Send military aid and advisors to the French and anti-Communist forces in Indo-China
+- We can't afford to this right now, even if it leads to a Communist takeover of Indochina
+- We can't allow a Pro-Soviet regime in the Western Hemisphere. help overthrow the government
+- Ignore the CIA. We can't play kingmaker in other countries. What will the world think if we're supporting dictators?
+- Cooperate with Mexico to swiftly deport Mexicans entering the US illegally, even if it results in Mexican-Americans also being deported by error.
+- There's no way this operation can work without causing harm to Mexican-Americans as well. It's better to just let migrants enter illegally until we figure out a more compassionate solution.
+- Rosa Parks Refuses to Give Up Her Seat and Enters Politics has not occurred
+- Rosa Parks Enters Politics After Refusing to Give Up Her Seat
+- Rosa Parks Refuses to Give Up Her Seat has not occurred
+- Rosa Parks gains celebrity and becomes active and playable
+- French Requests Aid in Indochina Response A occurred
+- The threat of Communism is real and we must take every opportunity we can to stop it.
+- Send military arms, aid, and advisors to help combat Communism in Vietnam, but refrain from boots on the ground
+- Ignore the war and pull out our remaining advisors, even if it means the inevitable Communist takeover of Vietnam.
+- Lady Bird Johnson Is Seen as Leading Political Socialiste
+- Lady Bird Johnson Enters Politics has not occurred
+- Lady Bird Johnson Is Seen as a Leading Political Socialite has not occurred
+- Ignore taking a stance on the Southern Manifesto
+- Declare that the Southern Manifesto is anti-American and behind the times.
+- Any politician with Trad will oppose any bills that give points to “civil rights” until both Poll Tax and Segregation are illegal
+- Pres gets -1 in Deep South and Upper South for re-election
+- Pres gets +1 in Deep South and Upper South for re-election
+- [Req: relations w/ Russia worse than neutral] We must intervene in this Pro-Western revolution against the Soviet-backed government, even if it causes nuclear war with the USSR!
+- We cannot risk nuclear war against the Soviet Union by aiding a Revolution in their sphere of influence.
+- Condemn the arbitrary invasion of Egypt by the UK, France, and Israel. use pressure to force them to withdraw
+- Ignore the entire affair, as we will either upset the Arab world or our allies if we play in role in this event
+- Federalize the Arkansas National Guard to enforce enrollment
+- Allow the governor of Arkansas to block enrollment
+- 25% chance -1 for pres re-election in Deep South and Upper South
+- Covertly help Taiwan by secretly sending arms, advisors, etc., although the discovery of this could lead to war or trade war against China.
+- Send US Navy to intimidate China from the strait of Taiwan
+- Land military forces in China to defeat Communist China and Restore the Republic of China
+- Do not get involved with Chinese affairs. rhetorical responses only
+- 10% chance of US-China Naval War and a 50% chance of -2 rev/budg because of a trade war.
+- 50% chance of US-China Naval War and a 100% chance of -2 rev/budg because of a trade war with China.
+- 80% chance of US-China Naval War and a 100% chance of -2 rev/budg.
+- 100% chance of US-China Naval War and -2 rev/budg
+- Send food and aid to Communist China to help them with their massive famine, even if they might refuse it for political reasons.
+- Don't send food and aid. the Chinese people need to know the full brunt of the failure of Communism.
+- We must intervene to prevent the threat of Communist. Aid the Pro-Western faction with military support
+- Ignore the crisis, even if it means the country falls to Pro-Soviet forces
+- Call on the US to close the missile gap by proliferating nuclear weapons.
+- Deny the missile gap theory, explaining to voters that it's all a big lie
+- Acknowledge that it was US spy plane but do not apologize to the USSR
+- Acknowledge and apologize to the USSR for spying on them.
+- Refuse to acknowledge the spy plane, despite obvious evidence.
+- Inform Cuban exiles and CIA that the invasion of Cuba will proceed
+- Inform the Cuban exiles and the CIA that you won't authorize an invasion of Cuba
+- [if blunder] then US forced immediately withdraws and rel with UK drop by 1 and relations with Russia drop by 1 and 75% chance of -1 party pref for incumbent. if the president has charisma, then nullify the party pref drop in blunder on resolve A.
+- If resolve A is successful, trigger US invasion of Cuba and 25% chance of World War III: Iron Curtain, if relations with Russia worse than neutral
+- Ignore saying anything that could worsen relations with the USSR
+- Enrollment of James Meredith at U of Mississippi
+- Use Federal to forcibly enroll Meredith into school against the wishes of the governor and segregationists
+- Allow the state to block Meredith's enrollment
+- Pres gains -1 in the Deep South in the next election
+- Pres gains +1 in the Deep South in the next election
+- Bay of Pigs A was blundered or Bay of Pigs B was selected
+- WWIII: Iron Curtain or US Invasion of Cuba not active
+- Blockade Cuba and staredown Russian fleet until Soviet Missiles are removed
+- We can't risk the destruction of world civilization. do not contest Soviet Missiles in Cuba
+- [if blunder] activate World War III: Iron Curtain and US Invasion of Cuba
+- [if successful] successful, then 25% chance of World War III: Iron Curtain. 25% chance of US Invasion of Cuba
+- Call on Congress to pass the Gulf of Tonkin Resolution
+- I fear this war will be unwinnable. Let's condemn the action, but do nothing.
+- Triggers Gulf of Tonkin Resolution without proposer
+- End the protests by declaring an end to the military draft
+- All battles increase by one stage in difficulty
+- [if blunder] -1 for re-election for the President
+- Soviet Union tests Nuclear Weapons has occurred
+- Sputnik Puts Soviets in the Lead for Space or US Beats Russia into Space has occurred
+- Sign the Treaty to ensure peace and fair use in space
+- Don't Sign the Treaty, so that we can place nukes in space and prevent anyone else from making use of the resources and knowledge of outer space. We just have to get a permanent place up there first.
+- Send military aid to Israel despite their having attacked our naval vessel in error and killing 34 soldiers
+- Refrain from intervening overtly and embargo all Middle East countries, including Israel, temporarily in an effort to enforce peace
+- Demand compensation from Israel, but play no role in their war otherwise
+- Can no longer proliferate nuclear weapons via legislation or executive action
+- Soviets Land First Man on the Moon did not occur
+- The major party nominee that went into the convention with the most primary delegates did not clinch nomination at the convention. at least one reformist in both houses of Congress
+- Call it illegal and unconstitutional. make the Supreme Court determine if it is allowed for them to muscle the states into open primaries
+- Every state now has a primary during presidential elections. one random US Senator and one random US Rep with
+- are tagged with the Commission name. if response B, the Supreme Court can deactivate it or uphold the activation of nationwide primaries
+- SCOTUS can uphold or deactivate nationwide primary activation
+- 25% chance increases difficulty of battles for rest of War
+- 25% chance decreases difficulty of battles for rest of War
+- Cultural Revolution occurred or China is not Communist
+- Use your influence to block China from joining the UN
+- US not at war at China or expand the Vietnam War into China
+- Go to China in hopes of driving a wedge in USSR-China relations, which could possibly open the market for cheap imports made in China
+- We don't mingle with Communists. Ignore ideas about visiting China.
+- Relations w/ China can be >5 even with Cold War Active
+- Hungarian Revolution response A lead to nuclear war
+- Let's retaliate! They aren't going to evaporate the people of the United States without incurring it in kind.
+- Do not retaliate. It could be a machine error. Besides, why would Russia want mutual assured destruction?
+- 50% chance of nukes being reported by our radar as a false alarm
+- US and USSR are Mostly Evaporated in Nuclear Exchange Leading to Worldwide Apocalyptic Atmospheric Changes
+- Hungarian Crisis Leads to Nuclear War or Nuclear Proliferation Leads to Nuclear War, Response A has nukes strike the US
+- US Evaporates Eastern Russia after False Alarm
+- Hungarian Crisis Leads to Nuclear War or Nuclear Proliferation Leads to Nuclear War, Response A has a false alarm
+- I must resurrect my legacy! I will not resign for doing this!
+- I am in despair. Guilt will waste me into a skeleton. I resign my office.
+- Deactivate all events regarding communist Russia or Soviet Union. president gains -5 in all future election/reelection bids.
+- VP takes over. President can be investigated or impeached
+- US is Mostly Evaporated by Soviet Nukes as President Arguably Saves the World By Not Retaliating.
+- Hungarian Crisis Leads to Nuclear War or Nuclear Proliferation Leads to Nuclear War, Response B has nukes strike the US
+- US President Saves World by Not Responding to False Alarm
+- Hungarian Crisis Leads to Nuclear War or Nuclear Proliferation Leads to Nuclear War, Response B has a false alarm
+- President gains +1 in all future election bids
+- Oil Crisis occurred or Gold Standard Abolished
+- Call for legislation and actions to deal with crisis. enact Price Controls on Oil & Gas
+- Stick to rhetoric and try to just wait it out.
+- Price Controls on Oil & Gas and doubles the points of legislation that improves the economy next legis phase
+- Unless pres has charisma, -1 in reelection bid
+- legislation that improves the economy (2x pts)
+- President with “controversial” is eligible for re-election
+- Prevent the wiretapping of the opposition party
+- Special Investigation in next legis phase, if discovered
+- Fascists won the Spanish Civil War and Francisco Franco took power
+- Franco Dies and Juan Carlos Becomes King of Spain
+- Decline to attend as the Soviets are our enemy.
+- Try diplomacy to recover the survivors, but avoid war.
+- Return the Panama Canal back to Panama. Most of our ships don't even fit in the canal anymore.
+- Refuse to return the Panama Canal back to Panama. It's strategically too important
+- Mediate a peace treaty between Israel and Egypt
+- Condemn the overthrow of the Shah and make mild threats to the Ayatollah
+- Accept blame for the overthrow of the Shah, a US ally. Condemn the overthrow.
+- Iranian Revolution has occurred or Iran-Iraq War is active
+- Oil and Gas Price Controls will aid with this crisis.
+- Remove Oil and Gas Price Controls or refrain from using them.
+- Activates Oil and Price controls, if not active
+- Saddam Hussein Formally Takes Power of Iraq After Having Held Leading Influence for Years
+- Refuse to sign. we can't trust others to uphold their end of the deal
+- 75% -1 in re-election and 75% -1 party pref if any response is bungled
+- American Communist Party is not the Speaker  or President
+- Covertly help the Afghan mujahideen against Soviets
+- Openly lend arms to Iraq. 10% chance activate invasion of Iran
+- Airstrike Iranian forces, send navy, lend arms
+- Criticize the Religious Right as blurring the lines of Church and State
+- President has “charisma” or “leadership”, is Republican
+- Blue pols with “can party flip” and “theocrat” have 50% chance to join Red. Abortion legis x2 next phase.
+- Theocrats +1 next election, President gains “Theocrat”
+- Cite the Monroe Doctrine to aid Argentina against the British
+- no military involvement. rhetorically condemn terrorism
+- Send aid and arms to Contras so they can combat Leftists
+- Secretly sell arms illegally to Iran to prevent them from falling into Soviet sphere of Influence. use money to aid the Contras
+- Considering our opposition to Iran, refrain from selling arms, even if they fall into the influence of the USSR
+- If blunders, investigation of all controversial executive members. 25% chance for Pres to avoid if has teflon
+- Give Televised Speech. If successful, +1 incumbent party preference. 75% success if orator, 50% if debate. If none of these, 25% success, and 25% backfire for -1 party preference
+- Use opportunity to accuse the Russians of sabotage
+- Show solidarity with the reform, ordering foreign aid to Russia
+- Praise the reform, but don't bail out the USSR
+- Rhetorically condemn Apartheid, but take no action.
+- Launch humanitarian war to end Apartheid. activate invasion of South Africa
+- Panama Declares Hostility to US, Assaults US Military Officer
+- Condemn the assaults and apply economic sanctions only
+- Grenada or Nicaragua were invaded in the last decade
+- Glasnost and Perestroika in the USSR has occurred
+- Sympathize with the revolutionaries in Eastern Europe and in China
+- Ignore the invasion, even if it means that Russia might expand their influence into the Middle East.
+- Ignore involvement, despite unconfirmed rumors of Serbs committing atrocities
+- Covertly send arms and aid to independence movements
+- Condemn the overthrow of Aristide, but take no action
+- Recognize the dissolution of the Soviet Union and the new republics
+- Refrain from outright recognition until new governments gain firm controlRefrain from outright recognition until new governments gain firm control
+- Gulf War has occurred or US has intervened in Iran-Iraq War
+- Iran-Iraq War resulted in intervention or Iraq Invades Kuwait resulted in Gulf War
+- Condemn the attacks, launch investigation, but take no further action
+- Launch humanitarian war to end genocide in Rwanda
+- Al-Qaeda Bombs US Embassies in Tanzania and Kenya
+- Condemn the bombings but avoid airstrikes as the location and culpability of this group is not 100% certain.
+- Airstrike Afghanistan, despite a lack of solid information. The public expects us to do something.
+- Send landforce to breakup Yugoslavia and end ethnic cleansing.
+- Attempt to balance the summit without showing favorites
+- Show the strength of the US-Israeli alliance to force a peace agreement with the Palestinians
+- Second Intafada (if blunder on Camp David Summit)
+- Declare Hamas a terrorist organization and send aid and arms to the Israelis
+- Demand compensation from Afghanistan. sanction Afghanistan. airstrike potential terrorist cells
+- Demand compensation from Afghanistan. no military involvement. rhetorically condemn terrorism.
+- Declare War on Afghanistan in attempt to remove pro-terrorist Taliban government. boots on the ground. active War on Terror and Afghanistan War
+- Demand compensation and apply sanctions. no military involvement
+- 40% chance for War on Terror w/ Invasion of Afghanistan
+- 50% President -1 for re-election. Theo/Expan +1 next election
+- Increase sanctions in Iran and launch airstrikes
+- Allow provisional Iraqi government to declare Saddam's fate, which will almost certainly lead to his execution.
+- Bring Saddam to US Territory for a military trial
+- Algorithms dominate popular technology, research, and consumerism
