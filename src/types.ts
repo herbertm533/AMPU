@@ -434,6 +434,18 @@ export const ANYTIME_EVENTS_RULES = {
 
 export const ANYTIME_EVENTS_FEED_CAP = 500;
 
+// 2.4.3 Independence-era event graph (1772). Tunables for the graph walker —
+// no magic numbers in the walker body.
+export const ERA_GRAPH_RULES = {
+  historyPressure: 0.8, // P(spine fires) when both spine & counterfactual are eligible (CP1-4)
+  maxEventsPerTurn: 1,  // matches today's 2.4.3 cap
+  fireChance: 0.85,     // base P that an eligible (non-core) node fires this turn (probabilistic firing)
+} as const;
+
+// Graph-specific enable flags that have no existing GameState home (CP1-6).
+// Optional + Partial on GameState so existing saves load as all-false.
+export type GraphFlagId = 'loansEnabled' | 'warVictoryGuaranteed';
+
 export type OfficeType =
   | 'President'
   | 'VicePresident'
@@ -662,6 +674,7 @@ export interface EraEventResponseEffect {
   enthusiasm?: { ideology: Ideology; party: PartyId; delta: number }[];
   interestGroups?: { id: string; delta: number }[];
   domesticStability?: number;
+  diplomacy?: { nation: string; delta: number }[];
   startWar?: { name: string; against: string };
   text: string;
 }
@@ -687,6 +700,28 @@ export interface EraEvent {
   unlocks?: ('governors' | 'congress' | 'presidency' | 'court' | 'continentalArmy')[];
   postEffects?: { type: 'startWar' | 'unlockGovernors' | 'unlockArticles' | 'startConvention' | 'endWar' | 'addPolitician' | 'assembleCC'; payload?: unknown }[];
 }
+
+// Serializable precondition tree for the 2.4.3 era-event graph (CP1-2).
+// A single pure evalPredicate(snap, pred) interprets it; preconditions are
+// data, not code, so they are inspectable, testable, and future-proof.
+export type Predicate =
+  | { all: Predicate[] }
+  | { any: Predicate[] }
+  | { not: Predicate }
+  | { yearAtLeast: number }
+  | { yearAtMost: number }
+  | { eventCompleted: string } // templateId in eraEventsCompleted
+  | { eventChose: { template: string; response: string } } // resolved node's chosenResponseId
+  | { meterAtLeast: { meter: MeterKey; value: number } }
+  | { meterAtMost: { meter: MeterKey; value: number } }
+  | { interestAtLeast: { group: string; value: number } }
+  | { diplomacyAtLeast: { nation: string; value: number } }
+  | { warActive: boolean } // game.revolutionaryWar?.active === flag
+  | { warOutcome: 'win' | 'loss' } // game.revolutionaryWar?.outcome
+  | { stateAdmitted: string } // snap.states has id
+  | { officeControlledByPlayer: 'cc-president' | 'general-in-chief' }
+  | { rosterHasSkill: { skill: SkillKey; min: number } } // any player-faction politician
+  | { flag: GraphFlagId };
 
 export interface Legislation {
   id: string;
@@ -796,6 +831,9 @@ export interface GameState {
   alignmentStability?: Record<string, { firstSeenYear: number }>;
   customDraftClasses?: ImportedDraftee[];
   inauguralDraftSeeded?: boolean;
+  // 2.4.3 era-event graph (1772). Optional so existing saves load.
+  graphFlags?: Partial<Record<GraphFlagId, boolean>>;
+  gameEnded?: { year: number; reason: string; templateId: string };
 }
 
 export interface DraftHistoryPick {

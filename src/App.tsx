@@ -7,6 +7,7 @@ import { Pages, type PageId } from './pages/registry';
 import { NavigationProvider } from './state/NavigationContext';
 import { EraEventModal } from './components/EraEventModal';
 import { ConventionModal } from './components/ConventionModal';
+import { GameOverScreen } from './components/GameOverScreen';
 
 function Shell(): JSX.Element {
   const { snapshot, loading, hasSave, modal } = useGame();
@@ -124,6 +125,9 @@ function Shell(): JSX.Element {
   }
   if (!snapshot) {
     return <NewGameScreen />;
+  }
+  if (snapshot.game.gameEnded) {
+    return <GameOverScreen />;
   }
 
   const PageComponent = Pages[page] ?? Pages.dashboard;
