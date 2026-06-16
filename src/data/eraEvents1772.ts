@@ -154,7 +154,6 @@ export const ERA_GRAPH_1772: GraphNode[] = [
   {
     templateId: 'continental_army',
     chartIndex: 13,
-    military: true,
     precondition: all(after('lexington_concord'), { warActive: true }),
     aiBias: { LW: 'a', Center: 'a', RW: 'a' },
     build: (year) => ({
