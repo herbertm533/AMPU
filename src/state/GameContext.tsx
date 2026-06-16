@@ -287,8 +287,16 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
 
   const chooseEraResponse = useCallback(async (eventId: string, responseId: string) => {
     if (!snapshot) return;
+    if (snapshot.game.gameEnded) return; // campaign over; ignore further responses
     const draft: FullGameSnapshot = JSON.parse(JSON.stringify(snapshot));
     resolveEraEvent(draft, eventId, responseId);
+    // A terminal ending fired: stop, surface the game-over screen (do not advance).
+    if (draft.game.gameEnded) {
+      setModal({ type: 'none' });
+      setSnapshot(draft);
+      await persist(draft);
+      return;
+    }
     // First check if a Convention modal popped from the resolution
     if (draft.game.pendingConvention && !draft.game.pendingConvention.resolved) {
       setSnapshot(draft);
@@ -307,6 +315,14 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
     // Re-run the current phase to surface the next scripted event (1772) or
     // recompute (1856 won't queue more in the same phase by default).
     const replay = runCurrentPhase(draft);
+    // The replay's AI auto-resolve loop may have resolved a terminal auto-node
+    // (e.g. annapolis 'b' -> confederation_remains). Stop before advancing.
+    if (draft.game.gameEnded) {
+      setModal({ type: 'none' });
+      setSnapshot(draft);
+      await persist(draft);
+      return;
+    }
     if (replay.needsPlayerInput === 'eraEvent') {
       setSnapshot(draft);
       setModal({ type: 'eraEvent', event: replay.payload as EraEvent });
@@ -320,8 +336,15 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
       return;
     }
     setModal({ type: 'none' });
-    // Clear queue and advance
-    draft.game.pendingEraEvents = [];
+    // Advance. For the 1772 graph we KEEP resolved era events in
+    // pendingEraEvents for the life of the era — eventChose branch predicates and
+    // the Era Events history page read their chosenResponseId (bounded, <=~32
+    // nodes). The 1856 path still clears so its per-year rebuild fires.
+    if (draft.game.scenarioId === '1772') {
+      draft.game.pendingEraEvents = draft.game.pendingEraEvents.filter((e) => e.resolved);
+    } else {
+      draft.game.pendingEraEvents = [];
+    }
     advancePhase(draft);
     setSnapshot(draft);
     await persist(draft);

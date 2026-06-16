@@ -81,6 +81,7 @@ const DEFS: ExpansionDef[] = [
   { id: 'yucatan', name: 'Yucatan', abbr: 'YUC', region: 'Latin America' },
 
   // Current U.S. states not in the base scenario roster
+  { id: 'vt', name: 'Vermont', abbr: 'VT', region: 'Northeast' }, // independent republic 1777-91; admitted via the era graph
   { id: 'alaska', name: 'Alaska', abbr: 'AK', region: 'West' },
   { id: 'arizona', name: 'Arizona', abbr: 'AZ', region: 'West' },
   { id: 'colorado', name: 'Colorado', abbr: 'CO', region: 'West' },

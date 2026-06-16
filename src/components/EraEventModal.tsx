@@ -27,7 +27,7 @@ export function EraEventModal({ event }: { event: EraEvent }): JSX.Element {
           <div className="text-xs uppercase tracking-wide text-amber-700 dark:text-amber-400">Era Event — {event.year}</div>
           <h2 className="text-lg font-bold">{event.title}</h2>
           <p className="text-sm text-slate-700 dark:text-slate-300 mt-1">{event.description}</p>
-          <p className="text-xs text-slate-500 mt-1">Decided by: <span className="font-semibold">{event.decider}</span></p>
+          <p className="text-xs text-slate-500 mt-1">Decided by: <span className="font-semibold">{event.decider === 'cc-president' ? 'You (President of Congress)' : event.decider}</span></p>
         </div>
         <div className="overflow-auto flex-1 p-3 space-y-2">
           {event.responses.map((resp) => {
@@ -63,6 +63,11 @@ export function EraEventModal({ event }: { event: EraEvent }): JSX.Element {
                   {resp.effect.interestGroups?.map((g: { id: string; delta: number }, i) => (
                     <span key={i} className={`rounded px-1.5 py-0.5 ${g.delta > 0 ? 'bg-emerald-200 text-emerald-800' : 'bg-rose-200 text-rose-800'}`}>
                       {g.id} {fmtDelta(g.delta)}
+                    </span>
+                  ))}
+                  {resp.effect.diplomacy?.map((d: { nation: string; delta: number }, i) => (
+                    <span key={`dpl-${i}`} className={`rounded px-1.5 py-0.5 ${d.delta > 0 ? 'bg-violet-200 text-violet-900' : 'bg-amber-200 text-amber-900'}`}>
+                      {d.nation} {fmtDelta(d.delta)}
                     </span>
                   ))}
                   {resp.effect.startWar && (

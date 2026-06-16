@@ -6,8 +6,9 @@ import { refreshPv } from '../pv';
 import { ANYTIME_EVENT_TEMPLATES, type AnytimeEventTemplate } from '../data/anytimeEvents';
 import { ANYTIME_NATIONAL_TEMPLATES, type AnytimeNationalTemplate } from '../data/anytimeNationalEvents';
 import { buildEraEventsForYear } from '../data/eraEvents1856';
-import { SCRIPTED_1772 } from '../data/eraEvents1772';
 import { FACTIONS_1772 } from '../data/factions1772';
+import { selectEraGraphNode, pickAIResponse, isAutoResolved, validate as validateEraGraph } from './eraGraph';
+import { admitState } from './territories';
 import { appointDelegates, electCCPresident, appointCCCommittees, generateCCBills, voteCC, CC_TERM_YEARS, numberToOrdinal } from './continentalCongress';
 import { startRevWar, runRevWarBattles, applyTreatyOfParis, applyFrenchAlliance } from './revolutionaryWar';
 import { makeConvention } from './constitutionalConvention';
@@ -2353,7 +2354,20 @@ export function runPhase_2_4_2_Anytime(snap: FullGameSnapshot): void {
 // ============================================================================
 export function runPhase_2_4_3_Era(snap: FullGameSnapshot): EraEvent | null {
   if (snap.game.scenarioId === '1772') {
-    return next1772Event(snap);
+    if (import.meta.env.DEV) validateEraGraph();
+    if (snap.game.gameEnded) return null; // an ending already fired
+    // Walk the graph. Foreign-actor (auto) nodes and nodes whose decider the
+    // player doesn't control are auto-resolved in the engine (by the
+    // controlling faction's ideology); the first player-controlled decision is
+    // returned for the modal. An ending short-circuits the loop (AC 29).
+    let event = selectEraGraphNode(snap);
+    while (event && isAutoResolved(snap, event)) {
+      const respId = pickAIResponse(snap, event);
+      resolveEraEvent(snap, event.id, respId);
+      if (snap.game.gameEnded) return null;
+      event = selectEraGraphNode(snap);
+    }
+    return event ?? null;
   }
   if (snap.game.pendingEraEvents.length === 0) {
     const fresh = buildEraEventsForYear(snap.game.year);
@@ -2363,32 +2377,19 @@ export function runPhase_2_4_3_Era(snap: FullGameSnapshot): EraEvent | null {
   return next ?? null;
 }
 
-function next1772Event(snap: FullGameSnapshot): EraEvent | null {
-  // Fire scripted events in order, gated by year and prior templateId
-  const completed = new Set(snap.game.eraEventsCompleted);
-  // Cap how many events fire per turn (so they don't all stack at once)
-  const firedThisTurn = (snap.game.pendingEraEvents ?? []).filter((e) => !e.resolved).length;
-  if (firedThisTurn >= 1) return snap.game.pendingEraEvents.find((e) => !e.resolved) ?? null;
-  for (const s of SCRIPTED_1772) {
-    if (completed.has(s.templateId)) continue;
-    if (s.gateYear && snap.game.year < s.gateYear) continue;
-    if (s.requiresTemplate && !completed.has(s.requiresTemplate)) continue;
-    const event = s.build(snap.game.year);
-    snap.game.pendingEraEvents.push(event);
-    return event;
-  }
-  return null;
-}
-
 export function resolveEraEvent(snap: FullGameSnapshot, eventId: string, responseId: string): void {
   const event = snap.game.pendingEraEvents.find((e) => e.id === eventId);
   if (!event) return;
   const resp = event.responses.find((r) => r.id === responseId);
   if (!resp) return;
+  // For the 1772 graph: a node not controlled by the player was resolved by the
+  // AI (tag the feed so the Era Events page can badge it). Computed BEFORE we
+  // mark resolved/applyEffect, since control depends on current state.
+  const aiResolved = snap.game.scenarioId === '1772' && isAutoResolved(snap, event);
   applyEffect(snap, resp.effect);
   event.resolved = true;
   event.chosenResponseId = responseId;
-  addLog(snap, '2.4.3', 'event', `${event.title}: ${resp.label}. ${resp.effect.text}`);
+  addLog(snap, '2.4.3', 'event', `${event.title}: ${resp.label}. ${resp.effect.text}`, { eraEvent: true, templateId: event.templateId, aiResolved });
   // Track completion for scripted scenarios
   if (event.templateId) snap.game.eraEventsCompleted.push(event.templateId);
 
@@ -2406,6 +2407,13 @@ export function resolveEraEvent(snap: FullGameSnapshot, eventId: string, respons
     // Promote colonies to states
     for (const s of snap.states) s.isColony = false;
     addLog(snap, '2.4.3', 'system', 'Governors will now be elected. The colonies are now states.');
+  }
+
+  // Terminal endings: consume triggersGameEnd (no existing consumer — the
+  // GameOverScreen gate reads game.gameEnded). Set once.
+  if (event.triggersGameEnd && !snap.game.gameEnded) {
+    snap.game.gameEnded = { year: snap.game.year, reason: event.title, templateId: event.templateId ?? event.id };
+    addLog(snap, '2.4.3', 'system', `The campaign ends: ${event.title}.`);
   }
 }
 
@@ -2474,7 +2482,22 @@ function handleScripted1772Consequences(snap: FullGameSnapshot, event: EraEvent,
       break;
     }
     case 'french_alliance': {
-      applyFrenchAlliance(snap);
+      if (responseId === 'a') {
+        applyFrenchAlliance(snap);
+        // Narrative-only (CP1-WAR): recorded/shown in flavor; NO revolutionaryWar.ts
+        // hook forces the outcome. (The war engine already blocks a loss while
+        // war.frenchAlliance is set.)
+        snap.game.graphFlags = { ...snap.game.graphFlags, warVictoryGuaranteed: true };
+      }
+      break;
+    }
+    case 'dutch_recognition': {
+      // The only in-era finance flag: foreign credit, not a national bank.
+      snap.game.graphFlags = { ...snap.game.graphFlags, loansEnabled: true };
+      break;
+    }
+    case 'vermont_statehood': {
+      if (responseId === 'a') admitState(snap, 'vt');
       break;
     }
     case 'treaty_of_paris': {
@@ -2515,11 +2538,21 @@ function handleScripted1772Consequences(snap: FullGameSnapshot, event: EraEvent,
   }
 }
 
-export function applyEffect(snap: FullGameSnapshot, effect: { meters?: Partial<NationalMeters>; partyPreference?: number; enthusiasm?: { ideology: Ideology; party: PartyId; delta: number }[]; interestGroups?: { id: string; delta: number }[]; startWar?: { name: string; against: string }; text?: string }): void {
+export function applyEffect(snap: FullGameSnapshot, effect: { meters?: Partial<NationalMeters>; partyPreference?: number; enthusiasm?: { ideology: Ideology; party: PartyId; delta: number }[]; interestGroups?: { id: string; delta: number }[]; domesticStability?: number; diplomacy?: { nation: string; delta: number }[]; startWar?: { name: string; against: string }; text?: string }): void {
   if (effect.meters) {
     for (const k of Object.keys(effect.meters) as (keyof NationalMeters)[]) {
       const v = effect.meters[k];
       if (v != null) snap.game.meters[k] = clamp(snap.game.meters[k] + v, -5, 5);
+    }
+  }
+  // domesticStability is shorthand for the domestic meter (the type declared it
+  // but applyEffect previously ignored it).
+  if (effect.domesticStability != null) {
+    snap.game.meters.domestic = clamp(snap.game.meters.domestic + effect.domesticStability, -5, 5);
+  }
+  if (effect.diplomacy) {
+    for (const dpl of effect.diplomacy) {
+      snap.game.diplomacy[dpl.nation] = clamp((snap.game.diplomacy[dpl.nation] ?? 0) + dpl.delta, -5, 5);
     }
   }
   if (effect.partyPreference != null) {
