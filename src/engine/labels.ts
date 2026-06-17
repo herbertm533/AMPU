@@ -64,6 +64,10 @@ const INTEREST_ANACHRONISM_PRE_1789 = new Set<string>([
   'PoliceUnions',
 ]);
 
+// Dev-only dedupe set so the anachronism console.warn fires once per id per
+// browser session — keeps the dev feed quiet under high re-render counts.
+const _warnedAnachronisms = new Set<string>();
+
 // Title + response-label lookup for `eventCompleted` / `eventChose` predicates.
 // Built once at module load by walking ERA_GRAPH_1772 with year=0 (titles are
 // year-agnostic for every authored node).
@@ -92,10 +96,10 @@ export function formatDecider(
       ? 'President of the Continental Congress'
       : 'President of the Confederation Congress';
   }
-  if (decider === 'president') return 'The President';
+  if (decider === 'president') return 'President of the United States';
   if (decider === 'cabinet') return 'Your Cabinet';
   if (decider === 'congress') return 'Congress';
-  return 'Automatic (no decision required)';
+  return 'Automatic (no decider)';
 }
 
 export function formatPartyId(partyId: PartyId, scenarioId: string, year: number): string {
@@ -234,6 +238,10 @@ export function formatEffect(
   if (effect.interestGroups) {
     for (const g of effect.interestGroups) {
       const anachronistic = pre1789 && INTEREST_ANACHRONISM_PRE_1789.has(g.id);
+      if (anachronistic && import.meta.env.DEV && !_warnedAnachronisms.has(g.id)) {
+        _warnedAnachronisms.add(g.id);
+        console.warn(`[labels] Anachronistic interest "${g.id}" on a pre-1789 event chip.`);
+      }
       chips.push({
         label: `${g.id} ${fmtDelta(g.delta)}`,
         tone: anachronistic ? 'anachronism' : g.delta > 0 ? 'positive' : 'negative',
