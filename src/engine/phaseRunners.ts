@@ -128,7 +128,11 @@ export function runPhase_2_1_1_Draft(snap: FullGameSnapshot, autoOnly: boolean):
     snap.game.inauguralDraftSeeded = true;
   }
 
-  if (snap.game.pendingDraftPool.length === 0 && !isExpansion1772) {
+  // Don't rebuild if we already drafted this year — the runner empties the pool
+  // and order on completion (lines below), so without this gate the next call
+  // (advance → runCurrentPhase) loops the player back into a fresh draft.
+  const alreadyDraftedThisYear = snap.game.lastDraftYear === snap.game.year;
+  if (snap.game.pendingDraftPool.length === 0 && !isExpansion1772 && !alreadyDraftedThisYear) {
     // Source precedence for this year's class:
     //   1. player's per-game imported dataset (Settings)
     //   2. the bundled standard classes shipped with the game
