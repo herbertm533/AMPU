@@ -24,6 +24,7 @@ interface GameContextValue {
   startNewGame: (factionId: string, scenarioId?: '1772' | '1856') => Promise<void>;
   loadGame: () => Promise<void>;
   advance: () => Promise<void>;
+  runEventsNow: () => Promise<void>;
   draftPick: (politicianId: string) => Promise<void>;
   simOnePick: () => Promise<void>;
   simToMyNextPick: () => Promise<void>;
@@ -231,6 +232,41 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
     await persist(draft);
   }, [snapshot, persist]);
 
+  const runEventsNow = useCallback(async () => {
+    if (!snapshot) return;
+    if (snapshot.game.gameEnded) return;
+    const cur = snapshot.game.phaseId;
+    if (cur !== '2.4.2' && cur !== '2.4.3') return;
+    const draft: FullGameSnapshot = JSON.parse(JSON.stringify(snapshot));
+    const eraResolvedBefore = new Set(
+      draft.game.pendingEraEvents.filter((e) => e.resolved).map((e) => e.id),
+    );
+    const entriesBefore = draft.events.length;
+    const result = runCurrentPhase(draft);
+    const ids = draft.game.newlyFiredEventIds ?? [];
+    for (const e of draft.game.pendingEraEvents) {
+      if (e.resolved && !eraResolvedBefore.has(e.id) && !ids.includes(e.id)) ids.push(e.id);
+    }
+    for (let i = entriesBefore; i < draft.events.length; i++) {
+      if (!ids.includes(draft.events[i].id)) ids.push(draft.events[i].id);
+    }
+    draft.game.newlyFiredEventIds = ids;
+    if (result.needsPlayerInput === 'eraEvent') {
+      setSnapshot(draft);
+      setModal({ type: 'eraEvent', event: result.payload as EraEvent });
+      await persist(draft);
+      return;
+    }
+    if (result.needsPlayerInput === 'convention') {
+      setSnapshot(draft);
+      setModal({ type: 'convention', convention: result.payload as ConstitutionalConvention });
+      await persist(draft);
+      return;
+    }
+    setSnapshot(draft);
+    await persist(draft);
+  }, [snapshot, persist]);
+
   const draftPick = useCallback(async (politicianId: string) => {
     if (!snapshot) return;
     const draft: FullGameSnapshot = JSON.parse(JSON.stringify(snapshot));
@@ -289,7 +325,24 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
     if (!snapshot) return;
     if (snapshot.game.gameEnded) return; // campaign over; ignore further responses
     const draft: FullGameSnapshot = JSON.parse(JSON.stringify(snapshot));
+    // Baseline so we can flag every era-event + event-log entry that fires
+    // during this turn (incl. the AI cascade in the replay) as "just fired."
+    const eraResolvedBefore = new Set(
+      draft.game.pendingEraEvents.filter((e) => e.resolved).map((e) => e.id),
+    );
+    const entriesBefore = draft.events.length;
+    const flagNewlyFired = (): void => {
+      const ids = draft.game.newlyFiredEventIds ?? [];
+      for (const e of draft.game.pendingEraEvents) {
+        if (e.resolved && !eraResolvedBefore.has(e.id) && !ids.includes(e.id)) ids.push(e.id);
+      }
+      for (let i = entriesBefore; i < draft.events.length; i++) {
+        if (!ids.includes(draft.events[i].id)) ids.push(draft.events[i].id);
+      }
+      draft.game.newlyFiredEventIds = ids;
+    };
     resolveEraEvent(draft, eventId, responseId);
+    flagNewlyFired();
     // A terminal ending fired: stop, surface the game-over screen (do not advance).
     if (draft.game.gameEnded) {
       setModal({ type: 'none' });
@@ -315,6 +368,7 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
     // Re-run the current phase to surface the next scripted event (1772) or
     // recompute (1856 won't queue more in the same phase by default).
     const replay = runCurrentPhase(draft);
+    flagNewlyFired();
     // The replay's AI auto-resolve loop may have resolved a terminal auto-node
     // (e.g. annapolis 'b' -> confederation_remains). Stop before advancing.
     if (draft.game.gameEnded) {
@@ -478,6 +532,7 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
     startNewGame,
     loadGame,
     advance,
+    runEventsNow,
     draftPick,
     simOnePick,
     simToMyNextPick,
