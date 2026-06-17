@@ -1,24 +1,14 @@
 import { useState } from 'react';
 import { useGame } from '../state/GameContext';
-import type { EraEvent, NationalMeters, Ideology, PartyId } from '../types';
-
-const METER_LABELS: Record<keyof NationalMeters, string> = {
-  revenue: 'Revenue',
-  economic: 'Economy',
-  military: 'Military',
-  domestic: 'Domestic Stability',
-  honest: 'Honest Govt',
-  quality: 'Quality of Life',
-  planet: 'Planet',
-};
-
-function fmtDelta(n: number): string {
-  return n > 0 ? `+${n}` : `${n}`;
-}
+import type { EraEvent } from '../types';
+import { EffectChips, PredicateChips, DeciderBadge, nodePreconditionFor } from './EventChips';
 
 export function EraEventModal({ event }: { event: EraEvent }): JSX.Element {
-  const { chooseEraResponse } = useGame();
+  const { chooseEraResponse, snapshot } = useGame();
   const [selected, setSelected] = useState<string | null>(null);
+
+  const precondition = nodePreconditionFor(event);
+  const showPrelude = snapshot?.game.scenarioId === '1772' && precondition != null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
@@ -27,8 +17,13 @@ export function EraEventModal({ event }: { event: EraEvent }): JSX.Element {
           <div className="text-xs uppercase tracking-wide text-amber-700 dark:text-amber-400">Era Event — {event.year}</div>
           <h2 className="text-lg font-bold">{event.title}</h2>
           <p className="text-sm text-slate-700 dark:text-slate-300 mt-1">{event.description}</p>
-          <p className="text-xs text-slate-500 mt-1">Decided by: <span className="font-semibold">{event.decider === 'cc-president' ? 'You (President of Congress)' : event.decider}</span></p>
+          <p className="text-xs text-slate-500 mt-1"><DeciderBadge event={event} /></p>
         </div>
+        {showPrelude && (
+          <div className="border-b border-slate-200 dark:border-slate-700 px-4 py-2 bg-slate-50 dark:bg-slate-800/50">
+            <PredicateChips predicate={precondition} />
+          </div>
+        )}
         <div className="overflow-auto flex-1 p-3 space-y-2">
           {event.responses.map((resp) => {
             const isSel = selected === resp.id;
@@ -44,35 +39,8 @@ export function EraEventModal({ event }: { event: EraEvent }): JSX.Element {
               >
                 <div className="font-semibold">{resp.label}</div>
                 <div className="text-sm text-slate-600 dark:text-slate-400 mt-0.5">{resp.description}</div>
-                <div className="mt-2 flex flex-wrap gap-2 text-xs">
-                  {resp.effect.meters && Object.entries(resp.effect.meters).map(([k, v]) => (
-                    <span key={k} className={`rounded px-1.5 py-0.5 ${(v as number) > 0 ? 'bg-emerald-200 text-emerald-800' : 'bg-rose-200 text-rose-800'}`}>
-                      {METER_LABELS[k as keyof NationalMeters]} {fmtDelta(v as number)}
-                    </span>
-                  ))}
-                  {resp.effect.partyPreference != null && (
-                    <span className={`rounded px-1.5 py-0.5 ${resp.effect.partyPreference > 0 ? 'bg-red-200 text-red-800' : 'bg-blue-200 text-blue-800'}`}>
-                      Party Pref {fmtDelta(resp.effect.partyPreference)}
-                    </span>
-                  )}
-                  {resp.effect.enthusiasm?.map((e: { ideology: Ideology; party: PartyId; delta: number }, i) => (
-                    <span key={i} className="rounded bg-slate-200 dark:bg-slate-700 px-1.5 py-0.5">
-                      {e.ideology}→{e.party === 'BLUE' ? 'D' : 'R'} {fmtDelta(e.delta)}
-                    </span>
-                  ))}
-                  {resp.effect.interestGroups?.map((g: { id: string; delta: number }, i) => (
-                    <span key={i} className={`rounded px-1.5 py-0.5 ${g.delta > 0 ? 'bg-emerald-200 text-emerald-800' : 'bg-rose-200 text-rose-800'}`}>
-                      {g.id} {fmtDelta(g.delta)}
-                    </span>
-                  ))}
-                  {resp.effect.diplomacy?.map((d: { nation: string; delta: number }, i) => (
-                    <span key={`dpl-${i}`} className={`rounded px-1.5 py-0.5 ${d.delta > 0 ? 'bg-violet-200 text-violet-900' : 'bg-amber-200 text-amber-900'}`}>
-                      {d.nation} {fmtDelta(d.delta)}
-                    </span>
-                  ))}
-                  {resp.effect.startWar && (
-                    <span className="rounded bg-rose-300 text-rose-900 px-1.5 py-0.5 font-bold">⚔ War: {resp.effect.startWar.name}</span>
-                  )}
+                <div className="mt-2">
+                  <EffectChips effect={resp.effect} year={event.year} />
                 </div>
               </button>
             );

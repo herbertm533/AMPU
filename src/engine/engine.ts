@@ -83,6 +83,15 @@ export function runCurrentPhase(snap: FullGameSnapshot): { needsPlayerInput?: 'd
 
 export function advancePhase(snap: FullGameSnapshot): { yearChanged: boolean } {
   const cur = snap.game.phaseId;
+  // Exiting an events phase: clear the "just fired this visit" badge state and
+  // bump the anytime-feed bookmark to the current head.
+  if (cur === '2.4.2' || cur === '2.4.3') {
+    snap.game.newlyFiredEventIds = [];
+    if (cur === '2.4.2') {
+      const last = snap.events[snap.events.length - 1];
+      if (last) snap.game.lastAnytimeFeedHeadId = last.id;
+    }
+  }
   const next = nextPhaseInfo(cur, snap.game.year, snap.game);
   snap.game.phaseId = next.phaseId;
   snap.game.year = next.nextYear;

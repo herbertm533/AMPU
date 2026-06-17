@@ -834,6 +834,13 @@ export interface GameState {
   // 2.4.3 era-event graph (1772). Optional so existing saves load.
   graphFlags?: Partial<Record<GraphFlagId, boolean>>;
   gameEnded?: { year: number; reason: string; templateId: string };
+  // Events-phase manual-trigger UI: ids flagged "just fired this phase visit"
+  // (EraEvent.id for 2.4.3; EventEntry.id for 2.4.2). Cleared by advancePhase
+  // when exiting 2.4.2/2.4.3. Optional so old saves load with `undefined`.
+  newlyFiredEventIds?: string[];
+  // Bookmark into snapshot.events: ids newer than this are "just fired" on the
+  // Anytime Events page. Bumped to the current head when exiting 2.4.2.
+  lastAnytimeFeedHeadId?: string;
 }
 
 export interface DraftHistoryPick {

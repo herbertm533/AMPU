@@ -1,8 +1,10 @@
 import { useState, useMemo } from 'react';
 import { useGame } from '../state/GameContext';
 import type { Era, EventEntry } from '../types';
-import { ANYTIME_EVENT_TEMPLATES, type AnytimeEventTemplate, type AnytimeEventEffect } from '../data/anytimeEvents';
-import { ANYTIME_NATIONAL_TEMPLATES, type AnytimeNationalTemplate, type AnytimeNationalEffect } from '../data/anytimeNationalEvents';
+import { ANYTIME_EVENT_TEMPLATES, type AnytimeEventTemplate } from '../data/anytimeEvents';
+import { ANYTIME_NATIONAL_TEMPLATES, type AnytimeNationalTemplate } from '../data/anytimeNationalEvents';
+import { formatAnytimePersonalEffect, formatAnytimeNationalEffect, type EffectChip } from '../engine/labels';
+import { RunNextEventButton } from '../components/EventChips';
 
 type Pool = 'all' | 'personal' | 'national';
 type FactionMode = 'all' | 'mine';
@@ -59,29 +61,14 @@ function categoryColor(cat: string): string {
   return 'bg-stone-100 text-stone-900 dark:bg-stone-800 dark:text-stone-200';
 }
 
-function effectChipsPersonal(effs: AnytimeEventEffect[]): string[] {
-  return effs.flatMap((e) => {
-    switch (e.kind) {
-      case 'grantTrait': return [`+${e.trait}`];
-      case 'pvHit': return [`PV ${e.amount > 0 ? '+' : ''}${e.amount}`];
-      case 'pvBump': return [`PV +${e.amount}`];
-      case 'skillBump': return [`+${e.amount} ${e.skill}`];
-      case 'commandBump': return [`+${e.amount} command`];
-      case 'death': return ['died'];
-      case 'forceRetire': return ['retired'];
-    }
-  });
-}
-
-function effectChipsNational(effs: AnytimeNationalEffect[]): string[] {
-  return effs.map((e) => {
-    switch (e.kind) {
-      case 'meterTick': return `${e.meter} ${e.amount > 0 ? '+' : ''}${e.amount}`;
-      case 'interestTick': return `${e.amount > 0 ? '+' : ''}${e.amount} ${e.group}`;
-      case 'partyPref': return `partyPref ${e.amount > 0 ? '+' : ''}${e.amount}`;
-      case 'stateBias': return `bias ${e.amount > 0 ? '+' : ''}${e.amount}`;
-    }
-  });
+function chipToneClass(tone: EffectChip['tone']): string {
+  switch (tone) {
+    case 'positive': return 'bg-emerald-100 text-emerald-900 dark:bg-emerald-900/40 dark:text-emerald-200';
+    case 'negative': return 'bg-rose-100 text-rose-900 dark:bg-rose-900/40 dark:text-rose-200';
+    case 'war':      return 'bg-red-200 text-red-900 font-bold';
+    case 'anachronism': return 'bg-amber-200 text-amber-900 italic';
+    default:         return 'bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200';
+  }
 }
 
 export function AnytimeEventsPage(): JSX.Element {
@@ -130,9 +117,31 @@ export function AnytimeEventsPage(): JSX.Element {
       ? NATIONAL_CATEGORIES
       : [...PERSONAL_CATEGORIES, ...NATIONAL_CATEGORIES];
 
+  const inEventsPhase = snapshot.game.phaseId === '2.4.2';
+  const lastSurfacedHead = snapshot.game.lastAnytimeFeedHeadId;
+  const newlyFiredIds = new Set(snapshot.game.newlyFiredEventIds ?? []);
+  // Anything in newlyFiredEventIds OR (if the bookmark exists) anything newer
+  // than the bookmark counts as "just fired."
+  const lastSurfacedIdx = lastSurfacedHead
+    ? allEvents.findIndex((e) => e.id === lastSurfacedHead)
+    : -1;
+  const isJustFired = (e: EventEntry): boolean => {
+    if (newlyFiredIds.has(e.id)) return true;
+    if (lastSurfacedHead && lastSurfacedIdx >= 0) {
+      // allEvents is sorted desc by year (newer first). Indexes 0..lastSurfacedIdx-1
+      // are newer than the bookmark.
+      const idx = allEvents.findIndex((ev) => ev.id === e.id);
+      return idx >= 0 && idx < lastSurfacedIdx;
+    }
+    return false;
+  };
+
   return (
     <div className="space-y-3">
-      <h2 className="text-xl font-bold">Anytime Events — {allEvents.length} events</h2>
+      <div className="flex items-center gap-3 flex-wrap">
+        <h2 className="text-xl font-bold flex-1">Anytime Events — {allEvents.length} events</h2>
+        {inEventsPhase && <RunNextEventButton phaseId="2.4.2" />}
+      </div>
 
       <div className="flex flex-wrap items-center gap-2 text-sm">
         <label className="flex items-center gap-1">
@@ -206,14 +215,15 @@ export function AnytimeEventsPage(): JSX.Element {
           const tpl = meta.pool === 'national'
             ? (meta.templateId ? NATIONAL_TEMPLATE_BY_ID.get(meta.templateId) ?? null : null)
             : (meta.templateId ? PERSONAL_TEMPLATE_BY_ID.get(meta.templateId) ?? null : null);
-          const chips = tpl
+          const chips: EffectChip[] = tpl
             ? (meta.pool === 'national'
-              ? effectChipsNational((tpl as AnytimeNationalTemplate).effects)
-              : effectChipsPersonal((tpl as AnytimeEventTemplate).effects))
+              ? formatAnytimeNationalEffect((tpl as AnytimeNationalTemplate).effects)
+              : formatAnytimePersonalEffect((tpl as AnytimeEventTemplate).effects))
             : [];
           const politician = meta.politicianId ? snapshot.politicians.find((p) => p.id === meta.politicianId) ?? null : null;
+          const justFired = isJustFired(e);
           return (
-            <div key={e.id} className="border-b border-slate-200 dark:border-slate-700/50 px-2 py-2 last:border-0 space-y-1">
+            <div key={e.id} className={`border-b border-slate-200 dark:border-slate-700/50 px-2 py-2 last:border-0 space-y-1 ${justFired ? 'border-l-4 border-l-amber-400 dark:border-l-amber-600 bg-amber-50/50 dark:bg-amber-900/10' : ''}`}>
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="text-xs text-slate-500 tabular-nums">[{e.year}]</span>
                 <span className={`text-[10px] uppercase rounded px-1.5 py-0.5 ${meta.pool === 'national' ? 'bg-slate-200 dark:bg-slate-700' : 'bg-rose-100 text-rose-900 dark:bg-rose-900/50 dark:text-rose-200'}`}>
@@ -222,6 +232,11 @@ export function AnytimeEventsPage(): JSX.Element {
                 {meta.category && (
                   <span className={`text-[10px] uppercase rounded px-1.5 py-0.5 ${categoryColor(meta.category)}`}>
                     {meta.category}
+                  </span>
+                )}
+                {justFired && (
+                  <span className="text-[10px] uppercase rounded px-1.5 py-0.5 bg-amber-200 text-amber-900 dark:bg-amber-800 dark:text-amber-100 font-bold">
+                    Just fired
                   </span>
                 )}
                 {politician && (
@@ -237,7 +252,7 @@ export function AnytimeEventsPage(): JSX.Element {
               {chips.length > 0 && (
                 <div className="flex flex-wrap gap-1">
                   {chips.map((c, i) => (
-                    <span key={i} className="text-[10px] rounded bg-slate-100 dark:bg-slate-700 px-1.5 py-0.5">{c}</span>
+                    <span key={i} className={`text-[10px] rounded px-1.5 py-0.5 ${chipToneClass(c.tone)}`}>{c.label}</span>
                   ))}
                 </div>
               )}
