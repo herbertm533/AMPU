@@ -18,6 +18,7 @@ function Shell(): JSX.Element {
   const lastIdeologyEntryKey = useRef<string | null>(null);
   const lastConversionEntryKey = useRef<string | null>(null);
   const lastKingmakerEntryKey = useRef<string | null>(null);
+  const lastCCBuilderEntryKey = useRef<string | null>(null);
 
   // Auto-navigate to Draft once per draft phase entry. The entry key combines
   // year + phaseId so leaving the page and returning during the same draft
@@ -111,6 +112,37 @@ function Shell(): JSX.Element {
       lastKingmakerEntryKey.current = null;
     }
   }, [snapshot?.game.phaseId, snapshot?.game.year]);
+
+  // Auto-navigate to the First-CC builder once per 2.9.6 visit (1772 gate). The
+  // sentinel: phase is 2.9.6, scenario is 1772, and either a build cursor is
+  // active or a build just completed (cursor cleared but cc.delegates populated
+  // and the page hasn't shown the roster summary yet).
+  useEffect(() => {
+    const g = snapshot?.game;
+    const inBuilder = !!g
+      && g.phaseId === '2.9.6'
+      && g.scenarioId === '1772'
+      && (g.ccBuilderCursor != null
+        || (g.eraEventsCompleted.includes('intolerable_acts')
+          && (g.continentalCongress?.delegates.length ?? 0) > 0));
+    if (inBuilder) {
+      const key = `${g!.year}:2.9.6`;
+      if (lastCCBuilderEntryKey.current !== key) {
+        lastCCBuilderEntryKey.current = key;
+        setPage('continentalCongressBuilder');
+      }
+    } else {
+      lastCCBuilderEntryKey.current = null;
+    }
+  }, [
+    snapshot?.game.phaseId,
+    snapshot?.game.year,
+    snapshot?.game.scenarioId,
+    snapshot?.game.ccBuilderCursor?.colonyIdx,
+    snapshot?.game.ccBuilderCursor?.slotIdx,
+    snapshot?.game.ccBuilderCursor?.pendingAIPick?.politicianId,
+    snapshot?.game.continentalCongress?.delegates.length,
+  ]);
 
   if (loading) {
     return (
