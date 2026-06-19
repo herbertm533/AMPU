@@ -34,9 +34,9 @@ re-stated as concrete acceptance criteria below:
 - **(F1) Convening gate:** First CC convened Sept 5, 1774. Gate on
   `year >= 1774 && eraEventsCompleted.includes('intolerable_acts') &&
   intolerable_acts chosenResponseId === 'ok'` (the "Convene CC" option).
-- **(F2) Georgia did not attend.** The user's spec gives GA 2 reps — flagged at
-  CP1, recommend **honor history** (exclude GA from inaugural build, fold in
-  later for Second CC, out of scope here).
+- **(F2) Georgia did not attend.** The user's spec gives GA 2 reps. **CP1
+  decision: include Georgia** as a game-mechanic shortcut. The historian's
+  flag is surfaced as a roster-summary footnote, not as gameplay exclusion.
 - **(F3) Counts are a defensible but rough abstraction.** PA/MA/VA/MD as "Big"
   underweights NY/NJ/SC; the spec **keeps the user's existing counts**
   (already encoded in `states1772.ts` via `colonySize` + `ccDelegateSlots`) and
@@ -102,12 +102,12 @@ Each AC tagged `[Locked]` (historian/user fact, baked in) or `[Open @ CP1]`
    resolved (the 2.4.3 → 2.9.6 cascade within one turn).
 
 **Colony scope and delegate counts**
-5. **[Open @ CP1, recommend honor history]** **Georgia is excluded** from the
-   inaugural First CC: 12 colonies seat delegates, GA is skipped with the
-   flavor line "Royal Governor James Wright suppresses the call; Georgia
-   will join the Second Continental Congress." If the user picks the
-   game-shortcut option at CP1, GA is included with its existing 2 slots
-   and a flavor caveat. (F2)
+5. **[Locked @ CP1: include Georgia]** **Georgia is included** in the
+   inaugural First CC with its existing 2 slots from `ccDelegateSlots`
+   (game-mechanic shortcut, overriding historian fact F2). All 13
+   colonies seat delegates. The roster-summary footnote (AC #23) notes
+   the abstraction: "Georgia did not actually send delegates to the
+   First Continental Congress in 1774 — game-mechanic license."
 6. **[Locked]** Delegate counts use the existing `ccDelegateSlots` values
    on each colony in `states1772.ts` (PA/MA/VA/MD=4; CT/NY/NJ/NC/SC=3;
    NH/RI/DE=2; GA=2 only if included). No re-balancing in this PR. The
@@ -314,8 +314,9 @@ Recommendations bolded.
    without breaking AI logic. (AC #15)
 6. **Year-over-year rebuilds.** **Recommend: inaugural CC is durable
    this PR**; Second CC and dissolutions are future work. (AC #27)
-7. **Georgia inclusion.** **Recommend: honor history — exclude GA from
-   the 1774 build**; fold in via the Second-CC follow-on later. (AC #5)
+7. **Georgia inclusion.** **LOCKED @ CP1: include Georgia** with its 2
+   slots (game-mechanic shortcut). Historian flag surfaces as a
+   one-line roster footnote, not a gameplay exclusion. (AC #5)
 
 ## Riskiest assumptions (top 3, ranked)
 
