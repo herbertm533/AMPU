@@ -104,8 +104,22 @@ export function shouldRunPhase(phaseId: PhaseId, year: number, game?: GameState)
       // Governor elections skipped until Declaration
       if (phaseId === '2.9.5' && !game.governorsExist) return false;
 
-      // Congressional elections skipped entirely (we use CC delegate appointments instead)
-      if (phaseId === '2.9.6') return false;
+      // Congressional elections in independence era: 1772 uses 2.9.6 as the
+      // First Continental Congress builder when the Intolerable Acts have
+      // resolved with "Convene CC" (response 'ok') AND year >= 1774. All other
+      // independence-era scenarios silently skip 2.9.6.
+      if (phaseId === '2.9.6') {
+        if (game.scenarioId !== '1772') return false;
+        if (game.year < 1774) return false;
+        if (!game.eraEventsCompleted.includes('intolerable_acts')) return false;
+        const intolerable = game.pendingEraEvents.find(
+          (e) => e.templateId === 'intolerable_acts' && e.resolved,
+        );
+        if (!intolerable || intolerable.chosenResponseId !== 'ok') return false;
+        // Once the inaugural First CC is seated, don't re-fire 2.9.6 (AC #27).
+        if (game.continentalCongress && game.continentalCongress.delegates.length > 0) return false;
+        return true;
+      }
 
       // First-turn skips
       if (isFirstTurn) {

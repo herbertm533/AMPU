@@ -565,6 +565,7 @@ export interface CCDelegate {
   politicianId: string;
   factionId: string;
   servedLastTerm?: boolean;
+  tier?: 'T1' | 'T2' | 'T3' | 'Wild' | 'Player';
 }
 
 export interface ContinentalCongress {
@@ -821,6 +822,9 @@ export interface GameState {
   careerGains?: CareerGainEntry[];
   relocations?: RelocationEntry[];
   relocationAttempts?: { year: number; counts: Record<string, number> };
+  // Transient cursor for the 1772 First-CC builder (phase 2.9.6). Cleared at
+  // phase end. Indices reference the alphabetical (by `abbr`) colony order.
+  ccBuilderCursor?: { colonyIdx: number; slotIdx: number; excludedThisColony?: string[] };
   ideologyShifts?: IdeologyShiftEntry[];
   ideologyAttempts?: { year: number; counts: Record<string, number> };
   conversions?: ConversionEntry[];

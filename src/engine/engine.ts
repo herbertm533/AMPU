@@ -5,14 +5,14 @@ import { addLog } from './log';
 
 export interface PhaseAdvanceResult {
   nextPhaseId: PhaseId;
-  needsPlayerInput?: 'draft' | 'eraEvent' | 'cabinet';
+  needsPlayerInput?: 'draft' | 'eraEvent' | 'cabinet' | 'convention' | 'ccBuilder';
   payload?: unknown;
   yearChanged: boolean;
 }
 
 // Run the current phase non-interactively if possible. Returns whether player
 // input is required.
-export function runCurrentPhase(snap: FullGameSnapshot): { needsPlayerInput?: 'draft' | 'eraEvent' | 'cabinet' | 'convention'; payload?: unknown } {
+export function runCurrentPhase(snap: FullGameSnapshot): { needsPlayerInput?: 'draft' | 'eraEvent' | 'cabinet' | 'convention' | 'ccBuilder'; payload?: unknown } {
   // Convention takes priority over phase progression
   if (snap.game.pendingConvention && !snap.game.pendingConvention.resolved) {
     return { needsPlayerInput: 'convention', payload: snap.game.pendingConvention };
@@ -74,7 +74,11 @@ export function runCurrentPhase(snap: FullGameSnapshot): { needsPlayerInput?: 'd
       return {};
     }
     case '2.9.5': P.runPhase_2_9_5_Governors(snap); return {};
-    case '2.9.6': P.runPhase_2_9_6_Congressional(snap); return {};
+    case '2.9.6': {
+      const r = P.runPhase_2_9_6_Congressional(snap);
+      if (r && r.needsPlayer) return { needsPlayerInput: 'ccBuilder', payload: r.payload };
+      return {};
+    }
     case '2.10': P.runPhase_2_10_End(snap); return {};
     default:
       return {};

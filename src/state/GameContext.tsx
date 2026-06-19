@@ -5,7 +5,7 @@ import { loadSnapshot, saveSnapshot, clearDb, exportJson, importJson } from '../
 import { build1856Scenario } from '../data/scenario1856';
 import { build1772Scenario } from '../data/scenario1772';
 import { runCurrentPhase, advancePhase } from '../engine/engine';
-import { playerDraftPick, resolveEraEvent, simOneDraftPick, autoPickForPlayer, setPlayerCareerTrack, attemptPlayerRelocation, attemptPlayerIdeologyShift, attemptPlayerConversion, assignProtege, releaseProtege } from '../engine/phaseRunners';
+import { playerDraftPick, resolveEraEvent, simOneDraftPick, autoPickForPlayer, setPlayerCareerTrack, attemptPlayerRelocation, attemptPlayerIdeologyShift, attemptPlayerConversion, assignProtege, releaseProtege, playerCCDelegatePick, playerCCDelegateDecline } from '../engine/phaseRunners';
 import { autoFillCPUVotes, applyConvention } from '../engine/constitutionalConvention';
 import { parseDraftCsv, type ParseResult } from '../data/draftImport';
 import { admitState } from '../engine/territories';
@@ -44,6 +44,8 @@ interface GameContextValue {
   importDraftDataset: (csv: string, mode: 'replace' | 'merge') => Promise<ParseResult>;
   clearDraftDataset: () => Promise<void>;
   admitTerritory: (stateId: string) => Promise<void>;
+  pickCCDelegate: (stateId: string, politicianId: string) => Promise<void>;
+  declineCCDelegate: (stateId: string, politicianId: string) => Promise<void>;
   resetGame: () => Promise<void>;
   theme: 'light' | 'dark';
 }
@@ -207,6 +209,9 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
   const advance = useCallback(async () => {
     if (!snapshot) return;
     const draft: FullGameSnapshot = JSON.parse(JSON.stringify(snapshot));
+    // Snapshot the pre-run state so we can detect a "fresh" First-CC build
+    // (delegates list went from 0 to >0 inside this advance call).
+    const ccBefore = snapshot.game.continentalCongress?.delegates.length ?? 0;
     // Run current phase
     const result = runCurrentPhase(draft);
     if (result.needsPlayerInput === 'draft') {
@@ -223,6 +228,28 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
     if (result.needsPlayerInput === 'convention') {
       setSnapshot(draft);
       setModal({ type: 'convention', convention: result.payload as ConstitutionalConvention });
+      await persist(draft);
+      return;
+    }
+    if (result.needsPlayerInput === 'ccBuilder') {
+      // The First-CC builder is a page-routed surface. App.tsx auto-navigates
+      // via the cursor sentinel. Persist and let the page take over.
+      setSnapshot(draft);
+      await persist(draft);
+      return;
+    }
+    // Pause on the First-CC roster summary so the player sees the seated CC
+    // before advancing. Only fire when this advance() call IS the one that
+    // built the CC — repeat Continue clicks fall through to advancePhase.
+    const ccAfter = draft.game.continentalCongress?.delegates.length ?? 0;
+    if (
+      draft.game.phaseId === '2.9.6'
+      && draft.game.scenarioId === '1772'
+      && draft.game.ccBuilderCursor == null
+      && ccBefore === 0
+      && ccAfter > 0
+    ) {
+      setSnapshot(draft);
       await persist(draft);
       return;
     }
@@ -471,6 +498,40 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
     await persist(draft);
   }, [snapshot, persist]);
 
+  const pickCCDelegate = useCallback(async (stateId: string, politicianId: string) => {
+    if (!snapshot) return;
+    const draft: FullGameSnapshot = JSON.parse(JSON.stringify(snapshot));
+    playerCCDelegatePick(draft, stateId, politicianId);
+    // Re-run the phase: either next player slot/colony or AI drains to the end.
+    const result = runCurrentPhase(draft);
+    if (result.needsPlayerInput === 'ccBuilder') {
+      setSnapshot(draft);
+      await persist(draft);
+      return;
+    }
+    // Build complete (cursor cleared by runner). Leave the snapshot on 2.9.6
+    // so the page can show the roster summary. The player clicks Continue
+    // (calls advance()) to leave the phase.
+    setSnapshot(draft);
+    await persist(draft);
+  }, [snapshot, persist]);
+
+  const declineCCDelegate = useCallback(async (stateId: string, politicianId: string) => {
+    if (!snapshot) return;
+    const draft: FullGameSnapshot = JSON.parse(JSON.stringify(snapshot));
+    playerCCDelegateDecline(draft, stateId, politicianId);
+    // After declining, the same slot is still open — re-run to either present
+    // the next player payload (same colony, smaller pool) or surface AI flow.
+    const result = runCurrentPhase(draft);
+    if (result.needsPlayerInput === 'ccBuilder') {
+      setSnapshot(draft);
+      await persist(draft);
+      return;
+    }
+    setSnapshot(draft);
+    await persist(draft);
+  }, [snapshot, persist]);
+
   const setCareerTrack = useCallback(async (politicianId: string, track: Politician['careerTrack']) => {
     if (!snapshot) return;
     const draft: FullGameSnapshot = JSON.parse(JSON.stringify(snapshot));
@@ -552,6 +613,8 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
     importDraftDataset,
     clearDraftDataset,
     admitTerritory,
+    pickCCDelegate,
+    declineCCDelegate,
     resetGame,
     theme,
   };

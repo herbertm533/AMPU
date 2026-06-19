@@ -9,7 +9,8 @@ import { buildEraEventsForYear } from '../data/eraEvents1856';
 import { FACTIONS_1772 } from '../data/factions1772';
 import { selectEraGraphNode, pickAIResponse, isAutoResolved, validate as validateEraGraph } from './eraGraph';
 import { admitState } from './territories';
-import { appointDelegates, electCCPresident, appointCCCommittees, generateCCBills, voteCC, CC_TERM_YEARS, numberToOrdinal } from './continentalCongress';
+import { appointDelegates, electCCPresident, appointCCCommittees, generateCCBills, voteCC, CC_TERM_YEARS, numberToOrdinal, ensureCC } from './continentalCongress';
+import { cc1774GateMet, colonyOrder1774, selectingFactionFor, eligiblePoolFor, aiPickDelegate, commitDelegate } from './firstContinentalCongress';
 import { startRevWar, runRevWarBattles, applyTreatyOfParis, applyFrenchAlliance } from './revolutionaryWar';
 import { makeConvention } from './constitutionalConvention';
 import { instantiateDraftees } from '../data/draftImport';
@@ -2428,6 +2429,17 @@ function applyPostEffects(snap: FullGameSnapshot, event: EraEvent): void {
       case 'assembleCC': {
         const ccExisting = snap.game.continentalCongress;
         if (ccExisting && ccExisting.delegates.length > 0) break;
+        // 1772 First-CC gate-swap: defer to phase 2.9.6's interactive builder
+        // when the Intolerable Acts -> "Convene CC" path is the trigger.
+        if (
+          snap.game.scenarioId === '1772'
+          && event.templateId === 'intolerable_acts'
+          && event.chosenResponseId === 'ok'
+        ) {
+          addLog(snap, '2.4.3', 'system',
+            'The First Continental Congress is called to meet at Philadelphia. Delegations will be chosen by the colonies.');
+          break;
+        }
         appointDelegates(snap);
         electCCPresident(snap);
         appointCCCommittees(snap);
@@ -3038,7 +3050,22 @@ export function runPhase_2_9_5_Governors(snap: FullGameSnapshot): void {
   }
 }
 
-export function runPhase_2_9_6_Congressional(snap: FullGameSnapshot): void {
+export interface CCBuilderPayload {
+  stateId: string;
+  pool: Politician[];
+  selectingFactionId: string;
+  declineRequired?: boolean;
+}
+
+export function runPhase_2_9_6_Congressional(
+  snap: FullGameSnapshot,
+): { needsPlayer?: boolean; payload?: CCBuilderPayload } | void {
+  // 1772 First-CC builder gate-swap (AC #3). When the gate is met, the
+  // interactive builder owns this phase; the 1856 Senate/House logic below
+  // does not run.
+  if (snap.game.scenarioId === '1772' && cc1774GateMet(snap)) {
+    return runCCBuilderWalk(snap);
+  }
   // 1/3 of senators every 2 years (class equal to year mod). House: all reps every 2.
   const senateClass = ((snap.game.year - 1856) / 2) % 3 + 1;
   for (const s of snap.states) {
@@ -3083,6 +3110,170 @@ export function runPhase_2_9_6_Congressional(snap: FullGameSnapshot): void {
     }
   }
   addLog(snap, '2.9.6', 'election', 'Congressional elections complete.');
+}
+
+// ============================================================================
+// 1772 First Continental Congress builder (phase 2.9.6 gate-swap)
+// ============================================================================
+
+// Drives the alphabetical colony walk. For each colony: resolve the selecting
+// faction + eligibility pool; if the selecting faction is the player, return
+// `needsPlayer` and let the UI take over. Otherwise AI picks all slots inline
+// and the loop advances to the next colony. On completion writes the capstone
+// log per AC #26 and clears the cursor.
+function runCCBuilderWalk(
+  snap: FullGameSnapshot,
+): { needsPlayer?: boolean; payload?: CCBuilderPayload } | void {
+  const cc = ensureCC(snap);
+  // Durability check (AC #27): if the CC is already seated and no cursor is
+  // active, treat the phase as already-built and exit cleanly.
+  if (cc.delegates.length > 0 && snap.game.ccBuilderCursor == null) {
+    return;
+  }
+  if (snap.game.ccBuilderCursor == null) {
+    snap.game.ccBuilderCursor = { colonyIdx: 0, slotIdx: 0 };
+  }
+  const order = colonyOrder1774(snap);
+  const cursor = snap.game.ccBuilderCursor;
+
+  while (cursor.colonyIdx < order.length) {
+    const state = order[cursor.colonyIdx];
+    const slots = state.ccDelegateSlots ?? 2;
+
+    // Slot done for this colony — roll forward.
+    if (cursor.slotIdx >= slots) {
+      cursor.colonyIdx += 1;
+      cursor.slotIdx = 0;
+      cursor.excludedThisColony = undefined;
+      continue;
+    }
+
+    const alreadySeated = new Set<string>(cc.delegates.map((d) => d.politicianId));
+    for (const ex of cursor.excludedThisColony ?? []) alreadySeated.add(ex);
+
+    let pool = eligiblePoolFor(snap, state, alreadySeated);
+    const { factionId: selectingFactionId } = selectingFactionFor(snap, state);
+
+    // Edge case: 0 eligible even after fallback — log and skip the colony.
+    if (pool.length === 0) {
+      addLog(
+        snap,
+        '2.9.6',
+        'event',
+        `No suitable delegates available — ${state.name} sends no representatives this session.`,
+      );
+      cursor.colonyIdx += 1;
+      cursor.slotIdx = 0;
+      cursor.excludedThisColony = undefined;
+      continue;
+    }
+
+    if (selectingFactionId === snap.game.playerFactionId) {
+      return {
+        needsPlayer: true,
+        payload: {
+          stateId: state.id,
+          pool,
+          selectingFactionId,
+        },
+      };
+    }
+
+    // AI pick (inline).
+    const choice = aiPickDelegate(snap, state, pool, selectingFactionId, alreadySeated);
+    if (!choice) {
+      // Defensive: no candidate at all (pool was non-empty but aiPickDelegate
+      // returned null). Skip the colony to avoid an infinite loop.
+      addLog(
+        snap,
+        '2.9.6',
+        'event',
+        `No suitable delegates available — ${state.name} sends no representatives this session.`,
+      );
+      cursor.colonyIdx += 1;
+      cursor.slotIdx = 0;
+      cursor.excludedThisColony = undefined;
+      continue;
+    }
+    // AC #16 decline-log: if a higher-ranked T1 politician was passed over
+    // because they were >= 4 years invested in a career track, log it once.
+    // (Cheaper than threading the skipped list out of aiPickDelegate.)
+    const declined = pool.filter(
+      (p) => p.factionId === selectingFactionId && p.careerTrack != null && p.careerTrackYears >= 4,
+    );
+    for (const d of declined) {
+      if (d.id === choice.politicianId) continue;
+      addLog(
+        snap,
+        '2.9.6',
+        'event',
+        `${d.firstName} ${d.lastName} declines appointment to the Continental Congress.`,
+      );
+    }
+
+    commitDelegate(snap, state.id, choice.politicianId, choice.tier, selectingFactionId);
+  }
+
+  // Walk complete. Capstone log per AC #26.
+  const seated = cc.delegates.length;
+  const colonies = new Set(cc.delegates.map((d) => d.stateId)).size;
+  addLog(
+    snap,
+    '2.9.6',
+    'appointment',
+    `First Continental Congress seated: ${seated} delegates from ${colonies} colonies.`,
+  );
+  cc.assemblyOrdinal = 1;
+  snap.game.ccBuilderCursor = undefined;
+}
+
+// Player-action helpers — UI invokes these via the GameContext callbacks. After
+// each helper, the caller re-runs `runCurrentPhase` to either resume the colony
+// walk (next AI slot/colony) or surface the next `needsPlayer` payload.
+
+export function playerCCDelegatePick(
+  snap: FullGameSnapshot,
+  stateId: string,
+  politicianId: string,
+): void {
+  const cursor = snap.game.ccBuilderCursor;
+  if (!cursor) return;
+  const order = colonyOrder1774(snap);
+  const state = order[cursor.colonyIdx];
+  if (!state || state.id !== stateId) return;
+  const { factionId: selectingFactionId } = selectingFactionFor(snap, state);
+  if (selectingFactionId !== snap.game.playerFactionId) return;
+  const alreadySeated = new Set<string>(
+    (snap.game.continentalCongress?.delegates ?? []).map((d) => d.politicianId),
+  );
+  for (const ex of cursor.excludedThisColony ?? []) alreadySeated.add(ex);
+  const pool = eligiblePoolFor(snap, state, alreadySeated);
+  if (!pool.find((p) => p.id === politicianId)) return;
+  commitDelegate(snap, state.id, politicianId, 'Player', selectingFactionId);
+}
+
+export function playerCCDelegateDecline(
+  snap: FullGameSnapshot,
+  stateId: string,
+  politicianId: string,
+): void {
+  const cursor = snap.game.ccBuilderCursor;
+  if (!cursor) return;
+  const order = colonyOrder1774(snap);
+  const state = order[cursor.colonyIdx];
+  if (!state || state.id !== stateId) return;
+  const p = snap.politicians.find((pp) => pp.id === politicianId);
+  if (!p) return;
+  if (!cursor.excludedThisColony) cursor.excludedThisColony = [];
+  if (!cursor.excludedThisColony.includes(politicianId)) {
+    cursor.excludedThisColony.push(politicianId);
+  }
+  addLog(
+    snap,
+    '2.9.6',
+    'event',
+    `${p.firstName} ${p.lastName} declines appointment to the Continental Congress.`,
+  );
 }
 
 // ============================================================================
