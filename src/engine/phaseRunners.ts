@@ -3057,9 +3057,22 @@ export interface CCBuilderPayload {
   declineRequired?: boolean;
 }
 
+export interface CCAIPickPayload {
+  stateId: string;
+  politicianId: string;
+  tier: 'T1' | 'T2' | 'T3' | 'Wild';
+  selectingFactionId: string;
+  declinedThisStep: { politicianId: string; tier: 'T1' | 'T2' | 'T3' | 'Wild' }[];
+}
+
+export type CCBuilderResult =
+  | { needsPlayer: true; payload: CCBuilderPayload }
+  | { needsAIConfirm: true; pendingAIPick: CCAIPickPayload }
+  | void;
+
 export function runPhase_2_9_6_Congressional(
   snap: FullGameSnapshot,
-): { needsPlayer?: boolean; payload?: CCBuilderPayload } | void {
+): CCBuilderResult {
   // 1772 First-CC builder gate-swap (AC #3). When the gate is met, the
   // interactive builder owns this phase; the 1856 Senate/House logic below
   // does not run.
@@ -3118,12 +3131,11 @@ export function runPhase_2_9_6_Congressional(
 
 // Drives the alphabetical colony walk. For each colony: resolve the selecting
 // faction + eligibility pool; if the selecting faction is the player, return
-// `needsPlayer` and let the UI take over. Otherwise AI picks all slots inline
-// and the loop advances to the next colony. On completion writes the capstone
-// log per AC #26 and clears the cursor.
-function runCCBuilderWalk(
-  snap: FullGameSnapshot,
-): { needsPlayer?: boolean; payload?: CCBuilderPayload } | void {
+// `needsPlayer`. For AI colonies, resolve the slot's pick and stash it on the
+// cursor as `pendingAIPick` — the UI shows an AI-Pick Card and calls
+// `confirmCCAIPick` to commit. AC #22: AI picks animate one at a time.
+// On full completion writes the capstone log per AC #26 and clears the cursor.
+function runCCBuilderWalk(snap: FullGameSnapshot): CCBuilderResult {
   const cc = ensureCC(snap);
   // Durability check (AC #27): if the CC is already seated and no cursor is
   // active, treat the phase as already-built and exit cleanly.
@@ -3135,6 +3147,18 @@ function runCCBuilderWalk(
   }
   const order = colonyOrder1774(snap);
   const cursor = snap.game.ccBuilderCursor;
+
+  // If a pendingAIPick is already staged (e.g. save/reload mid-card), surface
+  // it again without re-rolling AI — keeps the card on the same politician.
+  if (cursor.pendingAIPick) {
+    return {
+      needsAIConfirm: true,
+      pendingAIPick: {
+        ...cursor.pendingAIPick,
+        declinedThisStep: cursor.pendingAIPick.declinedThisStep ?? [],
+      },
+    };
+  }
 
   while (cursor.colonyIdx < order.length) {
     const state = order[cursor.colonyIdx];
@@ -3151,7 +3175,7 @@ function runCCBuilderWalk(
     const alreadySeated = new Set<string>(cc.delegates.map((d) => d.politicianId));
     for (const ex of cursor.excludedThisColony ?? []) alreadySeated.add(ex);
 
-    let pool = eligiblePoolFor(snap, state, alreadySeated);
+    const pool = eligiblePoolFor(snap, state, alreadySeated);
     const { factionId: selectingFactionId } = selectingFactionFor(snap, state);
 
     // Edge case: 0 eligible even after fallback — log and skip the colony.
@@ -3179,7 +3203,8 @@ function runCCBuilderWalk(
       };
     }
 
-    // AI pick (inline).
+    // AI slot. Resolve the pick, stage it on the cursor, return so the UI can
+    // animate the AI-Pick Card. The actual commit happens in `confirmCCAIPick`.
     const choice = aiPickDelegate(snap, state, pool, selectingFactionId, alreadySeated);
     if (!choice) {
       // Defensive: no candidate at all (pool was non-empty but aiPickDelegate
@@ -3195,23 +3220,34 @@ function runCCBuilderWalk(
       cursor.excludedThisColony = undefined;
       continue;
     }
-    // AC #16 decline-log: if a higher-ranked T1 politician was passed over
-    // because they were >= 4 years invested in a career track, log it once.
-    // (Cheaper than threading the skipped list out of aiPickDelegate.)
-    const declined = pool.filter(
-      (p) => p.factionId === selectingFactionId && p.careerTrack != null && p.careerTrackYears >= 4,
-    );
-    for (const d of declined) {
-      if (d.id === choice.politicianId) continue;
-      addLog(
-        snap,
-        '2.9.6',
-        'event',
-        `${d.firstName} ${d.lastName} declines appointment to the Continental Congress.`,
-      );
+
+    // Dedupe declines that have already been logged for this colony so the
+    // 4-slot AI-colony bug (same politician logged per slot) cannot recur.
+    if (!cursor.excludedThisColony) cursor.excludedThisColony = [];
+    const newDeclines: { politicianId: string; tier: 'T1' | 'T2' | 'T3' | 'Wild' }[] = [];
+    for (const d of choice.declinedThisStep) {
+      if (cursor.excludedThisColony.includes(d.politicianId)) continue;
+      if (d.politicianId === choice.politicianId) continue;
+      newDeclines.push(d);
     }
 
-    commitDelegate(snap, state.id, choice.politicianId, choice.tier, selectingFactionId);
+    cursor.pendingAIPick = {
+      stateId: state.id,
+      politicianId: choice.politicianId,
+      tier: choice.tier,
+      selectingFactionId,
+      declinedThisStep: newDeclines,
+    };
+    return {
+      needsAIConfirm: true,
+      pendingAIPick: {
+        stateId: state.id,
+        politicianId: choice.politicianId,
+        tier: choice.tier,
+        selectingFactionId,
+        declinedThisStep: newDeclines,
+      },
+    };
   }
 
   // Walk complete. Capstone log per AC #26.
@@ -3225,6 +3261,43 @@ function runCCBuilderWalk(
   );
   cc.assemblyOrdinal = 1;
   snap.game.ccBuilderCursor = undefined;
+}
+
+// MUTATING. Commits the AI-Pick Card's pending pick (R4 — AC #22). Logs declines
+// from `pendingAIPick.declinedThisStep` (deduped per-colony via
+// `excludedThisColony` so AC #25 fires once per politician per colony, covering
+// all tiers per R3). Clears `pendingAIPick`. Then re-invokes the walker so the
+// caller receives the NEXT step (pendingAIPick for the next AI slot, needsPlayer
+// for a player colony, or void on phase complete).
+export function confirmCCAIPick(snap: FullGameSnapshot): CCBuilderResult {
+  const cursor = snap.game.ccBuilderCursor;
+  if (!cursor || !cursor.pendingAIPick) {
+    // Nothing to confirm. Forward to the walker.
+    return runCCBuilderWalk(snap);
+  }
+  const pending = cursor.pendingAIPick;
+  // AC #25: emit decline logs for every politician this AI step skipped via the
+  // career-track rule, then stamp them into excludedThisColony so a later slot
+  // in the same colony cannot re-log the same name.
+  if (!cursor.excludedThisColony) cursor.excludedThisColony = [];
+  for (const d of pending.declinedThisStep ?? []) {
+    if (cursor.excludedThisColony.includes(d.politicianId)) continue;
+    cursor.excludedThisColony.push(d.politicianId);
+    const p = snap.politicians.find((pp) => pp.id === d.politicianId);
+    if (!p) continue;
+    addLog(
+      snap,
+      '2.9.6',
+      'event',
+      `${p.firstName} ${p.lastName} declines appointment to the Continental Congress.`,
+      { tier: d.tier },
+    );
+  }
+  // Commit and clear the pending field. `commitDelegate` advances `slotIdx`.
+  commitDelegate(snap, pending.stateId, pending.politicianId, pending.tier, pending.selectingFactionId);
+  cursor.pendingAIPick = undefined;
+  // Re-invoke the walker for the next step.
+  return runCCBuilderWalk(snap);
 }
 
 // Player-action helpers — UI invokes these via the GameContext callbacks. After

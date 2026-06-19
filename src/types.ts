@@ -824,7 +824,23 @@ export interface GameState {
   relocationAttempts?: { year: number; counts: Record<string, number> };
   // Transient cursor for the 1772 First-CC builder (phase 2.9.6). Cleared at
   // phase end. Indices reference the alphabetical (by `abbr`) colony order.
-  ccBuilderCursor?: { colonyIdx: number; slotIdx: number; excludedThisColony?: string[] };
+  // `excludedThisColony` collects per-colony declines (player) AND per-colony
+  // AI-already-logged decline ids so AC #25 logs once-per-politician-per-colony.
+  // `pendingAIPick` holds the AI's resolved pick AFTER `aiPickDelegate` ran but
+  // BEFORE commitment — UI shows the AI-Pick Card while populated, then
+  // `confirmCCAIPick` commits and clears the field. See AC #22.
+  ccBuilderCursor?: {
+    colonyIdx: number;
+    slotIdx: number;
+    excludedThisColony?: string[];
+    pendingAIPick?: {
+      stateId: string;
+      politicianId: string;
+      tier: 'T1' | 'T2' | 'T3' | 'Wild';
+      selectingFactionId: string;
+      declinedThisStep?: { politicianId: string; tier: 'T1' | 'T2' | 'T3' | 'Wild' }[];
+    };
+  };
   ideologyShifts?: IdeologyShiftEntry[];
   ideologyAttempts?: { year: number; counts: Record<string, number> };
   conversions?: ConversionEntry[];

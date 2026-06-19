@@ -128,15 +128,39 @@ function personalityIdeology(personality: 'LW' | 'Center' | 'RW'): Politician['i
   return 'Moderate';
 }
 
-// AC #14, #15, #16. AI walks T1 -> T2 -> T3, applies 12% wild-card, applies
-// deterministic decline for careerTrackYears >= 4.
+// AC #21 helper. Pure tier classifier shared between `aiPickDelegate` and the
+// page's pool sort. T1 = own faction; T2 = same party, different faction; T3 =
+// other party with ideology distance <= 2 to the selecting faction's
+// personality band; Wild = everyone else.
+export function classifyTier(
+  politician: Politician,
+  selectingFactionId: string,
+  factions: FullGameSnapshot['factions'],
+): 'T1' | 'T2' | 'T3' | 'Wild' {
+  const selectingFaction = factions.find((f) => f.id === selectingFactionId);
+  if (!selectingFaction) return 'Wild';
+  if (politician.factionId === selectingFactionId) return 'T1';
+  if (politician.partyId === selectingFaction.partyId) return 'T2';
+  const center = personalityIdeology(selectingFaction.personality);
+  if (ideologyDistance(politician.ideology, center) <= 2) return 'T3';
+  return 'Wild';
+}
+
+// AC #14, #15, #16, #25. AI walks T1 -> T2 -> T3, applies 12% wild-card, applies
+// deterministic decline for careerTrackYears >= 4. Every politician the AI
+// evaluates and skips for the career-track rule is reported in `declinedThisStep`
+// (caller dedupes per-colony before logging — AC #25 covers all tiers, not only T1).
 export function aiPickDelegate(
   snap: FullGameSnapshot,
   _state: State,
   pool: Politician[],
   selectingFactionId: string,
   _alreadySeated: Set<string>,
-): { politicianId: string; tier: 'T1' | 'T2' | 'T3' | 'Wild' } | null {
+): {
+  politicianId: string;
+  tier: 'T1' | 'T2' | 'T3' | 'Wild';
+  declinedThisStep: { politicianId: string; tier: 'T1' | 'T2' | 'T3' | 'Wild' }[];
+} | null {
   const selectingFaction = snap.factions.find((f) => f.id === selectingFactionId);
   if (!selectingFaction) return null;
   const usable = pool.filter((p) => !applyAIDeclineRule(p));
@@ -144,6 +168,21 @@ export function aiPickDelegate(
   // reluctantly serves the lowest-invested politician (edge case 2).
   const candidates = usable.length > 0 ? usable : pool;
   if (candidates.length === 0) return null;
+
+  // AC #25 — every politician the deterministic walk would have skipped via the
+  // career-track rule is recorded with its tier so the runner can log it.
+  // We only emit declines when there IS a usable candidate to serve (otherwise
+  // edge-case 2 fires and one of these "declined" politicians reluctantly serves).
+  const declinedThisStep: { politicianId: string; tier: 'T1' | 'T2' | 'T3' | 'Wild' }[] = [];
+  if (usable.length > 0) {
+    for (const p of pool) {
+      if (!applyAIDeclineRule(p)) continue;
+      declinedThisStep.push({
+        politicianId: p.id,
+        tier: classifyTier(p, selectingFactionId, snap.factions),
+      });
+    }
+  }
 
   // Tier classifiers.
   const t1 = candidates.filter((p) => p.factionId === selectingFactionId);
@@ -165,13 +204,13 @@ export function aiPickDelegate(
     const wildcards = candidates.filter((p) => !deterministicTierSet.has(p.id));
     if (wildcards.length > 0) {
       const chosen = pick(wildcards);
-      return { politicianId: chosen.id, tier: 'Wild' };
+      return { politicianId: chosen.id, tier: 'Wild', declinedThisStep };
     }
   }
 
   if (t1.length > 0) {
     const sorted = [...t1].sort((a, b) => b.pvCache - a.pvCache);
-    return { politicianId: sorted[0].id, tier: 'T1' };
+    return { politicianId: sorted[0].id, tier: 'T1', declinedThisStep };
   }
   if (t2.length > 0) {
     const sorted = [...t2].sort((a, b) => {
@@ -179,7 +218,7 @@ export function aiPickDelegate(
       if (di !== 0) return di;
       return b.pvCache - a.pvCache;
     });
-    return { politicianId: sorted[0].id, tier: 'T2' };
+    return { politicianId: sorted[0].id, tier: 'T2', declinedThisStep };
   }
   if (t3.length > 0) {
     const sorted = [...t3].sort((a, b) => {
@@ -187,12 +226,12 @@ export function aiPickDelegate(
       if (di !== 0) return di;
       return b.pvCache - a.pvCache;
     });
-    return { politicianId: sorted[0].id, tier: 'T3' };
+    return { politicianId: sorted[0].id, tier: 'T3', declinedThisStep };
   }
 
   // No tier match — last-resort pick by PV from anyone left.
   const sorted = [...candidates].sort((a, b) => b.pvCache - a.pvCache);
-  return { politicianId: sorted[0].id, tier: 'T3' };
+  return { politicianId: sorted[0].id, tier: 'T3', declinedThisStep };
 }
 
 // MUTATING. Appends to cc.delegates, clears careerTrack/careerTrackYears

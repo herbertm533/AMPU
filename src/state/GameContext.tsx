@@ -5,7 +5,7 @@ import { loadSnapshot, saveSnapshot, clearDb, exportJson, importJson } from '../
 import { build1856Scenario } from '../data/scenario1856';
 import { build1772Scenario } from '../data/scenario1772';
 import { runCurrentPhase, advancePhase } from '../engine/engine';
-import { playerDraftPick, resolveEraEvent, simOneDraftPick, autoPickForPlayer, setPlayerCareerTrack, attemptPlayerRelocation, attemptPlayerIdeologyShift, attemptPlayerConversion, assignProtege, releaseProtege, playerCCDelegatePick, playerCCDelegateDecline } from '../engine/phaseRunners';
+import { playerDraftPick, resolveEraEvent, simOneDraftPick, autoPickForPlayer, setPlayerCareerTrack, attemptPlayerRelocation, attemptPlayerIdeologyShift, attemptPlayerConversion, assignProtege, releaseProtege, playerCCDelegatePick, playerCCDelegateDecline, confirmCCAIPick } from '../engine/phaseRunners';
 import { autoFillCPUVotes, applyConvention } from '../engine/constitutionalConvention';
 import { parseDraftCsv, type ParseResult } from '../data/draftImport';
 import { admitState } from '../engine/territories';
@@ -46,6 +46,7 @@ interface GameContextValue {
   admitTerritory: (stateId: string) => Promise<void>;
   pickCCDelegate: (stateId: string, politicianId: string) => Promise<void>;
   declineCCDelegate: (stateId: string, politicianId: string) => Promise<void>;
+  confirmCCAIPick: () => Promise<void>;
   resetGame: () => Promise<void>;
   theme: 'light' | 'dark';
 }
@@ -231,9 +232,10 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
       await persist(draft);
       return;
     }
-    if (result.needsPlayerInput === 'ccBuilder') {
-      // The First-CC builder is a page-routed surface. App.tsx auto-navigates
-      // via the cursor sentinel. Persist and let the page take over.
+    if (result.needsPlayerInput === 'ccBuilder' || result.needsPlayerInput === 'ccAIConfirm') {
+      // The First-CC builder owns this surface for both player-pick colonies
+      // and AI-Pick Card animation steps. App.tsx auto-navigates via the
+      // cursor sentinel. Persist and let the page take over.
       setSnapshot(draft);
       await persist(draft);
       return;
@@ -502,9 +504,10 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
     if (!snapshot) return;
     const draft: FullGameSnapshot = JSON.parse(JSON.stringify(snapshot));
     playerCCDelegatePick(draft, stateId, politicianId);
-    // Re-run the phase: either next player slot/colony or AI drains to the end.
+    // Re-run the phase. AI slots return as `ccAIConfirm` (one-pick-at-a-time
+    // animation); a follow-on player colony returns as `ccBuilder`.
     const result = runCurrentPhase(draft);
-    if (result.needsPlayerInput === 'ccBuilder') {
+    if (result.needsPlayerInput === 'ccBuilder' || result.needsPlayerInput === 'ccAIConfirm') {
       setSnapshot(draft);
       await persist(draft);
       return;
@@ -523,11 +526,23 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
     // After declining, the same slot is still open — re-run to either present
     // the next player payload (same colony, smaller pool) or surface AI flow.
     const result = runCurrentPhase(draft);
-    if (result.needsPlayerInput === 'ccBuilder') {
+    if (result.needsPlayerInput === 'ccBuilder' || result.needsPlayerInput === 'ccAIConfirm') {
       setSnapshot(draft);
       await persist(draft);
       return;
     }
+    setSnapshot(draft);
+    await persist(draft);
+  }, [snapshot, persist]);
+
+  const confirmCCAIPickAction = useCallback(async () => {
+    if (!snapshot) return;
+    const draft: FullGameSnapshot = JSON.parse(JSON.stringify(snapshot));
+    // confirmCCAIPick commits the staged pending pick, logs deduped declines,
+    // re-invokes the walker, and mutates the cursor so the next step (AI card,
+    // player payload, or done) is reflected on the snapshot. The page reads
+    // the cursor on re-render to decide which surface to show.
+    confirmCCAIPick(draft);
     setSnapshot(draft);
     await persist(draft);
   }, [snapshot, persist]);
@@ -615,6 +630,7 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
     admitTerritory,
     pickCCDelegate,
     declineCCDelegate,
+    confirmCCAIPick: confirmCCAIPickAction,
     resetGame,
     theme,
   };

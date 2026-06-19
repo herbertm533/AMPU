@@ -1,15 +1,37 @@
 import { useState } from 'react';
 import { useGame } from '../state/GameContext';
 import type { Politician } from '../types';
-import { formatPartyId } from '../engine/labels';
 import {
   cc1774GateMet,
+  classifyTier,
   colonyOrder1774,
   eligiblePoolFor,
   selectingBodyLabel,
   selectingFactionFor,
 } from '../engine/firstContinentalCongress';
 import { CCDelegateDeclineModal } from '../components/CCDelegateDeclineModal';
+
+// Static tier-rationale flavor map. AC #22 / R4: shown on the AI-Pick Card.
+// Stays in the page (UI flavor), not the engine.
+function aiPickRationale(
+  tier: 'T1' | 'T2' | 'T3' | 'Wild',
+  selectingFactionName: string,
+  politicianName: string,
+): string {
+  switch (tier) {
+    case 'T1':
+      return `${selectingFactionName} nominates one of their own.`;
+    case 'T2':
+      return `${selectingFactionName} reaches across ideology to ${politicianName}.`;
+    case 'T3':
+      return 'A cross-faction compromise candidate.';
+    case 'Wild':
+      return 'An unexpected wild-card choice.';
+  }
+}
+
+// AC #21 / R5. Tier sort order for pool display.
+const TIER_RANK: Record<'T1' | 'T2' | 'T3' | 'Wild', number> = { T1: 0, T2: 1, T3: 2, Wild: 3 };
 
 // Derive a Patriot / Moderate / Loyalist flavor band from ideology. F5-binding:
 // these strings are the only "party-like" UI labels allowed on this page.
@@ -37,7 +59,7 @@ const TIER_BADGE: Record<string, { label: string; tone: string }> = {
 };
 
 export function ContinentalCongressBuilderPage(): JSX.Element {
-  const { snapshot, advance, pickCCDelegate, declineCCDelegate } = useGame();
+  const { snapshot, advance, pickCCDelegate, declineCCDelegate, confirmCCAIPick } = useGame();
   const [pendingDecline, setPendingDecline] = useState<Politician | null>(null);
 
   if (!snapshot) return <div />;
@@ -90,11 +112,90 @@ export function ContinentalCongressBuilderPage(): JSX.Element {
   for (const ex of cursor.excludedThisColony ?? []) alreadySeated.add(ex);
   const pool = eligiblePoolFor(snapshot, state, alreadySeated);
 
-  // Sort: PV desc (player colonies). Tier headers aren't computed here for AI
-  // colonies — the AI's decision happens inside the runner already.
-  const sortedPool = [...pool].sort((a, b) => b.pvCache - a.pvCache);
+  // R5 / AC #21. Sort by tier (T1 → T2 → T3 → Wild), then PV desc within tier.
+  // The same `classifyTier` helper drives the AI's decision and this UI sort —
+  // no logic duplication.
+  const sortedPool = [...pool].sort((a, b) => {
+    const ta = classifyTier(a, selectingFactionId, snapshot.factions);
+    const tb = classifyTier(b, selectingFactionId, snapshot.factions);
+    if (TIER_RANK[ta] !== TIER_RANK[tb]) return TIER_RANK[ta] - TIER_RANK[tb];
+    return b.pvCache - a.pvCache;
+  });
 
   const seatedThisColony = seatedDelegates.filter((d) => d.stateId === state.id);
+
+  // R4 AI-Pick Card surface: the engine has staged the AI's pick but not
+  // committed yet. Show the card with rationale + Continue. On Continue the
+  // engine commits, logs declines, and surfaces the next step.
+  if (cursor.pendingAIPick) {
+    const pa = cursor.pendingAIPick;
+    const pickedPol = snapshot.politicians.find((pp) => pp.id === pa.politicianId);
+    const pickedFaction = snapshot.factions.find((ff) => ff.id === pa.selectingFactionId);
+    const tierMeta = TIER_BADGE[pa.tier];
+    const rationale = pickedPol
+      ? aiPickRationale(pa.tier, pickedFaction?.name ?? pa.selectingFactionId, `${pickedPol.firstName} ${pickedPol.lastName}`)
+      : '';
+    const declinedRows = (pa.declinedThisStep ?? []).map((d) => {
+      const dp = snapshot.politicians.find((pp) => pp.id === d.politicianId);
+      return { name: dp ? `${dp.firstName} ${dp.lastName}` : '—', tier: d.tier };
+    });
+    return (
+      <div className="space-y-4">
+        <div className="rounded border border-amber-400 dark:border-amber-700 bg-amber-50 dark:bg-amber-900/30 p-3">
+          <div className="text-xs uppercase tracking-wide text-amber-700 dark:text-amber-400">
+            Continental Congress (1774) · Philadelphia
+          </div>
+          <h2 className="text-lg font-bold">{state.name} · Selecting {slotIdx + 1} of {slots}</h2>
+          <p className="text-sm text-slate-700 dark:text-slate-300 mt-1 italic">{selectingBodyLabel(state.id)}</p>
+        </div>
+
+        <div className="rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 p-4 space-y-3">
+          <div className="flex flex-wrap items-center gap-2 text-xs uppercase tracking-wide text-slate-500">
+            <span>AI selects</span>
+            <span className={`rounded px-1.5 py-0.5 ${tierMeta.tone}`}>{tierMeta.label}</span>
+          </div>
+          <div className="text-lg font-bold">
+            {pickedPol ? `${pickedPol.firstName} ${pickedPol.lastName}` : '—'}
+          </div>
+          <div className="flex flex-wrap items-center gap-2 text-xs">
+            <span className="text-slate-500">Faction:</span>
+            <span className="font-semibold">{pickedFaction?.name ?? pa.selectingFactionId}</span>
+            {pickedPol && (
+              <>
+                <span className="text-slate-500">·</span>
+                <span className="text-slate-500">Ideology:</span>
+                <span className="font-semibold">{pickedPol.ideology}</span>
+              </>
+            )}
+          </div>
+          <p className="text-sm italic text-slate-700 dark:text-slate-300">{rationale}</p>
+
+          {declinedRows.length > 0 && (
+            <div className="border-t border-slate-200 dark:border-slate-700 pt-2">
+              <div className="text-xs uppercase tracking-wide text-slate-500 mb-1">Declines this step (career-track ≥ 4y)</div>
+              <ul className="text-xs text-slate-600 dark:text-slate-300 space-y-0.5">
+                {declinedRows.map((r, i) => (
+                  <li key={i}>
+                    <span className="font-semibold">{r.name}</span>
+                    <span className={`ml-2 rounded px-1.5 ${TIER_BADGE[r.tier].tone}`}>{TIER_BADGE[r.tier].label}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          <div className="flex justify-end">
+            <button
+              onClick={() => void confirmCCAIPick()}
+              className="rounded bg-blue-600 hover:bg-blue-700 text-white px-4 py-1.5 text-sm font-semibold"
+            >
+              Continue
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const onSeat = (p: Politician): void => {
     if (p.careerTrack != null && p.careerTrackYears >= 1) {
@@ -165,19 +266,12 @@ export function ContinentalCongressBuilderPage(): JSX.Element {
       <div className="rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 overflow-hidden">
         <div className="px-3 py-2 border-b border-slate-300 dark:border-slate-700 flex items-center justify-between">
           <h3 className="font-semibold text-sm">Eligible Pool ({sortedPool.length})</h3>
-          {!isPlayerColony && (
-            <button
-              onClick={() => advance()}
-              className="rounded bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 text-xs font-semibold"
-            >
-              Continue
-            </button>
-          )}
         </div>
         <div className="overflow-auto" style={{ maxHeight: '60vh' }}>
           <table className="w-full text-sm">
             <thead className="bg-slate-100 dark:bg-slate-700/50 sticky top-0">
               <tr>
+                <th className="px-2 py-1.5 text-left">Tier</th>
                 <th className="px-2 py-1.5 text-left">Name</th>
                 <th className="px-2 py-1.5 text-left">Colony</th>
                 <th className="px-2 py-1.5 text-left">Faction</th>
@@ -193,15 +287,19 @@ export function ContinentalCongressBuilderPage(): JSX.Element {
               {sortedPool.map((p) => {
                 const f = snapshot.factions.find((ff) => ff.id === p.factionId);
                 const band = patriotBand(p.ideology);
-                const partyLabel = p.partyId ? formatPartyId(p.partyId, '1772', g.year) : '—';
+                const tierKey = classifyTier(p, selectingFactionId, snapshot.factions);
+                const tierMeta = TIER_BADGE[tierKey];
                 const trackText = p.careerTrack ? `${p.careerTrack} · ${p.careerTrackYears}y` : '—';
                 return (
                   <tr key={p.id} className="border-b border-slate-200 dark:border-slate-700/50 hover:bg-slate-50 dark:hover:bg-slate-700/30">
+                    <td className="px-2 py-1">
+                      <span className={`rounded px-1.5 text-[10px] font-bold uppercase ${tierMeta.tone}`}>{tierKey}</span>
+                    </td>
                     <td className="px-2 py-1 font-semibold">{p.firstName} {p.lastName}</td>
                     <td className="px-2 py-1">{state.abbr}</td>
                     <td className="px-2 py-1 text-xs">
                       {f?.name ?? '—'}
-                      <span className="ml-1 text-slate-400">({partyLabel})</span>
+                      <span className="ml-1 text-slate-400">({p.ideology})</span>
                     </td>
                     <td className="px-2 py-1">
                       <span className={`rounded px-1.5 text-[10px] font-bold uppercase ${band.tone}`}>{band.label}</span>
@@ -224,7 +322,7 @@ export function ContinentalCongressBuilderPage(): JSX.Element {
                 );
               })}
               {sortedPool.length === 0 && (
-                <tr><td colSpan={9} className="px-3 py-3 text-sm text-slate-500 italic">No eligible politicians in this colony.</td></tr>
+                <tr><td colSpan={10} className="px-3 py-3 text-sm text-slate-500 italic">No eligible politicians in this colony.</td></tr>
               )}
             </tbody>
           </table>

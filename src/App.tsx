@@ -140,6 +140,7 @@ function Shell(): JSX.Element {
     snapshot?.game.scenarioId,
     snapshot?.game.ccBuilderCursor?.colonyIdx,
     snapshot?.game.ccBuilderCursor?.slotIdx,
+    snapshot?.game.ccBuilderCursor?.pendingAIPick?.politicianId,
     snapshot?.game.continentalCongress?.delegates.length,
   ]);
 
