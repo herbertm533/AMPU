@@ -1,5 +1,6 @@
-import type { Politician, Skills, Trait, Ideology } from '../types';
+import type { Politician, Skills, Ideology } from '../types';
 import { uid } from '../rng';
+import { splitSeedTraits } from './draftImport';
 
 interface Seed {
   first: string;
@@ -11,7 +12,7 @@ interface Seed {
   age: number;
   skills: [number, number, number, number, number, number]; // admin, leg, jud, mil, gov, back
   command: number;
-  traits: Trait[];
+  traits: string[]; // may contain the 8 migrated expertise names; split on build
   office?: 'President' | 'VicePresident' | 'ChiefJustice' | 'AssociateJustice' | 'Senator' | 'Representative' | 'Governor' | 'GeneralInChief' | 'Admiral' | 'SecretaryOfState' | 'SecretaryOfTreasury' | 'SecretaryOfWar' | 'AttorneyGeneral';
   isHistorical?: boolean;
 }
@@ -114,6 +115,7 @@ export function buildPoliticians1856(): Politician[] {
       governing: seed.skills[4],
       backroom: seed.skills[5],
     };
+    const { traits, expertise } = splitSeedTraits(seed.traits);
     return {
       id: uid('pol'),
       firstName: seed.first,
@@ -125,7 +127,8 @@ export function buildPoliticians1856(): Politician[] {
       age: seed.age,
       birthYear: 1856 - seed.age,
       skills,
-      traits: seed.traits,
+      traits,
+      expertise,
       currentOffice: seed.office ? { type: seed.office } : null,
       careerTrack: null,
       careerTrackYears: 0,
@@ -171,6 +174,7 @@ export function buildFillerPoliticians(year: number, count: number, factionPool:
       birthYear: year - age,
       skills,
       traits: [],
+      expertise: [],
       currentOffice: null,
       careerTrack: null,
       careerTrackYears: 0,

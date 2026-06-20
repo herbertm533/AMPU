@@ -41,6 +41,7 @@ export function Roster(): JSX.Element {
       },
     },
     { key: 'traits', label: 'Traits', sortValue: (p) => p.traits.join(','), render: (p) => <span className="text-xs">{p.traits.slice(0, 2).join(', ')}</span> },
+    { key: 'expertise', label: 'Expertise', sortValue: (p) => p.expertise.join(','), render: (p) => <span className="text-xs">{p.expertise.slice(0, 2).join(', ')}</span> },
   ];
 
   return (

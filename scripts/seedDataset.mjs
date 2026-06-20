@@ -25,6 +25,15 @@ const wiki = (first, last) =>
   'https://en.wikipedia.org/wiki/' +
   encodeURIComponent((first + ' ' + last).replace(/\s+/g, '_'));
 
+// The 8 names that used to live in the Trait union are now Expertise. Split any
+// curated/era-figure traits list into the correct { traits, expertise } axes.
+const EXPERTISE_NAMES = new Set(['Agriculture', 'Business', 'Economics', 'Education', 'Environment', 'Media', 'Military', 'Naval']);
+const splitTraits = (arr) => {
+  const traits = [], expertise = [];
+  for (const t of arr) (EXPERTISE_NAMES.has(t) ? expertise : traits).push(t);
+  return { traits, expertise: [...new Set(expertise)] };
+};
+
 // [first,last,state,ideology,birthYear,[adm,leg,jud,mil,gov,bck],command,[traits],party]
 const ROWS = [
   // ===== 1772 scenario in-game roster (founding generation) =====
@@ -203,7 +212,7 @@ const ERA_ROWS = [
   ['John','Worthington','ma','Conservative',1719,[1,1,1,0,1,1],0,[],'Pro-Administration'],
 ];
 
-const header = ['draftYear','firstName','lastName','state','ideology','birthYear','age','admin','legislative','judicial','military','governing','backroom','command','traits','party','wikiUrl'];
+const header = ['draftYear','firstName','lastName','state','ideology','birthYear','age','admin','legislative','judicial','military','governing','backroom','command','traits','expertise','party','wikiUrl'];
 
 // Normalized curated rows (consumed by legislatorsToDataset.mjs as overrides).
 const seen = new Set();
@@ -213,11 +222,12 @@ for (const [first, last, state, ideo, birth, sk, cmd, traits, party] of ROWS) {
   if (seen.has(key)) continue;
   seen.add(key);
   const draftYear = draftYearFor(birth);
+  const { traits: t2, expertise } = splitTraits(traits);
   CURATED_ROWS.push({
     draftYear, firstName: first, lastName: last, state, ideology: ideo,
     birthYear: birth, age: draftYear - birth,
     skills: { admin: sk[0], legislative: sk[1], judicial: sk[2], military: sk[3], governing: sk[4], backroom: sk[5] },
-    command: cmd, traits, party, wikiUrl: wiki(first, last),
+    command: cmd, traits: t2, expertise, party, wikiUrl: wiki(first, last),
   });
 }
 
@@ -226,11 +236,12 @@ for (const [first, last, state, ideo, birth, sk, cmd, traits, party] of ROWS) {
 export const ERA_FIGURES = [];
 for (const [first, last, state, ideo, birth, sk, cmd, traits, party] of ERA_ROWS) {
   const draftYear = draftYearFor(birth);
+  const { traits: t2, expertise } = splitTraits(traits);
   ERA_FIGURES.push({
     draftYear, firstName: first, lastName: last, state, ideology: ideo,
     birthYear: birth, age: draftYear - birth,
     skills: { admin: sk[0], legislative: sk[1], judicial: sk[2], military: sk[3], governing: sk[4], backroom: sk[5] },
-    command: cmd, traits, party, wikiUrl: wiki(first, last),
+    command: cmd, traits: t2, expertise, party, wikiUrl: wiki(first, last),
   });
 }
 
@@ -241,7 +252,7 @@ if (process.argv[1] && process.argv[1].endsWith('seedDataset.mjs')) {
     lines.push([
       r.draftYear, r.firstName, r.lastName, r.state, r.ideology, r.birthYear, '',
       r.skills.admin, r.skills.legislative, r.skills.judicial, r.skills.military, r.skills.governing, r.skills.backroom,
-      r.command, r.traits.join('|'), r.party, r.wikiUrl,
+      r.command, r.traits.join('|'), r.expertise.join('|'), r.party, r.wikiUrl,
     ].join(','));
   }
   writeFileSync(new URL('../politicians-dataset.csv', import.meta.url), lines.join('\n') + '\n');

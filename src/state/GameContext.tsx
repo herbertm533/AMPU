@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react';
-import type { FullGameSnapshot, EraEvent, ConstitutionalConvention, Politician } from '../types';
+import type { FullGameSnapshot, EraEvent, ConstitutionalConvention, Politician, Expertise, Trait } from '../types';
 import { ALIGNMENT_RULES } from '../types';
 import { loadSnapshot, saveSnapshot, clearDb, exportJson, importJson } from '../db';
 import { build1856Scenario } from '../data/scenario1856';
@@ -165,6 +165,30 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
       if (ic.length !== f.interestCards.length) { f.interestCards = ic as typeof f.interestCards; dirty = true; }
       if (lc.length !== f.lobbyCards.length) { f.lobbyCards = lc as typeof f.lobbyCards; dirty = true; }
       if (ig.length !== f.ideologyCards.length) { f.ideologyCards = ig as typeof f.ideologyCards; dirty = true; }
+    }
+    // Expertise axis (PR1): init missing arrays + migrate the 8 legacy trait
+    // strings off pre-PR1 saves onto the expertise axis (D3 Option A). The
+    // Trait union no longer includes these, so on an old save they arrive as
+    // now-unknown strings — strip them and re-home them as expertise.
+    const LEGACY_EXPERTISE: Record<string, Expertise> = {
+      Agriculture: 'Agriculture', Business: 'Business', Economics: 'Economics',
+      Education: 'Education', Environment: 'Environment', Media: 'Media',
+      Military: 'Military', Naval: 'Naval',
+    };
+    for (const p of s.politicians) {
+      if (p.expertise == null) { p.expertise = []; dirty = true; }
+      const keptTraits: Trait[] = [];
+      let changed = false;
+      for (const t of p.traits as unknown as string[]) {
+        const xp = LEGACY_EXPERTISE[t];
+        if (xp) {
+          changed = true;
+          if (!p.expertise.includes(xp)) p.expertise.push(xp);
+        } else {
+          keptTraits.push(t as Trait);
+        }
+      }
+      if (changed) { p.traits = keptTraits; dirty = true; }
     }
     return dirty ? { ...s } : s;
   }, []);

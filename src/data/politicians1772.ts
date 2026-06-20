@@ -1,5 +1,6 @@
-import type { Politician, Skills, Trait, Ideology } from '../types';
+import type { Politician, Skills, Ideology } from '../types';
 import { uid } from '../rng';
+import { splitSeedTraits } from './draftImport';
 
 interface Seed1772 {
   first: string;
@@ -9,7 +10,7 @@ interface Seed1772 {
   age: number;
   skills: [number, number, number, number, number, number]; // admin, leg, jud, mil, gov, back
   command: number;
-  traits?: Trait[];
+  traits?: string[]; // may contain the 8 migrated expertise names; split on build
   preferredParty?: 'BLUE' | 'RED';
   historical?: boolean;
 }
@@ -80,6 +81,7 @@ export function buildPoliticians1772(includeHistorical = true): Politician[] {
       governing: s.skills[4],
       backroom: s.skills[5],
     };
+    const { traits, expertise } = splitSeedTraits(s.traits ?? []);
     return {
       id: uid('pol'),
       firstName: s.first,
@@ -91,7 +93,8 @@ export function buildPoliticians1772(includeHistorical = true): Politician[] {
       age: s.age,
       birthYear: 1772 - s.age,
       skills,
-      traits: s.traits ?? [],
+      traits,
+      expertise,
       currentOffice: null,
       careerTrack: null,
       careerTrackYears: 0,
@@ -129,6 +132,7 @@ export function buildPoliticians1772(includeHistorical = true): Politician[] {
       birthYear: 1772 - age,
       skills: { admin: skills[0], legislative: skills[1], judicial: skills[2], military: skills[3], governing: skills[4], backroom: skills[5] },
       traits: Math.random() < 0.15 ? ['Obscure'] : [],
+      expertise: [],
       currentOffice: null,
       careerTrack: null,
       careerTrackYears: 0,

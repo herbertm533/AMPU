@@ -38,7 +38,7 @@ export function startRevWar(snap: FullGameSnapshot): void {
 export function appointMilitary(snap: FullGameSnapshot): void {
   const war = ensureWar(snap);
   const isAvailable = (p: Politician): boolean => !p.deathYear && !p.retiredYear && !p.traits.includes('Frail') && p.skills.military >= 1;
-  const naval = (p: Politician): boolean => p.traits.includes('Naval');
+  const naval = (p: Politician): boolean => p.expertise.includes('Naval');
 
   if (!war.seniorGeneralId) {
     const gens = snap.politicians.filter((p) => isAvailable(p) && !naval(p)).sort((a, b) => b.skills.military - a.skills.military || b.command - a.command);

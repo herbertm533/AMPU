@@ -109,6 +109,7 @@ function record(person, isExec) {
     skills: { admin, legislative: leg, judicial: jud, military: mil, governing: gov, backroom: back },
     command: cmd,
     traits: isExec ? ['Leadership'] : [],
+    expertise: [],
     party: lastParty || (isExec ? 'President' : ''),
     wikiUrl: wiki(person.id?.wikipedia, first, last),
   };
@@ -243,6 +244,7 @@ function mkLoser(nm, party, po, year, office) {
     skills,
     command,
     traits: [],
+    expertise: [],
     party: party ? title(party) : '',
     wikiUrl: wiki(null, nm.first, nm.last),
   };
@@ -312,13 +314,13 @@ const jsonList = list.map(({ party, wikiUrl, age, ...keep }) => keep);
 writeFileSync(new URL('../public/standard-draft-classes.json', import.meta.url), JSON.stringify(jsonList));
 
 // CSV (human review) — full, with party + wikiUrl
-const header = ['draftYear','firstName','lastName','state','ideology','birthYear','age','admin','legislative','judicial','military','governing','backroom','command','traits','party','wikiUrl'];
+const header = ['draftYear','firstName','lastName','state','ideology','birthYear','age','admin','legislative','judicial','military','governing','backroom','command','traits','expertise','party','wikiUrl'];
 const lines = [header.join(',')];
 for (const r of list) {
   lines.push([
     r.draftYear, csv(r.firstName), csv(r.lastName), r.state, r.ideology, r.birthYear, '',
     r.skills.admin, r.skills.legislative, r.skills.judicial, r.skills.military, r.skills.governing, r.skills.backroom,
-    r.command, r.traits.join('|'), csv(r.party), r.wikiUrl,
+    r.command, r.traits.join('|'), (r.expertise ?? []).join('|'), csv(r.party), r.wikiUrl,
   ].join(','));
 }
 function csv(v) { const s = String(v ?? ''); return /[",]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; }
