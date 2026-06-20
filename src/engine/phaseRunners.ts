@@ -1,8 +1,8 @@
 import type { FullGameSnapshot, PhaseId, Politician, EraEvent, Legislation, ElectionResult, NationalMeters, Ideology, PartyId, SkillKey, Trait, CareerTrack, OfficeType, State, RelocationEntry, RelocationBand, IdeologyShiftEntry, ConversionEntry, KingmakerEntry, FactionAlignmentDriftEntry, FactionLeadershipEntry, InterestCardId, LobbyCardId, IdeologyCardId, Era } from '../types';
-import { IDEOLOGY_ORDER, SKILLS, POSITIVE_TRAITS, TRACK_SKILL, TRACK_THEMED_TRAITS, TRACK_EXPERTISE, OFFICE_EXPERTISE, COMMITTEE_EXPERTISE, CAREER_RANDOM_NEGATIVES, CAREER_ODDS, CAREER_TRACK_MAX_YEARS, CAREER_TRACK_CAP, CAREER_GAINS_CAP, RELOCATION_ODDS, RELOCATION_ATTEMPTS_PER_TURN, RELOCATIONS_CAP, CARPETBAGGER_LADDER, IDEOLOGY_SHIFT_ODDS, IDEOLOGY_ATTEMPTS_PER_TURN, IDEOLOGY_SHIFTS_CAP, CONVERSION_ODDS, CONVERSION_ATTEMPTS_PER_TURN, CONVERSIONS_CAP, KINGMAKER_RULES, KINGMAKERS_CAP, ALIGNMENT_RULES, ALIGNMENT_DRIFT_CAP, LEADERSHIP_RULES, LEADERSHIP_FEED_CAP, MORTALITY_RULES, ANYTIME_EVENTS_RULES, ABILITY_LOSS_RULES } from '../types';
+import { IDEOLOGY_ORDER, SKILLS, POSITIVE_TRAITS, TRACK_SKILL, TRACK_THEMED_TRAITS, TRACK_EXPERTISE, OFFICE_EXPERTISE, COMMITTEE_EXPERTISE, CAREER_RANDOM_NEGATIVES, CAREER_ODDS, CAREER_TRACK_MAX_YEARS, CAREER_TRACK_CAP, CAREER_GAINS_CAP, RELOCATION_ODDS, RELOCATION_ATTEMPTS_PER_TURN, RELOCATIONS_CAP, CARPETBAGGER_LADDER, IDEOLOGY_SHIFT_ODDS, IDEOLOGY_ATTEMPTS_PER_TURN, IDEOLOGY_SHIFTS_CAP, CONVERSION_ODDS, CONVERSION_ATTEMPTS_PER_TURN, CONVERSIONS_CAP, KINGMAKER_RULES, KINGMAKERS_CAP, ALIGNMENT_RULES, ALIGNMENT_DRIFT_CAP, LEADERSHIP_RULES, LEADERSHIP_FEED_CAP, MORTALITY_RULES, ANYTIME_EVENTS_RULES, ABILITY_LOSS_RULES, ABILITY_EARN_RULES, OFFICE_COMMAND_GRANT, OFFICE_ADMIN_GRANT, TRACK_SECONDARY_SKILLS } from '../types';
 import { addLog } from './log';
 import { addExpertise } from './expertise';
-import { loseSkill, loseCommand } from './abilities';
+import { loseSkill, loseCommand, addSkillPoint, addCommandPoint } from './abilities';
 import { uid, chance, d100, pick, pickWeighted, clamp, shuffle, rand } from '../rng';
 import { refreshPv } from '../pv';
 import { ANYTIME_EVENT_TEMPLATES, type AnytimeEventTemplate } from '../data/anytimeEvents';
@@ -310,6 +310,20 @@ function rollThreshold(snap: FullGameSnapshot, p: Politician, thresholdYears: nu
     if (k && p.skills[k] < 5) {
       p.skills[k] = clamp(p.skills[k] + 1, 0, 5);
       recordCareerGain(snap, p, thresholdYears, 'skill', k, false);
+    }
+  }
+
+  // 1b. Secondary skill (PR2b — half the primary's odds, lower curve).
+  // TRACK_SECONDARY_SKILLS: Judicial/Backroom -> [] (silent no-op);
+  // Legislative omits admin per the source's "all other tracks but
+  // Legislative grant Admin" wording.
+  if (chance(ABILITY_EARN_RULES.secondaryTrack)) {
+    const pool = TRACK_SECONDARY_SKILLS[track].filter((k) => p.skills[k] < 5);
+    if (pool.length > 0) {
+      const k = pick(pool);
+      if (addSkillPoint(p, k, 1)) {
+        recordCareerGain(snap, p, thresholdYears, 'skill', k, false);
+      }
     }
   }
 
@@ -1475,6 +1489,52 @@ function recordFactionLeadership(snap: FullGameSnapshot, entry: FactionLeadershi
   if (arr.length > LEADERSHIP_FEED_CAP) arr.splice(0, arr.length - LEADERSHIP_FEED_CAP);
 }
 
+// PR2b: faction-leader transition grants four stats — command, legislative,
+// governing, admin — each routed through the cap-bounded helper. One log line
+// per stat that actually rose; a leader already at all-caps silently no-ops.
+function applyFactionLeaderGrants(snap: FullGameSnapshot, p: Politician, factionName: string): void {
+  if (addCommandPoint(p, 1)) {
+    addLog(snap, '2.2.3', 'appointment',
+      `${p.firstName} ${p.lastName} gains Command leading the ${factionName}.`);
+  }
+  if (addSkillPoint(p, 'legislative', 1)) {
+    addLog(snap, '2.2.3', 'appointment',
+      `${p.firstName} ${p.lastName} gains Legislative leading the ${factionName}.`);
+  }
+  if (addSkillPoint(p, 'governing', 1)) {
+    addLog(snap, '2.2.3', 'appointment',
+      `${p.firstName} ${p.lastName} gains Governing leading the ${factionName}.`);
+  }
+  if (addSkillPoint(p, 'admin', 1)) {
+    addLog(snap, '2.2.3', 'appointment',
+      `${p.firstName} ${p.lastName} gains Admin leading the ${factionName}.`);
+  }
+}
+
+// PR2b: party-leader transition. Install (real change of party.leaderId) ->
+// command +1 and governing +1. Re-election (same leader retained across the
+// tick) -> legislative +1. Cap-bounded; long-tenured leaders plateau.
+function applyPartyLeaderGrants(
+  snap: FullGameSnapshot, p: Politician, partyName: string, formerLeaderId: string | null,
+): void {
+  const isInstall = p.id !== formerLeaderId;
+  if (isInstall) {
+    if (addCommandPoint(p, 1)) {
+      addLog(snap, '2.2.4', 'appointment',
+        `${p.firstName} ${p.lastName} gains Command leading the ${partyName}.`);
+    }
+    if (addSkillPoint(p, 'governing', 1)) {
+      addLog(snap, '2.2.4', 'appointment',
+        `${p.firstName} ${p.lastName} gains Governing leading the ${partyName}.`);
+    }
+  } else {
+    if (addSkillPoint(p, 'legislative', 1)) {
+      addLog(snap, '2.2.4', 'appointment',
+        `${p.firstName} ${p.lastName} gains Legislative — re-elected leader of the ${partyName}.`);
+    }
+  }
+}
+
 function recordAlignmentDrift(snap: FullGameSnapshot, entry: FactionAlignmentDriftEntry): void {
   if (!snap.game.factionAlignmentDrift) snap.game.factionAlignmentDrift = [];
   const arr = snap.game.factionAlignmentDrift;
@@ -1679,10 +1739,15 @@ export function runPhase_2_1_8_FactionPersonalities(snap: FullGameSnapshot): voi
 export function runPhase_2_2_1_CongressLeadership(snap: FullGameSnapshot): void {
   if (snap.game.currentEra === 'independence') {
     if (snap.game.continentalCongress === null) return;
-    // Election of CC President
+    // Election of CC President (already grants +1 command at continentalCongress.ts:145
+    // — F-RECONCILE ALREADY COVERED row; PR2b does not regrant here).
     electCCPresident(snap);
     return;
   }
+  // Capture the prior speaker/pro-tem so the PR2b legislative +1 grants fire
+  // only on a real change (a tick that re-elects the same person is silent).
+  const formerSpeakerId = snap.game.speakerId;
+  const formerProTemId = snap.game.proTemId;
   // Determine majority party: count senators per party
   const senateMembers = snap.states.flatMap((s) => s.senators.map((sn) => snap.politicians.find((p) => p.id === sn.politicianId))).filter(Boolean) as Politician[];
   const houseMembers = snap.states.flatMap((s) => s.representativeIds.map((id) => snap.politicians.find((p) => p.id === id))).filter(Boolean) as Politician[];
@@ -1700,6 +1765,10 @@ export function runPhase_2_2_1_CongressLeadership(snap: FullGameSnapshot): void 
   if (speakerCandidate) {
     snap.game.speakerId = speakerCandidate.id;
     addLog(snap, '2.2.1', 'appointment', `${speakerCandidate.firstName} ${speakerCandidate.lastName} elected Speaker of the House.`);
+    if (speakerCandidate.id !== formerSpeakerId && addSkillPoint(speakerCandidate, 'legislative', 1)) {
+      addLog(snap, '2.2.1', 'appointment',
+        `${speakerCandidate.firstName} ${speakerCandidate.lastName} gains Legislative from the Speaker's gavel.`);
+    }
   }
   const proTemCandidate = senateMembers
     .filter((m) => m.partyId === senateMajority)
@@ -1707,6 +1776,10 @@ export function runPhase_2_2_1_CongressLeadership(snap: FullGameSnapshot): void 
   if (proTemCandidate) {
     snap.game.proTemId = proTemCandidate.id;
     addLog(snap, '2.2.1', 'appointment', `${proTemCandidate.firstName} ${proTemCandidate.lastName} elected Senate Pro Tempore.`);
+    if (proTemCandidate.id !== formerProTemId && addSkillPoint(proTemCandidate, 'legislative', 1)) {
+      addLog(snap, '2.2.1', 'appointment',
+        `${proTemCandidate.firstName} ${proTemCandidate.lastName} gains Legislative from the Pro Tem chair.`);
+    }
   }
 }
 
@@ -1729,6 +1802,17 @@ export function runPhase_2_2_2_Committees(snap: FullGameSnapshot): void {
     if (candidate) {
       snap.game.committeeChairs[c] = candidate.id;
       addLog(snap, '2.2.2', 'appointment', `${candidate.firstName} ${candidate.lastName} chairs ${c} committee.`);
+      // PR2b: committee chair gains command + legislative (cap-bounded).
+      // The 1856+ phase re-runs every half-term and may pick the same person;
+      // the cap-bounded helper handles this correctly (5/5 silently no-ops).
+      if (addCommandPoint(candidate, 1)) {
+        addLog(snap, '2.2.2', 'appointment',
+          `${candidate.firstName} ${candidate.lastName} gains Command from chairing ${c}.`);
+      }
+      if (addSkillPoint(candidate, 'legislative', 1)) {
+        addLog(snap, '2.2.2', 'appointment',
+          `${candidate.firstName} ${candidate.lastName} gains Legislative from chairing ${c}.`);
+      }
       const xp = COMMITTEE_EXPERTISE[c];
       if (addExpertise(candidate, xp)) {
         addLog(snap, '2.2.2', 'appointment', `${candidate.firstName} ${candidate.lastName} gains ${xp} expertise.`);
@@ -1817,6 +1901,7 @@ export function runPhase_2_2_3_FactionLeaders(snap: FullGameSnapshot): void {
         });
         addLog(snap, '2.2.3', 'appointment',
           `${winner.firstName} ${winner.lastName} elected to lead the ${f.name}.`);
+        applyFactionLeaderGrants(snap, winner, f.name);
         newSeats++;
       } else {
         f.leaderId = null;
@@ -1869,6 +1954,7 @@ export function runPhase_2_2_3_FactionLeaders(snap: FullGameSnapshot): void {
       });
       addLog(snap, '2.2.3', 'appointment',
         `${challenger.firstName} ${challenger.lastName} unseats ${leader.firstName} ${leader.lastName} as leader of the ${f.name}.`);
+      applyFactionLeaderGrants(snap, challenger, f.name);
       unseated++;
     } else {
       if (!challenger.traits.includes('Failed Bid')) challenger.traits.push('Failed Bid');
@@ -1907,10 +1993,13 @@ export function runPhase_2_2_3_FactionLeaders(snap: FullGameSnapshot): void {
 // ============================================================================
 export function runPhase_2_2_4_PartyLeaders(snap: FullGameSnapshot): void {
   for (const party of snap.parties) {
+    // Capture before any reassignment so install vs. re-election can be diff'd.
+    const formerLeaderId = party.leaderId ?? null;
     if (snap.game.presidentId) {
       const pres = snap.politicians.find((p) => p.id === snap.game.presidentId);
       if (pres && pres.partyId === party.id) {
         party.leaderId = pres.id;
+        applyPartyLeaderGrants(snap, pres, party.name, formerLeaderId);
         continue;
       }
     }
@@ -1919,7 +2008,10 @@ export function runPhase_2_2_4_PartyLeaders(snap: FullGameSnapshot): void {
     party.leaderId = members[0]?.id ?? null;
     if (party.leaderId) {
       const ldr = snap.politicians.find((p) => p.id === party.leaderId);
-      if (ldr) addLog(snap, '2.2.4', 'appointment', `${ldr.firstName} ${ldr.lastName} leads the ${party.name}.`);
+      if (ldr) {
+        addLog(snap, '2.2.4', 'appointment', `${ldr.firstName} ${ldr.lastName} leads the ${party.name}.`);
+        applyPartyLeaderGrants(snap, ldr, party.name, formerLeaderId);
+      }
     }
   }
 }
@@ -1941,6 +2033,32 @@ export function runPhase_2_3_1_Cabinet(snap: FullGameSnapshot): void {
       snap.game.cabinet[pos] = pick.id;
       pick.currentOffice = { type: pos as 'SecretaryOfState' };
       addLog(snap, '2.3.1', 'appointment', `${pick.firstName} ${pick.lastName} confirmed as ${pos}.`);
+
+      // PR2b F-DOUBLING admin grant. Base from OFFICE_ADMIN_GRANT (= 1 for all
+      // six cabinet seats). Doubled per Egghead, doubled per Efficient, stacks
+      // (ladder: +1 / +2 / +2 / +4). Clamped at 5 by addSkillPoint — a
+      // politician at admin=4 with both traits jumps to 5, not 8.
+      const base = OFFICE_ADMIN_GRANT[pos as OfficeType];
+      if (base) {
+        const r = ABILITY_EARN_RULES.cabinetConfirmAdmin;
+        const amount = r.base
+          * (pick.traits.includes('Egghead')   ? r.eggheadMult   : 1)
+          * (pick.traits.includes('Efficient') ? r.efficientMult : 1);
+        if (addSkillPoint(pick, 'admin', amount)) {
+          addLog(snap, '2.3.1', 'appointment',
+            `${pick.firstName} ${pick.lastName} gains Admin from confirmation.`);
+        }
+      }
+
+      // PR2b Sec of State -> command +1 (initial appointment). Idempotency is
+      // cap-bounded approximation (no previousOffices field added per Q9): a
+      // returning Sec of State at command=5 silently no-ops.
+      const cmdBase = OFFICE_COMMAND_GRANT[pos as OfficeType];
+      if (cmdBase && addCommandPoint(pick, cmdBase)) {
+        addLog(snap, '2.3.1', 'appointment',
+          `${pick.firstName} ${pick.lastName} gains Command from the Secretary of State portfolio.`);
+      }
+
       const xp = OFFICE_EXPERTISE[pos as OfficeType];
       if (xp && addExpertise(pick, xp)) {
         addLog(snap, '2.3.1', 'appointment', `${pick.firstName} ${pick.lastName} gains ${xp} expertise.`);
@@ -1953,6 +2071,14 @@ export function runPhase_2_3_1_Cabinet(snap: FullGameSnapshot): void {
 // 2.3.2 Military
 // ============================================================================
 export function runPhase_2_3_2_Military(snap: FullGameSnapshot): void {
+  // PR2b: senior Gen/Adm command grant fires ONLY while a war is active. The
+  // independence-era war hangs on game.revolutionaryWar; later eras on
+  // game.wars (string[]). Either being truthy/active triggers. Computed once
+  // at function entry — a war starting later in the same tick does not
+  // retroactively grant.
+  const warActive =
+    snap.game.revolutionaryWar?.active === true || snap.game.wars.length > 0;
+
   if (!snap.game.cabinet.GeneralInChief) {
     const candidates = snap.politicians.filter((p) => !p.currentOffice && p.skills.military >= 3);
     candidates.sort((a, b) => b.skills.military - a.skills.military);
@@ -1963,6 +2089,10 @@ export function runPhase_2_3_2_Military(snap: FullGameSnapshot): void {
       const xp = OFFICE_EXPERTISE.GeneralInChief;
       if (xp && addExpertise(candidates[0], xp)) {
         addLog(snap, '2.3.2', 'appointment', `${candidates[0].firstName} ${candidates[0].lastName} gains ${xp} expertise.`);
+      }
+      if (warActive && addCommandPoint(candidates[0], 1)) {
+        addLog(snap, '2.3.2', 'appointment',
+          `${candidates[0].firstName} ${candidates[0].lastName} gains Command as wartime General in Chief.`);
       }
     }
   }
@@ -1976,6 +2106,10 @@ export function runPhase_2_3_2_Military(snap: FullGameSnapshot): void {
       const xp = OFFICE_EXPERTISE.Admiral;
       if (xp && addExpertise(navalCandidates[0], xp)) {
         addLog(snap, '2.3.2', 'appointment', `${navalCandidates[0].firstName} ${navalCandidates[0].lastName} gains ${xp} expertise.`);
+      }
+      if (warActive && addCommandPoint(navalCandidates[0], 1)) {
+        addLog(snap, '2.3.2', 'appointment',
+          `${navalCandidates[0].firstName} ${navalCandidates[0].lastName} gains Command as wartime Admiral.`);
       }
     }
   }
@@ -2637,6 +2771,25 @@ function handleScripted1772Consequences(snap: FullGameSnapshot, event: EraEvent,
   }
 }
 
+// PR2b: "Improves a meter" predicate for the bill-sponsor command grant in
+// runPhase_2_6_3_Floor. Evaluated statically on the bill's effect template
+// (not post-applyEffect to avoid double-counting clamp). Any positive delta
+// in bill.effects.meters OR a positive bill.effects.domesticStability counts;
+// a mixed-delta bill (e.g. Tariff Reduction's revenue -0.5, economic +0.5)
+// still grants — any positive counts.
+function billImprovesAnyMeter(bill: Legislation): boolean {
+  const m = bill.effects.meters;
+  if (m) {
+    for (const v of Object.values(m)) {
+      if (v != null && v > 0) return true;
+    }
+  }
+  if (bill.effects.domesticStability != null && bill.effects.domesticStability > 0) {
+    return true;
+  }
+  return false;
+}
+
 export function applyEffect(snap: FullGameSnapshot, effect: { meters?: Partial<NationalMeters>; partyPreference?: number; enthusiasm?: { ideology: Ideology; party: PartyId; delta: number }[]; interestGroups?: { id: string; delta: number }[]; domesticStability?: number; diplomacy?: { nation: string; delta: number }[]; startWar?: { name: string; against: string }; text?: string }): void {
   if (effect.meters) {
     for (const k of Object.keys(effect.meters) as (keyof NationalMeters)[]) {
@@ -2860,6 +3013,14 @@ export function runPhase_2_6_3_Floor(snap: FullGameSnapshot): void {
       bill.votes = { house: { yea: result.aye, nay: result.nay }, senate: { yea: 0, nay: 0 } };
       if (result.passed) {
         bill.status = 'passed';
+        // PR2b: sponsor of meter-improving passed legislation gains command +1.
+        if (billImprovesAnyMeter(bill)) {
+          const sponsor = snap.politicians.find((p) => p.id === bill.sponsorId);
+          if (sponsor && addCommandPoint(sponsor, 1)) {
+            addLog(snap, '2.6.3', 'appointment',
+              `${sponsor.firstName} ${sponsor.lastName} gains Command from passage of "${bill.title}".`);
+          }
+        }
         applyEffect(snap, bill.effects);
         addLog(snap, '2.6.3', 'legislation', `"${bill.title}" PASSED Continental Congress (${result.aye} aye / ${result.nay} nay / ${result.abstain} abstain).`);
         recordBillPassed(snap, bill.id);
@@ -2908,6 +3069,12 @@ export function runPhase_2_6_3_Floor(snap: FullGameSnapshot): void {
     bill.votes = { house, senate };
     if (house.yea > house.nay && senate.yea > senate.nay) {
       bill.status = 'passed';
+      // PR2b: sponsor of meter-improving passed legislation gains command +1.
+      // sponsor was resolved at the top of the loop.
+      if (billImprovesAnyMeter(bill) && addCommandPoint(sponsor, 1)) {
+        addLog(snap, '2.6.3', 'appointment',
+          `${sponsor.firstName} ${sponsor.lastName} gains Command from passage of "${bill.title}".`);
+      }
       applyEffect(snap, bill.effects);
       addLog(snap, '2.6.3', 'legislation', `"${bill.title}" PASSED. House ${house.yea}-${house.nay}, Senate ${senate.yea}-${senate.nay}.`);
       recordBillPassed(snap, bill.id);

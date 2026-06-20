@@ -463,6 +463,63 @@ export const ABILITY_LOSS_RULES = {
   };
 };
 
+// PR2b earn lifecycle. Magnitudes for every earn grant live here so engine
+// bodies stay free of magic numbers (mirrors ABILITY_LOSS_RULES above).
+export const ABILITY_EARN_RULES = {
+  // Independent secondary-skill roll inside rollThreshold. Half of
+  // CAREER_ODDS.skill (= 0.5), so secondaries accrue at half the rate of
+  // primaries; the existing primary roll is unchanged.
+  secondaryTrack: 0.25,
+  // Cabinet confirmation -> admin (F-DOUBLING). Ladder:
+  //   none           -> base                    = 1
+  //   Egghead alone  -> base * eggheadMult      = 2
+  //   Efficient alone-> base * efficientMult    = 2
+  //   both           -> base * both mults       = 4
+  // Computed at the call site; addSkillPoint clamps at 5 so a politician at
+  // admin=4 with both traits jumps to 5, not 8.
+  cabinetConfirmAdmin: {
+    base: 1,
+    eggheadMult: 2,
+    efficientMult: 2,
+  },
+} as const satisfies {
+  secondaryTrack: number;
+  cabinetConfirmAdmin: { base: number; eggheadMult: number; efficientMult: number };
+};
+
+// Office -> command grant on initial appointment. Only Secretary of State
+// today (reference's "initial appointment to Secretary of State" Command earn).
+// PMG and KeyAdvisor deliberately absent.
+export const OFFICE_COMMAND_GRANT: Partial<Record<OfficeType, number>> = {
+  SecretaryOfState: 1,
+};
+
+// Office -> admin grant on cabinet confirmation. F-DOUBLING ladder applied at
+// the call site (see ABILITY_EARN_RULES.cabinetConfirmAdmin); the value here
+// is the BASE (1). All six positions iterated by runPhase_2_3_1_Cabinet.
+export const OFFICE_ADMIN_GRANT: Partial<Record<OfficeType, number>> = {
+  SecretaryOfState: 1,
+  SecretaryOfTreasury: 1,
+  SecretaryOfWar: 1,
+  AttorneyGeneral: 1,
+  PostmasterGeneral: 1,
+  KeyAdvisor: 1,
+};
+
+// Career-track exit -> secondary skill pool (per the reference: "all other
+// tracks but Legislative grant Admin" -> Legislative track does NOT grant
+// Admin as a secondary). Judicial and Backroom are [] because the per-ability
+// Earn lists do not name them as secondary-granters.
+export const TRACK_SECONDARY_SKILLS: Record<CareerTrack, SkillKey[]> = {
+  Administration: ['legislative', 'governing'],
+  Military:       ['admin'],
+  Governing:      ['admin', 'legislative'],
+  Legislative:    ['governing'],     // admin EXCLUDED per source text
+  Judicial:       [],
+  Private:        ['governing', 'admin'],
+  Backroom:       [],
+};
+
 export const ANYTIME_EVENTS_RULES = {
   baseFireChance: 0.05,
   nationalBaseFireChance: 0.70,
