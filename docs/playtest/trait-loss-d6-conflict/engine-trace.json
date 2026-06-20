@@ -1,0 +1,99 @@
+{
+  "scenario": "1772",
+  "contractTests": {
+    "passed": 101,
+    "failed": 0,
+    "failures": []
+  },
+  "finalYear": 1834,
+  "finalPhase": "2.1.5",
+  "phasesRun": 538,
+  "phasesSkipped": 62,
+  "errorPhases": [],
+  "totalEvents": 1574,
+  "pr3Counts": {
+    "swapWon": 2,
+    "failedD6": 0,
+    "oldAgeDecay": 5,
+    "leadershipLost": 0
+  },
+  "pr3Samples": {
+    "swapWon": [
+      {
+        "year": 1802,
+        "phase": "2.1.2",
+        "text": "Charles Holten sheds Integrity and earns Corrupt — the gain wins on a d6."
+      },
+      {
+        "year": 1830,
+        "phase": "2.1.2",
+        "text": "Millard Fillmore sheds Passive and earns Efficient — the gain wins on a d6."
+      }
+    ],
+    "failedD6": [],
+    "oldAgeDecay": [
+      {
+        "year": 1822,
+        "phase": "2.4.1",
+        "text": "Stephen Reed (SC, age 83) has lost their Celebrity step — the years catch up."
+      },
+      {
+        "year": 1824,
+        "phase": "2.4.1",
+        "text": "William Few (GA, age 76) has lost their Charismatic step — the years catch up."
+      },
+      {
+        "year": 1824,
+        "phase": "2.4.1",
+        "text": "Joseph Ferry (PA, age 70) has lost their Charismatic step — the years catch up."
+      },
+      {
+        "year": 1828,
+        "phase": "2.4.1",
+        "text": "Samuel Sherman (MA, age 76) has lost their Celebrity step — the years catch up."
+      },
+      {
+        "year": 1830,
+        "phase": "2.4.1",
+        "text": "Andrew Rutledge (DE, age 91) has lost their Charismatic step — the years catch up."
+      }
+    ],
+    "leadershipLost": []
+  },
+  "initialTraitCounts": {
+    "Charismatic": 0,
+    "Unlikable": 0,
+    "Harmonious": 0,
+    "Puritan": 1,
+    "Integrity": 0,
+    "Corrupt": 0,
+    "Efficient": 1,
+    "Passive": 0,
+    "Egghead": 8,
+    "Incompetent": 0,
+    "Ideologue": 0,
+    "Impressionable": 0,
+    "Loyal": 0,
+    "Opportunist": 0,
+    "Leadership": 2,
+    "Celebrity": 4
+  },
+  "finalTraitCounts": {
+    "Charismatic": 51,
+    "Unlikable": 0,
+    "Harmonious": 91,
+    "Puritan": 1,
+    "Integrity": 49,
+    "Corrupt": 17,
+    "Efficient": 91,
+    "Passive": 1,
+    "Egghead": 112,
+    "Incompetent": 0,
+    "Ideologue": 36,
+    "Impressionable": 27,
+    "Loyal": 30,
+    "Opportunist": 34,
+    "Leadership": 162,
+    "Celebrity": 13
+  }
+}
