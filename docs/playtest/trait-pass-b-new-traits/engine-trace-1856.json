@@ -1,0 +1,302 @@
+{
+  "scenario": "1856",
+  "startYear": 1856,
+  "startEra": "nationalism",
+  "finalYear": 1894,
+  "finalEra": "nationalism",
+  "phasesRun": 562,
+  "phasesSkipped": 38,
+  "errorPhases": [],
+  "totalEvents": 1899,
+  "contractTests": {
+    "passed": 193,
+    "failed": 0,
+    "failures": []
+  },
+  "pr4bCounts": {
+    "summaryLinesTotal": 220,
+    "perTraitPerContext": {
+      "Likable": {
+        "presGeneral": 0,
+        "presPrimary": 0,
+        "house": 0,
+        "senatePre17": 0,
+        "governor": 0,
+        "internalParty": 0,
+        "total": 0
+      },
+      "Uncharismatic": {
+        "presGeneral": 0,
+        "presPrimary": 0,
+        "house": 0,
+        "senatePre17": 0,
+        "governor": 0,
+        "internalParty": 0,
+        "total": 0
+      },
+      "Cosmopolitan": {
+        "presGeneral": 0,
+        "presPrimary": 0,
+        "house": 13,
+        "senatePre17": 2,
+        "governor": 2,
+        "internalParty": 1,
+        "total": 18
+      },
+      "Provincial": {
+        "presGeneral": 0,
+        "presPrimary": 0,
+        "house": 0,
+        "senatePre17": 0,
+        "governor": 0,
+        "internalParty": 0,
+        "total": 0
+      },
+      "Two-Faced": {
+        "presGeneral": 0,
+        "presPrimary": 0,
+        "house": 0,
+        "senatePre17": 0,
+        "governor": 0,
+        "internalParty": 0,
+        "total": 0
+      },
+      "Predictable": {
+        "presGeneral": 0,
+        "presPrimary": 0,
+        "house": 1,
+        "senatePre17": 0,
+        "governor": 0,
+        "internalParty": 0,
+        "total": 1
+      },
+      "Hale": {
+        "presGeneral": 0,
+        "presPrimary": 0,
+        "house": 9,
+        "senatePre17": 0,
+        "governor": 2,
+        "internalParty": 0,
+        "total": 11
+      }
+    },
+    "aggregateByContext": {
+      "presGeneral": 14,
+      "presPrimary": 14,
+      "house": 129,
+      "senatePre17": 17,
+      "governor": 32,
+      "internalParty": 14
+    },
+    "headlineCases": {
+      "halevsFrailLargeBumps": 0,
+      "twoFacedPrimaryLarge": 0,
+      "likableLargeBumps": 0,
+      "uncharismaticMediumBumps": 0,
+      "internalPartyPredictableLikableMedium": 0,
+      "provincialHousePositive": 0,
+      "cosmopolitanPgSmall": 0,
+      "cosmopolitanPgMedium": 0,
+      "provincialPgSmall": 0,
+      "provincialPgMedium": 0
+    },
+    "revWarWoundGrant": {
+      "branch1PlainFrail": 0,
+      "branch2HaleShed": 0,
+      "branch3HaleResists": 0
+    },
+    "haleOldAgeDecay": 0
+  },
+  "initialTraitCounts": {
+    "Likable": 0,
+    "Uncharismatic": 0,
+    "Cosmopolitan": 0,
+    "Provincial": 0,
+    "Two-Faced": 0,
+    "Predictable": 0,
+    "Hale": 0,
+    "Frail": 0,
+    "Celebrity": 3,
+    "Charismatic": 2
+  },
+  "finalTraitCounts": {
+    "Likable": 1,
+    "Uncharismatic": 0,
+    "Cosmopolitan": 3,
+    "Provincial": 0,
+    "Two-Faced": 0,
+    "Predictable": 1,
+    "Hale": 3,
+    "Frail": 0,
+    "Celebrity": 3,
+    "Charismatic": 21
+  },
+  "samples": {
+    "halevsFrail": [],
+    "twoFacedPrimary": [],
+    "likableBumped": [],
+    "internalPartyMedium": [],
+    "provincialHousePos": [],
+    "cosmopolitanPgSmall": [],
+    "cosmopolitanPgMedium": [],
+    "haleOldAgeDecay": [],
+    "revWarWoundShed": [],
+    "revWarWoundResist": [],
+    "presGeneral": [
+      {
+        "year": 1856,
+        "phase": "2.9.4",
+        "text": "William H. Seward's traits net +2 in the presidential general race — Magician (+2)."
+      },
+      {
+        "year": 1860,
+        "phase": "2.9.4",
+        "text": "William H. Seward's traits net +2 in the presidential general race — Magician (+2)."
+      },
+      {
+        "year": 1864,
+        "phase": "2.9.4",
+        "text": "William H. Seward's traits net +2 in the presidential general race — Magician (+2)."
+      },
+      {
+        "year": 1868,
+        "phase": "2.9.4",
+        "text": "William H. Seward's traits net +2 in the presidential general race — Magician (+2)."
+      },
+      {
+        "year": 1872,
+        "phase": "2.9.4",
+        "text": "Stephen A. Douglas's traits net +4 in the presidential general race — Debater (+4)."
+      },
+      {
+        "year": 1872,
+        "phase": "2.9.4",
+        "text": "Edward Bates's traits net +2 in the presidential general race — Integrity (+2)."
+      },
+      {
+        "year": 1876,
+        "phase": "2.9.4",
+        "text": "Stephen A. Douglas's traits net +4 in the presidential general race — Debater (+4)."
+      },
+      {
+        "year": 1876,
+        "phase": "2.9.4",
+        "text": "Charles Sumner's traits net -2 in the presidential general race — Puritan (-2)."
+      },
+      {
+        "year": 1880,
+        "phase": "2.9.4",
+        "text": "Stephen A. Douglas's traits net +4 in the presidential general race — Debater (+4)."
+      },
+      {
+        "year": 1880,
+        "phase": "2.9.4",
+        "text": "Nathaniel P. Banks's traits net +4 in the presidential general race — Charismatic (+4)."
+      }
+    ],
+    "presPrimary": [
+      {
+        "year": 1856,
+        "phase": "2.9.1",
+        "text": "William H. Seward's traits net +4 in the Republican primary race — Magician (+4)."
+      },
+      {
+        "year": 1860,
+        "phase": "2.9.1",
+        "text": "William H. Seward's traits net +4 in the Republican primary race — Magician (+4)."
+      },
+      {
+        "year": 1864,
+        "phase": "2.9.1",
+        "text": "William H. Seward's traits net +4 in the Republican primary race — Magician (+4)."
+      },
+      {
+        "year": 1868,
+        "phase": "2.9.1",
+        "text": "William H. Seward's traits net +4 in the Republican primary race — Magician (+4)."
+      },
+      {
+        "year": 1872,
+        "phase": "2.9.1",
+        "text": "Stephen A. Douglas's traits net +4 in the Democratic primary race — Debater (+4)."
+      },
+      {
+        "year": 1872,
+        "phase": "2.9.1",
+        "text": "Edward Bates's traits net +2 in the Republican primary race — Integrity (+2)."
+      },
+      {
+        "year": 1876,
+        "phase": "2.9.1",
+        "text": "Stephen A. Douglas's traits net +4 in the Democratic primary race — Debater (+4)."
+      },
+      {
+        "year": 1876,
+        "phase": "2.9.1",
+        "text": "Charles Sumner's traits net -4 in the Republican primary race — Puritan (-4)."
+      },
+      {
+        "year": 1880,
+        "phase": "2.9.1",
+        "text": "Stephen A. Douglas's traits net +4 in the Democratic primary race — Debater (+4)."
+      },
+      {
+        "year": 1880,
+        "phase": "2.9.1",
+        "text": "Nathaniel P. Banks's traits net +2 in the Republican primary race — Charismatic (+2)."
+      }
+    ],
+    "internalParty": [
+      {
+        "year": 1856,
+        "phase": "2.2.3",
+        "text": "Stephen A. Douglas's traits net +8 in the Popular Sovereignty Democrats leadership race — Debater (+8)."
+      },
+      {
+        "year": 1856,
+        "phase": "2.2.3",
+        "text": "Martin Van Buren's traits net +8 in the Loco-Foco Democrats leadership race — Magician (+8)."
+      },
+      {
+        "year": 1856,
+        "phase": "2.2.3",
+        "text": "William H. Seward's traits net +8 in the Liberal Republicans leadership race — Magician (+8)."
+      },
+      {
+        "year": 1856,
+        "phase": "2.2.3",
+        "text": "Nathaniel P. Banks's traits net +2 in the Know-Nothing Republicans leadership race — Charismatic (+2)."
+      },
+      {
+        "year": 1864,
+        "phase": "2.2.3",
+        "text": "Edward Bates's traits net +2 in the Crittenden Republicans leadership race — Integrity (+2)."
+      },
+      {
+        "year": 1864,
+        "phase": "2.2.3",
+        "text": "Charles Sumner's traits net -4 in the Radical Republicans leadership race — Puritan (-4)."
+      },
+      {
+        "year": 1866,
+        "phase": "2.2.3",
+        "text": "John A. Andrew's traits net +2 in the Moderate Republicans leadership race — Integrity (+2)."
+      },
+      {
+        "year": 1872,
+        "phase": "2.2.3",
+        "text": "Edward Bates's traits net +2 in the Know-Nothing Republicans leadership race — Integrity (+2)."
+      },
+      {
+        "year": 1874,
+        "phase": "2.2.3",
+        "text": "Robert Boutwell's traits net +8 in the Loco-Foco Democrats leadership race — Magician (+8)."
+      },
+      {
+        "year": 1874,
+        "phase": "2.2.3",
+        "text": "Schuyler Colfax's traits net +2 in the Liberal Republicans leadership race — Charismatic (+2)."
+      }
+    ]
+  }
+}

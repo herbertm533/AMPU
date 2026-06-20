@@ -1,0 +1,211 @@
+{
+  "scenario": "1772",
+  "startYear": 1772,
+  "startEra": "independence",
+  "finalYear": 1834,
+  "finalEra": "independence",
+  "phasesRun": 538,
+  "phasesSkipped": 62,
+  "errorPhases": [],
+  "totalEvents": 1571,
+  "contractTests": {
+    "passed": 193,
+    "failed": 0,
+    "failures": []
+  },
+  "pr4bCounts": {
+    "summaryLinesTotal": 31,
+    "perTraitPerContext": {
+      "Likable": {
+        "presGeneral": 0,
+        "presPrimary": 0,
+        "house": 0,
+        "senatePre17": 0,
+        "governor": 0,
+        "internalParty": 1,
+        "total": 1
+      },
+      "Uncharismatic": {
+        "presGeneral": 0,
+        "presPrimary": 0,
+        "house": 0,
+        "senatePre17": 0,
+        "governor": 0,
+        "internalParty": 0,
+        "total": 0
+      },
+      "Cosmopolitan": {
+        "presGeneral": 0,
+        "presPrimary": 0,
+        "house": 0,
+        "senatePre17": 0,
+        "governor": 0,
+        "internalParty": 3,
+        "total": 3
+      },
+      "Provincial": {
+        "presGeneral": 0,
+        "presPrimary": 0,
+        "house": 0,
+        "senatePre17": 0,
+        "governor": 0,
+        "internalParty": 2,
+        "total": 2
+      },
+      "Two-Faced": {
+        "presGeneral": 0,
+        "presPrimary": 0,
+        "house": 0,
+        "senatePre17": 0,
+        "governor": 0,
+        "internalParty": 1,
+        "total": 1
+      },
+      "Predictable": {
+        "presGeneral": 0,
+        "presPrimary": 0,
+        "house": 0,
+        "senatePre17": 0,
+        "governor": 0,
+        "internalParty": 3,
+        "total": 3
+      },
+      "Hale": {
+        "presGeneral": 0,
+        "presPrimary": 0,
+        "house": 0,
+        "senatePre17": 0,
+        "governor": 0,
+        "internalParty": 4,
+        "total": 4
+      }
+    },
+    "aggregateByContext": {
+      "presGeneral": 0,
+      "presPrimary": 0,
+      "house": 0,
+      "senatePre17": 0,
+      "governor": 0,
+      "internalParty": 31
+    },
+    "headlineCases": {
+      "halevsFrailLargeBumps": 0,
+      "twoFacedPrimaryLarge": 0,
+      "likableLargeBumps": 0,
+      "uncharismaticMediumBumps": 0,
+      "internalPartyPredictableLikableMedium": 0,
+      "provincialHousePositive": 0,
+      "cosmopolitanPgSmall": 0,
+      "cosmopolitanPgMedium": 0,
+      "provincialPgSmall": 0,
+      "provincialPgMedium": 0
+    },
+    "revWarWoundGrant": {
+      "branch1PlainFrail": 0,
+      "branch2HaleShed": 0,
+      "branch3HaleResists": 0
+    },
+    "haleOldAgeDecay": 2
+  },
+  "initialTraitCounts": {
+    "Likable": 1,
+    "Uncharismatic": 0,
+    "Cosmopolitan": 2,
+    "Provincial": 2,
+    "Two-Faced": 0,
+    "Predictable": 1,
+    "Hale": 2,
+    "Frail": 0,
+    "Celebrity": 4,
+    "Charismatic": 0
+  },
+  "finalTraitCounts": {
+    "Likable": 10,
+    "Uncharismatic": 1,
+    "Cosmopolitan": 11,
+    "Provincial": 2,
+    "Two-Faced": 2,
+    "Predictable": 10,
+    "Hale": 14,
+    "Frail": 0,
+    "Celebrity": 10,
+    "Charismatic": 39
+  },
+  "samples": {
+    "halevsFrail": [],
+    "twoFacedPrimary": [],
+    "likableBumped": [],
+    "internalPartyMedium": [],
+    "provincialHousePos": [],
+    "cosmopolitanPgSmall": [],
+    "cosmopolitanPgMedium": [],
+    "haleOldAgeDecay": [
+      {
+        "year": 1812,
+        "phase": "2.4.1",
+        "text": "Benjamin Sullivan (MA, age 81) has lost their Hale step — the years catch up."
+      },
+      {
+        "year": 1822,
+        "phase": "2.4.1",
+        "text": "Silas Pratt (NY, age 86) has lost their Hale step — the years catch up."
+      }
+    ],
+    "revWarWoundShed": [],
+    "revWarWoundResist": [],
+    "presGeneral": [],
+    "presPrimary": [],
+    "internalParty": [
+      {
+        "year": 1772,
+        "phase": "2.2.3",
+        "text": "William Grayson's traits net +8 in the Sons of Liberty leadership race — Debater (+8)."
+      },
+      {
+        "year": 1772,
+        "phase": "2.2.3",
+        "text": "Benjamin Franklin's traits net +10 in the Moderate Patriots leadership race — Likable, Cosmopolitan, Hale (+10)."
+      },
+      {
+        "year": 1772,
+        "phase": "2.2.3",
+        "text": "John Adams's traits net +8 in the American Whigs leadership race — Debater (+8)."
+      },
+      {
+        "year": 1772,
+        "phase": "2.2.3",
+        "text": "Thomas Jefferson's traits net +4 in the Jefferson's Patriots leadership race — Cosmopolitan (+4)."
+      },
+      {
+        "year": 1772,
+        "phase": "2.2.3",
+        "text": "George Washington's traits net +2 in the Washington Patriots leadership race — Hale (+2)."
+      },
+      {
+        "year": 1772,
+        "phase": "2.2.3",
+        "text": "Patrick Henry's traits net +6 in the Adams Patriots leadership race — Debater (+8) / Provincial (-2)."
+      },
+      {
+        "year": 1772,
+        "phase": "2.2.3",
+        "text": "Richard Henry Lee's traits net +8 in the Jay Federalists leadership race — Debater (+8)."
+      },
+      {
+        "year": 1792,
+        "phase": "2.2.3",
+        "text": "John Quincy Adams's traits net +12 in the Sons of Liberty leadership race — Integrity, Debater, Hale (+12)."
+      },
+      {
+        "year": 1792,
+        "phase": "2.2.3",
+        "text": "Oliver Ellsworth's traits net +6 in the Ellsworth Progressives leadership race — Integrity, Harmonious (+6)."
+      },
+      {
+        "year": 1794,
+        "phase": "2.2.3",
+        "text": "William Sullivan's traits net +6 in the Ellsworth Progressives leadership race — Charismatic, Harmonious (+6)."
+      }
+    ]
+  }
+}
