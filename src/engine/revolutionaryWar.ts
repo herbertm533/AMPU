@@ -3,7 +3,7 @@ import { ABILITY_LOSS_RULES } from '../types';
 import { addLog } from './log';
 import { d, d100, chance, pick } from '../rng';
 import { recordDeath } from './halfTermSummary';
-import { loseSkill } from './abilities';
+import { loseSkill, addSkillPoint } from './abilities';
 
 const BATTLE_NAMES_GROUND = ['Bunker Hill', 'Long Island', 'Trenton', 'Princeton', 'Brandywine', 'Saratoga', 'Monmouth', 'Camden', 'Cowpens', "Guilford Courthouse", 'Yorktown', 'Charleston', 'Savannah', 'Germantown', 'Kings Mountain', 'Fort Ticonderoga'];
 const BATTLE_NAMES_NAVAL = ["Off Flamborough Head", 'Penobscot Bay', 'Off the Capes', 'Chesapeake Bay', "Block Island", 'Off the Carolinas'];
@@ -125,6 +125,27 @@ function applyBattleLoss(
   }
 }
 
+// PR2b: symmetric of applyBattleLoss — apply a per-stat earn map to one
+// commander. Skips a dead commander (deathYear set by applyCasualties). Logs
+// each stat that actually rises. Used for the majority-ground-wins admin grant
+// next to PR2a's majority-ground-loss admin penalty.
+function applyBattleEarn(
+  snap: FullGameSnapshot,
+  commander: Politician | undefined,
+  earns: Partial<Record<SkillKey, number>>,
+  context: string,
+): void {
+  if (!commander || commander.deathYear) return;
+  for (const [skill, amount] of Object.entries(earns) as [SkillKey, number][]) {
+    const before = commander.skills[skill];
+    if (addSkillPoint(commander, skill, amount)) {
+      addLog(snap, '2.7.2', 'event',
+        `${commander.firstName} ${commander.lastName} grows in stature commanding ${context} — ${skill[0].toUpperCase() + skill.slice(1)} ${before} → ${commander.skills[skill]}.`,
+        { politicianId: commander.id });
+    }
+  }
+}
+
 export function runRevWarBattles(snap: FullGameSnapshot): void {
   const war = ensureWar(snap);
   if (!war.active) return;
@@ -194,6 +215,12 @@ export function runRevWarBattles(snap: FullGameSnapshot): void {
     const wonThisPhase = war.currentGroundWins - groundWinsBefore;
     if (lostThisPhase > wonThisPhase && lostThisPhase > 0) {
       applyBattleLoss(snap, general, { admin: ABILITY_LOSS_RULES.battle.majorityGroundLossAdmin }, 'the campaign');
+    }
+    // PR2b symmetric earn: majority of ground wins this phase -> admin +1.
+    // Strict > on both sides — an even-split phase grants neither, matching
+    // PR2a's "majority" semantics.
+    if (wonThisPhase > lostThisPhase && wonThisPhase > 0) {
+      applyBattleEarn(snap, general, { admin: 1 }, 'the campaign');
     }
   }
 
