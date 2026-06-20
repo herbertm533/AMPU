@@ -568,6 +568,191 @@ export const TRAIT_CONFLICTS: Partial<Record<Trait, Trait>> = {
   Opportunist:    'Loyal',
 };
 
+// PR4a election contexts. Six locked contexts (spec AC #2). Senate uses
+// senatePre17 in BOTH AMPU scenarios (neither reaches 1913 / 17th Amendment;
+// spec F-SENATE-BOTH-ERAS).
+export type ElectionContext =
+  | 'presGeneral'
+  | 'presPrimary'
+  | 'house'
+  | 'senatePre17'
+  | 'governor'
+  | 'internalParty';
+
+// PR4a per-trait per-context magnitudes. Flat array of rule rows so the four
+// cross-cutting cases (era-scaled Domestic Apathy, Integrity bump vs tainted
+// opponent, Unlikable bump vs Charismatic opponent, Scandalous/Controversial
+// bump vs Integrity opponent) fit naturally — a nested Record would force
+// sentinel objects inside the inner shape.
+//
+// Magnitude bands (CP1 locked at the band level; numerics PM-recommended):
+//   SMALL  = 2  (≈ 2 pct-pts on calcStateVote score; ≈ 2 score-pts on internal-party path)
+//   MEDIUM = 4
+//   LARGE  = 8
+//
+// Negative-trait rows carry negative magnitudes. `era` is undefined for rows
+// that apply in BOTH AMPU scenarios; populated only on the Domestic-Apathy
+// era split (per F-DOMESTIC-APATHY-ERA-SCALED). `opponentConditional` is the
+// per-row bump that fires when the opponent holds the listed trait — used
+// for the three locked cases (spec AC #15).
+export const TRAIT_ELECTION_BANDS = {
+  SMALL: 2,
+  MEDIUM: 4,
+  LARGE: 8,
+} as const satisfies { SMALL: number; MEDIUM: number; LARGE: number };
+
+export interface TraitElectionRule {
+  trait: Trait;
+  context: ElectionContext;
+  magnitude: number;                 // signed; negative for hits
+  era?: Era;                         // row applies only when snap era matches; undefined = all eras
+  opponentConditional?: {
+    ifOpponentHas: Trait[];          // if ANY opponent holds one of these, swap to bumped
+    bumpedMagnitude: number;         // signed; replaces magnitude when triggered (not added)
+  };
+}
+
+export const TRAIT_ELECTION_EFFECTS: TraitElectionRule[] = [
+  // --- Charismatic --- (all eras; mild dampening in pre-17 Senate per F-SENATE-BOTH-ERAS)
+  { trait: 'Charismatic', context: 'presGeneral',   magnitude:  TRAIT_ELECTION_BANDS.MEDIUM },
+  { trait: 'Charismatic', context: 'presPrimary',   magnitude:  TRAIT_ELECTION_BANDS.SMALL  },
+  { trait: 'Charismatic', context: 'house',         magnitude:  TRAIT_ELECTION_BANDS.SMALL  },
+  { trait: 'Charismatic', context: 'senatePre17',   magnitude:  TRAIT_ELECTION_BANDS.SMALL  },
+  { trait: 'Charismatic', context: 'governor',      magnitude:  TRAIT_ELECTION_BANDS.MEDIUM },
+  { trait: 'Charismatic', context: 'internalParty', magnitude:  TRAIT_ELECTION_BANDS.SMALL  },
+
+  // --- Integrity --- (all eras; opponent-conditional MEDIUM vs tainted in presGeneral/house/governor only — AC #15)
+  { trait: 'Integrity', context: 'presGeneral', magnitude: TRAIT_ELECTION_BANDS.SMALL,
+    opponentConditional: { ifOpponentHas: ['Scandalous', 'Controversial', 'Corrupt'],
+                           bumpedMagnitude: TRAIT_ELECTION_BANDS.MEDIUM } },
+  { trait: 'Integrity', context: 'presPrimary',   magnitude: TRAIT_ELECTION_BANDS.SMALL },
+  { trait: 'Integrity', context: 'house',         magnitude: TRAIT_ELECTION_BANDS.SMALL,
+    opponentConditional: { ifOpponentHas: ['Scandalous', 'Controversial', 'Corrupt'],
+                           bumpedMagnitude: TRAIT_ELECTION_BANDS.MEDIUM } },
+  { trait: 'Integrity', context: 'senatePre17',   magnitude: TRAIT_ELECTION_BANDS.SMALL },
+  { trait: 'Integrity', context: 'governor',      magnitude: TRAIT_ELECTION_BANDS.SMALL,
+    opponentConditional: { ifOpponentHas: ['Scandalous', 'Controversial', 'Corrupt'],
+                           bumpedMagnitude: TRAIT_ELECTION_BANDS.MEDIUM } },
+  { trait: 'Integrity', context: 'internalParty', magnitude: TRAIT_ELECTION_BANDS.SMALL },
+
+  // --- Debater --- (all eras flat — Q3 SHIP FLAT; LARGE on internal-party / Webster-Hayne)
+  { trait: 'Debater', context: 'presGeneral',   magnitude: TRAIT_ELECTION_BANDS.MEDIUM },
+  { trait: 'Debater', context: 'presPrimary',   magnitude: TRAIT_ELECTION_BANDS.MEDIUM },
+  { trait: 'Debater', context: 'house',         magnitude: TRAIT_ELECTION_BANDS.SMALL  },
+  { trait: 'Debater', context: 'senatePre17',   magnitude: TRAIT_ELECTION_BANDS.MEDIUM },
+  { trait: 'Debater', context: 'governor',      magnitude: TRAIT_ELECTION_BANDS.SMALL  },
+  { trait: 'Debater', context: 'internalParty', magnitude: TRAIT_ELECTION_BANDS.LARGE  },
+
+  // --- Propagandist --- (concept-native to both eras; term anachronism is display-only)
+  { trait: 'Propagandist', context: 'presGeneral',   magnitude: TRAIT_ELECTION_BANDS.MEDIUM },
+  { trait: 'Propagandist', context: 'presPrimary',   magnitude: TRAIT_ELECTION_BANDS.SMALL  },
+  { trait: 'Propagandist', context: 'house',         magnitude: TRAIT_ELECTION_BANDS.SMALL  },
+  { trait: 'Propagandist', context: 'senatePre17',   magnitude: TRAIT_ELECTION_BANDS.SMALL  },
+  { trait: 'Propagandist', context: 'governor',      magnitude: TRAIT_ELECTION_BANDS.SMALL  },
+  { trait: 'Propagandist', context: 'internalParty', magnitude: TRAIT_ELECTION_BANDS.SMALL  },
+
+  // --- Harmonious --- (consensus archetype; Pierce 1852 — MEDIUM in convention/senate)
+  { trait: 'Harmonious', context: 'presGeneral',   magnitude: TRAIT_ELECTION_BANDS.SMALL  },
+  { trait: 'Harmonious', context: 'presPrimary',   magnitude: TRAIT_ELECTION_BANDS.MEDIUM },
+  { trait: 'Harmonious', context: 'house',         magnitude: TRAIT_ELECTION_BANDS.SMALL  },
+  { trait: 'Harmonious', context: 'senatePre17',   magnitude: TRAIT_ELECTION_BANDS.MEDIUM },
+  { trait: 'Harmonious', context: 'governor',      magnitude: TRAIT_ELECTION_BANDS.SMALL  },
+  { trait: 'Harmonious', context: 'internalParty', magnitude: TRAIT_ELECTION_BANDS.MEDIUM },
+
+  // --- Magician --- (Van Buren/Douglas; LARGE on senatePre17 + internal-party)
+  { trait: 'Magician', context: 'presGeneral',   magnitude: TRAIT_ELECTION_BANDS.SMALL  },
+  { trait: 'Magician', context: 'presPrimary',   magnitude: TRAIT_ELECTION_BANDS.MEDIUM },
+  { trait: 'Magician', context: 'house',         magnitude: TRAIT_ELECTION_BANDS.SMALL  },
+  { trait: 'Magician', context: 'senatePre17',   magnitude: TRAIT_ELECTION_BANDS.LARGE  },
+  { trait: 'Magician', context: 'governor',      magnitude: TRAIT_ELECTION_BANDS.SMALL  },
+  { trait: 'Magician', context: 'internalParty', magnitude: TRAIT_ELECTION_BANDS.LARGE  },
+
+  // --- Unlikable --- (Adams 1800; opp-conditional vs Charismatic in presGeneral only)
+  { trait: 'Unlikable', context: 'presGeneral',   magnitude: -TRAIT_ELECTION_BANDS.MEDIUM,
+    opponentConditional: { ifOpponentHas: ['Charismatic'],
+                           bumpedMagnitude: -TRAIT_ELECTION_BANDS.LARGE } },
+  { trait: 'Unlikable', context: 'presPrimary',   magnitude: -TRAIT_ELECTION_BANDS.MEDIUM },
+  { trait: 'Unlikable', context: 'house',         magnitude: -TRAIT_ELECTION_BANDS.SMALL  },
+  { trait: 'Unlikable', context: 'senatePre17',   magnitude: -TRAIT_ELECTION_BANDS.SMALL  },
+  { trait: 'Unlikable', context: 'governor',      magnitude: -TRAIT_ELECTION_BANDS.SMALL  },
+  { trait: 'Unlikable', context: 'internalParty', magnitude: -TRAIT_ELECTION_BANDS.MEDIUM },
+
+  // --- Puritan --- (Garrison/Sumner — consensus blocker; MEDIUM hit on senatePre17/internal)
+  { trait: 'Puritan', context: 'presGeneral',   magnitude: -TRAIT_ELECTION_BANDS.SMALL  },
+  { trait: 'Puritan', context: 'presPrimary',   magnitude: -TRAIT_ELECTION_BANDS.MEDIUM },
+  { trait: 'Puritan', context: 'house',         magnitude: -TRAIT_ELECTION_BANDS.SMALL  },
+  { trait: 'Puritan', context: 'senatePre17',   magnitude: -TRAIT_ELECTION_BANDS.MEDIUM },
+  { trait: 'Puritan', context: 'governor',      magnitude: -TRAIT_ELECTION_BANDS.SMALL  },
+  { trait: 'Puritan', context: 'internalParty', magnitude: -TRAIT_ELECTION_BANDS.MEDIUM },
+
+  // --- Numberfudger --- (Q2 WIRE-SMALL; only popular-vote contexts, no internal/senate/primary)
+  { trait: 'Numberfudger', context: 'presGeneral', magnitude: -TRAIT_ELECTION_BANDS.SMALL },
+  { trait: 'Numberfudger', context: 'house',       magnitude: -TRAIT_ELECTION_BANDS.SMALL },
+  { trait: 'Numberfudger', context: 'governor',    magnitude: -TRAIT_ELECTION_BANDS.SMALL },
+
+  // --- Scandalous --- (Hamilton-1797 vs Jackson-1828 contrast; opp-conditional vs Integrity)
+  { trait: 'Scandalous', context: 'presGeneral',   magnitude: -TRAIT_ELECTION_BANDS.MEDIUM,
+    opponentConditional: { ifOpponentHas: ['Integrity'],
+                           bumpedMagnitude: -TRAIT_ELECTION_BANDS.LARGE } },
+  { trait: 'Scandalous', context: 'presPrimary',   magnitude: -TRAIT_ELECTION_BANDS.SMALL  },
+  { trait: 'Scandalous', context: 'house',         magnitude: -TRAIT_ELECTION_BANDS.MEDIUM,
+    opponentConditional: { ifOpponentHas: ['Integrity'],
+                           bumpedMagnitude: -TRAIT_ELECTION_BANDS.LARGE } },
+  { trait: 'Scandalous', context: 'senatePre17',   magnitude: -TRAIT_ELECTION_BANDS.SMALL  },
+  { trait: 'Scandalous', context: 'governor',      magnitude: -TRAIT_ELECTION_BANDS.MEDIUM,
+    opponentConditional: { ifOpponentHas: ['Integrity'],
+                           bumpedMagnitude: -TRAIT_ELECTION_BANDS.LARGE } },
+  { trait: 'Scandalous', context: 'internalParty', magnitude: -TRAIT_ELECTION_BANDS.SMALL  },
+
+  // --- Controversial --- (Jackson/Douglas/Brooks; symmetric with Scandalous on Integrity)
+  { trait: 'Controversial', context: 'presGeneral',   magnitude: -TRAIT_ELECTION_BANDS.MEDIUM,
+    opponentConditional: { ifOpponentHas: ['Integrity'],
+                           bumpedMagnitude: -TRAIT_ELECTION_BANDS.LARGE } },
+  { trait: 'Controversial', context: 'presPrimary',   magnitude: -TRAIT_ELECTION_BANDS.SMALL  },
+  { trait: 'Controversial', context: 'house',         magnitude: -TRAIT_ELECTION_BANDS.SMALL,
+    opponentConditional: { ifOpponentHas: ['Integrity'],
+                           bumpedMagnitude: -TRAIT_ELECTION_BANDS.LARGE } },
+  { trait: 'Controversial', context: 'senatePre17',   magnitude: -TRAIT_ELECTION_BANDS.SMALL  },
+  { trait: 'Controversial', context: 'governor',      magnitude: -TRAIT_ELECTION_BANDS.SMALL,
+    opponentConditional: { ifOpponentHas: ['Integrity'],
+                           bumpedMagnitude: -TRAIT_ELECTION_BANDS.LARGE } },
+  { trait: 'Controversial', context: 'internalParty', magnitude: -TRAIT_ELECTION_BANDS.SMALL  },
+
+  // --- Obscure --- (Pierce 1852 dark-horse: POSITIVE in presPrimary; legislators know everyone in senatePre17)
+  { trait: 'Obscure', context: 'presGeneral',   magnitude: -TRAIT_ELECTION_BANDS.MEDIUM },
+  { trait: 'Obscure', context: 'presPrimary',   magnitude:  TRAIT_ELECTION_BANDS.SMALL  },
+  { trait: 'Obscure', context: 'house',         magnitude: -TRAIT_ELECTION_BANDS.MEDIUM },
+  // senatePre17: NONE (no row — legislators know everyone; spec's intentional gap)
+  { trait: 'Obscure', context: 'governor',      magnitude: -TRAIT_ELECTION_BANDS.MEDIUM },
+  { trait: 'Obscure', context: 'internalParty', magnitude: -TRAIT_ELECTION_BANDS.SMALL  },
+
+  // --- Domestic Apathy --- (F-DOMESTIC-APATHY-ERA-SCALED; era-split on presGeneral; flat on house/governor)
+  // 1772 scenario (independence + federalism) — -SMALL on presGeneral
+  { trait: 'Domestic Apathy', context: 'presGeneral', magnitude: -TRAIT_ELECTION_BANDS.SMALL,  era: 'independence' },
+  { trait: 'Domestic Apathy', context: 'presGeneral', magnitude: -TRAIT_ELECTION_BANDS.SMALL,  era: 'federalism'   },
+  // 1856 scenario (nationalism+) — -MEDIUM on presGeneral
+  { trait: 'Domestic Apathy', context: 'presGeneral', magnitude: -TRAIT_ELECTION_BANDS.MEDIUM, era: 'nationalism'  },
+  { trait: 'Domestic Apathy', context: 'presGeneral', magnitude: -TRAIT_ELECTION_BANDS.MEDIUM, era: 'modern'       },
+  // House / Governor — flat MEDIUM all eras (domestic district / state issues hit consistently)
+  { trait: 'Domestic Apathy', context: 'house',    magnitude: -TRAIT_ELECTION_BANDS.MEDIUM },
+  { trait: 'Domestic Apathy', context: 'governor', magnitude: -TRAIT_ELECTION_BANDS.MEDIUM },
+  // senatePre17 / presPrimary / internalParty: NONE (no rows)
+
+  // --- Carpetbagger --- (label kept per Q1; trait alone is the gate — trait granted only by successful relocation)
+  { trait: 'Carpetbagger', context: 'house',       magnitude: -TRAIT_ELECTION_BANDS.MEDIUM },
+  { trait: 'Carpetbagger', context: 'senatePre17', magnitude: -TRAIT_ELECTION_BANDS.SMALL  },
+  { trait: 'Carpetbagger', context: 'governor',    magnitude: -TRAIT_ELECTION_BANDS.MEDIUM },
+  // presGeneral / presPrimary / internalParty: NONE (state-level only)
+
+  // --- Outsider --- (Jackson/Frémont; flat per Q5 — no anti-establishment mood meter in PR4a)
+  { trait: 'Outsider', context: 'presGeneral',   magnitude:  TRAIT_ELECTION_BANDS.SMALL  },
+  { trait: 'Outsider', context: 'presPrimary',   magnitude: -TRAIT_ELECTION_BANDS.MEDIUM },
+  { trait: 'Outsider', context: 'house',         magnitude:  TRAIT_ELECTION_BANDS.SMALL  },
+  { trait: 'Outsider', context: 'senatePre17',   magnitude: -TRAIT_ELECTION_BANDS.MEDIUM },
+  { trait: 'Outsider', context: 'governor',      magnitude:  TRAIT_ELECTION_BANDS.SMALL  },
+  { trait: 'Outsider', context: 'internalParty', magnitude: -TRAIT_ELECTION_BANDS.MEDIUM },
+];
+
 export const ANYTIME_EVENTS_RULES = {
   baseFireChance: 0.05,
   nationalBaseFireChance: 0.70,

@@ -1,9 +1,10 @@
-import type { FullGameSnapshot, PhaseId, Politician, EraEvent, Legislation, ElectionResult, NationalMeters, Ideology, PartyId, SkillKey, Trait, CareerTrack, OfficeType, State, RelocationEntry, RelocationBand, IdeologyShiftEntry, ConversionEntry, KingmakerEntry, FactionAlignmentDriftEntry, FactionLeadershipEntry, InterestCardId, LobbyCardId, IdeologyCardId, Era } from '../types';
+import type { FullGameSnapshot, PhaseId, Politician, EraEvent, Legislation, ElectionResult, NationalMeters, Ideology, PartyId, SkillKey, Trait, CareerTrack, OfficeType, State, RelocationEntry, RelocationBand, IdeologyShiftEntry, ConversionEntry, KingmakerEntry, FactionAlignmentDriftEntry, FactionLeadershipEntry, InterestCardId, LobbyCardId, IdeologyCardId, Era, ElectionContext } from '../types';
 import { IDEOLOGY_ORDER, SKILLS, POSITIVE_TRAITS, TRACK_SKILL, TRACK_THEMED_TRAITS, TRACK_EXPERTISE, OFFICE_EXPERTISE, COMMITTEE_EXPERTISE, CAREER_RANDOM_NEGATIVES, CAREER_ODDS, CAREER_TRACK_MAX_YEARS, CAREER_TRACK_CAP, CAREER_GAINS_CAP, RELOCATION_ODDS, RELOCATION_ATTEMPTS_PER_TURN, RELOCATIONS_CAP, CARPETBAGGER_LADDER, IDEOLOGY_SHIFT_ODDS, IDEOLOGY_ATTEMPTS_PER_TURN, IDEOLOGY_SHIFTS_CAP, CONVERSION_ODDS, CONVERSION_ATTEMPTS_PER_TURN, CONVERSIONS_CAP, KINGMAKER_RULES, KINGMAKERS_CAP, ALIGNMENT_RULES, ALIGNMENT_DRIFT_CAP, LEADERSHIP_RULES, LEADERSHIP_FEED_CAP, MORTALITY_RULES, ANYTIME_EVENTS_RULES, ABILITY_LOSS_RULES, ABILITY_EARN_RULES, OFFICE_COMMAND_GRANT, OFFICE_ADMIN_GRANT, TRACK_SECONDARY_SKILLS, TRAIT_LIFECYCLE_RULES, TRAIT_CONFLICTS } from '../types';
 import { addLog } from './log';
 import { addExpertise } from './expertise';
 import { loseSkill, loseCommand, addSkillPoint, addCommandPoint } from './abilities';
 import { addTrait, removeTrait, tryGrantTrait } from './traits';
+import { applyTraitElectionBonus, composeTraitSummary } from './electionEffects';
 import { uid, chance, d100, d, pick, pickWeighted, clamp, shuffle, rand } from '../rng';
 import { refreshPv } from '../pv';
 import { ANYTIME_EVENT_TEMPLATES, type AnytimeEventTemplate } from '../data/anytimeEvents';
@@ -1832,6 +1833,14 @@ export function runPhase_2_2_2_Committees(snap: FullGameSnapshot): void {
   const all = [...senateMembers, ...houseMembers];
   for (const c of committees) {
     const skillKey: keyof Politician['skills'] = c === 'Justice' ? 'judicial' : c === 'Economic' ? 'admin' : c === 'Foreign' ? 'admin' : 'legislative';
+    // PR4a G-4: ready-to-flip — trait bonus would dominate 0-5 skill ranking;
+    // defer until skill range expands. The wire would be:
+    //   const era = snap.game.currentEra;
+    //   const candidate = all.sort((a, b) => {
+    //     const aBonus = applyTraitElectionBonus(a, 'internalParty', { era }).totalBonus;
+    //     const bBonus = applyTraitElectionBonus(b, 'internalParty', { era }).totalBonus;
+    //     return (b.skills[skillKey] + bBonus) - (a.skills[skillKey] + aBonus);
+    //   })[0];
     const candidate = all.sort((a, b) => b.skills[skillKey] - a.skills[skillKey])[0];
     if (candidate) {
       snap.game.committeeChairs[c] = candidate.id;
@@ -1914,7 +1923,10 @@ export function runPhase_2_2_3_FactionLeaders(snap: FullGameSnapshot): void {
           LEADERSHIP_RULES.traitBonusCap,
           LEADERSHIP_RULES.traitBonusPerPositive * posCount,
         );
-        return p.pvCache - fitPenalty + traitBonus;
+        // PR4a: per-trait per-context bonus. Composes additively with the
+        // existing positives-count floor (spec AC #10 / AC #24).
+        const { totalBonus: pr4aBonus } = applyTraitElectionBonus(p, 'internalParty', { era });
+        return p.pvCache - fitPenalty + traitBonus + pr4aBonus;
       };
       eligible.sort((a, b) => {
         const sa = scoreOf(a), sb = scoreOf(b);
@@ -1935,6 +1947,15 @@ export function runPhase_2_2_3_FactionLeaders(snap: FullGameSnapshot): void {
         });
         addLog(snap, '2.2.3', 'appointment',
           `${winner.firstName} ${winner.lastName} elected to lead the ${f.name}.`);
+        // PR4a: summary log on winner if their trait breakdown is non-empty.
+        const { perTraitBreakdown: winnerBreakdown } =
+          applyTraitElectionBonus(winner, 'internalParty', { era });
+        const winnerMsg = composeTraitSummary(
+          `${winner.firstName} ${winner.lastName}`,
+          `${f.name} leadership`,
+          winnerBreakdown,
+        );
+        if (winnerMsg) addLog(snap, '2.2.3', 'appointment', winnerMsg, { politicianId: winner.id });
         if (winner.id !== formerLeaderId) {
           applyFactionLeaderGrants(snap, winner, f.name);
         }
@@ -1990,6 +2011,15 @@ export function runPhase_2_2_3_FactionLeaders(snap: FullGameSnapshot): void {
       });
       addLog(snap, '2.2.3', 'appointment',
         `${challenger.firstName} ${challenger.lastName} unseats ${leader.firstName} ${leader.lastName} as leader of the ${f.name}.`);
+      // PR4a: summary log on successful challenger if their trait breakdown is non-empty.
+      const { perTraitBreakdown: chBreakdown } =
+        applyTraitElectionBonus(challenger, 'internalParty', { era });
+      const chMsg = composeTraitSummary(
+        `${challenger.firstName} ${challenger.lastName}`,
+        `${f.name} leadership`,
+        chBreakdown,
+      );
+      if (chMsg) addLog(snap, '2.2.3', 'appointment', chMsg, { politicianId: challenger.id });
       applyFactionLeaderGrants(snap, challenger, f.name);
       unseated++;
     } else {
@@ -3268,9 +3298,15 @@ function ideologyAlignment(ideo: Ideology, party: PartyId): number {
   return party === 'BLUE' ? v : -v;
 }
 
-function calcStateVote(snap: FullGameSnapshot, stateId: string, candidates: Politician[]): { politicianId: string; partyId: PartyId; pct: number; votes: number }[] {
+function calcStateVote(
+  snap: FullGameSnapshot,
+  stateId: string,
+  candidates: Politician[],
+  ctx: ElectionContext,
+): { politicianId: string; partyId: PartyId; pct: number; votes: number; traitBonus: number; traitBreakdown: { trait: Trait; bonus: number }[] }[] {
   const state = snap.states.find((s) => s.id === stateId)!;
   const totalVotes = 100_000 + state.electoralVotes * 5000;
+  const era = snap.game.currentEra;
   const scores = candidates.map((c) => {
     const partyId = c.partyId!;
     const enthusiasm = snap.game.enthusiasm[c.ideology]?.[partyId] ?? 0;
@@ -3278,26 +3314,53 @@ function calcStateVote(snap: FullGameSnapshot, stateId: string, candidates: Poli
     const partyPref = partyId === 'BLUE' ? -snap.game.partyPreference : snap.game.partyPreference;
     const pv = c.pvCache;
     const factionBias = electionFactionBias(snap, c.factionId, c.id);
-    const score = 50 + baseLean * 5 + partyPref * 5 + enthusiasm * 2 + pv * 0.1 + factionBias + (Math.random() - 0.5) * 8;
-    return { c, score: Math.max(1, score) };
+    // PR4a trait election effects. Opponent = the OTHER candidate's traits in the
+    // 2-candidate field; for >2 fields the helper sees the union. Opp-conditional
+    // rows fire if ANY opponent matches (spec Edge case).
+    const opponentTraits = candidates
+      .filter((other) => other.id !== c.id)
+      .flatMap((other) => other.traits);
+    const { totalBonus: traitBonus, perTraitBreakdown: traitBreakdown } =
+      applyTraitElectionBonus(c, ctx, { era, opponentTraits });
+    const score = 50 + baseLean * 5 + partyPref * 5 + enthusiasm * 2 + pv * 0.1
+                + factionBias + traitBonus
+                + (Math.random() - 0.5) * 8;
+    return { c, score: Math.max(1, score), traitBonus, traitBreakdown };
   });
   const total = scores.reduce((s, x) => s + x.score, 0);
-  return scores.map(({ c, score }) => ({
+  return scores.map(({ c, score, traitBonus, traitBreakdown }) => ({
     politicianId: c.id,
     partyId: c.partyId!,
     pct: (score / total) * 100,
     votes: Math.round((score / total) * totalVotes),
+    traitBonus,
+    traitBreakdown,
   }));
 }
 
 export function runPhase_2_9_1_Primaries(snap: FullGameSnapshot): { BLUE: Politician | null; RED: Politician | null } {
   const out = { BLUE: null as Politician | null, RED: null as Politician | null };
+  const era = snap.game.currentEra;
   for (const partyId of ['BLUE', 'RED'] as PartyId[]) {
     const candidates = snap.politicians.filter((p) => p.partyId === partyId && !p.deathYear && !p.retiredYear && p.age >= 35 && p.age <= 80 && p.command >= 2);
-    candidates.sort((a, b) => b.pvCache + b.command * 5 - (a.pvCache + a.command * 5));
-    const top = candidates[0] ?? null;
+    // PR4a: add per-context trait bonus to the existing sort key (PV + command*5).
+    const sortable = candidates.map((c) => {
+      const { totalBonus, perTraitBreakdown } = applyTraitElectionBonus(c, 'presPrimary', { era });
+      return { c, score: c.pvCache + c.command * 5 + totalBonus, breakdown: perTraitBreakdown };
+    });
+    sortable.sort((a, b) => b.score - a.score);
+    const topRow = sortable[0] ?? null;
+    const top = topRow?.c ?? null;
     out[partyId] = top;
-    if (top) addLog(snap, '2.9.1', 'election', `${top.firstName} ${top.lastName} wins ${partyId === 'BLUE' ? 'Democratic' : 'Republican'} primary.`);
+    if (top && topRow) {
+      addLog(snap, '2.9.1', 'election', `${top.firstName} ${top.lastName} wins ${partyId === 'BLUE' ? 'Democratic' : 'Republican'} primary.`);
+      const msg = composeTraitSummary(
+        `${top.firstName} ${top.lastName}`,
+        `${partyId === 'BLUE' ? 'Democratic' : 'Republican'} primary`,
+        topRow.breakdown,
+      );
+      if (msg) addLog(snap, '2.9.1', 'election', msg, { politicianId: top.id });
+    }
   }
   return out;
 }
@@ -3308,8 +3371,13 @@ export function runPhase_2_9_4_PresidentialGeneral(snap: FullGameSnapshot, blueC
   let blueEv = 0, redEv = 0;
   let bluePop = 0, redPop = 0;
   const stateResults: { state: string; winner: PartyId; bluePct: number; redPct: number }[] = [];
+  // PR4a: capture the first state's tally so we can emit once-per-race trait
+  // summary logs after the loop. The trait bonus is identical across all
+  // states (depends only on traits + opp + ctx + era), not state-specific.
+  let firstTally: ReturnType<typeof calcStateVote> | null = null;
   for (const s of snap.states) {
-    const tally = calcStateVote(snap, s.id, candidates);
+    const tally = calcStateVote(snap, s.id, candidates, 'presGeneral');
+    if (firstTally === null) firstTally = tally;
     const blue = tally.find((t) => t.partyId === 'BLUE')!;
     const red = tally.find((t) => t.partyId === 'RED')!;
     if (blue.pct > red.pct) blueEv += s.electoralVotes;
@@ -3317,6 +3385,15 @@ export function runPhase_2_9_4_PresidentialGeneral(snap: FullGameSnapshot, blueC
     bluePop += blue.votes;
     redPop += red.votes;
     stateResults.push({ state: s.id, winner: blue.pct > red.pct ? 'BLUE' : 'RED', bluePct: blue.pct, redPct: red.pct });
+  }
+  // PR4a: once-per-race trait summary log per candidate with non-empty breakdown.
+  if (firstTally) {
+    for (const row of firstTally) {
+      const c = candidates.find((cc) => cc.id === row.politicianId);
+      if (!c) continue;
+      const msg = composeTraitSummary(`${c.firstName} ${c.lastName}`, 'presidential general', row.traitBreakdown);
+      if (msg) addLog(snap, '2.9.4', 'election', msg, { politicianId: c.id });
+    }
   }
   const winner = blueEv > redEv ? blueCand : redCand;
   const result: ElectionResult = {
@@ -3361,8 +3438,15 @@ export function runPhase_2_9_5_Governors(snap: FullGameSnapshot): void {
       const red = candidates.filter((c) => c.partyId === 'RED').sort((a, b) => b.pvCache - a.pvCache)[0];
       const list = [blue, red].filter(Boolean) as Politician[];
       if (list.length < 2) continue;
-      const tally = calcStateVote(snap, s.id, list);
+      const tally = calcStateVote(snap, s.id, list, 'governor');
       tally.sort((a, b) => b.pct - a.pct);
+      // PR4a: summary log per candidate with non-empty breakdown, per state.
+      for (const row of tally) {
+        const c = list.find((cc) => cc.id === row.politicianId);
+        if (!c) continue;
+        const msg = composeTraitSummary(`${c.firstName} ${c.lastName}`, `${s.abbr} governor`, row.traitBreakdown);
+        if (msg) addLog(snap, '2.9.5', 'election', msg, { politicianId: c.id, stateId: s.id });
+      }
       const winnerId = tally[0].politicianId;
       const winner = snap.politicians.find((p) => p.id === winnerId);
       if (!winner) continue;
@@ -3425,8 +3509,15 @@ export function runPhase_2_9_6_Congressional(
       const red = candidates.filter((c) => c.partyId === 'RED').sort((a, b) => b.pvCache - a.pvCache)[0];
       const list = [blue, red].filter(Boolean) as Politician[];
       if (list.length < 2) continue;
-      const tally = calcStateVote(snap, s.id, list);
+      const tally = calcStateVote(snap, s.id, list, 'senatePre17');
       tally.sort((a, b) => b.pct - a.pct);
+      // PR4a: summary log per candidate with non-empty breakdown, per senate race.
+      for (const row of tally) {
+        const c = list.find((cc) => cc.id === row.politicianId);
+        if (!c) continue;
+        const msg = composeTraitSummary(`${c.firstName} ${c.lastName}`, `${s.abbr} senate`, row.traitBreakdown);
+        if (msg) addLog(snap, '2.9.6', 'election', msg, { politicianId: c.id, stateId: s.id });
+      }
       const winnerId = tally[0].politicianId;
       const winner = snap.politicians.find((p) => p.id === winnerId);
       if (!winner) continue;
@@ -3445,8 +3536,15 @@ export function runPhase_2_9_6_Congressional(
       const red = candidates.filter((c) => c.partyId === 'RED').sort((a, b) => b.pvCache - a.pvCache)[0];
       const list = [blue, red].filter(Boolean) as Politician[];
       if (list.length < 2) continue;
-      const tally = calcStateVote(snap, s.id, list);
+      const tally = calcStateVote(snap, s.id, list, 'house');
       tally.sort((a, b) => b.pct - a.pct);
+      // PR4a: summary log per candidate with non-empty breakdown, per house race.
+      for (const row of tally) {
+        const c = list.find((cc) => cc.id === row.politicianId);
+        if (!c) continue;
+        const msg = composeTraitSummary(`${c.firstName} ${c.lastName}`, `${s.abbr} house`, row.traitBreakdown);
+        if (msg) addLog(snap, '2.9.6', 'election', msg, { politicianId: c.id, stateId: s.id });
+      }
       const winnerId = tally[0].politicianId;
       const winner = snap.politicians.find((p) => p.id === winnerId);
       if (!winner) continue;
