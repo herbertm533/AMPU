@@ -1,5 +1,7 @@
 import type { FullGameSnapshot, ConstitutionalConvention, ConventionVote, ConstitutionalArticles, Politician } from '../types';
+import { TRAIT_CONFLICTS } from '../types';
 import { addLog } from './log';
+import { addTrait, tryGrantTrait } from './traits';
 import { uid, chance, pick } from '../rng';
 
 export function makeConvention(year: number): ConstitutionalConvention {
@@ -153,7 +155,7 @@ export function applyConvention(snap: FullGameSnapshot, conv: ConstitutionalConv
     const father = ranked[0];
     if (father) {
       conv.fatherOfConstitutionId = father.id;
-      if (!father.traits.includes('Celebrity')) father.traits.push('Celebrity');
+      addTrait(father, 'Celebrity');
       father.command = Math.min(5, father.command + 1);
       addLog(snap, '2.4.3', 'event', `${father.firstName} ${father.lastName} hailed as Father of the Constitution.`);
     }
@@ -165,7 +167,16 @@ export function applyConvention(snap: FullGameSnapshot, conv: ConstitutionalConv
       if (!authors.includes(a.id)) {
         authors.push(a.id);
         a.command = Math.min(5, a.command + 1);
-        if (!a.traits.includes('Egghead')) a.traits.push('Egghead');
+        const { granted, replaced } = tryGrantTrait(a, 'Egghead');
+        if (granted && replaced) {
+          addLog(snap, '2.4.3', 'event',
+            `${a.firstName} ${a.lastName} sheds ${replaced} and earns Egghead authoring the Federalist Papers — d6 wins.`,
+            { politicianId: a.id });
+        } else if (!granted && TRAIT_CONFLICTS['Egghead'] && a.traits.includes(TRAIT_CONFLICTS['Egghead']!)) {
+          addLog(snap, '2.4.3', 'event',
+            `${a.firstName} ${a.lastName} would have gained Egghead authoring the Federalist Papers, but Incompetent holds on a d6.`,
+            { politicianId: a.id });
+        }
       }
     }
     conv.federalistAuthorIds = authors;

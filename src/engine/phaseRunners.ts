@@ -1,9 +1,10 @@
 import type { FullGameSnapshot, PhaseId, Politician, EraEvent, Legislation, ElectionResult, NationalMeters, Ideology, PartyId, SkillKey, Trait, CareerTrack, OfficeType, State, RelocationEntry, RelocationBand, IdeologyShiftEntry, ConversionEntry, KingmakerEntry, FactionAlignmentDriftEntry, FactionLeadershipEntry, InterestCardId, LobbyCardId, IdeologyCardId, Era } from '../types';
-import { IDEOLOGY_ORDER, SKILLS, POSITIVE_TRAITS, TRACK_SKILL, TRACK_THEMED_TRAITS, TRACK_EXPERTISE, OFFICE_EXPERTISE, COMMITTEE_EXPERTISE, CAREER_RANDOM_NEGATIVES, CAREER_ODDS, CAREER_TRACK_MAX_YEARS, CAREER_TRACK_CAP, CAREER_GAINS_CAP, RELOCATION_ODDS, RELOCATION_ATTEMPTS_PER_TURN, RELOCATIONS_CAP, CARPETBAGGER_LADDER, IDEOLOGY_SHIFT_ODDS, IDEOLOGY_ATTEMPTS_PER_TURN, IDEOLOGY_SHIFTS_CAP, CONVERSION_ODDS, CONVERSION_ATTEMPTS_PER_TURN, CONVERSIONS_CAP, KINGMAKER_RULES, KINGMAKERS_CAP, ALIGNMENT_RULES, ALIGNMENT_DRIFT_CAP, LEADERSHIP_RULES, LEADERSHIP_FEED_CAP, MORTALITY_RULES, ANYTIME_EVENTS_RULES, ABILITY_LOSS_RULES, ABILITY_EARN_RULES, OFFICE_COMMAND_GRANT, OFFICE_ADMIN_GRANT, TRACK_SECONDARY_SKILLS } from '../types';
+import { IDEOLOGY_ORDER, SKILLS, POSITIVE_TRAITS, TRACK_SKILL, TRACK_THEMED_TRAITS, TRACK_EXPERTISE, OFFICE_EXPERTISE, COMMITTEE_EXPERTISE, CAREER_RANDOM_NEGATIVES, CAREER_ODDS, CAREER_TRACK_MAX_YEARS, CAREER_TRACK_CAP, CAREER_GAINS_CAP, RELOCATION_ODDS, RELOCATION_ATTEMPTS_PER_TURN, RELOCATIONS_CAP, CARPETBAGGER_LADDER, IDEOLOGY_SHIFT_ODDS, IDEOLOGY_ATTEMPTS_PER_TURN, IDEOLOGY_SHIFTS_CAP, CONVERSION_ODDS, CONVERSION_ATTEMPTS_PER_TURN, CONVERSIONS_CAP, KINGMAKER_RULES, KINGMAKERS_CAP, ALIGNMENT_RULES, ALIGNMENT_DRIFT_CAP, LEADERSHIP_RULES, LEADERSHIP_FEED_CAP, MORTALITY_RULES, ANYTIME_EVENTS_RULES, ABILITY_LOSS_RULES, ABILITY_EARN_RULES, OFFICE_COMMAND_GRANT, OFFICE_ADMIN_GRANT, TRACK_SECONDARY_SKILLS, TRAIT_LIFECYCLE_RULES, TRAIT_CONFLICTS } from '../types';
 import { addLog } from './log';
 import { addExpertise } from './expertise';
 import { loseSkill, loseCommand, addSkillPoint, addCommandPoint } from './abilities';
-import { uid, chance, d100, pick, pickWeighted, clamp, shuffle, rand } from '../rng';
+import { addTrait, removeTrait, tryGrantTrait } from './traits';
+import { uid, chance, d100, d, pick, pickWeighted, clamp, shuffle, rand } from '../rng';
 import { refreshPv } from '../pv';
 import { ANYTIME_EVENT_TEMPLATES, type AnytimeEventTemplate } from '../data/anytimeEvents';
 import { ANYTIME_NATIONAL_TEMPLATES, type AnytimeNationalTemplate } from '../data/anytimeNationalEvents';
@@ -333,8 +334,19 @@ function rollThreshold(snap: FullGameSnapshot, p: Politician, thresholdYears: nu
     const pool = TRACK_THEMED_TRAITS[track].filter((t) => !p.traits.includes(t));
     if (pool.length > 0) {
       const t = pick(pool);
-      p.traits.push(t);
-      recordCareerGain(snap, p, thresholdYears, 'trait', t, false);
+      const { granted, replaced } = tryGrantTrait(p, t);
+      if (granted) {
+        recordCareerGain(snap, p, thresholdYears, 'trait', t, false);
+        if (replaced) {
+          addLog(snap, '2.1.2', 'event',
+            `${p.firstName} ${p.lastName} sheds ${replaced} and earns ${t} — the gain wins on a d6.`,
+            { politicianId: p.id });
+        }
+      } else if (TRAIT_CONFLICTS[t] && p.traits.includes(TRAIT_CONFLICTS[t]!)) {
+        addLog(snap, '2.1.2', 'event',
+          `${p.firstName} ${p.lastName} would have gained ${t}, but ${TRAIT_CONFLICTS[t]} holds on a d6.`,
+          { politicianId: p.id });
+      }
     }
   }
 
@@ -348,8 +360,19 @@ function rollThreshold(snap: FullGameSnapshot, p: Politician, thresholdYears: nu
       : CAREER_RANDOM_NEGATIVES.filter((t) => !p.traits.includes(t));
     if (pool.length > 0) {
       const t = pick(pool);
-      p.traits.push(t);
-      recordCareerGain(snap, p, thresholdYears, 'trait', t, !positive);
+      const { granted, replaced } = tryGrantTrait(p, t);
+      if (granted) {
+        recordCareerGain(snap, p, thresholdYears, 'trait', t, !positive);
+        if (replaced) {
+          addLog(snap, '2.1.2', 'event',
+            `${p.firstName} ${p.lastName} sheds ${replaced} and earns ${t} — the gain wins on a d6.`,
+            { politicianId: p.id });
+        }
+      } else if (TRAIT_CONFLICTS[t] && p.traits.includes(TRAIT_CONFLICTS[t]!)) {
+        addLog(snap, '2.1.2', 'event',
+          `${p.firstName} ${p.lastName} would have gained ${t}, but ${TRAIT_CONFLICTS[t]} holds on a d6.`,
+          { politicianId: p.id });
+      }
     }
   }
 }
@@ -536,8 +559,7 @@ function resolveRelocation(snap: FullGameSnapshot, p: Politician, destStateId: s
     if (p.altState === dest.id) p.altState = undefined; // consumed only when used
     if (chance(pC)) {
       const t = CARPETBAGGER_LADDER.find((tr) => !p.traits.includes(tr));
-      if (t) {
-        p.traits.push(t);
+      if (t && addTrait(p, t)) {
         traitsGained.push(t);
       }
     }
@@ -1293,13 +1315,14 @@ function runDraftKingmakerTopUp(snap: FullGameSnapshot): void {
     const shuffled = shuffle(topHalf);
     const grants = shuffled.slice(0, Math.min(needed, shuffled.length));
     for (const g of grants) {
-      g.traits.push('Kingmaker');
-      recordKingmaker(snap, {
-        year: snap.game.year, kind: 'anointed',
-        politicianId: g.id,
-        factionId: f.id, reason: 'draft-floor',
-      });
-      granted++;
+      if (addTrait(g, 'Kingmaker')) {
+        recordKingmaker(snap, {
+          year: snap.game.year, kind: 'anointed',
+          politicianId: g.id,
+          factionId: f.id, reason: 'draft-floor',
+        });
+        granted++;
+      }
     }
   }
   if (granted > 0) snap.politicians = refreshPv(snap.politicians);
@@ -1321,13 +1344,14 @@ export function runPhase_2_1_7_Kingmakers(snap: FullGameSnapshot): void {
     if (!p.factionId) continue;
     if (p.command < gate) continue;
     if (p.traits.includes('Kingmaker')) continue;
-    p.traits.push('Kingmaker');
-    recordKingmaker(snap, {
-      year: snap.game.year, kind: 'anointed',
-      politicianId: p.id,
-      factionId: p.factionId,
-    });
-    anointed++;
+    if (addTrait(p, 'Kingmaker')) {
+      recordKingmaker(snap, {
+        year: snap.game.year, kind: 'anointed',
+        politicianId: p.id,
+        factionId: p.factionId,
+      });
+      anointed++;
+    }
   }
 
   // Phase 3: lifecycle sweep — break dead/retired/cross-faction bonds.
@@ -1378,7 +1402,17 @@ export function runPhase_2_1_7_Kingmakers(snap: FullGameSnapshot): void {
     if (traitBranch || bothBranch) {
       const inheritable = k.traits.filter((t) => POSITIVE_TRAITS.includes(t) && !c.traits.includes(t));
       if (inheritable.length > 0) {
-        c.traits.push(pick(inheritable));
+        const t = pick(inheritable);
+        const { granted, replaced } = tryGrantTrait(c, t);
+        if (granted && replaced) {
+          addLog(snap, '2.1.7', 'event',
+            `${c.firstName} ${c.lastName} inherits ${t} from ${k.firstName} ${k.lastName}, shedding ${replaced} on a d6.`,
+            { politicianId: c.id });
+        } else if (!granted && TRAIT_CONFLICTS[t] && c.traits.includes(TRAIT_CONFLICTS[t]!)) {
+          addLog(snap, '2.1.7', 'event',
+            `${c.firstName} ${c.lastName} would have inherited ${t} from ${k.firstName} ${k.lastName}, but ${TRAIT_CONFLICTS[t]} holds on a d6.`,
+            { politicianId: c.id });
+        }
       }
     }
 
@@ -1388,7 +1422,7 @@ export function runPhase_2_1_7_Kingmakers(snap: FullGameSnapshot): void {
     }
 
     // Mentor reward — independent of which branch fired for the protégé.
-    if (!k.traits.includes('Leadership')) k.traits.push('Leadership');
+    addTrait(k, 'Leadership');
 
     const factionId = k.factionId;
     k.protegeId = null;
@@ -1832,7 +1866,7 @@ export function runPhase_2_2_3_FactionLeaders(snap: FullGameSnapshot): void {
   // Step 0: Failed Bid decay sweep.
   for (const p of snap.politicians) {
     if (p.failedBidExpiresYear !== undefined && year >= p.failedBidExpiresYear) {
-      p.traits = p.traits.filter((t) => t !== 'Failed Bid');
+      removeTrait(p, 'Failed Bid');
       p.failedBidExpiresYear = undefined;
     }
   }
@@ -1901,7 +1935,9 @@ export function runPhase_2_2_3_FactionLeaders(snap: FullGameSnapshot): void {
         });
         addLog(snap, '2.2.3', 'appointment',
           `${winner.firstName} ${winner.lastName} elected to lead the ${f.name}.`);
-        applyFactionLeaderGrants(snap, winner, f.name);
+        if (winner.id !== formerLeaderId) {
+          applyFactionLeaderGrants(snap, winner, f.name);
+        }
         newSeats++;
       } else {
         f.leaderId = null;
@@ -1957,7 +1993,7 @@ export function runPhase_2_2_3_FactionLeaders(snap: FullGameSnapshot): void {
       applyFactionLeaderGrants(snap, challenger, f.name);
       unseated++;
     } else {
-      if (!challenger.traits.includes('Failed Bid')) challenger.traits.push('Failed Bid');
+      addTrait(challenger, 'Failed Bid');
       challenger.failedBidExpiresYear = year + 2 * LEADERSHIP_RULES.failedBidDecayTurns;
       recordFactionLeadership(snap, {
         year, factionId: f.id, kind: 'challenged',
@@ -2234,6 +2270,28 @@ export function runPhase_2_4_1_Deaths(snap: FullGameSnapshot): void {
         }
       }
     }
+
+    // Old-age trait decay (PR3). Independent of PR2a's ability decay above —
+    // both can fire in the same tick on the same politician.
+    const ot = TRAIT_LIFECYCLE_RULES.oldAge;
+    if (p.age >= ot.minAge) {
+      let traitChance: number = ot.baseChance;
+      for (const b of ot.ageBracketBonus) {
+        if (p.age >= b.minAge) { traitChance += b.bonus; break; }
+      }
+      traitChance = clamp(traitChance, 0, 1);
+      if (chance(traitChance)) {
+        const held = ot.fadingPool.filter((t) => p.traits.includes(t));
+        if (held.length > 0) {
+          const t = pick(held);
+          if (removeTrait(p, t)) {
+            addLog(snap, '2.4.1', 'event',
+              `${p.firstName} ${p.lastName} (${p.state.toUpperCase()}, age ${p.age}) has lost their ${t} step — the years catch up.`,
+              { politicianId: p.id });
+          }
+        }
+      }
+    }
   }
 
   snap.politicians = refreshPv(snap.politicians);
@@ -2471,12 +2529,22 @@ function rollPersonalEvents(
     let didMutate = false;
     for (const eff of tpl.effects) {
       switch (eff.kind) {
-        case 'grantTrait':
-          if (!p.traits.includes(eff.trait)) {
-            p.traits.push(eff.trait);
+        case 'grantTrait': {
+          const result = tryGrantTrait(p, eff.trait);
+          if (result.granted) {
             didMutate = true;
+            if (result.replaced) {
+              addLog(snap, '2.4.2', 'event',
+                `${p.firstName} ${p.lastName} sheds ${result.replaced} and earns ${eff.trait} — the gain wins on a d6.`,
+                { politicianId: p.id });
+            }
+          } else if (TRAIT_CONFLICTS[eff.trait] && p.traits.includes(TRAIT_CONFLICTS[eff.trait]!)) {
+            addLog(snap, '2.4.2', 'event',
+              `${p.firstName} ${p.lastName} would have gained ${eff.trait}, but ${TRAIT_CONFLICTS[eff.trait]} holds on a d6.`,
+              { politicianId: p.id });
           }
           break;
+        }
         case 'skillBump':
           if (eff.amount < 0) {
             if (loseSkill(p, eff.skill, -eff.amount)) didMutate = true;
@@ -2517,9 +2585,20 @@ function rollPersonalEvents(
 
     if (tpl.scandalScaled) {
       const mult = cfg.scandalMagnitudeMult;
-      if (mult >= 1.0 && !p.traits.includes('Corrupt')) {
-        p.traits.push('Corrupt');
-        didMutate = true;
+      if (mult >= 1.0) {
+        const result = tryGrantTrait(p, 'Corrupt');
+        if (result.granted) {
+          didMutate = true;
+          if (result.replaced) {
+            addLog(snap, '2.4.2', 'event',
+              `${p.firstName} ${p.lastName} sheds ${result.replaced} as the scandal sticks — Corrupt now.`,
+              { politicianId: p.id });
+          }
+        } else if (p.traits.includes('Integrity')) {
+          addLog(snap, '2.4.2', 'event',
+            `${p.firstName} ${p.lastName}'s Integrity weathers the scandal — Corrupt does not take, on a d6.`,
+            { politicianId: p.id });
+        }
       }
       if (mult >= 1.2) {
         p.flipFlopperPenalty += LEADERSHIP_RULES.failedBidPvStamp;
@@ -2674,8 +2753,7 @@ function handleScripted1772Consequences(snap: FullGameSnapshot, event: EraEvent,
     case 'boston_tea_party': {
       // Sam Adams (LW Blue faction leader) gains Celebrity
       const samAdams = snap.politicians.find((p) => p.firstName === 'Samuel' && p.lastName === 'Adams');
-      if (samAdams && !samAdams.traits.includes('Celebrity')) {
-        samAdams.traits.push('Celebrity');
+      if (samAdams && addTrait(samAdams, 'Celebrity')) {
         addLog(snap, '2.4.3', 'event', 'Samuel Adams gains the Celebrity trait.');
       }
       break;
@@ -2683,8 +2761,8 @@ function handleScripted1772Consequences(snap: FullGameSnapshot, event: EraEvent,
     case 'common_sense': {
       const paine = snap.politicians.find((p) => p.firstName === 'Thomas' && p.lastName === 'Paine');
       if (paine) {
-        if (!paine.traits.includes('Celebrity')) paine.traits.push('Celebrity');
-        paine.traits = paine.traits.filter((t) => t !== 'Obscure');
+        addTrait(paine, 'Celebrity');
+        removeTrait(paine, 'Obscure');
       }
       break;
     }

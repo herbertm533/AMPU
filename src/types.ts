@@ -520,6 +520,54 @@ export const TRACK_SECONDARY_SKILLS: Record<CareerTrack, SkillKey[]> = {
   Backroom:       [],
 };
 
+// PR3 trait lifecycle. Magnitudes for every trait erosion / d6 conflict live
+// here so engine bodies stay free of magic numbers (mirrors ABILITY_LOSS_RULES /
+// ABILITY_EARN_RULES above).
+export const TRAIT_LIFECYCLE_RULES = {
+  oldAge: {
+    minAge: 70,
+    baseChance: 0.05,
+    ageBracketBonus: [
+      { minAge: 85, bonus: 0.03 },
+      { minAge: 78, bonus: 0.02 },
+      { minAge: 70, bonus: 0.0  },
+    ],
+    amount: 1,
+    fadingPool: ['Celebrity', 'Charismatic'] as Trait[],
+  },
+  leadershipLossOnBattleLoss: { chance: 0.5 },
+  conflictD6Threshold: 4,
+} as const satisfies {
+  oldAge: {
+    minAge: number; baseChance: number;
+    ageBracketBonus: { minAge: number; bonus: number }[];
+    amount: number;
+    fadingPool: Trait[];
+  };
+  leadershipLossOnBattleLoss: { chance: number };
+  conflictD6Threshold: number;
+};
+
+// Symmetric trait-conflict pairing. Both directions listed so a lookup of
+// either side works (e.g. both Charismatic -> Unlikable AND Unlikable ->
+// Charismatic).
+export const TRAIT_CONFLICTS: Partial<Record<Trait, Trait>> = {
+  Charismatic:    'Unlikable',
+  Unlikable:      'Charismatic',
+  Harmonious:     'Puritan',
+  Puritan:        'Harmonious',
+  Integrity:      'Corrupt',
+  Corrupt:        'Integrity',
+  Efficient:      'Passive',
+  Passive:        'Efficient',
+  Egghead:        'Incompetent',
+  Incompetent:    'Egghead',
+  Ideologue:      'Impressionable',
+  Impressionable: 'Ideologue',
+  Loyal:          'Opportunist',
+  Opportunist:    'Loyal',
+};
+
 export const ANYTIME_EVENTS_RULES = {
   baseFireChance: 0.05,
   nationalBaseFireChance: 0.70,

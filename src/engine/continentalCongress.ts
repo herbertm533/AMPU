@@ -2,6 +2,7 @@ import type { FullGameSnapshot, CCDelegate, Politician, Legislation } from '../t
 import { addLog } from './log';
 import { addExpertise } from './expertise';
 import { addCommandPoint, addSkillPoint } from './abilities';
+import { addTrait, removeTrait } from './traits';
 import { uid, chance, pick, clamp } from '../rng';
 import { cardVoteBias } from './phaseRunners';
 
@@ -141,10 +142,10 @@ export function electCCPresident(snap: FullGameSnapshot): void {
   if (!winner) return;
   cc.presidentId = winner.id;
   // Apply rewards: lose Obscure, +1 leg, +1 cmd, 20% chance Leadership
-  winner.traits = winner.traits.filter((t) => t !== 'Obscure');
+  removeTrait(winner, 'Obscure');
   winner.skills.legislative = Math.min(5, winner.skills.legislative + 1);
   winner.command = Math.min(5, winner.command + 1);
-  if (chance(0.2) && !winner.traits.includes('Leadership')) winner.traits.push('Leadership');
+  if (chance(0.2)) addTrait(winner, 'Leadership');
   winner.currentOffice = { type: 'CCPresident' };
   addLog(snap, '2.2.1', 'appointment', `${winner.firstName} ${winner.lastName} elected President of the Continental Congress.`);
 }

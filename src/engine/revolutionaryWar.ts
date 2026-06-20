@@ -1,9 +1,10 @@
 import type { FullGameSnapshot, Politician, BattleRecord, RevolutionaryWar, SkillKey } from '../types';
-import { ABILITY_LOSS_RULES } from '../types';
+import { ABILITY_LOSS_RULES, TRAIT_LIFECYCLE_RULES } from '../types';
 import { addLog } from './log';
 import { d, d100, chance, pick } from '../rng';
 import { recordDeath } from './halfTermSummary';
 import { loseSkill, addSkillPoint } from './abilities';
+import { addTrait, removeTrait } from './traits';
 
 const BATTLE_NAMES_GROUND = ['Bunker Hill', 'Long Island', 'Trenton', 'Princeton', 'Brandywine', 'Saratoga', 'Monmouth', 'Camden', 'Cowpens', "Guilford Courthouse", 'Yorktown', 'Charleston', 'Savannah', 'Germantown', 'Kings Mountain', 'Fort Ticonderoga'];
 const BATTLE_NAMES_NAVAL = ["Off Flamborough Head", 'Penobscot Bay', 'Off the Capes', 'Chesapeake Bay', "Block Island", 'Off the Carolinas'];
@@ -95,7 +96,7 @@ function applyCasualties(snap: FullGameSnapshot, war: RevolutionaryWar, difficul
   for (let i = 0; i < wounds && candidates.length > 0; i++) {
     const idx = Math.floor(Math.random() * candidates.length);
     const victim = candidates.splice(idx, 1)[0];
-    if (!victim.traits.includes('Frail')) victim.traits.push('Frail');
+    addTrait(victim, 'Frail');
     battle.wounded.push(victim.id);
     addLog(snap, '2.7.2', 'event', `${victim.firstName} ${victim.lastName} wounded at ${battle.name} (gains Frail).`);
   }
@@ -120,6 +121,15 @@ function applyBattleLoss(
     if (loseSkill(commander, skill, amount)) {
       addLog(snap, '2.7.2', 'event',
         `${commander.firstName} ${commander.lastName} falters after the defeat at ${battleName} — ${skill[0].toUpperCase() + skill.slice(1)} ${before} → ${commander.skills[skill]}.`,
+        { politicianId: commander.id, battle: battleName });
+    }
+  }
+  // PR3 Leadership Lost on battle loss — senior commander, 0.5 chance per loss.
+  if (commander.traits.includes('Leadership')
+      && chance(TRAIT_LIFECYCLE_RULES.leadershipLossOnBattleLoss.chance)) {
+    if (removeTrait(commander, 'Leadership')) {
+      addLog(snap, '2.7.2', 'event',
+        `${commander.firstName} ${commander.lastName}'s aura of Leadership fades after the defeat at ${battleName}.`,
         { politicianId: commander.id, battle: battleName });
     }
   }
