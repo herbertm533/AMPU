@@ -503,21 +503,22 @@ export const ABILITY_EARN_RULES = {
 
 // Office -> command grant on initial appointment. Only Secretary of State
 // today (reference's "initial appointment to Secretary of State" Command earn).
-// PMG and KeyAdvisor deliberately absent.
+// Navy + Interior + PMG deliberately absent — administrative seats.
 export const OFFICE_COMMAND_GRANT: Partial<Record<OfficeType, number>> = {
   SecretaryOfState: 1,
 };
 
 // Office -> admin grant on cabinet confirmation. F-DOUBLING ladder applied at
 // the call site (see ABILITY_EARN_RULES.cabinetConfirmAdmin); the value here
-// is the BASE (1). All six positions iterated by runPhase_2_3_1_Cabinet.
+// is the BASE (1). Iterated by runPhase_2_3_1_Cabinet for each era-active seat.
 export const OFFICE_ADMIN_GRANT: Partial<Record<OfficeType, number>> = {
   SecretaryOfState: 1,
   SecretaryOfTreasury: 1,
   SecretaryOfWar: 1,
+  SecretaryOfNavy: 1,
   AttorneyGeneral: 1,
+  SecretaryOfInterior: 1,
   PostmasterGeneral: 1,
-  KeyAdvisor: 1,
 };
 
 // Career-track exit -> secondary skill pool (per the reference: "all other
@@ -921,9 +922,10 @@ export type OfficeType =
   | 'SecretaryOfState'
   | 'SecretaryOfTreasury'
   | 'SecretaryOfWar'
+  | 'SecretaryOfNavy'
   | 'AttorneyGeneral'
+  | 'SecretaryOfInterior'
   | 'PostmasterGeneral'
-  | 'KeyAdvisor'
   | 'GeneralInChief'
   | 'Admiral'
   | 'ChiefJustice'
@@ -939,16 +941,65 @@ export type OfficeType =
   | 'CCPresident'
   | 'Ambassador';
 
-// Cabinet / cabinet-level appointment -> expertise. Offices not listed grant
-// nothing (PMG, KeyAdvisor, etc.).
+// Cabinet / cabinet-level appointment -> expertise.
 export const OFFICE_EXPERTISE: Partial<Record<OfficeType, Expertise>> = {
   SecretaryOfState: 'Foreign Affairs',
   SecretaryOfTreasury: 'Economics',
   SecretaryOfWar: 'Military',
+  SecretaryOfNavy: 'Naval',
   AttorneyGeneral: 'Justice',
+  SecretaryOfInterior: 'Agriculture',
+  PostmasterGeneral: 'Transportation',
   GeneralInChief: 'Military',
-  Admiral: 'Naval',
 };
+
+// PR5 era-conditional cabinet seat list. Returns the cabinet seats active in
+// the given calendar year. Four historical transitions:
+//   year <  1789       -> []                              (no cabinet)
+//   1789 <= year < 1798 -> 4 seats: State / Treasury / War / AG
+//   1798 <= year < 1829 -> +SecretaryOfNavy               (5 seats)
+//   1829 <= year < 1849 -> +PostmasterGeneral             (6 seats)
+//   year >= 1849       -> +SecretaryOfInterior            (7 seats)
+// Pure, deterministic — no Math.random, no snapshot.
+export function cabinetSeatsForYear(year: number): OfficeType[] {
+  if (year < 1789) return [];
+  const seats: OfficeType[] = [
+    'SecretaryOfState',
+    'SecretaryOfTreasury',
+    'SecretaryOfWar',
+  ];
+  if (year >= 1798) seats.push('SecretaryOfNavy');
+  seats.push('AttorneyGeneral');
+  if (year >= 1849) seats.push('SecretaryOfInterior');
+  if (year >= 1829) seats.push('PostmasterGeneral');
+  return seats;
+}
+
+// PR5 composite-score weights per cabinet seat. Used by runPhase_2_3_1_Cabinet
+// to rank eligible candidates. AG admin / governing = 0 per the
+// F-AG-NO-DEPARTMENT-PRE-1870 rule (a one-person legal office).
+export interface CabinetSeatScoring {
+  admin: number;
+  governing: number;
+  secondaryStat?: SkillKey;
+  secondaryWeight: number;
+  expertiseBonus: number;
+}
+
+export const CABINET_SEAT_SCORING: Partial<Record<OfficeType, CabinetSeatScoring>> = {
+  SecretaryOfState:     { admin: 2, governing: 1, secondaryStat: 'legislative', secondaryWeight: 1, expertiseBonus: 5 },
+  SecretaryOfTreasury:  { admin: 2, governing: 1,                                secondaryWeight: 0, expertiseBonus: 5 },
+  SecretaryOfWar:       { admin: 1, governing: 1, secondaryStat: 'military',    secondaryWeight: 2, expertiseBonus: 5 },
+  SecretaryOfNavy:      { admin: 1, governing: 1, secondaryStat: 'military',    secondaryWeight: 2, expertiseBonus: 5 },
+  AttorneyGeneral:      { admin: 0, governing: 0, secondaryStat: 'judicial',    secondaryWeight: 2, expertiseBonus: 5 },
+  SecretaryOfInterior:  { admin: 2, governing: 1,                                secondaryWeight: 0, expertiseBonus: 5 },
+  PostmasterGeneral:    { admin: 1, governing: 2, secondaryStat: 'backroom',    secondaryWeight: 1, expertiseBonus: 5 },
+};
+
+// PR5 cross-party gate. 10% chance per seat-fill to relax the same-party
+// filter for that seat; cross-party picks then take a -3 score penalty.
+export const CABINET_CROSS_PARTY_RATE = 0.1;
+export const CABINET_CROSS_PARTY_PENALTY = -3;
 
 // Committee-chair appointment -> expertise (the 1856/general committee taxonomy).
 export const COMMITTEE_EXPERTISE: Record<'Domestic' | 'Foreign' | 'Economic' | 'Justice', Expertise> = {

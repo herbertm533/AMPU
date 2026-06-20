@@ -12,9 +12,10 @@ export const OFFICE_PRESTIGE: Record<string, number> = {
   SecretaryOfState: 12,
   SecretaryOfTreasury: 10,
   SecretaryOfWar: 10,
+  SecretaryOfNavy: 10,
   AttorneyGeneral: 8,
+  SecretaryOfInterior: 8,
   PostmasterGeneral: 4,
-  KeyAdvisor: 8,
   GeneralInChief: 12,
   Admiral: 10,
   SpeakerOfHouse: 12,
@@ -52,9 +53,10 @@ export function officeWeights(office: OfficeRef | null): Record<string, number> 
     case 'SecretaryOfState':
     case 'SecretaryOfTreasury':
     case 'SecretaryOfWar':
+    case 'SecretaryOfNavy':
     case 'AttorneyGeneral':
+    case 'SecretaryOfInterior':
     case 'PostmasterGeneral':
-    case 'KeyAdvisor':
     case 'Ambassador':
       return { admin: 2.5, legislative: 0.5, judicial: 0.5, military: 0.5, governing: 0.5, backroom: 1 };
     default:

@@ -3,14 +3,14 @@ import { PartyBadge } from '../components/PartyBadge';
 import type { OfficeType } from '../types';
 
 const POSITIONS: OfficeType[] = [
-  'KeyAdvisor',
   'SecretaryOfState',
   'SecretaryOfTreasury',
   'SecretaryOfWar',
+  'SecretaryOfNavy',
   'AttorneyGeneral',
+  'SecretaryOfInterior',
   'PostmasterGeneral',
   'GeneralInChief',
-  'Admiral',
 ];
 
 export function CabinetPage(): JSX.Element {

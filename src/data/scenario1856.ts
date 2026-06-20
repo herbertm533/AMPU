@@ -129,9 +129,10 @@ export function build1856Scenario(playerFactionId: string): FullGameSnapshot {
     SecretaryOfState: politicians.find((p) => p.currentOffice?.type === 'SecretaryOfState')?.id ?? null,
     SecretaryOfTreasury: null,
     SecretaryOfWar: null,
+    SecretaryOfNavy: null,
     AttorneyGeneral: null,
+    SecretaryOfInterior: null,
     PostmasterGeneral: null,
-    KeyAdvisor: null,
   } as GameState['cabinet'];
 
   const supremeCourtIds = politicians.filter((p) => p.currentOffice?.type === 'AssociateJustice').map((p) => p.id);

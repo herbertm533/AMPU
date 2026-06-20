@@ -1,5 +1,6 @@
 import type { FullGameSnapshot, PhaseId, Politician, EraEvent, Legislation, ElectionResult, NationalMeters, Ideology, PartyId, SkillKey, Trait, CareerTrack, OfficeType, State, RelocationEntry, RelocationBand, IdeologyShiftEntry, ConversionEntry, KingmakerEntry, FactionAlignmentDriftEntry, FactionLeadershipEntry, InterestCardId, LobbyCardId, IdeologyCardId, Era, ElectionContext } from '../types';
-import { IDEOLOGY_ORDER, SKILLS, POSITIVE_TRAITS, TRACK_SKILL, TRACK_THEMED_TRAITS, TRACK_EXPERTISE, OFFICE_EXPERTISE, COMMITTEE_EXPERTISE, CAREER_RANDOM_NEGATIVES, CAREER_ODDS, CAREER_TRACK_MAX_YEARS, CAREER_TRACK_CAP, CAREER_GAINS_CAP, RELOCATION_ODDS, RELOCATION_ATTEMPTS_PER_TURN, RELOCATIONS_CAP, CARPETBAGGER_LADDER, IDEOLOGY_SHIFT_ODDS, IDEOLOGY_ATTEMPTS_PER_TURN, IDEOLOGY_SHIFTS_CAP, CONVERSION_ODDS, CONVERSION_ATTEMPTS_PER_TURN, CONVERSIONS_CAP, KINGMAKER_RULES, KINGMAKERS_CAP, ALIGNMENT_RULES, ALIGNMENT_DRIFT_CAP, LEADERSHIP_RULES, LEADERSHIP_FEED_CAP, MORTALITY_RULES, ANYTIME_EVENTS_RULES, ABILITY_LOSS_RULES, ABILITY_EARN_RULES, OFFICE_COMMAND_GRANT, OFFICE_ADMIN_GRANT, TRACK_SECONDARY_SKILLS, TRAIT_LIFECYCLE_RULES, TRAIT_CONFLICTS } from '../types';
+import { IDEOLOGY_ORDER, SKILLS, POSITIVE_TRAITS, TRACK_SKILL, TRACK_THEMED_TRAITS, TRACK_EXPERTISE, OFFICE_EXPERTISE, COMMITTEE_EXPERTISE, CAREER_RANDOM_NEGATIVES, CAREER_ODDS, CAREER_TRACK_MAX_YEARS, CAREER_TRACK_CAP, CAREER_GAINS_CAP, RELOCATION_ODDS, RELOCATION_ATTEMPTS_PER_TURN, RELOCATIONS_CAP, CARPETBAGGER_LADDER, IDEOLOGY_SHIFT_ODDS, IDEOLOGY_ATTEMPTS_PER_TURN, IDEOLOGY_SHIFTS_CAP, CONVERSION_ODDS, CONVERSION_ATTEMPTS_PER_TURN, CONVERSIONS_CAP, KINGMAKER_RULES, KINGMAKERS_CAP, ALIGNMENT_RULES, ALIGNMENT_DRIFT_CAP, LEADERSHIP_RULES, LEADERSHIP_FEED_CAP, MORTALITY_RULES, ANYTIME_EVENTS_RULES, ABILITY_LOSS_RULES, ABILITY_EARN_RULES, OFFICE_COMMAND_GRANT, OFFICE_ADMIN_GRANT, TRACK_SECONDARY_SKILLS, TRAIT_LIFECYCLE_RULES, TRAIT_CONFLICTS, cabinetSeatsForYear, CABINET_SEAT_SCORING, CABINET_CROSS_PARTY_RATE, CABINET_CROSS_PARTY_PENALTY } from '../types';
+import type { CabinetSeatScoring } from '../types';
 import { addLog } from './log';
 import { addExpertise } from './expertise';
 import { loseSkill, loseCommand, addSkillPoint, addCommandPoint } from './abilities';
@@ -2089,48 +2090,85 @@ export function runPhase_2_3_1_Cabinet(snap: FullGameSnapshot): void {
   const president = snap.politicians.find((p) => p.id === snap.game.presidentId);
   if (!president) return;
   const partyId = president.partyId;
-  const positions: (keyof typeof snap.game.cabinet)[] = ['SecretaryOfState', 'SecretaryOfTreasury', 'SecretaryOfWar', 'AttorneyGeneral', 'PostmasterGeneral', 'KeyAdvisor'];
-  for (const pos of positions) {
-    if (snap.game.cabinet[pos]) continue;
-    const candidates = snap.politicians.filter((p) => p.partyId === partyId && !p.currentOffice && p.age < 75);
-    candidates.sort((a, b) => b.skills.admin - a.skills.admin);
-    const pick = candidates[0];
-    if (pick) {
-      snap.game.cabinet[pos] = pick.id;
-      pick.currentOffice = { type: pos as 'SecretaryOfState' };
-      addLog(snap, '2.3.1', 'appointment', `${pick.firstName} ${pick.lastName} confirmed as ${pos}.`);
+  const seats = cabinetSeatsForYear(snap.game.year);
+  if (seats.length === 0) return;
 
-      // PR2b F-DOUBLING admin grant. Base from OFFICE_ADMIN_GRANT (= 1 for all
-      // six cabinet seats). Doubled per Egghead, doubled per Efficient, stacks
-      // (ladder: +1 / +2 / +2 / +4). Clamped at 5 by addSkillPoint — a
-      // politician at admin=4 with both traits jumps to 5, not 8.
-      const base = OFFICE_ADMIN_GRANT[pos as OfficeType];
-      if (base) {
-        const r = ABILITY_EARN_RULES.cabinetConfirmAdmin;
-        const amount = r.base
-          * (pick.traits.includes('Egghead')   ? r.eggheadMult   : 1)
-          * (pick.traits.includes('Efficient') ? r.efficientMult : 1);
-        if (addSkillPoint(pick, 'admin', amount)) {
-          addLog(snap, '2.3.1', 'appointment',
-            `${pick.firstName} ${pick.lastName} gains Admin from confirmation.`);
-        }
-      }
+  for (const seat of seats) {
+    if (snap.game.cabinet[seat]) continue;
+    const scoring = CABINET_SEAT_SCORING[seat];
+    if (!scoring) continue;
 
-      // PR2b Sec of State -> command +1 (initial appointment). Idempotency is
-      // cap-bounded approximation (no previousOffices field added per Q9): a
-      // returning Sec of State at command=5 silently no-ops.
-      const cmdBase = OFFICE_COMMAND_GRANT[pos as OfficeType];
-      if (cmdBase && addCommandPoint(pick, cmdBase)) {
+    // PR5 cross-party gate. One roll per seat per cabinet cycle.
+    const crossPartyAllowed = chance(CABINET_CROSS_PARTY_RATE);
+
+    const eligible = snap.politicians.filter(
+      (p) => !p.currentOffice && p.age < 75 && (crossPartyAllowed || p.partyId === partyId),
+    );
+
+    const scored = eligible.map((p) => ({
+      p,
+      score: scoreCabinetCandidate(seat, p, scoring) + (p.partyId !== partyId ? CABINET_CROSS_PARTY_PENALTY : 0),
+    }));
+    scored.sort((a, b) => {
+      if (b.score !== a.score) return b.score - a.score;
+      if (b.p.pvCache !== a.p.pvCache) return b.p.pvCache - a.p.pvCache;
+      return a.p.id < b.p.id ? -1 : 1;
+    });
+
+    const pick = scored[0]?.p;
+    if (!pick) continue;
+    const isCross = pick.partyId !== partyId;
+
+    snap.game.cabinet[seat] = pick.id;
+    pick.currentOffice = { type: seat };
+
+    const xp = OFFICE_EXPERTISE[seat];
+    const expertiseLabel = xp && pick.expertise.includes(xp) ? ` (${xp} specialist)` : '';
+    const crossLabel = isCross ? ' (cross-party appointment)' : '';
+    addLog(snap, '2.3.1', 'appointment',
+      `${pick.firstName} ${pick.lastName} confirmed as ${seat}${expertiseLabel}${crossLabel}.`);
+
+    // PR2b F-DOUBLING admin grant. Doubled per Egghead, doubled per Efficient.
+    const baseAdmin = OFFICE_ADMIN_GRANT[seat];
+    if (baseAdmin) {
+      const r = ABILITY_EARN_RULES.cabinetConfirmAdmin;
+      const amount = r.base
+        * (pick.traits.includes('Egghead')   ? r.eggheadMult   : 1)
+        * (pick.traits.includes('Efficient') ? r.efficientMult : 1);
+      if (addSkillPoint(pick, 'admin', amount)) {
         addLog(snap, '2.3.1', 'appointment',
-          `${pick.firstName} ${pick.lastName} gains Command from the Secretary of State portfolio.`);
-      }
-
-      const xp = OFFICE_EXPERTISE[pos as OfficeType];
-      if (xp && addExpertise(pick, xp)) {
-        addLog(snap, '2.3.1', 'appointment', `${pick.firstName} ${pick.lastName} gains ${xp} expertise.`);
+          `${pick.firstName} ${pick.lastName} gains Admin from confirmation.`);
       }
     }
+
+    // PR2b Sec of State -> command +1.
+    const cmdBase = OFFICE_COMMAND_GRANT[seat];
+    if (cmdBase && addCommandPoint(pick, cmdBase)) {
+      addLog(snap, '2.3.1', 'appointment',
+        `${pick.firstName} ${pick.lastName} gains Command from the Secretary of State portfolio.`);
+    }
+
+    if (xp && addExpertise(pick, xp)) {
+      addLog(snap, '2.3.1', 'appointment', `${pick.firstName} ${pick.lastName} gains ${xp} expertise.`);
+    }
   }
+}
+
+// PR5 composite score for a candidate against a cabinet seat. Pure: skills +
+// expertise check, no RNG, no snapshot. Cross-party penalty is applied at the
+// call site so the sorted tuple already reflects it.
+function scoreCabinetCandidate(
+  seat: OfficeType,
+  p: Politician,
+  scoring: CabinetSeatScoring,
+): number {
+  let s = scoring.admin * p.skills.admin + scoring.governing * p.skills.governing;
+  if (scoring.secondaryStat && scoring.secondaryWeight > 0) {
+    s += scoring.secondaryWeight * p.skills[scoring.secondaryStat];
+  }
+  const primary = OFFICE_EXPERTISE[seat];
+  if (primary && p.expertise.includes(primary)) s += scoring.expertiseBonus;
+  return s;
 }
 
 // ============================================================================
@@ -2159,23 +2197,6 @@ export function runPhase_2_3_2_Military(snap: FullGameSnapshot): void {
       if (warActive && addCommandPoint(candidates[0], 1)) {
         addLog(snap, '2.3.2', 'appointment',
           `${candidates[0].firstName} ${candidates[0].lastName} gains Command as wartime General in Chief.`);
-      }
-    }
-  }
-  if (!snap.game.cabinet.Admiral) {
-    const navalCandidates = snap.politicians.filter((p) => !p.currentOffice && (p.skills.military >= 2 || p.expertise.includes('Naval')));
-    navalCandidates.sort((a, b) => b.skills.military - a.skills.military);
-    if (navalCandidates[0]) {
-      snap.game.cabinet.Admiral = navalCandidates[0].id;
-      navalCandidates[0].currentOffice = { type: 'Admiral' };
-      addLog(snap, '2.3.2', 'appointment', `${navalCandidates[0].firstName} ${navalCandidates[0].lastName} appointed Admiral.`);
-      const xp = OFFICE_EXPERTISE.Admiral;
-      if (xp && addExpertise(navalCandidates[0], xp)) {
-        addLog(snap, '2.3.2', 'appointment', `${navalCandidates[0].firstName} ${navalCandidates[0].lastName} gains ${xp} expertise.`);
-      }
-      if (warActive && addCommandPoint(navalCandidates[0], 1)) {
-        addLog(snap, '2.3.2', 'appointment',
-          `${navalCandidates[0].firstName} ${navalCandidates[0].lastName} gains Command as wartime Admiral.`);
       }
     }
   }
@@ -2985,6 +3006,28 @@ export function runPhase_2_5_1_Lingering(snap: FullGameSnapshot): void {
   if (state) {
     for (const k of Object.keys(snap.game.diplomacy)) {
       snap.game.diplomacy[k] = clamp(snap.game.diplomacy[k] + drift(state.skills.admin) * 0.2, -5, 5);
+    }
+  }
+
+  // PR5 per-seat expertise-gated meter bonus. Fires only when the seated Sec
+  // carries the seat's primary expertise (OFFICE_EXPERTISE).
+  const cabinetBonuses: Array<{ seat: OfficeType; meter: keyof NationalMeters }> = [
+    { seat: 'SecretaryOfState',     meter: 'domestic' },
+    { seat: 'SecretaryOfTreasury',  meter: 'economic' },
+    { seat: 'SecretaryOfWar',       meter: 'military' },
+    { seat: 'SecretaryOfNavy',      meter: 'military' },
+    { seat: 'AttorneyGeneral',      meter: 'honest'   },
+    { seat: 'SecretaryOfInterior',  meter: 'quality'  },
+    { seat: 'PostmasterGeneral',    meter: 'quality'  },
+  ];
+  for (const { seat, meter } of cabinetBonuses) {
+    const occupantId = snap.game.cabinet[seat];
+    if (!occupantId) continue;
+    const sec = snap.politicians.find((p) => p.id === occupantId);
+    if (!sec) continue;
+    const primary = OFFICE_EXPERTISE[seat];
+    if (primary && sec.expertise.includes(primary)) {
+      apply(meter, 0.2);
     }
   }
 

@@ -85,7 +85,7 @@ export function build1772Scenario(playerFactionId: string): FullGameSnapshot {
     pendingCabinetVacancies: [],
     pendingDraftPool: politicians.map((p) => p.id), // EXPANSION DRAFT — entire pool
     draftRoundOrder: [],
-    cabinet: { SecretaryOfState: null, SecretaryOfTreasury: null, SecretaryOfWar: null, AttorneyGeneral: null, PostmasterGeneral: null, KeyAdvisor: null },
+    cabinet: {},
     speakerId: null,
     proTemId: null,
     committeeChairs: { Domestic: null, Foreign: null, Economic: null, Justice: null },

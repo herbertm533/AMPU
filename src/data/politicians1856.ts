@@ -13,7 +13,7 @@ interface Seed {
   skills: [number, number, number, number, number, number]; // admin, leg, jud, mil, gov, back
   command: number;
   traits: string[]; // may contain the 8 migrated expertise names; split on build
-  office?: 'President' | 'VicePresident' | 'ChiefJustice' | 'AssociateJustice' | 'Senator' | 'Representative' | 'Governor' | 'GeneralInChief' | 'Admiral' | 'SecretaryOfState' | 'SecretaryOfTreasury' | 'SecretaryOfWar' | 'AttorneyGeneral';
+  office?: 'President' | 'VicePresident' | 'ChiefJustice' | 'AssociateJustice' | 'Senator' | 'Representative' | 'Governor' | 'GeneralInChief' | 'Admiral' | 'SecretaryOfState' | 'SecretaryOfTreasury' | 'SecretaryOfWar' | 'SecretaryOfNavy' | 'AttorneyGeneral' | 'SecretaryOfInterior';
   isHistorical?: boolean;
 }
 

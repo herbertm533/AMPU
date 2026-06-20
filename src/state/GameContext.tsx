@@ -190,6 +190,32 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
       }
       if (changed) { p.traits = keptTraits; dirty = true; }
     }
+    // PR5: scrub legacy cabinet seats (KeyAdvisor, Admiral) dropped as valid
+    // cabinet entries. Politicians whose currentOffice.type === 'KeyAdvisor'
+    // get their office nulled; 'Admiral' currentOffice is preserved (it's a
+    // legitimate Rev War combat-role assignment, not a cabinet seat).
+    const legacyCabinetKeys = ['KeyAdvisor', 'Admiral'] as const;
+    const cabinetAsAny = s.game.cabinet as unknown as Record<string, string | null | undefined>;
+    let cabinetDropped = false;
+    for (const k of legacyCabinetKeys) {
+      if (k in cabinetAsAny) {
+        delete cabinetAsAny[k];
+        cabinetDropped = true;
+      }
+    }
+    let politicianDropped = false;
+    for (const p of s.politicians) {
+      const office = p.currentOffice as { type: string } | null;
+      if (office && office.type === 'KeyAdvisor') {
+        p.currentOffice = null;
+        politicianDropped = true;
+      }
+    }
+    if (cabinetDropped || politicianDropped) {
+      dirty = true;
+      // eslint-disable-next-line no-console
+      console.log('[migration] PR5: dropped legacy KeyAdvisor cabinet field and currentOffice references.');
+    }
     return dirty ? { ...s } : s;
   }, []);
 

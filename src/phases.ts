@@ -16,7 +16,7 @@ export const PHASE_SEQUENCE: PhaseInfo[] = [
   { id: '2.2.4', label: 'Party Leaders', description: 'Each party selects its leader.', category: '2.2 Leadership Selection' },
 
   { id: '2.3.1', label: 'Cabinet Appointments', description: 'President nominates cabinet members.', category: '2.3 Presidential Appointments' },
-  { id: '2.3.2', label: 'Military Appointments', description: 'General in Chief and Admiral.', category: '2.3 Presidential Appointments' },
+  { id: '2.3.2', label: 'Military Appointments', description: 'General in Chief.', category: '2.3 Presidential Appointments' },
 
   { id: '2.4.1', label: 'Deaths & Retirements', description: 'Random deaths and retirements occur.', category: '2.4 Events' },
   { id: '2.4.2', label: 'Anytime Events', description: 'General historical events fire.', category: '2.4 Events' },
