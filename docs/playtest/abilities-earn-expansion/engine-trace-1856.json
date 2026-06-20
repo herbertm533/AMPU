@@ -1,0 +1,438 @@
+{
+  "scenario": "1772",
+  "finalYear": 1868,
+  "finalPhase": "2.4.2",
+  "totalEvents": 524,
+  "pr2bEarnLines": 98,
+  "pr2bEarnSamples": [
+    {
+      "year": 1856,
+      "phase": "2.2.1",
+      "text": "John A. Andrew gains Legislative from the Speaker's gavel."
+    },
+    {
+      "year": 1856,
+      "phase": "2.2.1",
+      "text": "William H. Seward gains Legislative from the Pro Tem chair."
+    },
+    {
+      "year": 1856,
+      "phase": "2.2.2",
+      "text": "Jefferson Davis gains Command from chairing Foreign."
+    },
+    {
+      "year": 1856,
+      "phase": "2.2.2",
+      "text": "Jefferson Davis gains Legislative from chairing Foreign."
+    },
+    {
+      "year": 1856,
+      "phase": "2.2.2",
+      "text": "Jefferson Davis gains Legislative from chairing Economic."
+    },
+    {
+      "year": 1856,
+      "phase": "2.2.2",
+      "text": "Edward Bates gains Command from chairing Justice."
+    },
+    {
+      "year": 1856,
+      "phase": "2.2.2",
+      "text": "Edward Bates gains Legislative from chairing Justice."
+    },
+    {
+      "year": 1856,
+      "phase": "2.2.3",
+      "text": "James Buchanan gains Command leading the Conservative Democrats."
+    },
+    {
+      "year": 1856,
+      "phase": "2.2.3",
+      "text": "James Buchanan gains Legislative leading the Conservative Democrats."
+    },
+    {
+      "year": 1856,
+      "phase": "2.2.3",
+      "text": "James Buchanan gains Governing leading the Conservative Democrats."
+    },
+    {
+      "year": 1856,
+      "phase": "2.2.3",
+      "text": "James Buchanan gains Admin leading the Conservative Democrats."
+    },
+    {
+      "year": 1856,
+      "phase": "2.2.3",
+      "text": "Stephen A. Douglas gains Command leading the Popular Sovereignty Democrats."
+    },
+    {
+      "year": 1856,
+      "phase": "2.2.3",
+      "text": "Stephen A. Douglas gains Legislative leading the Popular Sovereignty Democrats."
+    },
+    {
+      "year": 1856,
+      "phase": "2.2.3",
+      "text": "Stephen A. Douglas gains Governing leading the Popular Sovereignty Democrats."
+    },
+    {
+      "year": 1856,
+      "phase": "2.2.3",
+      "text": "Stephen A. Douglas gains Admin leading the Popular Sovereignty Democrats."
+    },
+    {
+      "year": 1856,
+      "phase": "2.2.3",
+      "text": "John Bell gains Command leading the Unionist Democrats."
+    },
+    {
+      "year": 1856,
+      "phase": "2.2.3",
+      "text": "John Bell gains Legislative leading the Unionist Democrats."
+    },
+    {
+      "year": 1856,
+      "phase": "2.2.3",
+      "text": "John Bell gains Governing leading the Unionist Democrats."
+    },
+    {
+      "year": 1856,
+      "phase": "2.2.3",
+      "text": "John Bell gains Admin leading the Unionist Democrats."
+    },
+    {
+      "year": 1856,
+      "phase": "2.2.3",
+      "text": "Thomas H. Benton gains Command leading the Jacksonian Democrats."
+    },
+    {
+      "year": 1856,
+      "phase": "2.2.3",
+      "text": "Thomas H. Benton gains Legislative leading the Jacksonian Democrats."
+    },
+    {
+      "year": 1856,
+      "phase": "2.2.3",
+      "text": "Thomas H. Benton gains Governing leading the Jacksonian Democrats."
+    },
+    {
+      "year": 1856,
+      "phase": "2.2.3",
+      "text": "Thomas H. Benton gains Admin leading the Jacksonian Democrats."
+    },
+    {
+      "year": 1856,
+      "phase": "2.2.3",
+      "text": "Martin Van Buren gains Command leading the Loco-Foco Democrats."
+    },
+    {
+      "year": 1856,
+      "phase": "2.2.3",
+      "text": "Martin Van Buren gains Legislative leading the Loco-Foco Democrats."
+    },
+    {
+      "year": 1856,
+      "phase": "2.2.3",
+      "text": "Martin Van Buren gains Governing leading the Loco-Foco Democrats."
+    },
+    {
+      "year": 1856,
+      "phase": "2.2.3",
+      "text": "Martin Van Buren gains Admin leading the Loco-Foco Democrats."
+    },
+    {
+      "year": 1856,
+      "phase": "2.2.3",
+      "text": "John J. Crittenden gains Command leading the Crittenden Republicans."
+    },
+    {
+      "year": 1856,
+      "phase": "2.2.3",
+      "text": "John J. Crittenden gains Legislative leading the Crittenden Republicans."
+    },
+    {
+      "year": 1856,
+      "phase": "2.2.3",
+      "text": "John J. Crittenden gains Governing leading the Crittenden Republicans."
+    },
+    {
+      "year": 1856,
+      "phase": "2.2.3",
+      "text": "John J. Crittenden gains Admin leading the Crittenden Republicans."
+    },
+    {
+      "year": 1856,
+      "phase": "2.2.3",
+      "text": "Winfield Scott gains Command leading the Moderate Republicans."
+    },
+    {
+      "year": 1856,
+      "phase": "2.2.3",
+      "text": "Winfield Scott gains Legislative leading the Moderate Republicans."
+    },
+    {
+      "year": 1856,
+      "phase": "2.2.3",
+      "text": "Winfield Scott gains Governing leading the Moderate Republicans."
+    },
+    {
+      "year": 1856,
+      "phase": "2.2.3",
+      "text": "Winfield Scott gains Admin leading the Moderate Republicans."
+    },
+    {
+      "year": 1856,
+      "phase": "2.2.3",
+      "text": "William H. Seward gains Governing leading the Liberal Republicans."
+    },
+    {
+      "year": 1856,
+      "phase": "2.2.3",
+      "text": "William H. Seward gains Admin leading the Liberal Republicans."
+    },
+    {
+      "year": 1856,
+      "phase": "2.2.3",
+      "text": "Thaddeus Stevens gains Command leading the Radical Republicans."
+    },
+    {
+      "year": 1856,
+      "phase": "2.2.3",
+      "text": "Thaddeus Stevens gains Governing leading the Radical Republicans."
+    },
+    {
+      "year": 1856,
+      "phase": "2.2.3",
+      "text": "Thaddeus Stevens gains Admin leading the Radical Republicans."
+    },
+    {
+      "year": 1856,
+      "phase": "2.2.3",
+      "text": "Nathaniel P. Banks gains Command leading the Know-Nothing Republicans."
+    },
+    {
+      "year": 1856,
+      "phase": "2.2.3",
+      "text": "Nathaniel P. Banks gains Legislative leading the Know-Nothing Republicans."
+    },
+    {
+      "year": 1856,
+      "phase": "2.2.3",
+      "text": "Nathaniel P. Banks gains Governing leading the Know-Nothing Republicans."
+    },
+    {
+      "year": 1856,
+      "phase": "2.2.3",
+      "text": "Nathaniel P. Banks gains Admin leading the Know-Nothing Republicans."
+    },
+    {
+      "year": 1856,
+      "phase": "2.2.4",
+      "text": "James Buchanan gains Governing leading the Democratic Party."
+    },
+    {
+      "year": 1856,
+      "phase": "2.2.4",
+      "text": "William H. Seward gains Governing leading the Republican Party."
+    },
+    {
+      "year": 1856,
+      "phase": "2.3.1",
+      "text": "Robert E. Lee gains Admin from confirmation."
+    },
+    {
+      "year": 1856,
+      "phase": "2.3.1",
+      "text": "Ulysses S. Grant gains Admin from confirmation."
+    },
+    {
+      "year": 1858,
+      "phase": "2.2.1",
+      "text": "Martin Van Buren gains Legislative from the Speaker's gavel."
+    },
+    {
+      "year": 1858,
+      "phase": "2.2.2",
+      "text": "Edward Bates gains Command from chairing Justice."
+    },
+    {
+      "year": 1858,
+      "phase": "2.2.2",
+      "text": "Edward Bates gains Legislative from chairing Justice."
+    },
+    {
+      "year": 1858,
+      "phase": "2.2.3",
+      "text": "Jefferson Davis gains Governing leading the Conservative Democrats."
+    },
+    {
+      "year": 1858,
+      "phase": "2.2.3",
+      "text": "Jefferson Davis gains Admin leading the Conservative Democrats."
+    },
+    {
+      "year": 1858,
+      "phase": "2.2.4",
+      "text": "James Buchanan gains Legislative — re-elected leader of the Democratic Party."
+    },
+    {
+      "year": 1858,
+      "phase": "2.3.1",
+      "text": "Ulysses S. Grant gains Admin from confirmation."
+    },
+    {
+      "year": 1858,
+      "phase": "2.3.1",
+      "text": "Ulysses S. Grant gains Command from the Secretary of State portfolio."
+    },
+    {
+      "year": 1858,
+      "phase": "2.3.1",
+      "text": "Henry Jackson gains Admin from confirmation."
+    },
+    {
+      "year": 1860,
+      "phase": "2.2.2",
+      "text": "Edward Bates gains Command from chairing Justice."
+    },
+    {
+      "year": 1860,
+      "phase": "2.2.2",
+      "text": "Edward Bates gains Legislative from chairing Justice."
+    },
+    {
+      "year": 1860,
+      "phase": "2.3.1",
+      "text": "George Lewis gains Admin from confirmation."
+    },
+    {
+      "year": 1860,
+      "phase": "2.3.1",
+      "text": "Stephen Ferry gains Admin from confirmation."
+    },
+    {
+      "year": 1860,
+      "phase": "2.3.1",
+      "text": "Samuel Reid gains Admin from confirmation."
+    },
+    {
+      "year": 1860,
+      "phase": "2.3.1",
+      "text": "Stephen Carter gains Admin from confirmation."
+    },
+    {
+      "year": 1862,
+      "phase": "2.2.3",
+      "text": "Benjamin R. Curtis gains Command leading the Jacksonian Democrats."
+    },
+    {
+      "year": 1862,
+      "phase": "2.2.3",
+      "text": "Benjamin R. Curtis gains Legislative leading the Jacksonian Democrats."
+    },
+    {
+      "year": 1862,
+      "phase": "2.2.3",
+      "text": "Benjamin R. Curtis gains Governing leading the Jacksonian Democrats."
+    },
+    {
+      "year": 1862,
+      "phase": "2.2.3",
+      "text": "Benjamin R. Curtis gains Admin leading the Jacksonian Democrats."
+    },
+    {
+      "year": 1862,
+      "phase": "2.2.3",
+      "text": "William P. Fessenden gains Command leading the Moderate Republicans."
+    },
+    {
+      "year": 1862,
+      "phase": "2.2.3",
+      "text": "William P. Fessenden gains Legislative leading the Moderate Republicans."
+    },
+    {
+      "year": 1862,
+      "phase": "2.2.3",
+      "text": "William P. Fessenden gains Governing leading the Moderate Republicans."
+    },
+    {
+      "year": 1862,
+      "phase": "2.2.3",
+      "text": "William P. Fessenden gains Admin leading the Moderate Republicans."
+    },
+    {
+      "year": 1862,
+      "phase": "2.3.1",
+      "text": "James K. Polk gains Admin from confirmation."
+    },
+    {
+      "year": 1862,
+      "phase": "2.3.1",
+      "text": "James K. Polk gains Command from the Secretary of State portfolio."
+    },
+    {
+      "year": 1862,
+      "phase": "2.3.1",
+      "text": "George Lewis gains Admin from confirmation."
+    },
+    {
+      "year": 1862,
+      "phase": "2.3.1",
+      "text": "Henry Jackson gains Admin from confirmation."
+    },
+    {
+      "year": 1862,
+      "phase": "2.3.1",
+      "text": "Samuel Reid gains Admin from confirmation."
+    },
+    {
+      "year": 1862,
+      "phase": "2.3.1",
+      "text": "James Conkling gains Admin from confirmation."
+    },
+    {
+      "year": 1862,
+      "phase": "2.3.1",
+      "text": "Stephen Dawes gains Admin from confirmation."
+    },
+    {
+      "year": 1864,
+      "phase": "2.2.2",
+      "text": "William P. Fessenden gains Command from chairing Domestic."
+    },
+    {
+      "year": 1864,
+      "phase": "2.2.3",
+      "text": "Edward Bates gains Governing leading the Crittenden Republicans."
+    }
+  ],
+  "phaseCounts": {
+    "system": 1,
+    "2.1.3": 7,
+    "2.1.5": 7,
+    "2.1.6": 7,
+    "2.1.7": 6,
+    "2.1.8": 6,
+    "2.2.1": 17,
+    "2.2.2": 45,
+    "2.2.3": 84,
+    "2.2.4": 12,
+    "2.3.1": 56,
+    "2.3.2": 10,
+    "2.4.1": 57,
+    "2.5.1": 32,
+    "2.5.3": 3,
+    "2.6.1": 30,
+    "2.6.2": 30,
+    "2.6.3": 21,
+    "2.9.1": 6,
+    "2.9.2": 3,
+    "2.9.3": 3,
+    "2.9.4": 3,
+    "2.9.6": 6,
+    "2.10": 6,
+    "2.1.1": 63,
+    "2.8.2": 2,
+    "2.8.1": 1
+  }
+}

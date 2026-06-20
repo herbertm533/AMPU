@@ -1,0 +1,318 @@
+{
+  "scenario": "1772",
+  "finalYear": 1792,
+  "finalPhase": "2.4.3",
+  "totalEvents": 706,
+  "pr2bEarnLines": 59,
+  "pr2bEarnSamples": [
+    {
+      "year": 1772,
+      "phase": "2.2.3",
+      "text": "Samuel Adams gains Command leading the Sons of Liberty."
+    },
+    {
+      "year": 1772,
+      "phase": "2.2.3",
+      "text": "Samuel Adams gains Legislative leading the Sons of Liberty."
+    },
+    {
+      "year": 1772,
+      "phase": "2.2.3",
+      "text": "Samuel Adams gains Governing leading the Sons of Liberty."
+    },
+    {
+      "year": 1772,
+      "phase": "2.2.3",
+      "text": "Samuel Adams gains Admin leading the Sons of Liberty."
+    },
+    {
+      "year": 1772,
+      "phase": "2.2.3",
+      "text": "George Wythe gains Command leading the Moderate Patriots."
+    },
+    {
+      "year": 1772,
+      "phase": "2.2.3",
+      "text": "George Wythe gains Legislative leading the Moderate Patriots."
+    },
+    {
+      "year": 1772,
+      "phase": "2.2.3",
+      "text": "George Wythe gains Governing leading the Moderate Patriots."
+    },
+    {
+      "year": 1772,
+      "phase": "2.2.3",
+      "text": "George Wythe gains Admin leading the Moderate Patriots."
+    },
+    {
+      "year": 1772,
+      "phase": "2.2.3",
+      "text": "Benjamin Franklin gains Command leading the American Whigs."
+    },
+    {
+      "year": 1772,
+      "phase": "2.2.3",
+      "text": "Benjamin Franklin gains Legislative leading the American Whigs."
+    },
+    {
+      "year": 1772,
+      "phase": "2.2.3",
+      "text": "Benjamin Franklin gains Governing leading the American Whigs."
+    },
+    {
+      "year": 1772,
+      "phase": "2.2.3",
+      "text": "Benjamin Franklin gains Admin leading the American Whigs."
+    },
+    {
+      "year": 1772,
+      "phase": "2.2.3",
+      "text": "Elias Boudinot gains Command leading the Patriot Conservatives."
+    },
+    {
+      "year": 1772,
+      "phase": "2.2.3",
+      "text": "Elias Boudinot gains Legislative leading the Patriot Conservatives."
+    },
+    {
+      "year": 1772,
+      "phase": "2.2.3",
+      "text": "Elias Boudinot gains Governing leading the Patriot Conservatives."
+    },
+    {
+      "year": 1772,
+      "phase": "2.2.3",
+      "text": "Elias Boudinot gains Admin leading the Patriot Conservatives."
+    },
+    {
+      "year": 1772,
+      "phase": "2.2.3",
+      "text": "Patrick Henry gains Command leading the Jefferson's Patriots."
+    },
+    {
+      "year": 1772,
+      "phase": "2.2.3",
+      "text": "Patrick Henry gains Legislative leading the Jefferson's Patriots."
+    },
+    {
+      "year": 1772,
+      "phase": "2.2.3",
+      "text": "Patrick Henry gains Governing leading the Jefferson's Patriots."
+    },
+    {
+      "year": 1772,
+      "phase": "2.2.3",
+      "text": "Patrick Henry gains Admin leading the Jefferson's Patriots."
+    },
+    {
+      "year": 1772,
+      "phase": "2.2.3",
+      "text": "Thomas McKean gains Command leading the Ellsworth Progressives."
+    },
+    {
+      "year": 1772,
+      "phase": "2.2.3",
+      "text": "Thomas McKean gains Legislative leading the Ellsworth Progressives."
+    },
+    {
+      "year": 1772,
+      "phase": "2.2.3",
+      "text": "Thomas McKean gains Governing leading the Ellsworth Progressives."
+    },
+    {
+      "year": 1772,
+      "phase": "2.2.3",
+      "text": "Thomas McKean gains Admin leading the Ellsworth Progressives."
+    },
+    {
+      "year": 1772,
+      "phase": "2.2.3",
+      "text": "John Adams gains Command leading the Franklin Patriots."
+    },
+    {
+      "year": 1772,
+      "phase": "2.2.3",
+      "text": "John Adams gains Legislative leading the Franklin Patriots."
+    },
+    {
+      "year": 1772,
+      "phase": "2.2.3",
+      "text": "John Adams gains Governing leading the Franklin Patriots."
+    },
+    {
+      "year": 1772,
+      "phase": "2.2.3",
+      "text": "John Adams gains Admin leading the Franklin Patriots."
+    },
+    {
+      "year": 1772,
+      "phase": "2.2.3",
+      "text": "James Wilson gains Command leading the Washington Patriots."
+    },
+    {
+      "year": 1772,
+      "phase": "2.2.3",
+      "text": "James Wilson gains Legislative leading the Washington Patriots."
+    },
+    {
+      "year": 1772,
+      "phase": "2.2.3",
+      "text": "James Wilson gains Governing leading the Washington Patriots."
+    },
+    {
+      "year": 1772,
+      "phase": "2.2.3",
+      "text": "James Wilson gains Admin leading the Washington Patriots."
+    },
+    {
+      "year": 1772,
+      "phase": "2.2.3",
+      "text": "Richard Henry Lee gains Command leading the Adams Patriots."
+    },
+    {
+      "year": 1772,
+      "phase": "2.2.3",
+      "text": "Richard Henry Lee gains Legislative leading the Adams Patriots."
+    },
+    {
+      "year": 1772,
+      "phase": "2.2.3",
+      "text": "Richard Henry Lee gains Governing leading the Adams Patriots."
+    },
+    {
+      "year": 1772,
+      "phase": "2.2.3",
+      "text": "Richard Henry Lee gains Admin leading the Adams Patriots."
+    },
+    {
+      "year": 1772,
+      "phase": "2.2.3",
+      "text": "John Dickinson gains Command leading the Jay Federalists."
+    },
+    {
+      "year": 1772,
+      "phase": "2.2.3",
+      "text": "John Dickinson gains Legislative leading the Jay Federalists."
+    },
+    {
+      "year": 1772,
+      "phase": "2.2.3",
+      "text": "John Dickinson gains Governing leading the Jay Federalists."
+    },
+    {
+      "year": 1772,
+      "phase": "2.2.3",
+      "text": "John Dickinson gains Admin leading the Jay Federalists."
+    },
+    {
+      "year": 1776,
+      "phase": "2.2.3",
+      "text": "William Maclay gains Command leading the Sons of Liberty."
+    },
+    {
+      "year": 1776,
+      "phase": "2.2.3",
+      "text": "William Maclay gains Legislative leading the Sons of Liberty."
+    },
+    {
+      "year": 1776,
+      "phase": "2.2.3",
+      "text": "William Maclay gains Governing leading the Sons of Liberty."
+    },
+    {
+      "year": 1776,
+      "phase": "2.2.3",
+      "text": "William Maclay gains Admin leading the Sons of Liberty."
+    },
+    {
+      "year": 1776,
+      "phase": "2.2.3",
+      "text": "Oliver Ellsworth gains Command leading the Ellsworth Progressives."
+    },
+    {
+      "year": 1776,
+      "phase": "2.2.3",
+      "text": "Oliver Ellsworth gains Legislative leading the Ellsworth Progressives."
+    },
+    {
+      "year": 1776,
+      "phase": "2.2.3",
+      "text": "Oliver Ellsworth gains Governing leading the Ellsworth Progressives."
+    },
+    {
+      "year": 1776,
+      "phase": "2.2.3",
+      "text": "Oliver Ellsworth gains Admin leading the Ellsworth Progressives."
+    },
+    {
+      "year": 1782,
+      "phase": "2.2.3",
+      "text": "Gouverneur Morris gains Command leading the Sons of Liberty."
+    },
+    {
+      "year": 1782,
+      "phase": "2.2.3",
+      "text": "Gouverneur Morris gains Legislative leading the Sons of Liberty."
+    },
+    {
+      "year": 1782,
+      "phase": "2.2.3",
+      "text": "Gouverneur Morris gains Governing leading the Sons of Liberty."
+    },
+    {
+      "year": 1782,
+      "phase": "2.2.3",
+      "text": "Gouverneur Morris gains Admin leading the Sons of Liberty."
+    },
+    {
+      "year": 1788,
+      "phase": "2.2.3",
+      "text": "William Grayson gains Command leading the Sons of Liberty."
+    },
+    {
+      "year": 1788,
+      "phase": "2.2.3",
+      "text": "William Grayson gains Legislative leading the Sons of Liberty."
+    },
+    {
+      "year": 1788,
+      "phase": "2.2.3",
+      "text": "William Grayson gains Governing leading the Sons of Liberty."
+    },
+    {
+      "year": 1788,
+      "phase": "2.2.3",
+      "text": "William Grayson gains Admin leading the Sons of Liberty."
+    },
+    {
+      "year": 1790,
+      "phase": "2.2.3",
+      "text": "George Clinton gains Command leading the American Whigs."
+    },
+    {
+      "year": 1790,
+      "phase": "2.2.3",
+      "text": "George Clinton gains Governing leading the American Whigs."
+    },
+    {
+      "year": 1790,
+      "phase": "2.2.3",
+      "text": "George Clinton gains Admin leading the American Whigs."
+    }
+  ],
+  "phaseCounts": {
+    "system": 1,
+    "2.1.1": 328,
+    "2.1.5": 11,
+    "2.1.6": 11,
+    "2.1.7": 11,
+    "2.1.8": 3,
+    "2.2.3": 85,
+    "2.4.1": 75,
+    "2.10": 10,
+    "2.1.3": 10,
+    "2.5.1": 63,
+    "2.1.2": 98
+  }
+}
