@@ -47,9 +47,26 @@ Invoke the `reviewer` agent to audit the diff against the spec's acceptance
 criteria and run the build. Fix anything it flags, then re-review until the
 verdict is CLEAN.
 
-### 6. Pre-merge
-Summarize what changed, then give me exact playtest steps (`npm run dev`, which
-scenario, which screen, what to look for) and what the reviewer says still needs a
-human to verify. **CHECKPOINT 3 — pre-merge.** Wait for me.
+### 6. QA smoke (engine-only)
+Invoke the `qa-tester` agent. It writes `scripts/playtest<Slug>.ts` per
+`docs/conventions/playtest-script.md`, runs it via `npx tsx`, and produces
+`docs/playtest/<slug>/engine-trace.json` plus a coverage report. The smoke
+verifies helper contracts (with stubbed RNG), drives a 1772 (and/or 1856)
+scenario through ~500 phases, and counts feature-specific event signatures.
+
+The qa-tester **cannot** test UI rendering, balance, or anything gated behind
+phases 2.4.2 / 2.4.3 (Vite `import.meta.env` skip). It reports those gaps
+honestly. The benefit: the human playtest checklist at the next checkpoint
+shrinks to exactly the items the smoke could not reach.
+
+If the smoke reports a contract failure or engine exception, go back to
+step 4 (build) — do not paper over. **No checkpoint** here; the artifacts
+are committed alongside the build.
+
+### 7. Pre-merge
+Summarize what changed, then give me the **pruned** playtest checklist (the
+qa-tester's coverage gaps, not the reviewer's full list) and the exact
+playtest steps (`npm run dev`, which scenario, which screen, what to look
+for). **CHECKPOINT 3 — pre-merge.** Wait for me.
 Only commit/push or open a PR AFTER I explicitly approve. Never push or merge on
 your own, and never use destructive git.
