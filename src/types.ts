@@ -587,7 +587,12 @@ export const TRAIT_LIFECYCLE_RULES = {
 // Symmetric trait-conflict pairing. Both directions listed so a lookup of
 // either side works (e.g. both Charismatic -> Unlikable AND Unlikable ->
 // Charismatic).
-export const TRAIT_CONFLICTS: Partial<Record<Trait, Trait>> = {
+// PR6: value type widened to `Trait | Trait[]` to preserve PR3's symmetric-
+// pair invariant when a single trait conflicts with multiple others. Passive
+// participates in BOTH the PR3 Efficient pair AND the PR6 Overeager pair; a
+// single-value mapping would silently break PR3 AC #14. tryGrantTrait
+// normalizes to array and iterates.
+export const TRAIT_CONFLICTS: Partial<Record<Trait, Trait | Trait[]>> = {
   Charismatic:    'Unlikable',
   Unlikable:      'Charismatic',
   Harmonious:     'Puritan',
@@ -595,9 +600,6 @@ export const TRAIT_CONFLICTS: Partial<Record<Trait, Trait>> = {
   Integrity:      'Corrupt',
   Corrupt:        'Integrity',
   Efficient:      'Passive',
-  // Passive→Efficient direction superseded by PR6 Passive→Overeager pair below.
-  // The Efficient→Passive direction above keeps d6-arbitration when granting
-  // Efficient to a Passive-carrier; the reverse path is now Overeager-coded.
   Egghead:        'Incompetent',
   Incompetent:    'Egghead',
   Ideologue:      'Impressionable',
@@ -623,7 +625,7 @@ export const TRAIT_CONFLICTS: Partial<Record<Trait, Trait>> = {
   'Master Kingmaker': 'Outsider',
   Outsider:           'Master Kingmaker',
   Overeager:          'Passive',
-  Passive:            'Overeager',
+  Passive:            ['Efficient', 'Overeager'],
 };
 
 // PR4a election contexts. Six locked contexts (spec AC #2). Senate uses

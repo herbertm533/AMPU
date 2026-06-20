@@ -1,7 +1,6 @@
 import type { FullGameSnapshot, ConstitutionalConvention, ConventionVote, ConstitutionalArticles, Politician } from '../types';
-import { TRAIT_CONFLICTS } from '../types';
 import { addLog } from './log';
-import { addTrait, tryGrantTrait } from './traits';
+import { addTrait, tryGrantTrait, firstHeldConflict } from './traits';
 import { uid, chance, pick } from '../rng';
 
 export function makeConvention(year: number): ConstitutionalConvention {
@@ -172,7 +171,7 @@ export function applyConvention(snap: FullGameSnapshot, conv: ConstitutionalConv
           addLog(snap, '2.4.3', 'event',
             `${a.firstName} ${a.lastName} sheds ${replaced} and earns Egghead authoring the Federalist Papers — d6 wins.`,
             { politicianId: a.id });
-        } else if (!granted && TRAIT_CONFLICTS['Egghead'] && a.traits.includes(TRAIT_CONFLICTS['Egghead']!)) {
+        } else if (!granted && firstHeldConflict(a, 'Egghead')) {
           addLog(snap, '2.4.3', 'event',
             `${a.firstName} ${a.lastName} would have gained Egghead authoring the Federalist Papers, but Incompetent holds on a d6.`,
             { politicianId: a.id });

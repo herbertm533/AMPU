@@ -4,7 +4,7 @@ import type { CabinetSeatScoring } from '../types';
 import { addLog } from './log';
 import { addExpertise } from './expertise';
 import { loseSkill, loseCommand, addSkillPoint, addCommandPoint } from './abilities';
-import { addTrait, removeTrait, tryGrantTrait } from './traits';
+import { addTrait, removeTrait, tryGrantTrait, firstHeldConflict } from './traits';
 import { applyTraitElectionBonus, composeTraitSummary } from './electionEffects';
 import { uid, chance, d100, d, pick, pickWeighted, clamp, shuffle, rand } from '../rng';
 import { refreshPv } from '../pv';
@@ -345,10 +345,13 @@ function rollThreshold(snap: FullGameSnapshot, p: Politician, thresholdYears: nu
             `${p.firstName} ${p.lastName} sheds ${replaced} and earns ${t} — the gain wins on a d6.`,
             { politicianId: p.id });
         }
-      } else if (TRAIT_CONFLICTS[t] && p.traits.includes(TRAIT_CONFLICTS[t]!)) {
-        addLog(snap, '2.1.2', 'event',
-          `${p.firstName} ${p.lastName} would have gained ${t}, but ${TRAIT_CONFLICTS[t]} holds on a d6.`,
-          { politicianId: p.id });
+      } else {
+        const held = firstHeldConflict(p, t);
+        if (held) {
+          addLog(snap, '2.1.2', 'event',
+            `${p.firstName} ${p.lastName} would have gained ${t}, but ${held} holds on a d6.`,
+            { politicianId: p.id });
+        }
       }
     }
   }
@@ -371,10 +374,13 @@ function rollThreshold(snap: FullGameSnapshot, p: Politician, thresholdYears: nu
             `${p.firstName} ${p.lastName} sheds ${replaced} and earns ${t} — the gain wins on a d6.`,
             { politicianId: p.id });
         }
-      } else if (TRAIT_CONFLICTS[t] && p.traits.includes(TRAIT_CONFLICTS[t]!)) {
-        addLog(snap, '2.1.2', 'event',
-          `${p.firstName} ${p.lastName} would have gained ${t}, but ${TRAIT_CONFLICTS[t]} holds on a d6.`,
-          { politicianId: p.id });
+      } else {
+        const held = firstHeldConflict(p, t);
+        if (held) {
+          addLog(snap, '2.1.2', 'event',
+            `${p.firstName} ${p.lastName} would have gained ${t}, but ${held} holds on a d6.`,
+            { politicianId: p.id });
+        }
       }
     }
   }
@@ -1411,10 +1417,13 @@ export function runPhase_2_1_7_Kingmakers(snap: FullGameSnapshot): void {
           addLog(snap, '2.1.7', 'event',
             `${c.firstName} ${c.lastName} inherits ${t} from ${k.firstName} ${k.lastName}, shedding ${replaced} on a d6.`,
             { politicianId: c.id });
-        } else if (!granted && TRAIT_CONFLICTS[t] && c.traits.includes(TRAIT_CONFLICTS[t]!)) {
-          addLog(snap, '2.1.7', 'event',
-            `${c.firstName} ${c.lastName} would have inherited ${t} from ${k.firstName} ${k.lastName}, but ${TRAIT_CONFLICTS[t]} holds on a d6.`,
-            { politicianId: c.id });
+        } else if (!granted) {
+          const held = firstHeldConflict(c, t);
+          if (held) {
+            addLog(snap, '2.1.7', 'event',
+              `${c.firstName} ${c.lastName} would have inherited ${t} from ${k.firstName} ${k.lastName}, but ${held} holds on a d6.`,
+              { politicianId: c.id });
+          }
         }
       }
     }
@@ -2616,10 +2625,13 @@ function rollPersonalEvents(
                 `${p.firstName} ${p.lastName} sheds ${result.replaced} and earns ${eff.trait} — the gain wins on a d6.`,
                 { politicianId: p.id });
             }
-          } else if (TRAIT_CONFLICTS[eff.trait] && p.traits.includes(TRAIT_CONFLICTS[eff.trait]!)) {
-            addLog(snap, '2.4.2', 'event',
-              `${p.firstName} ${p.lastName} would have gained ${eff.trait}, but ${TRAIT_CONFLICTS[eff.trait]} holds on a d6.`,
-              { politicianId: p.id });
+          } else {
+            const held = firstHeldConflict(p, eff.trait);
+            if (held) {
+              addLog(snap, '2.4.2', 'event',
+                `${p.firstName} ${p.lastName} would have gained ${eff.trait}, but ${held} holds on a d6.`,
+                { politicianId: p.id });
+            }
           }
           break;
         }
@@ -2902,6 +2914,13 @@ function modulateEraEventEffect(
     const N = event.secessionDefectionCount ?? 0;
     const band = secessionWinterBand(resp.id, N, president);
     mult *= band;
+    // PR6 AC #36: civil war is unavoidable when 2+ cabinet members defect.
+    // r1 (Concede) already starts the war unconditionally via its effect.
+    // r2/r3 omit startWar in their authored effects; inject it here when
+    // N>=2 so the historical inevitability holds regardless of response.
+    if (N >= 2 && !out.startWar) {
+      out.startWar = { name: 'American Civil War', against: 'Confederate States' };
+    }
   }
 
   // President Delegator / Micromanager — LAST, multiplies cumulative.
