@@ -1,7 +1,8 @@
 import type { FullGameSnapshot, PhaseId, Politician, EraEvent, Legislation, ElectionResult, NationalMeters, Ideology, PartyId, SkillKey, Trait, CareerTrack, OfficeType, State, RelocationEntry, RelocationBand, IdeologyShiftEntry, ConversionEntry, KingmakerEntry, FactionAlignmentDriftEntry, FactionLeadershipEntry, InterestCardId, LobbyCardId, IdeologyCardId, Era } from '../types';
-import { IDEOLOGY_ORDER, SKILLS, POSITIVE_TRAITS, TRACK_SKILL, TRACK_THEMED_TRAITS, TRACK_EXPERTISE, OFFICE_EXPERTISE, COMMITTEE_EXPERTISE, CAREER_RANDOM_NEGATIVES, CAREER_ODDS, CAREER_TRACK_MAX_YEARS, CAREER_TRACK_CAP, CAREER_GAINS_CAP, RELOCATION_ODDS, RELOCATION_ATTEMPTS_PER_TURN, RELOCATIONS_CAP, CARPETBAGGER_LADDER, IDEOLOGY_SHIFT_ODDS, IDEOLOGY_ATTEMPTS_PER_TURN, IDEOLOGY_SHIFTS_CAP, CONVERSION_ODDS, CONVERSION_ATTEMPTS_PER_TURN, CONVERSIONS_CAP, KINGMAKER_RULES, KINGMAKERS_CAP, ALIGNMENT_RULES, ALIGNMENT_DRIFT_CAP, LEADERSHIP_RULES, LEADERSHIP_FEED_CAP, MORTALITY_RULES, ANYTIME_EVENTS_RULES } from '../types';
+import { IDEOLOGY_ORDER, SKILLS, POSITIVE_TRAITS, TRACK_SKILL, TRACK_THEMED_TRAITS, TRACK_EXPERTISE, OFFICE_EXPERTISE, COMMITTEE_EXPERTISE, CAREER_RANDOM_NEGATIVES, CAREER_ODDS, CAREER_TRACK_MAX_YEARS, CAREER_TRACK_CAP, CAREER_GAINS_CAP, RELOCATION_ODDS, RELOCATION_ATTEMPTS_PER_TURN, RELOCATIONS_CAP, CARPETBAGGER_LADDER, IDEOLOGY_SHIFT_ODDS, IDEOLOGY_ATTEMPTS_PER_TURN, IDEOLOGY_SHIFTS_CAP, CONVERSION_ODDS, CONVERSION_ATTEMPTS_PER_TURN, CONVERSIONS_CAP, KINGMAKER_RULES, KINGMAKERS_CAP, ALIGNMENT_RULES, ALIGNMENT_DRIFT_CAP, LEADERSHIP_RULES, LEADERSHIP_FEED_CAP, MORTALITY_RULES, ANYTIME_EVENTS_RULES, ABILITY_LOSS_RULES } from '../types';
 import { addLog } from './log';
 import { addExpertise } from './expertise';
+import { loseSkill, loseCommand } from './abilities';
 import { uid, chance, d100, pick, pickWeighted, clamp, shuffle, rand } from '../rng';
 import { refreshPv } from '../pv';
 import { ANYTIME_EVENT_TEMPLATES, type AnytimeEventTemplate } from '../data/anytimeEvents';
@@ -2023,6 +2024,7 @@ function markPoliticianRetired(snap: FullGameSnapshot, p: Politician): void {
 // ============================================================================
 export function runPhase_2_4_1_Deaths(snap: FullGameSnapshot): void {
   const cfg = MORTALITY_RULES.eraConfig[snap.game.currentEra];
+  const capitalize = (s: string) => s[0].toUpperCase() + s.slice(1);
 
   const deathRateFor = (age: number): number => {
     for (const b of MORTALITY_RULES.deathBracket) {
@@ -2059,6 +2061,44 @@ export function runPhase_2_4_1_Deaths(snap: FullGameSnapshot): void {
       addLog(snap, '2.4.1', 'retire', `${p.firstName} ${p.lastName} (${p.state.toUpperCase()}, age ${p.age}) has retired.`, { retireCause: 'age', politicianId: p.id });
       recordRetirement(snap, p.id, 'age');
       markPoliticianRetired(snap, p);
+    }
+
+    // Old-age ability decay (PR2a). After the death/retire rolls so a just-
+    // died politician (death branch continues above) is never decayed.
+    const oa = ABILITY_LOSS_RULES.oldAge;
+    if (p.age >= oa.minAge) {
+      let decayChance: number = oa.baseChance;
+      for (const b of oa.ageBracketBonus) {
+        if (p.age >= b.minAge) { decayChance += b.bonus; break; }
+      }
+      // haleChanceMult is the documented longevity hook; Hale is not yet a trait
+      // (Q9 deferred), so this multiplier is 1.0 and a no-op in PR2a.
+      decayChance = clamp(decayChance * oa.haleChanceMult, 0, 1);
+      if (chance(decayChance)) {
+        // Pool of currently-decayable stats: every skill > 0, plus `command`
+        // (a separate field) when > 0. Tag each so we know which helper to call.
+        const pool: ({ kind: 'skill'; key: SkillKey } | { kind: 'command' })[] = [];
+        for (const k of SKILLS) if (p.skills[k] > 0) pool.push({ kind: 'skill', key: k });
+        if (p.command > 0) pool.push({ kind: 'command' });
+        if (pool.length > 0) {
+          const target = pick(pool);
+          if (target.kind === 'skill') {
+            const before = p.skills[target.key];
+            if (loseSkill(p, target.key, oa.amount)) {
+              addLog(snap, '2.4.1', 'event',
+                `${p.firstName} ${p.lastName} (${p.state.toUpperCase()}, age ${p.age}) has lost a step — ${capitalize(target.key)} ${before} → ${p.skills[target.key]}.`,
+                { politicianId: p.id });
+            }
+          } else {
+            const before = p.command;
+            if (loseCommand(p, oa.amount)) {
+              addLog(snap, '2.4.1', 'event',
+                `${p.firstName} ${p.lastName} (${p.state.toUpperCase()}, age ${p.age}) has lost a step — Command ${before} → ${p.command}.`,
+                { politicianId: p.id });
+            }
+          }
+        }
+      }
     }
   }
 
@@ -2304,7 +2344,9 @@ function rollPersonalEvents(
           }
           break;
         case 'skillBump':
-          if (p.skills[eff.skill] < ANYTIME_EVENTS_RULES.skillCap) {
+          if (eff.amount < 0) {
+            if (loseSkill(p, eff.skill, -eff.amount)) didMutate = true;
+          } else if (p.skills[eff.skill] < ANYTIME_EVENTS_RULES.skillCap) {
             p.skills[eff.skill] = clamp(
               p.skills[eff.skill] + eff.amount, 0, ANYTIME_EVENTS_RULES.skillCap,
             );
@@ -2312,7 +2354,9 @@ function rollPersonalEvents(
           }
           break;
         case 'commandBump':
-          if (p.command < ANYTIME_EVENTS_RULES.commandCap) {
+          if (eff.amount < 0) {
+            if (loseCommand(p, -eff.amount)) didMutate = true;
+          } else if (p.command < ANYTIME_EVENTS_RULES.commandCap) {
             p.command = clamp(
               p.command + eff.amount, 0, ANYTIME_EVENTS_RULES.commandCap,
             );

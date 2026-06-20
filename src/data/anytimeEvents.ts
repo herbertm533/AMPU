@@ -350,4 +350,39 @@ export const ANYTIME_EVENT_TEMPLATES: AnytimeEventTemplate[] = [
     ],
     text: '{first} {last} ({state}) distinguishes himself in combat — promotion and honors follow.',
   },
+
+  // ---------------- negative evolutions (PR2a loss) ----------------
+  // Target only validator-permitted skills (legislative/governing) and command;
+  // never a FORBIDDEN_SKILLS member. Each pairs the negative bump with a pvHit
+  // sibling. Low weight relative to the positive/illness pool.
+  {
+    id: 'setback-legislative-blunder',
+    category: 'scandal-verbal',
+    scandalScaled: true,            // scandal-* categories require scandalScaled (validator)
+    weight: 2,
+    effects: [{ kind: 'skillBump', skill: 'legislative', amount: -1 }, { kind: 'pvHit', amount: -6 }],
+    text: '{first} {last} ({state}) badly misjudges a floor fight — colleagues lose faith in their legislative touch.',
+  },
+  {
+    id: 'setback-governing-fiasco',
+    category: 'family-event',       // non-scandal -> must NOT set scandalScaled (validator)
+    weight: 2,
+    effects: [{ kind: 'skillBump', skill: 'governing', amount: -1 }, { kind: 'pvHit', amount: -6 }],
+    text: '{first} {last} ({state}) sees a signature state initiative collapse in mismanagement.',
+  },
+  {
+    id: 'setback-command-burnout',
+    category: 'illness-chronic',
+    weight: 1,
+    effects: [{ kind: 'commandBump', amount: -1 }, { kind: 'pvHit', amount: -8 }],
+    text: '{first} {last} ({state}) is visibly worn down — the old air of command has dimmed.',
+  },
+  {
+    id: 'setback-governing-scandal',
+    category: 'scandal-financial',
+    scandalScaled: true,
+    weight: 1,
+    effects: [{ kind: 'skillBump', skill: 'governing', amount: -1 }, { kind: 'pvHit', amount: -6 }],
+    text: '{first} {last} ({state}) is caught flat-footed by a procurement scandal back home.',
+  },
 ];
