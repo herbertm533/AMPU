@@ -27,7 +27,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 1,
     "traits": [
-      "Orator"
+      "Orator",
+      "Provincial"
     ],
     "expertise": []
   },
@@ -49,7 +50,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 1,
     "traits": [
-      "Egghead"
+      "Egghead",
+      "Cosmopolitan"
     ],
     "expertise": []
   },
@@ -72,7 +74,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "command": 1,
     "traits": [
       "Orator",
-      "Debater"
+      "Debater",
+      "Provincial"
     ],
     "expertise": []
   },
@@ -224,7 +227,9 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
       "backroom": 3
     },
     "command": 0,
-    "traits": [],
+    "traits": [
+      "Predictable"
+    ],
     "expertise": []
   },
   {
@@ -355,7 +360,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 1,
     "traits": [
-      "Leadership"
+      "Leadership",
+      "Hale"
     ],
     "expertise": []
   },
@@ -401,7 +407,10 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "command": 1,
     "traits": [
       "Celebrity",
-      "Egghead"
+      "Egghead",
+      "Likable",
+      "Cosmopolitan",
+      "Hale"
     ],
     "expertise": []
   },
@@ -917,7 +926,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "command": 1,
     "traits": [
       "Egghead",
-      "Reformist"
+      "Reformist",
+      "Uncharismatic"
     ],
     "expertise": []
   },
@@ -939,7 +949,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 1,
     "traits": [
-      "Egghead"
+      "Egghead",
+      "Cosmopolitan"
     ],
     "expertise": []
   },
@@ -961,7 +972,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 0,
     "traits": [
-      "Manipulative"
+      "Manipulative",
+      "Two-Faced"
     ],
     "expertise": []
   },
@@ -1784,7 +1796,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "command": 3,
     "traits": [
       "Orator",
-      "Debater"
+      "Debater",
+      "Provincial"
     ],
     "expertise": []
   },
@@ -1871,7 +1884,9 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "command": 4,
     "traits": [
       "Orator",
-      "Debater"
+      "Debater",
+      "Likable",
+      "Frail"
     ],
     "expertise": []
   },
@@ -1977,7 +1992,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 2,
     "traits": [
-      "Unlikable"
+      "Unlikable",
+      "Provincial"
     ],
     "expertise": []
   },
@@ -2045,7 +2061,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 4,
     "traits": [
-      "Celebrity"
+      "Celebrity",
+      "Hale"
     ],
     "expertise": [
       "Military"
@@ -2069,7 +2086,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 3,
     "traits": [
-      "Efficient"
+      "Efficient",
+      "Uncharismatic"
     ],
     "expertise": []
   },
@@ -2244,7 +2262,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "command": 2,
     "traits": [
       "Orator",
-      "Integrity"
+      "Integrity",
+      "Likable"
     ],
     "expertise": []
   },
@@ -2354,7 +2373,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "command": 5,
     "traits": [
       "Manipulative",
-      "Magician"
+      "Magician",
+      "Cosmopolitan"
     ],
     "expertise": []
   },
@@ -2377,7 +2397,9 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "command": 3,
     "traits": [
       "Integrity",
-      "Reformist"
+      "Reformist",
+      "Uncharismatic",
+      "Predictable"
     ],
     "expertise": []
   },
@@ -2467,7 +2489,9 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [
       "Orator",
       "Reformist",
-      "Puritan"
+      "Puritan",
+      "Cosmopolitan",
+      "Predictable"
     ],
     "expertise": []
   },
@@ -2922,6 +2946,132 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "command": 2,
     "traits": [
       "Integrity"
+    ],
+    "expertise": []
+  },
+  {
+    "draftYear": 1804,
+    "firstName": "Henry",
+    "lastName": "Clay",
+    "state": "ky",
+    "ideology": "Moderate",
+    "birthYear": 1777,
+    "age": 27,
+    "skills": {
+      "admin": 3,
+      "legislative": 5,
+      "judicial": 2,
+      "military": 1,
+      "governing": 3,
+      "backroom": 5
+    },
+    "command": 5,
+    "traits": [
+      "Charismatic",
+      "Likable",
+      "Magician",
+      "Orator"
+    ],
+    "expertise": []
+  },
+  {
+    "draftYear": 1792,
+    "firstName": "Andrew",
+    "lastName": "Jackson",
+    "state": "tn",
+    "ideology": "LW Populist",
+    "birthYear": 1767,
+    "age": 25,
+    "skills": {
+      "admin": 3,
+      "legislative": 2,
+      "judicial": 1,
+      "military": 5,
+      "governing": 3,
+      "backroom": 3
+    },
+    "command": 5,
+    "traits": [
+      "Hale",
+      "Outsider",
+      "Controversial",
+      "Celebrity"
+    ],
+    "expertise": [
+      "Military"
+    ]
+  },
+  {
+    "draftYear": 1792,
+    "firstName": "John Quincy",
+    "lastName": "Adams",
+    "state": "ma",
+    "ideology": "Moderate",
+    "birthYear": 1767,
+    "age": 25,
+    "skills": {
+      "admin": 4,
+      "legislative": 4,
+      "judicial": 3,
+      "military": 0,
+      "governing": 3,
+      "backroom": 3
+    },
+    "command": 4,
+    "traits": [
+      "Egghead",
+      "Integrity",
+      "Hale",
+      "Debater"
+    ],
+    "expertise": []
+  },
+  {
+    "draftYear": 1808,
+    "firstName": "John C.",
+    "lastName": "Calhoun",
+    "state": "sc",
+    "ideology": "Traditionalist",
+    "birthYear": 1782,
+    "age": 26,
+    "skills": {
+      "admin": 3,
+      "legislative": 5,
+      "judicial": 2,
+      "military": 1,
+      "governing": 2,
+      "backroom": 3
+    },
+    "command": 5,
+    "traits": [
+      "Orator",
+      "Debater",
+      "Predictable",
+      "Nationalist"
+    ],
+    "expertise": []
+  },
+  {
+    "draftYear": 1808,
+    "firstName": "Daniel",
+    "lastName": "Webster",
+    "state": "ma",
+    "ideology": "Conservative",
+    "birthYear": 1782,
+    "age": 26,
+    "skills": {
+      "admin": 3,
+      "legislative": 5,
+      "judicial": 3,
+      "military": 0,
+      "governing": 2,
+      "backroom": 3
+    },
+    "command": 4,
+    "traits": [
+      "Orator",
+      "Debater",
+      "Two-Faced"
     ],
     "expertise": []
   }

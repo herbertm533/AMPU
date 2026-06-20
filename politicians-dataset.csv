@@ -1,6 +1,6 @@
 draftYear,firstName,lastName,state,ideology,birthYear,age,admin,legislative,judicial,military,governing,backroom,command,traits,expertise,party,wikiUrl
 1772,John,Adams,ma,Moderate,1735,,3,3,3,0,2,2,1,Egghead|Debater,,RED,https://en.wikipedia.org/wiki/John_Adams
-1772,Samuel,Adams,ma,LW Populist,1722,,2,3,1,0,2,4,1,Orator,,BLUE,https://en.wikipedia.org/wiki/Samuel_Adams
+1772,Samuel,Adams,ma,LW Populist,1722,,2,3,1,0,2,4,1,Orator|Provincial,,BLUE,https://en.wikipedia.org/wiki/Samuel_Adams
 1772,Matthew,Adgate,ny,Liberal,1737,,1,1,0,0,1,1,0,,,Anti-Administration,https://en.wikipedia.org/wiki/Matthew_Adgate
 1772,Ethan,Allen,nh,Moderate,1738,,0,0,0,3,0,2,0,Celebrity,,BLUE,https://en.wikipedia.org/wiki/Ethan_Allen
 1772,John,Archer,md,Conservative,1741,,1,2,1,0,1,1,0,,,Republican,https://en.wikipedia.org/wiki/John_Archer_(American_politician)
@@ -47,7 +47,7 @@ draftYear,firstName,lastName,state,ideology,birthYear,age,admin,legislative,judi
 1772,William,Few,ga,Moderate,1748,,2,2,1,0,2,2,0,,,BLUE,https://en.wikipedia.org/wiki/William_Few
 1772,William,Floyd,ny,Moderate,1734,,1,2,1,0,1,1,0,,,,https://en.wikipedia.org/wiki/William_Floyd
 1772,Abiel,Foster,nh,Conservative,1735,,1,3,1,0,1,1,0,,,Federalist,https://en.wikipedia.org/wiki/Abiel_Foster
-1772,Benjamin,Franklin,pa,Moderate,1706,,4,3,1,0,2,4,1,Celebrity|Egghead,,RED,https://en.wikipedia.org/wiki/Benjamin_Franklin
+1772,Benjamin,Franklin,pa,Moderate,1706,,4,3,1,0,2,4,1,Celebrity|Egghead|Likable|Cosmopolitan|Hale,,RED,https://en.wikipedia.org/wiki/Benjamin_Franklin
 1772,Jonathan,Freeman,nh,Conservative,1745,,1,2,1,0,1,1,0,,,Federalist,https://en.wikipedia.org/wiki/Jonathan_Freeman_(representative)
 1772,Horatio,Gates,va,Moderate,1727,,1,0,0,3,0,1,0,,Military,BLUE,https://en.wikipedia.org/wiki/Horatio_Gates
 1772,Elbridge,Gerry,ma,Moderate,1744,,2,2,1,0,1,3,0,Manipulative,,BLUE,https://en.wikipedia.org/wiki/Elbridge_Gerry
@@ -64,7 +64,7 @@ draftYear,firstName,lastName,state,ideology,birthYear,age,admin,legislative,judi
 1772,Benjamin,Harrison V,va,Traditionalist,1726,,1,1,1,0,2,1,1,Leadership,,Anti-Administration,https://en.wikipedia.org/wiki/Benjamin_Harrison_V
 1772,Thomas,Hartley,pa,Conservative,1748,,1,3,1,0,1,2,0,,,Federalist,https://en.wikipedia.org/wiki/Thomas_Hartley
 1772,Thomas,Henderson,nj,Conservative,1743,,1,2,1,0,1,1,0,,,Federalist,https://en.wikipedia.org/wiki/Thomas_Henderson_(New_Jersey_politician)
-1772,Patrick,Henry,va,Traditionalist,1736,,1,4,2,1,3,3,1,Orator|Debater,,BLUE,https://en.wikipedia.org/wiki/Patrick_Henry
+1772,Patrick,Henry,va,Traditionalist,1736,,1,4,2,1,3,3,1,Orator|Debater|Provincial,,BLUE,https://en.wikipedia.org/wiki/Patrick_Henry
 1772,Daniel,Hiester,md,Conservative,1747,,1,3,1,0,1,2,0,,,Republican,https://en.wikipedia.org/wiki/Daniel_Hiester
 1772,John,Hiester,pa,Conservative,1745,,1,2,1,0,1,1,0,,,Republican,https://en.wikipedia.org/wiki/John_Hiester
 1772,William,Hindman,md,Conservative,1743,,1,3,1,0,1,1,1,,,Federalist,https://en.wikipedia.org/wiki/William_Hindman
@@ -80,7 +80,7 @@ draftYear,firstName,lastName,state,ideology,birthYear,age,admin,legislative,judi
 1772,Jonathan,Jackson,ma,Conservative,1743,,1,1,1,0,1,1,0,,,Pro-Administration,https://en.wikipedia.org/wiki/Jonathan_Jackson
 1772,Israel,Jacobs,pa,Moderate,1726,,1,2,1,0,1,1,0,,,,https://en.wikipedia.org/wiki/Israel_Jacobs
 1772,John,Jay,ny,Moderate,1745,,3,3,3,0,2,3,0,,,RED,https://en.wikipedia.org/wiki/John_Jay
-1772,Thomas,Jefferson,va,RW Populist,1743,,3,4,2,0,2,2,1,Egghead,,BLUE,https://en.wikipedia.org/wiki/Thomas_Jefferson
+1772,Thomas,Jefferson,va,RW Populist,1743,,3,4,2,0,2,2,1,Egghead|Cosmopolitan,,BLUE,https://en.wikipedia.org/wiki/Thomas_Jefferson
 1772,William,Johnson,ct,Conservative,1727,,1,2,1,0,1,1,1,,,Pro-Administration,https://en.wikipedia.org/wiki/William_Samuel_Johnson
 1772,William Samuel,Johnson,ct,Conservative,1727,,2,3,3,0,1,2,0,Egghead,,RED,https://en.wikipedia.org/wiki/William_Samuel_Johnson
 1772,Samuel,Johnston,nc,Conservative,1733,,2,3,2,0,2,2,0,,,RED,https://en.wikipedia.org/wiki/Samuel_Johnston
@@ -102,7 +102,7 @@ draftYear,firstName,lastName,state,ideology,birthYear,age,admin,legislative,judi
 1772,William,Maclay,pa,Progressive,1737,,2,3,1,0,1,2,0,Reformist,,BLUE,https://en.wikipedia.org/wiki/William_Maclay
 1772,Samuel,Maclay,pa,Conservative,1741,,1,3,1,0,1,1,1,,,Republican,https://en.wikipedia.org/wiki/Samuel_Maclay
 1772,Francis,Marion,sc,Traditionalist,1732,,0,0,0,4,0,1,0,,Military,BLUE,https://en.wikipedia.org/wiki/Francis_Marion
-1772,George,Mason,va,Traditionalist,1725,,2,3,2,0,2,3,0,,,BLUE,https://en.wikipedia.org/wiki/George_Mason
+1772,George,Mason,va,Traditionalist,1725,,2,3,2,0,2,3,0,Predictable,,BLUE,https://en.wikipedia.org/wiki/George_Mason
 1772,George,Mathews,ga,Moderate,1739,,1,2,1,0,1,1,0,,,,https://en.wikipedia.org/wiki/George_Mathews_(soldier)
 1772,Thomas,McKean,de,Progressive,1734,,2,3,3,0,2,2,0,,,RED,https://en.wikipedia.org/wiki/Thomas_McKean
 1772,Alexander,McKim,md,Conservative,1748,,1,2,1,0,1,1,0,,,Republican,https://en.wikipedia.org/wiki/Alexander_McKim
@@ -168,7 +168,7 @@ draftYear,firstName,lastName,state,ideology,birthYear,age,admin,legislative,judi
 1772,Peleg,Wadsworth,ma,Conservative,1748,,1,3,1,0,1,2,1,,,Federalist,https://en.wikipedia.org/wiki/Peleg_Wadsworth
 1772,John,Walker,va,Moderate,1744,,1,2,1,0,1,1,0,,,BLUE,https://en.wikipedia.org/wiki/John_Walker
 1772,Artemas,Ward,ma,Moderate,1727,,1,2,1,0,1,1,0,,,,https://en.wikipedia.org/wiki/Artemas_Ward
-1772,George,Washington,va,Moderate,1732,,2,1,0,4,2,2,1,Leadership,,RED,https://en.wikipedia.org/wiki/George_Washington
+1772,George,Washington,va,Moderate,1732,,2,1,0,4,2,2,1,Leadership|Hale,,RED,https://en.wikipedia.org/wiki/George_Washington
 1772,Anthony,Wayne,ga,Moderate,1745,,1,2,1,0,1,1,0,,,,https://en.wikipedia.org/wiki/Anthony_Wayne
 1772,John,Whitehill,pa,Conservative,1729,,1,2,1,0,1,1,0,,,Republican,https://en.wikipedia.org/wiki/John_Whitehill_(representative)
 1772,Robert,Whitehill,pa,Conservative,1738,,1,3,1,0,1,1,0,,,Republican,https://en.wikipedia.org/wiki/Robert_Whitehill_(politician)
@@ -212,7 +212,7 @@ draftYear,firstName,lastName,state,ideology,birthYear,age,admin,legislative,judi
 1776,Levi,Lincoln,ma,Conservative,1749,,1,2,1,0,1,1,0,,,Republican,https://en.wikipedia.org/wiki/Levi_Lincoln_Sr.
 1776,Samuel,Lyman,ma,Conservative,1749,,1,2,1,0,1,1,0,,,Federalist,https://en.wikipedia.org/wiki/Samuel_Lyman
 1776,Matthew,Lyon,ky,Conservative,1749,,1,3,1,0,1,2,0,,,Republican,https://en.wikipedia.org/wiki/Matthew_Lyon
-1776,James,Madison,va,Liberal,1751,,3,4,3,0,2,3,1,Egghead|Reformist,,BLUE,https://en.wikipedia.org/wiki/James_Madison
+1776,James,Madison,va,Liberal,1751,,3,4,3,0,2,3,1,Egghead|Reformist|Uncharismatic,,BLUE,https://en.wikipedia.org/wiki/James_Madison
 1776,Gouverneur,Morris,ny,Conservative,1752,,3,3,3,0,1,3,0,Egghead|Orator,,RED,https://en.wikipedia.org/wiki/Gouverneur_Morris
 1776,Frederick,Muhlenberg,pa,Moderate,1750,,2,3,1,0,3,2,1,Leadership,,RED,https://en.wikipedia.org/wiki/Frederick_Muhlenberg
 1776,Josiah,Parker,va,Conservative,1751,,1,3,1,0,1,2,0,,,Federalist,https://en.wikipedia.org/wiki/Josiah_Parker
@@ -247,7 +247,7 @@ draftYear,firstName,lastName,state,ideology,birthYear,age,admin,legislative,judi
 1780,Stephen,Bradley,vt,Conservative,1754,,1,4,1,0,1,2,2,,,Republican,https://en.wikipedia.org/wiki/Stephen_R._Bradley
 1780,Benjamin,Brown,ma,Conservative,1756,,1,2,1,0,1,1,0,,,Federalist,https://en.wikipedia.org/wiki/Benjamin_Brown_(politician)
 1780,Daniel,Buck,vt,Conservative,1753,,1,2,1,0,1,1,0,,,Federalist,https://en.wikipedia.org/wiki/Daniel_Buck
-1780,Aaron,Burr,ny,Moderate,1756,,2,2,2,1,1,4,0,Manipulative,,BLUE,https://en.wikipedia.org/wiki/Aaron_Burr
+1780,Aaron,Burr,ny,Moderate,1756,,2,2,2,1,1,4,0,Manipulative|Two-Faced,,BLUE,https://en.wikipedia.org/wiki/Aaron_Burr
 1780,Samuel,Cabell,va,Conservative,1756,,1,3,1,0,1,1,0,,,Republican,https://en.wikipedia.org/wiki/Samuel_Jordan_Cabell
 1780,Lambert,Cadwalader,nj,Moderate,1754,,1,2,1,0,1,1,0,,,,https://en.wikipedia.org/wiki/Lambert_Cadwalader_(representative)
 1780,Peter,Carleton,nh,Conservative,1755,,1,2,1,0,1,1,0,,,Republican,https://en.wikipedia.org/wiki/Peter_Carleton
@@ -280,7 +280,7 @@ draftYear,firstName,lastName,state,ideology,birthYear,age,admin,legislative,judi
 1780,Isaac,Griffin,pa,Conservative,1756,,1,2,1,0,1,1,0,,,Republican,https://en.wikipedia.org/wiki/Isaac_Griffin
 1780,James,Gunn,ga,Conservative,1753,,1,3,1,0,1,2,1,,,Federalist,https://en.wikipedia.org/wiki/James_Gunn_(Georgia_politician)
 1780,John,Hamilton,pa,Conservative,1754,,1,2,1,0,1,1,0,,,Republican,https://en.wikipedia.org/wiki/John_Hamilton_(congressman)
-1780,Alexander,Hamilton,ny,Conservative,1755,,4,3,2,2,1,3,1,Egghead,,RED,https://en.wikipedia.org/wiki/Alexander_Hamilton
+1780,Alexander,Hamilton,ny,Conservative,1755,,4,3,2,2,1,3,1,Egghead|Cosmopolitan,,RED,https://en.wikipedia.org/wiki/Alexander_Hamilton
 1780,George,Hancock,va,Conservative,1754,,1,2,1,0,1,1,0,,,Federalist,https://en.wikipedia.org/wiki/George_Hancock_(Virginia_politician)
 1780,Josiah,Hasbrouck,ny,Conservative,1755,,1,2,1,0,1,1,0,,,Republican,https://en.wikipedia.org/wiki/Josiah_Hasbrouck
 1780,Benjamin,Hawkins,nc,Moderate,1754,,2,2,1,0,2,2,0,,,BLUE,https://en.wikipedia.org/wiki/Benjamin_Hawkins
@@ -597,6 +597,7 @@ draftYear,firstName,lastName,state,ideology,birthYear,age,admin,legislative,judi
 1788,Isaac,Wilbour,ri,Conservative,1763,,1,2,1,0,1,1,0,,,Republican,https://en.wikipedia.org/wiki/Isaac_Wilbour
 1788,Robert,Williams,nc,Conservative,1762,,1,2,1,0,1,1,0,,,Republican,https://en.wikipedia.org/wiki/Robert_Williams_(North_Carolina_politician)
 1788,Henry,Woods,pa,Conservative,1764,,1,2,1,0,1,1,0,,,Federalist,https://en.wikipedia.org/wiki/Henry_Woods_(Pennsylvania_politician)
+1792,John Quincy,Adams,ma,Moderate,1767,,4,4,3,0,3,3,4,Egghead|Integrity|Hale|Debater,,RED,https://en.wikipedia.org/wiki/John_Quincy_Adams
 1792,Asa,Adgate,ny,Conservative,1767,,1,2,1,0,1,1,0,,,Republican,https://en.wikipedia.org/wiki/Asa_Adgate
 1792,Daniel,Avery,ny,Conservative,1766,,1,2,1,0,1,1,0,,,Republican,https://en.wikipedia.org/wiki/Daniel_Avery_(politician)
 1792,Josiah,Bartlett,nh,Conservative,1768,,1,2,1,0,1,1,0,,,Republican,https://en.wikipedia.org/wiki/Josiah_Bartlett_Jr.
@@ -657,7 +658,7 @@ draftYear,firstName,lastName,state,ideology,birthYear,age,admin,legislative,judi
 1792,Narsworthy,Hunter,ms,Moderate,1766,,1,2,1,0,1,1,0,,,,https://en.wikipedia.org/wiki/Narsworthy_Hunter
 1792,William,Irving,ny,Conservative,1766,,1,2,1,0,1,1,0,,,Republican,https://en.wikipedia.org/wiki/William_Irving_(American_politician)
 1792,Jared,Irwin,pa,Conservative,1768,,1,2,1,0,1,1,0,,,Republican,https://en.wikipedia.org/wiki/Jared_Irwin_(Pennsylvania_politician)
-1792,Andrew,Jackson,tn,Liberal,1767,,1,2,1,0,1,1,1,,,Democratic Republican,https://en.wikipedia.org/wiki/Andrew_Jackson
+1792,Andrew,Jackson,tn,LW Populist,1767,,3,2,1,5,3,3,5,Hale|Outsider|Controversial|Celebrity,Military,BLUE,https://en.wikipedia.org/wiki/Andrew_Jackson
 1792,Charles,Johnson,nc,Conservative,1766,,1,2,1,0,1,1,0,,,Republican,https://en.wikipedia.org/wiki/Charles_Johnson_(North_Carolina_politician)
 1792,William,Jones,pa,Conservative,1766,,1,2,1,0,1,1,0,,,Republican,https://en.wikipedia.org/wiki/William_Jones_(statesman)
 1792,George,Jones,ga,Conservative,1766,,1,2,1,0,1,1,1,,,Republican,https://en.wikipedia.org/wiki/George_Jones_(Georgia_politician)
@@ -1055,7 +1056,7 @@ draftYear,firstName,lastName,state,ideology,birthYear,age,admin,legislative,judi
 1804,James,Clark,nc,Conservative,1779,,1,2,1,0,1,1,0,,,Republican,https://en.wikipedia.org/wiki/James_West_Clark
 1804,Robert,Clark,ny,Conservative,1777,,1,2,1,0,1,1,0,,,Republican,https://en.wikipedia.org/wiki/Robert_Clark_(New_York_politician)
 1804,Archibald,Clarke,ny,Conservative,1780,,1,2,1,0,1,1,0,,,Republican,https://en.wikipedia.org/wiki/Archibald_S._Clarke
-1804,Henry,Clay,ky,Moderate,1777,,1,5,1,0,1,3,3,,,Whig,https://en.wikipedia.org/wiki/Henry_Clay
+1804,Henry,Clay,ky,Moderate,1777,,3,5,2,1,3,5,5,Charismatic|Likable|Magician|Orator,,BLUE,https://en.wikipedia.org/wiki/Henry_Clay
 1804,Thomas,Clayton,de,Moderate,1780,,1,3,1,0,1,2,2,,,Whig,https://en.wikipedia.org/wiki/Thomas_Clayton
 1804,David,Clendenin,oh,Conservative,1778,,1,2,1,0,1,1,0,,,Republican,https://en.wikipedia.org/wiki/David_Clendenin
 1804,Oliver,Comstock,ny,Conservative,1780,,1,2,1,0,1,1,0,,,Republican,https://en.wikipedia.org/wiki/Oliver_C._Comstock
@@ -1256,6 +1257,7 @@ draftYear,firstName,lastName,state,ideology,birthYear,age,admin,legislative,judi
 1808,Thomas,Burnside,pa,Conservative,1782,,1,2,1,0,1,1,0,,,Republican,https://en.wikipedia.org/wiki/Thomas_Burnside
 1808,Hutchins,Burton,nc,Conservative,1784,,1,2,1,0,1,1,0,,,Republican,https://en.wikipedia.org/wiki/Hutchins_Gordon_Burton
 1808,John,Calhoun,sc,Liberal,1782,,1,5,1,0,1,3,2,,,Democrat,https://en.wikipedia.org/wiki/John_C._Calhoun
+1808,John C.,Calhoun,sc,Traditionalist,1782,,3,5,2,1,2,3,5,Orator|Debater|Predictable|Nationalist,,BLUE,https://en.wikipedia.org/wiki/John_C._Calhoun
 1808,Newton,Cannon,tn,Conservative,1781,,1,3,1,0,1,1,0,,,Republican,https://en.wikipedia.org/wiki/Newton_Cannon
 1808,Hugh,Caperton,va,Conservative,1781,,1,2,1,0,1,1,0,,,Federalist,https://en.wikipedia.org/wiki/Hugh_Caperton
 1808,Walter,Case,ny,Conservative,1784,,1,2,1,0,1,1,0,,,Republican,https://en.wikipedia.org/wiki/Walter_Case
@@ -1404,7 +1406,7 @@ draftYear,firstName,lastName,state,ideology,birthYear,age,admin,legislative,judi
 1808,John,Wales,de,Moderate,1783,,1,2,1,0,1,1,1,,,Whig,https://en.wikipedia.org/wiki/John_Wales
 1808,David,Walker,ky,Conservative,1782,,1,2,1,0,1,1,0,,,Republican,https://en.wikipedia.org/wiki/David_Walker_(Kentucky_politician)
 1808,Garret,Wall,nj,Liberal,1783,,1,2,1,0,1,1,1,,,Democrat,https://en.wikipedia.org/wiki/Garret_D._Wall
-1808,Daniel,Webster,ma,Moderate,1782,,1,5,1,0,1,3,2,,,Whig,https://en.wikipedia.org/wiki/Daniel_Webster
+1808,Daniel,Webster,ma,Conservative,1782,,3,5,3,0,2,3,4,Orator|Debater|Two-Faced,,RED,https://en.wikipedia.org/wiki/Daniel_Webster
 1808,John,Weeks,nh,Liberal,1781,,1,2,1,0,1,1,0,,,Jackson,https://en.wikipedia.org/wiki/John_W._Weeks_(New_Hampshire_politician)
 1808,Jesse,Wharton,tn,Conservative,1782,,1,2,1,0,1,1,1,,,Republican,https://en.wikipedia.org/wiki/Jesse_Wharton
 1808,Grattan,Wheeler,ny,Moderate,1783,,1,2,1,0,1,1,0,,,Anti Masonic,https://en.wikipedia.org/wiki/Grattan_H._Wheeler
@@ -1978,7 +1980,7 @@ draftYear,firstName,lastName,state,ideology,birthYear,age,admin,legislative,judi
 1820,Henry,Horn,pa,Liberal,1796,,1,2,1,0,1,1,0,,,Jackson,https://en.wikipedia.org/wiki/Henry_Horn
 1820,William,Hough,ny,Liberal,1795,,1,2,1,0,1,1,0,,,Democrat,https://en.wikipedia.org/wiki/William_J._Hough
 1820,Samuel,Houston,tx,Moderate,1793,,1,4,1,0,1,2,2,,,American,https://en.wikipedia.org/wiki/Sam_Houston
-1820,Sam,Houston,tx,Moderate,1793,,2,2,1,4,3,2,4,Celebrity,Military,BLUE,https://en.wikipedia.org/wiki/Sam_Houston
+1820,Sam,Houston,tx,Moderate,1793,,2,2,1,4,3,2,4,Celebrity|Hale,Military,BLUE,https://en.wikipedia.org/wiki/Sam_Houston
 1820,Charles,Hudson,ma,Moderate,1795,,1,3,1,0,1,1,0,,,Whig,https://en.wikipedia.org/wiki/Charles_Hudson_(American_politician)
 1820,Hiram,Hunt,ny,Moderate,1796,,1,2,1,0,1,1,0,,,Whig,https://en.wikipedia.org/wiki/Hiram_P._Hunt
 1820,Peter,Ihrie,pa,Liberal,1796,,1,2,1,0,1,1,0,,,Jackson,https://en.wikipedia.org/wiki/Peter_Ihrie_Jr.
@@ -2041,7 +2043,7 @@ draftYear,firstName,lastName,state,ideology,birthYear,age,admin,legislative,judi
 1820,Henry,Pinckney,sc,Traditionalist,1794,,1,2,1,0,1,1,0,,,Nullifier,https://en.wikipedia.org/wiki/Henry_L._Pinckney
 1820,Franklin,Plummer,ms,Liberal,1796,,1,2,1,0,1,1,0,,,Jackson,https://en.wikipedia.org/wiki/Franklin_E._Plummer
 1820,James,Polk,tn,Liberal,1795,,1,3,1,0,1,2,1,,,Democrat,https://en.wikipedia.org/wiki/James_K._Polk
-1820,James K.,Polk,tn,Liberal,1795,,3,3,1,1,2,3,3,Efficient,,BLUE,https://en.wikipedia.org/wiki/James_K._Polk
+1820,James K.,Polk,tn,Liberal,1795,,3,3,1,1,2,3,3,Efficient|Uncharismatic,,BLUE,https://en.wikipedia.org/wiki/James_K._Polk
 1820,Robert,Potter,nc,Liberal,1794,,1,2,1,0,1,1,0,,,Jacksonian,https://en.wikipedia.org/wiki/Robert_Potter_(politician%2C_born_1800)
 1820,"David,",Potts,pa,Moderate,1794,,1,3,1,0,1,1,0,,,Anti Masonic,https://en.wikipedia.org/wiki/David_Potts_Jr.
 1820,William,Preston,sc,Moderate,1794,,1,3,1,0,1,1,1,,,Whig,https://en.wikipedia.org/wiki/William_C._Preston
@@ -2557,7 +2559,7 @@ draftYear,firstName,lastName,state,ideology,birthYear,age,admin,legislative,judi
 1828,William,Senter,tn,Moderate,1801,,1,2,1,0,1,1,0,,,Whig,https://en.wikipedia.org/wiki/William_Tandy_Senter
 1828,Ambrose,Sevier,ar,Liberal,1801,,1,4,1,0,1,2,2,,,Democrat,https://en.wikipedia.org/wiki/Ambrose_H._Sevier
 1828,William,Seward,ny,Conservative,1801,,1,3,1,0,1,2,1,,,Republican,https://en.wikipedia.org/wiki/William_H._Seward
-1828,William H.,Seward,ny,Liberal,1801,,3,4,2,0,3,4,5,Manipulative|Magician,,RED,https://en.wikipedia.org/wiki/William_H._Seward
+1828,William H.,Seward,ny,Liberal,1801,,3,4,2,0,3,4,5,Manipulative|Magician|Cosmopolitan,,RED,https://en.wikipedia.org/wiki/William_H._Seward
 1828,David,Seymour,ny,Liberal,1803,,1,2,1,0,1,1,0,,,Democrat,https://en.wikipedia.org/wiki/David_L._Seymour
 1828,Origen,Seymour,ct,Liberal,1804,,1,2,1,0,1,1,0,,,Democrat,https://en.wikipedia.org/wiki/Origen_S._Seymour
 1828,Wilson,Shannon,oh,Liberal,1802,,1,2,1,0,1,1,0,,,Democrat,https://en.wikipedia.org/wiki/Wilson_Shannon
@@ -2670,7 +2672,7 @@ draftYear,firstName,lastName,state,ideology,birthYear,age,admin,legislative,judi
 1832,William,Chapman,ia,Liberal,1808,,1,2,1,0,1,1,0,,,Democrat,https://en.wikipedia.org/wiki/William_W._Chapman
 1832,Robert,Charlton,ga,Liberal,1807,,1,2,1,0,1,1,1,,,Democrat,https://en.wikipedia.org/wiki/Robert_M._Charlton
 1832,Salmon,Chase,oh,Conservative,1808,,1,2,1,0,1,1,1,,,Republican,https://en.wikipedia.org/wiki/Salmon_P._Chase
-1832,Salmon P.,Chase,oh,Progressive,1808,,3,3,3,0,4,2,3,Integrity|Reformist,,RED,https://en.wikipedia.org/wiki/Salmon_P._Chase
+1832,Salmon P.,Chase,oh,Progressive,1808,,3,3,3,0,4,2,3,Integrity|Reformist|Uncharismatic|Predictable,,RED,https://en.wikipedia.org/wiki/Salmon_P._Chase
 1832,Asa,Clapp,me,Liberal,1805,,1,2,1,0,1,1,0,,,Democrat,https://en.wikipedia.org/wiki/Asa_Clapp_(politician)
 1832,Brutus,Clay,ky,Moderate,1808,,1,2,1,0,1,1,0,,,Unionist,https://en.wikipedia.org/wiki/Brutus_J._Clay
 1832,Williamson,Cobb,al,Liberal,1807,,1,3,1,0,1,2,1,,,Democrat,https://en.wikipedia.org/wiki/Williamson_R._W._Cobb
@@ -2757,7 +2759,7 @@ draftYear,firstName,lastName,state,ideology,birthYear,age,admin,legislative,judi
 1832,Benning,Jenness,nh,Liberal,1806,,1,2,1,0,1,1,1,,,Democrat,https://en.wikipedia.org/wiki/Benning_W._Jenness
 1832,Daniel,Jewett,mo,Conservative,1807,,1,2,1,0,1,1,1,,,Republican,https://en.wikipedia.org/wiki/Daniel_T._Jewett
 1832,Harvey,Johnson,oh,Liberal,1808,,1,2,1,0,1,1,0,,,Democrat,https://en.wikipedia.org/wiki/Harvey_H._Johnson
-1832,Andrew,Johnson,tn,Conservative,1808,,2,3,1,0,2,2,2,Unlikable,,BLUE,https://en.wikipedia.org/wiki/Andrew_Johnson
+1832,Andrew,Johnson,tn,Conservative,1808,,2,3,1,0,2,2,2,Unlikable|Provincial,,BLUE,https://en.wikipedia.org/wiki/Andrew_Johnson
 1832,Joseph,Johnston,va,Liberal,1807,,1,2,1,0,1,1,0,,,Democrat,https://en.wikipedia.org/wiki/Joseph_E._Johnston
 1832,Isaac,Jones,md,Moderate,1806,,1,2,1,0,1,1,0,,,Whig,https://en.wikipedia.org/wiki/Isaac_D._Jones
 1832,George,Keim,pa,Liberal,1805,,1,2,1,0,1,1,0,,,Democrat,https://en.wikipedia.org/wiki/George_M._Keim
@@ -3055,7 +3057,7 @@ draftYear,firstName,lastName,state,ideology,birthYear,age,admin,legislative,judi
 1836,Owen,Leib,pa,Liberal,1810,,1,2,1,0,1,1,0,,,Democrat,https://en.wikipedia.org/wiki/Owen_D._Leib
 1836,Moses,Leonard,ny,Liberal,1809,,1,2,1,0,1,1,0,,,Democrat,https://en.wikipedia.org/wiki/Moses_G._Leonard
 1836,Thomas,Ligon,md,Liberal,1810,,1,2,1,0,1,1,0,,,Democrat,https://en.wikipedia.org/wiki/Thomas_Watkins_Ligon
-1836,Abraham,Lincoln,il,Moderate,1809,,2,3,2,0,1,2,2,Orator|Integrity,,RED,https://en.wikipedia.org/wiki/Abraham_Lincoln
+1836,Abraham,Lincoln,il,Moderate,1809,,2,3,2,0,1,2,2,Orator|Integrity|Likable,,RED,https://en.wikipedia.org/wiki/Abraham_Lincoln
 1836,William,Lindsley,oh,Liberal,1812,,1,2,1,0,1,1,0,,,Democrat,https://en.wikipedia.org/wiki/William_D._Lindsley
 1836,Owen,Lovejoy,il,LW Populist,1811,,2,3,1,0,1,1,2,Reformist,,RED,https://en.wikipedia.org/wiki/Owen_Lovejoy
 1836,John,Lumpkin,ga,Liberal,1812,,1,3,1,0,1,1,0,,,Democrat,https://en.wikipedia.org/wiki/John_H._Lumpkin
@@ -3142,7 +3144,7 @@ draftYear,firstName,lastName,state,ideology,birthYear,age,admin,legislative,judi
 1836,William,Stewart,pa,Conservative,1810,,1,2,1,0,1,1,0,,,Republican,https://en.wikipedia.org/wiki/William_Stewart_(Pennsylvania_politician)
 1836,James,Strother,va,Moderate,1811,,1,2,1,0,1,1,0,,,Whig,https://en.wikipedia.org/wiki/James_F._Strother
 1836,Charles,Stuart,mi,Liberal,1810,,1,3,1,0,1,1,1,,,Democrat,https://en.wikipedia.org/wiki/Charles_E._Stuart
-1836,Charles,Sumner,ma,LW Populist,1811,,2,4,3,0,2,1,4,Orator|Reformist|Puritan,,RED,https://en.wikipedia.org/wiki/Charles_Sumner
+1836,Charles,Sumner,ma,LW Populist,1811,,2,4,3,0,2,1,4,Orator|Reformist|Puritan|Cosmopolitan|Predictable,,RED,https://en.wikipedia.org/wiki/Charles_Sumner
 1836,Thomas,Swann,md,Liberal,1809,,1,3,1,0,1,1,0,,,Democrat,https://en.wikipedia.org/wiki/Thomas_Swann
 1836,Samuel,Swope,ky,Moderate,1809,,1,2,1,0,1,1,0,,,American,https://en.wikipedia.org/wiki/Samuel_F._Swope
 1836,Thomas,Theaker,oh,Conservative,1812,,1,2,1,0,1,1,0,,,Republican,https://en.wikipedia.org/wiki/Thomas_Clarke_Theaker
@@ -3153,7 +3155,7 @@ draftYear,firstName,lastName,state,ideology,birthYear,age,admin,legislative,judi
 1836,Nelson,Tift,ga,Liberal,1810,,1,2,1,0,1,1,0,,,Democrat,https://en.wikipedia.org/wiki/Nelson_Tift
 1836,Patrick,Tompkins,ms,Moderate,1812,,1,2,1,0,1,1,0,,,Whig,https://en.wikipedia.org/wiki/Patrick_W._Tompkins
 1836,Cydnor,Tompkins,oh,Conservative,1810,,1,2,1,0,1,1,0,,,Republican,https://en.wikipedia.org/wiki/Cydnor_B._Tompkins
-1836,Robert,Toombs,ga,Traditionalist,1810,,2,4,1,1,2,3,3,Orator|Debater,,BLUE,https://en.wikipedia.org/wiki/Robert_Toombs
+1836,Robert,Toombs,ga,Traditionalist,1810,,2,4,1,1,2,3,3,Orator|Debater|Provincial,,BLUE,https://en.wikipedia.org/wiki/Robert_Toombs
 1836,Martin,Townsend,ny,Conservative,1810,,1,2,1,0,1,1,0,,,Republican,https://en.wikipedia.org/wiki/Martin_I._Townsend
 1836,Mark,Trafton,ma,Moderate,1810,,1,2,1,0,1,1,0,,,American,https://en.wikipedia.org/wiki/Mark_Trafton
 1836,John,Trimble,tn,Conservative,1812,,1,2,1,0,1,1,0,,,Republican,https://en.wikipedia.org/wiki/John_Trimble_(politician)
@@ -3274,7 +3276,7 @@ draftYear,firstName,lastName,state,ideology,birthYear,age,admin,legislative,judi
 1840,Samuel,Dobbins,nj,Conservative,1814,,1,2,1,0,1,1,0,,,Republican,https://en.wikipedia.org/wiki/Samuel_A._Dobbins
 1840,James,Doolittle,wi,Conservative,1815,,1,3,1,0,1,2,1,,,Republican,https://en.wikipedia.org/wiki/James_R._Doolittle
 1840,Stephen,Douglas,il,Liberal,1813,,1,4,1,0,1,2,2,,,Democrat,https://en.wikipedia.org/wiki/Stephen_A._Douglas
-1840,Stephen A.,Douglas,il,Moderate,1813,,3,4,2,0,2,4,4,Orator|Debater,,BLUE,https://en.wikipedia.org/wiki/Stephen_A._Douglas
+1840,Stephen A.,Douglas,il,Moderate,1813,,3,4,2,0,2,4,4,Orator|Debater|Likable|Frail,,BLUE,https://en.wikipedia.org/wiki/Stephen_A._Douglas
 1840,Peter,Dox,al,Liberal,1813,,1,2,1,0,1,1,0,,,Democrat,https://en.wikipedia.org/wiki/Peter_M._Dox
 1840,John,Driggs,mi,Conservative,1813,,1,2,1,0,1,1,0,,,Republican,https://en.wikipedia.org/wiki/John_F._Driggs
 1840,Augustus,Drum,pa,Liberal,1815,,1,2,1,0,1,1,0,,,Democrat,https://en.wikipedia.org/wiki/Augustus_Drum

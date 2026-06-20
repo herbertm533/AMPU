@@ -78,12 +78,18 @@ export type Trait =
   | 'Reformist'
   | 'Egghead'
   | 'Leadership'
+  | 'Likable'              // PR4b — warmth axis positive (Lincoln, Franklin, Clay)
+  | 'Cosmopolitan'         // PR4b — geographic horizon positive (Jefferson, Hamilton, Sumner)
+  | 'Predictable'          // PR4b — position-stability positive (Mason, Calhoun)
+  | 'Hale'                 // PR4b — robustness positive (Jackson, JQ Adams, Washington)
   | 'Incompetent'
   | 'Passive'
   | 'Unlikable'
+  | 'Uncharismatic'        // PR4b — warmth axis negative (Madison, Chase, Polk)
   | 'Puritan'
   | 'Domestic Apathy'
   | 'Flip-Flopper'
+  | 'Two-Faced'            // PR4b — position-stability negative (Burr, Webster)
   | 'Corrupt'
   | 'Scandalous'
   | 'Frail'
@@ -91,6 +97,7 @@ export type Trait =
   | 'Obscure'
   | 'Traitor'
   | 'Carpetbagger'
+  | 'Provincial'           // PR4b — geographic horizon negative (Henry, Sam Adams, A. Johnson)
   | 'Outsider'
   | 'Ideologue'
   | 'Impressionable'
@@ -118,6 +125,10 @@ export const POSITIVE_TRAITS: Trait[] = [
   'Reformist',
   'Egghead',
   'Leadership',
+  'Likable',                // PR4b
+  'Cosmopolitan',           // PR4b
+  'Predictable',            // PR4b
+  'Hale',                   // PR4b
   'Ideologue',
   'Loyal',
   'Ambitious',
@@ -127,9 +138,11 @@ export const NEGATIVE_TRAITS: Trait[] = [
   'Incompetent',
   'Passive',
   'Unlikable',
+  'Uncharismatic',          // PR4b
   'Puritan',
   'Domestic Apathy',
   'Flip-Flopper',
+  'Two-Faced',              // PR4b
   'Corrupt',
   'Scandalous',
   'Frail',
@@ -137,6 +150,7 @@ export const NEGATIVE_TRAITS: Trait[] = [
   'Obscure',
   'Traitor',
   'Carpetbagger',
+  'Provincial',             // PR4b
   'Outsider',
   'Impressionable',
   'Opportunist',
@@ -533,7 +547,7 @@ export const TRAIT_LIFECYCLE_RULES = {
       { minAge: 70, bonus: 0.0  },
     ],
     amount: 1,
-    fadingPool: ['Celebrity', 'Charismatic'] as Trait[],
+    fadingPool: ['Celebrity', 'Charismatic', 'Hale'] as Trait[],
   },
   leadershipLossOnBattleLoss: { chance: 0.5 },
   conflictD6Threshold: 4,
@@ -566,6 +580,15 @@ export const TRAIT_CONFLICTS: Partial<Record<Trait, Trait>> = {
   Impressionable: 'Ideologue',
   Loyal:          'Opportunist',
   Opportunist:    'Loyal',
+  // --- PR4b additions (4 pairs × 2 directions = 8 entries) ---
+  Likable:        'Uncharismatic',
+  Uncharismatic:  'Likable',
+  Cosmopolitan:   'Provincial',
+  Provincial:     'Cosmopolitan',
+  'Two-Faced':    'Predictable',
+  Predictable:    'Two-Faced',
+  Hale:           'Frail',
+  Frail:          'Hale',
 };
 
 // PR4a election contexts. Six locked contexts (spec AC #2). Senate uses
@@ -751,6 +774,107 @@ export const TRAIT_ELECTION_EFFECTS: TraitElectionRule[] = [
   { trait: 'Outsider', context: 'senatePre17',   magnitude: -TRAIT_ELECTION_BANDS.MEDIUM },
   { trait: 'Outsider', context: 'governor',      magnitude:  TRAIT_ELECTION_BANDS.SMALL  },
   { trait: 'Outsider', context: 'internalParty', magnitude: -TRAIT_ELECTION_BANDS.MEDIUM },
+
+  // === PR4b NEW TRAITS ===
+
+  // --- Likable --- (warmth axis positive — Lincoln/Franklin/Clay; opp-conditional vs Unlikable in presGeneral)
+  { trait: 'Likable', context: 'presGeneral',   magnitude: TRAIT_ELECTION_BANDS.MEDIUM,
+    opponentConditional: { ifOpponentHas: ['Unlikable'],
+                           bumpedMagnitude: TRAIT_ELECTION_BANDS.LARGE } },
+  { trait: 'Likable', context: 'presPrimary',   magnitude: TRAIT_ELECTION_BANDS.SMALL  },
+  { trait: 'Likable', context: 'house',         magnitude: TRAIT_ELECTION_BANDS.MEDIUM },
+  { trait: 'Likable', context: 'senatePre17',   magnitude: TRAIT_ELECTION_BANDS.SMALL  },
+  { trait: 'Likable', context: 'governor',      magnitude: TRAIT_ELECTION_BANDS.MEDIUM },
+  { trait: 'Likable', context: 'internalParty', magnitude: TRAIT_ELECTION_BANDS.MEDIUM },
+
+  // --- Uncharismatic --- (warmth axis negative — Madison/Chase/Polk; opp-conditional vs Charismatic in presGeneral)
+  { trait: 'Uncharismatic', context: 'presGeneral',   magnitude: -TRAIT_ELECTION_BANDS.SMALL,
+    opponentConditional: { ifOpponentHas: ['Charismatic'],
+                           bumpedMagnitude: -TRAIT_ELECTION_BANDS.MEDIUM } },
+  { trait: 'Uncharismatic', context: 'presPrimary',   magnitude: -TRAIT_ELECTION_BANDS.SMALL  },
+  { trait: 'Uncharismatic', context: 'house',         magnitude: -TRAIT_ELECTION_BANDS.SMALL  },
+  // senatePre17: NONE (Chase reached Senate 1849 — Uncharismatic ~neutral in pre-17 state-leg)
+  { trait: 'Uncharismatic', context: 'governor',      magnitude: -TRAIT_ELECTION_BANDS.SMALL  },
+  { trait: 'Uncharismatic', context: 'internalParty', magnitude: -TRAIT_ELECTION_BANDS.MEDIUM },
+
+  // --- Cosmopolitan --- (geographic horizon positive — Jefferson/Hamilton/Sumner; era-scaled)
+  // 1856 scenario (nationalism + modern) — +MEDIUM in presGeneral
+  { trait: 'Cosmopolitan', context: 'presGeneral', magnitude:  TRAIT_ELECTION_BANDS.MEDIUM, era: 'nationalism' },
+  { trait: 'Cosmopolitan', context: 'presGeneral', magnitude:  TRAIT_ELECTION_BANDS.MEDIUM, era: 'modern'      },
+  // 1772 scenario (independence + federalism) — +SMALL in presGeneral
+  { trait: 'Cosmopolitan', context: 'presGeneral', magnitude:  TRAIT_ELECTION_BANDS.SMALL,  era: 'independence' },
+  { trait: 'Cosmopolitan', context: 'presGeneral', magnitude:  TRAIT_ELECTION_BANDS.SMALL,  era: 'federalism'   },
+  { trait: 'Cosmopolitan', context: 'presPrimary',   magnitude:  TRAIT_ELECTION_BANDS.SMALL  },
+  { trait: 'Cosmopolitan', context: 'house',         magnitude: -TRAIT_ELECTION_BANDS.SMALL  },
+  // senatePre17 era-scaled — 1856 state-legs (MA/NY) responded to Sumner/Seward; 1772 more locally focused
+  { trait: 'Cosmopolitan', context: 'senatePre17',   magnitude:  TRAIT_ELECTION_BANDS.SMALL, era: 'nationalism' },
+  { trait: 'Cosmopolitan', context: 'senatePre17',   magnitude:  TRAIT_ELECTION_BANDS.SMALL, era: 'modern'      },
+  // senatePre17 in independence/federalism: NONE (no row — assumption per spec Open Q9)
+  { trait: 'Cosmopolitan', context: 'governor',      magnitude: -TRAIT_ELECTION_BANDS.MEDIUM },
+  { trait: 'Cosmopolitan', context: 'internalParty', magnitude:  TRAIT_ELECTION_BANDS.MEDIUM },
+
+  // --- Provincial --- (geographic horizon negative — Henry/Sam Adams/A. Johnson; era-scaled)
+  // 1856 scenario — -MEDIUM in presGeneral; 1772 — -SMALL
+  { trait: 'Provincial', context: 'presGeneral', magnitude: -TRAIT_ELECTION_BANDS.MEDIUM, era: 'nationalism' },
+  { trait: 'Provincial', context: 'presGeneral', magnitude: -TRAIT_ELECTION_BANDS.MEDIUM, era: 'modern'      },
+  { trait: 'Provincial', context: 'presGeneral', magnitude: -TRAIT_ELECTION_BANDS.SMALL,  era: 'independence' },
+  { trait: 'Provincial', context: 'presGeneral', magnitude: -TRAIT_ELECTION_BANDS.SMALL,  era: 'federalism'   },
+  { trait: 'Provincial', context: 'presPrimary',   magnitude: -TRAIT_ELECTION_BANDS.SMALL  },
+  // house/governor: era-scaled — bumped harder in nationalism/modern
+  { trait: 'Provincial', context: 'house',    magnitude:  TRAIT_ELECTION_BANDS.MEDIUM, era: 'nationalism' },
+  { trait: 'Provincial', context: 'house',    magnitude:  TRAIT_ELECTION_BANDS.MEDIUM, era: 'modern'      },
+  { trait: 'Provincial', context: 'house',    magnitude:  TRAIT_ELECTION_BANDS.SMALL,  era: 'independence' },
+  { trait: 'Provincial', context: 'house',    magnitude:  TRAIT_ELECTION_BANDS.SMALL,  era: 'federalism'   },
+  { trait: 'Provincial', context: 'senatePre17',   magnitude:  TRAIT_ELECTION_BANDS.SMALL  },
+  { trait: 'Provincial', context: 'governor', magnitude:  TRAIT_ELECTION_BANDS.MEDIUM, era: 'nationalism' },
+  { trait: 'Provincial', context: 'governor', magnitude:  TRAIT_ELECTION_BANDS.MEDIUM, era: 'modern'      },
+  { trait: 'Provincial', context: 'governor', magnitude:  TRAIT_ELECTION_BANDS.SMALL,  era: 'independence' },
+  { trait: 'Provincial', context: 'governor', magnitude:  TRAIT_ELECTION_BANDS.SMALL,  era: 'federalism'   },
+  { trait: 'Provincial', context: 'internalParty', magnitude: -TRAIT_ELECTION_BANDS.SMALL  },
+
+  // --- Two-Faced --- (position-stability negative — Burr/Webster; era-scaled in popular-vote contexts; flat LARGE in primary/internal)
+  // presGeneral era-scaled: 1856+partisan-press -MEDIUM; 1772 -SMALL
+  { trait: 'Two-Faced', context: 'presGeneral', magnitude: -TRAIT_ELECTION_BANDS.MEDIUM, era: 'nationalism' },
+  { trait: 'Two-Faced', context: 'presGeneral', magnitude: -TRAIT_ELECTION_BANDS.MEDIUM, era: 'modern'      },
+  { trait: 'Two-Faced', context: 'presGeneral', magnitude: -TRAIT_ELECTION_BANDS.SMALL,  era: 'independence' },
+  { trait: 'Two-Faced', context: 'presGeneral', magnitude: -TRAIT_ELECTION_BANDS.SMALL,  era: 'federalism'   },
+  { trait: 'Two-Faced', context: 'presPrimary',   magnitude: -TRAIT_ELECTION_BANDS.LARGE  },
+  { trait: 'Two-Faced', context: 'house',         magnitude: -TRAIT_ELECTION_BANDS.SMALL  },
+  // senatePre17 era-scaled (Webster lost his New England state-leg base after 7th of March)
+  { trait: 'Two-Faced', context: 'senatePre17',   magnitude: -TRAIT_ELECTION_BANDS.MEDIUM, era: 'nationalism' },
+  { trait: 'Two-Faced', context: 'senatePre17',   magnitude: -TRAIT_ELECTION_BANDS.MEDIUM, era: 'modern'      },
+  { trait: 'Two-Faced', context: 'senatePre17',   magnitude: -TRAIT_ELECTION_BANDS.SMALL,  era: 'independence' },
+  { trait: 'Two-Faced', context: 'senatePre17',   magnitude: -TRAIT_ELECTION_BANDS.SMALL,  era: 'federalism'   },
+  { trait: 'Two-Faced', context: 'governor',      magnitude: -TRAIT_ELECTION_BANDS.SMALL  },
+  { trait: 'Two-Faced', context: 'internalParty', magnitude: -TRAIT_ELECTION_BANDS.LARGE  },
+
+  // --- Predictable --- (position-stability positive — Mason/Calhoun; flat both eras)
+  { trait: 'Predictable', context: 'presGeneral',   magnitude: TRAIT_ELECTION_BANDS.SMALL  },
+  { trait: 'Predictable', context: 'presPrimary',   magnitude: TRAIT_ELECTION_BANDS.SMALL  },
+  { trait: 'Predictable', context: 'house',         magnitude: TRAIT_ELECTION_BANDS.SMALL  },
+  { trait: 'Predictable', context: 'senatePre17',   magnitude: TRAIT_ELECTION_BANDS.MEDIUM },
+  { trait: 'Predictable', context: 'governor',      magnitude: TRAIT_ELECTION_BANDS.SMALL  },
+  { trait: 'Predictable', context: 'internalParty', magnitude: TRAIT_ELECTION_BANDS.MEDIUM },
+
+  // --- Hale --- (robustness positive — Jackson/Houston/JQ Adams; era-scaled presGeneral; opp-conditional vs Frail = LARGE)
+  // presGeneral era-scaled: 1856+ stump-era +MEDIUM, 1772 +SMALL; opp-conditional vs Frail → +LARGE in BOTH eras
+  { trait: 'Hale', context: 'presGeneral', magnitude:  TRAIT_ELECTION_BANDS.MEDIUM, era: 'nationalism',
+    opponentConditional: { ifOpponentHas: ['Frail'],
+                           bumpedMagnitude: TRAIT_ELECTION_BANDS.LARGE } },
+  { trait: 'Hale', context: 'presGeneral', magnitude:  TRAIT_ELECTION_BANDS.MEDIUM, era: 'modern',
+    opponentConditional: { ifOpponentHas: ['Frail'],
+                           bumpedMagnitude: TRAIT_ELECTION_BANDS.LARGE } },
+  { trait: 'Hale', context: 'presGeneral', magnitude:  TRAIT_ELECTION_BANDS.SMALL,  era: 'independence',
+    opponentConditional: { ifOpponentHas: ['Frail'],
+                           bumpedMagnitude: TRAIT_ELECTION_BANDS.LARGE } },
+  { trait: 'Hale', context: 'presGeneral', magnitude:  TRAIT_ELECTION_BANDS.SMALL,  era: 'federalism',
+    opponentConditional: { ifOpponentHas: ['Frail'],
+                           bumpedMagnitude: TRAIT_ELECTION_BANDS.LARGE } },
+  { trait: 'Hale', context: 'presPrimary',   magnitude: TRAIT_ELECTION_BANDS.SMALL  },
+  { trait: 'Hale', context: 'house',         magnitude: TRAIT_ELECTION_BANDS.SMALL  },
+  { trait: 'Hale', context: 'senatePre17',   magnitude: TRAIT_ELECTION_BANDS.SMALL  },
+  { trait: 'Hale', context: 'governor',      magnitude: TRAIT_ELECTION_BANDS.SMALL  },
+  { trait: 'Hale', context: 'internalParty', magnitude: TRAIT_ELECTION_BANDS.SMALL  },
 ];
 
 export const ANYTIME_EVENTS_RULES = {

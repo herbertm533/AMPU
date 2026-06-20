@@ -4,7 +4,7 @@ import { addLog } from './log';
 import { d, d100, chance, pick } from '../rng';
 import { recordDeath } from './halfTermSummary';
 import { loseSkill, addSkillPoint } from './abilities';
-import { addTrait, removeTrait } from './traits';
+import { removeTrait, tryGrantTrait } from './traits';
 
 const BATTLE_NAMES_GROUND = ['Bunker Hill', 'Long Island', 'Trenton', 'Princeton', 'Brandywine', 'Saratoga', 'Monmouth', 'Camden', 'Cowpens', "Guilford Courthouse", 'Yorktown', 'Charleston', 'Savannah', 'Germantown', 'Kings Mountain', 'Fort Ticonderoga'];
 const BATTLE_NAMES_NAVAL = ["Off Flamborough Head", 'Penobscot Bay', 'Off the Capes', 'Chesapeake Bay', "Block Island", 'Off the Carolinas'];
@@ -96,9 +96,25 @@ function applyCasualties(snap: FullGameSnapshot, war: RevolutionaryWar, difficul
   for (let i = 0; i < wounds && candidates.length > 0; i++) {
     const idx = Math.floor(Math.random() * candidates.length);
     const victim = candidates.splice(idx, 1)[0];
-    addTrait(victim, 'Frail');
+    const { granted, replaced } = tryGrantTrait(victim, 'Frail');
     battle.wounded.push(victim.id);
-    addLog(snap, '2.7.2', 'event', `${victim.firstName} ${victim.lastName} wounded at ${battle.name} (gains Frail).`);
+    if (granted && replaced === 'Hale') {
+      // Hale carrier failed the d6 — sheds Hale, gains Frail (the "this wound finally took the fight out of him" case).
+      addLog(snap, '2.7.2', 'event',
+        `${victim.firstName} ${victim.lastName}'s wound shakes off their Hale constitution — they are Frail now.`,
+        { politicianId: victim.id, battle: battle.name });
+    } else if (granted) {
+      // No conflict (no Hale held) — normal Frail grant.
+      addLog(snap, '2.7.2', 'event',
+        `${victim.firstName} ${victim.lastName} sustains a wound — they are Frail now.`,
+        { politicianId: victim.id, battle: battle.name });
+    } else if (victim.traits.includes('Hale')) {
+      // Hale carrier resisted Frail on a d6 < 4 — Hale holds; Frail does not take.
+      addLog(snap, '2.7.2', 'event',
+        `${victim.firstName} ${victim.lastName}'s Hale constitution shrugs off the wound — Frail does not take, on a d6.`,
+        { politicianId: victim.id, battle: battle.name });
+    }
+    // else: already Frail (silent dedupe per tryGrantTrait return contract) — no log.
   }
   // Survivors may gain Military skill
   for (const p of participants) {
