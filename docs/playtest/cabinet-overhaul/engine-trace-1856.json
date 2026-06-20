@@ -1,0 +1,327 @@
+{
+  "scenario": "1856",
+  "startYear": 1856,
+  "startEra": "nationalism",
+  "finalYear": 1894,
+  "finalEra": "nationalism",
+  "phasesRun": 562,
+  "phasesSkipped": 38,
+  "errorPhases": [],
+  "totalEvents": 1935,
+  "contractTests": {
+    "passed": 116,
+    "failed": 0,
+    "failures": []
+  },
+  "cabinetCounts": {
+    "appointmentsTotal": 64,
+    "perSeat": {
+      "SecretaryOfState": 9,
+      "SecretaryOfTreasury": 10,
+      "SecretaryOfWar": 9,
+      "SecretaryOfNavy": 9,
+      "AttorneyGeneral": 9,
+      "SecretaryOfInterior": 9,
+      "PostmasterGeneral": 9
+    },
+    "expertiseSpecialistMarkers": {
+      "Foreign Affairs specialist": 6,
+      "Economics specialist": 7,
+      "Military specialist": 8,
+      "Naval specialist": 4,
+      "Justice specialist": 6,
+      "Agriculture specialist": 5,
+      "Transportation specialist": 4
+    },
+    "crossPartyAppointments": 1,
+    "crossPartyFraction": 0.0156,
+    "adminGrants": 39,
+    "sosCommandGrants": 2,
+    "expertiseGrants": 55,
+    "lingeringMeterLines": 253,
+    "perMeterDeltaLines": {
+      "revenue": 19,
+      "economic": 38,
+      "military": 55,
+      "domestic": 36,
+      "honest": 33,
+      "quality": 53,
+      "planet": 19
+    }
+  },
+  "cabinetSeed": {
+    "initial": {
+      "year": 1856,
+      "seats": [
+        "SecretaryOfState",
+        "SecretaryOfTreasury",
+        "SecretaryOfWar",
+        "SecretaryOfNavy",
+        "AttorneyGeneral",
+        "SecretaryOfInterior",
+        "PostmasterGeneral"
+      ],
+      "filled": {
+        "SecretaryOfState": "pol_mqmpqevx_jwblj98",
+        "SecretaryOfTreasury": null,
+        "SecretaryOfWar": null,
+        "SecretaryOfNavy": null,
+        "AttorneyGeneral": null,
+        "SecretaryOfInterior": null,
+        "PostmasterGeneral": null,
+        "GeneralInChief": "pol_mqmpqevx_ikjs1k7"
+      }
+    },
+    "final": {
+      "year": 1894,
+      "seats": [
+        "SecretaryOfState",
+        "SecretaryOfTreasury",
+        "SecretaryOfWar",
+        "SecretaryOfNavy",
+        "AttorneyGeneral",
+        "SecretaryOfInterior",
+        "PostmasterGeneral"
+      ],
+      "filled": {
+        "SecretaryOfState": null,
+        "SecretaryOfTreasury": null,
+        "SecretaryOfWar": null,
+        "SecretaryOfNavy": null,
+        "AttorneyGeneral": null,
+        "SecretaryOfInterior": null,
+        "PostmasterGeneral": null,
+        "GeneralInChief": null
+      }
+    }
+  },
+  "seatListByYear": {
+    "1772": [],
+    "1788": [],
+    "1789": [
+      "SecretaryOfState",
+      "SecretaryOfTreasury",
+      "SecretaryOfWar",
+      "AttorneyGeneral"
+    ],
+    "1797": [
+      "SecretaryOfState",
+      "SecretaryOfTreasury",
+      "SecretaryOfWar",
+      "AttorneyGeneral"
+    ],
+    "1798": [
+      "SecretaryOfState",
+      "SecretaryOfTreasury",
+      "SecretaryOfWar",
+      "SecretaryOfNavy",
+      "AttorneyGeneral"
+    ],
+    "1828": [
+      "SecretaryOfState",
+      "SecretaryOfTreasury",
+      "SecretaryOfWar",
+      "SecretaryOfNavy",
+      "AttorneyGeneral"
+    ],
+    "1829": [
+      "SecretaryOfState",
+      "SecretaryOfTreasury",
+      "SecretaryOfWar",
+      "SecretaryOfNavy",
+      "AttorneyGeneral",
+      "PostmasterGeneral"
+    ],
+    "1848": [
+      "SecretaryOfState",
+      "SecretaryOfTreasury",
+      "SecretaryOfWar",
+      "SecretaryOfNavy",
+      "AttorneyGeneral",
+      "PostmasterGeneral"
+    ],
+    "1849": [
+      "SecretaryOfState",
+      "SecretaryOfTreasury",
+      "SecretaryOfWar",
+      "SecretaryOfNavy",
+      "AttorneyGeneral",
+      "SecretaryOfInterior",
+      "PostmasterGeneral"
+    ],
+    "1856": [
+      "SecretaryOfState",
+      "SecretaryOfTreasury",
+      "SecretaryOfWar",
+      "SecretaryOfNavy",
+      "AttorneyGeneral",
+      "SecretaryOfInterior",
+      "PostmasterGeneral"
+    ],
+    "1857": [
+      "SecretaryOfState",
+      "SecretaryOfTreasury",
+      "SecretaryOfWar",
+      "SecretaryOfNavy",
+      "AttorneyGeneral",
+      "SecretaryOfInterior",
+      "PostmasterGeneral"
+    ],
+    "1900": [
+      "SecretaryOfState",
+      "SecretaryOfTreasury",
+      "SecretaryOfWar",
+      "SecretaryOfNavy",
+      "AttorneyGeneral",
+      "SecretaryOfInterior",
+      "PostmasterGeneral"
+    ]
+  },
+  "sampledEvents": {
+    "appointments": [
+      {
+        "year": 1856,
+        "phase": "2.3.1",
+        "text": "Robert E. Lee confirmed as SecretaryOfTreasury."
+      },
+      {
+        "year": 1858,
+        "phase": "2.3.1",
+        "text": "Stephen A. Douglas confirmed as SecretaryOfState."
+      },
+      {
+        "year": 1858,
+        "phase": "2.3.1",
+        "text": "Sam Houston confirmed as SecretaryOfTreasury."
+      },
+      {
+        "year": 1858,
+        "phase": "2.3.1",
+        "text": "William T. Sherman confirmed as SecretaryOfWar (Military specialist)."
+      },
+      {
+        "year": 1858,
+        "phase": "2.3.1",
+        "text": "Samuel Green confirmed as SecretaryOfNavy."
+      },
+      {
+        "year": 1860,
+        "phase": "2.3.1",
+        "text": "Edward Everett confirmed as AttorneyGeneral."
+      },
+      {
+        "year": 1860,
+        "phase": "2.3.1",
+        "text": "James Howard confirmed as SecretaryOfInterior."
+      },
+      {
+        "year": 1860,
+        "phase": "2.3.1",
+        "text": "John Hughes confirmed as PostmasterGeneral."
+      }
+    ],
+    "crossParty": [
+      {
+        "year": 1878,
+        "phase": "2.3.1",
+        "text": "Charles Logan confirmed as SecretaryOfNavy (cross-party appointment)."
+      }
+    ],
+    "adminGrants": [
+      {
+        "year": 1856,
+        "phase": "2.3.1",
+        "text": "Robert E. Lee gains Admin from confirmation."
+      },
+      {
+        "year": 1858,
+        "phase": "2.3.1",
+        "text": "Stephen A. Douglas gains Admin from confirmation."
+      },
+      {
+        "year": 1858,
+        "phase": "2.3.1",
+        "text": "Sam Houston gains Admin from confirmation."
+      },
+      {
+        "year": 1858,
+        "phase": "2.3.1",
+        "text": "William T. Sherman gains Admin from confirmation."
+      }
+    ],
+    "expertiseGrants": [
+      {
+        "year": 1856,
+        "phase": "2.2.2",
+        "text": "Jefferson Davis gains Foreign Affairs expertise."
+      },
+      {
+        "year": 1856,
+        "phase": "2.2.2",
+        "text": "Jefferson Davis gains Economics expertise."
+      },
+      {
+        "year": 1856,
+        "phase": "2.2.2",
+        "text": "Edward Bates gains Justice expertise."
+      },
+      {
+        "year": 1856,
+        "phase": "2.3.1",
+        "text": "Robert E. Lee gains Economics expertise."
+      },
+      {
+        "year": 1858,
+        "phase": "2.2.2",
+        "text": "Martin Van Buren gains Foreign Affairs expertise."
+      },
+      {
+        "year": 1858,
+        "phase": "2.2.2",
+        "text": "Martin Van Buren gains Economics expertise."
+      }
+    ],
+    "lingeringMeterDeltas": [
+      {
+        "year": 1856,
+        "phase": "2.5.1",
+        "text": "revenue: 0.0 -> 0.2 (+0.2)"
+      },
+      {
+        "year": 1856,
+        "phase": "2.5.1",
+        "text": "economic: 1.0 -> 1.1 (+0.1)"
+      },
+      {
+        "year": 1856,
+        "phase": "2.5.1",
+        "text": "military: -1.0 -> -1.2 (-0.2)"
+      },
+      {
+        "year": 1856,
+        "phase": "2.5.1",
+        "text": "domestic: -2.0 -> -2.1 (-0.1)"
+      },
+      {
+        "year": 1856,
+        "phase": "2.5.1",
+        "text": "honest: 0.0 -> -0.3 (-0.3)"
+      },
+      {
+        "year": 1856,
+        "phase": "2.5.1",
+        "text": "quality: 0.0 -> 0.1 (+0.1)"
+      },
+      {
+        "year": 1856,
+        "phase": "2.5.1",
+        "text": "planet: 4.0 -> 4.0 (-0.1)"
+      },
+      {
+        "year": 1856,
+        "phase": "2.5.1",
+        "text": "economic: 1.1 -> 1.3 (+0.2)"
+      }
+    ]
+  }
+}

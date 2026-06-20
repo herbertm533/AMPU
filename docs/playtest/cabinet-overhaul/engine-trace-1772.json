@@ -1,0 +1,232 @@
+{
+  "scenario": "1772",
+  "startYear": 1772,
+  "startEra": "independence",
+  "finalYear": 1834,
+  "finalEra": "independence",
+  "phasesRun": 538,
+  "phasesSkipped": 62,
+  "errorPhases": [],
+  "totalEvents": 1576,
+  "contractTests": {
+    "passed": 116,
+    "failed": 0,
+    "failures": []
+  },
+  "cabinetCounts": {
+    "appointmentsTotal": 0,
+    "perSeat": {
+      "SecretaryOfState": 0,
+      "SecretaryOfTreasury": 0,
+      "SecretaryOfWar": 0,
+      "SecretaryOfNavy": 0,
+      "AttorneyGeneral": 0,
+      "SecretaryOfInterior": 0,
+      "PostmasterGeneral": 0
+    },
+    "expertiseSpecialistMarkers": {
+      "Foreign Affairs specialist": 0,
+      "Economics specialist": 0,
+      "Military specialist": 0,
+      "Naval specialist": 0,
+      "Justice specialist": 0,
+      "Agriculture specialist": 0,
+      "Transportation specialist": 0
+    },
+    "crossPartyAppointments": 0,
+    "crossPartyFraction": 0,
+    "adminGrants": 0,
+    "sosCommandGrants": 0,
+    "expertiseGrants": 179,
+    "lingeringMeterLines": 210,
+    "perMeterDeltaLines": {
+      "revenue": 30,
+      "economic": 30,
+      "military": 30,
+      "domestic": 30,
+      "honest": 30,
+      "quality": 30,
+      "planet": 30
+    }
+  },
+  "cabinetSeed": {
+    "initial": {
+      "year": 1772,
+      "seats": [],
+      "filled": {}
+    },
+    "final": {
+      "year": 1834,
+      "seats": [
+        "SecretaryOfState",
+        "SecretaryOfTreasury",
+        "SecretaryOfWar",
+        "SecretaryOfNavy",
+        "AttorneyGeneral",
+        "PostmasterGeneral"
+      ],
+      "filled": {}
+    }
+  },
+  "seatListByYear": {
+    "1772": [],
+    "1788": [],
+    "1789": [
+      "SecretaryOfState",
+      "SecretaryOfTreasury",
+      "SecretaryOfWar",
+      "AttorneyGeneral"
+    ],
+    "1797": [
+      "SecretaryOfState",
+      "SecretaryOfTreasury",
+      "SecretaryOfWar",
+      "AttorneyGeneral"
+    ],
+    "1798": [
+      "SecretaryOfState",
+      "SecretaryOfTreasury",
+      "SecretaryOfWar",
+      "SecretaryOfNavy",
+      "AttorneyGeneral"
+    ],
+    "1828": [
+      "SecretaryOfState",
+      "SecretaryOfTreasury",
+      "SecretaryOfWar",
+      "SecretaryOfNavy",
+      "AttorneyGeneral"
+    ],
+    "1829": [
+      "SecretaryOfState",
+      "SecretaryOfTreasury",
+      "SecretaryOfWar",
+      "SecretaryOfNavy",
+      "AttorneyGeneral",
+      "PostmasterGeneral"
+    ],
+    "1848": [
+      "SecretaryOfState",
+      "SecretaryOfTreasury",
+      "SecretaryOfWar",
+      "SecretaryOfNavy",
+      "AttorneyGeneral",
+      "PostmasterGeneral"
+    ],
+    "1849": [
+      "SecretaryOfState",
+      "SecretaryOfTreasury",
+      "SecretaryOfWar",
+      "SecretaryOfNavy",
+      "AttorneyGeneral",
+      "SecretaryOfInterior",
+      "PostmasterGeneral"
+    ],
+    "1856": [
+      "SecretaryOfState",
+      "SecretaryOfTreasury",
+      "SecretaryOfWar",
+      "SecretaryOfNavy",
+      "AttorneyGeneral",
+      "SecretaryOfInterior",
+      "PostmasterGeneral"
+    ],
+    "1857": [
+      "SecretaryOfState",
+      "SecretaryOfTreasury",
+      "SecretaryOfWar",
+      "SecretaryOfNavy",
+      "AttorneyGeneral",
+      "SecretaryOfInterior",
+      "PostmasterGeneral"
+    ],
+    "1900": [
+      "SecretaryOfState",
+      "SecretaryOfTreasury",
+      "SecretaryOfWar",
+      "SecretaryOfNavy",
+      "AttorneyGeneral",
+      "SecretaryOfInterior",
+      "PostmasterGeneral"
+    ]
+  },
+  "sampledEvents": {
+    "appointments": [],
+    "crossParty": [],
+    "adminGrants": [],
+    "expertiseGrants": [
+      {
+        "year": 1792,
+        "phase": "2.1.2",
+        "text": "Caleb Whipple gains Agriculture expertise."
+      },
+      {
+        "year": 1792,
+        "phase": "2.1.2",
+        "text": "William Rutledge gains Justice expertise."
+      },
+      {
+        "year": 1792,
+        "phase": "2.1.2",
+        "text": "John King gains Agriculture expertise."
+      },
+      {
+        "year": 1792,
+        "phase": "2.1.2",
+        "text": "Henry Clymer gains Military expertise."
+      },
+      {
+        "year": 1792,
+        "phase": "2.1.2",
+        "text": "Stephen Wolcott gains Agriculture expertise."
+      },
+      {
+        "year": 1792,
+        "phase": "2.1.2",
+        "text": "Stephen Mifflin gains Agriculture expertise."
+      }
+    ],
+    "lingeringMeterDeltas": [
+      {
+        "year": 1774,
+        "phase": "2.5.1",
+        "text": "revenue: -1.0 -> -1.3 (-0.3)"
+      },
+      {
+        "year": 1774,
+        "phase": "2.5.1",
+        "text": "economic: 0.0 -> -0.2 (-0.2)"
+      },
+      {
+        "year": 1774,
+        "phase": "2.5.1",
+        "text": "military: -2.0 -> -2.2 (-0.2)"
+      },
+      {
+        "year": 1774,
+        "phase": "2.5.1",
+        "text": "domestic: -1.0 -> -1.1 (-0.1)"
+      },
+      {
+        "year": 1774,
+        "phase": "2.5.1",
+        "text": "honest: 1.0 -> 0.8 (-0.3)"
+      },
+      {
+        "year": 1774,
+        "phase": "2.5.1",
+        "text": "quality: -1.0 -> -1.1 (-0.1)"
+      },
+      {
+        "year": 1774,
+        "phase": "2.5.1",
+        "text": "planet: 5.0 -> 5.0 (-0.1)"
+      },
+      {
+        "year": 1776,
+        "phase": "2.5.1",
+        "text": "revenue: -1.3 -> -1.6 (-0.3)"
+      }
+    ]
+  }
+}
