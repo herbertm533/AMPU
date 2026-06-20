@@ -1,6 +1,7 @@
 import type { FullGameSnapshot, CCDelegate, Politician, Legislation } from '../types';
 import { addLog } from './log';
 import { addExpertise } from './expertise';
+import { addCommandPoint, addSkillPoint } from './abilities';
 import { uid, chance, pick, clamp } from '../rng';
 import { cardVoteBias } from './phaseRunners';
 
@@ -162,6 +163,22 @@ export function appointCCCommittees(snap: FullGameSnapshot): void {
   // foreignMilitary->Foreign Affairs, economic->Economics, judicial->Justice).
   const grantChair = (pol: Politician | undefined, xp: 'Welfare' | 'Foreign Affairs' | 'Economics' | 'Justice'): string | null => {
     if (!pol) return null;
+    // PR2b: CC committee chair gains command + legislative beside the PR1
+    // expertise grant. The committee taxonomy differs from 1856; map the
+    // expertise back to a human-facing committee name in the log line.
+    const committeeName =
+      xp === 'Welfare' ? 'Domestic'
+      : xp === 'Foreign Affairs' ? 'Foreign/Military'
+      : xp === 'Economics' ? 'Economic'
+      : 'Judicial';
+    if (addCommandPoint(pol, 1)) {
+      addLog(snap, '2.2.2', 'appointment',
+        `${pol.firstName} ${pol.lastName} gains Command from chairing ${committeeName}.`);
+    }
+    if (addSkillPoint(pol, 'legislative', 1)) {
+      addLog(snap, '2.2.2', 'appointment',
+        `${pol.firstName} ${pol.lastName} gains Legislative from the committee chair.`);
+    }
     if (addExpertise(pol, xp)) {
       addLog(snap, '2.2.2', 'appointment', `${pol.firstName} ${pol.lastName} gains ${xp} expertise.`);
     }
