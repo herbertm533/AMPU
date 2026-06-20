@@ -30,7 +30,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
       "Orator",
       "Provincial"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -53,7 +54,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
       "Egghead",
       "Cosmopolitan"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -77,7 +79,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
       "Debater",
       "Provincial"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -99,7 +102,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [
       "Celebrity"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -119,7 +123,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 0,
     "traits": [],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -141,7 +146,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [
       "Debater"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -163,7 +169,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [
       "Egghead"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -186,7 +193,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
       "Propagandist",
       "Obscure"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -208,7 +216,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [
       "Leadership"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -230,7 +239,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [
       "Predictable"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -252,7 +262,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [],
     "expertise": [
       "Military"
-    ]
+    ],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -274,7 +285,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [
       "Celebrity"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -296,7 +308,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [],
     "expertise": [
       "Military"
-    ]
+    ],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -318,7 +331,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [
       "Celebrity"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -340,7 +354,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [
       "Manipulative"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -361,9 +376,12 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "command": 1,
     "traits": [
       "Leadership",
-      "Hale"
+      "Hale",
+      "Decisive General",
+      "Delegator"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -384,9 +402,12 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "command": 1,
     "traits": [
       "Egghead",
-      "Debater"
+      "Debater",
+      "Micromanager",
+      "Crisis Gov"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -412,7 +433,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
       "Cosmopolitan",
       "Hale"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -432,7 +454,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 0,
     "traits": [],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -452,7 +475,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 0,
     "traits": [],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -474,7 +498,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [
       "Efficient"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -494,7 +519,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 0,
     "traits": [],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -516,7 +542,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [
       "Egghead"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -536,7 +563,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 0,
     "traits": [],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -558,7 +586,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [],
     "expertise": [
       "Military"
-    ]
+    ],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -580,7 +609,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [],
     "expertise": [
       "Military"
-    ]
+    ],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -604,7 +634,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     ],
     "expertise": [
       "Military"
-    ]
+    ],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -626,7 +657,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [],
     "expertise": [
       "Military"
-    ]
+    ],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -648,7 +680,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [
       "Egghead"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -668,7 +701,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 0,
     "traits": [],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -691,7 +725,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
       "Egghead",
       "Reformist"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -711,7 +746,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 0,
     "traits": [],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -731,7 +767,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 0,
     "traits": [],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -753,7 +790,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [],
     "expertise": [
       "Military"
-    ]
+    ],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -775,7 +813,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [],
     "expertise": [
       "Naval"
-    ]
+    ],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -797,7 +836,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [],
     "expertise": [
       "Naval"
-    ]
+    ],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -819,7 +859,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [],
     "expertise": [
       "Naval"
-    ]
+    ],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -841,7 +882,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [],
     "expertise": [
       "Military"
-    ]
+    ],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -860,10 +902,13 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
       "backroom": 1
     },
     "command": 0,
-    "traits": [],
+    "traits": [
+      "Naive Strategist"
+    ],
     "expertise": [
       "Military"
-    ]
+    ],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -883,7 +928,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 0,
     "traits": [],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -905,7 +951,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [
       "Puritan"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1776,
@@ -929,7 +976,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
       "Reformist",
       "Uncharismatic"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1780,
@@ -950,9 +998,12 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "command": 1,
     "traits": [
       "Egghead",
-      "Cosmopolitan"
+      "Cosmopolitan",
+      "Crisis Admin",
+      "Master Kingmaker"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1780,
@@ -973,9 +1024,11 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "command": 0,
     "traits": [
       "Manipulative",
-      "Two-Faced"
+      "Two-Faced",
+      "Master Kingmaker"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1780,
@@ -997,7 +1050,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [
       "Debater"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -1016,10 +1070,36 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
       "backroom": 3
     },
     "command": 0,
-    "traits": [],
+    "traits": [
+      "Crisis Admin"
+    ],
     "expertise": [
       "Economics"
-    ]
+    ],
+    "loyalty": 1
+  },
+  {
+    "draftYear": 1788,
+    "firstName": "Albert",
+    "lastName": "Gallatin",
+    "state": "pa",
+    "ideology": "Liberal",
+    "birthYear": 1761,
+    "age": 27,
+    "skills": {
+      "admin": 3,
+      "legislative": 3,
+      "judicial": 2,
+      "military": 0,
+      "governing": 3,
+      "backroom": 2
+    },
+    "command": 2,
+    "traits": [
+      "Crisis Admin"
+    ],
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1776,
@@ -1042,7 +1122,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
       "Egghead",
       "Orator"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -1062,7 +1143,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 0,
     "traits": [],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -1082,7 +1164,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 0,
     "traits": [],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1784,
@@ -1105,7 +1188,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
       "Orator",
       "Debater"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -1127,7 +1211,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [
       "Debater"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -1147,7 +1232,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 0,
     "traits": [],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1776,
@@ -1169,7 +1255,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [
       "Leadership"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1780,
@@ -1191,7 +1278,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [],
     "expertise": [
       "Education"
-    ]
+    ],
+    "loyalty": 1
   },
   {
     "draftYear": 1784,
@@ -1213,7 +1301,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [
       "Orator"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -1235,7 +1324,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [
       "Reformist"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -1255,7 +1345,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 0,
     "traits": [],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1780,
@@ -1275,7 +1366,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 0,
     "traits": [],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1776,
@@ -1297,7 +1389,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [],
     "expertise": [
       "Military"
-    ]
+    ],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -1317,7 +1410,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 0,
     "traits": [],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -1337,7 +1431,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 0,
     "traits": [],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -1357,7 +1452,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 0,
     "traits": [],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -1377,7 +1473,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 0,
     "traits": [],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -1397,7 +1494,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 0,
     "traits": [],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -1417,7 +1515,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 0,
     "traits": [],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -1437,7 +1536,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 0,
     "traits": [],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -1457,7 +1557,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 0,
     "traits": [],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -1477,7 +1578,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 0,
     "traits": [],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -1499,7 +1601,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [
       "Egghead"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -1521,7 +1624,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [],
     "expertise": [
       "Economics"
-    ]
+    ],
+    "loyalty": 1
   },
   {
     "draftYear": 1776,
@@ -1541,7 +1645,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 0,
     "traits": [],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -1563,7 +1668,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [
       "Debater"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -1583,7 +1689,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 0,
     "traits": [],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1780,
@@ -1603,7 +1710,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 0,
     "traits": [],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -1623,7 +1731,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 0,
     "traits": [],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1776,
@@ -1643,7 +1752,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 0,
     "traits": [],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1772,
@@ -1663,7 +1773,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 0,
     "traits": [],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1784,
@@ -1685,7 +1796,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [
       "Manipulative"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1816,
@@ -1705,9 +1817,11 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 4,
     "traits": [
-      "Efficient"
+      "Passive",
+      "Naive Strategist"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1848,
@@ -1729,7 +1843,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [
       "Orator"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1832,
@@ -1753,7 +1868,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     ],
     "expertise": [
       "Military"
-    ]
+    ],
+    "loyalty": 1
   },
   {
     "draftYear": 1824,
@@ -1775,7 +1891,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [
       "Nationalist"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1836,
@@ -1799,7 +1916,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
       "Debater",
       "Provincial"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1840,
@@ -1821,7 +1939,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [],
     "expertise": [
       "Economics"
-    ]
+    ],
+    "loyalty": 0.5
   },
   {
     "draftYear": 1832,
@@ -1841,9 +1960,35 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 2,
     "traits": [
-      "Corrupt"
+      "Corrupt",
+      "Iron Fist",
+      "Naive Strategist"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 0.5
+  },
+  {
+    "draftYear": 1836,
+    "firstName": "Jacob",
+    "lastName": "Thompson",
+    "state": "ms",
+    "ideology": "Conservative",
+    "birthYear": 1810,
+    "age": 26,
+    "skills": {
+      "admin": 2,
+      "legislative": 2,
+      "judicial": 1,
+      "military": 0,
+      "governing": 2,
+      "backroom": 2
+    },
+    "command": 2,
+    "traits": [
+      "Provincial"
+    ],
+    "expertise": [],
+    "loyalty": 0.5
   },
   {
     "draftYear": 1848,
@@ -1863,7 +2008,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 2,
     "traits": [],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1840,
@@ -1888,7 +2034,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
       "Likable",
       "Frail"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1808,
@@ -1910,7 +2057,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [
       "Globalist"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 0.9
   },
   {
     "draftYear": 1812,
@@ -1930,7 +2078,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 2,
     "traits": [],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1828,
@@ -1950,9 +2099,11 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 2,
     "traits": [
-      "Passive"
+      "Passive",
+      "Overeager"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1824,
@@ -1972,7 +2123,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 2,
     "traits": [],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1832,
@@ -1995,7 +2147,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
       "Unlikable",
       "Provincial"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1820,
@@ -2017,7 +2170,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [
       "Crisis Manager"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1820,
@@ -2041,7 +2195,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     ],
     "expertise": [
       "Education"
-    ]
+    ],
+    "loyalty": 1
   },
   {
     "draftYear": 1820,
@@ -2066,7 +2221,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     ],
     "expertise": [
       "Military"
-    ]
+    ],
+    "loyalty": 1
   },
   {
     "draftYear": 1820,
@@ -2087,9 +2243,13 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "command": 3,
     "traits": [
       "Efficient",
-      "Uncharismatic"
+      "Uncharismatic",
+      "Iron Fist",
+      "Micromanager",
+      "Overeager"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1808,
@@ -2112,7 +2272,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
       "Orator",
       "Reformist"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1840,
@@ -2134,7 +2295,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [
       "Reformist"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1808,
@@ -2155,9 +2317,11 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "command": 4,
     "traits": [
       "Manipulative",
-      "Magician"
+      "Magician",
+      "Master Kingmaker"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1824,
@@ -2177,7 +2341,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 2,
     "traits": [],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1812,
@@ -2199,7 +2364,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [
       "Crisis Manager"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1820,
@@ -2221,7 +2387,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [
       "Integrity"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1832,
@@ -2241,7 +2408,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 2,
     "traits": [],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1836,
@@ -2263,9 +2431,12 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [
       "Orator",
       "Integrity",
-      "Likable"
+      "Likable",
+      "Crisis Gov",
+      "Delegator"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1832,
@@ -2287,7 +2458,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [],
     "expertise": [
       "Economics"
-    ]
+    ],
+    "loyalty": 1
   },
   {
     "draftYear": 1840,
@@ -2309,7 +2481,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [
       "Integrity"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1836,
@@ -2329,7 +2502,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 2,
     "traits": [],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1844,
@@ -2352,7 +2526,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
       "Reformist",
       "Integrity"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1828,
@@ -2376,7 +2551,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
       "Magician",
       "Cosmopolitan"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1832,
@@ -2399,9 +2575,11 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
       "Integrity",
       "Reformist",
       "Uncharismatic",
-      "Predictable"
+      "Predictable",
+      "Crisis Admin"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1840,
@@ -2423,7 +2601,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [
       "Celebrity"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1836,
@@ -2445,7 +2624,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [
       "Reformist"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1848,
@@ -2467,7 +2647,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [
       "Charismatic"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1836,
@@ -2493,7 +2674,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
       "Cosmopolitan",
       "Predictable"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1816,
@@ -2517,7 +2699,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
       "Reformist",
       "Manipulative"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1824,
@@ -2539,7 +2722,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [
       "Reformist"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1820,
@@ -2561,7 +2745,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [
       "Reformist"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1836,
@@ -2583,7 +2768,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [
       "Reformist"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1824,
@@ -2605,7 +2791,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [
       "Passive"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1840,
@@ -2627,7 +2814,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [
       "Charismatic"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1844,
@@ -2649,7 +2837,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [
       "Globalist"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1812,
@@ -2673,7 +2862,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     ],
     "expertise": [
       "Military"
-    ]
+    ],
+    "loyalty": 1
   },
   {
     "draftYear": 1832,
@@ -2695,7 +2885,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [],
     "expertise": [
       "Military"
-    ]
+    ],
+    "loyalty": 1
   },
   {
     "draftYear": 1848,
@@ -2714,10 +2905,13 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
       "backroom": 0
     },
     "command": 1,
-    "traits": [],
+    "traits": [
+      "Decisive General"
+    ],
     "expertise": [
       "Military"
-    ]
+    ],
+    "loyalty": 1
   },
   {
     "draftYear": 1844,
@@ -2736,10 +2930,13 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
       "backroom": 0
     },
     "command": 1,
-    "traits": [],
+    "traits": [
+      "Decisive General"
+    ],
     "expertise": [
       "Military"
-    ]
+    ],
+    "loyalty": 1
   },
   {
     "draftYear": 1852,
@@ -2759,11 +2956,37 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 2,
     "traits": [
-      "Passive"
+      "Passive",
+      "Naive Strategist"
     ],
     "expertise": [
       "Military"
-    ]
+    ],
+    "loyalty": 1
+  },
+  {
+    "draftYear": 1840,
+    "firstName": "Edwin",
+    "lastName": "Stanton",
+    "state": "oh",
+    "ideology": "Liberal",
+    "birthYear": 1814,
+    "age": 26,
+    "skills": {
+      "admin": 4,
+      "legislative": 2,
+      "judicial": 3,
+      "military": 0,
+      "governing": 3,
+      "backroom": 3
+    },
+    "command": 3,
+    "traits": [
+      "Crisis Admin",
+      "Iron Fist"
+    ],
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1804,
@@ -2783,7 +3006,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 3,
     "traits": [],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1812,
@@ -2803,7 +3027,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 1,
     "traits": [],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1808,
@@ -2823,7 +3048,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 1,
     "traits": [],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1816,
@@ -2843,7 +3069,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 1,
     "traits": [],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1820,
@@ -2863,7 +3090,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 1,
     "traits": [],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1836,
@@ -2885,7 +3113,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [
       "Integrity"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1836,
@@ -2905,7 +3134,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 1,
     "traits": [],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1816,
@@ -2925,7 +3155,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     },
     "command": 1,
     "traits": [],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1812,
@@ -2947,7 +3178,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     "traits": [
       "Integrity"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1804,
@@ -2970,9 +3202,12 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
       "Charismatic",
       "Likable",
       "Magician",
-      "Orator"
+      "Orator",
+      "Master Kingmaker",
+      "Domestic Warrior"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1792,
@@ -2999,7 +3234,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
     ],
     "expertise": [
       "Military"
-    ]
+    ],
+    "loyalty": 1
   },
   {
     "draftYear": 1792,
@@ -3024,7 +3260,8 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
       "Hale",
       "Debater"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1808,
@@ -3047,9 +3284,11 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
       "Orator",
       "Debater",
       "Predictable",
-      "Nationalist"
+      "Nationalist",
+      "Domestic Warrior"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   },
   {
     "draftYear": 1808,
@@ -3073,6 +3312,7 @@ export const DEFAULT_DRAFT_CLASSES: ImportedDraftee[] = [
       "Debater",
       "Two-Faced"
     ],
-    "expertise": []
+    "expertise": [],
+    "loyalty": 1
   }
 ];

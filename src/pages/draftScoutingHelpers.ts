@@ -14,6 +14,7 @@ export function computeProjectedPV(d: ImportedDraftee): number {
     birthYear: d.birthYear,
     skills: d.skills,
     traits: d.traits,
+    loyalty: d.loyalty ?? 1.0,
     expertise: d.expertise,
     currentOffice: null,
     careerTrack: null,

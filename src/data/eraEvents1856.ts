@@ -30,6 +30,7 @@ export function buildEraEventsForYear(year: number): EraEvent[] {
   if (year >= 1856 && year <= 1858) {
     out.push({
       id: uid('era'),
+      templateId: 'dredScott1857',     // PR6 — keys event modulation
       year: 1857,
       title: 'Dred Scott Decision',
       description: 'The Supreme Court has ruled that African Americans cannot be citizens and that Congress cannot prohibit slavery in territories. The nation reels.',
@@ -78,6 +79,7 @@ export function buildEraEventsForYear(year: number): EraEvent[] {
   if (year >= 1858 && year <= 1860) {
     out.push({
       id: uid('era'),
+      templateId: 'johnBrown1859',     // PR6 — keys event modulation
       year: 1859,
       title: "John Brown's Raid on Harpers Ferry",
       description: "The abolitionist John Brown has led an armed raid on the federal arsenal at Harpers Ferry, Virginia, hoping to spark a slave uprising. He has been captured.",
@@ -102,6 +104,7 @@ export function buildEraEventsForYear(year: number): EraEvent[] {
   if (year >= 1860) {
     out.push({
       id: uid('era'),
+      templateId: 'southern-secession-threat',  // PR6 — gates Secession Winter
       year: 1860,
       title: 'Southern Secession Threat',
       description: 'Multiple Southern states have declared they will secede from the Union if a Republican is elected. South Carolina is moving first.',
@@ -118,6 +121,98 @@ export function buildEraEventsForYear(year: number): EraEvent[] {
         {
           id: 'r3', label: 'Let Them Go', description: 'A peaceful separation.',
           effect: { text: 'The Confederate States of America is born without bloodshed. For now.', meters: { domestic: -2, military: -1 }, partyPreference: -1, enthusiasm: [{ ideology: 'LW Populist', party: 'RED', delta: -3 }, { ideology: 'Traditionalist', party: 'BLUE', delta: 3 }], interestGroups: [{ id: 'Abolitionists', delta: -3 }, { id: 'Planters', delta: 4 }] },
+        },
+      ],
+    });
+  }
+
+  // PR6: Secession Winter — the post-election unraveling Nov 1860 – Mar 1861.
+  // Distinct from "Southern Secession Threat" (the pre-election threat). Year
+  // gate set to 1861 to prevent same-turn collision with the existing Threat
+  // event at year 1860.
+  if (year >= 1861) {
+    out.push({
+      id: uid('era'),
+      templateId: 'secession-winter',
+      year: 1861,
+      title: 'Secession Winter',
+      description: 'In the weeks after the November election, Southern cabinet officers are weighing whether to remain with the Union or join the new Confederacy. Charleston is arming. The cabinet table is splitting.',
+      decider: 'president',
+      responses: [
+        {
+          id: 'r1', label: 'Reinforce Federal Forts',
+          description: 'Send relief to Sumter and Pickens. Treat secession as rebellion.',
+          effect: {
+            text: 'Federal forts reinforced; the country pivots to war footing.',
+            meters: { military: 2, domestic: -3, honest: 1 },
+            partyPreference: -0.5,
+            startWar: { name: 'American Civil War', against: 'Confederate States' },
+          },
+        },
+        {
+          id: 'r2', label: 'Hold the Line Diplomatically',
+          description: 'Refuse to recognize secession, but do not provoke. Buy time for a peace conference.',
+          effect: {
+            text: 'A diplomatic standoff. The Union holds — for now.',
+            meters: { domestic: -2, military: -1 },
+            partyPreference: -0.5,
+            enthusiasm: [{ ideology: 'Liberal', party: 'RED', delta: 1 }],
+          },
+        },
+        {
+          id: 'r3', label: 'Acquiesce',
+          description: 'Allow peaceful separation. The Republic will preserve itself.',
+          effect: {
+            text: 'The Confederate States of America forms unopposed.',
+            meters: { domestic: -3, military: -2, honest: -2 },
+            partyPreference: -1.0,
+            enthusiasm: [{ ideology: 'Traditionalist', party: 'BLUE', delta: 2 }],
+            interestGroups: [{ id: 'Planters', delta: 4 }, { id: 'Abolitionists', delta: -4 }],
+          },
+        },
+      ],
+    });
+  }
+
+  // PR6: Trent Affair — Nov 1861 Wilkes seizure of Mason + Slidell from the
+  // British mail packet. SecState-centered. Decider is cabinet (the historical
+  // Dec 26 1861 cabinet meeting that resolved the crisis).
+  if (year >= 1861) {
+    out.push({
+      id: uid('era'),
+      templateId: 'trent-affair',
+      year: 1861,
+      title: 'Trent Affair',
+      description: 'Captain Wilkes of USS San Jacinto has seized Confederate commissioners Mason and Slidell from the British mail packet Trent. London is incensed. Eight thousand British troops embark for Canada. The cabinet meets December 26 to draft a response.',
+      decider: 'cabinet',
+      responses: [
+        {
+          id: 'r1', label: 'Release with Face-Saving Framing',
+          description: 'Seward drafts a note: Wilkes erred in failing to bring Trent into port for adjudication. No formal apology. Mason and Slidell released.',
+          effect: {
+            text: 'War averted. Northern public mood grudgingly accepts.',
+            meters: { domestic: -1 },
+            diplomacy: [{ nation: 'UK', delta: 1 }],
+          },
+        },
+        {
+          id: 'r2', label: 'Apologize and Release',
+          description: 'Full apology to London. Mason and Slidell released.',
+          effect: {
+            text: 'War averted but Northern public outrage hardens.',
+            meters: { domestic: -3 },
+            diplomacy: [{ nation: 'UK', delta: 2 }],
+          },
+        },
+        {
+          id: 'r3', label: 'Refuse Release',
+          description: 'Wilkes was right. Mason and Slidell stay in Boston harbor.',
+          effect: {
+            text: 'Britain declares war. The Union faces a two-front war.',
+            meters: { domestic: 1, military: -3, economic: -2 },
+            diplomacy: [{ nation: 'UK', delta: -5 }],
+            startWar: { name: 'Anglo-American War of 1862', against: 'United Kingdom' },
+          },
         },
       ],
     });

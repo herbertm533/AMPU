@@ -82,6 +82,13 @@ export type Trait =
   | 'Cosmopolitan'         // PR4b — geographic horizon positive (Jefferson, Hamilton, Sumner)
   | 'Predictable'          // PR4b — position-stability positive (Mason, Calhoun)
   | 'Hale'                 // PR4b — robustness positive (Jackson, JQ Adams, Washington)
+  | 'Crisis Admin'         // PR6 — fiscal crisis competence (Hamilton, Chase)
+  | 'Crisis Gov'           // PR6 — constitutional crisis competence (Lincoln, Washington Whiskey)
+  | 'Decisive General'     // PR6 — wartime command effectiveness (Grant, Washington Trenton)
+  | 'Domestic Warrior'     // PR6 — legislative / domestic-policy ranger (Calhoun, Clay, Sumner)
+  | 'Iron Fist'            // PR6 — authoritarian governance (Jackson, Polk, Lincoln habeas)
+  | 'Delegator'            // PR6 — multiplier UP on cabinet effects (Lincoln Team of Rivals)
+  | 'Master Kingmaker'     // PR6 — internal_party install power (Clay 1824, Van Buren Albany Regency)
   | 'Incompetent'
   | 'Passive'
   | 'Unlikable'
@@ -99,6 +106,9 @@ export type Trait =
   | 'Carpetbagger'
   | 'Provincial'           // PR4b — geographic horizon negative (Henry, Sam Adams, A. Johnson)
   | 'Outsider'
+  | 'Naive Strategist'     // PR6 — strategic incompetence (McClellan, St. Clair, Hull)
+  | 'Micromanager'         // PR6 — multiplier DOWN on cabinet effects (Polk diary, Adams 1798)
+  | 'Overeager'            // PR6 — acts before circumstances warrant (Pierce KS-NE, Wilkes Trent)
   | 'Ideologue'
   | 'Impressionable'
   | 'Loyal'
@@ -129,6 +139,13 @@ export const POSITIVE_TRAITS: Trait[] = [
   'Cosmopolitan',           // PR4b
   'Predictable',            // PR4b
   'Hale',                   // PR4b
+  'Crisis Admin',           // PR6
+  'Crisis Gov',             // PR6
+  'Decisive General',       // PR6
+  'Domestic Warrior',       // PR6
+  'Iron Fist',              // PR6 — mixed at lingering layer; positive at flat PV
+  'Delegator',              // PR6
+  'Master Kingmaker',       // PR6
   'Ideologue',
   'Loyal',
   'Ambitious',
@@ -152,6 +169,9 @@ export const NEGATIVE_TRAITS: Trait[] = [
   'Carpetbagger',
   'Provincial',             // PR4b
   'Outsider',
+  'Naive Strategist',       // PR6
+  'Micromanager',           // PR6
+  'Overeager',              // PR6
   'Impressionable',
   'Opportunist',
   'Failed Bid',
@@ -548,7 +568,8 @@ export const TRAIT_LIFECYCLE_RULES = {
       { minAge: 70, bonus: 0.0  },
     ],
     amount: 1,
-    fadingPool: ['Celebrity', 'Charismatic', 'Hale'] as Trait[],
+    fadingPool: ['Celebrity', 'Charismatic', 'Hale',
+                 'Crisis Admin', 'Crisis Gov', 'Decisive General'] as Trait[],
   },
   leadershipLossOnBattleLoss: { chance: 0.5 },
   conflictD6Threshold: 4,
@@ -574,7 +595,9 @@ export const TRAIT_CONFLICTS: Partial<Record<Trait, Trait>> = {
   Integrity:      'Corrupt',
   Corrupt:        'Integrity',
   Efficient:      'Passive',
-  Passive:        'Efficient',
+  // Passive→Efficient direction superseded by PR6 Passive→Overeager pair below.
+  // The Efficient→Passive direction above keeps d6-arbitration when granting
+  // Efficient to a Passive-carrier; the reverse path is now Overeager-coded.
   Egghead:        'Incompetent',
   Incompetent:    'Egghead',
   Ideologue:      'Impressionable',
@@ -590,6 +613,17 @@ export const TRAIT_CONFLICTS: Partial<Record<Trait, Trait>> = {
   Predictable:    'Two-Faced',
   Hale:           'Frail',
   Frail:          'Hale',
+  // --- PR6 additions (5 pairs × 2 directions = 10 entries) ---
+  'Decisive General': 'Naive Strategist',
+  'Naive Strategist': 'Decisive General',
+  Delegator:          'Micromanager',
+  Micromanager:       'Delegator',
+  'Domestic Warrior': 'Domestic Apathy',
+  'Domestic Apathy':  'Domestic Warrior',
+  'Master Kingmaker': 'Outsider',
+  Outsider:           'Master Kingmaker',
+  Overeager:          'Passive',
+  Passive:            'Overeager',
 };
 
 // PR4a election contexts. Six locked contexts (spec AC #2). Senate uses
@@ -878,6 +912,99 @@ export const TRAIT_ELECTION_EFFECTS: TraitElectionRule[] = [
   { trait: 'Hale', context: 'internalParty', magnitude: TRAIT_ELECTION_BANDS.SMALL  },
 ];
 
+// PR6 governance contexts — 4 contexts orthogonal to PR4a's 6 election contexts.
+// governance_crisis: era-event modulation (Dred Scott, John Brown, Secession Winter, Trent Affair)
+// lingering_phase:   per-turn meter drift in runPhase_2_5_1_Lingering
+// military_command:  wartime Command grant in runPhase_2_3_2_Military
+// internal_party:    faction-leader / dark-horse install bonus (faction scoring path)
+export type GovernanceContext =
+  | 'governance_crisis'
+  | 'lingering_phase'
+  | 'military_command'
+  | 'internal_party';
+
+// Numerically identical to TRAIT_ELECTION_BANDS — named separately for
+// clarity at consumer sites and to leave PR6 with its own dial.
+export const TRAIT_GOVERNANCE_BANDS = {
+  SMALL: 2,
+  MEDIUM: 4,
+  LARGE: 8,
+} as const satisfies { SMALL: number; MEDIUM: number; LARGE: number };
+
+export interface TraitGovernanceRule {
+  trait: Trait;
+  context: GovernanceContext;
+  // Signed additive magnitude (default semantics). When `multiplier`
+  // is set, the rule applies multiplicatively to the consumer's base
+  // and `magnitude` is treated as 0.
+  magnitude: number;
+  // Optional meter override on lingering_phase split rows (Iron Fist
+  // emits two rows: one for `honest`, one for `domestic`). When
+  // omitted, the consumer uses the seat's primary meter or the chosen
+  // response's `meters` field.
+  meter?: keyof NationalMeters;
+  // Delegator / Micromanager only. When set, the consumer multiplies
+  // the base bonus / response-meter swing by this factor (1.5 = +50%,
+  // 0.5 = -50%).
+  multiplier?: number;
+}
+
+export const TRAIT_GOVERNANCE_EFFECTS: TraitGovernanceRule[] = [
+  // --- Crisis Admin (Hamilton, Morris, Gallatin, Chase) ---
+  { trait: 'Crisis Admin', context: 'governance_crisis', magnitude: TRAIT_GOVERNANCE_BANDS.LARGE  },
+  { trait: 'Crisis Admin', context: 'lingering_phase',   magnitude: TRAIT_GOVERNANCE_BANDS.SMALL, meter: 'economic' },
+  { trait: 'Crisis Admin', context: 'internal_party',    magnitude: TRAIT_GOVERNANCE_BANDS.SMALL  },
+
+  // --- Crisis Gov (Lincoln, Washington Whiskey, Adams XYZ) ---
+  { trait: 'Crisis Gov', context: 'governance_crisis', magnitude: TRAIT_GOVERNANCE_BANDS.LARGE  },
+  { trait: 'Crisis Gov', context: 'lingering_phase',   magnitude: TRAIT_GOVERNANCE_BANDS.SMALL, meter: 'domestic' },
+  { trait: 'Crisis Gov', context: 'internal_party',    magnitude: TRAIT_GOVERNANCE_BANDS.SMALL  },
+
+  // --- Decisive General (Grant, Sherman, Washington Trenton) ---
+  { trait: 'Decisive General', context: 'governance_crisis', magnitude: TRAIT_GOVERNANCE_BANDS.SMALL },
+  { trait: 'Decisive General', context: 'military_command',  magnitude: TRAIT_GOVERNANCE_BANDS.LARGE },
+
+  // --- Naive Strategist (McClellan, St. Clair, Hull, Floyd) ---
+  { trait: 'Naive Strategist', context: 'governance_crisis', magnitude: -TRAIT_GOVERNANCE_BANDS.SMALL },
+  { trait: 'Naive Strategist', context: 'military_command',  magnitude: -TRAIT_GOVERNANCE_BANDS.LARGE },
+
+  // --- Domestic Warrior (Calhoun, Clay, Sumner, Madison Bill of Rights) ---
+  { trait: 'Domestic Warrior', context: 'governance_crisis', magnitude: TRAIT_GOVERNANCE_BANDS.SMALL  },
+  { trait: 'Domestic Warrior', context: 'lingering_phase',   magnitude: TRAIT_GOVERNANCE_BANDS.MEDIUM, meter: 'domestic' },
+  { trait: 'Domestic Warrior', context: 'internal_party',    magnitude: TRAIT_GOVERNANCE_BANDS.MEDIUM },
+
+  // --- Iron Fist (Jackson, Polk, Lincoln habeas, Adams Sedition) ---
+  // SPLIT on lingering_phase: +SMALL honest, -SMALL domestic per AC #6.
+  { trait: 'Iron Fist', context: 'governance_crisis', magnitude:  TRAIT_GOVERNANCE_BANDS.MEDIUM },
+  { trait: 'Iron Fist', context: 'lingering_phase',   magnitude:  TRAIT_GOVERNANCE_BANDS.SMALL, meter: 'honest'   },
+  { trait: 'Iron Fist', context: 'lingering_phase',   magnitude: -TRAIT_GOVERNANCE_BANDS.SMALL, meter: 'domestic' },
+  { trait: 'Iron Fist', context: 'military_command',  magnitude:  TRAIT_GOVERNANCE_BANDS.SMALL  },
+  { trait: 'Iron Fist', context: 'internal_party',    magnitude:  TRAIT_GOVERNANCE_BANDS.SMALL  },
+
+  // --- Delegator (Lincoln Team of Rivals, Washington 1789-97) ---
+  // MULTIPLIER on governance_crisis (event meters) + lingering_phase (PR5 +0.2 bonus).
+  // Additive +SMALL on internal_party.
+  { trait: 'Delegator', context: 'governance_crisis', magnitude: 0, multiplier: 1.5 },
+  { trait: 'Delegator', context: 'lingering_phase',   magnitude: 0, multiplier: 1.5 },
+  { trait: 'Delegator', context: 'internal_party',    magnitude: TRAIT_GOVERNANCE_BANDS.SMALL },
+
+  // --- Micromanager (Polk 25-volume diary, Adams 1797-1801) ---
+  // MULTIPLIER on governance_crisis + lingering_phase.
+  // Additive +SMALL on military_command (Polk-Scott Mexican War) + internal_party.
+  { trait: 'Micromanager', context: 'governance_crisis', magnitude: 0, multiplier: 0.5 },
+  { trait: 'Micromanager', context: 'lingering_phase',   magnitude: 0, multiplier: 0.5 },
+  { trait: 'Micromanager', context: 'military_command',  magnitude: TRAIT_GOVERNANCE_BANDS.SMALL },
+  { trait: 'Micromanager', context: 'internal_party',    magnitude: TRAIT_GOVERNANCE_BANDS.SMALL },
+
+  // --- Overeager (Pierce KS-NE, Polk 1846 war message, Clay 1812) ---
+  { trait: 'Overeager', context: 'governance_crisis', magnitude: TRAIT_GOVERNANCE_BANDS.SMALL },
+  { trait: 'Overeager', context: 'internal_party',    magnitude: TRAIT_GOVERNANCE_BANDS.SMALL },
+
+  // --- Master Kingmaker (Clay 1824, Van Buren Albany Regency, Weed, Burr 1800) ---
+  { trait: 'Master Kingmaker', context: 'governance_crisis', magnitude: TRAIT_GOVERNANCE_BANDS.SMALL },
+  { trait: 'Master Kingmaker', context: 'internal_party',    magnitude: TRAIT_GOVERNANCE_BANDS.LARGE },
+];
+
 export const ANYTIME_EVENTS_RULES = {
   baseFireChance: 0.05,
   nationalBaseFireChance: 0.70,
@@ -952,6 +1079,46 @@ export const OFFICE_EXPERTISE: Partial<Record<OfficeType, Expertise>> = {
   PostmasterGeneral: 'Transportation',
   GeneralInChief: 'Military',
 };
+
+// PR6 hand-rolled slave-state set circa 1856. The 15 slave states circa the
+// antebellum (eventual 11 CSA states + 4 border-loyal slave states). Used by
+// John Brown event modulation (ideology + state proxy for slavery position).
+// Secession Winter loyalty decay reads state.region directly, not this set.
+export const SLAVE_STATES_1856: ReadonlyArray<string> = [
+  'va', 'sc', 'ga', 'al', 'ms', 'tn', 'nc', 'ky',
+  'mo', 'fl', 'ar', 'tx', 'la', 'md', 'de',
+];
+
+// PR6 Secession Winter loyalty decay. Fires DURING the Secession Winter event
+// resolution (not as passive per-turn drift). Indexed by (state-region,
+// ideology) and returns per-event decay applied to each cabinet member's
+// loyalty field. After decay, loyalty < LOYALTY_DEFECTION_THRESHOLD triggers
+// defection.
+export const LOYALTY_REGION_BASE = {
+  South: 0.5,
+  Border: 0.2,
+  Northeast: 0.0,
+  Midwest: 0.0,
+  West: 0.0,
+} as const satisfies Record<string, number>;
+
+export const LOYALTY_IDEOLOGY_MULT: Record<Ideology, number> = {
+  'RW Populist':    1.2,
+  Traditionalist:   1.0,
+  Conservative:     0.7,
+  Moderate:         0.3,
+  Liberal:          0.0,
+  Progressive:     -0.2,
+  'LW Populist':   -0.3,
+};
+
+// Defection trigger threshold. A cabinet member whose post-decay loyalty is
+// strictly less than this value resigns. Tuned so Cobb/Floyd/Thompson (start
+// 0.5) defect and Cass (start 0.9, MI Midwest) stays.
+export const LOYALTY_DEFECTION_THRESHOLD = 0.4;
+
+// Loyalty field clamp range. Writes through engine helpers clamp to [0, 1].
+export const LOYALTY_RANGE = { min: 0, max: 1 } as const;
 
 // PR5 era-conditional cabinet seat list. Returns the cabinet seats active in
 // the given calendar year. Four historical transitions:
@@ -1038,6 +1205,10 @@ export interface Politician {
   retiredYear?: number;
   skills: Skills;
   traits: Trait[];
+  loyalty: number;          // PR6 — [0, 1]; 1 = fully loyal, 0 = fully defected.
+                            // Default 1.0; explicit values for 1856 marquee Secs
+                            // (Cobb/Floyd/Thompson 0.5, Cass 0.9). Read by
+                            // Secession Winter event resolution.
   expertise: Expertise[];
   currentOffice: OfficeRef | null;
   careerTrack: CareerTrack | null;
@@ -1240,6 +1411,9 @@ export interface EraEvent {
   triggersGameEnd?: boolean;
   unlocks?: ('governors' | 'congress' | 'presidency' | 'court' | 'continentalArmy')[];
   postEffects?: { type: 'startWar' | 'unlockGovernors' | 'unlockArticles' | 'startConvention' | 'endWar' | 'addPolitician' | 'assembleCC'; payload?: unknown }[];
+  // PR6 — Secession Winter defector count stored at resolve-time for the
+  // modulation pass to read. Optional, runtime-only.
+  secessionDefectionCount?: number;
 }
 
 // Serializable precondition tree for the 2.4.3 era-event graph (CP1-2).
@@ -1550,6 +1724,7 @@ export interface ImportedDraftee {
   command: number;
   traits: Trait[];
   expertise: Expertise[];
+  loyalty?: number;  // PR6 — optional; default 1.0 if missing. Cobb/Floyd/Thompson 0.5; Cass 0.9.
 }
 
 export interface ConventionVote {

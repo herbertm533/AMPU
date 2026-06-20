@@ -52,8 +52,12 @@ const ROWS = [
   ['Horatio','Gates','va','Moderate',1727,[1,0,0,3,0,1],0,['Military'],'BLUE'],
   ['Daniel','Boone','nc','Traditionalist',1734,[0,0,0,2,0,0],0,['Celebrity'],'BLUE'],
   ['Elbridge','Gerry','ma','Moderate',1744,[2,2,1,0,1,3],0,['Manipulative'],'BLUE'],
-  ['George','Washington','va','Moderate',1732,[2,1,0,4,2,2],1,['Leadership','Hale'],'RED'],
-  ['John','Adams','ma','Moderate',1735,[3,3,3,0,2,2],1,['Egghead','Debater'],'RED'],
+  // PR6: Washington — Trenton/Princeton (Decisive General); Hamilton-Jefferson
+  // cabinet deference + voluntary 1797 step-down (Delegator).
+  ['George','Washington','va','Moderate',1732,[2,1,0,4,2,2],1,['Leadership','Hale','Decisive General','Delegator'],'RED'],
+  // PR6: John Adams — XYZ Affair + Convention of 1800 (Crisis Gov); 1797-1801
+  // executive style (Micromanager).
+  ['John','Adams','ma','Moderate',1735,[3,3,3,0,2,2],1,['Egghead','Debater','Micromanager','Crisis Gov'],'RED'],
   ['Benjamin','Franklin','pa','Moderate',1706,[4,3,1,0,2,4],1,['Celebrity','Egghead','Likable','Cosmopolitan','Hale'],'RED'],
   ['John','Jay','ny','Moderate',1745,[3,3,3,0,2,3],0,[],'RED'],
   ['Henry','Laurens','sc','Traditionalist',1724,[3,2,1,1,2,3],0,[],'RED'],
@@ -75,16 +79,22 @@ const ROWS = [
   ['John','Barry','pa','Moderate',1745,[1,0,0,2,0,0],0,['Naval'],'RED'],
   ['Esek','Hopkins','ri','Moderate',1718,[1,0,0,3,0,0],0,['Naval'],'RED'],
   ['William','Moultrie','sc','Conservative',1730,[1,0,0,3,1,1],0,['Military'],'RED'],
-  ['Arthur','St. Clair','pa','Conservative',1737,[1,0,0,2,1,1],0,['Military'],'RED'],
+  // PR6: St. Clair — Wabash 1791 (Naive Strategist).
+  ['Arthur','St. Clair','pa','Conservative',1737,[1,0,0,2,1,1],0,['Military','Naive Strategist'],'RED'],
   ['Philip','Schuyler','ny','Conservative',1733,[2,1,0,2,1,2],0,[],'RED'],
   ['Timothy','Pickering','ma','Conservative',1745,[2,1,1,1,1,1],0,['Puritan'],'RED'],
 
   // ===== Founding-era arrivals (1st Congress / Convention / Cabinet) =====
   ['James','Madison','va','Liberal',1751,[3,4,3,0,2,3],1,['Egghead','Reformist','Uncharismatic'],'BLUE'],
-  ['Alexander','Hamilton','ny','Conservative',1755,[4,3,2,2,1,3],1,['Egghead','Cosmopolitan'],'RED'],
-  ['Aaron','Burr','ny','Moderate',1756,[2,2,2,1,1,4],0,['Manipulative','Two-Faced'],'BLUE'],
+  // PR6: Hamilton — Panic of 1792 (Crisis Admin); Federalist Papers + 1800 (Master Kingmaker).
+  ['Alexander','Hamilton','ny','Conservative',1755,[4,3,2,2,1,3],1,['Egghead','Cosmopolitan','Crisis Admin','Master Kingmaker'],'RED'],
+  // PR6: Burr — Tammany 1800 (Master Kingmaker).
+  ['Aaron','Burr','ny','Moderate',1756,[2,2,2,1,1,4],0,['Manipulative','Two-Faced','Master Kingmaker'],'BLUE'],
   ['Rufus','King','ny','Conservative',1755,[3,3,2,0,2,2],0,['Debater'],'RED'],
-  ['Robert','Morris','pa','Conservative',1734,[4,2,1,0,2,3],0,['Economics'],'RED'],
+  // PR6: Robert Morris — Superintendent of Finance 1781-84 (Crisis Admin).
+  ['Robert','Morris','pa','Conservative',1734,[4,2,1,0,2,3],0,['Economics','Crisis Admin'],'RED'],
+  // PR6 NEW: Albert Gallatin — Sec. Treasury 1801-14 under Jefferson + Madison (Crisis Admin).
+  ['Albert','Gallatin','pa','Liberal',1761,[3,3,2,0,3,2],2,['Crisis Admin'],'BLUE'],
   ['Gouverneur','Morris','ny','Conservative',1752,[3,3,3,0,1,3],0,['Egghead','Orator'],'RED'],
   ['Charles Cotesworth','Pinckney','sc','Conservative',1746,[2,2,2,2,1,2],0,[],'RED'],
   ['Thomas','Mifflin','pa','Moderate',1744,[2,2,0,2,3,2],0,[],'RED'],
@@ -119,38 +129,57 @@ const ROWS = [
   ['John','Beckley','va','Moderate',1757,[1,2,1,0,1,3],0,['Manipulative'],'BLUE'],
 
   // ===== 1856 scenario in-game roster =====
-  ['James','Buchanan','pa','Conservative',1791,[4,3,2,0,3,3],4,['Efficient'],'BLUE'],
+  // PR6: Buchanan correction (F-BUCHANAN-CORRECTION). He was the documented
+  // anti-case for both Efficient AND Iron Fist. Replace Efficient with the
+  // historian's Passive + Naive Strategist.
+  ['James','Buchanan','pa','Conservative',1791,[4,3,2,0,3,3],4,['Passive','Naive Strategist'],'BLUE'],
   ['John C.','Breckinridge','ky','Conservative',1821,[3,3,1,1,2,3],3,['Orator'],'BLUE'],
   ['Jefferson','Davis','ms','Traditionalist',1808,[4,3,1,4,2,3],4,['Nationalist','Military'],'BLUE'],
   ['James M.','Mason','va','Traditionalist',1798,[2,3,2,0,2,3],2,['Nationalist'],'BLUE'],
   ['Robert','Toombs','ga','Traditionalist',1810,[2,4,1,1,2,3],3,['Orator','Debater','Provincial'],'BLUE'],
-  ['Howell','Cobb','ga','Conservative',1815,[3,3,1,0,3,3],3,['Economics'],'BLUE'],
-  ['John B.','Floyd','va','Conservative',1806,[2,1,0,2,3,1],2,['Corrupt'],'BLUE'],
+  // PR6: Cobb — GA Conservative wavering by Dec 1860; starting loyalty 0.5.
+  ['Howell','Cobb','ga','Conservative',1815,[3,3,1,0,3,3],3,['Economics'],'BLUE',0.5],
+  // PR6: Floyd — Utah War + Indian Bonds + cannon redistribution (Iron Fist +
+  // Naive Strategist). Pro-Confederate wavering; starting loyalty 0.5.
+  ['John B.','Floyd','va','Conservative',1806,[2,1,0,2,3,1],2,['Corrupt','Iron Fist','Naive Strategist'],'BLUE',0.5],
+  // PR6 NEW: Jacob Thompson — MS Conservative Interior Sec; resigned Jan 8 1861;
+  // starting loyalty 0.5.
+  ['Jacob','Thompson','ms','Conservative',1810,[2,2,1,0,2,2],2,['Provincial'],'BLUE',0.5],
   ['James L.','Orr','sc','Conservative',1822,[2,3,1,0,1,2],2,[],'BLUE'],
   ['Stephen A.','Douglas','il','Moderate',1813,[3,4,2,0,2,4],4,['Orator','Debater','Likable','Frail'],'BLUE'],
-  ['Lewis','Cass','mi','Moderate',1782,[3,3,2,1,3,2],3,['Globalist'],'BLUE'],
+  // PR6: Cass — MI Moderate; resigned Dec 12 1860 in protest of Buchanan's
+  // refusal to reinforce — pro-Union despite Southern sympathies. Loyalty 0.9.
+  ['Lewis','Cass','mi','Moderate',1782,[3,3,2,1,3,2],3,['Globalist'],'BLUE',0.9],
   ['William L.','Marcy','ny','Moderate',1786,[3,2,1,1,3,3],2,[],'BLUE'],
-  ['Franklin','Pierce','nh','Moderate',1804,[2,2,1,1,2,2],2,['Passive'],'BLUE'],
+  // PR6: Pierce uniquely both Overeager AND Passive — historical fact (KS-NE
+  // catastrophe-aware signing). Within-pair stack PM-allowed at curated seed
+  // time; conflict map prevents subsequent random grants of either.
+  ['Franklin','Pierce','nh','Moderate',1804,[2,2,1,1,2,2],2,['Passive','Overeager'],'BLUE'],
   ['Daniel S.','Dickinson','ny','Moderate',1800,[2,3,1,0,2,3],2,[],'BLUE'],
   ['Andrew','Johnson','tn','Conservative',1808,[2,3,1,0,2,2],2,['Unlikable','Provincial'],'BLUE'],
   ['John','Bell','tn','Moderate',1796,[3,3,2,0,2,3],3,['Crisis Manager'],'BLUE'],
   ['Edward','Everett','ma','Moderate',1794,[3,2,2,0,2,2],2,['Orator','Education'],'BLUE'],
   ['Sam','Houston','tx','Moderate',1793,[2,2,1,4,3,2],4,['Celebrity','Military','Hale'],'BLUE'],
-  ['James K.','Polk','tn','Liberal',1795,[3,3,1,1,2,3],3,['Efficient','Uncharismatic'],'BLUE'],
+  // PR6: Polk — 25-vol diary (Micromanager); Mexican War + Wilmot Proviso brushback
+  // (Iron Fist); May 1846 war message (Overeager).
+  ['James K.','Polk','tn','Liberal',1795,[3,3,1,1,2,3],3,['Efficient','Uncharismatic','Iron Fist','Micromanager','Overeager'],'BLUE'],
   ['Thomas H.','Benton','mo','Liberal',1782,[3,4,1,1,2,3],4,['Orator','Reformist'],'BLUE'],
   ['David','Wilmot','pa','Progressive',1814,[2,3,2,0,1,2],2,['Reformist'],'BLUE'],
-  ['Martin','Van Buren','ny','Liberal',1782,[4,3,1,0,3,5],4,['Manipulative','Magician'],'BLUE'],
+  // PR6: Van Buren — Albany Regency + 1844 Polk dark-horse (Master Kingmaker).
+  ['Martin','Van Buren','ny','Liberal',1782,[4,3,1,0,3,5],4,['Manipulative','Magician','Master Kingmaker'],'BLUE'],
   ['John A.','Dix','ny','Liberal',1798,[3,2,1,2,3,2],2,[],'BLUE'],
   ['John J.','Crittenden','ky','Conservative',1787,[3,4,3,0,2,3],3,['Crisis Manager'],'RED'],
   ['Edward','Bates','mo','Conservative',1793,[3,2,4,0,2,2],2,['Integrity'],'RED'],
   ['Orville H.','Browning','il','Moderate',1806,[2,3,2,0,1,2],2,[],'RED'],
-  ['Abraham','Lincoln','il','Moderate',1809,[2,3,2,0,1,2],2,['Orator','Integrity','Likable'],'RED'],
+  // PR6: Lincoln — First Inaugural + habeas (Crisis Gov); Team of Rivals (Delegator).
+  ['Abraham','Lincoln','il','Moderate',1809,[2,3,2,0,1,2],2,['Orator','Integrity','Likable','Crisis Gov','Delegator'],'RED'],
   ['William P.','Fessenden','me','Moderate',1806,[3,4,2,0,2,2],3,['Economics'],'RED'],
   ['Lyman','Trumbull','il','Moderate',1813,[3,4,3,0,1,2],3,['Integrity'],'RED'],
   ['Hannibal','Hamlin','me','Moderate',1809,[3,3,1,0,3,2],2,[],'RED'],
   ['John A.','Andrew','ma','Liberal',1818,[3,3,2,0,4,2],3,['Reformist','Integrity'],'RED'],
   ['William H.','Seward','ny','Liberal',1801,[3,4,2,0,3,4],5,['Manipulative','Magician','Cosmopolitan'],'RED'],
-  ['Salmon P.','Chase','oh','Progressive',1808,[3,3,3,0,4,2],3,['Integrity','Reformist','Uncharismatic','Predictable'],'RED'],
+  // PR6: Chase — Greenbacks + National Banking Acts (Crisis Admin).
+  ['Salmon P.','Chase','oh','Progressive',1808,[3,3,3,0,4,2],3,['Integrity','Reformist','Uncharismatic','Predictable','Crisis Admin'],'RED'],
   ['John C.','Frémont','ca','Liberal',1813,[2,1,0,3,1,1],3,['Celebrity'],'RED'],
   ['Henry','Wilson','ma','Progressive',1812,[2,3,1,0,1,3],2,['Reformist'],'RED'],
   ['Schuyler','Colfax','in','Liberal',1823,[2,3,1,0,2,3],2,['Charismatic'],'RED'],
@@ -164,9 +193,15 @@ const ROWS = [
   ['Anson','Burlingame','ma','Moderate',1820,[2,2,1,0,1,2],2,['Globalist'],'RED'],
   ['Winfield','Scott','va','Moderate',1786,[2,0,0,5,0,1],3,['Military','Celebrity'],'RED'],
   ['Robert E.','Lee','va','Conservative',1807,[2,0,0,5,1,1],3,['Military'],'RED'],
-  ['Ulysses S.','Grant','oh','Moderate',1822,[1,0,0,4,0,0],1,['Military'],'RED'],
-  ['William T.','Sherman','oh','Moderate',1820,[1,0,0,4,0,0],1,['Military'],'RED'],
-  ['George B.','McClellan','pa','Conservative',1826,[2,0,0,3,0,0],2,['Military','Passive'],'BLUE'],
+  // PR6: Grant — Overland Campaign 1864 (Decisive General).
+  ['Ulysses S.','Grant','oh','Moderate',1822,[1,0,0,4,0,0],1,['Military','Decisive General'],'RED'],
+  // PR6: Sherman — Atlanta + March (Decisive General).
+  ['William T.','Sherman','oh','Moderate',1820,[1,0,0,4,0,0],1,['Military','Decisive General'],'RED'],
+  // PR6: McClellan — Peninsula Campaign (Naive Strategist); stacks cleanly with Passive.
+  ['George B.','McClellan','pa','Conservative',1826,[2,0,0,3,0,0],2,['Military','Passive','Naive Strategist'],'BLUE'],
+  // PR6 NEW: Edwin Stanton — wartime logistics + press suppression (Crisis Admin
+  // + Iron Fist). NOT Decisive General per historian deliberate correction.
+  ['Edwin','Stanton','oh','Liberal',1814,[4,2,3,0,3,3],3,['Crisis Admin','Iron Fist'],'RED'],
   ['Roger B.','Taney','md','Traditionalist',1777,[3,2,5,0,0,2],3,[],'BLUE'],
   ['John','Catron','tn','Conservative',1786,[2,1,4,0,0,1],1,[],'BLUE'],
   ['Peter V.','Daniel','va','Traditionalist',1784,[2,1,4,0,0,1],1,[],'BLUE'],
@@ -180,7 +215,8 @@ const ROWS = [
   // ===== PR4b CURATED additions (marquee figures not previously in ROWS) =====
   // Henry Clay — Senate/House power-broker; Speaker; Sec. State; multi-term
   // Senator from KY; canonical Likable + Charismatic + Magician case.
-  ['Henry','Clay','ky','Moderate',1777,[3,5,2,1,3,5],5,['Charismatic','Likable','Magician','Orator'],'BLUE'],
+  // PR6: Clay — 1824 Corrupt Bargain (Master Kingmaker); compromises (Domestic Warrior).
+  ['Henry','Clay','ky','Moderate',1777,[3,5,2,1,3,5],5,['Charismatic','Likable','Magician','Orator','Master Kingmaker','Domestic Warrior'],'BLUE'],
   // Andrew Jackson — TN/SC general, US Sen TN, 7th President; "Old Hickory";
   // 38 years carrying bullets; canonical Hale + Outsider + Controversial case.
   ['Andrew','Jackson','tn','LW Populist',1767,[3,2,1,5,3,3],5,['Hale','Outsider','Controversial','Military','Celebrity'],'BLUE'],
@@ -189,7 +225,8 @@ const ROWS = [
   ['John Quincy','Adams','ma','Moderate',1767,[4,4,3,0,3,3],4,['Egghead','Integrity','Hale','Debater'],'RED'],
   // John C. Calhoun — VP under JQA + Jackson; Sec. War; Sec. State; SC US Sen;
   // late-Southern-rights phase relentlessly consistent; canonical Predictable case.
-  ['John C.','Calhoun','sc','Traditionalist',1782,[3,5,2,1,2,3],5,['Orator','Debater','Predictable','Nationalist'],'BLUE'],
+  // PR6: Calhoun — nullification + late-Southern-rights phase (Domestic Warrior).
+  ['John C.','Calhoun','sc','Traditionalist',1782,[3,5,2,1,2,3],5,['Orator','Debater','Predictable','Nationalist','Domestic Warrior'],'BLUE'],
   // Daniel Webster — MA US Sen; Sec. State; 7th of March 1850 destroyed his
   // New England base; canonical Two-Faced (situational reversal) case.
   ['Daniel','Webster','ma','Conservative',1782,[3,5,3,0,2,3],4,['Orator','Debater','Two-Faced'],'RED'],
@@ -229,12 +266,14 @@ const ERA_ROWS = [
   ['John','Worthington','ma','Conservative',1719,[1,1,1,0,1,1],0,[],'Pro-Administration'],
 ];
 
-const header = ['draftYear','firstName','lastName','state','ideology','birthYear','age','admin','legislative','judicial','military','governing','backroom','command','traits','expertise','party','wikiUrl'];
+const header = ['draftYear','firstName','lastName','state','ideology','birthYear','age','admin','legislative','judicial','military','governing','backroom','command','traits','expertise','party','wikiUrl','loyalty'];
 
 // Normalized curated rows (consumed by legislatorsToDataset.mjs as overrides).
+// PR6 — optional 10th column `loyalty` extends the row tuple; rows that omit
+// it default to 1.0 (fully loyal).
 const seen = new Set();
 export const CURATED_ROWS = [];
-for (const [first, last, state, ideo, birth, sk, cmd, traits, party] of ROWS) {
+for (const [first, last, state, ideo, birth, sk, cmd, traits, party, loyalty] of ROWS) {
   const key = (first + ' ' + last).toLowerCase();
   if (seen.has(key)) continue;
   seen.add(key);
@@ -245,13 +284,14 @@ for (const [first, last, state, ideo, birth, sk, cmd, traits, party] of ROWS) {
     birthYear: birth, age: draftYear - birth,
     skills: { admin: sk[0], legislative: sk[1], judicial: sk[2], military: sk[3], governing: sk[4], backroom: sk[5] },
     command: cmd, traits: t2, expertise, party, wikiUrl: wiki(first, last),
+    loyalty: loyalty ?? 1.0,
   });
 }
 
 // Normalized additive era figures (consumed by legislatorsToDataset.mjs only
 // when the name isn't already present).
 export const ERA_FIGURES = [];
-for (const [first, last, state, ideo, birth, sk, cmd, traits, party] of ERA_ROWS) {
+for (const [first, last, state, ideo, birth, sk, cmd, traits, party, loyalty] of ERA_ROWS) {
   const draftYear = draftYearFor(birth);
   const { traits: t2, expertise } = splitTraits(traits);
   ERA_FIGURES.push({
@@ -259,6 +299,7 @@ for (const [first, last, state, ideo, birth, sk, cmd, traits, party] of ERA_ROWS
     birthYear: birth, age: draftYear - birth,
     skills: { admin: sk[0], legislative: sk[1], judicial: sk[2], military: sk[3], governing: sk[4], backroom: sk[5] },
     command: cmd, traits: t2, expertise, party, wikiUrl: wiki(first, last),
+    loyalty: loyalty ?? 1.0,
   });
 }
 
@@ -269,7 +310,7 @@ if (process.argv[1] && process.argv[1].endsWith('seedDataset.mjs')) {
     lines.push([
       r.draftYear, r.firstName, r.lastName, r.state, r.ideology, r.birthYear, '',
       r.skills.admin, r.skills.legislative, r.skills.judicial, r.skills.military, r.skills.governing, r.skills.backroom,
-      r.command, r.traits.join('|'), r.expertise.join('|'), r.party, r.wikiUrl,
+      r.command, r.traits.join('|'), r.expertise.join('|'), r.party, r.wikiUrl, r.loyalty ?? 1.0,
     ].join(','));
   }
   writeFileSync(new URL('../politicians-dataset.csv', import.meta.url), lines.join('\n') + '\n');

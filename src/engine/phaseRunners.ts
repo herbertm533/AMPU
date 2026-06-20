@@ -1,5 +1,5 @@
-import type { FullGameSnapshot, PhaseId, Politician, EraEvent, Legislation, ElectionResult, NationalMeters, Ideology, PartyId, SkillKey, Trait, CareerTrack, OfficeType, State, RelocationEntry, RelocationBand, IdeologyShiftEntry, ConversionEntry, KingmakerEntry, FactionAlignmentDriftEntry, FactionLeadershipEntry, InterestCardId, LobbyCardId, IdeologyCardId, Era, ElectionContext } from '../types';
-import { IDEOLOGY_ORDER, SKILLS, POSITIVE_TRAITS, TRACK_SKILL, TRACK_THEMED_TRAITS, TRACK_EXPERTISE, OFFICE_EXPERTISE, COMMITTEE_EXPERTISE, CAREER_RANDOM_NEGATIVES, CAREER_ODDS, CAREER_TRACK_MAX_YEARS, CAREER_TRACK_CAP, CAREER_GAINS_CAP, RELOCATION_ODDS, RELOCATION_ATTEMPTS_PER_TURN, RELOCATIONS_CAP, CARPETBAGGER_LADDER, IDEOLOGY_SHIFT_ODDS, IDEOLOGY_ATTEMPTS_PER_TURN, IDEOLOGY_SHIFTS_CAP, CONVERSION_ODDS, CONVERSION_ATTEMPTS_PER_TURN, CONVERSIONS_CAP, KINGMAKER_RULES, KINGMAKERS_CAP, ALIGNMENT_RULES, ALIGNMENT_DRIFT_CAP, LEADERSHIP_RULES, LEADERSHIP_FEED_CAP, MORTALITY_RULES, ANYTIME_EVENTS_RULES, ABILITY_LOSS_RULES, ABILITY_EARN_RULES, OFFICE_COMMAND_GRANT, OFFICE_ADMIN_GRANT, TRACK_SECONDARY_SKILLS, TRAIT_LIFECYCLE_RULES, TRAIT_CONFLICTS, cabinetSeatsForYear, CABINET_SEAT_SCORING, CABINET_CROSS_PARTY_RATE, CABINET_CROSS_PARTY_PENALTY } from '../types';
+import type { FullGameSnapshot, PhaseId, Politician, EraEvent, EraEventResponse, EraEventResponseEffect, Legislation, ElectionResult, NationalMeters, Ideology, PartyId, SkillKey, Trait, CareerTrack, OfficeType, State, RelocationEntry, RelocationBand, IdeologyShiftEntry, ConversionEntry, KingmakerEntry, FactionAlignmentDriftEntry, FactionLeadershipEntry, InterestCardId, LobbyCardId, IdeologyCardId, Era, ElectionContext } from '../types';
+import { IDEOLOGY_ORDER, SKILLS, POSITIVE_TRAITS, TRACK_SKILL, TRACK_THEMED_TRAITS, TRACK_EXPERTISE, OFFICE_EXPERTISE, COMMITTEE_EXPERTISE, CAREER_RANDOM_NEGATIVES, CAREER_ODDS, CAREER_TRACK_MAX_YEARS, CAREER_TRACK_CAP, CAREER_GAINS_CAP, RELOCATION_ODDS, RELOCATION_ATTEMPTS_PER_TURN, RELOCATIONS_CAP, CARPETBAGGER_LADDER, IDEOLOGY_SHIFT_ODDS, IDEOLOGY_ATTEMPTS_PER_TURN, IDEOLOGY_SHIFTS_CAP, CONVERSION_ODDS, CONVERSION_ATTEMPTS_PER_TURN, CONVERSIONS_CAP, KINGMAKER_RULES, KINGMAKERS_CAP, ALIGNMENT_RULES, ALIGNMENT_DRIFT_CAP, LEADERSHIP_RULES, LEADERSHIP_FEED_CAP, MORTALITY_RULES, ANYTIME_EVENTS_RULES, ABILITY_LOSS_RULES, ABILITY_EARN_RULES, OFFICE_COMMAND_GRANT, OFFICE_ADMIN_GRANT, TRACK_SECONDARY_SKILLS, TRAIT_LIFECYCLE_RULES, TRAIT_CONFLICTS, cabinetSeatsForYear, CABINET_SEAT_SCORING, CABINET_CROSS_PARTY_RATE, CABINET_CROSS_PARTY_PENALTY, TRAIT_GOVERNANCE_EFFECTS, SLAVE_STATES_1856, LOYALTY_REGION_BASE, LOYALTY_IDEOLOGY_MULT, LOYALTY_DEFECTION_THRESHOLD, LOYALTY_RANGE } from '../types';
 import type { CabinetSeatScoring } from '../types';
 import { addLog } from './log';
 import { addExpertise } from './expertise';
@@ -208,6 +208,7 @@ export function runPhase_2_1_1_Draft(snap: FullGameSnapshot, autoOnly: boolean):
         birthYear: snap.game.year - age,
         skills,
         traits: chance(0.3) ? [pick(['Charismatic', 'Orator', 'Efficient', 'Reformist', 'Integrity'] as const)] : [],
+        loyalty: 1.0,
         expertise: [],
         currentOffice: null,
         careerTrack: null,
@@ -2187,16 +2188,42 @@ export function runPhase_2_3_2_Military(snap: FullGameSnapshot): void {
     const candidates = snap.politicians.filter((p) => !p.currentOffice && p.skills.military >= 3);
     candidates.sort((a, b) => b.skills.military - a.skills.military);
     if (candidates[0]) {
-      snap.game.cabinet.GeneralInChief = candidates[0].id;
-      candidates[0].currentOffice = { type: 'GeneralInChief' };
-      addLog(snap, '2.3.2', 'appointment', `${candidates[0].firstName} ${candidates[0].lastName} appointed General in Chief.`);
+      const gic = candidates[0];
+      snap.game.cabinet.GeneralInChief = gic.id;
+      gic.currentOffice = { type: 'GeneralInChief' };
+      addLog(snap, '2.3.2', 'appointment', `${gic.firstName} ${gic.lastName} appointed General in Chief.`);
       const xp = OFFICE_EXPERTISE.GeneralInChief;
-      if (xp && addExpertise(candidates[0], xp)) {
-        addLog(snap, '2.3.2', 'appointment', `${candidates[0].firstName} ${candidates[0].lastName} gains ${xp} expertise.`);
+      if (xp && addExpertise(gic, xp)) {
+        addLog(snap, '2.3.2', 'appointment', `${gic.firstName} ${gic.lastName} gains ${xp} expertise.`);
       }
-      if (warActive && addCommandPoint(candidates[0], 1)) {
-        addLog(snap, '2.3.2', 'appointment',
-          `${candidates[0].firstName} ${candidates[0].lastName} gains Command as wartime General in Chief.`);
+      if (warActive) {
+        // PR6 trait modulation. Decisive General → +1 additional Command on top
+        // of PR2b's wartime +1 (net +2). Naive Strategist → suppresses the
+        // wartime +1 entirely. Cross-trait stack prevented by AC #10 conflict.
+        const decisive = gic.traits.includes('Decisive General');
+        const naive    = gic.traits.includes('Naive Strategist');
+        const grant = naive ? 0 : (decisive ? 2 : 1);
+        if (grant > 0 && addCommandPoint(gic, grant)) {
+          if (decisive) {
+            addLog(snap, '2.3.2', 'appointment',
+              `${gic.firstName} ${gic.lastName} gains Command as wartime General in Chief (Decisive General bonus).`);
+          } else {
+            addLog(snap, '2.3.2', 'appointment',
+              `${gic.firstName} ${gic.lastName} gains Command as wartime General in Chief.`);
+          }
+        } else if (naive) {
+          addLog(snap, '2.3.2', 'appointment',
+            `${gic.firstName} ${gic.lastName} appointed General in Chief — Naive Strategist, no wartime Command bump.`);
+        }
+
+        // PR6 SecWar Decisive General provides strategic cover → +1 to GIC.
+        const secWar = snap.politicians.find((p) => p.id === snap.game.cabinet.SecretaryOfWar);
+        if (secWar?.traits.includes('Decisive General')) {
+          if (addCommandPoint(gic, 1)) {
+            addLog(snap, '2.3.2', 'appointment',
+              `${gic.firstName} ${gic.lastName} gains Command from SecWar ${secWar.firstName} ${secWar.lastName}'s strategic cover.`);
+          }
+        }
       }
     }
   }
@@ -2732,10 +2759,21 @@ export function resolveEraEvent(snap: FullGameSnapshot, eventId: string, respons
   // AI (tag the feed so the Era Events page can badge it). Computed BEFORE we
   // mark resolved/applyEffect, since control depends on current state.
   const aiResolved = snap.game.scenarioId === '1772' && isAutoResolved(snap, event);
-  applyEffect(snap, resp.effect);
+
+  // PR6: Secession Winter pre-resolution defection check (must run BEFORE the
+  // modulation pass — modulation reads the post-decay N defectors count).
+  if (event.templateId === 'secession-winter') {
+    runSecessionWinterDefections(snap, event);
+  }
+
+  // PR6: Pre-modulation pass. Returns a deep-cloned effect with `meters`
+  // adjusted per cabinet expertise + governance traits + Delegator/Micromanager
+  // multiplier. Other effect fields pass through unchanged.
+  const modulatedEffect = modulateEraEventEffect(snap, event, resp);
+  applyEffect(snap, modulatedEffect);
   event.resolved = true;
   event.chosenResponseId = responseId;
-  addLog(snap, '2.4.3', 'event', `${event.title}: ${resp.label}. ${resp.effect.text}`, { eraEvent: true, templateId: event.templateId, aiResolved });
+  addLog(snap, '2.4.3', 'event', `${event.title}: ${resp.label}. ${modulatedEffect.text}`, { eraEvent: true, templateId: event.templateId, aiResolved });
   recordEraEvent(snap, event.id, event.templateId, aiResolved, responseId);
   // Track completion for scripted scenarios
   if (event.templateId) snap.game.eraEventsCompleted.push(event.templateId);
@@ -2764,6 +2802,177 @@ export function resolveEraEvent(snap: FullGameSnapshot, eventId: string, respons
     addLog(snap, '2.4.3', 'system', `The campaign ends: ${event.title}.`);
     recordMilestone(snap, '2.4.3', `Campaign ends: ${event.title}.`);
   }
+}
+
+// PR6 era-event modulation helper. Pure: returns a NEW effect with `meters`
+// adjusted; other fields (partyPreference, enthusiasm, etc.) reference the
+// original object. Mutating engine code reads only `meters` for the multiplier
+// pass; the other fields pass through unchanged.
+function modulateEraEventEffect(
+  snap: FullGameSnapshot,
+  event: EraEvent,
+  resp: EraEventResponse,
+): EraEventResponseEffect {
+  // Deep-clone meters; pass other fields by reference. text gets cloned too so
+  // the Trent Affair voice shift doesn't mutate the original event data.
+  const out: EraEventResponseEffect = {
+    ...resp.effect,
+    meters: resp.effect.meters ? { ...resp.effect.meters } : undefined,
+  };
+
+  const president = snap.politicians.find((p) => p.id === snap.game.presidentId);
+  const cabinet = snap.game.cabinet;
+  const getSec = (seat: OfficeType): Politician | undefined => {
+    const id = cabinet[seat];
+    return id ? snap.politicians.find((p) => p.id === id) : undefined;
+  };
+  const ag       = getSec('AttorneyGeneral');
+  const secWar   = getSec('SecretaryOfWar');
+  const secState = getSec('SecretaryOfState');
+
+  // Multiplier accumulator. Each branch multiplies into `mult`; meters get
+  // mult-scaled at the end.
+  let mult = 1.0;
+
+  // --- Dred Scott (templateId === 'dredScott1857') ---
+  if (event.templateId === 'dredScott1857' && out.meters) {
+    // AG Justice expertise softens domestic + honest by 0.5.
+    if (ag?.expertise.includes('Justice')) {
+      if (out.meters.domestic != null) out.meters.domestic *= 0.5;
+      if (out.meters.honest   != null) out.meters.honest   *= 0.5;
+    }
+    if (president?.traits.includes('Iron Fist') && resp.id === 'r1') mult *= 1.3;
+    if (president?.traits.includes('Crisis Gov') && (resp.id === 'r2' || resp.id === 'r3')) {
+      if (out.meters.domestic != null) out.meters.domestic *= 0.7;
+    }
+  }
+
+  // --- John Brown (templateId === 'johnBrown1859') ---
+  if (event.templateId === 'johnBrown1859' && out.meters) {
+    if (secWar?.expertise.includes('Military')) mult *= 0.8;
+    if (secWar?.traits.includes('Decisive General')) {
+      if (out.meters.military != null) out.meters.military *= 1.2;
+    }
+    if (secWar?.traits.includes('Naive Strategist')) {
+      if (out.meters.military != null) out.meters.military *= 0.7;
+      if (out.meters.domestic != null) out.meters.domestic *= 1.3;
+    }
+    if (president?.traits.includes('Iron Fist') && resp.id === 'r3') mult *= 1.3;
+    if (president?.traits.includes('Crisis Gov') && resp.id === 'r2') {
+      if (out.meters.domestic != null) out.meters.domestic *= 0.7;
+    }
+    if (ag?.expertise.includes('Justice')) {
+      if (out.meters.honest != null) out.meters.honest *= 0.8;
+    }
+    // Slavery-position routing per AC #29 (ideology + state proxy).
+    if (secWar) {
+      const proSlaveryIdeo: ReadonlyArray<Ideology> = ['Conservative', 'Traditionalist', 'RW Populist'];
+      const antiSlaveryIdeo: ReadonlyArray<Ideology> = ['Liberal', 'Progressive', 'LW Populist'];
+      const inSlaveState = SLAVE_STATES_1856.includes(secWar.state);
+      const isPro  = proSlaveryIdeo.includes(secWar.ideology) && inSlaveState;
+      const isAnti = antiSlaveryIdeo.includes(secWar.ideology) && !inSlaveState;
+      if (isPro  && resp.id === 'r3') mult *= 1.3;
+      if (isAnti && resp.id === 'r1') {
+        if (out.meters.domestic != null) out.meters.domestic *= 1.3;
+      }
+    }
+  }
+
+  // --- Trent Affair (templateId === 'trent-affair') ---
+  if (event.templateId === 'trent-affair') {
+    if (secState?.expertise.includes('Foreign Affairs')) {
+      if (resp.id === 'r1') mult *= 0.7;
+      if (resp.id === 'r3') mult *= 1.2;
+    }
+    if (secState?.traits.includes('Crisis Gov') && resp.id === 'r1') mult *= 0.7;
+    if (secState?.traits.includes('Iron Fist')  && resp.id === 'r3') mult *= 1.3;
+    if (president?.traits.includes('Delegator')    && resp.id === 'r1') mult *= 1.5;
+    if (president?.traits.includes('Micromanager') && resp.id === 'r1') mult *= 0.5;
+
+    // PR6 Trent Affair log voice shift (AC #40). When SecState has Foreign
+    // Affairs expertise AND response is r1, override the effect text with
+    // Seward's historical Dec 26 framing snippet.
+    if (resp.id === 'r1' && secState?.expertise.includes('Foreign Affairs')) {
+      out.text = "Seward's note: Wilkes erred in failing to bring Trent into port for adjudication. War averted; Northern public mood grudgingly accepts.";
+    }
+  }
+
+  // --- Secession Winter (templateId === 'secession-winter') ---
+  if (event.templateId === 'secession-winter') {
+    const N = event.secessionDefectionCount ?? 0;
+    const band = secessionWinterBand(resp.id, N, president);
+    mult *= band;
+  }
+
+  // President Delegator / Micromanager — LAST, multiplies cumulative.
+  if (president?.traits.includes('Delegator'))    mult *= 1.5;
+  if (president?.traits.includes('Micromanager')) mult *= 0.5;
+
+  // Apply cumulative multiplier to every meter in the copy.
+  if (mult !== 1.0 && out.meters) {
+    for (const k of Object.keys(out.meters) as (keyof NationalMeters)[]) {
+      const v = out.meters[k];
+      if (v != null) out.meters[k] = v * mult;
+    }
+  }
+
+  return out;
+}
+
+// PR6 Secession Winter band → multiplier per AC #35.
+function secessionWinterBand(responseId: string, N: number, pres: Politician | undefined): number {
+  const isCrisisGov = pres?.traits.includes('Crisis Gov') === true;
+  if (responseId === 'r1') {                                  // Reinforce
+    if (N === 0 && isCrisisGov) return 0.3;                   // very good
+    if (N === 0)                return 0.6;                   // good
+    if (N <= 2)                 return 1.0;                   // partial
+    return 1.5;                                               // bad
+  }
+  if (responseId === 'r2') {                                  // Diplomatic
+    if (N === 0)                return isCrisisGov ? 0.6 : 1.0;
+    if (N >= 2)                 return 1.5;                   // bad
+    return 1.0;
+  }
+  // r3 (Acquiesce)
+  return 2.0;                                                 // any → very bad
+}
+
+// PR6 Secession Winter defection check. Runs BEFORE the modulation pass in
+// resolveEraEvent. For each cabinet seat in {Treasury, War, Interior, State}:
+//   1. Read occupant.
+//   2. Apply LOYALTY_DECAY from (state region × ideology) tables.
+//   3. If post-decay loyalty < LOYALTY_DEFECTION_THRESHOLD: defect.
+//      - Set snap.game.cabinet[seat] = null
+//      - Set occupant.currentOffice = null
+//      - Grant 'Traitor' trait via tryGrantTrait
+//      - Log line
+// Stores N (defector count) on event metadata for the modulation pass.
+function runSecessionWinterDefections(snap: FullGameSnapshot, event: EraEvent): void {
+  const seats: OfficeType[] = ['SecretaryOfTreasury', 'SecretaryOfWar', 'SecretaryOfInterior', 'SecretaryOfState'];
+  let defectionCount = 0;
+  for (const seat of seats) {
+    const occupantId = snap.game.cabinet[seat];
+    if (!occupantId) continue;
+    const sec = snap.politicians.find((p) => p.id === occupantId);
+    if (!sec) continue;
+    const stateRow = snap.states.find((s) => s.id === sec.state);
+    const region: string = stateRow?.region ?? 'Northeast';
+    const regionBase = (LOYALTY_REGION_BASE as Record<string, number>)[region] ?? 0;
+    const ideoMult   = LOYALTY_IDEOLOGY_MULT[sec.ideology] ?? 0;
+    const decay      = regionBase * ideoMult;
+    sec.loyalty = clamp(sec.loyalty - decay, LOYALTY_RANGE.min, LOYALTY_RANGE.max);
+    if (sec.loyalty < LOYALTY_DEFECTION_THRESHOLD) {
+      snap.game.cabinet[seat] = null;
+      sec.currentOffice = null;
+      const { granted } = tryGrantTrait(sec, 'Traitor');
+      defectionCount += 1;
+      const traitorTag = granted ? ' (gains Traitor)' : '';
+      addLog(snap, '2.4.3', 'event',
+        `${sec.firstName} ${sec.lastName} (${sec.state.toUpperCase()}) resigns as ${seat} to join the Confederacy${traitorTag}.`,
+        { politicianId: sec.id });
+    }
+  }
+  event.secessionDefectionCount = defectionCount;
 }
 
 function applyPostEffects(snap: FullGameSnapshot, event: EraEvent): void {
@@ -3030,6 +3239,60 @@ export function runPhase_2_5_1_Lingering(snap: FullGameSnapshot): void {
       apply(meter, 0.2);
     }
   }
+
+  // PR6 per-trait lingering-phase modulation. Applies AFTER the PR5 expertise
+  // bonus so the multiplier on Delegator/Micromanager-President compounds with
+  // the per-seat +0.2. Pure: no RNG, no snapshot mutation outside `apply()`.
+  const president = snap.politicians.find((p) => p.id === snap.game.presidentId);
+  let presMultiplier = 1.0;
+  if (president) {
+    if (president.traits.includes('Delegator'))   presMultiplier = 1.5;
+    if (president.traits.includes('Micromanager')) presMultiplier = 0.5;
+  }
+  // 2. Re-apply the differential of the PR5 expertise bonus when the President
+  //    holds Delegator/Micromanager. (multiplier - 1.0) * 0.2 on each matched
+  //    seat where the PR5 bonus fired.
+  if (presMultiplier !== 1.0) {
+    for (const { seat, meter } of cabinetBonuses) {
+      const occupantId = snap.game.cabinet[seat];
+      if (!occupantId) continue;
+      const sec = snap.politicians.find((p) => p.id === occupantId);
+      if (!sec) continue;
+      const primaryExpertise = OFFICE_EXPERTISE[seat];
+      if (primaryExpertise && sec.expertise.includes(primaryExpertise)) {
+        apply(meter, (presMultiplier - 1.0) * 0.2);
+      }
+    }
+  }
+  // 3. Apply per-trait additive lingering_phase rules to each occupied seat
+  //    AND to the President. Seat → primary meter mirrors cabinetBonuses;
+  //    President defaults to `honest` (Iron Fist split row carries its own
+  //    `meter` override, routed correctly inside applyTraitsForSeat).
+  const seatPrimaryMeter: Partial<Record<OfficeType, keyof NationalMeters>> = {
+    SecretaryOfState:     'domestic',
+    SecretaryOfTreasury:  'economic',
+    SecretaryOfWar:       'military',
+    SecretaryOfNavy:      'military',
+    AttorneyGeneral:      'honest',
+    SecretaryOfInterior:  'quality',
+    PostmasterGeneral:    'quality',
+  };
+  const applyTraitsForSeat = (p: Politician, primary: keyof NationalMeters): void => {
+    for (const rule of TRAIT_GOVERNANCE_EFFECTS) {
+      if (rule.context !== 'lingering_phase') continue;
+      if (rule.multiplier != null) continue;       // multipliers applied above
+      if (!p.traits.includes(rule.trait)) continue;
+      apply(rule.meter ?? primary, rule.magnitude);
+    }
+  };
+  for (const [seat, primary] of Object.entries(seatPrimaryMeter) as Array<[OfficeType, keyof NationalMeters]>) {
+    const occupantId = snap.game.cabinet[seat];
+    if (!occupantId) continue;
+    const sec = snap.politicians.find((p) => p.id === occupantId);
+    if (!sec) continue;
+    applyTraitsForSeat(sec, primary);
+  }
+  if (president) applyTraitsForSeat(president, 'honest');
 
   // National debt
   snap.game.nationalDebt = Math.max(0, snap.game.nationalDebt - snap.game.meters.revenue * 1_500_000);

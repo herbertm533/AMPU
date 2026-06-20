@@ -216,6 +216,25 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
       // eslint-disable-next-line no-console
       console.log('[migration] PR5: dropped legacy KeyAdvisor cabinet field and currentOffice references.');
     }
+    // PR6: backfill `loyalty` field on politicians missing it. Default 1.0
+    // (fully loyal). Engine code reads loyalty in Secession Winter only;
+    // 1772 politicians get the default and never trigger the mechanic.
+    // Idempotent: a second repair() call finds all loyalty values set and skips.
+    let loyaltyBackfilled = false;
+    for (const p of s.politicians as unknown as Array<Politician & { loyalty?: number }>) {
+      if (typeof p.loyalty !== 'number') {
+        p.loyalty = 1.0;
+        loyaltyBackfilled = true;
+      } else if (p.loyalty < 0 || p.loyalty > 1) {
+        p.loyalty = Math.max(0, Math.min(1, p.loyalty));
+        loyaltyBackfilled = true;
+      }
+    }
+    if (loyaltyBackfilled) {
+      dirty = true;
+      // eslint-disable-next-line no-console
+      console.log('[migration] PR6: backfilled politician.loyalty to 1.0 on missing entries.');
+    }
     return dirty ? { ...s } : s;
   }, []);
 
