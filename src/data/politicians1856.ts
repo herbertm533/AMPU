@@ -15,27 +15,29 @@ interface Seed {
   traits: string[]; // may contain the 8 migrated expertise names; split on build
   office?: 'President' | 'VicePresident' | 'ChiefJustice' | 'AssociateJustice' | 'Senator' | 'Representative' | 'Governor' | 'GeneralInChief' | 'Admiral' | 'SecretaryOfState' | 'SecretaryOfTreasury' | 'SecretaryOfWar' | 'SecretaryOfNavy' | 'AttorneyGeneral' | 'SecretaryOfInterior';
   isHistorical?: boolean;
+  loyalty?: number; // PR6: defaults to 1.0; explicit values for known-wavering 1860 figures
 }
 
 // A representative roster of major 1856 era figures plus generic fillers.
 const SEEDS: Seed[] = [
   // Blue presidency
-  { first: 'James', last: 'Buchanan', state: 'pa', party: 'BLUE', faction: 'fact_blue_cons', ideology: 'Conservative', age: 65, skills: [4, 3, 2, 0, 3, 3], command: 4, traits: ['Efficient'], office: 'President', isHistorical: true },
+  { first: 'James', last: 'Buchanan', state: 'pa', party: 'BLUE', faction: 'fact_blue_cons', ideology: 'Conservative', age: 65, skills: [4, 3, 2, 0, 3, 3], command: 4, traits: ['Passive', 'Naive Strategist'], office: 'President', isHistorical: true },
   { first: 'John C.', last: 'Breckinridge', state: 'ky', party: 'BLUE', faction: 'fact_blue_unionist', ideology: 'Conservative', age: 35, skills: [3, 3, 1, 1, 2, 3], command: 3, traits: ['Orator'], office: 'VicePresident', isHistorical: true },
 
   // Blue Conservative
   { first: 'Jefferson', last: 'Davis', state: 'ms', party: 'BLUE', faction: 'fact_blue_cons', ideology: 'Traditionalist', age: 48, skills: [4, 3, 1, 4, 2, 3], command: 4, traits: ['Nationalist', 'Military'], office: 'Senator', isHistorical: true },
   { first: 'James M.', last: 'Mason', state: 'va', party: 'BLUE', faction: 'fact_blue_cons', ideology: 'Traditionalist', age: 58, skills: [2, 3, 2, 0, 2, 3], command: 2, traits: ['Nationalist'], office: 'Senator', isHistorical: true },
   { first: 'Robert', last: 'Toombs', state: 'ga', party: 'BLUE', faction: 'fact_blue_cons', ideology: 'Traditionalist', age: 46, skills: [2, 4, 1, 1, 2, 3], command: 3, traits: ['Orator', 'Debater'], office: 'Senator', isHistorical: true },
-  { first: 'Howell', last: 'Cobb', state: 'ga', party: 'BLUE', faction: 'fact_blue_cons', ideology: 'Conservative', age: 41, skills: [3, 3, 1, 0, 3, 3], command: 3, traits: ['Economics'], isHistorical: true },
-  { first: 'John B.', last: 'Floyd', state: 'va', party: 'BLUE', faction: 'fact_blue_cons', ideology: 'Conservative', age: 50, skills: [2, 1, 0, 2, 3, 1], command: 2, traits: ['Corrupt'], isHistorical: true },
+  { first: 'Howell', last: 'Cobb', state: 'ga', party: 'BLUE', faction: 'fact_blue_cons', ideology: 'Conservative', age: 41, skills: [3, 3, 1, 0, 3, 3], command: 3, traits: ['Economics'], isHistorical: true, loyalty: 0.5 },
+  { first: 'John B.', last: 'Floyd', state: 'va', party: 'BLUE', faction: 'fact_blue_cons', ideology: 'Conservative', age: 50, skills: [2, 1, 0, 2, 3, 1], command: 2, traits: ['Corrupt', 'Iron Fist', 'Naive Strategist'], isHistorical: true, loyalty: 0.5 },
   { first: 'James L.', last: 'Orr', state: 'sc', party: 'BLUE', faction: 'fact_blue_cons', ideology: 'Conservative', age: 34, skills: [2, 3, 1, 0, 1, 2], command: 2, traits: [], isHistorical: true },
 
   // Blue Pop Sovereignty
   { first: 'Stephen A.', last: 'Douglas', state: 'il', party: 'BLUE', faction: 'fact_blue_popsov', ideology: 'Moderate', age: 43, skills: [3, 4, 2, 0, 2, 4], command: 4, traits: ['Orator', 'Debater'], office: 'Senator', isHistorical: true },
-  { first: 'Lewis', last: 'Cass', state: 'mi', party: 'BLUE', faction: 'fact_blue_popsov', ideology: 'Moderate', age: 74, skills: [3, 3, 2, 1, 3, 2], command: 3, traits: ['Globalist'], office: 'SecretaryOfState', isHistorical: true },
+  { first: 'Lewis', last: 'Cass', state: 'mi', party: 'BLUE', faction: 'fact_blue_popsov', ideology: 'Moderate', age: 74, skills: [3, 3, 2, 1, 3, 2], command: 3, traits: ['Globalist'], office: 'SecretaryOfState', isHistorical: true, loyalty: 0.9 },
   { first: 'William L.', last: 'Marcy', state: 'ny', party: 'BLUE', faction: 'fact_blue_popsov', ideology: 'Moderate', age: 70, skills: [3, 2, 1, 1, 3, 3], command: 2, traits: [], isHistorical: true },
-  { first: 'Franklin', last: 'Pierce', state: 'nh', party: 'BLUE', faction: 'fact_blue_popsov', ideology: 'Moderate', age: 52, skills: [2, 2, 1, 1, 2, 2], command: 2, traits: ['Passive'], isHistorical: true },
+  // PR6 within-pair stack allowed at curated seed: Pierce was uniquely both eager AND ineffectual
+  { first: 'Franklin', last: 'Pierce', state: 'nh', party: 'BLUE', faction: 'fact_blue_popsov', ideology: 'Moderate', age: 52, skills: [2, 2, 1, 1, 2, 2], command: 2, traits: ['Passive', 'Overeager'], isHistorical: true },
   { first: 'Daniel S.', last: 'Dickinson', state: 'ny', party: 'BLUE', faction: 'fact_blue_popsov', ideology: 'Moderate', age: 56, skills: [2, 3, 1, 0, 2, 3], command: 2, traits: [], isHistorical: true },
 
   // Blue Unionist
@@ -59,7 +61,7 @@ const SEEDS: Seed[] = [
   { first: 'Orville H.', last: 'Browning', state: 'il', party: 'RED', faction: 'fact_red_critt', ideology: 'Moderate', age: 50, skills: [2, 3, 2, 0, 1, 2], command: 2, traits: [], isHistorical: true },
 
   // Red Moderate
-  { first: 'Abraham', last: 'Lincoln', state: 'il', party: 'RED', faction: 'fact_red_mod', ideology: 'Moderate', age: 47, skills: [2, 3, 2, 0, 1, 2], command: 2, traits: ['Orator', 'Integrity'], isHistorical: true },
+  { first: 'Abraham', last: 'Lincoln', state: 'il', party: 'RED', faction: 'fact_red_mod', ideology: 'Moderate', age: 47, skills: [2, 3, 2, 0, 1, 2], command: 2, traits: ['Orator', 'Integrity', 'Crisis Gov', 'Delegator'], isHistorical: true },
   { first: 'William P.', last: 'Fessenden', state: 'me', party: 'RED', faction: 'fact_red_mod', ideology: 'Moderate', age: 49, skills: [3, 4, 2, 0, 2, 2], command: 3, traits: ['Economics'], office: 'Senator', isHistorical: true },
   { first: 'Lyman', last: 'Trumbull', state: 'il', party: 'RED', faction: 'fact_red_mod', ideology: 'Moderate', age: 43, skills: [3, 4, 3, 0, 1, 2], command: 3, traits: ['Integrity'], office: 'Senator', isHistorical: true },
   { first: 'Hannibal', last: 'Hamlin', state: 'me', party: 'RED', faction: 'fact_red_mod', ideology: 'Moderate', age: 47, skills: [3, 3, 1, 0, 3, 2], command: 2, traits: [], isHistorical: true },
@@ -87,9 +89,9 @@ const SEEDS: Seed[] = [
   // Military
   { first: 'Winfield', last: 'Scott', state: 'va', party: 'RED', faction: 'fact_red_mod', ideology: 'Moderate', age: 70, skills: [2, 0, 0, 5, 0, 1], command: 3, traits: ['Military', 'Celebrity'], office: 'GeneralInChief', isHistorical: true },
   { first: 'Robert E.', last: 'Lee', state: 'va', party: null, faction: null, ideology: 'Conservative', age: 49, skills: [2, 0, 0, 5, 1, 1], command: 3, traits: ['Military'], isHistorical: true },
-  { first: 'Ulysses S.', last: 'Grant', state: 'oh', party: null, faction: null, ideology: 'Moderate', age: 34, skills: [1, 0, 0, 4, 0, 0], command: 1, traits: ['Military'], isHistorical: true },
-  { first: 'William T.', last: 'Sherman', state: 'oh', party: null, faction: null, ideology: 'Moderate', age: 36, skills: [1, 0, 0, 4, 0, 0], command: 1, traits: ['Military'], isHistorical: true },
-  { first: 'George B.', last: 'McClellan', state: 'pa', party: 'BLUE', faction: 'fact_blue_popsov', ideology: 'Conservative', age: 30, skills: [2, 0, 0, 3, 0, 0], command: 2, traits: ['Military', 'Passive'], isHistorical: true },
+  { first: 'Ulysses S.', last: 'Grant', state: 'oh', party: null, faction: null, ideology: 'Moderate', age: 34, skills: [1, 0, 0, 4, 0, 0], command: 1, traits: ['Military', 'Decisive General'], isHistorical: true },
+  { first: 'William T.', last: 'Sherman', state: 'oh', party: null, faction: null, ideology: 'Moderate', age: 36, skills: [1, 0, 0, 4, 0, 0], command: 1, traits: ['Military', 'Decisive General'], isHistorical: true },
+  { first: 'George B.', last: 'McClellan', state: 'pa', party: 'BLUE', faction: 'fact_blue_popsov', ideology: 'Conservative', age: 30, skills: [2, 0, 0, 3, 0, 0], command: 2, traits: ['Military', 'Passive', 'Naive Strategist'], isHistorical: true },
 
   // Supreme Court 1856
   { first: 'Roger B.', last: 'Taney', state: 'md', party: null, faction: null, ideology: 'Traditionalist', age: 79, skills: [3, 2, 5, 0, 0, 2], command: 3, traits: [], office: 'ChiefJustice', isHistorical: true },
@@ -128,7 +130,7 @@ export function buildPoliticians1856(): Politician[] {
       birthYear: 1856 - seed.age,
       skills,
       traits,
-      loyalty: 1.0,
+      loyalty: seed.loyalty ?? 1.0,
       expertise,
       currentOffice: seed.office ? { type: seed.office } : null,
       careerTrack: null,
