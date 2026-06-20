@@ -1,0 +1,94 @@
+{
+  "scenario": "1772",
+  "startYear": 1772,
+  "startEra": "independence",
+  "finalYear": 1834,
+  "finalEra": "independence",
+  "phasesRun": 538,
+  "phasesSkipped": 62,
+  "errorPhases": [],
+  "totalEvents": 1586,
+  "contractTests": {
+    "passed": 266,
+    "failed": 0,
+    "failures": []
+  },
+  "pr4aCounts": {
+    "summaryLinesTotal": 20,
+    "presGeneral": 0,
+    "governor": 0,
+    "senatePre17": 0,
+    "house": 0,
+    "presPrimary": 0,
+    "internalParty": 20,
+    "oppCondBumpsObserved": 0,
+    "unlikableLargeBumpsObserved": 0,
+    "domesticApathyPresGenLines": 0
+  },
+  "cycleLogVolume": {
+    "cyclesObserved": 0,
+    "avgSummaryLinesPerCycle": 0,
+    "busiestCycles": []
+  },
+  "pr4aSamples": {
+    "presGeneral": [],
+    "governor": [],
+    "senatePre17": [],
+    "house": [],
+    "presPrimary": [],
+    "internalParty": [
+      {
+        "year": 1772,
+        "phase": "2.2.3",
+        "text": "Theodore Sedgwick's traits net +8 in the Patriot Conservatives leadership race — Debater (+8)."
+      },
+      {
+        "year": 1772,
+        "phase": "2.2.3",
+        "text": "Patrick Henry's traits net +8 in the Jefferson's Patriots leadership race — Debater (+8)."
+      },
+      {
+        "year": 1772,
+        "phase": "2.2.3",
+        "text": "John Adams's traits net +8 in the Franklin Patriots leadership race — Debater (+8)."
+      },
+      {
+        "year": 1788,
+        "phase": "2.2.3",
+        "text": "Frederick Muhlenberg's traits net +2 in the Jay Federalists leadership race — Propagandist (+2)."
+      },
+      {
+        "year": 1796,
+        "phase": "2.2.3",
+        "text": "William Otis's traits net +8 in the Sons of Liberty leadership race — Debater (+8)."
+      },
+      {
+        "year": 1798,
+        "phase": "2.2.3",
+        "text": "William Grayson's traits net +8 in the Sons of Liberty leadership race — Debater (+8)."
+      },
+      {
+        "year": 1804,
+        "phase": "2.2.3",
+        "text": "John Gibbs's traits net +14 in the American Whigs leadership race — Charismatic, Harmonious, Magician (+14)."
+      },
+      {
+        "year": 1810,
+        "phase": "2.2.3",
+        "text": "William Bedford's traits net +12 in the Moderate Patriots leadership race — Charismatic, Debater, Harmonious (+14) / Obscure (-2)."
+      },
+      {
+        "year": 1810,
+        "phase": "2.2.3",
+        "text": "Oliver Ellsworth's traits net +14 in the Ellsworth Progressives leadership race — Integrity, Debater, Harmonious (+14)."
+      },
+      {
+        "year": 1812,
+        "phase": "2.2.3",
+        "text": "Rufus King's traits net +8 in the Jefferson's Patriots leadership race — Debater (+8)."
+      }
+    ],
+    "oppCondBumps": [],
+    "domesticApathyPresGen": []
+  }
+}
