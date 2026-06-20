@@ -1,7 +1,8 @@
-import type { FullGameSnapshot, PhaseId } from '../types';
+import type { FullGameSnapshot, PhaseId, EraEvent } from '../types';
 import { nextPhaseInfo, getPhaseInfo, PHASE_SEQUENCE } from '../phases';
 import * as P from './phaseRunners';
 import { addLog } from './log';
+import { openSummaryIfNeeded } from './halfTermSummary';
 
 export interface PhaseAdvanceResult {
   nextPhaseId: PhaseId;
@@ -12,11 +13,12 @@ export interface PhaseAdvanceResult {
 
 // Run the current phase non-interactively if possible. Returns whether player
 // input is required.
-export function runCurrentPhase(snap: FullGameSnapshot): { needsPlayerInput?: 'draft' | 'eraEvent' | 'cabinet' | 'convention' | 'ccBuilder' | 'ccAIConfirm'; payload?: unknown } {
+export function runCurrentPhase(snap: FullGameSnapshot): { needsPlayerInput?: 'draft' | 'eraEvent' | 'cabinet' | 'convention' | 'ccBuilder' | 'ccAIConfirm'; payload?: unknown; acknowledgements?: EraEvent[] } {
   // Convention takes priority over phase progression
   if (snap.game.pendingConvention && !snap.game.pendingConvention.resolved) {
     return { needsPlayerInput: 'convention', payload: snap.game.pendingConvention };
   }
+  openSummaryIfNeeded(snap);
   const phaseId = snap.game.phaseId;
   const info = getPhaseInfo(phaseId);
   if (!info) return {};
@@ -42,9 +44,9 @@ export function runCurrentPhase(snap: FullGameSnapshot): { needsPlayerInput?: 'd
     case '2.4.1': P.runPhase_2_4_1_Deaths(snap); return {};
     case '2.4.2': P.runPhase_2_4_2_Anytime(snap); return {};
     case '2.4.3': {
-      const event = P.runPhase_2_4_3_Era(snap);
-      if (event) return { needsPlayerInput: 'eraEvent', payload: event };
-      return {};
+      const r = P.runPhase_2_4_3_Era(snap);
+      if (r.event) return { needsPlayerInput: 'eraEvent', payload: r.event, acknowledgements: r.acknowledgements };
+      return { acknowledgements: r.acknowledgements };
     }
     case '2.5.1': P.runPhase_2_5_1_Lingering(snap); return {};
     case '2.5.2': P.runPhase_2_5_2_Governors(snap); return {};

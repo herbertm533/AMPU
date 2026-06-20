@@ -15,6 +15,7 @@ import { startRevWar, runRevWarBattles, applyTreatyOfParis, applyFrenchAlliance 
 import { makeConvention } from './constitutionalConvention';
 import { instantiateDraftees } from '../data/draftImport';
 import { STANDARD_DRAFT_CLASSES } from '../data/standardDraftClasses';
+import { recordDeath, recordRetirement, recordBillPassed, recordBillFailed, recordEraEvent, recordMilestone, closeSummary } from './halfTermSummary';
 
 // ============================================================================
 // 2.1.1 Draft
@@ -2023,7 +2024,8 @@ export function runPhase_2_4_1_Deaths(snap: FullGameSnapshot): void {
 
     if (chance(deathChance)) {
       p.deathYear = snap.game.year;
-      addLog(snap, '2.4.1', 'death', `${p.firstName} ${p.lastName} (${p.state.toUpperCase()}, age ${p.age}) has died.`);
+      addLog(snap, '2.4.1', 'death', `${p.firstName} ${p.lastName} (${p.state.toUpperCase()}, age ${p.age}) has died.`, { deathCause: 'age', politicianId: p.id });
+      recordDeath(snap, p.id, 'age');
       markPoliticianDead(snap, p);
       continue;
     }
@@ -2031,7 +2033,8 @@ export function runPhase_2_4_1_Deaths(snap: FullGameSnapshot): void {
     const retireChance = clamp(retireRateFor(p.age) * cfg.retireMult, 0, 1);
     if (chance(retireChance)) {
       p.retiredYear = snap.game.year;
-      addLog(snap, '2.4.1', 'retire', `${p.firstName} ${p.lastName} (${p.state.toUpperCase()}, age ${p.age}) has retired.`);
+      addLog(snap, '2.4.1', 'retire', `${p.firstName} ${p.lastName} (${p.state.toUpperCase()}, age ${p.age}) has retired.`, { retireCause: 'age', politicianId: p.id });
+      recordRetirement(snap, p.id, 'age');
       markPoliticianRetired(snap, p);
     }
   }
@@ -2297,11 +2300,13 @@ function rollPersonalEvents(
           break;
         case 'death':
           p.deathYear = snap.game.year;
+          recordDeath(snap, p.id, 'event');
           markPoliticianDead(snap, p);
           didMutate = true;
           break;
         case 'forceRetire':
           p.retiredYear = snap.game.year;
+          recordRetirement(snap, p.id, 'event');
           markPoliticianRetired(snap, p);
           didMutate = true;
           break;
@@ -2331,12 +2336,16 @@ function rollPersonalEvents(
       .replace('{last}', p.lastName)
       .replace('{state}', p.state.toUpperCase());
 
+    const hasDeath = tpl.effects.some((e) => e.kind === 'death');
+    const hasForceRetire = tpl.effects.some((e) => e.kind === 'forceRetire');
     addLog(snap, '2.4.2', 'event', text, {
       templateId: tpl.id,
       politicianId: p.id,
       pool: 'personal',
       category: tpl.category,
       pvDelta: pvEff && (pvEff.kind === 'pvHit' || pvEff.kind === 'pvBump') ? pvEff.amount : undefined,
+      ...(hasDeath ? { deathCause: 'event' as const } : {}),
+      ...(hasForceRetire ? { retireCause: 'event' as const } : {}),
     });
   }
 
@@ -2357,29 +2366,32 @@ export function runPhase_2_4_2_Anytime(snap: FullGameSnapshot): void {
 // ============================================================================
 // 2.4.3 Era events
 // ============================================================================
-export function runPhase_2_4_3_Era(snap: FullGameSnapshot): EraEvent | null {
+export function runPhase_2_4_3_Era(snap: FullGameSnapshot): { event: EraEvent | null; acknowledgements: EraEvent[] } {
+  const acknowledgements: EraEvent[] = [];
   if (snap.game.scenarioId === '1772') {
     if (import.meta.env.DEV) validateEraGraph();
-    if (snap.game.gameEnded) return null; // an ending already fired
-    // Walk the graph. Foreign-actor (auto) nodes and nodes whose decider the
-    // player doesn't control are auto-resolved in the engine (by the
-    // controlling faction's ideology); the first player-controlled decision is
-    // returned for the modal. An ending short-circuits the loop (AC 29).
+    if (snap.game.gameEnded) return { event: null, acknowledgements };
     let event = selectEraGraphNode(snap);
     while (event && isAutoResolved(snap, event)) {
-      const respId = pickAIResponse(snap, event);
-      resolveEraEvent(snap, event.id, respId);
-      if (snap.game.gameEnded) return null;
+      const autoEventRef = event;
+      const respId = pickAIResponse(snap, autoEventRef);
+      resolveEraEvent(snap, autoEventRef.id, respId);
+      // F6: terminal-ending nodes flow straight to Campaign-Over; do not
+      // surface them via the acknowledgement modal.
+      if (!autoEventRef.triggersGameEnd) {
+        acknowledgements.push(JSON.parse(JSON.stringify(autoEventRef)) as EraEvent);
+      }
+      if (snap.game.gameEnded) return { event: null, acknowledgements };
       event = selectEraGraphNode(snap);
     }
-    return event ?? null;
+    return { event: event ?? null, acknowledgements };
   }
   if (snap.game.pendingEraEvents.length === 0) {
     const fresh = buildEraEventsForYear(snap.game.year);
     snap.game.pendingEraEvents = fresh;
   }
   const next = snap.game.pendingEraEvents.find((e) => !e.resolved);
-  return next ?? null;
+  return { event: next ?? null, acknowledgements };
 }
 
 export function resolveEraEvent(snap: FullGameSnapshot, eventId: string, responseId: string): void {
@@ -2395,6 +2407,7 @@ export function resolveEraEvent(snap: FullGameSnapshot, eventId: string, respons
   event.resolved = true;
   event.chosenResponseId = responseId;
   addLog(snap, '2.4.3', 'event', `${event.title}: ${resp.label}. ${resp.effect.text}`, { eraEvent: true, templateId: event.templateId, aiResolved });
+  recordEraEvent(snap, event.id, event.templateId, aiResolved, responseId);
   // Track completion for scripted scenarios
   if (event.templateId) snap.game.eraEventsCompleted.push(event.templateId);
 
@@ -2412,6 +2425,7 @@ export function resolveEraEvent(snap: FullGameSnapshot, eventId: string, respons
     // Promote colonies to states
     for (const s of snap.states) s.isColony = false;
     addLog(snap, '2.4.3', 'system', 'Governors will now be elected. The colonies are now states.');
+    recordMilestone(snap, '2.4.3', 'Governors unlocked; colonies promoted to states.');
   }
 
   // Terminal endings: consume triggersGameEnd (no existing consumer — the
@@ -2419,6 +2433,7 @@ export function resolveEraEvent(snap: FullGameSnapshot, eventId: string, respons
   if (event.triggersGameEnd && !snap.game.gameEnded) {
     snap.game.gameEnded = { year: snap.game.year, reason: event.title, templateId: event.templateId ?? event.id };
     addLog(snap, '2.4.3', 'system', `The campaign ends: ${event.title}.`);
+    recordMilestone(snap, '2.4.3', `Campaign ends: ${event.title}.`);
   }
 }
 
@@ -2477,6 +2492,7 @@ function handleScripted1772Consequences(snap: FullGameSnapshot, event: EraEvent,
     case 'lexington_concord': {
       if (responseId === 'a') {
         startRevWar(snap);
+        recordMilestone(snap, '2.4.3', 'The Revolutionary War begins.');
       }
       break;
     }
@@ -2487,6 +2503,7 @@ function handleScripted1772Consequences(snap: FullGameSnapshot, event: EraEvent,
     }
     case 'articles_of_confederation': {
       snap.game.articlesOfConfederation = true;
+      recordMilestone(snap, '2.4.3', 'Articles of Confederation ratified.');
       const cc = snap.game.continentalCongress;
       if (cc) {
         const oldPres = cc.presidentId ? snap.politicians.find((p) => p.id === cc.presidentId) : null;
@@ -2518,6 +2535,7 @@ function handleScripted1772Consequences(snap: FullGameSnapshot, event: EraEvent,
     }
     case 'treaty_of_paris': {
       applyTreatyOfParis(snap);
+      recordMilestone(snap, '2.4.3', 'Treaty of Paris signed; war ends in victory.');
       // Add western territories: OH KY TN MS AL as undeveloped territories
       const territories: { id: string; name: string; abbr: string; region: 'Northeast' | 'Midwest' | 'South' | 'West' | 'Border' }[] = [
         { id: 'oh', name: 'Ohio Territory', abbr: 'OH', region: 'Midwest' },
@@ -2598,6 +2616,7 @@ export function applyEffect(snap: FullGameSnapshot, effect: { meters?: Partial<N
     });
     snap.game.wars.push(warId);
     addLog(snap, '2.4.3', 'war', `${effect.startWar.name} begins against ${effect.startWar.against}.`);
+    recordMilestone(snap, '2.4.3', `${effect.startWar.name} begins.`);
   }
 }
 
@@ -2778,6 +2797,7 @@ export function runPhase_2_6_3_Floor(snap: FullGameSnapshot): void {
         bill.status = 'passed';
         applyEffect(snap, bill.effects);
         addLog(snap, '2.6.3', 'legislation', `"${bill.title}" PASSED Continental Congress (${result.aye} aye / ${result.nay} nay / ${result.abstain} abstain).`);
+        recordBillPassed(snap, bill.id);
         // Special handling: Establish Continental Army/Navy unlocks military
         if (bill.title.includes('Continental Army') || bill.title.includes('Continental Navy')) {
           // appointMilitary will run during Military phase
@@ -2785,6 +2805,7 @@ export function runPhase_2_6_3_Floor(snap: FullGameSnapshot): void {
       } else {
         bill.status = 'failed';
         addLog(snap, '2.6.3', 'legislation', `"${bill.title}" FAILED Continental Congress (${result.aye} aye / ${result.nay} nay / ${result.abstain} abstain).`);
+        recordBillFailed(snap, bill.id);
       }
     }
     snap.game.pendingLegislation = [];
@@ -2824,9 +2845,11 @@ export function runPhase_2_6_3_Floor(snap: FullGameSnapshot): void {
       bill.status = 'passed';
       applyEffect(snap, bill.effects);
       addLog(snap, '2.6.3', 'legislation', `"${bill.title}" PASSED. House ${house.yea}-${house.nay}, Senate ${senate.yea}-${senate.nay}.`);
+      recordBillPassed(snap, bill.id);
     } else {
       bill.status = 'failed';
       addLog(snap, '2.6.3', 'legislation', `"${bill.title}" FAILED. House ${house.yea}-${house.nay}, Senate ${senate.yea}-${senate.nay}.`);
+      recordBillFailed(snap, bill.id);
     }
   }
   snap.game.pendingLegislation = [];
@@ -2907,8 +2930,9 @@ export function runPhase_2_8_2_CourtMgmt(snap: FullGameSnapshot): void {
     if (!j) continue;
     if (j.age >= 75 && chance(0.15)) {
       j.retiredYear = snap.game.year;
+      recordRetirement(snap, j.id, 'court');
       vacateOffice(snap, j);
-      addLog(snap, '2.8.2', 'retire', `Justice ${j.firstName} ${j.lastName} retires from the Supreme Court.`);
+      addLog(snap, '2.8.2', 'retire', `Justice ${j.firstName} ${j.lastName} retires from the Supreme Court.`, { retireCause: 'court', politicianId: j.id });
       // Replace with new justice
       const candidates = snap.politicians.filter((p) => !p.currentOffice && !p.deathYear && !p.retiredYear && p.partyId === president.partyId && p.skills.judicial >= 2);
       candidates.sort((a, b) => b.skills.judicial - a.skills.judicial);
@@ -3375,6 +3399,7 @@ export function runPhase_2_10_End(snap: FullGameSnapshot): void {
     }
   }
   addLog(snap, '2.10', 'system', `End of ${snap.game.year - 2}-${snap.game.year} term.`);
+  closeSummary(snap);
 }
 
 // suppress unused

@@ -861,6 +861,9 @@ export interface GameState {
   // Bookmark into snapshot.events: ids newer than this are "just fired" on the
   // Anytime Events page. Bumped to the current head when exiting 2.4.2.
   lastAnytimeFeedHeadId?: string;
+  // Per-half-term delta records, opened at the top of each turn and closed at
+  // 2.10. Read by the End-of-Half-Term page and the Campaign-Over recap.
+  halfTermSummaries?: HalfTermSummary[];
 }
 
 export interface DraftHistoryPick {
@@ -959,6 +962,38 @@ export interface FactionLeadershipEntry {
   success?: boolean;
   reason?: 'death' | 'retire' | 'defect' | 'promoted' | 'replaced' | 'challenge-win'
          | 'challenge-loss' | 'election';
+}
+
+export type DeathCause =
+  | 'age'
+  | 'battle'
+  | 'event'
+  | 'assassination';
+
+export type RetireCause =
+  | 'age'
+  | 'event'
+  | 'court';
+
+// Per-half-term delta record. Opened at the start of a new turn (the first
+// runCurrentPhase call where the current half-term has no summary yet),
+// populated by phase runners as the turn unfolds, and closed at 2.10. Read by
+// the End-of-Half-Term page (current-turn entry) and Campaign-Over recap
+// (historical entries).
+export interface HalfTermSummary {
+  startYear: number;
+  endYear: number;
+  metersStart: NationalMeters;
+  metersEnd: NationalMeters;
+  factionSizesStart: Record<string, number>;
+  factionSizesEnd: Record<string, number>;
+  pvSnapshotStart: Record<string, number>;
+  deaths: { politicianId: string; year: number; cause: DeathCause; office?: string }[];
+  retirements: { politicianId: string; year: number; cause: RetireCause; office?: string }[];
+  billsPassed: string[];
+  billsFailed: string[];
+  eraEventsResolved: { eraEventId: string; templateId?: string; aiResolved: boolean; chosenResponseId: string }[];
+  milestones: { phase: PhaseId; text: string }[];
 }
 
 // A draftee imported from the user's CSV dataset. Persisted on the game state

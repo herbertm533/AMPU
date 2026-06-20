@@ -31,6 +31,8 @@ import { TerritoriesPage } from './TerritoriesPage';
 import { AnytimeEventsPage } from './AnytimeEventsPage';
 import { EraEventsPage } from './EraEventsPage';
 import { ContinentalCongressBuilderPage } from './ContinentalCongressBuilderPage';
+import { DeathsRetirementsPage } from './DeathsRetirementsPage';
+import { EndOfHalfTermPage } from './EndOfHalfTermPage';
 
 export type PageId =
   | 'dashboard'
@@ -65,7 +67,9 @@ export type PageId =
   | 'territories'
   | 'anytimeEvents'
   | 'eraEvents'
-  | 'continentalCongressBuilder';
+  | 'continentalCongressBuilder'
+  | 'deathsRetirements'
+  | 'endOfHalfTerm';
 
 export const Pages: Record<PageId, () => JSX.Element> = {
   dashboard: Dashboard,
@@ -101,4 +105,6 @@ export const Pages: Record<PageId, () => JSX.Element> = {
   anytimeEvents: AnytimeEventsPage,
   eraEvents: EraEventsPage,
   continentalCongressBuilder: ContinentalCongressBuilderPage,
+  deathsRetirements: DeathsRetirementsPage,
+  endOfHalfTerm: EndOfHalfTermPage,
 };
