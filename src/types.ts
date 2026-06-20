@@ -418,6 +418,51 @@ export const MORTALITY_RULES = {
   }>,
 } as const;
 
+export const ABILITY_LOSS_RULES = {
+  // --- Old-age decay (runPhase_2_4_1_Deaths) ---
+  oldAge: {
+    minAge: 70,            // below this, decay chance is 0 (aligns with pv.ts:83 age penalty + the 70+ death/retire brackets)
+    baseChance: 0.10,      // per-turn P(one decay event) at/above minAge; mid of the ~8-12% band
+    // Additive bumps to baseChance by age bracket (descending; first match wins, like MORTALITY_RULES.deathBracket).
+    ageBracketBonus: [
+      { minAge: 85, bonus: 0.06 },
+      { minAge: 78, bonus: 0.03 },
+      { minAge: 70, bonus: 0.0  },
+    ],
+    amount: 1,             // points removed from the chosen stat per fired event
+    // Longevity mitigation slot (Q9): Hale is NOT in the Trait union, so this is
+    // unused in PR2a and left here only as the documented hook for the trait PR.
+    haleChanceMult: 1.0,
+  },
+
+  // --- Battle-loss penalties (runRevWarBattles) ---
+  // Per the F-BATTLE-TIER reference. Each entry is the stat -> points to dock the
+  // senior commander on a LOST battle of that type/tier. Command & judicial never appear.
+  battle: {
+    // Ground losses, by difficulty tier.
+    groundLossByTier: {
+      difficult: { military: 1 },
+      moderate:  { military: 1, governing: 1, legislative: 1, admin: 1 },
+      easy:      { military: 1, governing: 1, legislative: 1, admin: 1 },
+    },
+    // Naval losses have no difficulty tier in AMPU -> military only.
+    navalLoss: { military: 1 },
+    // Phase-level: losing the MAJORITY of ground battles this phase -> admin -1 (Q16: IN).
+    majorityGroundLossAdmin: 1,
+  },
+} as const satisfies {
+  oldAge: {
+    minAge: number; baseChance: number;
+    ageBracketBonus: { minAge: number; bonus: number }[];
+    amount: number; haleChanceMult: number;
+  };
+  battle: {
+    groundLossByTier: Record<'difficult' | 'moderate' | 'easy', Partial<Record<SkillKey, number>>>;
+    navalLoss: Partial<Record<SkillKey, number>>;
+    majorityGroundLossAdmin: number;
+  };
+};
+
 export const ANYTIME_EVENTS_RULES = {
   baseFireChance: 0.05,
   nationalBaseFireChance: 0.70,

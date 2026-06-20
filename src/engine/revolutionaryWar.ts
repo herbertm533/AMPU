@@ -1,7 +1,9 @@
-import type { FullGameSnapshot, Politician, BattleRecord, RevolutionaryWar } from '../types';
+import type { FullGameSnapshot, Politician, BattleRecord, RevolutionaryWar, SkillKey } from '../types';
+import { ABILITY_LOSS_RULES } from '../types';
 import { addLog } from './log';
 import { d, d100, chance, pick } from '../rng';
 import { recordDeath } from './halfTermSummary';
+import { loseSkill } from './abilities';
 
 const BATTLE_NAMES_GROUND = ['Bunker Hill', 'Long Island', 'Trenton', 'Princeton', 'Brandywine', 'Saratoga', 'Monmouth', 'Camden', 'Cowpens', "Guilford Courthouse", 'Yorktown', 'Charleston', 'Savannah', 'Germantown', 'Kings Mountain', 'Fort Ticonderoga'];
 const BATTLE_NAMES_NAVAL = ["Off Flamborough Head", 'Penobscot Bay', 'Off the Capes', 'Chesapeake Bay', "Block Island", 'Off the Carolinas'];
@@ -103,6 +105,26 @@ function applyCasualties(snap: FullGameSnapshot, war: RevolutionaryWar, difficul
   }
 }
 
+// Apply a per-tier penalty map to one commander, after casualties. Skips a
+// commander already killed this battle (deathYear set by applyCasualties) so a
+// dead general is not also "demoted". Logs each stat that actually drops.
+function applyBattleLoss(
+  snap: FullGameSnapshot,
+  commander: Politician | undefined,
+  penalties: Partial<Record<SkillKey, number>>,
+  battleName: string,
+): void {
+  if (!commander || commander.deathYear) return;
+  for (const [skill, amount] of Object.entries(penalties) as [SkillKey, number][]) {
+    const before = commander.skills[skill];
+    if (loseSkill(commander, skill, amount)) {
+      addLog(snap, '2.7.2', 'event',
+        `${commander.firstName} ${commander.lastName} falters after the defeat at ${battleName} — ${skill[0].toUpperCase() + skill.slice(1)} ${before} → ${commander.skills[skill]}.`,
+        { politicianId: commander.id, battle: battleName });
+    }
+  }
+}
+
 export function runRevWarBattles(snap: FullGameSnapshot): void {
   const war = ensureWar(snap);
   if (!war.active) return;
@@ -131,10 +153,13 @@ export function runRevWarBattles(snap: FullGameSnapshot): void {
     war.battleLog.push(battle);
     addLog(snap, '2.7.2', 'war', battle.text);
     if (win) war.navalWins++; else war.navalLosses++;
+    if (!win) applyBattleLoss(snap, admiral, ABILITY_LOSS_RULES.battle.navalLoss, navalName);
   }
 
   // Ground phase — multiple battles
   if (general) {
+    const groundLossesBefore = war.currentGroundLosses;
+    const groundWinsBefore = war.currentGroundWins;
     let battleCount = 0;
     do {
       const planning = secWar?.skills.admin != null ? secWar.skills.admin + general.skills.military : general.skills.military * 2;
@@ -157,8 +182,19 @@ export function runRevWarBattles(snap: FullGameSnapshot): void {
       addLog(snap, '2.7.2', 'war', battle.text);
       if (win) war.currentGroundWins++; else war.currentGroundLosses++;
       applyCasualties(snap, war, difficulty, battle, win ? 'win' : 'loss');
+      if (!win) {
+        applyBattleLoss(snap, general, ABILITY_LOSS_RULES.battle.groundLossByTier[difficulty], name);
+      }
       battleCount++;
     } while (battleCount < 3 && d100() <= 66);
+
+    // Majority-of-ground-losses this phase -> admin -1 (Q16: IN). Tallies are
+    // cumulative across the war, so diff against the pre-loop snapshot.
+    const lostThisPhase = war.currentGroundLosses - groundLossesBefore;
+    const wonThisPhase = war.currentGroundWins - groundWinsBefore;
+    if (lostThisPhase > wonThisPhase && lostThisPhase > 0) {
+      applyBattleLoss(snap, general, { admin: ABILITY_LOSS_RULES.battle.majorityGroundLossAdmin }, 'the campaign');
+    }
   }
 
   // Check win/loss conditions
