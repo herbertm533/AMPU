@@ -16,12 +16,20 @@ export function Draft(): JSX.Element {
   const order = g.draftRoundOrder;
   const inLiveDraft = g.phaseId === '2.1.1' && order.length > 0;
 
+  const isInaugural = g.year === g.startYear;
+  const titlePrefix = isInaugural ? 'Inaugural Draft' : 'Draft';
+  const pillLabel = isInaugural ? 'INAUGURAL' : 'ROOKIE';
+  const pillClass = isInaugural ? 'bg-amber-500 text-slate-900' : 'bg-slate-300 text-slate-700';
+
   if (!inLiveDraft) {
     const lastYear = g.lastDraftYear;
     return (
       <div>
         <DraftTabs />
-        <h2 className="text-xl font-bold mb-2">Draft</h2>
+        <div className="flex items-start justify-between mb-2 gap-3">
+          <h2 className="text-xl font-bold">{titlePrefix} — {g.year}</h2>
+          <span className={`text-[10px] font-semibold uppercase tracking-wide rounded px-1.5 py-0.5 ${pillClass}`}>{pillLabel}</span>
+        </div>
         {g.pendingDraftPool.length === 0 && order.length === 0 && lastYear != null ? (
           <div className="rounded border border-slate-300 dark:border-slate-700 p-4 space-y-3">
             <p className="text-sm">The {lastYear} draft is complete. Continue to the next phase.</p>
@@ -40,7 +48,10 @@ export function Draft(): JSX.Element {
     return (
       <div>
         <DraftTabs />
-        <h2 className="text-xl font-bold mb-2">Draft</h2>
+        <div className="flex items-start justify-between mb-2 gap-3">
+          <h2 className="text-xl font-bold">{titlePrefix} — {g.year}</h2>
+          <span className={`text-[10px] font-semibold uppercase tracking-wide rounded px-1.5 py-0.5 ${pillClass}`}>{pillLabel}</span>
+        </div>
         <div className="rounded border border-slate-300 dark:border-slate-700 p-4 space-y-3">
           <p className="text-sm">Draft pool exhausted. Continue to the next phase.</p>
           <button onClick={() => advance()} className="rounded bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-1.5 text-sm font-semibold">Continue</button>
@@ -103,8 +114,16 @@ export function Draft(): JSX.Element {
     <div>
       <DraftTabs />
       <div className="flex items-start justify-between mb-3 flex-wrap gap-3">
-        <div>
-          <h2 className="text-xl font-bold">Draft — {g.year}</h2>
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 flex-wrap">
+            <h2 className="text-xl font-bold">{titlePrefix} — {g.year}</h2>
+            <span className={`text-[10px] font-semibold uppercase tracking-wide rounded px-1.5 py-0.5 ${pillClass}`}>{pillLabel}</span>
+          </div>
+          {isInaugural && (
+            <div className="mt-2 rounded border border-amber-400 bg-amber-50 dark:bg-amber-900/20 px-3 py-2 text-sm text-amber-900 dark:text-amber-200">
+              The founding generation. These are the marquee historical figures of pre-revolutionary America, drafted onto factions in snake order. From {g.startYear + 4} onward, drafts will be smaller classes of newly-eligible rookies (born ~25 years ago).
+            </div>
+          )}
           <div className="text-sm text-slate-600 dark:text-slate-400 mt-1">
             Pick <span className="font-semibold">{currentPickNumber}</span> of <span className="font-semibold">{totalPicks}</span>
             {' · '}Round <span className="font-semibold">{currentRound}</span>

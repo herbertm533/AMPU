@@ -13,7 +13,7 @@ import { loadStandardDraftClasses } from '../data/standardDraftClasses';
 
 type Modal =
   | { type: 'none' }
-  | { type: 'eraEvent'; event: EraEvent }
+  | { type: 'eraEvent'; event: EraEvent; mode?: 'pick' | 'acknowledge' }
   | { type: 'convention'; convention: ConstitutionalConvention };
 
 interface GameContextValue {
@@ -30,6 +30,7 @@ interface GameContextValue {
   simToMyNextPick: () => Promise<void>;
   simToEndOfDraft: () => Promise<void>;
   chooseEraResponse: (eventId: string, responseId: string) => Promise<void>;
+  acknowledgeEraEvent: () => void;
   setCareerTrack: (politicianId: string, track: Politician['careerTrack']) => Promise<void>;
   attemptRelocation: (politicianId: string, destStateId: string) => Promise<void>;
   attemptIdeologyShift: (politicianId: string) => Promise<void>;
@@ -64,6 +65,9 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
   const [loading, setLoading] = useState(true);
   const [modal, setModal] = useState<Modal>({ type: 'none' });
   const [hasSave, setHasSave] = useState(false);
+  // Auto-resolved era-event acknowledgements pending UI surface, one at a time.
+  // Lives in React state only; dropped on reload per spec edge case.
+  const [ackQueue, setAckQueue] = useState<EraEvent[]>([]);
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     const saved = localStorage.getItem('ampu-theme');
     if (saved === 'light' || saved === 'dark') return saved;
@@ -128,6 +132,10 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
       }
       years.sort((a, b) => a.year - b.year);
       s.game.draftHistory = years;
+      dirty = true;
+    }
+    if (s.game.halfTermSummaries == null) {
+      s.game.halfTermSummaries = [];
       dirty = true;
     }
     // Legacy career-track migration, gated on the careerGains sentinel: the
@@ -207,6 +215,19 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
     setLoading(false);
   }, [repair]);
 
+  // Filter out terminal-ending acknowledgements (defense in depth on top of the
+  // engine-side F6 exclusion) and queue the rest. Returns the head event to
+  // surface immediately, or null if nothing to enqueue.
+  const enqueueAcks = useCallback((draft: FullGameSnapshot, acks: EraEvent[] | undefined): EraEvent | null => {
+    if (!acks || acks.length === 0) return null;
+    const endedTpl = draft.game.gameEnded?.templateId;
+    const filtered = acks.filter((e) => !endedTpl || e.templateId !== endedTpl);
+    if (filtered.length === 0) return null;
+    const [head, ...rest] = filtered;
+    if (rest.length > 0) setAckQueue((q) => [...q, ...rest]);
+    return head;
+  }, []);
+
   const advance = useCallback(async () => {
     if (!snapshot) return;
     const draft: FullGameSnapshot = JSON.parse(JSON.stringify(snapshot));
@@ -222,7 +243,12 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
     }
     if (result.needsPlayerInput === 'eraEvent') {
       setSnapshot(draft);
-      setModal({ type: 'eraEvent', event: result.payload as EraEvent });
+      const ackHead = enqueueAcks(draft, result.acknowledgements);
+      if (ackHead) {
+        setModal({ type: 'eraEvent', event: ackHead, mode: 'acknowledge' });
+      } else {
+        setModal({ type: 'eraEvent', event: result.payload as EraEvent });
+      }
       await persist(draft);
       return;
     }
@@ -258,8 +284,12 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
     // Otherwise, advance to next phase
     advancePhase(draft);
     setSnapshot(draft);
+    const ackHead = enqueueAcks(draft, result.acknowledgements);
+    if (ackHead) {
+      setModal({ type: 'eraEvent', event: ackHead, mode: 'acknowledge' });
+    }
     await persist(draft);
-  }, [snapshot, persist]);
+  }, [snapshot, persist, enqueueAcks]);
 
   const runEventsNow = useCallback(async () => {
     if (!snapshot) return;
@@ -282,7 +312,12 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
     draft.game.newlyFiredEventIds = ids;
     if (result.needsPlayerInput === 'eraEvent') {
       setSnapshot(draft);
-      setModal({ type: 'eraEvent', event: result.payload as EraEvent });
+      const ackHead = enqueueAcks(draft, result.acknowledgements);
+      if (ackHead) {
+        setModal({ type: 'eraEvent', event: ackHead, mode: 'acknowledge' });
+      } else {
+        setModal({ type: 'eraEvent', event: result.payload as EraEvent });
+      }
       await persist(draft);
       return;
     }
@@ -293,8 +328,12 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
       return;
     }
     setSnapshot(draft);
+    const ackHead = enqueueAcks(draft, result.acknowledgements);
+    if (ackHead) {
+      setModal({ type: 'eraEvent', event: ackHead, mode: 'acknowledge' });
+    }
     await persist(draft);
-  }, [snapshot, persist]);
+  }, [snapshot, persist, enqueueAcks]);
 
   const draftPick = useCallback(async (politicianId: string) => {
     if (!snapshot) return;
@@ -408,7 +447,12 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
     }
     if (replay.needsPlayerInput === 'eraEvent') {
       setSnapshot(draft);
-      setModal({ type: 'eraEvent', event: replay.payload as EraEvent });
+      const ackHead = enqueueAcks(draft, replay.acknowledgements);
+      if (ackHead) {
+        setModal({ type: 'eraEvent', event: ackHead, mode: 'acknowledge' });
+      } else {
+        setModal({ type: 'eraEvent', event: replay.payload as EraEvent });
+      }
       await persist(draft);
       return;
     }
@@ -418,7 +462,12 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
       await persist(draft);
       return;
     }
-    setModal({ type: 'none' });
+    const ackHead = enqueueAcks(draft, replay.acknowledgements);
+    if (ackHead) {
+      setModal({ type: 'eraEvent', event: ackHead, mode: 'acknowledge' });
+    } else {
+      setModal({ type: 'none' });
+    }
     // Advance. For the 1772 graph we KEEP resolved era events in
     // pendingEraEvents for the life of the era — eventChose branch predicates and
     // the Era Events history page read their chosenResponseId (bounded, <=~32
@@ -431,7 +480,19 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
     advancePhase(draft);
     setSnapshot(draft);
     await persist(draft);
-  }, [snapshot, persist]);
+  }, [snapshot, persist, enqueueAcks]);
+
+  const acknowledgeEraEvent = useCallback((): void => {
+    setAckQueue((q) => {
+      if (q.length === 0) {
+        setModal({ type: 'none' });
+        return q;
+      }
+      const [next, ...rest] = q;
+      setModal({ type: 'eraEvent', event: next, mode: 'acknowledge' });
+      return rest;
+    });
+  }, []);
 
   const setConventionVote = useCallback((articleKey: string, optionId: string): void => {
     if (!snapshot?.game.pendingConvention) return;
@@ -614,6 +675,7 @@ export function GameProvider({ children }: { children: ReactNode }): JSX.Element
     simToMyNextPick,
     simToEndOfDraft,
     chooseEraResponse,
+    acknowledgeEraEvent,
     setCareerTrack,
     attemptRelocation,
     attemptIdeologyShift,

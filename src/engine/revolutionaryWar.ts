@@ -1,6 +1,7 @@
 import type { FullGameSnapshot, Politician, BattleRecord, RevolutionaryWar } from '../types';
 import { addLog } from './log';
 import { d, d100, chance, pick } from '../rng';
+import { recordDeath } from './halfTermSummary';
 
 const BATTLE_NAMES_GROUND = ['Bunker Hill', 'Long Island', 'Trenton', 'Princeton', 'Brandywine', 'Saratoga', 'Monmouth', 'Camden', 'Cowpens', "Guilford Courthouse", 'Yorktown', 'Charleston', 'Savannah', 'Germantown', 'Kings Mountain', 'Fort Ticonderoga'];
 const BATTLE_NAMES_NAVAL = ["Off Flamborough Head", 'Penobscot Bay', 'Off the Capes', 'Chesapeake Bay', "Block Island", 'Off the Carolinas'];
@@ -85,8 +86,9 @@ function applyCasualties(snap: FullGameSnapshot, war: RevolutionaryWar, difficul
     const idx = Math.floor(Math.random() * candidates.length);
     const victim = candidates.splice(idx, 1)[0];
     victim.deathYear = snap.game.year;
+    recordDeath(snap, victim.id, 'battle');
     battle.killed.push(victim.id);
-    addLog(snap, '2.7.2', 'death', `${victim.firstName} ${victim.lastName} killed at ${battle.name}.`);
+    addLog(snap, '2.7.2', 'death', `${victim.firstName} ${victim.lastName} killed at ${battle.name}.`, { deathCause: 'battle', politicianId: victim.id, battle: battle.name });
   }
   for (let i = 0; i < wounds && candidates.length > 0; i++) {
     const idx = Math.floor(Math.random() * candidates.length);
