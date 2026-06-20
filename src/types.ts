@@ -73,17 +73,9 @@ export type Trait =
   | 'Manipulative'
   | 'Celebrity'
   | 'Magician'
-  | 'Naval'
-  | 'Education'
-  | 'Economics'
-  | 'Business'
-  | 'Agriculture'
-  | 'Environment'
-  | 'Media'
   | 'Nationalist'
   | 'Globalist'
   | 'Reformist'
-  | 'Military'
   | 'Egghead'
   | 'Leadership'
   | 'Incompetent'
@@ -121,17 +113,9 @@ export const POSITIVE_TRAITS: Trait[] = [
   'Manipulative',
   'Celebrity',
   'Magician',
-  'Naval',
-  'Education',
-  'Economics',
-  'Business',
-  'Agriculture',
-  'Environment',
-  'Media',
   'Nationalist',
   'Globalist',
   'Reformist',
-  'Military',
   'Egghead',
   'Leadership',
   'Ideologue',
@@ -159,6 +143,20 @@ export const NEGATIVE_TRAITS: Trait[] = [
   'Failed Bid',
 ];
 
+// Expertise — a third character axis, distinct from skills and traits: what a
+// politician studied or worked their way up through. Exactly 19 tags.
+export type Expertise =
+  | 'Agriculture' | 'Business' | 'Economics' | 'Education' | 'Energy'
+  | 'Environment' | 'Foreign Affairs' | 'Healthcare' | 'Housing' | 'Justice'
+  | 'Labor' | 'Media' | 'Military' | 'Naval' | 'Science' | 'Technology'
+  | 'Trade' | 'Transportation' | 'Welfare';
+
+export const EXPERTISE: Expertise[] = [
+  'Agriculture', 'Business', 'Economics', 'Education', 'Energy', 'Environment',
+  'Foreign Affairs', 'Healthcare', 'Housing', 'Justice', 'Labor', 'Media',
+  'Military', 'Naval', 'Science', 'Technology', 'Trade', 'Transportation', 'Welfare',
+];
+
 // Career-track tables — single source for engine rolls AND the page legend.
 export const TRACK_SKILL: Record<CareerTrack, SkillKey | null> = {
   Private: null,
@@ -171,13 +169,25 @@ export const TRACK_SKILL: Record<CareerTrack, SkillKey | null> = {
 };
 
 export const TRACK_THEMED_TRAITS: Record<CareerTrack, Trait[]> = {
-  Private: ['Celebrity', 'Business', 'Media'],
-  Military: ['Military', 'Naval', 'Crisis Manager'],
-  Governing: ['Leadership', 'Charismatic', 'Agriculture'],
-  Administration: ['Efficient', 'Economics', 'Education'],
+  Private: ['Celebrity', 'Propagandist', 'Orator'],
+  Military: ['Crisis Manager', 'Leadership'],
+  Governing: ['Leadership', 'Charismatic', 'Harmonious'],
+  Administration: ['Efficient', 'Egghead', 'Leadership'],
   Legislative: ['Orator', 'Debater', 'Reformist'],
   Judicial: ['Integrity', 'Egghead', 'Harmonious'],
   Backroom: ['Manipulative', 'Kingmaker', 'Numberfudger'],
+};
+
+// Career-track exit -> expertise (the Military/Naval and economic themes that
+// left TRACK_THEMED_TRAITS now land on the expertise axis). null = no grant.
+export const TRACK_EXPERTISE: Record<CareerTrack, Expertise | null> = {
+  Private: 'Business',
+  Military: 'Military',
+  Governing: 'Agriculture',
+  Administration: 'Economics',
+  Legislative: null,
+  Judicial: 'Justice',
+  Backroom: null,
 };
 
 export const CAREER_RANDOM_NEGATIVES: Trait[] = ['Corrupt', 'Scandalous', 'Controversial', 'Flip-Flopper'];
@@ -470,6 +480,25 @@ export type OfficeType =
   | 'CCPresident'
   | 'Ambassador';
 
+// Cabinet / cabinet-level appointment -> expertise. Offices not listed grant
+// nothing (PMG, KeyAdvisor, etc.).
+export const OFFICE_EXPERTISE: Partial<Record<OfficeType, Expertise>> = {
+  SecretaryOfState: 'Foreign Affairs',
+  SecretaryOfTreasury: 'Economics',
+  SecretaryOfWar: 'Military',
+  AttorneyGeneral: 'Justice',
+  GeneralInChief: 'Military',
+  Admiral: 'Naval',
+};
+
+// Committee-chair appointment -> expertise (the 1856/general committee taxonomy).
+export const COMMITTEE_EXPERTISE: Record<'Domestic' | 'Foreign' | 'Economic' | 'Justice', Expertise> = {
+  Domestic: 'Welfare',
+  Foreign: 'Foreign Affairs',
+  Economic: 'Economics',
+  Justice: 'Justice',
+};
+
 export interface OfficeRef {
   type: OfficeType;
   stateId?: string;
@@ -499,6 +528,7 @@ export interface Politician {
   retiredYear?: number;
   skills: Skills;
   traits: Trait[];
+  expertise: Expertise[];
   currentOffice: OfficeRef | null;
   careerTrack: CareerTrack | null;
   careerTrackYears: number;
@@ -1009,6 +1039,7 @@ export interface ImportedDraftee {
   skills: Skills;
   command: number;
   traits: Trait[];
+  expertise: Expertise[];
 }
 
 export interface ConventionVote {

@@ -94,11 +94,12 @@ export function DraftScouting(): JSX.Element {
                       <th className="px-1.5 py-1.5 text-right">Bck</th>
                       <th className="px-1.5 py-1.5 text-right">Cmd</th>
                       <th className="px-1.5 py-1.5 text-left">Traits</th>
+                      <th className="px-1.5 py-1.5 text-left">Expertise</th>
                     </tr>
                   </thead>
                   <tbody>
                     {candidates.length === 0 ? (
-                      <tr><td colSpan={14} className="px-2 py-3 text-center text-xs text-slate-400">No candidates for this year.</td></tr>
+                      <tr><td colSpan={15} className="px-2 py-3 text-center text-xs text-slate-400">No candidates for this year.</td></tr>
                     ) : candidates.map((d, i) => {
                       const heldBack = !validStateIds.has(d.state);
                       return (
@@ -117,6 +118,7 @@ export function DraftScouting(): JSX.Element {
                           <td className="px-1.5 py-1 text-right">{d.skills.backroom}</td>
                           <td className="px-1.5 py-1 text-right">{d.command}</td>
                           <td className="px-1.5 py-1 text-[11px]">{d.traits.join(', ')}</td>
+                          <td className="px-1.5 py-1 text-[11px]">{d.expertise.length > 0 ? d.expertise.join(', ') : ''}</td>
                         </tr>
                       );
                     })}

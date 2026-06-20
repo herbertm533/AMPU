@@ -1,4 +1,4 @@
-import type { Ideology, Trait, Politician, ImportedDraftee, Skills } from '../types';
+import type { Ideology, Trait, Expertise, Politician, ImportedDraftee, Skills } from '../types';
 import { IDEOLOGY_ORDER, POSITIVE_TRAITS, NEGATIVE_TRAITS } from '../types';
 import { uid } from '../rng';
 import { resolveStateId } from './expansionStates';
@@ -6,6 +6,27 @@ import { resolveStateId } from './expansionStates';
 export type { ImportedDraftee };
 
 export const ALL_TRAITS: Trait[] = [...POSITIVE_TRAITS, ...NEGATIVE_TRAITS];
+
+// The 8 tags that historically lived in the Trait union but are now Expertise.
+// Used to migrate legacy seed literals without re-authoring every row.
+const MIGRATED_EXPERTISE: Record<string, Expertise> = {
+  Agriculture: 'Agriculture', Business: 'Business', Economics: 'Economics',
+  Education: 'Education', Environment: 'Environment', Media: 'Media',
+  Military: 'Military', Naval: 'Naval',
+};
+
+// Split a raw seed array (string[] today, literally containing the 8 names) into
+// a clean { traits, expertise } pair on the correct axes. Deduped on insert.
+export function splitSeedTraits(raw: string[]): { traits: Trait[]; expertise: Expertise[] } {
+  const traits: Trait[] = [];
+  const expertise: Expertise[] = [];
+  for (const t of raw) {
+    const xp = MIGRATED_EXPERTISE[t];
+    if (xp) { if (!expertise.includes(xp)) expertise.push(xp); }
+    else traits.push(t as Trait);
+  }
+  return { traits, expertise };
+}
 
 export const CSV_COLUMNS = [
   'draftYear',
@@ -214,6 +235,7 @@ export function parseDraftCsv(csv: string): ParseResult {
       skills,
       command,
       traits,
+      expertise: [],
     });
   }
 
@@ -247,6 +269,7 @@ export function instantiateDraftees(
       birthYear: d.birthYear,
       skills: { ...d.skills },
       traits: [...d.traits],
+      expertise: [...(d.expertise ?? [])],
       currentOffice: null,
       careerTrack: null,
       careerTrackYears: 0,

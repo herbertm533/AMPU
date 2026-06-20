@@ -1,6 +1,7 @@
-import type { FullGameSnapshot, PhaseId, Politician, EraEvent, Legislation, ElectionResult, NationalMeters, Ideology, PartyId, SkillKey, Trait, CareerTrack, State, RelocationEntry, RelocationBand, IdeologyShiftEntry, ConversionEntry, KingmakerEntry, FactionAlignmentDriftEntry, FactionLeadershipEntry, InterestCardId, LobbyCardId, IdeologyCardId, Era } from '../types';
-import { IDEOLOGY_ORDER, SKILLS, POSITIVE_TRAITS, TRACK_SKILL, TRACK_THEMED_TRAITS, CAREER_RANDOM_NEGATIVES, CAREER_ODDS, CAREER_TRACK_MAX_YEARS, CAREER_TRACK_CAP, CAREER_GAINS_CAP, RELOCATION_ODDS, RELOCATION_ATTEMPTS_PER_TURN, RELOCATIONS_CAP, CARPETBAGGER_LADDER, IDEOLOGY_SHIFT_ODDS, IDEOLOGY_ATTEMPTS_PER_TURN, IDEOLOGY_SHIFTS_CAP, CONVERSION_ODDS, CONVERSION_ATTEMPTS_PER_TURN, CONVERSIONS_CAP, KINGMAKER_RULES, KINGMAKERS_CAP, ALIGNMENT_RULES, ALIGNMENT_DRIFT_CAP, LEADERSHIP_RULES, LEADERSHIP_FEED_CAP, MORTALITY_RULES, ANYTIME_EVENTS_RULES } from '../types';
+import type { FullGameSnapshot, PhaseId, Politician, EraEvent, Legislation, ElectionResult, NationalMeters, Ideology, PartyId, SkillKey, Trait, CareerTrack, OfficeType, State, RelocationEntry, RelocationBand, IdeologyShiftEntry, ConversionEntry, KingmakerEntry, FactionAlignmentDriftEntry, FactionLeadershipEntry, InterestCardId, LobbyCardId, IdeologyCardId, Era } from '../types';
+import { IDEOLOGY_ORDER, SKILLS, POSITIVE_TRAITS, TRACK_SKILL, TRACK_THEMED_TRAITS, TRACK_EXPERTISE, OFFICE_EXPERTISE, COMMITTEE_EXPERTISE, CAREER_RANDOM_NEGATIVES, CAREER_ODDS, CAREER_TRACK_MAX_YEARS, CAREER_TRACK_CAP, CAREER_GAINS_CAP, RELOCATION_ODDS, RELOCATION_ATTEMPTS_PER_TURN, RELOCATIONS_CAP, CARPETBAGGER_LADDER, IDEOLOGY_SHIFT_ODDS, IDEOLOGY_ATTEMPTS_PER_TURN, IDEOLOGY_SHIFTS_CAP, CONVERSION_ODDS, CONVERSION_ATTEMPTS_PER_TURN, CONVERSIONS_CAP, KINGMAKER_RULES, KINGMAKERS_CAP, ALIGNMENT_RULES, ALIGNMENT_DRIFT_CAP, LEADERSHIP_RULES, LEADERSHIP_FEED_CAP, MORTALITY_RULES, ANYTIME_EVENTS_RULES } from '../types';
 import { addLog } from './log';
+import { addExpertise } from './expertise';
 import { uid, chance, d100, pick, pickWeighted, clamp, shuffle, rand } from '../rng';
 import { refreshPv } from '../pv';
 import { ANYTIME_EVENT_TEMPLATES, type AnytimeEventTemplate } from '../data/anytimeEvents';
@@ -203,6 +204,7 @@ export function runPhase_2_1_1_Draft(snap: FullGameSnapshot, autoOnly: boolean):
         birthYear: snap.game.year - age,
         skills,
         traits: chance(0.3) ? [pick(['Charismatic', 'Orator', 'Efficient', 'Reformist', 'Integrity'] as const)] : [],
+        expertise: [],
         currentOffice: null,
         careerTrack: null,
         careerTrackYears: 0,
@@ -376,10 +378,15 @@ export function runPhase_2_1_2_CareerTracks(snap: FullGameSnapshot): void {
     const fid = p.factionId;
     const isFull = (t: CareerTrack): boolean => (trackCount.get(slotKey(fid, t)) ?? 0) >= CAREER_TRACK_CAP;
     if (p.careerTrack && p.careerTrackYears >= CAREER_TRACK_MAX_YEARS) {
+      const exiting = p.careerTrack;
       const oldKey = slotKey(fid, p.careerTrack);
       trackCount.set(oldKey, (trackCount.get(oldKey) ?? 1) - 1);
       p.careerTrack = null;
       p.careerTrackYears = 0;
+      const xp = TRACK_EXPERTISE[exiting];
+      if (xp && addExpertise(p, xp)) {
+        addLog(snap, '2.1.2', 'appointment', `${p.firstName} ${p.lastName} gains ${xp} expertise.`);
+      }
       if (p.age < 60) {
         const next = bestAvailableTrack(p, isFull);
         if (next) {
@@ -1721,6 +1728,10 @@ export function runPhase_2_2_2_Committees(snap: FullGameSnapshot): void {
     if (candidate) {
       snap.game.committeeChairs[c] = candidate.id;
       addLog(snap, '2.2.2', 'appointment', `${candidate.firstName} ${candidate.lastName} chairs ${c} committee.`);
+      const xp = COMMITTEE_EXPERTISE[c];
+      if (addExpertise(candidate, xp)) {
+        addLog(snap, '2.2.2', 'appointment', `${candidate.firstName} ${candidate.lastName} gains ${xp} expertise.`);
+      }
     }
   }
 }
@@ -1929,6 +1940,10 @@ export function runPhase_2_3_1_Cabinet(snap: FullGameSnapshot): void {
       snap.game.cabinet[pos] = pick.id;
       pick.currentOffice = { type: pos as 'SecretaryOfState' };
       addLog(snap, '2.3.1', 'appointment', `${pick.firstName} ${pick.lastName} confirmed as ${pos}.`);
+      const xp = OFFICE_EXPERTISE[pos as OfficeType];
+      if (xp && addExpertise(pick, xp)) {
+        addLog(snap, '2.3.1', 'appointment', `${pick.firstName} ${pick.lastName} gains ${xp} expertise.`);
+      }
     }
   }
 }
@@ -1944,15 +1959,23 @@ export function runPhase_2_3_2_Military(snap: FullGameSnapshot): void {
       snap.game.cabinet.GeneralInChief = candidates[0].id;
       candidates[0].currentOffice = { type: 'GeneralInChief' };
       addLog(snap, '2.3.2', 'appointment', `${candidates[0].firstName} ${candidates[0].lastName} appointed General in Chief.`);
+      const xp = OFFICE_EXPERTISE.GeneralInChief;
+      if (xp && addExpertise(candidates[0], xp)) {
+        addLog(snap, '2.3.2', 'appointment', `${candidates[0].firstName} ${candidates[0].lastName} gains ${xp} expertise.`);
+      }
     }
   }
   if (!snap.game.cabinet.Admiral) {
-    const navalCandidates = snap.politicians.filter((p) => !p.currentOffice && (p.skills.military >= 2 || p.traits.includes('Naval')));
+    const navalCandidates = snap.politicians.filter((p) => !p.currentOffice && (p.skills.military >= 2 || p.expertise.includes('Naval')));
     navalCandidates.sort((a, b) => b.skills.military - a.skills.military);
     if (navalCandidates[0]) {
       snap.game.cabinet.Admiral = navalCandidates[0].id;
       navalCandidates[0].currentOffice = { type: 'Admiral' };
       addLog(snap, '2.3.2', 'appointment', `${navalCandidates[0].firstName} ${navalCandidates[0].lastName} appointed Admiral.`);
+      const xp = OFFICE_EXPERTISE.Admiral;
+      if (xp && addExpertise(navalCandidates[0], xp)) {
+        addLog(snap, '2.3.2', 'appointment', `${navalCandidates[0].firstName} ${navalCandidates[0].lastName} gains ${xp} expertise.`);
+      }
     }
   }
 }
@@ -2095,9 +2118,7 @@ function validateAnytimeTemplates(): void {
     'Leadership', 'Debater', 'Reformist', 'Integrity',
     'Efficient', 'Magician', 'Harmonious', 'Egghead',
     'Propagandist',
-    'Naval', 'Military', 'Education', 'Economics', 'Business',
-    'Agriculture', 'Environment', 'Media', 'Nationalist',
-    'Globalist', 'Celebrity',
+    'Nationalist', 'Globalist', 'Celebrity',
     'Traitor', 'Obscure', 'Puritan',
   ];
   const FORBIDDEN_SKILLS: SkillKey[] = ['admin', 'judicial', 'military', 'backroom'];

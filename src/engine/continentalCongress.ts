@@ -1,5 +1,6 @@
 import type { FullGameSnapshot, CCDelegate, Politician, Legislation } from '../types';
 import { addLog } from './log';
+import { addExpertise } from './expertise';
 import { uid, chance, pick, clamp } from '../rng';
 import { cardVoteBias } from './phaseRunners';
 
@@ -156,10 +157,20 @@ export function appointCCCommittees(snap: FullGameSnapshot): void {
   const pickByStat = (key: keyof Politician['skills']): Politician | undefined => {
     return [...delegates].sort((a, b) => b.skills[key] - a.skills[key])[0];
   };
-  cc.committeeChairs.domestic = pickByStat('legislative')?.id ?? null;
-  cc.committeeChairs.foreignMilitary = pickByStat('military')?.id ?? null;
-  cc.committeeChairs.economic = pickByStat('admin')?.id ?? null;
-  cc.committeeChairs.judicial = pickByStat('judicial')?.id ?? null;
+  // The 1772 CC committee taxonomy differs from the 1856 committees; grant the
+  // mapped expertise to each picked chair (domestic->Welfare,
+  // foreignMilitary->Foreign Affairs, economic->Economics, judicial->Justice).
+  const grantChair = (pol: Politician | undefined, xp: 'Welfare' | 'Foreign Affairs' | 'Economics' | 'Justice'): string | null => {
+    if (!pol) return null;
+    if (addExpertise(pol, xp)) {
+      addLog(snap, '2.2.2', 'appointment', `${pol.firstName} ${pol.lastName} gains ${xp} expertise.`);
+    }
+    return pol.id;
+  };
+  cc.committeeChairs.domestic = grantChair(pickByStat('legislative'), 'Welfare');
+  cc.committeeChairs.foreignMilitary = grantChair(pickByStat('military'), 'Foreign Affairs');
+  cc.committeeChairs.economic = grantChair(pickByStat('admin'), 'Economics');
+  cc.committeeChairs.judicial = grantChair(pickByStat('judicial'), 'Justice');
   addLog(snap, '2.2.2', 'appointment', `CC committee chairs appointed.`);
 }
 
