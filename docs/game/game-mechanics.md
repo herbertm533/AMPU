@@ -1401,9 +1401,21 @@ The forum routes 2.6.2 through an interactive **committee chair veto** step (pos
 - A chair who declines to block lets the bill flow to 2.6.3 unchanged.
 - Engine 2.6.2 currently rolls a chair-driven `passChance`; the forum's pattern is
   **deterministic veto + replace**, gated by chair-committee domain.
+
+> **`pop` sharpens — chair blocks EXACTLY ONE + duplicate-bill auto-block (modern, 6th era).**
+> The 2015-17 modern cycle shows the chair-block as a discrete step: the chair may BLOCK
+> exactly **one proposal** from the slate **before** the committee votes (`pop` POST 488,
+> 489, 490 — clean sequence with the chair picking the block target, then the committee
+> voting the rest). Separately, if the **same legislation is proposed twice** in a single
+> cycle, the chair **auto-blocks the duplicate** (`pop` POST 712–714). This is the duplicate-
+> guard variant of block-and-replace — not a chair choice but a rule. (Combines with §12.4
+> domain-locking: deterministic per-rule, **chair gets exactly one discretionary block
+> per cycle**, the duplicate-block is mandatory.)
+
 *(designed, not built — extend 2.6.2 to surface a "block / replace from {committee
 domain bills}" UI to the chair's player; engine should still resolve probabilistically for
-CPU chairs.)*
+CPU chairs. Add: **one discretionary block per cycle + an automatic duplicate-bill block
+that doesn't consume that quota**.)*
 
 ### 12.5 Forum design layer: bill packaging (designed, not built)
 
@@ -1423,6 +1435,14 @@ Posts 176-179 introduce **bill packaging**: between 2.6.2 and 2.6.3, a chair may
 > 565). The 1772 solo gives the **CPU heuristic**: a CPU chair bundles **~75%** of the time
 > unless the reason is hostile/random, with **Crisis** as an added bundling reason (`1772s`
 > posts 18, 46, 57).
+
+> **`pop` corroborates 6th-era + sharpens "load-bearing packaging".** The 2015-17 modern cycle
+> ran the **chair packages passing bills together** step explicitly (`pop` POST 502–507): the
+> chair decides post-committee-vote whether to leave bills separate or package them. **Load-
+> bearing in `pop`:** **4 unrelated GOP bills** (Stand-Your-Ground / Surveillance / Keystone
+> XL / Pipeline subsidies) were jammed into a single Bill #3 to **amortize sign/veto cost**
+> across the package (POST 507, 542). Confirms the package step as a **chair-discretion**
+> action (not deterministic).
 
 *(designed, not built — add `Bill.packageOf?: BillId[]`, a chair-side bundling action, and a
 CPU bundling-eligibility heuristic: bundle if net-positive or a statehood bill; ~75% baseline.)*
@@ -1462,6 +1482,20 @@ re-queue next session.)*
 > majority-supported items (POST 5920). **CPUs filibuster crisis legis they ideologically
 > oppose to extend the crisis to election day** (POST 7081). Open: can a package be
 > re-filibustered? (POST 3275: *"The rules actually don't say tbh."*)
+
+> **`pop` sharpens — modern filibuster runs at 60-vote cloture, NOT 67%.** A 6th-era,
+> 6-named-Senators flag (`pop` POST 519, 521): specific Senators are pre-tagged
+> "can-filibuster" by trait/ideology — **Rand Paul, Tom Coburn, Mike Lee, Ilhan Omar** named.
+> Omar filibustered Bill 2 (Stand Your Ground + Federal Prisons); **cloture needed 60 votes
+> in a 100-seat Senate**, got **58 — bill killed**. **The 60-vote cloture is the modern-era
+> threshold**, distinct from the 67% drums dump (which is the **pre-modern** rule).
+> Open: is 60 modern-era-specific or a post-reform reduction triggered by an amendment?
+> (Both readings consistent.) **Iron-Fist Sen Maj Leader passes everything else
+> unilaterally** at this scale: McConnell (5 legis + Iron Fist) is documented in `pop`
+> POST 523, 739 as effectively delivering ~54 automatic AYE votes on majority items — the
+> **modern instance** of the §25.9 Iron-Fist overload, surfaced as a specific cascade
+> ("≈ auto-54-votes" is the modern-era manifestation of "**auto-cloture for majority items**"
+> in `drums` POST 5920).
 
 ### 12.7 Forum design layer: `*Crisis Bill*` tag (designed, not built)
 
@@ -1583,6 +1617,16 @@ the GM as the rule (post 237). *(needs roadmap-planner attention.)*
 > 0**. It adds the **staged tabulation method**: *tabulate each card first, then sum per
 > faction* (the player had been under-counting multi-card factions). Same author ruling in
 > both threads → high confidence this is the canonical scorer.
+
+> **`pop` sharpens — sign triggers ideology + lobby + meter ticks SIMULTANEOUSLY.** A signed
+> bill resolves all three scoring channels in **one event**, not in sequential phases
+> (`pop` POST 539, 542): **points to ideologies** (±50/100/150/250/350) **+ meter ticks**
+> (Planet Health, Economic Stability) **+ lobby points** ("+100 for High Tech", "+50 for
+> Human Rights") all post at sign-time. Sharpens #12: the scorer is **one resolver step
+> iterating ALL of {ideology cards, lobby cards, meter tags} for the bill**, not three
+> separate phases. The ±250/±350 magnitudes seen here extend the prior ±50/100/150 bands —
+> implies a **per-card-class scale** (interest ±50, lobby ±100, ideology ±150, faction-
+> defining ±250, era-double ±350) but the band structure is not yet documented.
 
 ---
 
@@ -2433,6 +2477,70 @@ labels bumped inline):*
 - **Amendments (§21.3)** — modern ratification by **governors at 40-of-53** + **2/3-of-572
   House** pass gate; grandfather clause.
 
+*New items revealed by forum digest `c50d9da7` (`pop`, 2012 fresh-modern boot) —
+[§26](#26-scenario-boot-model--modern-endgame-designed-not-built):*
+
+The modern era is now **corroborated both ways**: `modern` reached the Era-of-Populism as a
+**60-yr continuation** from a 1948 campaign; `pop` records the **cold boot** of the same
+era at 2012. The two threads' alignment anchors the build constraint **era identity = data
+configuration, NOT code paths** (the R1 deck = "Trumpism" because the seed instantiates
+the right cards in the right faction at boot, not because there is a "Trumpism" mechanic).
+The biggest unbuilt surfaces unique to `pop`:
+
+- **Scenario-boot model (§26.1, §26.2)** — a single `BootSheet` schema instantiated per era
+  (1788 / 1856 / 2012 minimum) producing a `FullGameSnapshot` from a per-era boot sheet:
+  pre-built faction roster + era-tuned deck assignment + sitting-government seeding +
+  state roster keyed to **boot year** (NOT era — the 2012 fresh boot is **50 + DC**, not
+  53) + "no leaders / no career tracks / no legacy at boot" baseline; pairs a Senate-class
+  verifier + `TRAIT_CONFLICTS` validator at boot time. (`pop` POST 1, 12, 17, 264, 359;
+  DH-24 / DH-25 / DH-27.)
+- **Era-coded double-points issues (§26.3)** — a per-era `doubleScoringIssues: IssueTag[]`
+  table that doubles ideology/lobby/meter awards on signed bills tagged with the era's
+  defining issues. **Era-of-Populism doubles Climate Crisis + Immigration** (`pop` POST
+  699). Couples to §12.8 bill scoring.
+- **APOCALYPSE Planet-Health endgame (§26.4) — a NEW meter-driven endgame model.** Planet
+  Health falling into the bottom-tier band starts a **10-game-year countdown clock to
+  mandatory game-end**, distinct from the shipped event-driven `triggersGameEnd`. The
+  engine must support **BOTH** endgame models. `game.endgameClocks: { meter; threshold;
+  remainingYears }[]` (`pop` POST 542, 548).
+- **Era-event-creates-office (§26.5)** — generalizes §24.6's Progressive institutional
+  layer across a 4th era. A bill carrying `createsCabinetSeat: SeatSpec` appends a new
+  seat to a **dynamic cabinet-seat list**, replacing the static `cabinetSeatsForYear`
+  lookup as anything more than the boot seed. (`pop` POST 699, 1100 — Sec. of Environment
+  & Climate.)
+- **Modern SCOTUS confirmation rules — refinements (§26.6)** — **factions within 1
+  ideology step auto-confirm** SCOTUS (`pop` POST 561; declarative override of the
+  cabinet 50/50 trap). **Manipulative-Pres compels Justice retirement** if target lacks
+  Integrity OR Jud<5 (`pop` POST 555; separate trait, **moved out** of the Iron-Fist
+  overload table to its proper home).
+- **12th-Amendment-gated VP actions (§26.7)** — amendments toggle **callable action
+  entries**, not just durable rules. Each action-library entry carries a `requires:
+  AmendmentPredicate?` field; library entries are filtered against `game.amendments.passed`
+  at evaluation. The 12th gates "Send VP to Shore Up Support" (`pop` POST 951);
+  generalizes to VP-by-party-ticket actions and beyond.
+
+*Modern detail that **sharpens** already-documented systems (now corroborated across 4-6
+eras — labels bumped inline):*
+
+- **Legislation (§12.4–§12.8)** — chair-block-EXACTLY-ONE + duplicate-bill auto-block
+  (`pop` POST 488–490, 712–714, extends §12.4); chair-can-package as load-bearing (`pop`
+  POST 502–507, extends §12.5); **named-Senator filibuster + 60-vote modern cloture +
+  Iron-Fist Maj Leader auto-54-votes** (`pop` POST 519, 521, 523, 739, extends §12.6 /
+  §25.9); **sign triggers ideology + lobby + meter ticks simultaneously** (`pop` POST 539,
+  542, extends §12.8: scoring is one resolver step over all card classes).
+- **53-state alt roster (§22.10)** — **state count is keyed to the BOOT YEAR, not the era**
+  (`pop` POST 264: fresh 2012 boot = 50 + DC, NOT 53). The build needs **both** rosters
+  for the same `modern` era.
+- **Iron-Fist conditional-vote-rules (§25.9)** — Iron-Fist controllers publish **declarative
+  predicate → {AYE/NAY}** policies (`pop` POST 1111). Promote conditional-vote-rule to a
+  first-class CPU-handler primitive (`factionLeader.compelledVoteRule?: Predicate → Vote`).
+- **Israel meter ACTIVE in modern era** (`pop` POST 525, 742; sharpens §22.1 + §24.7's
+  "present-but-INACTIVE in 1900" — Israel's activation rule fires at the modern era boundary
+  at latest).
+- **Modern era corroborated both ways** — the modern era is the only era ingested as
+  **both 60-year continuation AND fresh scenario boot**, anchoring the era-identity-as-
+  data-configuration constraint above.
+
 ### 19.1 Design divergences for the roadmap
 
 Rules where the **forum and the shipped engine genuinely disagree** (not just
@@ -2540,6 +2648,38 @@ Rules where the **forum and the shipped engine genuinely disagree** (not just
     are **not single-line rule fixes** but require new data structures and supporting passes.
     Together they form the dominant CPU-AI replacement workstream.
 
+*New in batch 6 (`pop`, 2012 fresh-modern boot):*
+
+14. **★★ NEW endgame model: meter-driven game-end clock vs. event-driven `triggersGameEnd`.**
+    Shipped engine has only an **event-driven** game-end (`EraEvent.triggersGameEnd`,
+    `types.ts:1635`). `pop` records a **meter-driven** path: a meter (Planet Health)
+    falling into a specific bottom-tier band starts a **10-game-year countdown clock to
+    mandatory game-end** (`pop` POST 542, 548 — APOCALYPSE). The two paths must **both**
+    exist; the build needs `game.endgameClocks: { meter; threshold; remainingYears }[]`
+    in `FullGameSnapshot`. **NEW engine surface — explicit roadmap item** (see [§26.4](#264-apocalypse-planet-health-endgame--the-10-year-clock-new-endgame-model)).
+
+15. **Cabinet seats: static `cabinetSeatsForYear` lookup vs. dynamic seat list.** Shipped
+    cabinet seats are a year-keyed static lookup (`types.ts:1196`). The designed model
+    (§24.6 + `pop` §26.5) is a **dynamic seat list driven by passed legislation + era
+    events**: a bill carrying `createsCabinetSeat: SeatSpec` appends a new seat. The
+    static lookup acts only as the **initial boot seed**; thereafter the list is mutable
+    state. Replace `cabinetSeatsForYear` reads in the cabinet phase with a read of the
+    dynamic list.
+
+16. **Amendments toggle CAPABILITIES, not just rules.** The shipped engine treats amendments
+    (where they exist) as durable rule-flag changes; `pop` POST 951 shows amendments
+    additionally gating **action-library entries** ("Send VP to Shore Up Support" requires
+    12th). Each action-library entry needs a `requires: AmendmentPredicate?` field; libraries
+    filtered against `game.amendments.passed` at evaluation. Pairs with §21.3, §24.4 (the
+    ratifier/threshold-as-tunable), §26.7.
+
+17. **State roster keyed to BOOT YEAR, not era enum.** Shipped behavior is one roster per
+    scenario (`states1772.ts`, `states1856.ts`). The 2012 fresh-modern boot needs **50 + DC**,
+    NOT 53 (`pop` POST 264). The 53-state alt roster (`modern` §22.10) is the *product* of
+    60-yr in-game annexation events. Build needs **multiple rosters per era**, selected by
+    `{era, startYear}` not by `era` alone, and the era-event annexation chain must mutate
+    the snapshot's state list at fire time.
+
 > **GM-confirmed design holes from `house-divided` (DH-3..DH-11 — point to `game-context.md`, not
 > re-documented).** Eleven balance/rules flags joined the gap log this batch (full text in
 > `game-context.md` → design-holes): **DH-3** career-track pols can still run for President;
@@ -2567,6 +2707,19 @@ Rules where the **forum and the shipped engine genuinely disagree** (not just
 > running-mate logic doesn't penalize ticket experience holes**; **CPU governor menu static + no
 > industry-stack awareness**; **CPU primary attack always hits highest-PV**; **CPU compromise-
 > candidate picker rigid highest→lowest** with no cross-faction coordination.
+
+> **New design holes from `pop` (DH-24..DH-28 — point to `game-context.md`, not re-documented
+> here).** Five new design holes joined the gap log this batch (see `game-context.md` →
+> design-holes): **DH-24** Senate-class boot data buggy for fresh modern scenarios
+> (boot-data-quality validator needed); **DH-25** career-track bootstrap is a 3-year-stale
+> design discussion (no canonical rule for which existing pols start on career tracks at boot —
+> blocks the modern scenario shipping); **DH-26** 3rd-party VP "same traits" rule is prohibitive
+> (makes 3rd-party tickets nearly impossible; pairs with DH-11 Dem 3rd-party structural bias);
+> **DH-27** trait-conflict adjudication slips in boot/draft data (`TRAIT_CONFLICTS` is run only
+> on trait-add events, not at dataset/boot import); **DH-28** "Repeal deals with climate crisis"
+> tag — incomplete data tagging is gameable (per-bill meter-impact tags must be COMPLETE and
+> verified at dataset-build time — generalizes to other meter-impact tags + the era-double-
+> points tags from §26.3).
 
 > **Confirmed shipped bugs (fixes, not features).** Defects surfaced by the forum threads are
 > catalogued in `game-context.md` → "Confirmed shipped bugs" and owned by the roadmap as fixes.
@@ -3036,7 +3189,12 @@ to Mean", "Volatility", and legislation:
 
 - **8 tracked powers** (modern): **UK, France, Spain, Germany, Russia, China, Japan, Israel**
   — the era-dependent roster of [§13.3.1](#1331-per-power-relations-meters--an-era-dependent-power-roster)
-  at its widest (federalism 5, gilded 6, modern 8; +Israel/Japan).
+  at its widest (federalism 5, gilded 6, modern 8; +Israel/Japan). **`pop` corroborates the
+  Israel meter ACTIVE in the modern era** (`pop` POST 525, 742; pairs with §24.7 1856-native
+  where Israel was present-but-INACTIVE in 1900 — i.e. the activation rule fires at the
+  modern era boundary at latest). Per-power relation **cap behavior confirmed** in `pop`:
+  Japan was already maxed, no further +1 (POST 533) — the cap is bidirectional, not just a
+  bottom-clamp.
 
 **Numeric national debt** (distinct from the ordinal Revenue/Budget meter, modern#post 99,
 1537, 2042): a **signed integer** tracked alongside the meter — "National Debt now at −5"
@@ -3283,6 +3441,15 @@ close-state tie-breaks + faithless electors, and the auto-generated 53-state atl
 multiplier, ideology/control-aware category assignment, 4-or-5 category mode, host-sets-
 categories advantage; reuse it for primary delegate counts and convention ballots.)*
 
+> **`pop` corroborates 5-group primary end-to-end.** The 5-group Debate → Scandal → Broke →
+> 24-h Actions → Primary-Day loop with Major/Minor candidate gates ran cleanly through the
+> 2016 Dem (5-faction × Major + Minor) AND GOP primaries, ending with Napolitano (B4) 1189
+> over Biden (B2) 1009 / Brown (B1) 372 / Harris (B3) 61 / Gillibrand (B4) 10 (`pop` POST 30,
+> 53–62, 88–180, 762, 799–849, 888, 945–947). **6th-era confirmation** of this loop. The
+> 4-part enthusiasm reshuffle, the 6-axis ticket scoring, the convention plank scoring, the
+> 3-debate + October Surprise + per-region general (October Surprise: Revenue/Budget Crisis
+> improves → +1 Blue + Napolitano nationwide, `pop` POST 972) are all 6th-era confirmed too.
+>
 > **CPU-confirmed across `drums` (batch 5).** The CPU primary AI atop this engine is
 > **designer-acknowledged under-tuned** ("you can curb-stomp the CPU bc it is simple," POST 7135):
 > a **fixed action template per candidate per group** (Speech + Campaign Focus + Attack +
@@ -3338,6 +3505,25 @@ a case (post 30).
 **failed nominee ⇒ the replacement must be a moderate / the other party's ideology / an
 other-party member, and is auto-confirmed.** Trait swaying applies (Harmonious aye; Integrity
 supports Integrity) but **no Orator/Debater shenanigans** (removed, post 1418).
+
+> **Sharpened by `pop`: factions within 1 ideology step auto-confirm.** Declarative rule
+> (`pop` POST 561): a faction whose center ideology is **within 1 step** of the nominee's
+> ideology **auto-votes AYE** — only factions **≥ 2 steps away** may oppose. Worked case:
+> KBJ + Goodwin Liu (both Lib) confirmed because only R1/R2/R3 were ≥2 steps from Lib —
+> insufficient bloc to block. This is the **modern confirmation threshold by ideology
+> proximity**, distinct from the cabinet's 50/50 trap ([§25.5](#255-cabinet-confirmation--designer-acknowledged-bug-36-of-88-nominees-passed))
+> and from compel-vote (`Iron Fist`). First explicit declarative form of this rule.
+
+> **Sharpened by `pop`: Manipulative-Pres compel-retire IS DISTINCT from Iron-Fist
+> overload.** A **Manipulative president** can compel a Justice's retirement **if the
+> target lacks Integrity OR has Judicial < 5** (`pop` POST 555). This is a separate
+> trait-power from Iron-Fist's compel-VOTE (`drums` POST 3660) and from the 5-Judicial
+> immunity rule documented elsewhere. Three distinct powers, three distinct traits:
+> **Iron-Fist ⇒ compel a vote** (Justice flips on a docket case);
+> **Manipulative ⇒ compel a retirement** (Justice gated by !Integrity OR Jud<5);
+> **age ≥ 75 OR ≥ 12 yrs** ⇒ the **shipped 0.15 retire roll** ([§14](#14-executive--court-management-28x)).
+> Sharpens §25.9 by **removing** the Manipulative-compel-retire effect from the Iron-Fist
+> overload table — it always belonged to Manipulative.
 
 **Appointee ideology reveal + drift** (post 113, 339, 1418, 1558, 2250): a new Justice's
 **true ideology is discovered on joining** via a roll (LW-Pop not Prog; Mukasey Liberal not
@@ -3436,6 +3622,14 @@ ratings into the generic war engine.)*
 - **53 states** including **DC, Cuba (CU), Puerto Rico (PR)** as **full states** (post 426,
   438; the delegate table at post 2240 lists Cuba 17 EV, PR 3 EV). The roster is the **modern
   alt-history annexed set**, not the real 50 states.
+- **Sharpened by `pop`: state count is keyed to the BOOT YEAR, not the era.** A **fresh-modern
+  2012 boot** starts at **50 + DC** (`pop` POST 264), **not 53**. The 53-state roster is the
+  *product* of `modern`'s 60-yr in-game annexation chain (Cuba/PR pulled in by era events
+  between 1948 and ~2012). Implication: the build needs **both** a 50+DC modern roster (the
+  cold-boot 2012 baseline) **and** a 53-state continuation roster (reached only via the
+  annexation-event chain) — they are **different `FullGameSnapshot.states` arrays for the
+  same `modern` era**. Generalizes: rosters are an artifact of the **boot year × era-event
+  history**, not a per-era fixed table.
 - **Modern apportionment / decennial Census**: a Census recomputes EV apportionment under a
   **Wyoming Rule**, **resets every state's Bias**, and adds/removes a state's **"focus Rep"**
   House seat (post 185, 870, 964: total EVs dropped **706 → 678**). Wyoming-Rule apportionment
@@ -4547,10 +4741,38 @@ collisions.)*
 > "Force Vote" for chamber compulsion, "Compel SCOTUS" for court compulsion, "Fire Officers"
 > for military mid-war replacement). Cross-ref `game-context.md` design-holes — DH-9-adjacent.
 
+> **`pop` sharpens — Iron-Fist controllers publish CONDITIONAL VOTE RULES (CPU-handler
+> insight).** Mid-thread (`pop` POST 1111), Iron-Fist Sen Maj Leader McConnell's player
+> issued an **explicit conditional-vote policy**:
+> *"McConnell will vote NAY to all Libs, Progs, and LW Pops with less than 3 Admin, AYE to
+> everyone else."*
+> The engine then applies this **declarative rule** to every vote McConnell controls. This
+> is the **handler shape** for Iron-Fist's compelled-vote power: rather than the player or
+> CPU resolving each compelled vote case-by-case, the controller publishes a **predicate →
+> {AYE/NAY}** policy ahead of time, and the engine binds it across the term. Pairs with
+> §25.6 NAY/AYE/NAY default but **overrides** it for Iron-Fist-controlled votes (the
+> conditional rule beats the default heuristic). **Cleanly architectural**: the build can
+> represent this as a `factionLeader.compelledVoteRule?: Predicate → Vote` field rather
+> than as ad-hoc hardcoded behavior.
+
+> **Pairs with §22.6 modern auto-cloture.** The "Iron-Fist Maj Leader auto-cloture for
+> majority items" cascade (`drums` POST 5920) is the **same generalized rule** instantiated
+> for the cloture vote — the conditional-vote-rule infrastructure subsumes both the per-vote
+> compulsion and the auto-cloture short-circuit. Sharpens §25.9 by **promoting** the
+> conditional-vote-rule to a first-class CPU-handler primitive rather than a per-effect
+> hack.
+
+> **Distinct from Manipulative-compel-retirement (moved to §22.7).** The "Manipulative Pres
+> compels a Justice's retirement" effect has been **moved out** of the Iron-Fist overload
+> table — see §22.7. It always belonged to the **Manipulative** trait, gated on the target
+> lacking Integrity OR Jud<5 (`pop` POST 555). Iron-Fist's compel-vote (Justice flips on a
+> case) is the related but DIFFERENT power, retained in the §22.7 / §25.9 tables.
+
 *(designed, not built — split Iron Fist into distinct office-keyed traits; document the
 Pres-IF-vs-MajLeader-IF tiebreak; codify the 90% officer-fire + 20% MilPrep-risk; the
 unilateral threshold-set at convention; the cross-faction PM-General-style takeover via
-Loans-from-Wealthy.)*
+Loans-from-Wealthy; add a `factionLeader.compelledVoteRule?: Predicate → Vote` field so
+Iron-Fist controllers can publish conditional-vote policies declaratively.)*
 
 ### 25.10 Faction-leader replacement — 4-condition removal
 
@@ -4756,3 +4978,357 @@ Pres compelled-retire; the per-vote sway-only-if-not-unanimous rule. Cross-ref
 
 *(designed, not built — these are architectural CPU additions; the rules to implement them are
 spec'd above, but the data structures and the supporting passes are new work.)*
+
+---
+
+## 26. Scenario-boot model & modern endgame (designed, not built)
+
+> **Entire section is designed, not built.** Sourced from `c50d9da7` (the "Era of Populism
+> Playtest", `pop`), the **first dedicated fresh-boot of a modern-era scenario** in any
+> ingested thread. Earlier modern signal (`modern`, batch 3) reached the Populism era as a
+> **60-yr continuation** from a 1948 campaign; `pop` records the **cold boot** of the same
+> era. The two threads' alignment establishes a build constraint stated up front:
+> **era identity = data configuration, NOT code paths**. The R1 deck = "Trumpism" not because
+> there is a "Trumpism" mechanic but because the seed instantiates the right cards in the
+> right faction at boot.
+>
+> Cite `pop#POST N`. Cross-ref `game-context.md` rows #86–#91 and design-holes DH-24..DH-28.
+>
+> **What §26 owns vs. neighbors:** §22 owns the **modern subsystems** (meter bank, primary
+> loop, SCOTUS docket, 53-state apportionment) that the **deep-modern** continuation reaches.
+> §26 owns the **scenario-boot model and its cross-cutting shape** (1788 / 1856 / 2012 all
+> mid-government clean starts), plus the **NEW endgame condition** unique to `pop` and a
+> small cluster of rule sharpenings that have an institutional flavor (bill-creates-office,
+> 12th-Amendment-gates-capability). The modern subsystems themselves stay in §22; the
+> boot-shape that loads them stays here.
+
+### 26.1 The mid-government boot shape (general)
+
+> **Cross-cutting build constraint.** Three documented scenario boots — **1788**
+> ([§20.1](#201-scenario-shape--a-mid-government-boot-like-1856), designed), **1856**
+> (shipped, `scenario1856.ts:177–193`), and **2012** (designed, `pop` POST 1) — share
+> the same shape. Generalizing the shape now means **one boot-sheet schema** instantiated
+> per era (and per start-year), rather than three bespoke loaders.
+
+The shape, common to all three:
+
+1. **A single pre-built sheet** loads the snapshot at start. The sheet contains:
+   - Pre-named **faction roster** (the per-party-5-faction cap holds across all three:
+     B1–B5 / R1–R5; **`pop` is the 6th-era confirmation**).
+   - **Per-faction archetype politicians + era-tuned ideology / interest / lobby decks.**
+   - **Sitting government** keyed to the start year (president + VP + cabinet + Congress +
+     governors + SCOTUS justices).
+   - **A state roster keyed to the boot year**, NOT to the era enum
+     ([§22.10 sharpening](#2210-53-state-alt-roster--modern-apportionment): the 2012 fresh
+     boot is 50 + DC, *not* 53 — the 53-state continuation roster is the product of
+     `modern`'s 60-yr annexation chain).
+
+2. **NO inherited PV / legacy / dynasty / Kingmaker-Protégé pairs at fresh boot.** The boot
+   is **flat** — no points carry from "earlier eras" because there are no earlier eras to
+   carry from. The cumulative end-of-game total ([§2.5](#25-era-boundaries--per-era-point-banking--the-new-era-boot-pipeline-designed-not-built))
+   starts at 0 for every faction. `pop` POST 54, 205: JEB!'s "Bush dynasty" had to be
+   improvised ad-hoc by the GM (a +1 Active Kingmaker hand-grant) because **no formal
+   dynasty mechanic exists**, and the boot has no place to put one.
+
+3. **NO faction leaders pre-selected at boot, NO career-track pols.**
+   - **Faction leaders are EMPTY at boot.** They are selected **after the first general
+     election** (`pop` POST 359). The boot's first primary therefore falls back to **generic
+     Major-candidate criteria — 1 command + matching ideology + matching interest/lobby
+     match** (`pop` POST 30), not the §25.1 75/25-PL rule that requires a faction leader to
+     exist.
+   - **Career-track pols are EMPTY at boot.** A long-running **3-year-stale design
+     discussion** (`pop` POST 31, 33 — Lars: *"we've legit been having this discussion for
+     almost three years now"*) treats career-track bootstrapping as an OPEN design issue
+     (DH-25). Zagnut's houserule: "anyone drafted in 1996+ goes onto one track each"; Rodja
+     hand-populated by GM ad-hoc (POST 38, 50). **Neither is canonical** — the build needs a
+     stated rule before any modern scenario ships.
+
+The implication for the build: **build the boot-sheet schema once, instantiate per era.**
+Era identity is **data configuration**, not a code path. A `BootSheet` structure parameter-
+ized by `{era, startYear, factions: FactionSeed[], sittingGovernment: …, stateRoster: …}`
+covers 1788, 1856, 2012, and any future era boot, with the **"no leaders / no career tracks
+/ no legacy at boot" baseline** as the default.
+
+> **DH-24 reminder — boot-data quality is a real problem.** A fresh-modern boot's seed data
+> can have stale Senate-class assignments (`pop` POST 272, 297, 298: Ron Johnson (WI) was
+> up in 2010 not 2012; the GM had to swap classes mid-election). The boot pipeline needs a
+> **Senate-class verifier** that checks each senator's last-election year against the class.
+> Same shape for **DH-27 trait-conflict adjudication** (`pop` POST 1139: Quinn had both
+> Integrity AND Controversial simultaneously — `TRAIT_CONFLICTS` is run only on trait-add
+> events, not at dataset/boot import time). Validators run **at scenario-boot time**.
+
+*(designed, not built — a `BootSheet` schema instantiated per era; a `scenarioBoot(era,
+year)` pipeline producing a `FullGameSnapshot`; a Senate-class verifier; a `TRAIT_CONFLICTS`
+validator running at boot/import; explicit "no faction leader" and "empty career-track"
+baseline states with the generic-Major fallback for the first primary.)*
+
+### 26.2 Era-of-Populism scenario boot specifics
+
+The concrete instantiation for **2012 Obama-reelection** (`pop` POST 1, 12, 17, 30, 38, 45,
+50, 54, 205, 264, 359, 419, 422, 426, 475):
+
+#### 26.2.1 The 10 pre-built faction decks
+
+**Two parties, 5 named factions each** (Blue = Dems / Red = Reps). **Per-faction era-tuned
+ideology + interest + lobby decks** at boot. **No new card types** — the modern flat card
+pool (the shipped pool augmented for the modern era) is the only pool; "era identity" is
+**emergent from deck combinations**, not from new mechanical content.
+
+| F | Archetype politicians | Ideology cards | Interest cards | Lobby cards |
+|---|---|---|---|---|
+| **B1** | **Bernie Sanders / RBG / Barney Frank** | LW Pop, Progressive | Reformist, Pacifist, LW Activist, Civil Rights | Environmentalists, Welfare, Public Housing |
+| B2 | Biden / Harry Reid | Progressive, Liberal | Civil Rights, LW Activist, Reformist | Public Healthcare, Human Rights, LW Media, Labor Unions |
+| B3 | Warren / Feinstein / Kerry | Liberal | Civil Rights | Environmentalists, Public Education, Science |
+| B4 | Hillary / Pelosi / Cuomo | Moderate | Civil Rights | Human Rights |
+| **B5** | **Obama / Hoyer / Klobuchar** (incumbent) | Moderate, Liberal | Civil Rights | Wall Street, Environmentalists, Big Pharma |
+| **R1** | **Trump / Ron Paul / Sarah Palin** | RW Pop, Trad | Nationalist, Pacifist, Theocrat, RW Activist, Protectionist | RW Media, Isolationists |
+| R2 | McConnell / Boehner | Conservative | Theocrat | Big Agriculture, Corporations, Wall Street, Free Trade |
+| R3 | Rick Perry / Kevin McCarthy | Traditionalist, Conservative | Nationalist, RW Activist | Corporations, Wall Street, Oil and Gas |
+| R4 | Clarence Thomas / Orrin Hatch | Moderate | Expansionist | Private Education, Oil and Gas, Globalists, Law and Order, Technology, Transportation |
+| R5 | McCain / Romney | Moderate | Expansionist | Military Industrial Complex, Technology |
+
+The era's mechanical identity is **R1's deck instantiating "Trumpism"** (RW Pop + Trad +
+Nationalist + Protectionist + RW Media + Isolationists) and **B1's deck instantiating
+"Bernie-populism"** (LW Pop + Progressive + Reformist + LW Activist + Welfare + Public
+Housing). Both decks point at "anti-establishment / pro-base" play patterns through the
+existing card scoring engine ([§12.8](#128-forum-design-layer-bill-scoring-sums-all-faction-cards-design-divergence)),
+not through new mechanics. **`historical-context.md` §10** grounds this: "populist" =
+**style** that attaches to both poles (Tea Party 2009 + Occupy 2011 → Sanders + Trump);
+the game's R1/B1 split is the **same dual-pole populism**, mechanized via card decks.
+
+#### 26.2.2 Sitting government pre-loaded
+
+- **Pres. Obama (B5)** = 2012 incumbent facing reelection.
+- **VP Biden (B2)** = incumbent VP.
+- **Cabinet** has the 2009–2012 historical incumbents (Sebelius, Geithner) plus **Hillary as
+  "former Sec of State"** — the boot reads **a partial career history** into the start
+  state, not just the offices at year T.
+- **Current Congress, governors, and ambassadors** all exist day-1 (the boot does not run
+  the 2.1.x – 2.3.1 derivation; the offices are seeded, not derived).
+- **9 named SCOTUS justices** seeded by name: Roberts, Kagan, Alito, Thomas, Kennedy,
+  Sotomayor, Scalia, RBG, Breyer. **Court size = 9** (NOT the §22.7 dynamic court size; the
+  boot starts at 9 and the court-packing bill can grow it).
+
+#### 26.2.3 Boot omissions
+
+The boot **explicitly LACKS**:
+- **Faction leaders** (chosen after the first general election, POST 359).
+- **Career-track pols** (DH-25; an OPEN design issue).
+- **Inherited PV / legacy / dynasty / Kingmaker-Protégé pairs** (the boot is **flat**).
+- **Alt-state assignments for boot pols** (procedural-gen kicks in later — see §26.3 / row
+  #90, era-coded by Rule 3.0.18 to begin at the **2020 draft**, one new pol per state per
+  cycle; before 2020, drafts are "really small handful of real ones" only).
+- **53 states** — the 2012 boot is **50 + DC** (`pop` POST 264). The 53-state alt roster
+  ([§22.10](#2210-53-state-alt-roster--modern-apportionment)) is **only reachable** via a
+  60-yr in-game annexation chain (Cuba + PR via era events between 1948 and ~2012). For a
+  fresh modern boot, the build needs the 50 + DC roster.
+
+*(designed, not built — a `Scenario2012` boot with the 10-faction deck assignments above;
+the 50 + DC state roster (NOT 53); seeded Obama/Biden + 7-Dept cabinet + Congress + 9-named
+SCOTUS; explicit "no faction leaders / no career-track pols" baseline; the
+generic-Major-candidate fallback for the first primary that 75/25 cannot apply to.)*
+
+### 26.3 Era-coded scoring multipliers (double-points issues)
+
+> **NEW per-era tunable.** The era's defining issues get a **DOUBLE-POINTS multiplier** on
+> bill scoring during that era's half-terms. (`pop` POST 699 verbatim — GM Rodja: *"Keep in
+> mind that bills related to Climate Crisis or Immigration are worth double points this
+> turn."*)
+
+The Era-of-Populism double-points issues are **Climate Crisis** and **Immigration**. These
+are the era's mechanized tension: the two issues drive the bill catalog (the entire 2015-17
+Climate Crisis slate; the Sessions/Fischbach/border-wall Immigration slate) and the
+double-points multiplier means **each Climate-Crisis-tagged or Immigration-tagged bill's
+±50/100/150 card scoring is doubled** during the Populism era's half-terms.
+
+**Generalize to a per-era table:**
+
+| Era | Double-points issues (designed) |
+|---|---|
+| federalism | (open — likely Slavery? tariff? Hamilton's financial program?) |
+| nationalism | (open — likely Slavery; sectional balance — see §23.2's free/slave scoring) |
+| gilded | (open — likely tariff; Reconstruction-related) |
+| **modern Era-of-Populism** | **Climate Crisis + Immigration** (`pop` POST 699 — explicit) |
+| modern Era-of-Future (the upcoming era after 2024) | (open) |
+
+The shape is a **tunable table** keyed `{era → IssueTag[]}` that doubles the per-card
+scoring magnitudes during the era's half-terms. Couples to §12.8 (bill scoring sums all
+faction cards) — the multiplier applies at the per-card-hit stage.
+
+> **DH-28 reminder — incomplete data tagging is gameable.** `pop` POST 552: the "deals
+> with climate crisis" Repeal tag is **only on some bills**, not all that should carry it.
+> Players gamed this — bills that should affect Planet Health but aren't tagged slip
+> through scoring. **Build TODO:** per-bill meter-impact tags must be **complete and
+> verified** at dataset-build time; the same tag completeness rule applies to the
+> era-double-points tags. Generalizes: tags are load-bearing scoring inputs, not flavor —
+> they need a CI-time validator.
+
+*(designed, not built — add an `era.doubleScoringIssues: IssueTag[]` table; double
+ideology/lobby/meter awards on signed bills tagged with those issues during the era;
+authored per era; tag-completeness validator at dataset build time.)*
+
+### 26.4 APOCALYPSE Planet-Health endgame — the 10-year clock (NEW endgame model)
+
+> **NEW ENDGAME CONDITION — distinct from the shipped `triggersGameEnd` event-driven path.**
+> `EraEvent.triggersGameEnd` exists in shipped (`types.ts:1635`) but is **event-driven**.
+> `pop` records the **first meter-driven endgame**: when a meter falls into a specific
+> bottom-tier, a **10-game-year countdown clock to mandatory game-end** starts. (`pop` POST
+> 542, 548.)
+
+**The trigger:** after Bill #3 lifted drilling subsidies and **Planet's Health crashed
+into the bottom band**, GM Rodja announced verbatim:
+
+> *"END OF THE WORLD IN 10 YEARS IF WE DON'T FIX THIS."* (`pop` POST 542)
+
+**The mechanic:**
+
+1. **Meter threshold:** Planet's Health falling to the **APOCALYPSE / bottom-tier band**
+   triggers the clock. (The band name is the meter's bottom-of-ladder label — see
+   §22.1's Planet's Health ladder: "Poor → Near Crisis → Crisis → APOCALYPSE".)
+2. **Countdown:** a **10-game-year** clock starts (5 half-terms). During the clock, normal
+   gameplay continues — bills, elections, events all proceed.
+3. **Recovery:** if Planet's Health **recovers above the threshold** before the clock
+   expires, the clock CLEARS and game continues normally.
+4. **Expiry:** if the clock expires (10 game years elapsed with Planet's Health still in
+   the bottom band), the **game ends** with a climate-apocalypse end-state — analogous to
+   `triggersGameEnd` but **meter-derived**, not event-derived.
+
+**Implication for the engine: BOTH endgame models must exist.**
+
+| Endgame model | Trigger | Examples |
+|---|---|---|
+| **Event-driven** (shipped) | `EraEvent.triggersGameEnd = true` fires from era graph | Constitutional ratification end-state (1772); upcoming era events (designed) |
+| **Meter-driven** (NEW, `pop`) | Meter into bottom-tier band → 10-year countdown → expiry | **Planet's Health → APOCALYPSE** (the canonical modern instance) |
+
+The Planet's Health instance is **the documented clock-trigger meter** for the modern era;
+**analogous bottom-tier endgame clocks may exist for other meters/eras** but are not yet
+documented. Players in-thread acknowledge climate is the **most likely game-end path** for
+the populist arc — the model is **load-bearing** for the era's pacing, not edge-case.
+
+> **NEW roadmap surface.** This is a NEW endgame mechanism — the build's roadmap needs an
+> explicit item for it (separate from the existing event-driven `triggersGameEnd`). Pairs
+> with §22.1 (the meter bank), §22.11 (the era clock), and `game-context.md` row #88.
+
+*(designed, not built — add a **meter-derived endgame condition** model: per-meter
+bottom-tier threshold + countdown clock + scheduled game-end if not recovered; persist the
+clock in `FullGameSnapshot` (e.g. `game.endgameClocks: { meter; threshold; remainingYears
+}[]`); render a HUD warning when active; reconcile with `EraEvent.triggersGameEnd` so both
+paths terminate the game cleanly.)*
+
+### 26.5 Era-event-creates-office (bill installs a new cabinet seat)
+
+> **Generalizes the [§24.6 Progressive institutional layer](#246-66-the-progressive-era-institutional-layer-offices-created-in-game-by-law)
+> across a 4th era (modern).** §24.6 documented Fed Reserve / Chief of Staff / FBI / CNO
+> being created in-game by 1856-arc legislation. `pop` confirms the same generic mechanic
+> in the modern era: **legislation creates a real cabinet office mid-game**, the office
+> persists, and the cabinet expands.
+
+**Worked case:** the 2015-17 Climate Crisis slate included **"Create Department of
+Environment and Climate" (Wasserman Schultz)** (`pop` POST 699). It passed. The **2017
+cabinet** then includes a new seat — **Sec. of Environment & Climate (Sally Jewell)** (`pop`
+POST 1100). The seat persists into the next administration's cabinet.
+
+**The rule shape:**
+
+| Step | Action |
+|---|---|
+| 1 | A bill carries a `createsCabinetSeat: SeatSpec` flag in its `effects`. |
+| 2 | When the bill is signed (`runPhase_2_6_4`-equivalent), the `SeatSpec` is appended to the **dynamic cabinet seat list** (rather than `cabinetSeatsForYear`'s static lookup, `types.ts:1196`). |
+| 3 | The next **cabinet phase** (2.3.1) fills the new seat per the normal cabinet rules (Admin + party + faction-equity, etc.). |
+| 4 | The seat **persists across administrations** (a new president's cabinet inherits the seat list, subject to the firing-precedent rules `pop` corroborates from `fed` §21.4). |
+
+**Implication for the build: cabinet seat list is DATA, not hard-coded.**
+
+The shipped `cabinetSeatsForYear` (`types.ts:1196`) is a year-keyed static lookup; the
+designed model is a **dynamic seat list driven by passed legislation + era events**, with
+the year-keyed lookup acting only as the **initial seed** at boot. Pairs with #66 (Progressive
+institutional layer) and `game-context.md` row #89.
+
+*(designed, not built — generalize `cabinetSeatsForYear` to a **dynamic cabinet-seat list**
+in `FullGameSnapshot.game.cabinetSeats: SeatSpec[]`; add a `legislation.createsCabinetSeat:
+SeatSpec?` field; on sign, append the spec; cabinet phase 2.3.1 reads the dynamic list.
+Extends §24.6.)*
+
+### 26.6 Modern SCOTUS confirmation rules — refinements
+
+Two `pop` SCOTUS sharpenings, both already inlined at [§22.7](#227-scotus-subsystem-253--282)
+but called out here as a small confirmation-rules cluster for cross-reference:
+
+#### 26.6.1 Auto-AYE within 1 ideology step (declarative confirmation rule)
+
+> **Declarative rule, not heuristic** (`pop` POST 561; first explicit form).
+
+A faction whose center ideology is **within 1 step** of the nominee's ideology **auto-votes
+AYE** at SCOTUS confirmation. Only factions **≥ 2 steps away** may oppose. This bypasses
+the **cabinet 50/50 trap** ([§25.5](#255-cabinet-confirmation--designer-acknowledged-bug-36-of-88-nominees-passed) /
+DH-23) for ideologically-close justices — a SCOTUS-specific override.
+
+Worked case: KBJ + Goodwin Liu (both Lib) confirmed because only R1/R2/R3 were ≥2 steps
+from Lib — insufficient bloc to block. Sharpens #52 SCOTUS confirmation; first time the
+threshold is **declarative** rather than per-faction-heuristic.
+
+#### 26.6.2 Manipulative Pres compels Justice retirement
+
+> **Distinct from Iron-Fist compel-vote** (`pop` POST 555). A **Manipulative** president can
+> compel a Justice's retirement **if the target lacks Integrity OR has Judicial < 5**.
+
+This is a separate trait-power, **NOT** part of the Iron-Fist overload table. The three
+distinct powers:
+
+| Power | Trait | Gate |
+|---|---|---|
+| **Compel a vote** (Justice flips on a docket case) | Iron Fist | (no per-target gate) |
+| **Compel a retirement** | Manipulative | target lacks Integrity OR Jud < 5 |
+| **Age-/years-gated retire roll** | (none — automatic) | age ≥ 75 OR ≥ 12 yrs on court (shipped 0.15) |
+
+Sharpens §25.9 by **removing** the Manipulative-compel-retire effect from the Iron-Fist
+overload — it always belonged to Manipulative.
+
+*(designed, not built — the within-1-step auto-AYE rule for SCOTUS confirmation; the
+Manipulative-Pres compel-retirement gated on !Integrity OR Jud<5; both factored into §22.7
+SCOTUS subsystem; remove the conflation in §25.9 Iron-Fist overload.)*
+
+### 26.7 12th-Amendment-gated VP actions (amendments toggle capabilities)
+
+> **NEW: amendments toggle in-game CAPABILITIES, not just durable state.** Sharpens
+> [§21.3 amendments-as-durable-ratified-state](#213-amendments-as-durable-separately-ratified-state)
+> and [§24.4 amendment-ratifier/threshold-as-era-keyed-tunable](#244-64-amendment-ratification-by-34-of-state-governors--era-keyed-then-tunable):
+> a passed amendment doesn't only flip a rule-bound flag, it can **unlock** specific
+> action-library entries. (`pop` POST 951.)
+
+**The instance:** the general-election action **"Send VP to Shore Up Support"** (a
+[§22.5 general-election library](#225-general-election-library-294) entry) **requires the
+12th Amendment to be in place** — i.e. elections by party tickets. Before the 12th
+ratifies, the action is **disabled**; after it ratifies, the action is **available**.
+
+**Generalization:** the amendment store (`game.amendments`, designed at §21.3) gates more
+than just **durable rules**; it gates **callable action entries** in the various action
+libraries (general-election actions, exec actions, gov actions). Each library entry
+carries a `requires: AmendmentId?` or `requires: (snapshot) => boolean` predicate that
+checks the amendment state at action-evaluation time. The constitutional shape of the
+game **evolves in-game**, and individual subsystems gate on it.
+
+| Capability | Gated on | Source |
+|---|---|---|
+| **"Send VP to Shore Up Support"** general-election action | 12th Amendment ratified | `pop` POST 951 |
+| Presidential **two-term limit** | Two-Term-Limit Amendment ratified (else open-ended) | §21.3 / `modern` POST 15-29 |
+| **Income tax bills** | 16A-equivalent (income tax) amendment ratified — *unblocks* after Pollock | §22.7 / §24.4; `hd` POST 7250 |
+| **VP-nomination authority** | VP-vacancy-fill Amendment ratified | §21.3 / `fed` 276-277 |
+| **Filibuster (institute filibuster)** | "Institute Filibuster" law passed | §12.6 / `fed` 159 |
+| **(other VP-by-party-ticket mechanics)** | 12th Amendment ratified (likely) | `pop` open |
+
+Pairs with **§24.1 succession / acting-president state** (line-of-succession amendments
+similarly toggle line-of-succession capabilities) and `game-context.md` row #91.
+
+*(designed, not built — each action-library entry carries a `requires: AmendmentPredicate?`
+field; at action-evaluation, the library is filtered against `game.amendments.passed`;
+amendments toggle CAPABILITIES, not just rule-flags; pairs with §21.3 ratification flow.)*
+
+---
+
+> **Cross-reference for the roadmap.** §26 ties to roadmap items: **K3/K4 era-content
+> registry** (the boot-sheet schema and per-era data lives here); **E22 gilded scenario /
+> Phase-2 modern scenarios** (a 2012 boot is a separate scenario from the `modern`
+> continuation — both need to ship); the **cabinet-seat-as-data** refinement (§26.5 extends
+> §24.6 / row #66); and the **NEW APOCALYPSE meter-driven endgame** (§26.4) — a NEW engine
+> surface that needs an explicit roadmap entry, not just a sub-item under the meter bank.
