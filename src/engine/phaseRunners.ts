@@ -719,7 +719,10 @@ export function factionCenter(snap: FullGameSnapshot, factionId: string): number
     }
   }
   const rawMean = sum / count;
-  const econLean = leanSum / members.length;
+  // Clamp lean mean to [-1, +1] so a member holding multiple economic
+  // tags (Agriculture + Business) can't exceed the spec's max ±0.5 index
+  // shift — the lobby-expertise trickle is exactly what produces such members.
+  const econLean = clamp(leanSum / members.length, -1, 1);
   const biasedMean = rawMean + LOBBY_RULES.factionExpertiseBiasWeight * econLean;
   return clamp(Math.round(biasedMean), 0, 6);
 }
