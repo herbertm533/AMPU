@@ -1,5 +1,5 @@
 import type { FullGameSnapshot, PhaseId, Politician, EraEvent, EraEventResponse, EraEventResponseEffect, Legislation, ElectionResult, NationalMeters, Ideology, PartyId, SkillKey, Trait, CareerTrack, OfficeType, State, RelocationEntry, RelocationBand, IdeologyShiftEntry, ConversionEntry, KingmakerEntry, FactionAlignmentDriftEntry, FactionLeadershipEntry, InterestCardId, LobbyCardId, IdeologyCardId, Era, ElectionContext } from '../types';
-import { IDEOLOGY_ORDER, SKILLS, POSITIVE_TRAITS, TRACK_SKILL, TRACK_THEMED_TRAITS, TRACK_EXPERTISE, OFFICE_EXPERTISE, COMMITTEE_EXPERTISE, CAREER_RANDOM_NEGATIVES, CAREER_ODDS, CAREER_TRACK_MAX_YEARS, CAREER_TRACK_CAP, CAREER_GAINS_CAP, RELOCATION_ODDS, RELOCATION_ATTEMPTS_PER_TURN, RELOCATIONS_CAP, CARPETBAGGER_LADDER, IDEOLOGY_SHIFT_ODDS, IDEOLOGY_ATTEMPTS_PER_TURN, IDEOLOGY_SHIFTS_CAP, CONVERSION_ODDS, CONVERSION_ATTEMPTS_PER_TURN, CONVERSIONS_CAP, KINGMAKER_RULES, KINGMAKERS_CAP, ALIGNMENT_RULES, ALIGNMENT_DRIFT_CAP, LEADERSHIP_RULES, LEADERSHIP_FEED_CAP, MORTALITY_RULES, ANYTIME_EVENTS_RULES, ABILITY_LOSS_RULES, ABILITY_EARN_RULES, OFFICE_COMMAND_GRANT, OFFICE_ADMIN_GRANT, TRACK_SECONDARY_SKILLS, TRAIT_LIFECYCLE_RULES, cabinetSeatsForYear, CABINET_SEAT_SCORING, CABINET_CROSS_PARTY_RATE, CABINET_CROSS_PARTY_PENALTY, TRAIT_GOVERNANCE_EFFECTS, SLAVE_STATES_1856, LOYALTY_REGION_BASE, LOYALTY_IDEOLOGY_MULT, LOYALTY_DEFECTION_THRESHOLD, LOYALTY_RANGE } from '../types';
+import { IDEOLOGY_ORDER, SKILLS, POSITIVE_TRAITS, TRACK_SKILL, TRACK_THEMED_TRAITS, TRACK_EXPERTISE, OFFICE_EXPERTISE, COMMITTEE_EXPERTISE, CAREER_RANDOM_NEGATIVES, CAREER_ODDS, CAREER_TRACK_MAX_YEARS, CAREER_TRACK_CAP, CAREER_GAINS_CAP, RELOCATION_ODDS, RELOCATION_ATTEMPTS_PER_TURN, RELOCATIONS_CAP, CARPETBAGGER_LADDER, IDEOLOGY_SHIFT_ODDS, IDEOLOGY_ATTEMPTS_PER_TURN, IDEOLOGY_SHIFTS_CAP, CONVERSION_ODDS, CONVERSION_ATTEMPTS_PER_TURN, CONVERSIONS_CAP, KINGMAKER_RULES, KINGMAKERS_CAP, ALIGNMENT_RULES, ALIGNMENT_DRIFT_CAP, LEADERSHIP_RULES, LEADERSHIP_FEED_CAP, MORTALITY_RULES, ANYTIME_EVENTS_RULES, ABILITY_LOSS_RULES, ABILITY_EARN_RULES, OFFICE_COMMAND_GRANT, OFFICE_ADMIN_GRANT, TRACK_SECONDARY_SKILLS, TRAIT_LIFECYCLE_RULES, cabinetSeatsForYear, CABINET_SEAT_SCORING, CABINET_CROSS_PARTY_RATE, CABINET_CROSS_PARTY_PENALTY, TRAIT_GOVERNANCE_EFFECTS, SLAVE_STATES_1856, LOYALTY_REGION_BASE, LOYALTY_IDEOLOGY_MULT, LOYALTY_DEFECTION_THRESHOLD, LOYALTY_RANGE, LOBBY_EXPERTISE, LOBBY_INDUSTRY, EXPERTISE_IDEOLOGY_LEAN, LOBBY_RULES } from '../types';
 import type { CabinetSeatScoring } from '../types';
 import { addLog } from './log';
 import { addExpertise } from './expertise';
@@ -469,6 +469,26 @@ export function runPhase_2_1_2_CareerTracks(snap: FullGameSnapshot): void {
     }
   }
 
+  // Pass 3 — PR7 lobby → expertise trickle. Per faction × held lobby card
+  // with a non-null expertise tag × eligible living unretired member:
+  // chance(odds) → addExpertise → log on real change. Mirrors the existing
+  // committee/cabinet grant pattern; addExpertise dedupes so re-grants are
+  // silent no-ops. Seeded RNG (chance) keeps determinism.
+  for (const f of snap.factions) {
+    for (const card of f.lobbyCards) {
+      const xp = LOBBY_EXPERTISE[card];
+      if (!xp) continue;
+      for (const p of snap.politicians) {
+        if (p.factionId !== f.id) continue;
+        if (p.deathYear || p.retiredYear) continue;
+        if (!chance(LOBBY_RULES.expertiseGrantOdds)) continue;
+        if (addExpertise(p, xp)) {
+          addLog(snap, '2.1.2', 'appointment', `${p.firstName} ${p.lastName} gains ${xp} expertise from the ${card} lobby.`);
+        }
+      }
+    }
+  }
+
   snap.politicians = refreshPv(snap.politicians);
 }
 
@@ -678,21 +698,30 @@ function traitMult(p: Politician, kind: 'drift' | 'self' | 'opposed'): number {
 }
 
 // Living-member mean ideology index, rounded half-up (x.5 rounds toward RW).
-// Deliberately diverges from 2.1.8's unfiltered (dead-counting) rollup.
+// PR7: blended with an additive expertise-economic bias (econLean * weight)
+// before clamping/rounding. With EXPERTISE_IDEOLOGY_LEAN values zeroed,
+// output is byte-identical to the pre-PR7 mean (AC #9 invariant).
 export function factionCenter(snap: FullGameSnapshot, factionId: string): number | null {
   const members = snap.politicians.filter((p) => p.factionId === factionId && !p.deathYear && !p.retiredYear);
   if (members.length === 0) return null;
   const faction = snap.factions.find((f) => f.id === factionId);
   const leaderId = faction?.leaderId ?? null;
   let sum = 0, count = 0;
+  let leanSum = 0;
   for (const p of members) {
     const w = (leaderId !== null && p.id === leaderId)
       ? LEADERSHIP_RULES.ideologyWeightInFactionCenter
       : 1;
     sum += IDEOLOGY_ORDER.indexOf(p.ideology) * w;
     count += w;
+    for (const x of p.expertise) {
+      leanSum += EXPERTISE_IDEOLOGY_LEAN[x] ?? 0;
+    }
   }
-  return Math.round(sum / count);
+  const rawMean = sum / count;
+  const econLean = leanSum / members.length;
+  const biasedMean = rawMean + LOBBY_RULES.factionExpertiseBiasWeight * econLean;
+  return clamp(Math.round(biasedMean), 0, 6);
 }
 
 export function getFactionLeader(snap: FullGameSnapshot, factionId: string | null | undefined): Politician | null {
@@ -1595,6 +1624,33 @@ export function runPhase_2_1_8_FactionPersonalities(snap: FullGameSnapshot): voi
   const year = snap.game.year;
   const K = ALIGNMENT_RULES.stableTurns;
   let personalityShifts = 0, added = 0, dropped = 0, swapped = 0;
+
+  // PR7 — Lobby → Industry +1 nudge (deterministic). For each state, the union
+  // of nudge keys from held lobby cards of every faction with a living member
+  // residing in that state — that already exist on s.industries — is bumped
+  // +1, clamped ≤5. Per-(state,key) dedupe via Set: at most one +1 per state
+  // per key per year regardless of how many factions/cards target it. Missing
+  // keys are NOT created. Runs before the personality refresh so the held card
+  // has its effect before 2.1.8's later drift can drop it.
+  for (const s of snap.states) {
+    const bumped = new Set<string>();
+    for (const f of snap.factions) {
+      const hasMember = snap.politicians.some(
+        (p) => p.factionId === f.id && p.state === s.id && !p.deathYear && !p.retiredYear,
+      );
+      if (!hasMember) continue;
+      for (const card of f.lobbyCards) {
+        for (const key of LOBBY_INDUSTRY[card]) {
+          if (bumped.has(key)) continue;
+          if (!(key in s.industries)) continue;
+          if (s.industries[key] >= 5) { bumped.add(key); continue; }
+          s.industries[key] = s.industries[key] + 1;
+          bumped.add(key);
+          addLog(snap, '2.1.8', 'system', `${s.name} ${key} industry rises (${card}).`);
+        }
+      }
+    }
+  }
 
   // Step 1: personality refresh from living-only factionCenter (bug fix).
   for (const f of snap.factions) {

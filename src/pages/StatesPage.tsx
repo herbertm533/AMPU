@@ -25,7 +25,7 @@ export function StatesPage(): JSX.Element {
       const g = s.governorId ? snapshot.politicians.find((p) => p.id === s.governorId) : null;
       return g ? <span>{g.firstName} {g.lastName} <PartyBadge party={g.partyId} /></span> : <span className="text-slate-400">Vacant</span>;
     } },
-    { key: 'industries', label: 'Industries', sortValue: (s) => Object.keys(s.industries).length, render: (s) => <span className="text-xs text-slate-500">{Object.keys(s.industries).join(', ')}</span> },
+    { key: 'industries', label: 'Industries', sortValue: (s) => Object.keys(s.industries).length, render: (s) => <span className="text-xs text-slate-500">{Object.entries(s.industries).map(([k, v]) => `${k}: ${v}`).join(', ')}</span> },
   ];
 
   return (

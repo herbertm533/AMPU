@@ -368,6 +368,69 @@ export const ALIGNMENT_RULES = {
     Planters: 'RW', Nativists: 'RW', MilitaryIndustrial: 'RW', LawAndOrder: 'RW',
   } as Record<InterestCardId, 'LW' | 'Center' | 'RW'>,
 };
+// PR7 — Lobby → Expertise grant. null = non-economic lobby (no grant).
+// Drives the trickle pass in 2.1.2 (per held card, per member, chance-gated).
+export const LOBBY_EXPERTISE: Record<LobbyCardId, Expertise | null> = {
+  // 1772
+  Merchants: 'Business',
+  Planters: 'Agriculture',
+  SmallFarmers: 'Agriculture',
+  Lawyers: 'Justice',
+  Patriots: null,
+  NationalUnity: null,
+  Reformers: null,
+  // 1856
+  SlavePower: 'Agriculture',
+  NorthernIndustry: 'Business',
+  Expansionists: 'Foreign Affairs',
+  UrbanLabor: 'Labor',
+  Abolitionists: null,
+  EvangelicalReform: null,
+  ProUnion: null,
+  Nativists: null,
+};
+
+// PR7 — Lobby → Industry +1 nudge. Keys MUST match era State.industries keys
+// verbatim. Cards listing a key absent on a given state are no-ops (skip-if-
+// missing in the nudge pass) — single combined map is correct in both eras.
+// Empty arrays = non-economic lobbies or anachronistic associations
+// (UrbanLabor in 1856 has no union-vs-mfg sign before ~1870).
+export const LOBBY_INDUSTRY: Record<LobbyCardId, readonly string[]> = {
+  Merchants: ['shipping', 'finance'],
+  Planters: ['tobacco'],
+  SmallFarmers: ['agriculture'],
+  SlavePower: ['cotton', 'tobacco'],
+  NorthernIndustry: ['manufacturing', 'coal'],
+  Expansionists: ['agriculture'],
+  Lawyers: [],
+  UrbanLabor: [],
+  Patriots: [],
+  NationalUnity: [],
+  Reformers: [],
+  Abolitionists: [],
+  EvangelicalReform: [],
+  ProUnion: [],
+  Nativists: [],
+};
+
+// PR7 — Expertise economic lean on the LW(−)…RW(+) axis. Partial: only
+// economically-meaningful tags carry a sign (Agriculture, Business, Labor);
+// absent tags default 0. Business is deliberately half-weight (1772 commerce
+// was Federalist/center; 1856 Northern industry was center-left Republican —
+// sign is historiographically ambiguous).
+export const EXPERTISE_IDEOLOGY_LEAN: Partial<Record<Expertise, number>> = {
+  Agriculture: 1,
+  Business: 0.5,
+  Labor: -1,
+};
+
+// PR7 — Tuning knobs (co-located so the human can dial without touching
+// engine code). Max |econLean| is 1 → max factionCenter shift is the weight.
+export const LOBBY_RULES = {
+  expertiseGrantOdds: 0.10,
+  factionExpertiseBiasWeight: 0.5,
+} as const;
+
 export const ALIGNMENT_DRIFT_CAP = 200;
 
 export const LEADERSHIP_FEED_CAP = 200;
