@@ -322,6 +322,25 @@ Stalwart/Half-Breed/Mugwump/Bourbon factional politics, the tariff/currency/
 civil-service issues, the 1896 realignment — **see §4 (and §5)**; only the
 antebellum-specific real history stays in §3 below.
 
+**Note on the "Drums of War" all-CPU playtest:** an even longer-running thread
+(an all-CPU mechanical stress-test of the Civil War subsystem) **starts in
+1841** under President Harrison/VP Tyler with the late Jacksonian-Whig
+second-party system intact ("Welcome everyone to an all CPU playtest of the
+Civil War years… start after the 1840 elections," chunk-001 post 1) and runs
+*continuously through the Civil War, Reconstruction, Gilded Age, and Progressive
+eras into mid-1924* (the final chunk-117 covers the 1922-24 half-term under
+President Hearst: League of Nations debate, Kellogg-Briand pact, London Naval
+Treaty, Nazi Party emergence). So it corroborates §3 (antebellum/Civil War) and
+extends it backward into the **1840s Whig-Democrat era** — and the same thread
+also corroborates §4 (Gilded Age) and §5 (Progressive/WWI/1920s). It surfaces
+no new real-history detail beyond what §3-§5 already document; the historical
+content is the same Whig/Democrat → Republican/Democrat → Progressive arc.
+**The 1840s opening framing** (Harrison/Tyler/Webster/Clay/Calhoun; Whigs vs.
+Democrats; Mexican-border tensions; "Manifest Destiny" debates) is era-accurate
+for the late-Jacksonian/Whig second party system that immediately precedes the
+1856 Republican founding — see §3 *Common pop-history* for the Manifest-Destiny
+note and §2 terminology for the "Democrat" party-name origin under Jackson.
+
 ### Binding facts (ground truth)
 - **The 1856 party system was brand new and three-way.** **[consensus]** The
   **Republican Party formed in 1854** out of anti-slavery Whigs, **Free-Soilers**,
@@ -495,6 +514,10 @@ Unionists** (the cleavage the game's per-politician secession rolls model).
   post 1332; partial-03 posts 1710/1977). The shipped `eraEvents1856.ts` spine
   ends at the Trent Affair (1861) and has **no** Civil War combat model — so the
   war the campaign actually plays is host-improvised content, not in the build.
+  The *Drums of War* all-CPU thread independently corroborates this — it is
+  explicitly framed as a stress-test of "Civil War rules" with the same
+  out-of-engine combat model and similarly improvised faction/figure choices
+  (e.g. President Hearst as 1922-24 chief executive, chunk-117).
 - **Reconstruction is an end-of-era subsystem the campaign reaches (1865-68),
   also unbuilt.** Post-victory readmission plans (Ironclad-Oath loyalty / military
   districts requiring 14th-Amendment ratification / pardoning rank-and-file
@@ -540,7 +563,10 @@ gesture at is **Gilded Age → Populist surge (1890s) → Progressive Era**. *(T
 "A House Divided" Part-2 campaign — see §3 — also plays this whole window,
 transitioning in at "Welcome to 1868, the Era of the Gilded Age" and running to
 its 1892 Progressive transition; so the real history here governs that thread's
-back two-thirds as well.)*
+back two-thirds as well.)* *(The "Drums of War" all-CPU stress-test thread —
+see §3 — likewise transits this entire era continuously from a 1841 start, so
+the real history here also governs its 1868-1892 in-game years; it surfaces no
+new real-history detail beyond what this section already documents.)*
 
 ### Binding facts (ground truth)
 - **Party polarity continues from 1856: Republicans = the Union/Reconstruction
@@ -658,7 +684,12 @@ formed. Bounding events: Realignment of **1896** (McKinley def. Bryan) →
 **1932** (FDR). Engine: would run on `modern`/`progressive` tuning (no scenario).
 *(The "A House Divided" Part-2 campaign explicitly enters this era — "Welcome to
 the Era of Progressivism" at 1892, running through its 1898-1900 finale — so this
-section also frames that thread's closing years, as an alt-history.)*
+section also frames that thread's closing years, as an alt-history.)* *(The
+"Drums of War" all-CPU stress-test thread — see §3 — runs even further into this
+era, ending mid-1924 under President Hearst with the League of Nations debate,
+Kellogg-Briand pact, London Naval Treaty, and Nazi-Party emergence in chunk-117;
+all era-accurate 1920s events, no new real-history detail beyond what this
+section already documents.)*
 
 ### Binding facts (ground truth)
 - **1896 was a critical realignment that locked in Republican national dominance
@@ -756,7 +787,13 @@ farmers (Grange/Populist heirs), Prohibitionists, suffragists, nativists
   Cuomo") — the real-life 22nd Amendment passed in **1951**. Treat the campaign's
   institutional history as a *divergent alt-timeline*, not a mirror of real dates.
   *(The "A House Divided" thread, by contrast, actually plays this era's opening
-  years 1892-1900 as a direct continuation of its 1856 alt-history.)*
+  years 1892-1900 as a direct continuation of its 1856 alt-history.)* *(The
+  "Drums of War" all-CPU thread also actually plays this era — through WWI and
+  into mid-1924 under President Hearst — and shows the engine handling 1920s
+  events at real-history texture: League of Nations, Kellogg-Briand, the London
+  Naval Treaty, even the Nazi Party emergence in Germany; chunk-117. So this
+  era's *event content* is engine-tested even if the period has no shipped
+  scenario.)*
 - **Polarity guidance for any future build:** if a `progressive` era is ever
   scenario-ized, the BLUE/RED → Democrat/Republican mapping should be treated as
   **in flux**, with progressivism deliberately spanning both parties — the
@@ -1321,4 +1358,5 @@ Ordered by importance to this brief.
 - Shipped data: `src/data/factions1772.ts`, `factions1856.ts`, `scenario1772.ts`, `scenario1856.ts`, `eraEvents1772.ts`, `eraEvents1856.ts`; `CLAUDE.md` (draft pipeline).
 - Digests: `docs/game/playtest-digests/` (`1772s` 85f8e6b4, `fed` f55d3e21, `gilded` f4c7c2c4); `docs/game/game-context.md`.
 - 1948-continued batch: `docs/game/sources/3a9ac985-ampu-1948-playtest-continued-2004-and-beyond/` — chunk-001 (2004-08 start; BLUE=Dem/RED=Rep mapping, "Pres Cuomo," two-term-limit amendment), per-era "Welcome to" markers, chunk-032 (2004+ repeals of New-Deal/Cold-War statutes).
-- "A House Divided" 1856 Part 2 batch (added this update): `docs/game/sources/77db6e6f-a-house-divided-1856-ampu-playtest-part-2/` — chunk-001 (1856 start; Buchanan 174/Frémont 114/Fillmore 8; BLUE=Dem/RED=Rep; the four factions incl. Crittenden Republicans w/ Lincoln); "Welcome to" era markers (1860-61 chunk-011, 1868 Gilded-Age chunk-031, 1892 Progressivism chunk-106, 1898-1900 chunk-126); partial-02 (chunks 11-20: Seward wins 1860; John-Brown's-Raid blunder → secession & Civil War engine; CSA pres Quitman); partial-03 (chunks 21-30: Seward re-elected 1864; Union victory; Reconstruction; Lincoln nominated 1868). Campaign spans 1856→1900.
+- "A House Divided" 1856 Part 2 batch: `docs/game/sources/77db6e6f-a-house-divided-1856-ampu-playtest-part-2/` — chunk-001 (1856 start; Buchanan 174/Frémont 114/Fillmore 8; BLUE=Dem/RED=Rep; the four factions incl. Crittenden Republicans w/ Lincoln); "Welcome to" era markers (1860-61 chunk-011, 1868 Gilded-Age chunk-031, 1892 Progressivism chunk-106, 1898-1900 chunk-126); partial-02 (chunks 11-20: Seward wins 1860; John-Brown's-Raid blunder → secession & Civil War engine; CSA pres Quitman); partial-03 (chunks 21-30: Seward re-elected 1864; Union victory; Reconstruction; Lincoln nominated 1868). Campaign spans 1856→1900.
+- "Drums of War" all-CPU Civil War stress-test batch (added this update): `docs/game/sources/e1776bbd-drums-of-war-an-allcpu-playtest-of-the-civil-war/` — chunk-001 (1841 start under Pres Harrison/VP Tyler; Whig/Democrat second-party system; Webster/Clay/Calhoun/Jefferson Davis/Lincoln/Seward all on the board); chunk-117 (mid-1924 finale under President Hearst — League of Nations and Kellogg-Briand decisions, London Naval Treaty, Dada/Surrealism, Nazi Party emergence). All-CPU mechanical stress-test of the Civil War subsystem; covers ~83 in-game years (1841→1924), corroborating §3 antebellum, §4 Gilded Age, and §5 Progressive/WWI/1920s without surfacing new real-history detail beyond those sections.
