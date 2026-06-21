@@ -13,7 +13,7 @@ architecture, this doc says so and sketches the change.
 > **federalism** solo-with-AI playtest) and `85f8e6b4` (a 90-post 1772 solo
 > "aesthetic experiment", the **presentation layer** A1–A8) — adding three design
 > divergences (#4–#6), three confirmed bugs, and a parallelizable presentation
-> track. **Batch 3** (this revision) absorbs `3a9ac985` — a **2276-post modern
+> track. **Batch 3** absorbed `3a9ac985` — a **2276-post modern
 > (1948→2020) multiplayer campaign**, the most mechanically mature thread yet. It
 > **corroborates ~30 prior deltas across a 4th era** (the keystone calls are now
 > as strong as they will get), adds the modern subsystems (named meter bank,
@@ -23,9 +23,32 @@ architecture, this doc says so and sketches the change.
 > SCOTUS, #8 cabinet)**, **two GM-confirmed design holes (DH-1 filibuster-MUST-pass,
 > DH-2 era-deck-off-year)**, and — architecturally most important — **two scaling
 > walls that are NOT era-gated** (dataset exhaustion → procedural pol generation;
-> Wyoming-Rule House bloat → persist/auto-fill slates). [§9](#9-build-sequencing-advice)
-> is **re-sequenced** to pull those cross-cutting items forward while keeping the
-> deep-modern subsystems at the far end.
+> Wyoming-Rule House bloat → persist/auto-fill slates).
+>
+> **Batch 4** (this revision) absorbs `77db6e6f` — a **9051-post 1856-native
+> "A House Divided" Part 2** campaign (1856→1904 alt-history multiplayer), the
+> **first 1856-native procedural record** and **only source for the Civil-War /
+> Reconstruction / secession machinery**. It is mostly the **4th–5th corroboration**
+> of the existing gap log across a new era, so the keystone calls do not move; the
+> NEW surface is: **(1) a concrete shipped bug** — `RELOCATION_ATTEMPTS_PER_TURN`
+> is `5` at `types.ts:247` but the design changed it to `4` mid-thread and it went
+> *live in the running playtest* (divergence **#9**; the clearest "the forum drives
+> the build" evidence) — a **one-line XS quick-win, now at the front of the
+> quick-fix list**; **(2) the era model is per-era point *banking* toward an
+> end-of-game total, not reset-and-discard** (#68) — an **architectural refinement
+> folded into K3/K4**, not a new keystone; **(3) the Civil-War two-theater combat
+> engine + Reconstruction readmission subsystem** (#56/#57) — a sizeable subsystem
+> that **ENHANCES the already-shipped 1856 scenario** (unlike the federalism epic,
+> which is a *new* scenario), so it is placed **early-ish — after generic war (#6)
+> + ActionRegistry (K2) — because it completes a playable shipped scenario**; plus
+> (4) succession/eligibility + 0-Command acting president (#61), contingent House
+> election + tied-chamber inverse control (#62), offices-created-by-law (#66),
+> era-keyed amendment ratification by governors (#64), the "3 traits + 3 alt-states"
+> draft re-rule (#69), the now-**authored** investigation 5d6 spec (#65 → #54 moves
+> from needs-design to **ready**), and **nine new design holes (DH-3..DH-11)** — most
+> notably the **CPU convention AI is GM-confirmed unstable (DH-8)**, which any
+> conventions build must own. [§9](#9-build-sequencing-advice) is re-sequenced for
+> these deltas.
 >
 > **⚠ Batch-3 correction — the cabinet "no-wipe" claim was WRONG.** Batch 2's
 > grounding note asserted the engine has *no* cabinet-wipe-on-election and that
@@ -161,6 +184,27 @@ row below is a **widening of an existing shape** (`is widening?` column).
 | **53-state roster + Wyoming-Rule apportionment** (#55, #34) | new `data/states_modern.ts` + `State.electoralVotes` (exists) + `State.bias` (exists) | a 53-state roster (DC/CU/PR) + a decennial apportionment recompute that resets EV + `bias` + adds/removes a focus-Rep | **WIDENING.** `State.region` already includes `Caribbean`/`Latin America`/`Pacific`/`Atlantic` (`types.ts:1322`) — partial readiness. The recompute is the same `pendingEvDeltas` decennial mechanism (batch 1) at a larger scale. **But see scaling-wall (b): the House bloat it produces is a UX wall.** |
 | **Two-home-state politicians** (#55) | `Politician` (`types.ts:1251`, single `state` today, `:1784`) | `homeStates?: string[]` (or `altStates?: string[]`) alongside the primary `state` | **WIDENING.** Additive optional list; `repair()` backfills `[]`. Touches relocation/Carpetbagger (which read `p.state`) and kingmaker chaining — audit those readers. |
 | **Persist + auto-fill House slates & committee rosters** (A9) | `GameState` | `houseSlates?: …` + carry-forward committee rosters | **STRUCTURAL-ish + UX.** See scaling-wall (b) below — this is a near-term requirement, not a modern-only one. |
+
+**Batch 4 (1856-native `hd`):** these EXTEND the already-shipped 1856 scenario
+(`scenario1856.ts`, era `nationalism`) — that is the key sequencing fact (the
+payoff completes a *playable shipped* scenario, vs. federalism being a new one).
+Almost all land as additive optional fields; the war/Reconstruction status models
+are the genuinely new shapes.
+
+| Delta (forum) | Lands on | Field (designed) | Widening? · Notes / migration |
+|---|---|---|---|
+| **Per-era point BANKING + ~12-step era-boot pipeline** (#68, §2.5) | `GameState` | `eraPointBanks?: Record<Era, …>` + per-era running `Faction.score` zeroed at the boundary | **REFINES K3/K4 — not a new item.** Points do **not** carry linearly; the era's score is **banked** at the boundary and the running total zeroes, with the per-era banks summing toward the (open) cross-era win total. The `advanceEra` keystone gains a bank-and-zero step + an end-of-era award payout + a full 2.1.x→2.3.1 re-run + content-pool swap. Resolves the long-open "does the point-reset fire at a boundary?" question. See §6.7.2 + K3/K4. |
+| **Civil-War two-theater combat engine + tiered war** (#56, §23.3) | `War` entity + `GameState.wars` (array exists) | extend `War` with `theaters[]` (East/West), `navalWins` gate, per-theater `warScore`, `tier: 'major'\|'minor'\|'operation'`, multiplier | **STRUCTURAL (war model) but the `War` array already persists.** The **Major-tier** instance of divergence #6's generic war: two theaters (3 naval wins gate land), additive per-battle `success%`, per-theater WarScore (+10 auto-wins), named-battle officer casualties on the military track, and a **permanent president +1-all-elections** on Union victory. **Enhances shipped 1856** (no Civil War today; spine ends at Trent Affair 1861). Fold the shipped flat resolver + 1772 Rev-War loop in as configured instances. |
+| **Reconstruction readmission status + time-boxed bias** (#57, §23.4) | `State` (`types.ts:1318`) + `Legislation` | `reconstruction?: 'occupied'\|'military-gov'\|'readmitted'` + `biasModifiers?: { delta; untilYear }[]` | **STRUCTURAL-ish (status enum) + additive.** Per-state readmission **bill** gates Gov/Rep/Senate election unlock; the Ironclad-Oath plan grants a **time-boxed `+2 toward incumbent until <year>`** modifier (distinct from permanent `State.bias`); strip-leaders/pardon bills remove-or-return named pols (prune broken Kingmaker pairs). Pairs with #21 (state policies) + #58. |
+| **Secession + Southern-Unionist / Secessionist gating** (#58, §23.1) | `Politician` (`types.ts:1251`) | `allegiance?: 'union'\|'secessionist'` + a "Secessionists" inactive bucket; reads `Southern Unionist`/`Nationalist` traits + `state` region | **Additive.** A scripted secession event chain (here triggered by a *blundered* presidential decision) moves pols of seceded/border states inactive **unless** they hold `Southern Unionist`. The draft dataset already needs the trait on Southern pols. No-relocate-INTO-rebel-state rule; CSA officeholder seeding. `repair()` backfill `'union'`. |
+| **Free/Slave sectional-balance crisis** (#59, §23.2) | derived per turn from `State` membership in `SLAVE_STATES_1856` (`types.ts:1152`, exists) | no new field — compute `freeStateCount`/`slaveStateCount` at half-term close | **WIDENING (engine, not shape).** The defining Nationalism crisis: while free > slave and era is `nationalism`, a fixed score/meter/election penalty package fires (Speaker/Pro-Tem −250, Moderates −250, DomStab −2, Party-Pref +2 Red, RW-Activists +2 next election). **Retired on emancipation** (13th-Amendment beat). The `SLAVE_STATES_1856` set already exists — only the scoring is unwired. |
+| **Canada conquest → era-gated statehood + Canadian draft + penalties** (#60, §23.5) | `State` (roster exists in `expansionStates.ts`, region `'Canada'`, 11 provinces) + statehood pipeline (#43) | per-(state, era) admission gate + a region-keyed bonus draft pool + Canada-region election penalties | **WIDENING + content.** The province **roster already exists** (`expansionStates.ts`); missing are the **era-gated admission rules** (1856: Quebec→statehood directly, Ontario must be a territory, NL/NM/Utah locked until Gilded), a **bonus Canadian draft pool** (~70 historical pols) on annexation, native-born relaxation once a region is fully annexed, and Canada-region candidate/cabinet election penalties. Rides the bill-driven statehood path (#43). |
+| **Succession / eligibility / 0-Command acting president** (#61, §24.1) | `GameState` + `Politician` | `successionOrder?: OfficeType[]` (bill-mutable) + `Politician.bornForeign?: boolean` + an `actingPresident?` state | **STRUCTURAL-ish + additive.** A **configurable line of succession** (legislatable order); **native-born vs foreign-born** eligibility gating the presidency (relaxable per #60); an **acting-president state whose `command` (often 0) gates exec actions / SCOTUS-compel / re-election eligibility**. `vicePresidentId` exists (`types.ts:1568`) but no eligibility gate, no configurable line, no acting state. Era-gate the VP-vacancy-fill on the amendment. |
+| **Contingent House election + tied-chamber inverse control** (#62, §24.2) | engine + `GameState` | a contingent-election path (1-vote-per-state by House-delegation majority, Governor-party tiebreak; Senate elects VP) + a config `contingentTopN: 2\|3` | **WIDENING (engine).** Today the EC tally always resolves to a winner. On no EC majority, run the contingent path; build must **pick a stated cutoff** (DH-6: top-2 house rule vs. top-3 12th-Amendment) + the **tied-chamber inverse-control** rule (a tied chamber is controlled by whoever does NOT control the other). An election-system addition; slots into the same EC tally code as #5. |
+| **Offices created in-game by law (institutional layer)** (#66, §24.6) | `GameState.cabinet` (seat map) + a new `createdOffices?` | model offices as **data created/destroyed by bills + exec actions**, not a fixed `cabinetSeatsForYear` | **STRUCTURAL (generalizes the seat list).** Fed Chair (6-yr; creating the Fed **deactivates the Independent Treasury**), Chief of Staff (+1 exec action), CNO (replaces Sr Admiral; +1 Command), FBI Director (10-yr, off the 5-retention cap), Commerce/Labor split. `cabinetSeatsForYear` (`types.ts:1196`) is year-keyed and fixed today. Ties to ActionRegistry K2 + the cabinet-retention refactor (#25/#49). |
+| **Amendment ratification by 3/4 governors — era-keyed + in-game-tunable** (#64, §24.4) | `GameState.amendments` (same field as #39) | the **ratifier + threshold are an era-keyed, bill-changeable field** | **Folds into the amendments item (#39).** 1856: 2/3 of both chambers then **3/4 of state GOVERNORS**; the threshold is itself tunable by a passed amendment (options table → faction-enthusiasm side effects); Gilded default drops to 2/3 of states. Plus a SCOTUS-ruling effect that **gates a bill category until an amendment passes** (*Pollock* → no income-tax bill until ratification) — couples to the SCOTUS docket (#52). |
+| **"3 traits + 3 alt-states" draft re-rule** (#69, §24.8) | draft config (era-dependent) | a tunable `{ traits, altStates }` rookie-grant pair, **era-keyed** | **WIDENING (config).** The 1868 re-rule set rookies to **3 traits + 3 alt-state adds** (down from 5/5). Goes in the era-config table (§6.1 pattern). The alt-state add is the `Politician.homeStates?` (#55) field. Open: is 3/3 canonical going forward. Confirms reverse-PV draft order + pick-position bonuses. |
+| **Investigation 5d6 special committee** (#65 → fills #54, §24.5) | `Legislation` (`Bill.type`) + a special-committee form | an investigation-bill type → Speaker-formed Chair+Ranking+3 → **5d6 + 4 modifiers**, 21–25 = guilty | **WIDENING (engine).** #54 was a design hole (rules blank); **`hd` AUTHORED the spec** — so #54 is now **READY to build** (no design task remaining). Targets the dominant party; on guilt resign + cabinet ban + trait/meter ripples. Extends the legislative micro-mechanics; needs `Bill.type` (#42). |
 
 **Two scaling walls (architecturally important; NOT era-gated — call these out):**
 
@@ -433,7 +477,7 @@ content**.
 | File | Role |
 |---|---|
 | `scenario1772.ts` (`build1772Scenario`) | Founding scenario; starts `currentEra: 'independence'`, phase `2.1.1`, full pool expansion draft. |
-| `scenario1856.ts` (`build1856Scenario`) | Antebellum scenario; starts `currentEra: 'nationalism'`, phase `2.1.2` (rookie crop pre-seeded), bicameral constitution already ratified. |
+| `scenario1856.ts` (`build1856Scenario`) | Antebellum scenario; starts `currentEra: 'nationalism'`, phase `2.1.2` (rookie crop pre-seeded), bicameral constitution already ratified. **Spine dead-ends at the Trent Affair (1861)** — batch 4 (`hd`) designs its continuation: the Civil-War combat engine + Reconstruction + secession + Canada arc that turns this half-finished shipped scenario into a full 1856→1904 campaign (§9.1.2; gap #56–#60). |
 | `states1772.ts` / `states1856.ts` | Colony/state rosters. |
 | `factions1772.ts` / `factions1856.ts` | Seed factions, parties, interest groups. |
 | `politicians1772.ts` / `politicians1856.ts` | Seed/filler politicians (note: `politicians1856.ts` uses raw `Math.random` 12× — author-time fill, see §8). |
@@ -693,9 +737,15 @@ Example call: era graph generalization — make `ERA_GRAPHS[era]` and update
 2. Add a transition trigger. Today the **only** era transition is hard-coded in
    `constitutionalConvention.ts:198` (`currentEra = 'federalism'`). Generalize
    to `advanceEra(snap, target: Era)` in `src/engine/eraTransition.ts` (pure).
-3. Era boundaries are also card-pool / nation-roster swaps. Run them through
-   `advanceEra` so a 1772→federalism→nationalism→gilded campaign has one
-   transition function with side-effect hooks.
+3. Era boundaries are also card-pool / nation-roster swaps **and a point-banking
+   step** (batch 4, #68/§2.5). Run them through `advanceEra` so a
+   1772→federalism→nationalism→gilded campaign has one transition function. The
+   boundary is a **~12-step boot pipeline**, not a flag flip: end-of-era award
+   payout → **bank the era's score + zero the running total** (points do *not*
+   carry linearly; the per-era banks sum toward the cross-era win total) → faction
+   trades → a **full 2.1.x→2.3.1 re-run** under the new era's rules → card/draft/
+   SCOTUS pool swap (+ the per-era card-count rescale). Model the banks as
+   `GameState.eraPointBanks?: Record<Era, …>`; `repair()` backfills `{}`.
 4. Add scenario builder (`scenarioGilded.ts`?) if the era is a starting era.
 
 #### 6.7.3 Action library (governor / exec / convention / diplomacy / primary / general)
@@ -818,25 +868,40 @@ draft runner instantiates the year's class via `instantiateDraftees`
 | 18 | **SCOTUS is a stub (divergence #7), not a system** | court ruling `phaseRunners.ts:3398-3414` (4 hardcoded titles, `partyPreference ±0.1`); retire/backfill `:3648-3671` | The shipped court has the *entity* (`supremeCourtIds`/`chiefJusticeId`, `types.ts:1584`) but no docket, per-case effects, compel-vote/retire, dynamic size, or ruling→law-deactivation. Modern #52 is a from-scratch SCOTUS module — there is no balance-tuned court to preserve, so framing it as a "replacement" overstates what ships. Gates BUG-2 (`Chisholm` needs amendments). M–L. |
 | 19 | **Dataset exhaustion (scaling wall a)** | runtime load `standardDraftClasses.ts:13`; finite ~18.5k JSON | The real-person dataset **runs out in the deep-modern era** → no draft pool for late-era play. Needs a **runtime, seeded procedural pol generator** (`src/engine/`, emitting `ImportedDraftee` rows, reusing `instantiateDraftees` `phaseRunners.ts:114`). Also fixes "sparse new states need filler officials" (#43) + BUG-3 stopgap. Connects to portraits (A1). **Needed for ANY late-era play.** M–L. |
 | 20 | **House bloat → manual-staffing tedium (scaling wall b)** | no slate/committee persistence across cycles; election + committee phases re-run from empty each cycle | Wyoming-Rule House ~572–601 (Senate 106) makes the manual House-election + committee-staffing phases unbearable — **a player quit over it**. Needs **persist + carry-forward/auto-fill** of House slates + committee rosters on the snapshot. **Near-term** (improves 1856's 31-state congress too), not modern-only. M. |
-| 21 | **DH-1: filibustered "MUST-pass" bill has no rules remedy** | no deadlock rule (filibuster itself unbuilt); `modern` 640-716 | A GM-confirmed **design hole** (rules, not code): when a required bill is filibustered to death the rulebook has no answer (GM improvised a 4-leader special-committee auto-pass with a per-day "shutdown" penalty clock). **Rules must be *authored* (a PM/design task) before this can be built.** Couples to the filibuster epic + investigation-committees (#54), which is likewise under-designed. |
+| 21 | **DH-1: filibustered "MUST-pass" bill has no rules remedy** | no deadlock rule (filibuster itself unbuilt); `modern` 640-716 | A GM-confirmed **design hole** (rules, not code): when a required bill is filibustered to death the rulebook has no answer (GM improvised a 4-leader special-committee auto-pass with a per-day "shutdown" penalty clock). **Rules must be *authored* (a PM/design task) before this can be built.** Couples to the filibuster epic. **(NB: investigation-committees #54, formerly grouped here as under-designed, is now READY — `hd` authored the 5d6 spec, §24.5/#65.)** |
 | 22 | **DH-2: modern era-deck fired off-year cards** | possible scheduling defect; reconcile with BUG-1 + the §6.4 scheduling fork; `modern` 2221 | In ~2018 the deck pulled 2008-era cards. **Reported, not verified** — could be intended shuffle/backlog or a real defect. Resolve **together with divergence #4 (era-event scheduling)** and BUG-1's era-lock filter, since all three are the same scheduling surface. |
 
 ### 8.1 Confirmed shipped bugs + GM-confirmed design holes
 
-Three code defects (`BUG-*`, surfaced by `fed`) and two GM-confirmed design holes
-(`DH-*`, surfaced by `modern`). **`BUG-*` are fixes, not features** — small and
-high-value, and BUG-1 is a hard blocker the moment a federalism/1800 scenario
-ships. **`DH-*` are *rules gaps*, not crashes** — the forum rulebook had no answer
-and a human improvised; **the rules must be *authored* (a PM/design task) before
-they can be built.** Verified against the codebase where quick.
+Code defects (`BUG-*`: BUG-0 from `hd`, BUG-1/2/3 from `fed`) and GM-confirmed
+design holes (`DH-*`: DH-1/2 from `modern`, DH-3..DH-11 from `hd`). **`BUG-*` are
+fixes, not features** — small and high-value; **BUG-0 (the relocation-cap stale
+constant) is the cheapest win in the roadmap** and BUG-1 is a hard blocker the
+moment a federalism/1800 scenario ships. **`DH-*` are *rules gaps / balance flags*,
+not crashes** — the forum rulebook had no answer and a human improvised; most
+**need rules *authored* (a PM/design task) before they can be built**, and several
+are **balance dials** for an existing-but-unbuilt system. Verified against the
+codebase where quick. **One `DH-*` is a code area, not just a rule:** DH-8 (CPU
+convention AI unstable) — flagged below because **any conventions build must own
+it**.
 
 | Bug | Location (verified) | Fix | Size / when |
 |---|---|---|---|
+| **BUG-0 (batch 4) — relocation cap is STALE: shipped `5`, design `4`** (divergence #9) | **VERIFIED:** `RELOCATION_ATTEMPTS_PER_TURN = 5` at **`src/types.ts:247`**. The designer (`vcczar`) changed the cap to **4** non-alt-state relocations mid-thread and it went **LIVE in the running playtest** (`hd` POST 7062–7066, 7555); the browser engine never caught up. **Settled value** — the digest says it went live, not mid-thread flux. | **One-line edit:** `RELOCATION_ATTEMPTS_PER_TURN = 4`. (The full feature — auto-Carpetbagger + 10-yr expiry + alt-state exemption — is divergence #2 / a separate consistency PR; this row is *only* the stale constant.) | **XS — the cheapest win in the whole roadmap. Do it FIRST.** No dependency, no migration (it's a tunable const, not a save field). |
 | **BUG-1** — era events never deactivate by era for non-1772/1856 start years (an 1800-start wrongly loses the Louisiana Purchase; stale events also dilute the roll table) | `buildEraEventsForYear(snap.game.year)` is called with **no era-vs-start-year filter** at `phaseRunners.ts:2817`. Latent today (only 1772/1856 ship; the 1772 graph path at `:2801` is separate), but a blocker once a 3rd scenario lands | Add an "era-lock" filter: an event whose era is past the scenario's start era is treated as already-happened and excluded from the roll table (`fed` 524-535). **Resolve together with DH-2 and divergence #4 — same scheduling surface.** | **XS.** Land *before/with* the federalism scenario — it directly gates it. |
 | **BUG-2** — `Chisholm v. Georgia` needs an "11th Amendment not ratified" gate | **No SCOTUS case data contains it** (grep: 0 hits in `src`). This is a *forward requirement on SCOTUS-case content*, not a live crash | When the federalism SCOTUS case file is authored, gate `Chisholm` on `!amendmentPassed('11th')`. Bundles into the SCOTUS subsystem (divergence #7). | **XS.** Bundles into SCOTUS content; needs the amendments field (#39). |
 | **BUG-3** — no fallback when no viable PM-General candidate exists | `GeneralInChief` is a real seat (`types.ts:1121`, granted via `cabinetSeatsForYear` `:1145`) filled at `phaseRunners.ts:2255`; the **no-candidate path is uncovered** → potential crash | Define the empty-pool behavior (leave vacant + log, or auto-generate a stopgap officer — ties to procedural pol generation, scaling wall a). | **XS.** Defensive guard; do alongside the war/cabinet work. |
 | **DH-1** — a filibustered "MUST-pass" bill has no rules remedy | Filibuster itself is unbuilt; no deadlock rule exists. GM improvised a 4-leader special-committee auto-pass with a per-day "shutdown" penalty clock (`modern` 640-716). **A rules gap, not a code bug.** | **Author the deadlock rule first** (forced-compromise vs shutdown-clock vs fallback auto-pass — a design call), then build it into the filibuster epic. | **Design task + S build.** Blocks the filibuster epic's completeness. |
 | **DH-2** — modern era-event deck fired off-year cards (2008 cards in 2018) | Possible scheduling defect or intended shuffle/backlog (`modern` 2221). **Reported, not verified.** | Resolve **together with BUG-1 + divergence #4** (era-event scheduling) — all three are the same scheduling surface. | **Investigate within the scheduling-fork decision.** |
+| **DH-3 (`hd`)** — career-track pols can run for President | A career-track pol is barred from Gov/Rep/leadership/Kingmaker but **no rule bars a presidential run** (`hd` 8205–8219). GM-acknowledged, intended-to-fix. | **quick-fix / author.** Bar career-track pols from the presidential candidate pool (and from CPU presidential selection). Relates to #63 primary. | **XS rule + S build.** Add a guard at candidate eligibility. |
+| **DH-4 (`hd`)** — "Extend Credit to all nations" near-auto-win foreign loop | Extending credit to all 7 powers "works amazingly every time" → stacked EconStab/industry/relation bonus (`hd` 7346). Diplomacy itself is unbuilt (#26). | **balance.** Needs a diminishing-returns / cap rule. Author the cap **into the diplomacy-actions epic**, not separately. | **Balance dial; folds into diplomacy library.** |
+| **DH-5 (`hd`)** — Kingmaker-flip grabs the protégé(s), "insanely OP" | Converting/flipping a Kingmaker also seizes his protégés + their +1 election standing (`hd` 7589, 8762). Kingmaker/conversion exist (`KINGMAKER_RULES` `types.ts:295`; `CONVERSION_ODDS` `:268`). | **balance / quick-fix.** Add a pairing-dissolution-on-flip rule (or no protégé transfer). Relates to #29/#30. | **S.** A rule in the conversion path; **also note for Reconstruction** (#57 prunes broken Kingmaker pairs — same code area). |
+| **DH-6 (`hd`)** — contingent-election top-2 vs top-3 deviation | GM uses **top 2** vs the 12th Amendment's **top 3**, overruled "Game rules" (`hd` 5720–5721). No contingent path exists. | **author-before-build.** Build must **pick a stated cutoff** (config it: `contingentTopN`). Bundles into the contingent-election addition (#62). | **Design call + bundled into #62.** |
+| **DH-7 (`hd`)** — R/D convention-threshold asymmetry + Iron-Fist unilateral change | Dems run **3/4**, GOP **2/3→½+1**; an **Iron-Fist PL can unilaterally lower** the threshold (`hd` 4726, 623–630, 5594–5713). No convention thresholds exist. | **author-before-build.** Document a chosen rule (era/party-fixed vs temporary) + re-gate the rules-change power. Bundles into the **convention epic**. | **Design call; part of the convention subsystem.** |
+| **DH-8 (`hd`)** — **CPU convention AI unstable + ballot-shift rule ambiguous** | GM-acknowledged: the CPU convention AI is "rough/awful, needs a 2.9 rework" and **cannot perform some actions humans can**; the ballot-shift rule is genuinely ambiguous (`hd` 4686–4690, 2025–2038). No convention AI exists today. | **CPU-AI (known-unstable) + author.** **Any conventions build must OWN the CPU side** — a player-only convention is not shippable for a single-player game where most factions are CPU. Firm both specs (ballot-shift: GM ruled next round) inside the epic. | **Owned by the convention epic; do not treat the CPU as optional.** |
+| **DH-9 (`hd`)** — exec/gov-action ability stat inconsistent | The ability stat differs across actions/events (exec=Command in build, gov=Gov); designers think it should all be Command; a live "all-Admin implementation" rebalance was applied (`hd` 2274, 2279–2282, 3097–3098). | **author-before-build.** One canonical decision before the action libraries (K2) author their `resolve` stat. Relates to #22/#23. | **Design call; resolve *before* the action-library epics fix the stat per row.** |
+| **DH-10 (`hd`)** — blundered implementations still score unless overridden | Designer ruling: a FAILED implementation **still scores points + moves meters "as if it succeeded"**; the blunder only risks scandal/resignation — UNLESS a specific event overrides (`hd` 8649–8672). | **author / per-action data flag.** Needs a per-action `blunderStillScores?` flag + an override appendix. Refines #22. | **S; a data-flag convention for the era-event/action content.** |
+| **DH-11 (`hd`)** — apparent Dem 3rd-party structural bias + lobby cards too inelastic | Dems reportedly "won every instance a 3rd-party run mattered" (possible bias in #48); lobby cards are too inelastic (raw-pol-count-driven → a trifecta party can lack lobbies) (`hd` 7480-block, 7799). | **balance.** Rebalance the 3rd-party trigger (#48) + the lobby-card distribution (#5/§7.4 card algorithm). | **Balance dials; fold into the respective subsystems (#48, #5).** |
 
 ---
 
@@ -844,9 +909,29 @@ they can be built.** Verified against the codebase where quick.
 
 > **This section is written for the roadmap-planner to lift directly.** It is my
 > engineering opinion on order, dependencies, and rough size/risk for the
-> game-pm gap log (~55 rows across 4 eras + A1–A9 presentation), the design
-> divergences (mechanics §19.1, now #1–#8), the confirmed bugs, and the GM design
-> holes (DH-1/DH-2). Source: codebase + `gilded` + `fed` + `1772s` + `modern`.
+> game-pm gap log (~69 rows across 5 eras + A1–A9 presentation), the design
+> divergences (mechanics §19.1, now **#1–#9**), the confirmed bugs (now incl.
+> BUG-0), and the GM design holes (DH-1/DH-2 + DH-3..DH-11). Source: codebase +
+> `gilded` + `fed` + `1772s` + `modern` + `hd`.
+>
+> **Batch-4 changes to the plan (mostly corroboration — three concrete moves):**
+> 1. **BUG-0 (relocation cap `5`→`4`, divergence #9) goes to the FRONT of the
+>    quick-wins** — a verified one-line XS edit (`types.ts:247`), no dependency, no
+>    migration. The single cheapest item in the roadmap.
+> 2. **Per-era point BANKING (#68) folds into K3/K4 as a design refinement**, not a
+>    new item: the era boot is a bank-and-zero + award + full pre-turn re-run +
+>    content swap pipeline, and the per-era banks sum toward the cross-era win
+>    total. It sharpens what `advanceEra` must do; it does not add a keystone.
+> 3. **The Civil-War combat engine + Reconstruction subsystem (#56/#57) lands
+>    early-ish on the subsystem track** — explicitly **after generic war (#6) +
+>    ActionRegistry (K2)** but **before the federalism-only / deep-modern tail —
+>    because it COMPLETES the already-shipped 1856 scenario** (the highest-leverage
+>    "finish a playable thing" move). Justified in §9.2.
+> Plus: **#54 investigation committees is now READY** (the `hd` 5d6 spec authored
+> the rules — it moves from needs-design to buildable); the 1856-arc election
+> additions (#61 succession, #62 contingent election) slot into the election work;
+> and **DH-8 (CPU convention AI) is now a GM-confirmed must-own for the convention
+> epic.** Keystone calls are unchanged (5th-era corroboration).
 >
 > **Batch-3 changes to the plan.** The modern subsystems are **mostly the FAR end**
 > (the deep-modern era builds last — it depends on every keystone and most
@@ -884,8 +969,8 @@ second era).
 | **K1** | **`State.policies` + `State.electionMethod` data shapes** (`State`, `types.ts:1318`; repair() backfill `{}` / `'popular'`) | **XS** | `policies` is load-bearing for gov actions, era events, bill effects, scoring. `electionMethod` is the precondition for the per-state EC method (divergence #5). Bundle them — both are one-line additive `State` fields with trivial backfills. |
 | **K1.5** | **Ideology→color palette** (`IDEOLOGY_COLORS: Record<Ideology, string>` in `src/theme/`) — *presentation-track* foundation | **XS** | A tiny **cross-cutting** asset that **many presentation items depend on** (roster, congress, maps, score sheets, committee views — A2/A3/A7). `Party.color` exists (`types.ts:1310`) but the per-*ideology* legend does not. Doing it first lets the whole presentation track build against a stable palette. Independent of the engine track — can land immediately. |
 | **K2** | **The `ActionRegistry<Ctx>` type** (§6.6) — one shape for governor / exec / convention / diplomacy / **primary / general** actions, in `src/engine/actionRegistry.ts` | **S** | Now **confirmed across 4 eras**; `modern` adds a **5th and 6th** library (primary + general-election actions). Building each ad-hoc is now a **~6× tax**. A single ~80-line type unifies them + one UI Action Picker + one persistence shape. **The single highest-leverage keystone — if only one lands this quarter, it is K2.** Do it before any library. |
-| **K3** | **`advanceEra(snap, target)` keystone + era-content registry + year-decoupling** (lift the 5 `ERA_GRAPH_1772` spots in `eraGraph.ts` to `ERA_GRAPHS: Record<Era, GraphNode[]>`; generalize `constitutionalConvention.ts:198`'s hard-coded `currentEra = 'federalism'` to a callable transition with hooks for **points-reset**, card-pool swap + **per-era card-count rescale**, nation renames, draft-profile shift, party-formation; **gate content by `currentEra`, not literal year**) | **M** | Today the **only** era transition lives inside a constitutional-convention finisher. `fed` (post 518) *and* `modern` (post 1080/1172, with card-count rescale + era-end awards) confirm a **live era transition** is real and load-bearing. The alt-history clock (`modern`: fictional eras ~10yr behind real tech) makes **year-based content-gating wrong** — gate by enum. Debt #5 and #9 dissolve here. |
-| **K4** | **Era enum widening + first new scenario** (add `gilded`/`progressive` to `Era` (`types.ts:1337`) as the timeline needs; fill every `Record<Era, …>` rule table the TS exhaustiveness check flags; add the scenario builder) | **M–L** | Once K3 lands, this is mostly content. The TS `satisfies Record<Era, …>` is the safety net — missing rows are compile errors. The enum **will grow** (`modern` frames Gilded + progressive + modern as distinct eras). **See §9.1.1 for which scenario goes first (federalism, not gilded; modern is dead last).** |
+| **K3** | **`advanceEra(snap, target)` keystone + era-content registry + year-decoupling + per-era point BANKING** (lift the 5 `ERA_GRAPH_1772` spots in `eraGraph.ts` to `ERA_GRAPHS: Record<Era, GraphNode[]>`; generalize `constitutionalConvention.ts:198`'s hard-coded `currentEra = 'federalism'` to a callable transition with the **~12-step boot pipeline**: end-of-era award payout → **bank the era's score + zero the running total** (#68 — points BANK per era, they do *not* carry linearly) → faction trades → **full 2.1.x→2.3.1 re-run** → card-pool swap + **per-era card-count rescale** → nation renames → draft-profile shift → party-formation; **gate content by `currentEra`, not literal year**) | **M** | Today the **only** era transition lives inside a constitutional-convention finisher. `fed` (518), `modern` (1080/1172), **and `hd` (live transitions at 1868 & 1892 + per-era banking, POST 6679–6816)** confirm a **live era transition** is real and load-bearing. **Batch-4 refinement: the boundary is a point-BANKING pipeline, not a reset-and-discard** — the per-era banks sum toward the (open) cross-era win total. The alt-history clock makes **year-based content-gating wrong** — gate by enum. Debt #5 and #9 dissolve here. |
+| **K4** | **Era enum widening + first new scenario** (add `gilded`/`progressive` to `Era` (`types.ts:1337`) as the timeline needs; fill every `Record<Era, …>` rule table the TS exhaustiveness check flags — incl. the **era-keyed draft rookie-grant** `{traits, altStates}` (#69, 3/3 in 1856-arc) and **era-keyed amendment ratifier+threshold** (#64); add the scenario builder) | **M–L** | Once K3 lands, this is mostly content. The TS `satisfies Record<Era, …>` is the safety net — missing rows are compile errors. The enum **will grow** (Gilded + progressive + modern as distinct eras; `hd` shows live Gilded `1868` + Progressive `1892` boundaries). **See §9.1.1 for which scenario goes first (federalism, not gilded; modern is dead last).** |
 
 **The dependency chain**: K0 → (K1 ‖ K2 ‖ K3) → K4 → per-system work.
 K1.5 is **off the critical path entirely** (presentation track) — land it
@@ -934,6 +1019,50 @@ bill-driven statehood) that the roadmap needs anyway. Gilded follows once
 > stops being latent and starts dropping/leaking era events. **Fix BUG-1 in the
 > same epic as (or just before) `scenario1788`.**
 
+#### 9.1.2 Where the Civil-War / Reconstruction engine lands (batch 4) — and why early-ish
+
+The `hd` thread surfaces a sizeable new subsystem (the two-theater Civil-War combat
+engine #56 + Reconstruction readmission #57 + secession gating #58 + the
+sectional-balance crisis #59 + Canada conquest #60). The sequencing question the
+roadmap-planner asked: **does the Civil-War payoff build relatively early, or wait
+behind the keystones / federalism / the deep-modern tail?** My call: **early-ish on
+the subsystem track — after generic war (#6) + ActionRegistry (K2), but it does NOT
+queue behind federalism or the modern epic.** The reasoning:
+
+- **It ENHANCES an already-shipped scenario, not a new one.** This is the decisive
+  difference from the federalism epic. `scenario1856.ts` (era `nationalism`) *ships
+  today* but its era-event spine **dead-ends at the Trent Affair (1861)** — the
+  antebellum pressure (Dred Scott, John Brown, Secession Winter loyalty decay,
+  `SLAVE_STATES_1856` at `types.ts:1152`) builds toward a war the build cannot
+  fight. Adding #56/#57/#58/#59 **completes a half-finished playable scenario** —
+  the single highest "finish a playable thing" leverage in the batch. Federalism,
+  by contrast, is net-new content behind a new scenario builder.
+- **But it has two hard prerequisites that fix its floor in the order:**
+  - **The generic war system (#6 / divergence #6).** The Civil War is explicitly
+    the **Major-tier instance** of that engine (two theaters, naval-gates-land,
+    per-theater WarScore + auto-win, Major/Minor/Operation multiplier). Building
+    the Civil War *before* generalizing the flat resolver (`phaseRunners.ts:3593-3627`)
+    would mean writing the multi-theater model twice. So **#6 must land first** —
+    and #6 should be designed *with multi-theater + tiers in view* (see the #6 row)
+    so the Civil War is a configured instance, not a rewrite.
+  - **ActionRegistry (K2).** The 3 Reconstruction readmission plans + the
+    strip-leaders/pardon laws + the secession trigger are ActionRegistry/exec-action
+    rows; readmission is a per-state **bill** through the existing pipeline.
+- **Internal ordering (cheap parts first):** secession gating (#58, a
+  `Politician.allegiance` field + a "Secessionists" pool + trait reads) and the
+  free/slave sectional crisis (#59, derived from the existing `SLAVE_STATES_1856`
+  set) are **cheap additive parts** that can land as the antebellum payoff before
+  the heavy war engine. The two-theater war (#56) + Reconstruction status model +
+  readmission bills + time-boxed bias (#57) are the heavy L parts. Canada (#60)
+  rides the bill-driven-statehood pipeline (#43) and can follow.
+- **Net placement:** in the engine-track subsystem order, the Civil-War/Reconstruction
+  epic sits **right after generic war (#6)** — well ahead of the deep-modern Phase-2
+  tail, and not gated on federalism (the two are independent; do whichever finishes
+  a playable scenario faster — I rank the Civil-War 1856 completion *above* the new
+  federalism scenario on pure "finish a shipped thing" grounds, though the planner
+  may prefer federalism first if the cross-era systems it forces — per-state EC,
+  amendments — are wanted sooner).
+
 ### 9.2 Major subsystems (do these after the keystones)
 
 Slot the heavyweights. Within each row I call out the keystones it depends on so
@@ -945,13 +1074,17 @@ are deep-modern subsystems that build last.
 | Subsystem | Forum location | Size | Depends on | Notes |
 |---|---|---|---|---|
 | **Federalism era (`scenario1788` + content)** — mid-government boot, 10-faction roster + nickname relabel, era-event spine (Compromise of 1790, Hamiltonian program, Whiskey/Fries, French-Rev wars, Louisiana Purchase), party-formation events, Mod/Cons draft profile, federalism SCOTUS set | mechanics §20; `fed` | **L** | **BUG-1**, K1 (electionMethod for the per-state EC the era needs); benefits from K3 but does **not** block on it (see §9.1.1) | The **highest-value batch-2 epic**: it is the best-documented unbuilt era, sits between the two built scenarios, and exercises the most cross-era systems. Boot via the `scenario1856` template. Pulls in several rows below (generic war, per-state EC, amendments, bill typing). |
-| **Convention machinery (2.9.2)** — multi-ballot loop, momentum, unit-rule, inter-ballot actions, VP-impact check, 5-plank platform + comparison, scandal rolls, faithless electors, host-advantage, PL-VP-override, post-election scoring | gilded §15.3 (211, 220-267); **fed** 231-247, 580-606 (corroborated) | **L–XL** | K0, K2 | Still the **single biggest unbuilt subsystem**. Replaces the `engine.ts:69` one-liner. Needs the action registry (inter-ballot actions) + the RNG seed. `fed` adds **host-advantage** ("rigged in my favor") and **party-leader-overrules-VP**. Wire into `needsPlayerInput: 'convention'` (`engine.ts:9`) with a richer payload. |
+| **Convention machinery (2.9.2)** — multi-ballot loop, momentum, unit-rule, inter-ballot actions, VP-impact check, 5-plank platform + comparison, scandal rolls, faithless electors, host-advantage, PL-VP-override, post-election scoring, **CPU convention AI** | gilded §15.3 (211, 220-267); `fed` 231-247, 580-606; **`hd` 3261-3290, 4646-4726, 5594-5713** (corroborated 5 eras) | **L–XL** | K0, K2 | Still the **single biggest unbuilt subsystem**. Replaces the `engine.ts:69` one-liner. Needs the action registry (inter-ballot actions) + the RNG seed. `fed` adds host-advantage + PL-overrules-VP. **Batch 4 adds two GM-confirmed must-owns: DH-8 — the CPU convention AI is acknowledged-unstable and CANNOT do some actions humans can, so a player-only convention is not shippable (most factions are CPU); and the ballot-shift rule is ambiguous (GM ruled next-round).** Also DH-7 (R/D threshold asymmetry + Iron-Fist unilateral lower) needs a chosen rule. Wire into `needsPlayerInput: 'convention'` (`engine.ts:9`). |
 | **Governor's actions library (2.5.2)** — ~14 named actions, era-flavored, d100 vs 20·governing, per-action prereqs | gilded §11.3; **fed** 33-558 (corroborated, 3 eras) | **M** | K1, K2 | Replaces the passive `bias` nudge at `phaseRunners.ts:3382`. Actions read & write `State.policies` (K1). Era-flavored row sets are a per-era registry index. |
 | **Executive actions library (2.8.1)** — persistent active actions, `Easily Overwhelmed` VP hand-off, green/yellow auto-deactivate-on-admin-change | gilded §14.1; **fed** 46-575 (corroborated) | **M** | K2; needs an **admin-change hook** (presidency change) for the auto-deactivate sweep | Replaces the 4 hardcoded one-shots at `phaseRunners.ts:3636`. Persistent state on `GameState.activeExecutiveActions`. `fed` adds the **control-handoff chain** (Incompetent Pres → VP → Manipulative advisor) with an undefined multi-manipulator tie-break (open Q). |
 | **Diplomacy actions library (2.7.1)** — Increase Relations / Trade / Extend Credit; per-power meters with era roster + renames | gilded §13.3; **fed** 45-572 (corroborated) | **M** | K2 (action shape); diplomacy shape already right (`GameState.diplomacy` is `Record<string, number>`) | `fed` confirms the **era-dependent power roster** (5 in federalism: UK/France/Spain/Prussia/Russia; 6 in gilded +China; Prussia→Germany 1871). Couples to the national-surplus integer (Extend Credit adds debt). |
-| **Generic cross-era war system** — additive Chance-of-Success per battle, warscore/momentum/×2 resolution, confirmation cascade (defeated commander → Incompetent + fired → Senate-confirmation drama) | mechanics §21.1; `fed` 222-573, `1772s` 20-60 | **M–L** | K0 (lots of rolls); **BUG-3** (no-PM-General fallback is in this blast radius) | **Divergence #6.** Generalize one `War` model usable in any era; replace the flat resolver (`phaseRunners.ts:3593-3627`) and **fold the 1772 Rev-War loop in as one configured instance** (`revolutionaryWar.ts`). Outcome grants/denies territory (couples to bill-driven statehood). Pairs with the A4 battle-card UI (presentation track). |
+| **Generic cross-era war system** — additive Chance-of-Success per battle, warscore/momentum/×2 resolution, confirmation cascade (defeated commander → Incompetent + fired → Senate-confirmation drama) | mechanics §21.1; `fed` 222-573, `1772s` 20-60, **`hd` I-1 (deepest spec)** | **M–L** | K0 (lots of rolls); **BUG-3** (no-PM-General fallback is in this blast radius) | **Divergence #6.** Generalize one `War` model usable in any era; replace the flat resolver (`phaseRunners.ts:3593-3627`) and **fold the 1772 Rev-War loop in as one configured instance** (`revolutionaryWar.ts`). Outcome grants/denies territory (couples to bill-driven statehood). Pairs with the A4 battle-card UI. **Build this so the `War` model already supports multi-theater + tiers** — the Civil-War row below is its Major-tier instance, so design the generic model with that in view (avoid a rework). |
+| **[1856-arc, batch 4] Civil-War combat engine + Reconstruction subsystem — COMPLETES the shipped 1856 scenario** — two theaters (3 naval wins gate land), per-theater WarScore (+10 auto-wins) + Major/Minor/Operation tiers, named-battle officer casualties, permanent-president-+1-all-elections on Union victory; then Reconstruction status (occupied/military-gov/readmitted) + per-state readmission **bills** + time-boxed `+2-until-year` bias + strip-leaders/pardon laws + secession gating (`Southern Unionist`/Secessionists pool) + free/slave sectional-balance crisis | mechanics §23 (§23.1–§23.5); `hd` I-1..I-5 | **L** | **generic war (#6)** (this is its Major-tier instance), **K2** (Reconstruction readmission + the 3-plan exec action are ActionRegistry rows), the bill pipeline (readmission bills), `SLAVE_STATES_1856` (`types.ts:1152`, exists) for the sectional crisis | **Place EARLY-ish on the subsystem track — after #6 + K2, but it does NOT wait behind federalism or the deep-modern tail.** Rationale: unlike federalism (a *new* scenario), this **enhances the already-shipped 1856 scenario** (`scenario1856.ts`, era `nationalism`), whose spine dead-ends at the Trent Affair (1861). Building it turns a half-finished shipped scenario into a complete arc — the highest "finish a playable thing" leverage. Secession (#58) + the sectional crisis (#59) are cheap additive parts that can land first as the antebellum payoff; the two-theater war (#56) + Reconstruction (#57) are the heavy parts. See §9.1.2. |
+| **[1856-arc, batch 4] Succession / eligibility / acting-president** — configurable bill-mutable line of succession; native-born vs foreign-born presidency gate (relaxable per #60 Canada); an acting-president state whose `command` (often 0) gates exec actions / SCOTUS-compel / re-election; era-keyed VP-vacancy-fill amendment | mechanics §24.1, #61; `hd` I-6 | **M** | the amendments item (#39, VP-vacancy fill); ties to the cabinet/leadership pipeline | **An election-system / constitutional addition.** `vicePresidentId` exists (`types.ts:1568`) but no eligibility gate, no configurable line, no acting state. Best landed *with* the convention/election work — the foreign-born gate also constrains convention Major candidacy. Folds DH-3 (career-track pols can't run for President). |
+| **[1856-arc, batch 4] Contingent House election + tied-chamber inverse control** | mechanics §24.2, #62; `hd` I-7 | **S–M** | the EC tally path (`calcStateVote('presGeneral')`, `phaseRunners.ts:3752`) | **Election-system addition.** On no EC majority: 1-vote-per-state by House-delegation majority (Governor-party tiebreak), Senate elects VP; **pick a stated cutoff** (DH-6: config `contingentTopN` top-2 vs top-3) + the tied-chamber inverse-control rule. Slots into the same tally code as per-state EC method (#5). |
+| **[1856-arc, batch 4] Offices created in-game by law (institutional layer)** | mechanics §24.6, #66; `hd` I-11 | **M** | **K2** (offices created by exec action/bill are ActionRegistry-adjacent); the cabinet-retention refactor (#25) | **Generalizes the cabinet beyond `cabinetSeatsForYear`** (`types.ts:1196`, year-keyed/fixed today): model offices as data **created/destroyed by bills + exec actions** with their own terms/eligibility/decline/Command-grant rules (Fed Chair, CoS, CNO, FBI Director) — incl. create-Fed-deactivates-Independent-Treasury. Pairs with #49 (military-leadership tier) + #25 (retention). Mostly a Gilded/Progressive-era need. |
 | **Per-state presidential-election method** — `State.electionMethod` resolved from seated-legislature majority for legislature-states; flip per-state by event, globally by amendment | mechanics §21.2; `fed` 194-373 | **M** | K1 (the field), amendments (global flip) | **Divergence #5.** Diverges from `calcStateVote('presGeneral')` (`phaseRunners.ts:3752`). Federalism *needs* it (CT/GA/MA/NJ/NY/RI/SC start legislature-chosen in 1796, decisive). Best landed *with* the federalism epic. |
-| **Constitutional amendments durable state** — `GameState.amendments`; **cross-state ratification vote** (can fail); bill-of-amendment type; effects on term-length / popular-vote-everywhere / VP-vacancy / suffrage / court-size | mechanics §21.3 (sharpens §14.2); gilded + **fed** (corroborated) | **M** | K0 | Sharpened in batch 2: the **ratification vote at the gov phase** and **failure case** (Christianity-as-religion rejected 9-7) are new. Couples to per-state EC (#5) and firing-precedent. Gates BUG-2 (`Chisholm` needs `!11th`). |
+| **Constitutional amendments durable state** — `GameState.amendments`; **cross-state ratification vote** (can fail); bill-of-amendment type; effects on term-length / popular-vote-everywhere / VP-vacancy / suffrage / court-size; **era-keyed + in-game-tunable ratifier + threshold** (#64) | mechanics §21.3, **§24.4 (#64)**; gilded + `fed` + **`hd`** (corroborated 3 eras) | **M** | K0; K4 (era-keyed table) | Sharpened across batches: the **ratification vote** + **failure case** (batch 2), and **batch 4: the ratifier + threshold are an ERA-KEYED, bill-changeable field** — 1856 = 2/3 of both chambers then **3/4 of state GOVERNORS**; Gilded default drops to 2/3 of states; a passed amendment can change the threshold (options table → faction-enthusiasm side effects). Plus a **SCOTUS-ruling-gates-a-bill-class-until-amendment** hook (*Pollock* → no income-tax bill until ratified) couples to #52. Couples to per-state EC (#5), firing-precedent, succession (#61). Gates BUG-2. |
 | **Bill typing + budget-gated spending cap** — `Bill.type` (Foundational/Spending/Crisis); numeric per-turn spending budget gating non-crisis spending bills at the floor; crisis-bypass; cabinet free-proposal slot | mechanics §21.6; `1772s` B4, `fed` 159-703 (corroborated) | **M** | K0; **national-surplus integer** (the cap reads it, not the ordinal `revenue`) | New `Bill.type` tag (none today, grep-confirmed). A bill can pass the floor and still be "BLOCKED DUE TO BUDGET." Prerequisite for crisis bills and the Hamiltonian financial program. |
 | **Bill-driven statehood + auto-generated officials** — statehood/territory bills → `admitState`; event/war annexation; **generate filler pols** for sparse new states; organized/unorganized status | mechanics §21.5; `fed` 81-718 | **M** | bill typing (the bill route); generic war (war annexation); **BUG-3** shares the auto-generate-officials need | `admitState` exists (`territories.ts:8`) but is invoked only from 1772 era-event `postEffects`. Federalism admits VT/KY/OH/TN/AL + MS/IN/MI/IL/LA territories this way. |
 | **Legislative micro-mechanics** — committee block-and-replace, bill packaging, filibuster (law-toggled), `(Crisis)` tag | gilded §12.4-§12.7; **fed** 159-730 (corroborated, pervasive) | **M each** | K0 (filibuster is a roll); committees already exist; crisis bills need the bill-type tag | 4 independent PRs. `fed` clarifies filibuster is a **standing rule toggled ON by a law** ("Institute Filibuster", 1792) and packaging has a **won't-bundle-net-negative-unless-statehood** rule. |
@@ -977,15 +1110,17 @@ are deep-modern subsystems that build last.
 | **Third-party challenge trigger (2.9.3)** — party-pref-band + ideology-discontent check → spawn an independent ticket from the rule-selected faction; nationwide ballot for a Celebrity | mechanics §22.4, #48; `modern` 400-2116 | **M** | the enthusiasm/Party-Pref engine | NEW (modern). Two-party engine only today. Phase 2.9.3 exists (`phases.ts:41`) as a stub. |
 | **Military-leadership appointment tier** — JCS/Army/Navy chiefs + Generals/Admirals above `GeneralInChief`; auto-confirm; promotion back-fill; rank-mismatch + resign rules; feeds the war engine's per-battle modifiers | mechanics §22.9, #49; `modern` 214-2182 | **M** | the generic war system (#45); cabinet richness | NEW (modern). Pairs with the generic-war epic — the ranks feed its Chance-of-Success terms (SecDef + Joint-Chiefs ×2, leading-officer ×10). |
 | **53-state roster + Wyoming-Rule apportionment + two-home-state pols** — modern 53-state roster (DC/CU/PR); decennial recompute that resets EV + `bias` + focus-Rep; `Politician.homeStates?` | mechanics §22.10, #55, #34; `modern` 185-2240 | **M–L** | census-delta queue (batch 1); **scaling wall (b)** must land first (House bloat) | NEW (modern). `State.region` is partly ready (`types.ts:1322`). The Wyoming-Rule House size is *why* scaling wall (b) is a hard prerequisite. |
-| **Modern legislative depth** — collective crisis-bill accountability, bill-relationship/replacement graph (amendment-tier bills repealable only by amendment), investigation special committees (#54), Executive-Branch-Interference | mechanics §22.8, #54, #12b; `modern` 32-2265 | **M** | bill typing; committees; **DH-1 + #54 need rules authored first** | Mostly extends the legislative micro-mechanics. **#54 (investigation committees) and DH-1 (filibustered MUST-pass remedy) are UNDER-DESIGNED — the forum left the rules blank; a PM/design task must author them before they can be built** (debt #21). |
+| **Modern legislative depth** — collective crisis-bill accountability, bill-relationship/replacement graph (amendment-tier bills repealable only by amendment), investigation special committees (#54 — **now READY**), Executive-Branch-Interference | mechanics §22.8, **§24.5 (#54/#65)**, #12b; `modern` 32-2265, `hd` I-10 | **M** | bill typing; committees; **DH-1 still needs rules authored** | Mostly extends the legislative micro-mechanics. **Batch-4 change: #54 (investigation committees) is now BUILDABLE — `hd` authored the concrete spec (#65, §24.5): Speaker-formed Chair+Ranking+3 → 5d6 + 4 modifiers → 21–25 = guilty (resign + cabinet ban), targets the dominant party.** No design task remaining for #54. **DH-1 (filibustered MUST-pass remedy) is STILL under-designed** — author the deadlock rule first (debt #21). |
 
 ### 9.3 Design divergences — keep shipped or refactor to forum?
 
 Rules where the forum and the engine genuinely disagree (mechanics §19.1, now
-**#1–#8**, plus the separate meter-model item). These are **decisions, not
+**#1–#9**, plus the separate meter-model item). These are **decisions, not
 feature-adds**. My defensible call per item. **Numbering matches mechanics §19.1:**
-#1–#3 batch 1, #4–#6 batch 2, **#7 (SCOTUS) and #8 (cabinet) are batch 3**; the
-meter model is its own unnumbered item (mechanics §21.8).
+#1–#3 batch 1, #4–#6 batch 2, #7 (SCOTUS) and #8 (cabinet) batch 3, **#9
+(relocation cap) is batch 4**; the meter model is its own unnumbered item
+(mechanics §21.8). **#9 is also BUG-0** — the only divergence that is a one-line
+verified shipped-vs-design lag rather than a model/scoring choice.
 
 | # | Divergence | Recommendation | Rationale |
 |---|---|---|---|
@@ -997,7 +1132,8 @@ meter model is its own unnumbered item (mechanics §21.8).
 | **6** | **Generic war resolver** *(batch 2)* — shipped: flat `milPower×10 + d100` one-roll (`phaseRunners.ts:3593-3627`); rich battle system is Rev-War-only. Forum: additive Chance-of-Success + warscore/momentum/×2 + confirmation cascade, for *every* war. | **Refactor to forum (one generic `War` model).** Generalize the rich path; fold the 1772 Rev-War loop in as one configured instance. The flat resolver is a placeholder, not a designed alternative. | The forum model is corroborated across 2 eras and the Rev War already implements most of it — this is *consolidation*, not new design. **Size: M–L. Risk: medium** (touches both war paths; do after K0 so the rolls are seeded). |
 | **7** | **SCOTUS model** *(batch 3)* — shipped: 2.5.3 picks 1 of 4 hardcoded titles + nudges `partyPreference ±0.1` (`phaseRunners.ts:3398-3414`); 2.8.2 age-≥75 retire + same-party backfill (`:3648-3671`). Forum: a named-Justice docket with compel-vote/retire, dynamic court size + packing, 64/60% confirmation, ideology reveal + 10-yr drift, ruling→law-deactivation. | **Build the forum subsystem from scratch** — there is **no balance-tuned court to preserve** (the shipped court is a stub, debt #18). Mechanics §19.1 calls it "a replacement"; verified, it is *net-new over a stub*, which is the easier case (nothing to migrate, just superseded). | Corroborated only in `modern` (1 era) but deeply specified. **Far-end** (deep-modern); case content is per-era data. Gates BUG-2. **Size: M–L. Risk: medium** (compel mechanics are intricate). |
 | **8** | **Cabinet persistence** *(batch 3 — CORRECTS a batch-2 error)* — shipped: `runPhase_2_9_4_PresidentialGeneral` **unconditionally wipes the whole cabinet** after every presidential general (`phaseRunners.ts:3804-3812`), even on incumbent re-election; 2.3.1 re-fills from scratch next turn. Forum: **retain up to 5** (CIA/FBI exempt) with per-officer tenure + a firing-precedent gate. | **Refactor to forum (replace the wipe with retention).** Remove the unconditional clear at `:3804-3812`; keep occupants, add a `firingPrecedentSet` gate on *replacement* + per-officer tenure (CIA/FBI/Fed-Chair/Key-Advisor terms) + same-faction US-Bank guard + opp-party cap. | **The batch-2 "no wipe exists" note was wrong** (it missed `:3804`). This is a genuine wipe-vs-retention contradiction; the shipped behavior (cabinet churns every 4 years) is the *opposite* of forum intent. Corroborated across `fed` + `modern` (2 eras). **Size: M** (not the S batch 2 claimed). **Risk: low–medium** (touches the election→appointment handoff). |
-| **(meter)** | **Meter model** *(batch 2 §21.8, sharpened by batch 3 §22.1)* — shipped: 7 numeric meters `[-5,5]` (`NationalMeters`, `types.ts:1399`). Forum: named/banded-ordinal meters + a **±3-per-phase swing cap** + crisis/cascade + numeric debt + a war-score meter. **Batch 3 confirms the bank maps 1:1 to the shipped fields** (§2.1.1) — it's a *widening*, not a new shape. | **Split the decision.** **Do now (cheap, orthogonal, near-term):** the **±3-per-phase clamp** + the **crisis entry/exit + cascade** rules (these benefit every era — see the near-term row in §9.2). **Defer (presentation):** the labeled-ordinal *relabel* touches every meter read + the UI; ride it on the presentation track. The war-score meter rides the generic-war epic (#6). | The ±3 clamp + crisis rules are balance/feel wins over the existing numeric fields with no model change. The labeled relabel is mostly presentational. **Size: XS (clamp) / M (crisis+cascade) / L (relabel). Risk: low / low / medium.** |
+| **9** | **Relocation cap** *(batch 4 — the clearest "forum drives the build" case)* — shipped: `RELOCATION_ATTEMPTS_PER_TURN = 5` (`types.ts:247`). Forum: the designer changed it to **4** non-alt-state attempts mid-thread and it went **LIVE in the running playtest** (`hd` POST 7062–7066, 7555); alt-state moves are exempt. | **Refactor to forum (lower to 4) — immediately.** It is a settled, dated design change (the digest says it went live, not mid-thread flux); the browser engine simply hasn't caught up. The one-line constant edit is BUG-0. The full auto-Carpetbagger + 10-yr-expiry + alt-state-exemption feature is divergence #2 / a separate consistency PR. | Not a balance debate — a stale constant lagging a shipped design decision. **Direction = lower to 4.** **Size: XS (the constant). Risk: none** (tunable const, not a save field). |
+| **(meter)** | **Meter model** *(batch 2 §21.8, sharpened by batch 3 §22.1, corroborated by batch 4 §24.7)* — shipped: 7 numeric meters `[-5,5]` (`NationalMeters`, `types.ts:1399`). Forum: named/banded-ordinal meters + a **±3-per-phase swing cap** + crisis/cascade + numeric debt + a war-score meter. **Batches 3–4 confirm the bank maps 1:1 to the shipped fields** (§2.1.1) and extend it to **~16 meters** (era-gated per-power relations + per-ideology enthusiasm + an inactive Israel placeholder + a 9-part Lingering resolution + policy-gated caps, `hd` I-12). | **Split the decision.** **Do now (cheap, orthogonal, near-term):** the **±3-per-phase clamp** + the **crisis entry/exit + cascade** rules (these benefit every era — see the near-term row in §9.2). **Defer (presentation):** the labeled-ordinal *relabel* touches every meter read + the UI; ride it on the presentation track. The war-score meter rides the generic-war epic (#6). The era-gated per-power/per-ideology meter expansion rides the meter-model generalization row. | The ±3 clamp + crisis rules are balance/feel wins over the existing numeric fields with no model change. The labeled relabel is mostly presentational. **Size: XS (clamp) / M (crisis+cascade) / L (relabel). Risk: low / low / medium.** |
 
 ### 9.4 The presentation track (A1–A8) — a parallel workstream
 
@@ -1095,51 +1231,77 @@ planning. Specifically:
 > **Batch-3 change:** three cross-cutting items pulled forward into the engine
 > track (meter-model generalization, persist/auto-fill House slates, procedural
 > pol generation), and a **far-end modern epic** appended after gilded.
+> **Batch-4 change:** **BUG-0 (relocation cap 5→4) added to the FRONT of the cheap
+> fixes**; the **Civil-War / Reconstruction epic inserted right after generic war
+> (#3)** because it completes the shipped 1856 scenario; the **1856-arc election
+> additions** (succession #61, contingent election #62) slotted next to the
+> convention work; **#54 marked READY**; per-era point-banking folded into K3.
 
 **Cheap fixes first (do immediately — XS each, high value):**
-**BUG-1 (era-event filter, gates federalism) · BUG-3 (no-PM-General guard) ·
-the ±3 meter-swing clamp (meter-model divergence) · auto-Carpetbagger (divergence
-#2).** (BUG-2 rides the SCOTUS content; DH-1/DH-2 need rules authored first.)
+**BUG-0 (relocation cap `5`→`4`, `types.ts:247`, divergence #9 — the cheapest win;
+do it FIRST) · BUG-1 (era-event filter, gates federalism) · BUG-3 (no-PM-General
+guard) · the ±3 meter-swing clamp (meter-model divergence) · auto-Carpetbagger
+(divergence #2).** (BUG-2 rides the SCOTUS content; DH-1/DH-3..DH-11 need rules
+authored or are balance dials folded into their subsystems; **#54 investigation
+committees is now ready — rules authored by `hd` #65**.)
 
 **ENGINE TRACK — Phase 0 (keystones, parallelizable after K0):**
 **K0) Seed the RNG → K1) `State.policies` + `State.electionMethod` shapes →
 K2) `ActionRegistry<Ctx>` (now ~6× leverage — do first if only one lands) →
-K3) `advanceEra()` + era-content registry + year-decoupling →
-K4) Era enum widening (`gilded`/`progressive`) + `scenario1788` (federalism) —
-NOT gilded/modern first (§9.1.1).**
+K3) `advanceEra()` + era-content registry + year-decoupling + **per-era point
+BANKING (#68 — bank-and-zero boot pipeline, not reset-and-discard)** →
+K4) Era enum widening (`gilded`/`progressive`) + `scenario1788` (federalism) +
+era-keyed draft-grant (#69) & amendment-ratifier (#64) tables — NOT gilded/modern
+first (§9.1.1).**
 
 **ENGINE TRACK — Phase 1 (subsystems, roughly this order to minimize rework):**
 **1) Federalism era epic (`scenario1788` + content; pulls in #2-#5; needs BUG-1)
 → 2) Bill typing + spending cap (+ national-surplus/debt integer) →
-3) Generic cross-era war system (divergence #6; needs BUG-3) → 4) Per-state EC
-method (divergence #5) → 5) Amendments-as-state (gates BUG-2) →
+3) Generic cross-era war system (divergence #6; needs BUG-3; **design it
+multi-theater + tiered so the Civil War is a configured instance**) →
+**3b) Civil-War / Reconstruction epic [1856-arc — COMPLETES the shipped 1856
+scenario] (the Major-tier instance of #3; secession #58 + sectional crisis #59
+are cheap antebellum-payoff parts first, then the two-theater war #56 +
+Reconstruction readmission #57 + Canada #60; needs #3 + K2). Ranked here on
+"finish a playable shipped thing" grounds — see §9.1.2; independent of federalism**
+→ 4) Per-state EC method (divergence #5) → 5) Amendments-as-state (now incl.
+era-keyed ratifier #64 + SCOTUS-gates-bill-class hook; gates BUG-2) →
 6) Meter-model generalization [NEAR-TERM] (±3-clamp + crisis/cascade over the
 existing `NationalMeters`; benefits every era) → 7) Persist/auto-fill House
 slates & committees [NEAR-TERM — scaling wall b; UX, helps 1856 too] →
 8) Procedural pol generation [NEAR-TERM — scaling wall a; needed for late-era +
 sparse states + BUG-3 stopgap; bridges to P2] → 9) Convention machinery (uses K2;
-biggest single subsystem) → 10) Governor's actions library → 11) Diplomacy actions
-library → 12) Executive actions library → 13) Legislative micro-mechanics
-(block-and-replace, packaging, filibuster) → 14) Era-event extensions
-(multi-decider, census deltas, territory grants; resolve the scheduling fork
-[divergence #4 + BUG-1 + DH-2] here) → 15) Cabinet & Congressional leadership
-richness + **cabinet retention replacing the wipe (divergence #8 — M, not S)** →
-16) Faction-personality 5-step distribution + per-era card pool + nicknames →
-17) Small consistency PRs (old-age decay, auto-retire, industry leadership,
-tariff integer) → 18) Bill scoring leaderboard (divergence #1) →
-19) Conversion-targeting refactor (divergence #3, if pursued) →
-20) gilded scenario (once `advanceEra` + action libraries are mature).**
+biggest single subsystem; **must OWN the CPU convention AI — DH-8 — and pick
+threshold rules — DH-7**) → **9b) Succession / eligibility / acting-president
+(#61) + contingent House election & tied-chamber control (#62) [1856-arc election
+additions; pick top-2-vs-top-3 — DH-6; folds DH-3]** → 10) Governor's actions
+library → 11) Diplomacy actions library (**cap "Extend Credit to all" — DH-4**) →
+12) Executive actions library (**resolve the ability-stat — DH-9 — and the
+blunder-still-scores flag — DH-10**) → 13) Legislative micro-mechanics
+(block-and-replace, packaging, filibuster) + **investigation committees #54 (5d6
+spec ready, #65)** → 14) Era-event extensions (multi-decider, census deltas,
+territory grants; resolve the scheduling fork [divergence #4 + BUG-1 + DH-2] here)
+→ 15) Cabinet & Congressional leadership richness + **cabinet retention replacing
+the wipe (divergence #8 — M, not S)** + **offices-created-by-law (#66)** →
+16) Faction-personality 5-step distribution + per-era card pool + nicknames
+(**rebalance inelastic lobby cards — DH-11**) → 17) Small consistency PRs (old-age
+decay, auto-retire, industry leadership, tariff integer) → 18) Bill scoring
+leaderboard (divergence #1) → 19) Conversion-targeting refactor (divergence #3, if
+pursued; **add Kingmaker-pairing-dissolution-on-flip — DH-5**) → 20) gilded
+scenario (once `advanceEra` + action libraries are mature).**
 
 **ENGINE TRACK — Phase 2 (FAR-END modern epic — builds LAST, after gilded):**
 **21) Enthusiasm/Party-Pref engine + Score economy (over #6's meter bank) →
 22) Presidential primary subsystem (uses K2 + the CPU delegate engine) →
 23) SCOTUS named-Justice docket (divergence #7; from-scratch over a stub) →
-24) Third-party challenge trigger → 25) Military-leadership appointment tier
-(pairs with #3 war) → 26) 53-state roster + Wyoming-Rule apportionment +
-two-home-state pols (needs #7 House-slate persistence first) → 27) Modern
-legislative depth (collective crisis accountability, bill-relationship graph,
-investigation committees [#54] + DH-1 — the last two need rules authored) →
-28) Modern era scenario/continuation (`scenario1948`; the XL capstone).**
+24) Third-party challenge trigger (**rebalance apparent Dem bias — DH-11**) →
+25) Military-leadership appointment tier (pairs with #3 war) → 26) 53-state roster
++ Wyoming-Rule apportionment + two-home-state pols (needs #7 House-slate
+persistence first) → 27) Modern legislative depth (collective crisis
+accountability, bill-relationship graph; **investigation committees #54 already
+shipped at Phase-1 #13**; **DH-1 filibustered-MUST-pass still needs rules
+authored**) → 28) Modern era scenario/continuation (`scenario1948`; the XL
+capstone).**
 
 **PRESENTATION TRACK (parallel, different workstream):**
 **P0) ideology→color palette (K1.5) → P1) politician card + roster/congress
@@ -1153,27 +1315,40 @@ lands.)
 **M1) Hot-seat sequential (depends on K2 + the action libraries) →
 M2) Async / backend (separate L–XL epic).**
 
-**The four most important calls for the planner:**
-1. **#8/#7 reconciliation (corrects batch 2).** There **IS** a cabinet
-   wipe-on-election (`phaseRunners.ts:3804-3812`) — batch 2 wrongly said there
-   wasn't. **#8 is a real wipe→retention refactor (M, engine Phase-1 #15), not a
-   small flag.** **#7 (SCOTUS)** is correctly a from-scratch subsystem, but over a
-   *stub* (4 hardcoded titles + `partyPreference ±0.1`, `:3398-3414`) — nothing
-   rich is being displaced; it sits at the **far end** (Phase-2 #23).
-2. **The two scaling walls are NOT modern-only and sit in the NEAR-TERM band
-   (engine Phase-1 #7 and #8), not the far end.** Persist/auto-fill House slates
-   (wall b) improves 1856 now; procedural pol generation (wall a) is required for
-   *any* late-era play and bridges to the portrait epic. Do not defer them to the
-   modern epic.
-3. **Far-end vs. near-term:** the deep-modern **subsystems** (primaries,
-   enthusiasm engine, SCOTUS docket, 53-state roster, modern scenario) are the
-   FAR end (Phase 2, after gilded). The **cross-cutting items they surfaced**
-   (meter-model generalization, the two scaling walls, era-enum growth +
-   year-decoupling) are NEAR-term and folded into Phase 0/1.
-4. **K2 is now the single most important keystone** (~6× leverage across 6 action
-   libraries); if only one keystone lands this quarter, it is K2. Federalism still
-   comes before gilded before modern, and `scenario1788` (mid-government boot)
-   before a fully-general `advanceEra` (§9.1.1).
+**The most important calls for the planner (batch-4 leads):**
+1. **BUG-0 (relocation cap `5`→`4`) is the cheapest win in the whole roadmap — do
+   it first.** Verified: `RELOCATION_ATTEMPTS_PER_TURN = 5` at `types.ts:247`; the
+   design changed it to `4` mid-thread and it went **live in the running playtest**
+   (divergence #9, `hd` 7062–7066/7555). One-line const edit, no migration, no
+   dependency. The browser engine simply lags a shipped design decision.
+2. **Per-era point BANKING (#68) is a REFINEMENT to K3/K4, not a new item.** The
+   era boundary is a bank-and-zero + award + full 2.1.x→2.3.1 re-run + content-swap
+   pipeline; the per-era banks sum toward the (open) cross-era win total. Build
+   `advanceEra` with the bank step from the start — it changes the win-condition
+   shape and the boot sequence, but it does not add a keystone.
+3. **The Civil-War / Reconstruction engine lands EARLY-ish — Phase-1 #3b, right
+   after generic war (#6) — because it COMPLETES the already-shipped 1856
+   scenario** (spine dead-ends at the Trent Affair 1861). This is the decisive
+   contrast with federalism (a *new* scenario): finishing 1856 is the highest
+   "finish a playable thing" leverage. Hard prerequisites: generic war (#6, design
+   it multi-theater + tiered so the Civil War is a configured instance) + K2. Cheap
+   antebellum parts (secession #58, sectional crisis #59) can land first; the
+   two-theater war (#56) + Reconstruction (#57) are the heavy L parts. See §9.1.2.
+4. **#54 investigation committees is now READY** — `hd` authored the 5d6 spec
+   (#65); it moves from needs-design to buildable and rides Phase-1 #13. **DH-1
+   (filibustered MUST-pass) is the remaining under-designed legislative hole.**
+5. **DH-8 (CPU convention AI) is a GM-confirmed must-own for the convention epic.**
+   A player-only convention is not shippable in a single-player game where most
+   factions are CPU; the convention subsystem owns the CPU side + the ambiguous
+   ballot-shift rule (next-round) + the DH-7 threshold rules.
+6. **(carried) #8/#7, the two scaling walls, far-end vs. near-term, K2.** #8 is a
+   real cabinet wipe→retention refactor (M, Phase-1 #15) — batch 2 wrongly said
+   no wipe exists (`:3804-3812`). #7 SCOTUS is from-scratch over a *stub*
+   (`:3398-3414`), far-end (Phase-2 #23). The two scaling walls (persist House
+   slates; procedural pol gen) are NEAR-term (Phase-1 #7/#8), not modern-only. The
+   deep-modern subsystems are the FAR end (Phase 2). **K2 remains the single most
+   important keystone** (~6× leverage); federalism before gilded before modern,
+   `scenario1788` before a fully-general `advanceEra` (§9.1.1).
 
 ---
 
