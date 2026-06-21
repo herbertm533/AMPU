@@ -1224,7 +1224,12 @@ and finance (booming), free trade/globalization, the religious right, labor
 in-game years **2004 → 2020** (forum "Welcome to 2006-2008" … "Welcome to
 2018-2020"; chunk-001 opens at the 2008 conventions), with real-world posting
 running into 2026 — i.e. it has run *past* the present day as an alt-history.
-Engine: `modern` (the only fully shipped modern tuning).
+The newly ingested *era-of-populism* thread (added this update) opens at
+**2012 — Obama's reelection campaign** (chunk-001 post 1, "Playtest begins with
+2012 election, reelection campaign of President Barack Obama") and runs as the
+game's fictional, alt-history **"Era of Populism"** scenario (one of the
+game's named modern eras, with a forthcoming "Era of the Future" beginning
+~2024; chunk-013). Engine: `modern` (the only fully shipped modern tuning).
 
 ### Binding facts (ground truth)
 - **The modern alignment is fully in place and matches everyday usage:**
@@ -1241,6 +1246,23 @@ Engine: `modern` (the only fully shipped modern tuning).
 - **Demographic/educational sorting** increasingly defines the divide (race,
   ethnicity, geography — urban/rural — and especially the **education** split
   among white voters). **[consensus]** ([Pew, 2024](https://www.pewresearch.org/politics/2024/04/09/changing-partisan-coalitions-in-a-politically-divided-nation/))
+- **Populism is the defining political style of the 2010s, on BOTH right and
+  left, with a shared 2008-financial-crisis lineage.** **[consensus]** The 2008
+  bank bailouts catalyzed two parallel populist insurgencies: the **right-wing
+  Tea Party** (2009; anti-government, anti-tax, anti-Washington) and the
+  **left-wing Occupy Wall Street** (2011; anti-corporate, "the 99%," structural
+  inequality). Both framed politics as ordinary "people" vs. a corrupt
+  "establishment" — the textbook populist frame — but identified *different*
+  elites and very different remedies. Their legacies "powerfully shaped the
+  campaigns of Donald Trump and Senator Bernie Sanders" in 2016: Sanders
+  channeled progressive/anti-Wall-Street populism within the Democratic primary
+  (Wall Street, billionaires, "the rigged economy"); Trump channeled
+  nationalist/anti-immigration/anti-trade populism within the Republican primary
+  (immigration, "the wall," NAFTA/TPP, "drain the swamp"). Scholars stress that
+  both campaigns shared the *form* (people-vs.-establishment, anti-elite
+  rhetoric) while differing sharply on the *content* (left-progressive vs.
+  right-reactionary) — "populism" itself is a style/strategy that can attach to
+  left or right substance. ([BU Journal of History — Two Paths of Populism](https://www.bujh.org/two-paths-of-populism-the-tea-party-and-occupy-wall-street-historical-perspective.html), [PBS NewsHour — 2008 crisis fuels populism](https://www.pbs.org/newshour/politics/how-the-2008-financial-crisis-fuels-todays-populist-politics), [FPRI — Populism in American Elections: Sanders & Trump](https://www.fpri.org/article/2020/06/populism-in-american-elections-bernie-sanders-and-donald-trump/), [Democratic Erosion — Trump and Sanders](https://www.democratic-erosion.com/2022/03/14/trump-and-sanders-populism-on-the-right-and-the-left/))
 - **Defining real-world events of the period** (orientation; the game's are
   alt-history): 9/11 (2001) and the "war on terror"; Iraq War (2003); the 2008
   financial crisis & Great Recession; the Tea Party (2009-10) and the Affordable
@@ -1250,40 +1272,61 @@ Engine: `modern` (the only fully shipped modern tuning).
 ### Key figures (real-world, for orientation — the campaign's are alt-history)
 - **George W. Bush** (Republican, 2001-09), **Barack Obama** (Democrat, 2009-17)
   — the period's two-term presidents in real life. In the game, by contrast, the
-  2008 incumbent is **"Pres Cuomo"** with **"Gov Bush"** running the GOP
-  convention (chunk-001 posts 14-15) — a divergent roster.
+  2008 incumbent in the 1948-continued thread is **"Pres Cuomo"** with
+  **"Gov Bush"** running the GOP convention (chunk-001 posts 14-15) — a
+  divergent roster — while the *era-of-populism* thread treats Obama as the
+  real-history 2012 incumbent (chunk-001 post 1) and so its starting state
+  matches real history more closely.
 - **Real-world period figures** the game pool draws on (its draft classes are
   generated from real legislators — see CLAUDE.md dataset pipeline): the era's
   senators/governors (e.g. Baldwin, Franken, Lott, Braun, Chenoweth-Hage all
   appear as bill sponsors in chunk-032) populate the modern draft.
+- **2010s populist figures the game models directly:** the *era-of-populism*
+  thread's faction leaders are the real-life standard-bearers of left and right
+  populism — **B1 Bernie Sanders / RBG / Barney Frank** as the LW-Populist /
+  Progressive Democratic wing, and **R1 Donald Trump / Ron Paul / Sarah Palin**
+  as the RW-Populist / Traditionalist Republican wing (chunk-001 post 1). This
+  is the era where pairing Sanders and Trump as parallel-but-opposite populists
+  is the academic consensus framing (see binding-facts citation).
 
 ### Timeline of relevant events (real world, for orientation)
 - **2000** — Bush v. Gore. **2001** — 9/11. **2003** — Iraq War. **[consensus]**
 - **2008** — Financial crisis; Obama elected. **[consensus]**
-- **2010** — ACA; Tea Party wave (GOP retakes the House). **[consensus]**
-- **2016** — A populist-realignment election; the educational/urban-rural divide
+- **2009-10** — Tea Party emerges; ACA; GOP retakes the House. **[consensus]**
+- **2011** — Occupy Wall Street. **[consensus]**
+- **2016** — A populist-realignment election (Trump nominated R / Sanders runs
+  Sanders strong in the D primary); the educational/urban-rural divide
   sharpens. **[consensus]**
 - **2020** — COVID-19; a high-turnout, highly polarized election. **[consensus]**
 
 ### Era-appropriate factions / ideologies / interests
 **Democrats** (BLUE): urban, younger, more educated, racially diverse coalition;
-internal center-left (establishment) vs. progressive-left tension. **Republicans**
-(RED): suburban/rural, the white working class (increasingly), the religious
-right, business conservatives; internal establishment vs. populist tension.
-Interest blocs that are now era-appropriate (and that the shipped flat
-`INTEREST_GROUPS` list — Big Tech, Big Oil & Gas, Globalists, LW/RW Media —
-**finally fits**, unlike in 1856/1868): Big Tech, energy, finance/Wall Street,
-labor, the religious right, gun-rights, environmentalists, immigration
-advocates/restrictionists, partisan media. **[consensus]**
+internal center-left (establishment) vs. progressive-left tension — the
+**Sanders/Warren left-populist wing vs. the Clinton/Biden establishment** is
+the era's signature intra-Democratic axis. **Republicans** (RED): suburban/rural,
+the white working class (increasingly), the religious right, business
+conservatives; internal establishment vs. populist tension — the **Trump
+right-populist wing vs. the McConnell/Romney establishment** is the era's
+signature intra-Republican axis. Interest blocs that are now era-appropriate
+(and that the shipped flat `INTEREST_GROUPS` list — Big Tech, Big Oil & Gas,
+Globalists, LW/RW Media — **finally fits**, unlike in 1856/1868): Big Tech,
+energy, finance/Wall Street, labor, the religious right, gun-rights,
+environmentalists, immigration advocates/restrictionists, partisan media.
+**[consensus]**
 
 ### Period-specific terminology
 - **Use (and it now means what it says):** liberal/progressive (Democratic),
   conservative (Republican), the culture war, polarization, partisan sorting,
-  "the base," populism (left and right), Tea Party, the resistance, red
-  state/blue state, swing/purple state. **This is the one era where modern
-  political vocabulary is fully period-accurate.**
+  "the base," populism (left and right), Tea Party, Occupy, the resistance,
+  "MAGA," "the 99%," "drain the swamp," "the establishment," red state/blue
+  state, swing/purple state. **This is the one era where modern political
+  vocabulary is fully period-accurate.**
 - **Avoid:** importing *any* earlier-era polarity — by now BLUE=left/RED=right is
   simply correct. The only caveat is alt-history divergence (below), not polarity.
+- **A populism-specific note:** "populist" in this era is a *style* (people-vs.-
+  establishment) that attaches to *both* poles — the Sanders left and the Trump
+  right are both populists in form but ideological opposites in content. Do not
+  treat "populist" as a synonym for either left *or* right.
 
 ### Common pop-history simplifications and what they get wrong
 - **"The parties have always been this polarized."** **[consensus]** No — measured
@@ -1294,32 +1337,75 @@ advocates/restrictionists, partisan media. **[consensus]**
   election; before then networks used the colors inconsistently. (Relevant
   because the game's *fixed* BLUE/RED tokens are *not* the real-world color
   convention for most of the timeline.)
+- **"Populism is right-wing"** (or "Populism is left-wing"). **[consensus]**
+  Both — the 2010s produced *parallel* populist movements (Tea Party / Trump on
+  the right, Occupy / Sanders on the left) sharing a common anti-elite frame
+  and the same 2008-bailout origin point, but pointing in opposite ideological
+  directions. ([BU Journal of History](https://www.bujh.org/two-paths-of-populism-the-tea-party-and-occupy-wall-street-historical-perspective.html))
 
 ### Game treatment vs. real history (divergence notes)
-- **This is the era the 1948 batch actually plays — and the game's polarity is
-  correct.** BLUE=Democrats, RED=Republicans, modern left/right (chunk-001 post
-  14). No polarity caveat needed; the game-master can use plain modern political
-  language.
-- **It is an *alt-history*, not a re-enactment.** The campaign began in 1948 and
-  60 in-game years of player decisions produced a **divergent present**: a
-  President "Cuomo" in 2008 (not Bush/Obama); a presidential two-term-limit
-  amendment *still unratified* in 2008 (chunk-001 post 15) though the real 22nd
-  Amendment passed in 1951; and a statute book that still contains — and is now
-  *repealing* — New-Deal/Cold-War-era laws (FDA, NASA subsidies, SE-Asia war
-  powers, the National Monetary Commission; chunk-032). **Game-master framing:
-  use real history for ideological/era texture and the *menu* of plausible
-  issues, but treat named officeholders, election outcomes, and the enacted-law
-  record as the campaign's own divergent timeline.**
+- **This is the era both modern playtests actually play — and the game's polarity
+  is correct.** BLUE=Democrats, RED=Republicans, modern left/right (1948-continued
+  chunk-001 post 14; era-of-populism chunk-001 post 1, with Democratic factions
+  Sanders/Biden/Warren/Clinton/Obama and Republican factions
+  Trump/McConnell/Perry/Thomas/McCain). No polarity caveat needed; the
+  game-master can use plain modern political language.
+- **The "Era of Populism" name is the game's own fictional/alt-history era
+  label, but it tracks a real political phenomenon.** The game runs ~10 years
+  behind real time and uses fictional era names ("Era of Terror," "Era of
+  Populism," forthcoming "Era of the Future" at ~2024; chunk-013). The Era of
+  Populism scenario opens at 2012 — chronologically *after* the Tea Party (2009)
+  and Occupy Wall Street (2011), and *before* the 2016 Sanders/Trump populist
+  primaries that made the era's name retroactively obvious. So the era label
+  itself is corroborated by real history: this *is* the period when populism
+  becomes a defining force in American politics. The faction roster
+  (Sanders/RBG/Barney Frank as the LW-Populist wing; Trump/Ron Paul/Sarah Palin
+  as the RW-Populist wing) maps cleanly onto the real left/right populist
+  archetypes of the period.
+- **Populist issues the playtest surfaces are era-accurate.** Bills and
+  governor-actions in the era-of-populism thread name the genuine 2010s populist
+  flashpoints: **immigration reform and "the border wall"** (chunk-008 posts
+  1305-1551, both Obama "calls for immigration reform" and Republican "call for
+  immigration reform and the border wall" appear as in-game actions); **Keystone
+  XL and Dakota Access pipelines** (chunk-007 post 528, "Subsidize Keystone XL
+  and Dakota Pipelines"); **federal surveillance state** ("Send Federal funds to
+  states to build Surveillance Systems," chunk-007 post 528); **drilling on
+  federal land**, **Green New Deal state policy** (chunk-014 post 1127),
+  **legalize marijuana / animal-cruelty / "arm teachers"** (chunk-014 posts
+  1126-1136). These are exactly the issue menu of real 2010s politics; the
+  game-master should treat them as period-accurate framing, even as the *votes*
+  and *outcomes* in the playtest diverge.
+- **It is an *alt-history*, not a re-enactment.** The 1948-continued campaign
+  began in 1948 and 60 in-game years of player decisions produced a **divergent
+  present**: a President "Cuomo" in 2008 (not Bush/Obama); a presidential
+  two-term-limit amendment *still unratified* in 2008 (chunk-001 post 15) though
+  the real 22nd Amendment passed in 1951; and a statute book that still contains
+  — and is now *repealing* — New-Deal/Cold-War-era laws (FDA, NASA subsidies,
+  SE-Asia war powers, the National Monetary Commission; chunk-032). The
+  era-of-populism thread, by contrast, opens *at* a real-history starting state
+  (Obama as 2012 incumbent) and lets divergence accumulate forward from there.
+  **Game-master framing: use real history for ideological/era texture and the
+  *menu* of plausible issues, but treat named officeholders, election outcomes,
+  and the enacted-law record as the campaign's own divergent timeline.**
 - **Interest-group cards finally fit the era.** The shipped flat `INTEREST_GROUPS`
   pool (Big Tech, Big Oil & Gas, Globalists, LW/RW Media — anachronistic in 1856
-  and 1868 per §3-4) is **era-appropriate here**. The historical-context note for
-  the *gilded*/antebellum eras to *era-gate* this pool does **not** apply to the
-  modern era — these cards belong here.
+  and 1868 per §3-4) is **era-appropriate here**. The era-of-populism factions
+  carry interest tags that read as 2010s-real: "Environmentalists, Welfare,
+  Public Housing" on the Sanders/B1 wing; "Wall Street, Environmentalists, Big
+  Pharma" on the Obama/B5 wing; "RW Media, Isolationists" on the Trump/R1 wing;
+  "Corporations, Wall Street, Oil and Gas" on the Perry/R3 wing; "Military
+  Industrial Complex" on the McCain/R5 wing (chunk-001 post 1). These match the
+  real interest-group lineups of the period.
 - **The "draft real politicians" model is most accurate here.** Per CLAUDE.md the
   draft classes are generated from real legislators; in the modern era this yields
   genuinely period-correct names (the chunk-032 bill sponsors are all real
-  late-20th/early-21st-century members), so the draft texture matches history
-  even where the *outcomes* diverge.
+  late-20th/early-21st-century members, and the era-of-populism roster is openly
+  built on a "2012 sheet" of real pols, chunk-001 post 1), so the draft texture
+  matches history even where the *outcomes* diverge. *Note:* by the Era of
+  Populism / Era of the Future (~2024 onward), the game switches to **generated
+  rather than real** politicians as the historical record runs out (chunk-013
+  rule 3.0.18) — so this is the era where the real-politician draft model
+  begins to give way to generated drafts.
 
 ---
 
@@ -1353,10 +1439,13 @@ Ordered by importance to this brief.
 - [Miller Center — Grassroots Conservatism](https://millercenter.org/the-presidency/teacher-resources/recasting-presidential-history/presidency-and-grassroots-conservatism) — religious right / New Right network.
 - [Miller Center — Clinton: Campaigns and Elections](https://millercenter.org/president/clinton/campaigns-and-elections) and [Brookings — Southern committee chairs / realignment](https://www.brookings.edu/articles/vital-stats-southern-committee-chairs-congress/) — New Democrat centrism; 1994 down-ballot completion of the Southern realignment.
 - [Pew — Political Polarization in the American Public (2014)](https://www.pewresearch.org/politics/2014/06/12/political-polarization-in-the-american-public/) and [Pew — Changing Partisan Coalitions (2024)](https://www.pewresearch.org/politics/2024/04/09/changing-partisan-coalitions-in-a-politically-divided-nation/) — ideological consistency doubled since 1994; demographic sorting; modern alignment.
+- [BU Journal of History — Two Paths of Populism: The Tea Party and Occupy Wall Street](https://www.bujh.org/two-paths-of-populism-the-tea-party-and-occupy-wall-street-historical-perspective.html) and [PBS NewsHour — How the 2008 financial crisis fuels today's populist politics](https://www.pbs.org/newshour/politics/how-the-2008-financial-crisis-fuels-todays-populist-politics) — Tea Party (2009, right-populism) and Occupy Wall Street (2011, left-populism) both born of 2008 bailouts; their legacies shape Trump and Sanders in 2016.
+- [FPRI — Populism in American Elections: Bernie Sanders and Donald Trump](https://www.fpri.org/article/2020/06/populism-in-american-elections-bernie-sanders-and-donald-trump/) and [Democratic Erosion — Trump and Sanders: Populism on the Right and the Left](https://www.democratic-erosion.com/2022/03/14/trump-and-sanders-populism-on-the-right-and-the-left/) — academic framing of Trump (right-populist) and Sanders (left-populist) as parallel-but-opposite populists sharing the people-vs.-establishment form.
 
 **Internal sources:**
 - Shipped data: `src/data/factions1772.ts`, `factions1856.ts`, `scenario1772.ts`, `scenario1856.ts`, `eraEvents1772.ts`, `eraEvents1856.ts`; `CLAUDE.md` (draft pipeline).
 - Digests: `docs/game/playtest-digests/` (`1772s` 85f8e6b4, `fed` f55d3e21, `gilded` f4c7c2c4); `docs/game/game-context.md`.
 - 1948-continued batch: `docs/game/sources/3a9ac985-ampu-1948-playtest-continued-2004-and-beyond/` — chunk-001 (2004-08 start; BLUE=Dem/RED=Rep mapping, "Pres Cuomo," two-term-limit amendment), per-era "Welcome to" markers, chunk-032 (2004+ repeals of New-Deal/Cold-War statutes).
 - "A House Divided" 1856 Part 2 batch: `docs/game/sources/77db6e6f-a-house-divided-1856-ampu-playtest-part-2/` — chunk-001 (1856 start; Buchanan 174/Frémont 114/Fillmore 8; BLUE=Dem/RED=Rep; the four factions incl. Crittenden Republicans w/ Lincoln); "Welcome to" era markers (1860-61 chunk-011, 1868 Gilded-Age chunk-031, 1892 Progressivism chunk-106, 1898-1900 chunk-126); partial-02 (chunks 11-20: Seward wins 1860; John-Brown's-Raid blunder → secession & Civil War engine; CSA pres Quitman); partial-03 (chunks 21-30: Seward re-elected 1864; Union victory; Reconstruction; Lincoln nominated 1868). Campaign spans 1856→1900.
-- "Drums of War" all-CPU Civil War stress-test batch (added this update): `docs/game/sources/e1776bbd-drums-of-war-an-allcpu-playtest-of-the-civil-war/` — chunk-001 (1841 start under Pres Harrison/VP Tyler; Whig/Democrat second-party system; Webster/Clay/Calhoun/Jefferson Davis/Lincoln/Seward all on the board); chunk-117 (mid-1924 finale under President Hearst — League of Nations and Kellogg-Briand decisions, London Naval Treaty, Dada/Surrealism, Nazi Party emergence). All-CPU mechanical stress-test of the Civil War subsystem; covers ~83 in-game years (1841→1924), corroborating §3 antebellum, §4 Gilded Age, and §5 Progressive/WWI/1920s without surfacing new real-history detail beyond those sections.
+- "Drums of War" all-CPU Civil War stress-test batch: `docs/game/sources/e1776bbd-drums-of-war-an-allcpu-playtest-of-the-civil-war/` — chunk-001 (1841 start under Pres Harrison/VP Tyler; Whig/Democrat second-party system; Webster/Clay/Calhoun/Jefferson Davis/Lincoln/Seward all on the board); chunk-117 (mid-1924 finale under President Hearst — League of Nations and Kellogg-Briand decisions, London Naval Treaty, Dada/Surrealism, Nazi Party emergence). All-CPU mechanical stress-test of the Civil War subsystem; covers ~83 in-game years (1841→1924), corroborating §3 antebellum, §4 Gilded Age, and §5 Progressive/WWI/1920s without surfacing new real-history detail beyond those sections.
+- "Era of Populism" playtest batch (added this update): `docs/game/sources/c50d9da7-era-of-populism-playtest/` — chunk-001 post 1 (2012 start; "reelection campaign of President Barack Obama"; faction roster pairing Sanders/RBG/Frank as LW-Populist B1 with Trump/Paul/Palin as RW-Populist R1; BLUE=Dem/RED=Rep modern polarity); chunk-007 post 528 (Keystone XL + Dakota pipelines, federal surveillance funding, federal drilling subsidies as period-accurate bill content); chunk-008 posts 1305-1551 (immigration reform and "border wall" as in-game presidential/legislative actions); chunk-013 rule 3.0.18 (the "Era of Populism" → forthcoming "Era of the Future" ~2024 transition where generated draft pols replace real ones); chunk-014 (governor actions: state Green New Deal, "arm teachers," legalize marijuana, animal-cruelty bans). Corroborates §10 modern-polarized era — including the alt-history era-naming convention and the dual left/right populism academic frame — without surfacing new real-history detail beyond §10.
