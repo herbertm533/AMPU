@@ -8,3 +8,7 @@ dist-ssr
 *.log
 *.tsbuildinfo
 .legis/
+# Cleaned/chunked playtest text staged by scripts/playtestToText.mjs — bulky and
+# regenerable from the raw uploads. The durable knowledge lives in the committed
+# docs/game/playtest-digests/ and docs/game/*.md living docs.
+docs/game/sources/
