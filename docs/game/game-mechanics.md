@@ -56,6 +56,26 @@
 >   in the shipped build but `4` in the running playtest** ([§19.1 #9](#191-design-divergences-for-the-roadmap)).
 >   Mostly **corroborates** the existing gap log across ~5 eras (conventions, legislation,
 >   SCOTUS, cabinet, governors, churn) — flagged "confirmed 1856-native" inline.
+> - **Batch 5** — `e1776bbd` ("Drums of War", a 7540-post **all-CPU** 1841→mid-1924 playtest,
+>   `drums`): the **most mechanically *interior* surface in the knowledge base**. Because
+>   the run was all-CPU, it is the **first explicit record of CPU heuristics, thresholds,
+>   tie-breaks, and design-holes** — surfacing what prior multiplayer threads couldn't capture.
+>   Adds a new **[§25 CPU AI specifications](#25-cpu-ai-specifications-designed-not-built-unless-flagged)**
+>   (15 subsections: candidate selection 75/25 rule, no VP retention + 8-element rubric,
+>   the bloc-vote IRV leadership ladder, the convention CPU per-ballot menu + compromise
+>   picker, the **designer-acknowledged 36%-cabinet-pass-rate bug**, the legislation
+>   NAY/AYE/NAY heuristic, scripted A/B/C event cabinet voting, conversion %-rolls with
+>   Pliable+adjacency gating, the **overloaded Iron Fist** trait, the 4-condition faction-leader
+>   removal table, kingmaker endorsement preferences, the under-tuned CPU primary AI, the
+>   deterministic Whig→"Conservative Party" rename trigger, the long-term Justice ideology
+>   drift, and the architectural CPU gaps). The Civil War / Reconstruction battle %-formula
+>   is now **multi-confirmed across 5+ wars + 4 eras** (the engine generalizes cleanly), and
+>   the Reconstruction END exec action is freshly spec'd. Live designer patches in-thread
+>   (continuous IRV elimination, ±3 ideology-swing cap, 5%/half-term retirement/death rate,
+>   deterministic Whig→Conservative-Party rename) extend the **★ "forum DRIVES the build"**
+>   theme. Mostly **corroborates + sharpens** the gap log; the truly NEW surface is the
+>   CPU-AI cluster. Also reveals that **contingent-election rules don't exist** in the rules
+>   doc (GM invented 5 rulesets mid-thread, DH-pointer in [§24.2](#242-62-contingent-house-election--tied-chamber-inverse-control)).
 >
 > **Alt-history note.** All four forum threads (and especially `modern`) play a
 > **divergent alternate timeline**, not real history: fictional **era names** (the
@@ -142,6 +162,22 @@
     - [24.6 The Progressive-era institutional layer](#246-66-the-progressive-era-institutional-layer-offices-created-in-game-by-law)
     - [24.7 Lingering — the ~16-meter homeostasis engine](#247-67-lingering--the-16-meter-homeostasis-engine-era-gated-foreign-meters)
     - [24.8 Draft rookie grants re-ruled — "3 traits + 3 alt-states"](#248-69-draft-rookie-grants-re-ruled--3-traits--3-alt-states)
+25. [CPU AI specifications](#25-cpu-ai-specifications-designed-not-built-unless-flagged)
+    - [25.1 Candidate selection (the 75/25 rule)](#251-candidate-selection-open-seats-primaries-conventions--the-7525-rule)
+    - [25.2 VP selection (no retention; 8-element rubric)](#252-vp-selection--no-retention-logic-designer-acknowledged-bug)
+    - [25.3 Leadership / Speaker / PPT — IRV bloc-vote tie-break](#253-leadership--speaker--ppt--irv-style-bloc-vote-tie-break-ladder)
+    - [25.4 Convention CPU — per-ballot menu + compromise picker](#254-convention-cpu--per-ballot-momentum--interballot-menu--compromise-picker)
+    - [25.5 Cabinet confirmation — designer-acknowledged 36% pass rate](#255-cabinet-confirmation--designer-acknowledged-bug-36-of-88-nominees-passed)
+    - [25.6 Legislation voting heuristic (NAY/AYE/NAY)](#256-legislation-voting-heuristic-nayayenay)
+    - [25.7 Scripted A/B/C event cabinet voting](#257-scripted-abc-event-cabinet-voting)
+    - [25.8 Conversion AI — Pliable + ideology-adjacency gating](#258-conversion-ai--deterministic--rolls-with-pliable--ideology-adjacency-gating)
+    - [25.9 Iron Fist — the overloaded trait](#259-iron-fist--the-overloaded-trait-designer-flagged-to-split)
+    - [25.10 Faction-leader replacement — 4-condition removal](#2510-faction-leader-replacement--4-condition-removal)
+    - [25.11 Kingmaker / endorsement preference rules](#2511-kingmaker--endorsement-preference-rules)
+    - [25.12 CPU primary AI (under-tuned)](#2512-cpu-primary-ai-designer-acknowledged-under-tuned)
+    - [25.13 Faction-rename rule — Whig → "Conservative Party"](#2513-faction-rename-rule--whig-auto-rename-to-conservative-party-deterministic)
+    - [25.14 Long-term Justice ideology drift](#2514-long-term-justice-ideology-drift-the-canonical-drift-rule)
+    - [25.15 Critical missing CPU logic (architectural gaps)](#2515-critical-missing-cpu-logic-architectural-gaps)
 
 ---
 
@@ -1293,6 +1329,24 @@ On passage, `applyEffect` mutates state with the clamps from [§1](#1-core-model
 if the bill improves any meter, the sponsor may gain `+1 command`. `startWar` effects create
 a `War` and push it onto `game.wars`.
 
+> **CPU-confirmed canonical voting heuristic (`drums` batch 5).** The all-CPU run finally
+> dumps the canonical NAY/AYE/NAY ladder used by every faction's senators/reps when scoring a
+> bill (`drums` POST 2161, multi-confirmed across POSTS 2524, 2710, 2832-2879, 3122-3132,
+> 3508-3527, 3924-3940, 4267-4280, 4396-4416):
+> 1. Bill helps an **opposition president**'s meters/election? → **NAY**.
+> 2. Bill gives points to **my ideology/lobbies**? → **AYE**.
+> 3. Otherwise → **NAY by default**.
+>
+> Plus: proposers = each faction's **highest-Legis** pol (Efficient adds +1 proposal; Legis-5 +
+> Efficient gets extras); **SecTreas and SecWar each get 1 free bill** per session a
+> congressional proposer can pick up as a free extra (POSTS 2523, 3086); a faction **CANNOT
+> propose a bill that costs points to one of its own cards** (mid-stream GM rule, POSTS
+> 2530-2531, 2851); **proposal validity must check active amendments** (a "Apply Civil Rights
+> to Former Slaves" auto-proposed after the 14A made it invalid, POST 2006); **veto override
+> = 2/3 in BOTH chambers** (designer ruling — 60% was a bug, reverted, POSTS 2180-2187);
+> **amendments can't be packaged with bills** (POST 1835); **±3 cap on per-phase ideology
+> swings** (POST 4574 — Mods swung +7 raw, capped at +3, designer ruling).
+
 ### 12.4 Forum design layer: committee block-and-replace (designed, not built)
 
 > **Confirmed 1856-native (`house-divided`) — the whole pipeline (§12.4–§12.8).** The full
@@ -1368,6 +1422,17 @@ Between the House vote and the Senate vote (gilded posts 189-194; fed posts 159,
 `game.filibusterEnabled`, (b) a 2.6.2.5 hook between House and Senate tallies for a
 per-faction, trait-gated filibuster action, and (c) persistence so filibustered bills
 re-queue next session.)*
+
+> **CPU-confirmed deterministic per-Senator (`drums` batch 5).** The all-CPU run dumps the
+> filibuster as **deterministic per-Senator-trait** rather than a per-faction roll:
+> **Puritan senators auto-filibuster 1 bill/session** — **no roll**, deterministic given trait
+> (`drums` POSTS 48, 140, 2716, 2871, 3115, 3273, 4610, 4751, 5103-5105). Specific named
+> filibusterers (Yulee, Morgan, Dorr in Reconstruction; Cockrell, Simmons, Sweet in Gilded —
+> Puritan-driven). **Cloture needs 67%** (POSTS 5105, 5496, 5921 — Wartime Income Tax fails
+> 52-48; Children's Bureau succeeds 77-23). **Iron-Fist CPU Maj Leader auto-cloture** for
+> majority-supported items (POST 5920). **CPUs filibuster crisis legis they ideologically
+> oppose to extend the crisis to election day** (POST 7081). Open: can a package be
+> re-filibustered? (POST 3275: *"The rules actually don't say tbh."*)
 
 ### 12.7 Forum design layer: `*Crisis Bill*` tag (designed, not built)
 
@@ -1717,6 +1782,20 @@ The build's 2.9.2 is one line: "log ratification." The forum runs a multi-step c
 > request-UP only** (`hd` POST 3261, 3262, 3268, 3893, 3922–3924, 4646–4726, 5594–5713, 6917,
 > 8247). Host-Governor delegate grouping is flagged **exploitable corruption** (DH-12-adjacent;
 > `game-context.md`).
+>
+> **CPU-confirmed across 5 maps + 11-ballot deadlocks (`drums`, batch 5).** All-CPU run finally
+> dumps the **convention CPU**'s machinery: the **per-ballot momentum** + **inter-ballot menu**
+> (Stifle Competition ~90 floor, Appeal to Credibility/Integrity/Charisma, Whip Party,
+> rejectable Presidential Promise, Kingmaker Interference, Smoke-Filled Rooms, Will of the People,
+> ≥-ballot-5 Rules Change via **weighted-kingmaker vote**), the **compromise at ballot 10**
+> (rigid highest→lowest faction-points picker with **no cross-faction coordination**, POST 7229),
+> the **dark horse at ballot 25** (PL picks from lowest-scoring faction → auto-nominated), and
+> the **broken auto-drop-out** that produces **10-13 ballot deadlocks** (no rule fires after
+> 2-3 inconclusive ballots). The Pineapple Primary, kingmaker-refusal traits (Lowbrow / Easily
+> Overwhelmed / Unlikable), anti-frontrunner lowest-score preference, and the unanimous shortcut
+> (offer+accept VP pre-vote ⇒ ballot 1 unanimous) are all CPU-confirmed. Full per-ballot menu &
+> behavior dump → **[§25.4](#254-convention-cpu--per-ballot-momentum--interballot-menu--compromise-picker)**.
+> Designer's overall ruling: the convention CPU is **"rough/awful, needs a 2.9 rework"** (DH-8).
 
 #### 15.3.1 Candidate types and per-faction slate
 
@@ -3132,6 +3211,18 @@ close-state tie-breaks + faithless electors, and the auto-generated 53-state atl
 multiplier, ideology/control-aware category assignment, 4-or-5 category mode, host-sets-
 categories advantage; reuse it for primary delegate counts and convention ballots.)*
 
+> **CPU-confirmed across `drums` (batch 5).** The CPU primary AI atop this engine is
+> **designer-acknowledged under-tuned** ("you can curb-stomp the CPU bc it is simple," POST 7135):
+> a **fixed action template per candidate per group** (Speech + Campaign Focus + Attack +
+> sometimes Embrace Local Issue + sometimes Presidential Promise), 1d6 per action with
+> trait gates; **attack target = highest-PV rival regardless of context** (no underdog logic —
+> repeat attacks on a runaway frontrunner); **Presidential-Promise acceptance gate**:
+> target only accepts a withdraw-for-cabinet bribe **if they hold less than half the delegate
+> target needed to win** (POST 7173, 7184). The **frontrunner determination rule** is era-keyed:
+> out-of-power party → **Party Leader is the frontrunner**; in-power party → the faction running
+> a major with the highest points; once primaries exist, the **primary winner is the frontrunner**
+> and overrides the PL bonus (POST 6754). Full primary CPU spec → **[§25.12](#2512-cpu-primary-ai-designer-acknowledged-under-tuned)**.
+
 ### 22.7 SCOTUS subsystem (2.5.3 + 2.8.2)
 
 > **NEW full subsystem; designed, not built.** The shipped court is abstract — 2.5.3 nudges
@@ -3195,6 +3286,17 @@ bills tied to a court-disabled policy **should** auto-deactivate but **don't** (
 > Farmers' Loan 5-4** ruled income tax a direct tax → **blocked income-tax bills until an
 > amendment passed** ([§24.4](#244-64-amendment-ratification-by-34-of-state-governors--era-keyed-then-tunable)),
 > plus **Cruikshank** and **Plessy** (`hd` POST 4616–4632, 7250, 7252, 7273, 8181, 8536, 8651).
+>
+> **CPU-confirmed across `drums` (batch 5; Justice drift = the canonical percentages).** The
+> 10-year drift rule is finally dumped: **25% mid / 10% left / 5% right every 10 yrs; Puritan
+> blocks all shifts** (`drums` POST 7533). The other CPU-confirmed pieces: **default = vote
+> ideology**; **switches to "vote cards"** if the case touches the Justice's faction's lobby
+> cards; **sway is one vote per swayer + only if initial vote isn't unanimous** (POSTS 4591,
+> 4741, 5079); **Integrity / Passive abstain from being swayed**; **Manipulative Pres compels 1
+> justice/term on d6 5-6** (~33%, POST 1142); **Iron-Fist Pres compels cross-party justices
+> without Integrity to vote Nay** (POST 3660 — Cobb compelled all Dem justices on Strauder,
+> flipping 7-2 Aye to 4-5 Nay); **disputed electors → SCOTUS rules, Integrity NOT consulted**
+> (POST 462). Full Justice drift table → **[§25.14](#2514-long-term-justice-ideology-drift-the-canonical-drift-rule)**.
 
 *(designed, not built — a SCOTUS module: a per-term case docket + ideology-vote model; the
 Iron-Fist/Manipulative compel-vote and compel-retire powers (with the 12-year minimum + the
@@ -3419,36 +3521,60 @@ package; retire the whole subsystem on the abolition era event.)*
   experience` is **a prerequisite to be an Admiral and is NOT the same as a `Naval` trait**
   (`hd` POST 1325, 1329).
 
-**Per-battle success %** (`hd` POST 1332 ff.) — additive, then a **d100**:
+**Per-battle success %** (`hd` POST 1332 ff.; **multi-confirmed across `drums` maps 5/8/10/11 +
+Eastern + Western + Utah + WWI + Mexico**, batch 5) — additive, then a **d100**:
 
 ```
 Success% = base
-  − Difficulty            // Easy 0 / Moderate −10 / Difficult −15
+  − Difficulty            // Easy 0 / Moderate −10 / Difficult −25  (drums slightly sharper)
   + Planning              // Sec War + Senior General skills  (Sec Navy + Sr Admiral for naval)
   + Officer               // commanding officer Military ×10, +10 if Decisive General
-  + Meters                // +15
-  + Benchmarks            // +15
+  + MilPrep               // level × 5 + 5 per ally (high=+15, mid=+10, low=+5)
+  + Benchmarks            // +5 each (3 = +15; 4 = +20)
 roll d100 ≤ Success% ⇒ battle won
 ```
 
 This is the **same additive battle-card shape** as [§21.1](#211-generic-cross-era-war-system)
 (difficulty + planning + officer + meters + benchmarks → single %), with the officer-rating ×10
 and the appointment-tier feed ([§22.9](#229-military-leadership-appointment-tier-232)) made
-explicit for the Civil War.
+explicit for the Civil War. The **`drums` thread re-derives the formula end-to-end** across
+**4 wars + 4 eras** (Eastern theatre, Western theatre, Utah, WWI, Mexico, Sioux), making this
+**the single most multiply-confirmed cross-era resolver in the knowledge base** (`drums` POST
+123, 1725, 1728, 1731, 2199, 2539, 2728, 2881, 3278, 3540, 5111, 5353, 6181, 6317, 6571, 6705).
 
-**War Score per theater** (`hd` POST 1977):
+**Multi-confirmed outcome rules** (`drums` extends `hd` with the rolled values & cascade):
+- **Victory**: +1-3 War Score (Easy +1 / Moderate +2 / Hard +3); officer gains Military Leader
+  if missing; +1 Military.
+- **Defeat**: −2 War Score; officer −1 Military; **next general −1 Mil lingering**.
+- **Officer KIA on natural 1** on the success roll (e.g. Custer at Little Bighorn 29-to-win,
+  rolled 1 → killed, POST 3278; Eberle "killed in action 1/100" → auto-nomination + unanimous
+  confirm of replacement, POST 6181).
+- **Catastrophic 100/100**: −3 War Score, general loses 1 Military + Leadership + Military Leader
+  (POST 2728 — Battle of Fort Fizzle, Williams).
+- **Phase continuation roll ~50%** between battles.
+
+**War Score per theater** (`hd` POST 1977; sharper threshold in `drums`):
 
 | Event | War-Score delta |
 |---|---|
 | Easy / naval win | **+1** |
 | Difficult land win | **+3** |
-| Loss | **−1** |
-| **War Score reaches +10** | **theater AUTO-WINS** |
+| Loss | **−1** (or −2 in `drums`) |
+| **War Score reaches ≥ +11** | **theater AUTO-WINS** (`drums` POST 5111, 6708) |
 
 If neither theater has auto-won, an **end-of-phase roll vs `WarScore × multiplier %`** decides
 whether the war **carries to the next half-term** (it carried repeatedly). Contrast the shipped
 `±50` cliff and the batch-2 `warscore + momentum → %` with an **escalating ×2** the longer the
-war runs — the Civil War is the **Major-tier** instance of that multiplier.
+war runs — the Civil War is the **Major-tier** instance of that multiplier. The `drums` thread
+sharpens the resolver:
+
+- **War-end check per phase**: `WarScore × 2 = % chance war ends this phase` (corroborated for
+  Sioux, Spanish, post-CW).
+- **Post-war defeat chance**: `|WarScore| × 2 × 10 = % defeat` (POST 5111: −2 × 2 × 10 = 40%,
+  rolled 72 → war continues).
+- **Minor wars use ×2 end-multiplier** (Utah 4×2=80%, POST 1731; Sioux 3×2=60%, POST 3278).
+- **Momentum bonus**: +1 War Score if higher than prior turn; −2 if lower (POST 6706).
+- **Naval phase gate is per-war**: 3 wins required for Mexico, 2 for WWI (POST 6571, 6572).
 
 **Named historical battles kill named pols on the military career track** (both sides):
 Hampton Roads, Charleston, New Orleans, Galveston, Mobile Bay, Antietam, Shiloh, Chickamauga,
@@ -3537,12 +3663,31 @@ not back in the Union (`hd` POST 1987–1988, 2320):
 > states** was put to an A–E vote with **no fixed rule** — "in 1840/1856 we did option D" (POST
 > 1182–1194). A build needs a stated rule. See `game-context.md` design-holes.
 
+> **Confirmed 1856-native + sharpened across `drums` (batch 5).** Adds the specific
+> **Reconstruction END exec action** spec (`drums` POST 2812, NEW):
+> *"Voters Tire of Costs of Reconstruction"* event. Pres can end via executive action:
+> **AG Admin roll vs threshold** (e.g. Taylor rolled 67/100 = success). On success:
+> **+100pts to RW Activists / Trads / RW Pop / Cons; −100pts Civil Rights**; **triggers
+> White League / Red Shirts paramilitary event next** (Pres choice A = send federal forces vs
+> B = let states sort; e.g. Lee chose A, rolled 59/60); if Reconstruction continues,
+> **Reconstruction Riots** event fires. Also confirmed: **no default penalty for returning
+> Confederates** = critical balance hole (`drums` POSTS 1742-1752); **persistent +2 Red bias**
+> dominates 1864/68 (POST 2269); **14th-equiv Amendment** shifts Deep South state bias 1 toward
+> incumbent party (POST 1833); **Lenient 10% Loyalty plan** = judicial bill through the normal
+> pipeline (POSTS 2524-2535). **Jim Crow event sequence** (POSTS 4569, 4571, 4718):
+> FL/TN/MS/AR enact Jim Crow → state bias +2 Blue, +100 RW Activists/Trads/RW Pop, −100 Civil
+> Rights, Honest Gov −1, **3× point multiplier for 30 years**. **BUG flag (POST 4729)**:
+> scripted events don't check active SCOTUS rulings (Munn v Illinois → Cruikshank previously
+> deactivated poll taxes, POST 2698).
+
 *(designed, not built — a `State.reconstruction` status (occupied / military-gov / readmitted)
 with President-appointed 2-yr military Govs and no representation until a per-state readmission
 bill passes; the three readmission plans incl. a **time-boxed `bias +2 until year`** modifier;
 Black-voter enfranchisement on readmission feeding `calcStateVote`; the strip-leaders / pardon
 bills that remove-or-return named pols; the doubled-Carpetbagger-into-reconstructed-state rule;
-the 2:1 Plantation→Agriculture industry conversion; and the Reconstruction era-event spine.)*
+the 2:1 Plantation→Agriculture industry conversion; the Reconstruction era-event spine; and
+the **Reconstruction END exec action** (AG-Admin roll + lobby payouts + White-League/Red-Shirts
+trigger).)*
 
 ### 23.5 (#60) Canada conquest → era-gated territory→statehood + Canadian draft
 

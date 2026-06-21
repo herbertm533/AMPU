@@ -487,6 +487,18 @@ where the rulebook had no answer (these are design defects to spec, not crashes)
 | DH-9 | **Exec/Gov-action ability stat inconsistent (Command vs Admin/Gov/Justice)** | Exec actions = Command in build; gov actions use Gov | **Designer-flagged:** the ability stat differs across actions/events; designers think it should all be Command. A live **"all-Admin implementation" rebalance** was applied, and an **A-branch event can no-op** on a failed implementation roll. Needs one canonical decision | ingested (hd 2274, 2279-2282, 3097-3098; relates to #22/#23) |
 | DH-10 | **Blundered implementations still score (generic) unless a specific event overrides** | Implementation rolls exist (#22) | **Designer ruling (vcczar/MrPotatoTed/ebrk):** a FAILED (blundered) implementation **still scores points & moves meters "as if it succeeded"**; the blunder only risks scandal/resignation — UNLESS a specific event/action overrides (does-not-pass / retriable). **Needs a per-action data flag + appendix** | ingested (hd 8649-8672; refines #22) |
 | DH-11 | **Apparent Dem 3rd-party structural bias; lobby cards too inelastic** | 3rd-party trigger is `modern`-only design (#48); lobby cards exist | **Balance flags:** Dems reportedly "won every instance a 3rd-party run was a factor" (possible structural bias in #48); and **lobby cards are too inelastic** (raw-pol-count-driven → a trifecta party can lack lobbies). Both need rebalancing | ingested (hd 7480-block, 7799; relates to #48/#5) |
+| DH-12 | **White-peace rules MISSING from the war system** | War system not fully implemented (#45/#56) | **Designer-flagged:** Tyler (POSTS 6533-6541) — *"There are, in fact, no rules about white peace"* — had to dig up old treaty docs. Should be: Moderate Implementation (Pres + Sec State + Sec War), 75% -1 Party Pref, -100 Mil-Industry, -500 Expansionists, -500 President, returns to antebellum status quo. Needs porting to current ruleset | ingested (drums 6533-6541; relates to #45/#56) |
+| DH-13 | **Faithless-elector trigger over-aggressive + undocumented** | No faithless-elector roller | Generated whenever winner's state has the other party's ideology enthusiasm maxed (POST 466); kaldrich001 flagged historically unusual; 1876: 22 from Cobb, 12 from Fremont; 1892: 8 Whig (3 MA → Clay, 5 NJ → Shaw) created 232-232 tie → House contingent; 1900: 8-elector defection. **EBR deadlock side-effect rule** (POST 5250): Controversial gain on elected Pres + 50/50 Dom Stab hit. **Needs documented + capped trigger** | ingested (drums 466, 469-471, 2912, 4441, 5250; refines #19) |
+| DH-14 | **Bill ideology impacts not era-aware** | Bills carry fixed ideology effects | Matt (POSTS 6691, 6878, 6912): Mods need to be removed from the negative-points side of Women's Suffrage in 1916 — should be era-sensitive. Tyler agreed. **Equal Voting Rights for Women never passes** (60.5%, 63.6% short of 2/3); GM: *"This amendment will never pass in a game with CPUs."* Bills need era-keyed ideology impact tables | ingested (drums 6691, 6878, 6912) |
+| DH-15 | **Small/large-state action-impact multiplier UNCODIFIED** | No state-size multiplier | Tyler (POSTS 6676-6680): *"Since RI is a small state he would only succeed on impacting the meter at 2.5% [half of 5%]; large states double."* In playtest sheets ("Effects Meters?" column) but **not codified in the gov actions section** of the rulebook | ingested (drums 6676-6680; refines #20) |
+| DH-16 | **Reapportionment cap 435 likely never triggers** | Apportionment cap not modeled | Tyler (POST 5352): with natural growth at this simulation's present rate, **it'll be ~year 2000 before the cap binds** — effectively never in normal play. Population growth in this sim is slower than IRL | ingested (drums 4290, 5352) |
+| DH-17 | **Convention auto-drop-out + 1-action/candidate cap "impractical"** | Convention not implemented | Players proposed CPU should auto-drop-out after 2-3 ballots of 0 Momentum (POST 1162) to avoid 11-13-ballot deadlocks (Whig 1852 & 1856 went 11). **NOT implemented.** Tyler (POST 7214): 1-action-per-candidate-per-ballot cap is *"impractical and will ensure certain actions are never taken. Suggested to change to limited by Command."* House-rule patch logged | ingested (drums 1162, 7214; refines #13/#71) |
+| DH-18 | **Dark-horse compromise candidates dodge resignation rolls** | Convention not implemented | POSTS 7257, 7263: *"Yeah, I'm not sure that makes sense. The resignation rules assume no Dark Horse candidate will be nominated."* → house-ruled: nominees face resignation rolls retroactively after convention. **Loophole confirmed** | ingested (drums 7257, 7263; refines #71) |
+| DH-19 | **CPU governor menu static; no industry-stack awareness; no-op silently when capped** | Governor actions not implemented (#20) | CPU governor actions are a **fixed menu lookup mapped to faction identity** (Theocrat-aligned → Prohibition/Abortion/Ban Evolution; Mining-state → Improve Mining; Liberal/Prog → Strengthen Labor Unions; Reformist → Allow State Primaries; Big-Ag → Major Irrigation). **No awareness of state's existing industry stacks** — Improve Industry in a state already at 10/10 fails silently. Most states cap at 10 in any industry; NY/MA/LA may exceed in Maritime/Finance | ingested (drums 5894, 6159, 6289, 6519, 6671, 6888, 7062, 7424, 7532; refines #20) |
+| DH-20 | **CPU has NO reciprocity / vote-trading (architectural)** | CPU votes by faction discipline only | Designer comment (POST 4875): *"Sadly for @matthewyoung123 the CPUs don't understand reciprocity."* No side-deals, no quid-pro-quo logic exists — confirmation/leadership votes swing 76-24 → 91-9 by faction discipline alone. **Architectural gap** — pairs with #70 IRV bloc-vote | ingested (drums 4875; refines #70) |
+| DH-21 | **CPU has NO meter-guarding logic on scripted-event options** | Era-event responses score by individual ideology/cards | Under Roosevelt, **both Quality of Life and Economic Stability crashed to crisis state simultaneously** (POST 6280: "Quality of Life -2… Economic Stability -5"). Roosevelt's Internationalist + Pro-Federal-Government + Advocate New Freedoms triple-stack tanked all meters with no AI penalty. **No mechanism penalizes the CPU AI for choosing terrible-for-meters scripted event options**, and no AI logic considers whether stacking events on a single meter could push it to crisis | ingested (drums 6280; refines #74/#75) |
+| DH-22 | **Cascading scandal sequencing hole — no smoothing for back-to-back at-most-once events** | Era events fire independently | Roaring Twenties cascade (POST 7389): Estella scandal → VP forced to resign → Pershing replaces with Hearst as VP → Pershing scandal one event later → Pershing resigns → **Hearst becomes President within days** of becoming VP. Tyler called it *"A lot of events and unfortunate rolls."* Cabinet replacement chain resolves 3 deep in one event (Rep → VP → President → new VP from Senate, each triggering state-Gov replacement chains). **No smoothing for "back-to-back at-most-once" event types** | ingested (drums 7389; affects all era-event subsystems) |
+| DH-23 | **Cabinet 50/50 Admin-1 reject + lobby-maximizing selection = 36% pass-rate bug** | Cabinet phase exists (#25/#31/#73) | The two CPU bugs reinforce: **(a) Admin-1 nominees roll 50/50 in committee** (Whig minority auto-NAY + 50/50 Dem NAY = guaranteed fail); **(b) lobby-maximizing selection rule picks Admin-nobodies who hold the right cards** rather than high-Admin competents. **Combined cause of designer-acknowledged 36% confirmation pass rate** (POSTS 4702-4708 — vcczar: "low chance to reject" rule was lost from rules doc). Engine TODO: default-AYE baseline + weight Admin/competence in selection + detect same-actor-selects-AND-votes auto-AYE bloc | ingested (drums 867-876, 1607-1608, 1614-1626, 4702-4708, 4896-4900; refines #25/#31/#73) |
 
 Open balance/feel questions (build proves correctness, not fun) live below.
 
@@ -503,11 +515,18 @@ points **DO bank per era** via a ~12-step boot pipeline (#68); the **per-party
 faction cap** = **5 Blue + 5 Red** holds across a 5th era; the **amendment
 ratifier/threshold is era-keyed AND in-game-tunable** (3/4 Governors in 1856 →
 2/3 default later, #64); the **investigation spec** now has a concrete 5d6 rule
-(#65, fills #54). New `hd` open questions are folded into the list below
-(per-era point-bank as the cross-era win condition; Israel/foreign-meter
-activation rule; the meter→per-state election formula; Civil-War end-year;
-whether 3/3 traits-and-alt-states is the canonical draft re-rule). New open
-questions from `modern` are appended at the end. Still open:
+(#65, fills #54). _Resolved/clarified by batch 5 (`drums`):_ **the bulk of DH-8
+(CPU AI under-spec) is now resolved** — explicit heuristics for candidate
+selection (#72), leadership IRV (#70), convention behavior (#71), cabinet
+selection (#73), legislation voting (#74), scripted-event A/B/C cabinet voting
+(#75), conversion %-table (#76), faction-leader replacement (#78), and the
+faction-rename trigger (#40). DH-8 **REMAINS open** for the architectural gaps
+DH-20/DH-21/DH-22 (no vote-trading, no meter-guarding, no event-cascade
+smoothing). The **Justice 10-yr drift percentages** (25/10/5 mid/left/right) are
+now canonical (#79); **±3 swing cap** is patched (#80); **veto override = 2/3
+both chambers** (#82); **midterm uses full meter+enthusiasm** (#83); **contingent
+election rules don't exist** (#84 — author before build); **5%/half-term
+retire/death** (#85). New `drums` open questions are appended below. Still open:
 
 - **Era enum**: is `Gilded Age` a distinct `Era` entry or does `modern` cover
   1868→present? Forum frames 1868–1892 *and* "the next era" — likely needs
@@ -597,6 +616,42 @@ questions from `modern` are appended at the end. Still open:
   revisions," down from 5/5) the canonical going-forward rule?
 - **Contingent-election cutoff** (`hd`/#62/DH-6): top-2 (house rule) vs top-3
   (12th Amendment) — which does the build adopt?
+- **75/25 rule extension to faction-leader picks?** (`drums` POST 143): does the
+  75% party-leader / 25% random candidate rule apply to faction-leader
+  selection too? Tyler asks; explicitly open. (#72)
+- **VP retention era-curve** (`drums` POST 167): Tyler suggests "more likely
+  Nuclear+ era" — what's the era-keyed table? (#72)
+- **2-ideology-gap rule between Pres/VP** (`drums` POST 3797): Tyler "I'm not
+  finding it anywhere"; observed at 4-step gap (Breckinridge/Weaver). Is there a
+  gap cap?
+- **Kingmaker endorsement formula** (`drums` POST 1949): d6 vs d6+kingmakers vs
+  d6+kingmakers+endorsements — GM toggled mid-game; pick a rule.
+- **Convention auto-drop-out at 2-3 stuck ballots?** (`drums` POST 1162 / DH-17)
+  — should this be a hard rule to prevent 11-13-ballot deadlocks?
+- **Reconstruction default-penalty for returning Confederates** (`drums` POSTS
+  1742-1752): voting-ban / +9-to-victors / one-phase-delay / auto-Articles —
+  which is canonical? (#57)
+- **Whig→Republican realignment conditions** (`drums` POSTS 1284, 1737, 2049):
+  5% trigger, 3-condition gate — conditions never specified.
+- **Egghead cabinet suggestions: weight or remove?** (`drums` POST 1801+; #75)
+- **Iron Fist + Loans-from-Wealthy:** temporary gov takeover for ALL gov
+  actions or election only? (`drums` POST 2433; #77)
+- **Pliable Pres + Manipulative Advisor logic** (`drums` POST 4956): Tyler
+  *"rules are very murky"* — pick a rule.
+- **Outgoing vs incoming Congress in contingent election** (`drums` POST 5203):
+  thread used incoming; the rule is "nebulous." (#84)
+- **Iron Fist Pres vs Iron Fist Sen Maj Leader** (`drums` POST 7012): Pres IF
+  doesn't override Sen-Maj-Ldr IF — *"We need a new rule then. Lol."* (#77)
+- **Primary delegate Group caps** (`drums` POSTS 5708-5732): Groups 1-3 cap at
+  3 each then round-robin — implementation undocumented.
+- **Master Kingmaker forced to Key Advisor regardless of Admin?** (`drums`
+  POSTS 5658-5660): edge case with 0-1 Admin.
+- **McGovern-Fraser triggers (15 states) vs Women's Suffrage 1920 (all states)
+  inconsistency** (`drums` POSTS 7163, 7165; #63).
+- **Filibuster repeatability on packages** (`drums` POST 3275): Tyler *"the
+  rules actually don't say tbh."*
+- **Ahistorical SCOTUS rulings remove the overturning case from pool?**
+  (`drums` POST 5896) — confirm.
 
 ## Sources
 
@@ -654,5 +709,37 @@ questions from `modern` are appended at the end. Still open:
     log across a 5th era** (#1/#2/#8/#10/#13/#20/#45/#50/#51 et al.). Source of
     DH-3…DH-11 and the **★ "forum drives the build"** finding (relocation cap
     4 went live mid-thread; shipped build still 5 — gap #38 / §0).
+  - [`e1776bbd-drums-of-war-an-allcpu-playtest-of-the-civil-war`](playtest-digests/e1776bbd-drums-of-war-an-allcpu-playtest-of-the-civil-war.md)
+    (`drums`) — **7540 posts / 117 chunks** (map-digested into 12 partials → 3
+    section-digests → this final reduce). The **first explicit forum record of
+    CPU AI behavior** — an **all-CPU 1841→mid-1924 playtest** (the title is a
+    misnomer; the Civil War is one ~20-year arc inside a 4-era run, ending
+    mid-68th Congress under Pres Hearst with no 1924 outcome — live stoppage).
+    GMs @Ich_bin_Tyler → @matthewyoung123 (Tyler stepped down mid-arc and joined
+    as a player); designer @vcczar live-rules; @Arkansas_Progressive authored
+    the runnable Lingering script. **This thread RESOLVES the bulk of DH-8 (CPU
+    AI under-spec)** by providing explicit heuristics for candidate selection,
+    leadership IRV, convention behavior, cabinet selection, legislation voting,
+    scripted A/B/C events, conversion %-rolls, faction-leader replacement, and
+    faction renaming — the new CPU AI specifications cluster (#70-#78). Also
+    introduces the **long-term Justice ideology drift table** (#79), the **±3
+    swing cap** (#80), **High-Tech industry via era event** (#81), **veto
+    override = 2/3 both chambers** (#82), the **full-meter+enthusiasm midterm
+    rule** (#83), the **contingent-election-rules-don't-exist** finding (#84 —
+    author before build), and **5%/half-term retire/death rate** (#85). **Source
+    of DH-12…DH-23** (white-peace missing; faithless-elector over-aggressive;
+    era-unaware bill ideology; small/large state multiplier uncodified; reapp
+    cap never triggers; convention auto-drop-out + 1-action cap impractical;
+    dark-horse dodges resignation rolls; CPU gov menu no industry-stack
+    awareness; **NO reciprocity / vote-trading** (architectural, DH-20); **NO
+    meter-guarding on scripted events** (DH-21); **cascading-scandal sequencing
+    hole** (DH-22); cabinet 36% pass-rate combined bug (DH-23 — designer
+    acknowledged)). **Reconfirms BUG-0 / "forum drives the build"** theme:
+    vcczar/Tyler patched IRV (continuous + first-round-only randomize, POST
+    3419), the ±3 swing cap (POST 4574), the 5% retire/death rate (POST 5437),
+    and added the deterministic faction-rename-to-"Conservative-Party" trigger
+    (POST 7406) — all LIVE mid-thread. **Corroborates the core loop across a
+    5th era + most CPU heuristics** (#10/#13/#15/#19/#20/#28/#31/#38/#40/#45/#51
+    /#52/#56-67 et al.).
 - The shipped-build description ("What this game is / Eras / Core entities /
   Glossary") was generated from the AMPU codebase + `CLAUDE.md`.
