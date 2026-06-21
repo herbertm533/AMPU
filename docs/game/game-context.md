@@ -323,7 +323,11 @@ tree). Digest shorthands: **`gilded`** = the f4c7c2c4 1868 Gilded-Age digest;
 **`drums`** = the e1776bbd all-CPU 1841→1924 digest; **`pop`** = the c50d9da7
 **fresh-modern-boot** Era-of-Populism 2012→2017 digest; **`rep1800`** = the
 6aa7309a **1800→1868** "Era of Republicanism" digest (the early-republic gap-fill;
-cites `§A/§B/§C` section-digest refs + `POST n`). A row marked
+cites `§A/§B/§C` section-digest refs + `POST n`); **`new1772`** = the afc6cbd7
+**first-multiplayer 1772** "AMPU New 1772 playtest" digest (1772→1796 founding,
+abandoned at GM burnout; cites `§n` digest-section refs + `POST n`); **`tea1772`**
+= the ad0f2875 **solo all-CPU 1772→1874** "Stamping out America's love for tea"
+digest (stalls mid-Gilded; cites `§n` + `POST n`). A row marked
 **(corroborated across N eras)** has been independently observed in multiple
 threads — the strongest signal that it is a real, load-bearing rule rather than
 a one-off ruling.
@@ -1000,5 +1004,48 @@ trait, trait-conflict in boot data, meter-tag completeness). _Resolved/clarified
     core loop + ~12 deltas across an 8th era** (#2/#4/#5/#25b/#39/#43/#56/#57/#59/
     #76/#88) and reconfirms the **★ "forum drives the build"** theme (relocation
     cap told to the coder as UNLIMITED — conflicting with `hd`'s 4 and shipped 5).
+  - [`afc6cbd7-ampu-new-1772-playtest`](playtest-digests/afc6cbd7-ampu-new-1772-playtest.md)
+    (`new1772`) — **3614 posts / 37 chunks.** The **FIRST captured multiplayer
+    1772 campaign** — 10 humans (5 BLUE + 5 RED), running **1772→~1796** (~12
+    turns), the only thread that organically transitions Independence →
+    Confederation → Constitution → Federalism from a 1772 start and **stands up
+    the entire federal apparatus piece-by-piece via in-game legislation** (SCOTUS
+    by 2 bills, Bank + President-of-Bank seat, Dept of Navy + SecNavy, AG-by-bill,
+    academies/DC/Library/Mint/Marine-Corps). First-time GM @Largo833 (a.k.a.
+    @Arkansas_Progressive); rules-owner @MrPotatoTed; designer @vcczar hands-off;
+    @Anthony coding the build. **★ ABANDONED at GM burnout (POST 3607)** — the
+    single strongest case that the build must own all bookkeeping (DH-36). The
+    best **multi-faction founding-era rules reference** (complements the batch-2
+    SOLO 1772 `1772s` presentation reference). **Source of rows #101 (founding-era
+    offices-by-law), #104 (first-President rule + lone-ideology minor convention
+    exploit)** and design-holes **DH-36 (★ burnout-killed-a-game), DH-37 (no
+    pol-trading), DH-38 (no Rogue-Island), DH-39 (all-human Convention deadlock),
+    DH-40 (SCOTUS-count not packaged), DH-43 (Vermont mapping), DH-44 (post-12A
+    legislature vote-count)**. **Confirms the founding systems from a MULTIPLAYER
+    angle** and corroborates #43/#45/#93 (bill-driven statehood + procedural
+    filler-pol gen; concurrent multi-wars incl. the Invasion-of-Canada track + the
+    post-RevWar Northwest-Indian-War reopen; the 12A before/after machine reached
+    organically).
+  - [`ad0f2875-stamping-out-americas-love-for-tea-a-1772-to-future`](playtest-digests/ad0f2875-stamping-out-americas-love-for-tea-a-1772-to-future.md)
+    (`tea1772`) — **157 posts / 26 chunks** (2-stage reduce). A **solo all-CPU
+    fast-traversal** (single operator drives all 10 CPU factions) running
+    **1772→1874** — the one corpus showing the independence→federalism handoff in
+    actual play **plus** the full named-band sequence from a single save. Operator
+    @Bushwa777 → @matthewyoung123 narrates the Civil-War→Gilded tail; designer
+    @vcczar adjudicates (and defers the Prigg cascade). **★ Delivers the
+    multi-save proof for #92** — its named era-bands (Federalists → Republicanism
+    → Democracy → Manifest-Destiny → Nationalism) **exactly match `rep1800`'s
+    1800-start bands at the same in-game dates.** **★ Negative result: despite the
+    "to future" title it STALLS at 1874 (mid-Gilded) — NO future era, no
+    game-over** ("Era of the Future" undocumented everywhere). **Source of rows
+    #100 (SCOTUS-overturns-an-Amendment + threshold-amendable), #102 (dual era
+    scoring), #103 (presidential-vote modifier stack + era-issue list), #105
+    (stat-collapse → forced resignation)** and design-holes **DH-41 (★
+    SCOTUS-ruling→statute cascade UNBUILT/deferred), DH-42 (national-meters swamp
+    state-lean)**. **Confirms the third CW outcome** (President does NOT defect, NO
+    UK intervention — strengthening #56's branch-points-are-variables finding to 3
+    independent outcomes) and corroborates the per-2-year loop + #39 (stragglers
+    ratify late) + #45 (concurrent multi-wars: Mexican-American + Apache + Navajo)
+    + #59 (free/slave balance) across a 1772-start traversal.
 - The shipped-build description ("What this game is / Eras / Core entities /
   Glossary") was generated from the AMPU codebase + `CLAUDE.md`.
