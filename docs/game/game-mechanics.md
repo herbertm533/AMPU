@@ -12,10 +12,26 @@
 > `federalism / nationalism / modern`; where only 1772/1856 logic exists, the rest is
 > flagged **designed, not built**.
 >
-> **Forum-design batches absorbed.** `f4c7c2c4` (1868–1872 Gilded-Age playtest): the
-> convention machinery, governor's actions library, state policy flags, executive
-> actions library, per-power foreign relations, legislative micro-mechanics, and
-> Gilded-Age era. See [§19](#19-shipped-vs-designed-boundary).
+> **Forum-design batches absorbed.**
+> - **Batch 1** — `f4c7c2c4` (1868–1872 Gilded-Age playtest, `gilded`): the
+>   convention machinery, governor's actions library, state policy flags, executive
+>   actions library, per-power foreign relations, legislative micro-mechanics, and
+>   Gilded-Age era.
+> - **Batch 2** — `f55d3e21` (1788 federalism solo, `fed`) + `85f8e6b4` (1772 solo
+>   "aesthetic experiment", `1772s`): a full **federalism-era** section
+>   ([§20](#20-federalism-era-designed-not-built)); the **per-state presidential
+>   election method**; a **generic cross-era war system**; **amendments as durable
+>   ratified state**; the **firing-precedent gate**; **bill-driven statehood**; the
+>   fully-specified **2.1.8 card-distribution algorithm**; **bill typing + budget cap**;
+>   the **era-event scheduling model** (and its divergence from `coreSpine`); the
+>   **named-ordinal meter model + ±3 swing cap**. Many batch-1 deltas are now
+>   **corroborated across a second era** (flagged inline). See [§19](#19-shipped-vs-designed-boundary).
+>
+> **Confidence flag.** A rule marked **(confirmed across federalism + gilded)** (or
+> "+ 1772 solo") has been independently observed in two/three threads — the strongest
+> signal it is a real, load-bearing rule, not a one-off GM ruling. Outright **bugs**
+> in shipped behavior are not catalogued here; see `game-context.md` →
+> "Confirmed shipped bugs" (the roadmap owns those fixes), cross-referenced in [§19](#19-shipped-vs-designed-boundary).
 >
 > **How to read citations.** `phaseRunners.ts:3431` = file `src/engine/phaseRunners.ts`,
 > line 3431. `types.ts:229` = `src/types.ts`. Odds are probabilities in `[0,1]`;
@@ -47,6 +63,16 @@
 18. [System interactions](#18-system-interactions)
 19. [Shipped vs. designed boundary](#19-shipped-vs-designed-boundary)
     - [19.1 Design divergences for the roadmap](#191-design-divergences-for-the-roadmap)
+20. [Federalism era (designed, not built)](#20-federalism-era-designed-not-built)
+21. [Cross-era mechanics revealed by batch 2 (designed, not built)](#21-cross-era-mechanics-revealed-by-batch-2-designed-not-built)
+    - [21.1 Generic cross-era war system](#211-generic-cross-era-war-system)
+    - [21.2 Per-state presidential-election method](#212-per-state-presidential-election-method)
+    - [21.3 Amendments as durable, separately-ratified state](#213-amendments-as-durable-separately-ratified-state)
+    - [21.4 Firing-precedent gate on cabinet changes](#214-firing-precedent-gate-on-cabinet-changes)
+    - [21.5 Bill-driven statehood + auto-generated officials](#215-bill-driven-statehood--auto-generated-officials)
+    - [21.6 Bill typing + budget-gated spending cap](#216-bill-typing--budget-gated-spending-cap)
+    - [21.7 Era-event scheduling model vs. `coreSpine`](#217-era-event-scheduling-model-vs-corespine)
+    - [21.8 Named-ordinal meter model + ±3 swing cap + war-score meter](#218-named-ordinal-meter-model--3-swing-cap--war-score-meter)
 
 ---
 
@@ -523,7 +549,44 @@ Constants `ALIGNMENT_RULES` (`types.ts:330`). Order:
    - *Lobby cards* (`:1769`) mirror interest drift but score via the
      `lobbyToInterest` proxy (`types.ts:339`).
 
-### 7.4 Forum design layer: era-gated multi-pool card library (designed, not built)
+### 7.4 Forum design layer: the card-distribution algorithm (designed, not built)
+
+> **Corroborated across 1772 solo + gilded.** The gilded thread only showed the
+> *per-half-term drift* (add/drop lines); the **1772 solo digest fully specifies the
+> distribution algorithm** (`1772s` B9, posts 5, 15, 28, 53). This replaces the thinner
+> batch-1 description. The shipped engine instead refreshes a personality bucket and swaps
+> single cards (`runPhase_2_1_8_FactionPersonalities`, [§7.3](#73-alignment-drift--runphase_2_1_8_factionpersonalities-phaserunnersts1623)); it does **not** run this allocation.
+
+**The full distribution, run each 2.1.8** (`1772s` B9):
+
+1. **Ideology cards — primary.** Each faction's ideology card = the **ideology held by the
+   most of its politicians**.
+2. **Ideology cards — fill the era minimum.** Any remaining **era-minimum ideologies** (the
+   ideologies the era requires to be represented somewhere) go to the **faction with the most
+   pols of that ideology**.
+3. **Adjacency rule.** A faction's ideology cards must be **adjacent on the 7-point scale**
+   (no gaps). A gap is resolved by **dropping the card representing the fewest pols on either
+   side of the gap** (the player even patched a sub-rule for genuinely undistributable cards,
+   post 5).
+4. **Interest/lobby cards — primary + disinterested top-up.** Each interest/lobby card goes
+   to the faction with the **most "interested" pols** in it. Then **disinterested factions
+   top up** with their **most-represented interest** — **subject to a `≥5`-pol floor that
+   applies to the top-up only**, *not* to the first-ever distribution.
+5. **Lobby activation by event.** A lobby card only enters the pool once an **event activates
+   it** (post 18/28: **Lexington & Concord activated the Military-Industrial + Big Agriculture
+   lobbies**). Until activated, the lobby cannot be held by anyone.
+
+**Per-half-term drift** (the gilded view, post 49) then layers on top: discrete add/drop
+lines driven by the legislative record, e.g. "@Brocklin Added: Big Corporations, Human
+Rights; Lost: Liberals, Environmentalist, LW Media." Interest/lobby cards drop at low score
+and add at high score (the shipped `dropThreshold ≤ −4` / `addThreshold ≥ +4`,
+[§7.3](#73-alignment-drift--runphase_2_1_8_factionpersonalities-phaserunnersts1623), is the
+nearest shipped analog).
+
+*(designed, not built — implement the five-step allocation + lobby-activation gating in
+2.1.8, alongside (not replacing) the existing card-drift swaps.)*
+
+#### 7.4.1 Era-gated multi-pool card library (designed, not built)
 
 The forum's card pool is **wider and era-gated** than the shipped deck. From the 1868–1870
 turn (post 49) and 1870–1872 turn (post 323):
@@ -611,6 +674,12 @@ governing `+1`; re-election grants legislative `+1`.
 
 #### 8.5.1 Congressional Leadership has nine roles, not two
 
+> **Corroborated across federalism + gilded.** Federalism confirms the multi-role,
+> multi-ballot pipeline — incl. a **six-ballot Pro Tem race** (fed post 3), **incumbent
+> leaders un-challengeable when their party's meters are sky-high** (fed posts 447, 539),
+> and **committee-chair eligibility = prior service on that committee** (fed = same as
+> gilded post 66).
+
 Forum 2.2.1 elects **all nine** congressional leadership posts (post 50, 324, 334) — the
 build elects only Speaker and President Pro Tem. Roles, with example point/trait awards:
 
@@ -653,8 +722,29 @@ elect all nine roles with point/trait grants; add committee-service tracking.)*
   `Easily Overwhelmed` (`types.ts:154`) but does not gate party-leader eligibility on it.
 - **Pliable faction leader auto-replacement** (post 341): a `Pliable` faction leader runs
   on a different shortlist (any matching ideology/lobby card holder, not Leadership-gated).
-*(designed, not built — encode trait gates on faction-leader eligibility; add anointing
-flow.)*
+
+> **The canonical 6-criterion eligibility filter (corroborated across 3 eras).** The 1772
+> solo quotes the rulebook filter **verbatim** (`1772s` posts 80-87, post 86); gilded and
+> federalism corroborate its pieces. The filter is applied as a **cascade waived in reverse
+> priority** — start with all six required; if no candidate qualifies, drop the lowest-priority
+> criterion and retry, and so on:
+>
+> | Priority | Criterion (must hold) |
+> |---|---|
+> | 1 (highest) | personal ideology **matches a faction ideology card** |
+> | 2 | **not** Incompetent / Lackey / Passive |
+> | 3 | holds a matching **interest or lobby card** |
+> | 4 | **not** currently on a career track |
+> | 5 | has the **Leadership** trait |
+> | 6 (lowest) | **not** Obscure |
+>
+> So the engine first seeks an ideology-matched, competent, card-matched, off-track,
+> Leadership-bearing, non-Obscure candidate, and relaxes the *least* important constraints
+> first when none exists. Post 341's "pick any Mod that has either Reformist or Business"
+> is this cascade after several waivers.
+
+*(designed, not built — encode the 6-criterion reverse-priority cascade on faction-leader
+eligibility; add the anointing flow.)*
 
 #### 8.5.3 Party leader incumbency fatigue (designed, not built)
 
@@ -710,8 +800,21 @@ Forum 2.3.1 fills a **much wider** roster than `cabinetSeatsForYear` (post 87, 9
 - **Senate confirmation roll-call** per nominee (post 102 implies a roll for each appointment).
 - **Cap on cross-party cabinet**: forum permits up to **3 reds in a Blue cabinet** (post 104)
   — a per-cabinet hard cap, not the per-seat 10% gate the engine uses.
+
+> **Corroborated + the cabinet roster is era-gated (federalism + gilded).** Federalism (posts
+> 5, 44, 60, 132, 454, 547, 659) confirms the wider roster — State/Treasury/War/AG/PM
+> General/Navy + Ministers UK/France/Spain/Prussia/Russia + Key Advisor + Sr General/Admiral
+> + Senate confirmation roll-calls — but with a **different per-era set**: the 1788 cabinet
+> has **no Interior, no China minister, and no Senior Admiral** the 1868 cabinet had. So the
+> minister/officer roster grows with the foreign-power roster ([§13.3.1](#1331-per-power-relations-meters--an-era-dependent-power-roster))
+> and the year-gated domestic seats (`cabinetSeatsForYear`). Two GM rulings worth encoding:
+> **senators refuse a *military* appointment** (general/admiral) except in a major war but
+> **will accept an ambassadorship** (fed posts 71-73 — stops Congress→military stat-laundering);
+> and a no-viable-PM-General candidate is an **undefined, crash-prone path** escalated to the
+> dev (fed post 5 — see `game-context.md` BUG-3).
+
 *(designed, not built — extend `Office` enum with Minister-* offices and admiral-bench
-slots; add cross-party cap.)*
+slots, **keyed per era**; add the cross-party cap and the senators-refuse-military rule.)*
 
 #### 9.3.2 State-status eligibility check
 
@@ -819,11 +922,19 @@ start the Constitutional Convention, assemble the CC, admit a state).
 
 #### 10.4.1 Multi-decider events
 
+> **Corroborated across federalism + gilded.** Federalism adds the **implementation-roll
+> layer**: a secretary may **blunder the implementation** while a high-stat president **bails
+> them out** (fed posts 29, 496, 575, 702), and **Egghead/Efficient** cabinet members
+> "suggest" the choice a Pliable/Passive president then accepts (fed posts 29, 65, 475, 702
+> "Our eggheads … both choose A"). So a multi-decider event resolves as: advisory step
+> (Egghead) → decision (president, trait-modulated) → implementation rolls per assigned office.
+
 Forum era events can route a response through **multiple offices** working in tandem
-(post 129: "Oregon Treaty: To be implemented (Diff) by Pres Clinton, Sec of State Delano
-and UK Minister Clay"). The shipped `EraEvent.decider` is a single role; the design
+(gilded post 129: "Oregon Treaty: To be implemented (Diff) by Pres Clinton, Sec of State
+Delano and UK Minister Clay"). The shipped `EraEvent.decider` is a single role; the design
 permits a list of deciders, each rolling at a different difficulty. *(designed, not built —
-extend `decider` to `decider: Role | Role[]`; resolution rolls per role.)*
+extend `decider` to `decider: Role | Role[]`; add an Egghead-advisory step and per-office
+implementation rolls.)*
 
 #### 10.4.2 Foreign-territory grants via era event
 
@@ -1032,20 +1143,43 @@ Posts 176-179 introduce **bill packaging**: between 2.6.2 and 2.6.3, a chair may
 - If the package passes, **every bill in it** is enacted simultaneously, in declared order.
 - If the package fails, every bill in it is killed.
 - Engine `Bill` carries `votes: { house, senate }`; the packaged-bill shape is
-  effectively a meta-bill whose `effects` are the *union* of its members'. *(designed,
-  not built — add `Bill.packageOf?: BillId[]` and a chair-side bundling action.)*
+  effectively a meta-bill whose `effects` are the *union* of its members'.
+
+> **Corroborated across federalism + 1772 solo.** Federalism (posts 160, 213, 564-565)
+> shows named bundles voted as one ("BUNDLE 1: Bureau of Indian Affairs AND Smithsonian")
+> and adds a **bundling-eligibility rule**: a chair **won't bundle** a bill that is
+> **net-negative for the chair's faction** — *unless* it is a **statehood bill** (fed post
+> 565). The 1772 solo gives the **CPU heuristic**: a CPU chair bundles **~75%** of the time
+> unless the reason is hostile/random, with **Crisis** as an added bundling reason (`1772s`
+> posts 18, 46, 57).
+
+*(designed, not built — add `Bill.packageOf?: BillId[]`, a chair-side bundling action, and a
+CPU bundling-eligibility heuristic: bundle if net-positive or a statehood bill; ~75% baseline.)*
 
 ### 12.6 Forum design layer: filibuster (designed, not built)
 
-Between the House vote and the Senate vote (posts 189-194), **each faction with a
-Senate-floor presence** is offered the option to filibuster one bill/package:
+> **Corroborated across federalism + gilded** — and **federalism sharpens it**: the
+> filibuster is not an always-available action but a **standing rule toggled ON by a law**.
 
-- One filibuster attempt per faction per session.
-- If filibustered, the targeted bill **dies** (post 194: "S.2 ... Filibustered" — no
-  vote tallied).
-- Engine has no concept; floor vote runs in House then Senate without an inter-chamber
-  hook. *(designed, not built — add a 2.6.2.5 hook between House and Senate tallies for
-  per-faction filibuster choice; cap one per faction.)*
+Between the House vote and the Senate vote (gilded posts 189-194; fed posts 159, 566, 725,
+730), **each faction with a Senate-floor presence** may filibuster one bill/package:
+
+- **Unlocked by legislation.** "Institute Filibuster" is itself a bill, passed in 1792
+  (fed post 159). Before it passes, **no filibuster exists**. After it passes, the
+  filibuster is a per-bill action available to an eligible senator.
+- **Trait-gated actor.** An eligible senator must hold the right trait/personality —
+  fed post 730: "FILIBUSTERED … BECAUSE RED 1 IS LED BY A PURITAN" (a Puritan senator
+  filibusters).
+- **One attempt per faction per session.**
+- **Filibustered bills persist, not just die.** Federalism clarifies a filibustered bill
+  **returns next term** and **can be re-filibustered** (fed posts 566, 725) — sharper than
+  the gilded reading where "S.2 … Filibustered" simply went un-tallied (gilded post 194).
+- Engine has no concept; floor vote runs House then Senate with no inter-chamber hook.
+
+*(designed, not built — add (a) an `Institute Filibuster` law that sets
+`game.filibusterEnabled`, (b) a 2.6.2.5 hook between House and Senate tallies for a
+per-faction, trait-gated filibuster action, and (c) persistence so filibustered bills
+re-queue next session.)*
 
 ### 12.7 Forum design layer: `*Crisis Bill*` tag (designed, not built)
 
@@ -1063,9 +1197,20 @@ attempt to **resolve** an active crisis are stamped `*Crisis Bill*` by the GM (p
 On passage, the crisis-bill resolves the crisis (per the digest: Pres Clinton "solved the
 Economic and Corruption crises"). Effects scale: a Crisis Bill scores **+150 pts** vs a
 regular bill's +50 (post 196 shows three regular bills + the Crisis Bill totaling
-150-points-per-faction-card hits). *(designed, not built — introduce
-`game.activeCrises: CrisisId[]` and `Bill.resolvesCrisis?: CrisisId`; on passage of a
-crisis bill, pop the crisis off and apply a stronger scoring multiplier.)*
+150-points-per-faction-card hits).
+
+> **Corroborated across federalism + gilded — and federalism adds two load-bearing
+> facts:** (1) **crisis bills bypass the spending cap** ("crisis can pass with spending
+> freely", fed post 159 — see [§21.6](#216-bill-typing--budget-gated-spending-cap)); and
+> (2) the nation is in **named national-crisis states** entered/exited by **meter movement**,
+> which crisis bills/actions resolve (fed posts 39, 166, 372 "out of the corruption crisis",
+> 477, 480). The federalism **crisis taxonomy** is **Budget, Economy, Domestic Stability,
+> Honest Government** — a subset of the gilded list (which adds Anti-Naturalization /
+> Anti-Native / Anti-Chinese), so the **crisis set is era-dependent**.
+
+*(designed, not built — introduce `game.activeCrises: CrisisId[]` entered/exited by meter
+thresholds, plus `Bill.resolvesCrisis?: CrisisId`; on passage of a crisis bill, pop the
+crisis off, **skip the spending-cap gate**, and apply a stronger scoring multiplier.)*
 
 ### 12.8 Forum design layer: bill scoring sums ALL faction cards (design divergence)
 
@@ -1104,6 +1249,13 @@ not just the leader's ideology, and the per-hit magnitudes are an order of magni
 larger than the shipped vote-bias scaling. This is one of the biggest gaps; clarified by
 the GM as the rule (post 237). *(needs roadmap-planner attention.)*
 
+> **Corroborated across gilded + 1772 solo.** The 1772 solo re-derives the same rule from
+> the rulebook (`1772s` C3, posts 27, 29, 42, 44): **every ideology/interest/lobby card a
+> faction holds scores independently**, so a faction holding opposite-side cards **nets toward
+> 0**. It adds the **staged tabulation method**: *tabulate each card first, then sum per
+> faction* (the player had been under-counting multi-card factions). Same author ruling in
+> both threads → high confidence this is the canonical scorer.
+
 ---
 
 ## 13. Foreign affairs & war (2.7.x)
@@ -1122,14 +1274,25 @@ Each nation in `game.diplomacy`: `0.20` chance to drift `±0.5` (50/50 sign), cl
 
 ### 13.3 Forum design layer (designed, not built)
 
-#### 13.3.1 Per-power relations meters
+#### 13.3.1 Per-power relations meters — an era-dependent power roster
 
-Forum tracks **separate relation meters** per major foreign power (post 132): UK, France,
-Spain, Prussia, Russia, China. Each runs on the same `[−5,+5]` band with descriptors
-(`Friendly`, `Neutral`, `Hostile`, `Maxed`). Engine has `game.diplomacy` indexed by
-nation key, but the **list of seeded nations is era-dependent** (Prussia post-1871 →
-Germany; China post-1911 → ROC). *(designed, not built — extend `diplomacy` to a
-per-era seed set with renaming/merging hooks across era transitions.)*
+> **Confirmed era-dependent across federalism + gilded.** This is now a confident rule:
+> the **roster of tracked powers changes per era**.
+>
+> | Era | Powers (count) | Source |
+> |---|---|---|
+> | **Federalism (1788)** | UK, France, Spain, Prussia, Russia — **5, no China** | fed posts 32, 75, 88, 296, 479, 711 |
+> | **Gilded (1868)** | UK, France, Spain, Prussia, Russia, **China — 6** | gilded post 132 |
+>
+> Renames track real history: **Prussia → Germany** post-1871; **China → ROC** post-1911.
+> ("Germany" appears once as a slip for Prussia in fed post 75.)
+
+Forum tracks **separate relation meters** per major foreign power. Each runs on the same
+`[−5,+5]` band with descriptors (`Friendly`, `Neutral`, `Hostile`, `Maxed`); 1772 confirms
+**UK Relations** specifically as a named ordinal meter (`1772s` B8). Engine has
+`game.diplomacy` indexed by nation key, but the seed list is fixed, not era-keyed.
+*(designed, not built — extend `diplomacy` to a per-era seed set (5 in federalism, 6 in
+gilded) with renaming/merging hooks across era transitions.)*
 
 #### 13.3.2 Three diplomacy actions library
 
@@ -1282,7 +1445,19 @@ vs a tainted opponent; Unlikable `−MEDIUM`, bumped `−LARGE` vs a Charismatic
 ### 15.3 Convention machinery (2.9.2) — full forum design (designed, not built)
 
 The build's 2.9.2 is one line: "log ratification." The forum runs a multi-step convention
-**every** presidential cycle (posts 211, 220-267). The full subsystem:
+**every** presidential cycle (gilded posts 211, 220-267). The full subsystem:
+
+> **Corroborated across federalism + gilded (very high confidence).** Federalism ran a full
+> multi-ballot convention at **every** cycle 1792→1808 (posts 90, 231-247, 394-417, 580-606,
+> 714-727), confirming delegate counts per state, major/minor/favorite-son candidate types,
+> nominator-speech d6→momentum, separate keynote roll, drop-out-and-endorse, presidential
+> cabinet-seat promises (and that they are **rejectable by a stubborn AI**, posts 397-399),
+> and that conventions routinely go **4–7 ballots** to 50%+1. Federalism adds **two new rules**:
+> - **Convention-host advantage.** The faction that **sets the delegate categories** is
+>   favored — fed post 398: "the convention was rigged in my favor as I set the delegates"
+>   (the host is chosen by a governor / faction leader of the host state, posts 202, 481, 714).
+> - **Party leader overrules the nominee's VP pick.** Fed post 401: the **party leader's VP
+>   choice beats the nominee's** (the shipped model has the nominee pick VP unchallenged).
 
 #### 15.3.1 Candidate types and per-faction slate
 
@@ -1789,10 +1964,53 @@ step-down anointing; Passive trait auto-disqualifies.
 **End-of-half-term (§16.1)** — defeated incumbents auto-retire; faction nicknames update
 per era.
 
+*New items revealed by forum digests `f55d3e21` (federalism) + `85f8e6b4` (1772 solo):*
+
+**Federalism era (§20)** — a full unbuilt era: a `scenario1788` mid-government boot; the
+10-faction roster + per-era **nickname relabel** mechanic; the federalism **era-event spine**
+(Compromise of 1790, Hamiltonian financial program, Pinckney/Jay, Whiskey/Fries rebellions,
+French-Revolution wars, Louisiana Purchase); **party-formation as an era event** (~1792); the
+**Mod/Cons-weighted draft profile**; the federalism SCOTUS case set.
+
+**Generic cross-era war system (§21.1)** — one war model for every war (additive
+Chance-of-Success + warscore/momentum/×2 + confirmation cascade), replacing the flat generic
+resolver and folding in the 1772 Rev-War loop.
+
+**Per-state presidential-election method (§21.2)** — `State.electionMethod`
+(popular vs legislature-chosen), flipped per-state by event and globally by amendment;
+**diverges from the national popular `calcStateVote`**.
+
+**Amendments as durable, separately-ratified state (§21.3)** — pass Congress → ratify across
+states → durable rule-changing flag; can fail ratification; term-length / popular-vote /
+VP-vacancy / suffrage effects.
+
+**Firing-precedent gate on cabinet (§21.4)** — cabinets are sticky hold-overs until a firing
+precedent is set; **contradicts the shipped cabinet-wipe-on-election**; same-faction guard on
+the US Bank President.
+
+**Bill-driven statehood + auto-generated officials (§21.5)** — statehood/territory bills call
+`admitState`; event/war annexation; generate filler pols for sparse new states.
+
+**Bill typing + budget-gated spending cap (§21.6)** — Foundational/Spending/Crisis tags; a
+numeric per-turn spending budget that blocks non-crisis spending bills even after the floor
+vote; crisis bypasses the cap.
+
+**Era-event scheduling model (§21.7)** — historical-year-sorted, per-half-term-capped,
+roll-≤-%-to-fire-with-spill; **diverges from the shipped `coreSpine` precondition graph**.
+
+**Named-ordinal meters + ±3 swing cap + war-score meter (§21.8)** — labeled-step ordinal
+meters and a ±3-per-phase clamp vs the 7 numeric meters.
+
+**Card-distribution algorithm (§7.4)** — the five-step ideology/interest/lobby allocation
+(adjacency rule, ≥5-pol top-up floor, lobby-activation-by-event), now fully specified by the
+1772 solo.
+
 ### 19.1 Design divergences for the roadmap
 
-Three rules where the **forum and the shipped engine genuinely disagree** (not just
-"forum has more"):
+Rules where the **forum and the shipped engine genuinely disagree** (not just
+"forum has more"). The roadmap-planner should treat each as a *decision*, not a feature add.
+
+*From batch 1:*
 
 1. **Bill scoring**: shipped engine uses `factionCenter` (one ideology index, PR7-biased)
    in `cardVoteBias` at `0.03 × delta` per matching card. Forum scores **every** ideology
@@ -1803,3 +2021,429 @@ Three rules where the **forum and the shipped engine genuinely disagree** (not j
    keyed on fit/PV/Loyal/Opportunist. Forum gates strictly on `Can Party Flip` (cross
    party) and `Pliable + adjacent ideology` (same party), with hard per-base rates of
    5/10/15%. (See §6.4.x.)
+
+*New in batch 2:*
+
+4. **Era-event scheduling model vs. `coreSpine`** *(the biggest 1772 divergence)*. The
+   shipped 1772 engine fires events off a **precondition graph** whose `coreSpine` nodes fire
+   **regardless of any probabilistic roll** (`eraEvents1772.ts:23`; `selectEraGraphNode`,
+   `eraGraph.ts:107`). The forum instead **sorts events by historical year** and **rolls each
+   one (`roll ≤ %-to-fire`) per half-term up to an era cap**, with the 1772 half-term firing
+   its 5 historical events at 100% and **spill into another GenEvo round** if a required count
+   is underfilled (`1772s` B1). These produce **different event sequences**. (See
+   [§21.7](#217-era-event-scheduling-model-vs-corespine).)
+5. **Per-state presidential-election method vs. the national popular model**. Shipped
+   `calcStateVote` resolves the general by **popular vote in every state** (`presGeneral`,
+   `phaseRunners.ts:3752`). The federalism design has **per-state electors chosen by
+   legislature vs popular vote**, flippable per state by event or by national amendment
+   (`fed` 194, 220, 255, 306-307). (See
+   [§21.2](#212-per-state-presidential-election-method).)
+6. **Generic war resolver vs. warscore/momentum/×2**. Shipped non-Rev-War wars use a flat
+   `milPower×10 + d100 > enemyPower×10 + 50`, war ends at `±50` (`phaseRunners.ts:3593-3627`).
+   The forum uses a **per-battle Chance-of-Success formula** + a **warscore + momentum → %**
+   resolution with an **escalating ×2 multiplier** and a **confirmation cascade** when a
+   defeated commander is fired (`fed` 222, 312, 389; `1772s` 20, 22, 48, 60). (See
+   [§21.1](#211-generic-cross-era-war-system).)
+
+> **Confirmed shipped bugs (fixes, not features).** Three defects surfaced by the federalism
+> thread are catalogued in `game-context.md` → "Confirmed shipped bugs" and owned by the
+> roadmap as fixes: **BUG-1** era events never deactivate for non-1772/1856 start years
+> (latent in `buildEraEventsForYear`, `phaseRunners.ts:2817`; an 1800-start wrongly loses the
+> Louisiana Purchase); **BUG-2** `Chisholm v. Georgia` needs an "11th Amendment not ratified"
+> gate (SCOTUS case content not yet seeded); **BUG-3** no fallback when there is no viable
+> PM-General candidate (`GeneralInChief`, `types.ts:1121`). Not re-documented here.
+
+---
+
+## 20. Federalism era (designed, not built)
+
+> **Entire section is designed, not built.** The `federalism` era exists in the engine only
+> as **balance-tuning rows** (`MORTALITY_RULES`/`LEADERSHIP_RULES`/`ANYTIME_EVENTS_RULES`
+> `eraConfig`, `TRAIT_*` splits) and as the **transition target** a 1772 game enters on
+> Constitution ratification (`constitutionalConvention.ts:198`). **No `scenario1788` exists,
+> no federalism faction roster, no federalism era-event spine, no federalism bill catalog,
+> no federalism SCOTUS case set.** This section is the spec, sourced from the `fed` digest
+> (`f55d3e21`, a 1788→1808 solo-with-AI playtest of Hamilton's Arch Federalists). It is
+> parallel in depth to the 1772/1856 coverage in [§17](#17-era-systems). Cite `fed#post N`.
+
+### 20.1 Scenario shape — a mid-government boot like 1856
+
+The 1788 scenario **boots mid-government**, not from scratch like 1772 (`fed` 1, 14):
+
+- **Pre-seated** President, VP, SCOTUS, and Congress (Washington administration). Like
+  `scenario1856` (`scenario1856.ts:177-193`), it should start **past the draft** at a
+  governance phase, with governors and courts already existing.
+- **Open boot question** (`fed` 1, 14): the forum sheet pre-seated officeholders but the
+  player **re-ran Congress leadership + cabinet at start anyway**. Canonical answer (pre-seat
+  fully vs re-derive leadership/cabinet) is undecided — flagged to the human.
+- **Default config quirk** (`fed` 1): the sheet defaults to a **Blue-controlled House**,
+  even though the historical 1st House was pro-administration (Red/Federalist) — a balance,
+  not a fidelity, choice.
+- **Continuous-campaign alternative.** Federalism may *also* be reached by playing a 1772
+  game forward through the Constitutional Convention rather than booting `scenario1788`
+  directly. Either way, **points reset at the era boundary** (`fed` 518; see
+  [§20.7](#207-era-transition-federalism--nationalism-1800)).
+
+### 20.2 The 10-faction roster + per-era nickname relabel (fed 2, 24, 140, 184)
+
+**10 factions, 5 per party**, with **period-specific identities** (contrast the generic
+`factions1772.ts` proto-names):
+
+| Party | # | Faction (1788) | Leader | Lean |
+|---|---|---|---|---|
+| **BLUE = Democratic-Republicans** (Jefferson) | B1 | Old Republicans | Jefferson | RW Pop |
+| | B2 | Republicans | Madison | — |
+| | B3 | Democratic-Republicans | John Milton | Moderate |
+| | B4 | Fusion Democratic-Republicans | Gerry | business-friendly |
+| | B5 | Democrats | Boudinot | Liberal wing |
+| **RED = Federalists** (Hamilton) | R1 | States' Rights Federalists | Henry Laurens | Southern wing |
+| | R2 | **Arch Federalists** (the player) | **Hamilton** | Center-Right |
+| | R3 | Moderate Federalists | Washington | — |
+| | R4 | Moderates | Franklin | — |
+| | R5 | Rush Federalists | Benjamin Rush | — |
+
+**Per-era nickname relabel mechanic (confirmed across federalism + gilded; dense in
+federalism).** Faction names and nicknames **drift heavily, almost every turn**, tracking
+real party evolution and gated by the **faction-leader's traits/ideology** + a **"names
+table"** (`fed` 184: "the names table is hard on the eyes"). Observed relabels in-thread:
+
+- R5 Rush → Benson → Knox → Moderate Federalists
+- B1 Old Republicans → Anti-Federalists → Old Republicans
+- B2 Republicans → Traditionalists
+- B5 Democrats → Populists (LW)
+- R1 States'-Rights → Arch-Federalists → Populists (RW) → Arch-Federalists
+
+`Faction.nickname` exists (`types.ts:1297`) but nothing updates it. *(designed, not built —
+add an authored **names table keyed per (party, era, ideology)** gated by leader traits, with
+both algorithmic mix and a player-edit override.)*
+
+### 20.3 The federalism era-event spine (fed 28, 64, 140, 194, 368, 475, 555, 702)
+
+The era's spine is the **Hamilton-vs-Jefferson financial/constitutional fight + the wars of
+the French Revolution**, in roughly historical order:
+
+| Era event | What it does | Decider | Post |
+|---|---|---|---|
+| **Compromise of 1790** | Accept Assumption ⇄ move capital to the Potomac (DC) | President | 28 |
+| **Hamiltonian financial program** (a cluster of foundational bills, [§20.4](#204-the-hamiltonian-financial-program-as-bills-fed-38-250)) | Assumption, Bank of the US, Mint, 10% tariff, Militia Act, bimetallism | Congress | 38 |
+| **Pinckney's Treaty** (Spain) | resolve Spanish/Mississippi tension | Pres + cabinet | 28 |
+| **Manufacturing Appears / Cotton Gin / Cotton Textile Boom** | activate industry lobbies; make slavery "much more sustainable" (seeds the nationalism crisis) | auto/Congress | 64, 194 |
+| **State-by-state slavery abolition** | PA / NY / New England abolish slavery | per-state event | 28, 64, 292 |
+| **Essex Junto** (New England secession scare) | **−2 to elections for 4 years outside New England/NY** | event | 140 |
+| **Party-formation events** ([§20.5](#205-party-formation-as-an-era-event-1792-fed-140)) | "Federalists Formed", "Jeffersonian Republicans Formed" — *create the party names* | auto | 140 |
+| **French Revolution → War with the UK ("War of 1795")** | Jefferson (CPU) joins France; **win → rights to Canada / state of Quebec; loss → battlefield defeat + maluses** | war system | 194, 389 |
+| **Whiskey Rebellion** | domestic-stability crisis; Militia-Act/Crisis-Gov competence matters | Pres/cabinet | 368 |
+| **Buttonwood Agreement** | Wall Street appears (finance lobby) | auto | 76 |
+| **Fries's Rebellion** | second domestic rebellion | Pres/cabinet | 702 |
+| **Barbary tribute → Barbary War** | naval war | war system | 475 |
+| **Louisiana Purchase** | annexes Louisiana en bloc (fired "one term behind schedule") | era event | 702 |
+| **Impressment → War of 1812** | fires as the era hands off to nationalism | war system | 702 |
+
+Plus a swarm of **census-flavor events** stashing EV deltas ([§10.4.3](#1043-census-driven-ev-deltas);
+`fed` 30) and **Latin-American independence** flavor events (Colombia/Ecuador/Venezuela/
+Peru/Bolivia/Gran Colombia, `fed` 76).
+
+### 20.4 The Hamiltonian financial program as bills (fed 38, 250)
+
+The program is a cluster of **foundational/crisis bills** ([§21.6](#216-bill-typing--budget-gated-spending-cap)):
+
+| Bill | Type | Effect | Note |
+|---|---|---|---|
+| **Assume Rev War debt** | Crisis, **free** | federalizes state debt | the keystone |
+| **Bank of the United States** | Crisis | national bank; **US Bank President** office created | "the most controversial proposal" (`fed` 38); Bank Pres removable **only by a same-faction president** ([§21.4](#214-firing-precedent-gate-on-cabinet-changes)) |
+| **US Mint** | Foundational | establishes coinage | — |
+| **Set average tariff to 10%** | Crisis | sets the **national tariff integer** | **change-cadence rule**: set 1789, **"1796 first year we can change it"** (`fed` 250) |
+| **Militia Act** | Crisis | grants Pres power to **call up state militia** | enables suppressing the Whiskey/Fries rebellions |
+| **Bimetallic currency** | — | US dollar = gold + silver bullion, intended to "incur some inflation to aid debt repayment" | **same bill as the gilded bimetallism axis** (corroborated across 2 eras) |
+
+> **Tariff is a national integer set by legislation, with a change-cadence** (corroborated
+> across federalism + gilded). The integer is **set once, then locked until a "first new
+> tariff year"** before it can be changed again (`fed` 250; gilded sets it by bill but
+> didn't show the cadence). *(designed, not built — add `game.tariffPercent: number` +
+> `game.tariffNextChangeableYear`.)*
+
+### 20.5 Party-formation as an era event (~1792) (fed 140)
+
+A federalism-specific structural rule with **no engine analog**: **party identity is itself
+event-driven**. The events "Federalists Formed" and "Jeffersonian Republicans Formed" fire
+**~1792** and *create the party names*. Before they fire, the two parties are **unnamed
+proto-blocs** (BLUE/RED exist as the engine's two-party spine, but carry no era name). This
+couples to the nickname table ([§20.2](#202-the-10-faction-roster--per-era-nickname-relabel-fed-2-24-140-184))
+and gates anything that displays a party name. *(designed, not built — add a
+`party.formedYear` / `party.eraName` set by a party-formation era event; treat a party as
+unnamed before it fires.)*
+
+### 20.6 The federalism draft-ideology profile — Mod/Cons-weighted (fed 136, 330)
+
+Federalism is a **Moderate/Conservative-dominated era** (confirmed across federalism +
+gilded as the general "per-era ideology drafting profile" rule, gap #4):
+
+- GM: "those ideos [LW Pop/Prog/Lib] **don't really matter this era**" (`fed` 136).
+- The Senate is "**all Mod or Cons except 2 Trad and 1 Prog**" (`fed` 330); enthusiasm
+  meters peg toward Mod.
+- Marquee rookies (Jackson, JQA, Clay, Monroe, Burr, Gallatin) all enter via **normal draft
+  classes** in this window (`fed` 118, 510, 638) — confirming the dataset's
+  `draftYear ≈ birthYear + 25` rule (CLAUDE.md) yields era-correct rookies.
+
+Contrast the shipped per-faction draft bias in `pickBestForFaction`
+([§4.2](#42-picking--pickbestforfaction-phaserunnersts33)), which uses static personality
+buckets, not a per-era ideology mix. *(designed, not built — add a per-(faction, era) draft
+ideology profile, or an era-boundary drift rule; the 1856 `eligibleIdeologies` is the seed
+of this for one era.)*
+
+### 20.7 Era transition (federalism → nationalism, ~1800)
+
+Observed live in-thread (`fed` 11, 485, 518):
+
+- **Points reset at the era boundary** (`fed` 518: "Since it's a new era, points reset").
+- **A new card pool + new bill catalog appears** (`fed` 485) — Bureau of Indian Affairs,
+  Smithsonian, the 36°30′ slavery line, Marine Hospital Service, compensated emancipation,
+  colonization/Liberia all appear **only at/after the boundary** (`fed` 475, 485, 560, 702).
+- **Era-locked content** is the *intent* but **not built** (`fed` 521-535) — see BUG-1 in
+  `game-context.md`: events "never deactivate; they only deactivate if your *start date* is
+  past the era", so an 1800-start game wrongly keeps/loses the wrong events.
+
+### 20.8 Federalism SCOTUS case set (fed 36, 80, 145, 206, 377, 484, 716)
+
+The 2.5.3 phase is built (`phaseRunners.ts:3397`) but seeds **no substantive cases**. The
+federalism case set is: **Marbury v. Madison, Ware v. Hylton, Martin v. Hunter's Lessee,
+Calder v. Bull**, plus **Chisholm v. Georgia** (which **must be gated on "11th Amendment not
+ratified"** — BUG-2). Justices **ideology-shift after 10y tenure** and face **compelled
+resignation after ~12y / age 75** (`fed` 56). *(designed, not built — add a federalism
+SCOTUS case data file with per-case gates.)*
+
+---
+
+## 21. Cross-era mechanics revealed by batch 2 (designed, not built)
+
+Mechanics the batch-2 threads show are **generic across eras**, not era-specific. Each is
+designed-not-built and cross-referenced from the per-system sections above.
+
+### 21.1 Generic cross-era war system
+
+> **Designed, not built.** Confirmed across federalism + 1772 solo. The shipped engine has
+> **two** war paths and **neither** matches: the rich Revolutionary War
+> ([§17.4](#174-revolutionary-war)) is **1772-scoped**, and the generic resolver
+> (`runPhase_2_7_2_Military`, `phaseRunners.ts:3593-3627`) is a **flat**
+> `milPower×10 + d100 > enemyPower×10 + 50`, war ends at `warScore ±50`. The forum runs **one
+> generic war system for every war** — War of 1795, Barbary War, War of 1812 (`fed` 9; `1772s`
+> confirms the *same* battle-card breakdown for the Rev War).
+
+**Per half-term: 1–N battles.** Each battle resolves on an **additive Chance-of-Success**
+(`fed` 222, 312, 389, 492, 573; the battle-card itemization is corroborated verbatim by
+`1772s` 22, 48, 60):
+
+```
+ChanceOfSuccess% = base + commanderMil + difficultyMod + milPrepMod − 25
+  base          = 6 (navy) | 8 (army)
+  commanderMil  = the commanding officer's military stat (scaled)
+  difficultyMod  = Easy (+) | Moderate (0) | Hard (−)   // 1772 card: "Moderate battle (−10)"
+  milPrepMod    = from the Military Preparedness meter
+roll d100 ≤ ChanceOfSuccess ⇒ battle won
+```
+
+> **Worked battle-card** (`1772s` 22, the player's itemized card):
+> `Moderate battle (−10) + Planning (6) + Commodore Artemas Ward (30) + Meters (0) +
+> Military Benchmarks (10) = Probability of victory 36% → FIGHT! rolled 94/36 → DEFEAT.`
+> This is the **battle-card additive-odds** mechanic: difficulty + planning + commander +
+> meters + benchmarks, summed to a single % to-hit. (The card's *visual shading* is UX, not
+> a rule — see `game-context.md` A4.)
+
+**End-of-phase war-resolution roll** (`fed` 86): separate from individual battles, the war
+checks for an overall outcome via **`warScore + momentum → X% chance of victory/defeat`**,
+modulated by a **war multiplier (`×2`) that escalates the longer the war runs**. 1772 has the
+sibling loop: **war-weariness roll**, **momentum adjusts the war score**, and a **"check if
+war over" roll** each phase (`1772s` 60).
+
+**Side effects (the confirmation cascade, `fed` 87, 222, 494):** a **defeated commander gains
+`Incompetent` and is fired**; replacements are scarce (the military track hasn't churned
+enough officers), forcing **Senate-confirmation drama** for new generals/admirals. 1772 adds:
+the top officer is fired **if Iron-Fisted**, and losing the majority of a phase's battles
+docks the general (`Incompetent`, `−Military`). Outcome feeds meters (mil prep, dom stab,
+econ, budget, party pref) and **grants/denies territory** (Canada/Quebec on a War-of-1795 win).
+
+*(designed, not built — generalize to a `War` model usable in any era: the additive
+success-chance formula, the warscore/momentum/×2 resolution, and the confirmation-cascade
+side effects. Fold the 1772 Rev-War loop into it as one configured instance.)*
+
+### 21.2 Per-state presidential-election method
+
+> **Designed, not built. Diverges from shipped `calcStateVote`.** Shipped general elections
+> resolve by **popular vote in every state** (`presGeneral`, `phaseRunners.ts:3752`,
+> `calcStateVote` [§15.1](#151-calcstatevote--the-core-resolver-phaserunnersts3685)). The
+> federalism design has a **per-state electoral-college selection mode** (`fed` 194, 220, 255,
+> 258, 306-307, 373).
+
+Each state chooses presidential electors by one of two methods:
+
+| Method | How the state's EV resolve | Who can flip it |
+|---|---|---|
+| **Popular vote** | as today: `calcStateVote('presGeneral')`, winner-take-all the EV | — |
+| **Legislature-chosen** | the state's **legislature majority** (its seated senators/reps by party) awards the EV; the popular tally is **ignored** | per-state event, or a national amendment |
+
+- **States that start legislature-chosen (1796 snapshot, `fed` 220, 255, 258):** **CT, GA,
+  MA, NJ, NY, RI, SC** chose electors by legislature, not popular vote — **decisive in the
+  election** that year.
+- **Per-state flip by era event:** e.g. "Popular Vote in KY and NC" (`fed` 194) switches
+  *those two states* to popular vote.
+- **National flip by amendment:** the **"National Suffrage for White Male Property Owners"**
+  amendment (`fed` 306-307, 373) sets **"Popular vote is now active in all states"** at once —
+  an amendment effect ([§21.3](#213-amendments-as-durable-separately-ratified-state)).
+
+*(designed, not built — add `State.electionMethod: 'popular' | 'legislature'`; resolve
+legislature-method EV from the state's seated-legislature party majority in
+`runPhase_2_9_4_PresidentialGeneral`; flip per-state by event and globally by amendment.
+Distinct from the [§11.4](#114-state-level-policy-flags-designed-not-built) state-policy
+flags — this is the EC selection mode.)*
+
+### 21.3 Amendments as durable, separately-ratified state
+
+> **Designed, not built. Confirmed across federalism + gilded.** `constitutionalConvention.ts`
+> covers only the **initial** Constitution's binding articles ([§17.3](#173-constitutional-convention-constitutionalconventionts));
+> post-founding amendments are unmodeled. (Sharpens batch-1 [§14.2](#142-forum-design-layer-constitutional-amendments-durable-state-designed-not-built).)
+
+**Ratification flow** (`fed` 38, 76, 201, 214, 297, 306, 373):
+
+1. An amendment **passes Congress** (as a bill of an amendment type).
+2. It then goes **to the states at the next governance phase** for ratification.
+3. Ratification threshold is usually **unanimous / near-unanimous**; a **"2/3 of states to
+   ratify" amendment** itself raises the bar; **"Christianity as Official Religion" was
+   rejected 9-7** (`fed` 214) — so amendments **can fail** ratification.
+4. On ratification, the amendment becomes a **durable rule-changing flag** that persists
+   until repealed by another amendment.
+
+**Observed durable effects:**
+
+| Amendment | Durable effect |
+|---|---|
+| 11th | (gates `Chisholm v. Georgia` — BUG-2) |
+| 12th | enables the **6-year presidential-loss retirement malus** ([§21.x via gap #37]); pre-12th, losers don't suffer it (`fed` 111, 331) |
+| Six-Year-Term Presidency | presidential term **4 → 6 years** (later **repealed**, `fed` 176) |
+| "National Suffrage" | **popular vote active in all states** ([§21.2](#212-per-state-presidential-election-method)) |
+| VP-vacancy fill | president may **nominate a VP** when the slot is empty (`fed`/gilded 276-277) |
+
+> **No VP-replacement amendment exists yet in either timeline** (`fed` 468, 746): a **dead VP
+> leaves the office vacant** until the VP-vacancy-fill amendment is ratified. Engine has no
+> VP-succession path regardless.
+
+*(designed, not built — add `game.amendments: { id; passedYear; data? }[]`; a cross-state
+ratification vote at the gov phase; an amendment bill type; and effect-binding checked at the
+relevant phase boundaries.)*
+
+### 21.4 Firing-precedent gate on cabinet changes
+
+> **Designed, not built (federalism, `fed` 41, 119, 131, 177, 354, 392, 454, 547).** The
+> shipped engine fills empty cabinet seats ([§9.1](#91-231-cabinet--runphase_2_3_1_cabinet-phaserunnersts2158))
+> and **wipes the whole cabinet on a presidential change** (`runPhase_2_9_4_PresidentialGeneral`
+> "resets the entire cabinet to empty", [§15.2](#152-the-election-phases)). The federalism
+> design instead makes cabinets **sticky hold-overs** until a precedent is set.
+
+- A president **cannot freely fire/replace** cabinet members until a **firing precedent is
+  set** — a **multi-step process** tied to **card configuration** + the exec action **"Set
+  Precedence for Firing Cabinet Members."**
+- Until then, cabinets **hold over across administrations, even cross-party** (Jefferson keeps
+  Hamilton; Howard keeps Blue ministers). Replacement happens **only** via
+  **death / retirement / resignation** ("you can't fire me, I quit", `fed` 177) or
+  **wrong-party auto-rotation of the PM General** (`fed` 119).
+- **The US Bank President can be removed only by a same-faction president** (`fed` 454, 547).
+
+This **contradicts the shipped cabinet wipe on election** — once firing-precedent is
+modeled, the wipe must be replaced with hold-over + precedent-gated replacement. *(designed,
+not built — add `game.firingPrecedentSet: boolean`; gate cabinet replacement on it; replace
+the on-election cabinet wipe with hold-over; same-faction guard on Bank-President removal.)*
+
+### 21.5 Bill-driven statehood + auto-generated officials
+
+> **Designed, not built (federalism, `fed` 81, 158, 168, 302, 379, 386, 560, 571, 718).**
+> Shipped `admitState` ([§17.6](#176-territories-territoriests)) is invoked only from 1772
+> era-event `postEffects`; `expansionStates.ts` is a **static registry** with no bill-driven
+> path. (Extends gilded #33 with the bill-driven route.)
+
+- **Statehood bills** admit land: **VT, KY, OH, TN, AL** as states; **MS, IN, MI, IL, LA** as
+  **Territories** first (organized vs unorganized status precedes statehood).
+- **Annexation by era event / war:** **Louisiana Purchase** (era event); **rights to
+  Canada/Quebec** on **winning the War of 1795**.
+- **Auto-generate officials for sparse new states** (`fed` 168, 386, 571: "pols had to be
+  generated"): when a freshly admitted state has too few politicians to fill its
+  Gov/Senate/House seats, the engine must **generate filler officials**.
+
+*(designed, not built — wire statehood/territory bills → `admitState`; add event/war-driven
+annexation; **auto-generate politicians** for under-populated new states.)*
+
+### 21.6 Bill typing + budget-gated spending cap
+
+> **Designed, not built. Confirmed across federalism + 1772 solo.** `Legislation`
+> ([§12](#12-legislation-26x)) carries `committee/effects/status` but **no `type` tag** (grep:
+> none) and there is **no budget-gated bill cap**.
+
+- **Bills are typed** — **Foundational / Spending / Crisis** (`1772s` B4; `fed` 159, 561,
+  566, 703):
+  - **Foundational** — Create Dept. of State/War/Treasury, Bank of N. America / US: special
+    handling (`1772s` 18 notes a half-point penalty the player chose to drop).
+  - **Spending** — capped by a **per-turn spending budget** (below).
+  - **Crisis** — **bypasses the spending cap** entirely ("crisis can pass with spending
+    freely", `fed` 159; see [§12.7](#127-forum-design-layer-crisis-bill-tag-designed-not-built)).
+- **Budget-gated spending cap** (`1772s` 46, 57; `fed` 159, 561, 566, 703): a non-crisis
+  spending bill can **pass the floor and still be "BLOCKED DUE TO BUDGET."** At
+  **Overspending only 3 spending bills pass** (`1772s` 46), and **ordering matters** when
+  over-subscribed. The cap reads off the **numeric national budget/surplus**
+  ([§13.3.3](#1333-national-surplus-integer)), *not* the ordinal `revenue` meter (`fed` 703:
+  an economy gain "didn't go through because budget too in the hole").
+- **"Free pick-up" legislation by a skilled Treasurer** (`1772s` 57; `fed` 38, 57): a
+  high-skill Treasury Sec can propose **one free extra bill** — **double points to proposer +
+  Treasurer; −50 to the Treasurer if not picked up** (the broader "cabinet suggests / free
+  pickup" seeding).
+
+*(designed, not built — add `Bill.type: 'foundational' | 'spending' | 'crisis' | …`; a
+numeric **per-turn spending budget** that gates non-crisis spending bills at the floor; the
+crisis-bypass; and a cabinet free-proposal slot.)*
+
+### 21.7 Era-event scheduling model vs. `coreSpine`
+
+> **Designed, not built — and the single biggest 1772 mechanical divergence** (`1772s` B1,
+> posts 9, 10, 18, 37). The shipped 1772 engine and the forum **schedule era events
+> differently and therefore produce different event sequences.**
+
+| | Shipped engine | Forum design |
+|---|---|---|
+| Model | **Precondition graph**: `GraphNode`s with a `Predicate` gate; `coreSpine` nodes **fire regardless of the probabilistic roll**; non-core nodes fire on `fireChance 0.85` with `historyPressure 0.8` | **Historical-year sort**: all events sorted by their historical year, then **rolled in order** |
+| 1772 first half-term | spine openers fire by precondition | the **5 historical 1772 events fire at 100%**, ignoring the era cap |
+| Other half-terms | one event/turn via `selectEraGraphNode` | **roll each event (`roll ≤ %-to-fire`)** in historical order, **up to a per-era cap** |
+| Underfill | n/a — graph just advances | **spill into another GenEvo (anytime-events) round** to hit a required count (`1772s` 18: "Ten Events must happen… there's a new round of GenEvos") |
+| Code | `eraEvents1772.ts:23` (`coreSpine` "fire regardless of the probabilistic roll"); `selectEraGraphNode` (`eraGraph.ts:107`) | — |
+
+The two models are **not equivalent**: the graph guarantees a *causal* spine (Gaspee →
+Committees → Tea Act …) while the forum guarantees a *historical-cadence* spine with
+probabilistic minor events and a hard per-half-term cap + spill. Related GM rulings:
+**"roll for *all* events; any that hit & are eligible occur"** with **no fixed draw count**
+(`@MrPotatoTed`, `fed` 16), a **per-era cap (~10)** house variant (`fed` 696-699), and
+**events dated before game start are treated as already-happened** (`fed` 526-527).
+
+*(designed, not built — decision for the human: adopt the historical-year-sorted,
+per-half-term-capped, roll-≤-%-to-fire-with-spill model, or keep the `coreSpine` precondition
+graph. They are a genuine fork, not additive.)*
+
+### 21.8 Named-ordinal meter model + ±3 swing cap + war-score meter
+
+> **Designed, not built (`1772s` B8, posts 9, 18, 37, 57-59).** Shipped `NationalMeters`
+> ([§11.1](#111-251-lingering-meters--runphase_2_5_1_lingering-phaserunnersts3260)) are **7
+> numeric meters** (`revenue, economic, military, domestic, honest, quality, planet`,
+> `types.ts:1399`). The forum tracks **named ordinal meters with labeled steps**.
+
+- **Named ordinal labels** (`1772s` B8): Revenue/Budget (…**Overspending / Very
+  Overspending**), Economic Stability (**Sound / Stagnation / Panic**), Domestic Stability
+  (…**Mass Protests**), Military Preparedness (…**Moderately Unprepared**), **UK Relations**
+  (…**Enemies**), and a **War Progress / War Score** meter.
+- **±3 swing cap per phase** (GM ruling, `1772s` 58): **any single meter may move at most ±3
+  in one phase** — a clamp the numeric model does not enforce.
+- **War-score meter** (`1772s` 60): the war's progress is tracked as a named ordinal meter,
+  feeding the war-resolution roll ([§21.1](#211-generic-cross-era-war-system)) — distinct from
+  the shipped `War.warScore` integer.
+- **Per-power relations as named ordinals** ([§13.3.1](#1331-per-power-relations-meters--an-era-dependent-power-roster)):
+  UK Relations specifically confirmed here.
+
+*(designed, not built — decision for the human: keep 7 numeric meters, or move to named
+ordinal meters with labeled steps + a ±3-per-phase swing cap + a first-class war-score meter.
+Balance proposal `1772s` C1 — enthusiasm as a graduated multiplier with a 3rd-party-at-Neutral
+rule rather than a flat election bonus — is a related human call, logged in `game-context.md`
+#18.)*
