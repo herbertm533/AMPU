@@ -76,8 +76,29 @@
 >   theme. Mostly **corroborates + sharpens** the gap log; the truly NEW surface is the
 >   CPU-AI cluster. Also reveals that **contingent-election rules don't exist** in the rules
 >   doc (GM invented 5 rulesets mid-thread, DH-pointer in [§24.2](#242-62-contingent-house-election--tied-chamber-inverse-control)).
+> - **Batch 6** — `c50d9da7` (1172-post "Era of Populism Playtest", 2012→mid-2017 multiplayer,
+>   `pop`): the **first dedicated fresh-boot of a modern-era scenario** in any ingested thread.
+>   `modern` (batch 3) entered the modern era from a 1948 campaign that had played 60 in-game
+>   years forward; `pop` records how a **fresh 2012 scenario BOOTS from cold**. Adds a new
+>   **[§26 Scenario-boot model & modern endgame](#26-scenario-boot-model--modern-endgame-designed-not-built)**
+>   (7 subsections: the cross-cutting **mid-government boot shape** at 1788/1856/2012; the
+>   Era-of-Populism scenario specifics with **10 pre-built faction decks** instantiating
+>   "Trumpism" / "Bernie-populism" as **data, not code**; **era-coded double-points scoring**
+>   on the era's defining issues; the **APOCALYPSE Planet-Health 10-year game-end clock** — a
+>   **NEW meter-driven endgame model** distinct from the event-driven `triggersGameEnd`; the
+>   **era-event-creates-office** generalization of the institutional-layer (a bill installs a
+>   new cabinet seat); refined **modern SCOTUS confirmation rules** (auto-AYE within 1 ideology
+>   step; Manipulative-compelled retirement); and **12th-Amendment-gated VP actions**
+>   (amendments toggle capabilities, not just durable state)). Sharpens §22 modern's chair
+>   mechanics + filibuster + bill-resolution; §25.8/§25.9 with the conditional-vote-rules
+>   CPU-handler insight; §22.10's 53-state result reframed as **state count = year × era**
+>   (2012 boot = 50 + DC, **not** 53 — the 53-state roster is the product of `modern`'s
+>   60-yr annexation chain). Also lifts the modern era's corroboration to **both 60-year
+>   continuation AND fresh scenario boot**, anchoring the build constraint:
+>   **era identity = data configuration, NOT code paths.** Cite `pop#POST N`. New design
+>   holes DH-24..DH-28 logged to `game-context.md`.
 >
-> **Alt-history note.** All four forum threads (and especially `modern`) play a
+> **Alt-history note.** All five forum threads (and especially `modern`/`pop`) play a
 > **divergent alternate timeline**, not real history: fictional **era names** (the
 > `modern` thread plays the "Era of Terror" → "Era of Populism", not "the 2000s"), a
 > game clock that **runs ~10 years behind real-world technology**, **53 states**
@@ -178,6 +199,14 @@
     - [25.13 Faction-rename rule — Whig → "Conservative Party"](#2513-faction-rename-rule--whig-auto-rename-to-conservative-party-deterministic)
     - [25.14 Long-term Justice ideology drift](#2514-long-term-justice-ideology-drift-the-canonical-drift-rule)
     - [25.15 Critical missing CPU logic (architectural gaps)](#2515-critical-missing-cpu-logic-architectural-gaps)
+26. [Scenario-boot model & modern endgame (designed, not built)](#26-scenario-boot-model--modern-endgame-designed-not-built)
+    - [26.1 The mid-government boot shape (general)](#261-the-mid-government-boot-shape-general)
+    - [26.2 Era-of-Populism scenario boot specifics](#262-era-of-populism-scenario-boot-specifics)
+    - [26.3 Era-coded scoring multipliers (double-points issues)](#263-era-coded-scoring-multipliers-double-points-issues)
+    - [26.4 APOCALYPSE Planet-Health endgame — the 10-year clock (NEW endgame model)](#264-apocalypse-planet-health-endgame--the-10-year-clock-new-endgame-model)
+    - [26.5 Era-event-creates-office (bill installs a new cabinet seat)](#265-era-event-creates-office-bill-installs-a-new-cabinet-seat)
+    - [26.6 Modern SCOTUS confirmation rules — refinements](#266-modern-scotus-confirmation-rules--refinements)
+    - [26.7 12th-Amendment-gated VP actions (amendments toggle capabilities)](#267-12th-amendment-gated-vp-actions-amendments-toggle-capabilities)
 
 ---
 
