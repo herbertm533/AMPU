@@ -49,7 +49,103 @@ architecture, this doc says so and sketches the change.
 > notably the **CPU convention AI is GM-confirmed unstable (DH-8)**, which any
 > conventions build must own.
 >
-> **Batch 5** (this revision) absorbs `e1776bbd` — a **7540-post, all-CPU 1841→1924
+> **Batch 6** (this revision) absorbs `c50d9da7` — a **1172-post, multiplayer
+> "Era of Populism Playtest"** that is the **first dedicated fresh-boot of a
+> modern-era scenario** in any ingested thread (vs. batch 3's `modern` 60-yr
+> continuation from a 1948 campaign). The thread's unique value is
+> **scenario-boot model + a NEW meter-driven endgame**. Five structural deltas:
+> 1. **APOCALYPSE meter-driven endgame is a NEW engine surface (divergence #14).**
+>    Verified vs shipped: the only endgame model in the engine today is
+>    **event-driven** — `EraEvent.triggersGameEnd` (`types.ts:1476`) is consumed
+>    at `phaseRunners.ts:2871` which sets `game.gameEnded` (`types.ts:1635`). There
+>    is **no meter-watcher, no countdown clock, no `endgameClocks` array** anywhere
+>    in the engine. The Populism playtest documents (`pop` POST 542, 548) a
+>    NEW endgame condition: Planet's Health crashing into APOCALYPSE band starts a
+>    **10-game-year (5 half-term) countdown** to mandatory game-end; recovery
+>    above threshold clears it. **Sizing M.** Needs: new `GameState.endgameClocks:
+>    { meter; threshold; remainingYears; startedYear }[]` field +
+>    `repair()` backfill `[]` + a per-meter band-monitor in the Lingering phase
+>    (`runPhase_2_5_1`) that arms/disarms/decrements clocks + a new termination path
+>    in `runCurrentPhase` (engine.ts) that fires when `remainingYears` hits 0 +
+>    HUD warning in `GameOverScreen.tsx`. **Phase placement: Phase 1.** Rationale:
+>    `pop` documents Planet's Health as the canonical instance, but row #88 says
+>    "analogous bottom-tier endgame clocks may exist for other meters/eras." The
+>    `planet` meter ships today (`types.ts:1406`, all eras tick it) and the model
+>    is **meter-agnostic** — once the clock infrastructure exists, the Populism
+>    instance is one configured row in a per-era table. The meter-clock and the
+>    `triggersGameEnd` event-path share a sink (`game.gameEnded`); both must close
+>    cleanly. **Pulls forward** with the meter-model generalization (Phase-1 #6).
+> 2. **`cabinetSeatsForYear` becomes the BOOT SEED only (divergence #15).** Verified:
+>    `cabinetSeatsForYear(year)` at `types.ts:1196` is a pure derived function with
+>    NO mutable state; the cabinet seat list is **recomputed each turn**
+>    (`phaseRunners.ts:2162`). The designed model (§24.6 + §26.5) makes the seat
+>    list a **mutable persisted array** driven by passed bills + era events. A
+>    Climate-Crisis-bill-passes → cabinet gains a Sec of Environment & Climate seat
+>    next administration. **Refactor** `cabinetSeatsForYear` to **seed**
+>    `GameState.cabinetSeats: SeatSpec[]` at boot only; runners read the mutable
+>    list. Folds into **E16 cabinet retention** (already on the roadmap) — sized
+>    M-ish; the cabinet pipeline is touched anyway, this is one more refactor of
+>    the same code area. Bill content needs `Legislation.createsCabinetSeat?:
+>    SeatSpec`. Pairs with #66 (Progressive institutional layer).
+> 3. **Amendments toggle CAPABILITIES, not just rules (divergence #16).** Verified:
+>    no `requires:` predicate, no `ActionRegistry`, no `AmendmentPredicate` exists
+>    in the engine today (a single `isAvailable` match is in `revolutionaryWar.ts`,
+>    unrelated). The designed model (§26.7): each action-library entry carries a
+>    `requires: AmendmentPredicate?` field; the library is filtered against
+>    `game.amendments.passed` at evaluation. The canonical instance: the general-
+>    election action "Send VP to Shore Up Support" requires the 12th Amendment.
+>    **K2 design must account for this from day one** — the `GameAction<Ctx>`
+>    shape gains a `requires?: AmendmentPredicate` field, and the filter step in
+>    the action picker reads `game.amendments`. **Cost-effective if folded into
+>    K2** (one extra field); **expensive if retrofit** (every library has to be
+>    re-traversed). **K2's spec is updated below** to include this.
+> 4. **State roster keyed to BOOT YEAR, not era enum (divergence #17).** Verified
+>    against the data layer: `states1772.ts` / `states1856.ts` are the only
+>    rosters; `expansionStates.ts` is the post-founding admittable pool. **There
+>    is no notion of "multiple rosters per era enum."** The 2012 fresh-modern
+>    boot is **50 + DC** (`pop` POST 264) while the 53-state alt roster (`modern`
+>    §22.10, Wyoming Rule) is the *product* of 60 yrs of annexation events in the
+>    `modern` continuation. **Both rosters need to exist for the same `modern`
+>    enum.** This refines K4 (era-content registry) + the modern scenario items:
+>    the registry must key on `{era, startYear}` (or `scenarioId`) for the
+>    initial state roster, and the annexation chain must mutate the snapshot's
+>    state list at fire time. Folds into K4 + E28 (53-state roster) +
+>    E30 (modern scenario boot). Sized as a design refinement, not a new keystone.
+> 5. **The scenario-boot schema (§26.1) is the cross-cutting K4 build constraint.**
+>    Three documented mid-government boots — 1788 (designed), 1856 (shipped),
+>    2012 (designed in `pop`) — share the SAME shape: a pre-built sheet with
+>    pre-named faction roster + per-faction archetype politicians + era-tuned
+>    ideology/interest/lobby decks + sitting government keyed to start year +
+>    state roster keyed to boot year + EXPLICITLY EMPTY at boot (no faction
+>    leaders, no career-track pols, no inherited PV/legacy/dynasty). **Build the
+>    `BootSheet` schema ONCE in K4**, instantiate per era. Era identity is
+>    **data configuration**, not a code path. **K4's spec is updated below** to
+>    name this explicitly. Also: a **Senate-class verifier (DH-24)** and a
+>    **`TRAIT_CONFLICTS` validator (DH-27)** run at scenario-boot time.
+>
+> **DH-24..DH-28 classification.** **DH-25 (career-track bootstrap unresolved) is
+> the biggest — 3-year-stale design discussion** that **blocks any modern scenario
+> shipping**. Author the rule before `scenario1948`/`scenario2012` ships (parking
+> lot). DH-24 (Senate-class boot data) is XS — one verifier helper. DH-26 (3rd-
+> party VP "same traits") is a balance dial folded into the 3rd-party trigger
+> (E26). DH-27 (`TRAIT_CONFLICTS` not enforced at boot) is XS — one validator at
+> dataset/boot. DH-28 (incomplete meter-impact tag coverage) is a CI/dataset-time
+> validator — folds into the dataset pipeline.
+>
+> **CPU handler 9b legislation refinement: conditional-vote-rules primitive
+> (`pop` POST 1111).** The §25.9 Iron-Fist split now subsumes the conditional-
+> vote-rule infrastructure — Iron-Fist controllers publish **declarative
+> predicate → {AYE/NAY}** policies (e.g. "Sen Maj Leader NAYs any nominee with
+> Admin<3 unless faction holds Integrity"). Promote `compelledVoteRule?:
+> Predicate → Vote` to a **first-class CPU-handler primitive**: store it on
+> `Faction.factionLeader` (or its rename target), wire CPU handler #2 (legislation
+> NAY/AYE/NAY) to consult it BEFORE the §25.6 heuristic. Subsumes the per-vote
+> Iron-Fist effect AND the "auto-AYE for own picks" cabinet rule (§25.5.2) under
+> ONE primitive — see §6.6.1's handler-order table updated below.
+>
+> [§9](#9-build-sequencing-advice) is re-sequenced for these deltas.
+>
+> **Batch 5** absorbs `e1776bbd` — a **7540-post, all-CPU 1841→1924
 > "Drums of War" playtest**. Because the run was all-CPU, it is the **first
 > explicit forum record of CPU heuristics, thresholds, tie-breaks, and formulas**.
 > Its unique value is **agent-decision specification**, not new mechanics. Three
@@ -78,7 +174,7 @@ architecture, this doc says so and sketches the change.
 >    straight to `snap.game.cabinet[seat] = pick.id` + `addLog("confirmed as
 >    ${seat}")` (`:2191–:2198`). **The bug doesn't exist today because the
 >    *system* doesn't exist today.** This makes the fix smaller than expected —
->    XS-S, see §9.3 #14 — but it also means the cabinet-confirmation epic is the
+>    XS-S — but it also means the cabinet-confirmation epic is the
 >    venue where the lost-rule fix lands (a default-AYE baseline; an Iron-Fist
 >    Maj-Leader auto-AYE-own-picks rule; the lobby-maximizer Admin-weighting),
 >    not a quick-win against existing code.
@@ -274,6 +370,23 @@ the rest is **engine code over read-only state**.
 | **High-Tech industry via era event (§3.4 / #81)** | `State.industries` (exists) + a new era-event template | era-event content row + a "Improve High Tech" gov action | **Content + 1 action row.** Pure content; rides the era-event registry. |
 | **5%/half-term retire-death rate (#85)** | `MORTALITY_RULES` per-era table (`types.ts:485`) | refine the rule's percentage for senators + cabinet | **Refines existing rules const.** A balance dial — not a shape change. |
 | **Faction-rename "Conservative Party" 3-condition trigger (§25.13 / #40)** | engine — a `renameTriggers` registry that watches `(noRepublicanParty, redLeaderProtectionist, blueWon3InARow)` | NEW `src/data/factionRenameTriggers.ts` (predicate → name-generator pairs) + a per-era authored names table | **Data-driven content registry pattern** (§6.7.1). Reads the existing `Faction`/`Party` state + the election history. **Per-era authored names pool** replaces the GM-admitted "kinda stupid/silly" default. |
+
+**Batch 6 (`pop`, 2012 fresh-modern boot):** the boot model is the headline.
+Most of the rows below are **additive optional fields** on `GameState`; the
+APOCALYPSE endgame and the dynamic cabinet seat list are the structurally-new
+shapes.
+
+| Delta (forum) | Lands on | Field (designed) | Widening? · Notes / migration |
+|---|---|---|---|
+| **APOCALYPSE meter-driven endgame clock** (#88 / divergence #14, NEW endgame model) | `GameState` (NEW field) | `endgameClocks?: { meter: MeterKey; threshold: number; remainingYears: number; startedYear: number }[]` | **STRUCTURAL net-new — the engine has only event-driven endgame today.** Verified: `EraEvent.triggersGameEnd` (`types.ts:1476`) is consumed at `phaseRunners.ts:2871` setting `game.gameEnded`. No meter-watcher, no clock, no countdown anywhere. Sink (`game.gameEnded`) is shared — both paths must close cleanly. Per-meter band-monitor in Lingering (2.5.1) arms/disarms/decrements; engine termination path fires when `remainingYears` hits 0. `repair()` backfills `[]`. **Phase placement: Phase 1** (meter is `planet`, ships today; model is meter-agnostic; one configured row per era). **Size M.** |
+| **Dynamic cabinet seat list — `cabinetSeatsForYear` becomes BOOT SEED only** (#89 / divergence #15) | `GameState` + `Legislation` | `cabinetSeats?: SeatSpec[]` (mutable, persisted) + `Legislation.createsCabinetSeat?: SeatSpec` | **STRUCTURAL refactor — verified `cabinetSeatsForYear` (`types.ts:1196`) is pure derived, NO mutable state today.** `phaseRunners.ts:2162` reads it each turn. Refactor: shipped function becomes the boot-seed; runners read `game.cabinetSeats`; bill-sign handler appends `createsCabinetSeat` payload. Folds into **E16 cabinet retention** (same code area; M-ish marginal cost). Pairs with #66 Progressive institutional layer. |
+| **Amendments toggle CAPABILITIES** (#91 / divergence #16) | `GameAction<Ctx>` (the K2 keystone shape itself) | `requires?: AmendmentPredicate` field on every action-library entry; library filter consults `game.amendments.passed` at evaluation | **STRUCTURAL — folds into K2 design.** Verified: no `ActionRegistry`, no `GameAction`, no `AmendmentPredicate`, no `requires:` in the engine today. **K2 must include this from day one** — one extra field on the registry shape, one filter step in the picker. Cheap if folded in; expensive if retrofit across 6 libraries. The canonical instance ("Send VP to Shore Up Support" requires 12th Amendment) ships with the general-election library. |
+| **Scenario-boot model + `BootSheet` schema** (#86, divergence #17 keys it) | NEW data layer + K4 registry | `BootSheet<{era, startYear, factions, sittingGovernment, stateRoster, …}>`; per-`{era, startYear}` indexed, NOT per-era alone | **CROSS-CUTTING K4 BUILD CONSTRAINT.** Three documented mid-government boots (1788 designed / 1856 shipped / 2012 designed) share ONE shape: pre-built faction roster (5 Blue + 5 Red), per-faction archetype politicians + era-tuned decks, sitting government pre-loaded, EXPLICITLY EMPTY at boot (no faction leaders, no career-track pols, no inherited PV/legacy/Kingmaker pairs). **Build the schema ONCE in K4**, instantiate per era. Era identity is **data configuration**, not a code path. **K4's spec is updated below** to name this explicitly. |
+| **State roster keyed to BOOT YEAR, not era enum** (divergence #17) | K4 registry + `expansionStates.ts` | `{era, startYear} → State[]` keyed registry; annexation chain mutates `snap.states` at fire time | **Refines K4.** Verified: `states1772.ts`/`states1856.ts` are the only rosters; `expansionStates.ts` is the admittable pool. The 2012 fresh-modern boot needs **50 + DC**; the 53-state alt roster (Wyoming Rule) is the product of 60 yrs of `modern` annexation chain — **BOTH must exist for `modern` era enum.** Folds into K4 + E28 (53-state roster) + E30 (modern scenario boot). |
+| **Era-coded double-points issues** (#87) | NEW per-era table | `era.doubleScoringIssues?: IssueTag[]`; doubles ±50/100/150 magnitudes during the era's half-terms | **WIDENING (content + 1 multiplier hook).** A `{era → IssueTag[]}` tunable lookup applied at the per-card-hit stage of bill scoring (§12.8). Per-era authored. Climate Crisis + Immigration are the Populism era's documented pair. Couples to **DH-28 tag-completeness validator** at dataset build. |
+| **Era-coded procedural pol generation start year** (#90, sharpens scaling-wall a) | NEW per-era config + the procedural generator (Phase-1 #8) | `era.proceduralPolGen?: { startYear: number; perStatePerCycle: number }`; dataset-exhaustion fallback is the OTHER trigger | **Sharpens scaling wall (a).** Rule 3.0.18 says the **2020 draft** is when Populism-era CPU-generated rookies start appearing (1 new pol per state per cycle). The generator (Phase-1 #8) needs BOTH gates: per-era year-trigger AND dataset-exhaustion fallback (whichever fires first). Same generator code path. |
+| **Conditional-vote-rules primitive** (`pop` POST 1111, sharpens §25.9) | `Faction` or `Politician.factionLeader` | `factionLeader.compelledVoteRule?: Predicate → Vote`; promotes a `Predicate` extension | **CPU-handler primitive — folds into the Iron-Fist split (E17) + CPU handler #2.** Iron-Fist controllers publish **declarative predicate → {AYE/NAY}** policies (e.g. "NAY on any nominee with Admin<3"). Subsumes BOTH per-vote Iron-Fist compulsion AND the §25.5.2 auto-AYE-own-picks cabinet rule under one primitive. Handler #2 (legislation NAY/AYE/NAY) consults this BEFORE the §25.6 heuristic. Same primitive used by handler #4 (cabinet) when a controller exists. |
+| **Boot-data quality validators (DH-24, DH-27)** | NEW scenario-boot validators | `validateSenateClasses(snap)` + `validateTraitConflicts(snap, dataset)` | **XS each, run at scenario-boot.** DH-24: a fresh modern boot's seed data can have stale Senate-class assignments (Ron Johnson up in 2010 not 2012 in the `pop` boot). DH-27: `TRAIT_CONFLICTS` (`types.ts:658`) is run only on trait-ADD events, not at dataset/boot import — boot data can ship a pol with both `Integrity` AND `Controversial`. Both validators run at the boot pipeline + at `loadStandardDraftClasses` (`standardDraftClasses.ts:13`). |
 
 **Two scaling walls (architecturally important; NOT era-gated — call these out):**
 
@@ -851,9 +964,9 @@ the scaffold introduces; `(K2)` = consumes an `ActionRegistry`):
 | Order | Handler | Spec | Reads | Writes | Notes |
 |---|---|---|---|---|---|
 | 1 | **Candidate selection (75/25 + minor + open-seat)** | §25.1 / #72 | `Politician.{currentOffice,command,traits,pvCache}`, `Faction.leadershipPolId`, `state.preferredIdeologies` | candidate id | Cheapest win (table lookup + 1 roll); blocks no other handler. |
-| 2 | **Legislation NAY/AYE/NAY** | §25.6 / #74 | `Bill.cards`, `Faction.cards`, opposition president's meters | vote | Replaces the floor-vote stub; pairs with `Bill.type` (#42). |
+| 2 | **Legislation NAY/AYE/NAY + conditional-vote-rules consumer** | §25.6 / #74 + `pop` POST 1111 | `Bill.cards`, `Faction.cards`, opposition president's meters, **`Faction.factionLeader.compelledVoteRule?: Predicate → Vote`** (consults BEFORE the §25.6 heuristic) | vote | Replaces the floor-vote stub; pairs with `Bill.type` (#42). **Batch 6: handler consults the conditional-vote-rules primitive first** — if a faction-leader has published a declarative `Predicate → {AYE/NAY}` policy (e.g. "NAY any nominee with Admin<3"), the predicate decides the vote; the §25.6 heuristic is the fallback. Same primitive used by handler #4 below (cabinet). Predicate extension (the existing `Predicate` tree at `types.ts:1487`) is the shape. |
 | 3 | **Leadership IRV bloc-vote + 3-ballot collective endorse** | §25.3 / #70 | `Politician.{ideology,pvCache,skills.legislative}` per round | per-round vote | The most-corroborated CPU heuristic. Deterministic continuous elimination + first-round random scramble. |
-| 4 | **Cabinet selection + confirmation (default-AYE baseline)** | §25.5 / DH-23 / #73 | `Politician.{admin,governing,expertise,traits}`, `Faction.cards` (lobbies), Sen Maj Leader Iron-Fist + Pres Pliable | seat + vote | **Replaces the one-step pick at `phaseRunners.ts:2158-2223` with a 2-step pick→Senate-vote.** Default-AYE; Iron-Fist Maj-Leader auto-AYE-own-picks; lobby-maximizer with Admin weighting. |
+| 4 | **Cabinet selection + confirmation (default-AYE baseline + conditional-vote-rules + SCOTUS-style within-1-step auto-AYE)** | §25.5 / DH-23 / #73 + `pop` §26.6.1 | `Politician.{admin,governing,expertise,traits}`, `Faction.cards` (lobbies), Sen Maj Leader Iron-Fist + Pres Pliable, `Faction.factionLeader.compelledVoteRule?`, **per-faction ideology-center distance from nominee** (`pop` §26.6.1: within-1-step auto-AYE rule for SCOTUS confirmation; applies the same principle to cabinet confirmation as a declarative pattern) | seat + vote | **Replaces the one-step pick at `phaseRunners.ts:2158-2223` with a 2-step pick→Senate-vote.** Default-AYE; Iron-Fist Maj-Leader auto-AYE-own-picks (via the conditional-vote-rules primitive — same shape as handler #2); lobby-maximizer with Admin weighting. **Batch 6: SCOTUS uses a declarative within-1-step auto-AYE rule (§26.6.1) that bypasses the 50/50 cabinet trap** — fold this into the same handler for SCOTUS confirmations + the Manipulative-Pres-compel-retire (gated on `!Integrity OR Jud<5`) as separate trait-powers, NOT under the Iron-Fist overload. |
 | 5 | **Convention CPU (per-ballot menu + compromise + dark horse)** (K2) | §25.4 / #71 | convention runtime state + the convention `ActionRegistry` | inter-ballot action + ballot vote | Highest-complexity handler. Owns DH-8 (the GM-confirmed unstable surface). **Includes the 11-ballot deadlock fix** (auto-drop-out after 2-3 ballots of 0 Momentum, currently NOT implemented — DH-17). |
 | 6 | **Conversion poach (Pliable + adjacency gating)** (*) | §25.8 / #76 | actor's leader traits + target's `Pliable`/ideology gap | flip outcome | Add a multi-faction-collision tie-break (DH-bug). The rate table is per-leader. |
 | 7 | **A/B/C event vote + president ideology force + meter-guarding** (*) | §25.7 / DH-21 | event option's declared `meterEffects` + cabinet ideology + `GameState.meters` | option pick | **First handler to use the meter-impact aggregator** — it down-weights triple-stacks driving an already-bad meter into crisis. |
@@ -966,6 +1079,20 @@ leadership-vote enforcer consumes it). The scandal-smoother filters the
 era-event walker's eligibility set against `GameState.recentScandalIds`. Both
 fields are `repair()`-backfilled `[]` and stamped with `firedYear`/`expiresOnYear`
 so the data is self-cleaning.
+
+**Batch-6 addition — the conditional-vote-rules primitive (`pop` POST 1111).**
+Iron-Fist (and Manipulative) controllers can publish **declarative `Predicate
+→ {AYE/NAY}` policies** stored at `Faction.factionLeader.compelledVoteRule?`.
+Handlers **#2 (legislation)** and **#4 (cabinet)** consult this primitive
+BEFORE running their default heuristic — the conditional vote-rule acts as
+an authoritative override. Subsumes per-vote Iron-Fist compulsion + the
+§25.5.2 "auto-AYE for own picks" cabinet rule under one shape. The predicate
+is the existing `Predicate` tree (`types.ts:1487`); `evalPredicate` already
+walks it. The same primitive could be promoted upward (e.g. faction-leaders
+publishing endorsement policies for primaries) — keep it on the controller's
+data layer so any handler can read it. Folds into **E17 Iron-Fist split**
+(which authors the spec'd Iron-Fist child traits AND the conditional-vote-
+rules infrastructure together).
 
 **Gotchas to watch (all four playbooks):**
 - PV impact: any action that changes a stat, trait, or office must `refreshPv`
@@ -1155,13 +1282,77 @@ against the codebase where quick.
 
 > **This section is written for the roadmap-planner to lift directly.** It is my
 > engineering opinion on order, dependencies, and rough size/risk for the
-> game-pm gap log (~85 rows across 5 eras + A1–A9 presentation + the new CPU-AI
-> cluster #70–#85), the design divergences (mechanics §19.1, now **#1–#13**), the
-> confirmed bugs (incl. BUG-0), and the GM design holes (DH-1/DH-2 + DH-3..DH-11
-> + DH-12..DH-23). Source: codebase + `gilded` + `fed` + `1772s` + `modern` +
-> `hd` + `drums`.
+> game-pm gap log (~91 rows across 5 eras + A1–A9 presentation + the CPU-AI
+> cluster #70–#85 + the **batch-6 scenario-boot / endgame cluster #86–#91**),
+> the design divergences (mechanics §19.1, now **#1–#17**), the confirmed bugs
+> (incl. BUG-0), and the GM design holes (DH-1/DH-2 + DH-3..DH-11 +
+> DH-12..DH-23 + **DH-24..DH-28**). Source: codebase + `gilded` + `fed` +
+> `1772s` + `modern` + `hd` + `drums` + `pop`.
 >
-> **Batch-5 changes to the plan (the lead — three concrete moves):**
+> **Batch-6 changes to the plan (the lead — three concrete moves):**
+> 1. **APOCALYPSE meter-driven endgame is Phase-1, sized M.** Verified shipped:
+>    only event-driven endgame exists (`EraEvent.triggersGameEnd` →
+>    `phaseRunners.ts:2871` → `game.gameEnded`); no meter-watcher, no
+>    countdown clock, no `endgameClocks` array. The forum adds a NEW model:
+>    bottom-tier band entry → 10-game-year countdown → mandatory game-end
+>    (recovery clears it). **Phase-1, NOT Phase-2.** Rationale: the `planet`
+>    meter ships today and ticks every era; the model is **meter-agnostic**
+>    (the Populism Planet Health clock is one configured row per era, and
+>    analogous bottom-tier clocks may apply to other meters/eras). **Folds in
+>    with the meter-model generalization** (Phase-1 #6 ±3-clamp + crisis/cascade)
+>    — same code area, same tick site (`runPhase_2_5_1_Lingering`), shared
+>    `game.gameEnded` sink with the event-driven path. **Size: M.**
+>    Architecturally significant — it's a new endgame surface, not a balance
+>    dial — but cheap because the meter and the sink both ship.
+> 2. **K4 `BootSheet` schema is THE cross-cutting build constraint of K4.**
+>    Three documented mid-government boots — 1788 (designed) / 1856 (shipped) /
+>    2012 (designed in `pop`) — share ONE shape: pre-built faction roster
+>    (5 Blue + 5 Red) + per-faction archetype politicians + era-tuned
+>    ideology/interest/lobby decks + sitting government keyed to start year +
+>    **state roster keyed to `{era, startYear}`, NOT era alone** (divergence
+>    #17 — same `modern` enum has the 50+DC fresh-modern roster AND the
+>    53-state Wyoming-Rule continuation roster) + EXPLICITLY EMPTY at boot
+>    (no faction leaders, no career-track pols, no inherited PV/legacy/
+>    Kingmaker pairs). **Build the schema ONCE in K4**, instantiate per era.
+>    **Era identity is data configuration, not code paths** — R1's "Trumpism"
+>    deck is the seed configuration of one faction, not a "Trumpism mechanic."
+>    Also: **Senate-class verifier (DH-24)** + **`TRAIT_CONFLICTS` validator
+>    (DH-27)** run at boot pipeline as guardrails on seed data.
+> 3. **K2 + cabinet + amendment refactors are the divergence-#15/#16 calls.**
+>    Two refactors fold cleanly into already-planned work:
+>    - **K2 gains `requires?: AmendmentPredicate`** on the `GameAction<Ctx>`
+>      shape from day one (divergence #16) — one field + one filter step in
+>      the picker. **Cheap if early, expensive if retrofit** across 6 libraries.
+>      The canonical instance ("Send VP to Shore Up Support" requires 12th
+>      Amendment) ships with the general-election library. Same `requires:`
+>      mechanism also gates bill catalog entries (income-tax category) and
+>      gov action entries — predicate field belongs at the registry-row
+>      level, not the library level.
+>    - **E16 cabinet refactor gains the dynamic seat list** (divergence #15).
+>      Verified: `cabinetSeatsForYear(year)` (`types.ts:1196`) is **pure
+>      derived with NO mutable state**; `phaseRunners.ts:2162` recomputes it
+>      each turn. Refactor: shipped function becomes the **boot seed only**;
+>      runners read `GameState.cabinetSeats: SeatSpec[]`; bill-sign handler
+>      appends `Legislation.createsCabinetSeat?: SeatSpec`. **Folds into the
+>      cabinet retention refactor** — same code area, marginal additional
+>      cost.
+> 4. **CPU handler 9b legislation now consumes the conditional-vote-rules
+>    primitive** (`pop` POST 1111). Iron-Fist controllers publish declarative
+>    `Predicate → {AYE/NAY}` policies stored at `Faction.factionLeader.
+>    compelledVoteRule?`. Handler #2 (legislation) consults this BEFORE the
+>    §25.6 heuristic; handler #4 (cabinet) consumes the same primitive for
+>    auto-AYE-own-picks AND SCOTUS within-1-step auto-AYE (§26.6.1). Promotes
+>    a §25.9 sub-effect to a **first-class CPU primitive** — subsumes per-vote
+>    Iron-Fist compulsion + auto-AYE under one shape. Folds into E17 (Iron-Fist
+>    split) + CPU handler suite (#2, #4).
+> 5. **DH-25 (career-track bootstrap unresolved) is a PARKING LOT BLOCKER on
+>    any modern scenario shipping.** The 3-yr-stale design discussion has no
+>    canonical rule for which existing pols start on career tracks at a
+>    mid-game boot. Author the rule (Zagnut's "1996+, 1/track" houserule is
+>    on the table) before `scenario1948` or `scenario2012` ships. DH-24 / DH-27
+>    are XS validators that run at the boot pipeline.
+>
+> **Batch-5 changes to the plan (carried, still the lead for CPU work):**
 > 1. **K5 — a `CpuController` scaffold — is a NEW keystone.** The shipped engine
 >    has **no agent-decision pass at all** (only three thin stubs:
 >    `pickBestForFaction` `phaseRunners.ts:33`, `pickAIResponse` `eraGraph.ts:88`,
@@ -1248,9 +1439,9 @@ scaffold** — because the §25 spec needs a home and the shipped engine has non
 | **K0** | **Seed the RNG** (replace `Math.random` in `rng.ts:5` with mulberry32/xoshiro; store `seed`+state on `GameState`; migrate the **14** raw `Math.random` engine calls — debt #1–#3) | **S–M** | Determinism is the **prerequisite for multiplayer** (clients/turns must agree on roll outcomes), for replay/test harnesses, and for **every CPU handler (K5)** — the spec'd tie-breaks are deterministic. Mechanical but touches many files. |
 | **K1** | **`State.policies` + `State.electionMethod` data shapes** (`State`, `types.ts:1318`; repair() backfill `{}` / `'popular'`) | **XS** | `policies` is load-bearing for gov actions, era events, bill effects, scoring. `electionMethod` is the precondition for the per-state EC method (divergence #5). Bundle them. |
 | **K1.5** | **Ideology→color palette** (`IDEOLOGY_COLORS: Record<Ideology, string>` in `src/theme/`) — *presentation-track* foundation | **XS** | A tiny **cross-cutting** asset that **many presentation items depend on** (roster, congress, maps, score sheets, committee views — A2/A3/A7). Independent of the engine track. |
-| **K2** | **The `ActionRegistry<Ctx>` type** (§6.6) — one shape for governor / exec / convention / diplomacy / primary / general actions, in `src/engine/actionRegistry.ts` | **S** | Confirmed across 4 eras; `modern` adds a 5th + 6th library. ~6× leverage. **K2 is a hard prerequisite for K5** — most CPU handlers pick from a library, so they need a uniform registry shape to call into. |
+| **K2** | **The `ActionRegistry<Ctx>` type** (§6.6) — one shape for governor / exec / convention / diplomacy / primary / general actions, in `src/engine/actionRegistry.ts`. **Batch 6 update: the `GameAction<Ctx>` shape gains a `requires?: AmendmentPredicate` field from day one** (divergence #16) — the picker filter step consults `game.amendments.passed`. Subsumes amendment-gating across all 6 libraries with one extra field; expensive to retrofit later. | **S** | Confirmed across 4 eras; `modern` adds a 5th + 6th library. ~6× leverage. **K2 is a hard prerequisite for K5** — most CPU handlers pick from a library, so they need a uniform registry shape to call into. The `requires?: AmendmentPredicate` field also enables capability-gating (12th Amendment unlocks "Send VP to Shore Up Support"; income-tax bills unlock after a 16A-equivalent). |
 | **K3** | **`advanceEra(snap, target)` keystone + era-content registry + year-decoupling + per-era point BANKING** (lift the 5 `ERA_GRAPH_1772` spots in `eraGraph.ts` to `ERA_GRAPHS: Record<Era, GraphNode[]>`; generalize `constitutionalConvention.ts:198`'s hard-coded `currentEra = 'federalism'` to a callable transition with the **~12-step boot pipeline**: end-of-era award payout → **bank the era's score + zero the running total** (#68) → faction trades → **full 2.1.x→2.3.1 re-run** → card-pool swap + per-era card-count rescale → nation renames → draft-profile shift → party-formation; **gate content by `currentEra`, not literal year**) | **M** | Live transitions corroborated in `fed`/`modern`/`hd`. Per-era banks sum toward the cross-era win total. Debt #5 and #9 dissolve here. |
-| **K4** | **Era enum widening + first new scenario** (add `gilded`/`progressive` to `Era` (`types.ts:1337`); fill every `Record<Era, …>` rule table the TS exhaustiveness check flags — incl. the **era-keyed draft rookie-grant** `{traits, altStates}` (#69, 3/3 in 1856-arc) and **era-keyed amendment ratifier+threshold** (#64); add the scenario builder) | **M–L** | The TS `satisfies Record<Era, …>` is the safety net — missing rows are compile errors. **See §9.1.1 for which scenario goes first (federalism).** |
+| **K4** | **Era enum widening + first new scenario + the `BootSheet` schema** (add `gilded`/`progressive` to `Era` (`types.ts:1337`); fill every `Record<Era, …>` rule table the TS exhaustiveness check flags — incl. the **era-keyed draft rookie-grant** `{traits, altStates}` (#69, 3/3 in 1856-arc) and **era-keyed amendment ratifier+threshold** (#64) and the **per-era `doubleScoringIssues: IssueTag[]`** table (#87) and the **per-era `proceduralPolGen.startYear`** field (#90); add the scenario builder). **Batch 6 update: K4 also introduces the `BootSheet<{era, startYear, factions, sittingGovernment, stateRoster, …}>` schema** (divergence #17, §26.1) — the cross-cutting build constraint for ALL mid-government boots (1788 / 1856 / 2012). The registry keys on `{era, startYear}` (or `scenarioId`) for the initial state roster — same `modern` enum has BOTH the 50+DC fresh-boot roster AND the 53-state Wyoming-Rule continuation roster. Includes **EXPLICITLY EMPTY baselines** (no faction leaders at boot, no career-track pols, no inherited PV/legacy/Kingmaker pairs) and the **generic-Major-candidate fallback** for the first primary (1 command + matching ideology + matching interest/lobby — §26.1). Add the **Senate-class verifier (DH-24)** + the **`TRAIT_CONFLICTS` validator (DH-27)** as boot-pipeline hooks. | **M–L** | The TS `satisfies Record<Era, …>` is the safety net — missing rows are compile errors. **See §9.1.1 for which scenario goes first (federalism).** **The `BootSheet` schema makes era identity DATA, not code paths** — R1's "Trumpism" deck (RW Pop + Trad + Nationalist + Protectionist + RW Media + Isolationists) is one row in 2012's boot sheet, not a "Trumpism mechanic." |
 | **K5** | **`CpuController` scaffold** — `src/engine/cpu/{types.ts, controller.ts, tiebreaks.ts}` + the two `repair()` backfills (`GameState.cpuCommitments?`, `GameState.recentScandalIds?`) + a deterministic-under-seed unit test. **No handler code in this PR** — just the orchestrator + the persistent state + the tie-break utility module. **(NEW, batch 5.)** | **S** | The shipped engine has **no agent-decision pass at all** (debt #23); the §25 spec'd heuristics have no home. K5 is **~120 lines that unlock ~15 follow-on handler PRs.** Each handler is then a lightweight, parallelizable PR (§6.6.1 handler-order table). **Not on the critical path for scenarios** — federalism + the 1856-arc can ship with stubbed handlers. The scaffold makes **DH-8 + DH-20 + DH-21 + DH-22 buildable** (today they have nowhere to live). |
 
 **The dependency chain**: K0 → (K1 ‖ K2 ‖ K3) → K4 → K5 → per-system handlers.
@@ -1417,6 +1608,88 @@ of pure decision code, with the heuristic verbatim from §25.
 > to start scenario work; **do** wait on K5 to ship the §25 heuristics — they
 > have no other home.
 
+#### 9.1.4 Where the APOCALYPSE meter-driven endgame lands (batch 6) — Phase 1, not Phase 2
+
+> **The single most important call in batch 6.** This subsection is the planner's
+> grounding for the APOCALYPSE clock's placement.
+
+`pop` documents a NEW endgame condition: a meter falling into a specific
+bottom-tier band starts a **10-game-year (5 half-term) countdown** to
+mandatory game-end (`pop` POST 542, 548 — Planet Health → APOCALYPSE).
+The shipped engine has **only event-driven endgame** (`EraEvent.triggersGameEnd`
+at `types.ts:1476` → `phaseRunners.ts:2871` → `game.gameEnded` at
+`types.ts:1635`). No meter-watcher, no countdown clock, no `endgameClocks`
+array anywhere in the codebase.
+
+**The placement question: Phase 1 or Phase 2?** Three facts decide it.
+
+- **The `planet` meter ships TODAY.** `NationalMeters` (`types.ts:1399`)
+  includes `planet`, and it ticks in `runPhase_2_5_1_Lingering` and via era
+  events / legislation across **every era**. The clock infrastructure does
+  not wait for the modern era — it can monitor `planet` in 1772 or 1856
+  (whether the planet meter ever crashes that early is a content question,
+  not an infrastructure one).
+- **The model is META-AGNOSTIC.** Row #88 explicitly notes "analogous
+  bottom-tier endgame clocks may exist for other meters/eras" (e.g. Econ
+  Stab "depression spiral," Honest Gov "corruption collapse"). The Populism
+  Planet Health 10-yr clock is **one configured row** in a per-era table;
+  the engine doesn't know about "APOCALYPSE" as a special concept.
+- **The sink is shared with the event-driven path.** Both paths terminate
+  via `game.gameEnded` — the existing `GameOverScreen.tsx` (`:20`) already
+  reads it; the autosave / GameContext lifecycle (`:365`, `:484`, `:511`)
+  already gates on it. The meter-clock just needs to **set** `game.gameEnded`
+  when `remainingYears` hits 0; everything downstream is reused.
+
+**Recommendation: Phase 1.** Specifically, **fold it into Phase-1 #6 (meter-
+model generalization)** as a sibling refactor. Rationale:
+
+- Same code area (`runPhase_2_5_1_Lingering`, the meter writers).
+- Same time the ±3-clamp and crisis/cascade rules are being added — the
+  band-monitor reads the same "what tier is each meter in?" computation.
+- Cheap incremental cost (the field + the monitor + the termination path
+  are all small). Sized **M** all-in, including the GameOverScreen HUD
+  warning for active clocks.
+- **Architecturally important** — it's a NEW endgame surface, not a balance
+  dial. Naming it as a divergence (#14) and putting it on the Phase-1
+  roadmap means the architectural decision lands once and is visible.
+
+**Counter-argument considered (and rejected).** A planner might argue the
+APOCALYPSE clock is "modern-only" because Populism is the only documented
+instance — therefore Phase 2 with the rest of modern. But:
+- The shape is generic; making it modern-only would build a one-off, then
+  rebuild it generically later when the second meter-clock gets authored
+  (Econ Stab? Honest Gov?).
+- The `planet` meter ships and ticks every era today — there is no era
+  enum reason to wait.
+- The `game.gameEnded` sink is shared today; building a parallel
+  modern-only termination would split the sink.
+
+**The implementation outline** (~M sizing):
+
+1. Add `GameState.endgameClocks?: { meter: MeterKey; threshold: number;
+   remainingYears: number; startedYear: number; bandName?: string }[]`
+   (optional; `repair()` backfills `[]`).
+2. Add a per-era table `era.endgameClockRules?: { meter; threshold;
+   countdownYears }[]` (initially: `{planet, -4, 10}` for `modern`/Populism).
+   Authored data; future eras add rows.
+3. In `runPhase_2_5_1_Lingering`, after meter writes: walk
+   `era.endgameClockRules`; for each row, check the meter's current band:
+   - If meter is at-or-below threshold AND no active clock for it: arm
+     (push new clock entry with `startedYear = game.year`,
+     `remainingYears = countdownYears`).
+   - If meter is above threshold AND clock active: disarm (filter out).
+   - If meter is at-or-below AND clock active: decrement by 2 (half-term).
+4. In `engine.ts` / `advancePhase`: if any clock's `remainingYears <= 0`,
+   set `game.gameEnded = { year, reason: <band-name + meter>, templateId:
+   'apocalypse:<meter>' }`. The existing `GameOverScreen` flow takes over.
+5. `GameOverScreen.tsx`: render the meter-driven case with a distinct
+   message vs. the event-driven case (read the `templateId` prefix).
+6. HUD warning: render an inline banner when `endgameClocks.length > 0`
+   showing remaining years (read by any of the meter pages).
+
+**Determinism note:** the band-monitor is deterministic (no rolls); it
+needs no K0 dependency. The model can ship before K0 lands.
+
 ### 9.2 Major subsystems (do these after the keystones)
 
 Slot the heavyweights. Within each row I call out the keystones it depends on so
@@ -1444,15 +1717,15 @@ are deep-modern subsystems that build last.
 | **Legislative micro-mechanics** — committee block-and-replace, bill packaging, filibuster (law-toggled), `(Crisis)` tag | gilded §12.4-§12.7; **fed** 159-730 (corroborated, pervasive) | **M each** | K0 (filibuster is a roll); committees already exist; crisis bills need the bill-type tag | 4 independent PRs. `fed` clarifies filibuster is a **standing rule toggled ON by a law** ("Institute Filibuster", 1792) and packaging has a **won't-bundle-net-negative-unless-statehood** rule. |
 | **Era-event extensions** — multi-decider events, foreign-territory grants en bloc, census-driven EV deltas (decade N, effect N+2), state-policy side-effects, Egghead-cabinet advisory | gilded §10.4; **fed** 29-702 (corroborated) | **M** | K1, K3 | `Predicate` tree extends well (§2.1.1). Multi-decider widens `EraEvent.decider`. Census deltas need a `pendingEvDeltas` queue applied in 2.10 on `year % 10`. |
 | **Cabinet & leadership richness** — region-coverage + diversity + intra-party-equity malus, state-status eligibility guard, Ministers-to-foreign-powers seats (era-keyed), Congressional 9-role pipeline (RCV whip races, committee-eligibility-by-prior-service, incumbent-protection-when-dominant, CPU auto-fill), faction-leader 6-criterion cascade + anointing | gilded §28-32; **fed** 3-681; **modern** 167-1873 (corroborated 4 eras) | **M–L** | K0 | `fed` + `modern` confirm the 9-role pipeline (six-ballot Pro Tem race; modern CPU auto-fill). The **6-criterion faction-leader cascade** is spec'd verbatim (`1772s`/`modern`). Ministers roster is era-keyed. **Includes the cabinet wipe→retention refactor — see next row.** |
-| **Cabinet retention replacing the wipe (divergence #8 — CORRECTED)** — remove the unconditional cabinet clear at `phaseRunners.ts:3804-3812`; retain occupants (modern: keep ≤5, CIA/FBI exempt), add per-officer tenure (CIA/FBI/Fed-Chair/Key-Advisor terms) + `firingPrecedentSet` gate on *replacement* + same-faction US-Bank guard + opp-party cap | mechanics §19.1 #8, §21.4; `fed` 41-547; `modern` 587-2172 | **M** | cabinet richness (shares the code) | **Batch-3 correction.** Wipe→retention refactor, **M not S** (debt #17). Net behavior today: cabinet churns from scratch every 4 years — the *opposite* of forum intent. |
+| **Cabinet retention replacing the wipe (divergence #8 — CORRECTED) + dynamic seat-list refactor (divergence #15, batch 6)** — remove the unconditional cabinet clear at `phaseRunners.ts:3804-3812`; retain occupants (modern: keep ≤5, CIA/FBI exempt), add per-officer tenure (CIA/FBI/Fed-Chair/Key-Advisor terms) + `firingPrecedentSet` gate on *replacement* + same-faction US-Bank guard + opp-party cap. **Batch 6 addition: `cabinetSeatsForYear` (`types.ts:1196`) becomes the BOOT SEED only.** Introduce `GameState.cabinetSeats: SeatSpec[]` populated from the shipped function at boot; runners read the mutable list. Add `Legislation.createsCabinetSeat?: SeatSpec`; bill-sign handler appends the payload. | mechanics §19.1 #8, §21.4, **§26.5 (#89/#15)**; `fed` 41-547; `modern` 587-2172; **`pop` 699, 1100** (Climate-bill creates Sec of Environment & Climate) | **M** | cabinet richness (shares the code) | **Batch-3 correction.** Wipe→retention refactor, **M not S** (debt #17). Net behavior today: cabinet churns from scratch every 4 years — the *opposite* of forum intent. **Batch 6 folds in the seat-list-as-mutable-state refactor** — same code area, marginal additional cost; pairs with #66 (Progressive institutional layer: Fed Chair / CoS / CNO / FBI all created in-game by legislation). |
 | **Cabinet confirmation system (DH-23 / batch 5)** — add the Senate confirmation step (committee → floor); default-AYE baseline with low-% opposition reject (the lost rule); Iron-Fist Maj-Leader auto-AYE-own-picks (the §25.5.2 designer ruling); replace lobby-maximizer with **Admin-weighted lobby-maximizer**; 50/50 Admin-1 trap fix; PPT-5-alternatives auto-confirm chain after failure | mechanics §25.5 (DH-23); `drums` POSTS 867-876, 1607-1626, 4702-4708, 4896-4900 | **XS-S** | cabinet richness (the seat-pick) + cabinet retention (above) + **K5 handler #4** | **The 36% pass-rate bug DOES NOT EXIST in the shipped engine because the *system* doesn't exist.** `runPhase_2_3_1_Cabinet` (`phaseRunners.ts:2158-2223`) is a one-step scored pick that goes straight to `cabinet[seat] = pick.id` + `addLog("confirmed")` (`:2191-:2198`) — no committee, no Senate vote, no NAY/AYE roll. **So the fix is "build it in the right shape from day one"**, not "patch a broken system." **Smaller than the digest implies.** Lands as a quick win on the engine track once the cabinet pipeline is touched (after retention). |
 | **Faction-personality 5-step distribution + per-era card pool + draft profile** | mechanics §7.4; `1772s` B9 (algorithm) + gilded/`fed` (drift) | **M** | K3/K4 (era enum for per-era pool + draft profile) | `1772s` supplies the **full 5-step allocation** (adjacency rule, ≥5-pol top-up floor, lobby-activation-by-event) the gilded thread only saw as drift. Implement *alongside* the existing card-swap drift, not replacing it. |
 | **Faction nickname / per-era relabel table** | mechanics §16.1.3, §20.2; **fed** 2-184 (dense) | **S–M** | K4 | `Faction.nickname` exists (`types.ts:1297`); nothing updates it. Authored names table per (party, era, ideology) gated by leader traits + player-edit override. Also `Party.formedYear`/`eraName` for party-formation events (federalism §20.5). |
 | **Small consistency PRs** — old-age stat decay (separate from mortality), defeated-incumbent auto-retire (amendment-gated 6yr malus), auto-Carpetbagger (10yr expiry, alt-state moves exempt from cap), national-surplus integer, industry-leadership scoring, tariff integer + change-cadence | gilded §F; **fed** 52-331, `1772s` 3-90 (corroborated) | **XS–S each** | mostly — (surplus/industry read existing fields) | A grab-bag of cheap consistency wins. The **national-surplus integer** and **tariff integer** are prerequisites for the spending cap and the gilded/federalism economic axes respectively. |
-| **[NEAR-TERM, batch 3] Meter-model generalization** — banded-text ladders over the existing 7 `NationalMeters` fields + crisis entry/exit by tier + cascade rules + top-of-ladder effects (Honest-Gov't-maxed kills Machines) + numeric debt integer + `metersToElectionBonus()` from the canonical "State of the Meters" table | mechanics §22.1, §22.2; `modern` 12-2230 (corroborated 4 eras) | **M** | K0; national-surplus integer (= the debt field) | **It's a WIDENING, not a relabel** — the bank maps 1:1 to shipped fields (§2.1.1). Do the ±3-clamp (the **meter-model divergence**, §9.3) here cheaply; the crisis/cascade rules benefit every era. The full labeled-ordinal *presentation* relabel can ride the presentation track separately. |
+| **[NEAR-TERM, batch 3] Meter-model generalization + APOCALYPSE endgame clock** — banded-text ladders over the existing 7 `NationalMeters` fields + crisis entry/exit by tier + cascade rules + top-of-ladder effects (Honest-Gov't-maxed kills Machines) + numeric debt integer + `metersToElectionBonus()` from the canonical "State of the Meters" table. **Batch 6 addition: the meter-driven endgame clock** (divergence #14 / #88) — `GameState.endgameClocks: { meter; threshold; remainingYears; startedYear }[]` + arm/disarm/decrement in `runPhase_2_5_1_Lingering` + a termination path firing `game.gameEnded` when `remainingYears` hits 0. | mechanics §22.1, §22.2, **§26.4 (APOCALYPSE)**; `modern` 12-2230 (corroborated 4 eras); **`pop` 542, 548 (the canonical 10-yr Planet Health instance)** | **M** | K0; national-surplus integer (= the debt field); the meter-bank ladders (the threshold reads a band) | **It's a WIDENING, not a relabel** — the bank maps 1:1 to shipped fields (§2.1.1). Do the ±3-clamp (the **meter-model divergence**, §9.3 (meter)) here cheaply; the crisis/cascade rules benefit every era. **The APOCALYPSE clock is meter-agnostic** — Populism's 10-yr Planet Health countdown is one configured row per era; analogous bottom-tier clocks may exist for other meters/eras. **BOTH endgame paths share `game.gameEnded`** — the meter-clock and the `triggersGameEnd` event path terminate cleanly through the same sink. The full labeled-ordinal *presentation* relabel can ride the presentation track separately. |
 | **[NEAR-TERM, batch 3] Procedural pol generation (scaling wall a)** — a runtime, seeded generator emitting `ImportedDraftee` rows when the real dataset is dry; stat/ideology/trait/demographic distribution + plausible-ethnically-varied **toggleable name engine** | mechanics §22.11, #43, A1; `modern` 456-1771 | **M–L** | K0 (seeded RNG); reuses `instantiateDraftees` (`phaseRunners.ts:114`) | **Needed for ANY late-era play** (dataset runs out) AND for sparse-state filler (#43) AND BUG-3 stopgap. Lives in `src/engine/`, sibling-in-spirit to the `scripts/` pipeline (§7) but runtime. **The bridge to the portrait epic (A1/P2)** — generated pols need procedural portraits. |
 | **[NEAR-TERM, batch 3] Persist + auto-fill House slates & committees (scaling wall b)** — store House candidate slates + committee rosters on the snapshot; carry-forward + bulk auto-fill by default | A9, mechanics §22.10; `modern` 115-1281 | **M** | repair() backfill for the new fields | **UX wall, not modern-only** — improves 1856's 31-state congress too; a player quit over the manual tedium at 53-state scale. The "computer owns the deterministic tedium" theme (also 1772-solo Lingering/Committees/Cabinet). Do **before** the deep-modern roster. |
-| **Design-divergence resolutions** | mechanics §19.1 (#1–#13) + the meter-model item | varies | depends per item | See §9.3 — call per item. **#10 (contingent-election rules — author before build), #11 (veto override 2/3 both chambers — forward-only), #12 (midterm uses full meter+enthusiasm — verify), #13 (CPU AI architectural gaps → §25.15) are batch-5 additions.** |
+| **Design-divergence resolutions** | mechanics §19.1 (#1–#17) + the meter-model item | varies | depends per item | See §9.3 — call per item. **Batch-5: #10 (contingent-election rules — author before build), #11 (veto override 2/3 both chambers — forward-only), #12 (midterm uses full meter+enthusiasm — verify), #13 (CPU AI architectural gaps → §25.15). Batch-6: #14 (APOCALYPSE meter-driven endgame → Phase-1 #6), #15 (dynamic cabinet seat list → E16), #16 (amendments toggle capabilities → K2 from day one), #17 (state roster keyed to `{era, startYear}` → K4).** |
 | **[CPU-AI EPIC, batch 5] CPU handler suite (15 handlers, one PR each)** — the §25 spec'd subsystems wired against K5's scaffold; lands as a series of lightweight per-subsystem PRs once K5 ships (see §6.6.1 handler-order table) | mechanics §25 (15 subsections); `drums` (7540 posts, all-CPU) | **~15 × S–M** (each handler 50-200 lines) | **K5 scaffold** + K0 (seed) + K2 (registry); handlers 11/12 also need the architectural-gap persistent state K5 introduces | **DH-8 explicit-heuristics resolution.** Each handler replaces an inline stub or a missing piece in a phase runner. **Parallelizable**: once K5 lands, multiple handlers can land concurrently across contributors. **Order within the epic is in §6.6.1's handler-order table** — start with candidate selection (cheap, blocks nothing), then legislation NAY/AYE/NAY, then leadership IRV (most-corroborated), then cabinet confirmation (DH-23), then convention CPU (DH-8 marquee, biggest single handler). The three architectural gaps (DH-20/21/22) are handlers 11/12/7 — they land **after** the persistent state is exercised by simpler handlers (validates the scaffold). **Includes the cabinet-confirmation system itself** — see §9.3 #14. |
 | **[CPU-AI EPIC, batch 5] Iron-Fist trait split (§25.9 / debt #25)** | mechanics §25.9; `drums` POSTS 2511, 2784, 3241, 3660, 4896-4900, 5353, 6293, 6471, 6568, 6703, 6852, 6881, 6907, 6912, 6922, 7012, 7224, 7364 | **M** | independent of keystones — the trait system shipped in PR4–PR6 | **Designer-flagged.** Split `'Iron Fist'` into ≥6 office-keyed traits. Touches: 4 governance rows (`types.ts:1043-1047`); 3 era-event multiplier readers (`phaseRunners.ts:2915,:2931,:2959`); the 6 grant-callers in §25.9 (PL+Honest-Gov-maxed gov control, Sen Maj Leader vote forcing, President officer-fire / SCOTUS-compel / challenger-stifle, Loans-from-Wealthy + IF PL gov takeover, Convention PL unilateral threshold, mid-war military replacement). `repair()` migrates `'Iron Fist'` → all child traits (over-broad but safe). **Independent of K5** — can land before or after the CPU handler suite; the trait readers are existing code, not CPU heuristics. |
 
@@ -1460,25 +1733,28 @@ are deep-modern subsystems that build last.
 
 | Subsystem | Forum location | Size | Depends on | Notes |
 |---|---|---|---|---|
-| **Modern era (`scenario1948`/continuation + content)** — the modern faction roster + nickname menu, modern era-event spine (fictional eras), modern bill/issue catalog (tariff-power-to-President, healthcare, climate, gun control), modern card pool | mechanics §22; `modern` (2276 posts) | **XL** | K3, K4 (+ enum: `modern` reachable), and most subsystems below | The richest unbuilt era, but **dead last** — it sits at the end of the timeline and depends on the meter bank, enthusiasm engine, primaries, convention, SCOTUS, war, and the scaling walls all landing first. Reached via `advanceEra` (continuous campaign) or a `scenario1948` boot. |
+| **Modern era (`scenario1948` continuation + `scenario2012` fresh-boot + content)** — the modern faction roster + nickname menu, modern era-event spine (fictional eras: "Era of Terror" / "Era of Populism" / upcoming "Era of the Future"), modern bill/issue catalog (tariff-power-to-President, healthcare, climate, gun control), modern card pool. **Batch 6: TWO modern scenarios — a continuation boot (`scenario1948`) AND a fresh-boot (`scenario2012`).** The Populism boot is the **canonical fresh-modern instance** of the `BootSheet` schema (K4): 10 pre-built factions (B1-B5 / R1-R5) + era-tuned ideology/interest/lobby decks per faction (R1 = "Trumpism" deck; B1 = "Bernie-populism" deck) + 50+DC roster + Obama/Biden + 9-named SCOTUS + EXPLICITLY EMPTY at boot (no faction leaders, no career-track pols, no inherited PV/legacy/dynasty/Kingmaker-Protégé pairs). | mechanics §22, **§26.1-26.2 (the boot sheet itself)**; `modern` (2276 posts); **`pop` (1172 posts, the fresh-boot canonical instance)** | **XL** | K3, K4 (+ enum: `modern` reachable + the `BootSheet` schema + per-`{era, startYear}` state roster), and most subsystems below + **DH-25 career-track bootstrap rule must be authored before this ships** (parking lot — 3-yr-stale design discussion is the long pole) | The richest unbuilt era, but **dead last** — it sits at the end of the timeline and depends on the meter bank, enthusiasm engine, primaries, convention, SCOTUS, war, and the scaling walls all landing first. Reached via `advanceEra` (continuous campaign) or a `scenario1948` boot OR a `scenario2012` fresh-modern boot. **The first primary in a fresh-boot uses the generic-Major-candidate fallback** (1 cmd + matching ideology + matching interest/lobby — §26.1) because the 75/25 PL rule (§25.1) requires a faction leader to exist, and the boot has none. |
 | **Presidential primary subsystem (2.9.1)** — candidate eligibility + blocking (Iron-Fist PL), focus-state trait table, Strength score, per-group debate/scandal/broke/action loop, delegate accumulation + transfer | mechanics §22.3; `modern` 340-1704 | **L** | K2 (primary actions), the **CPU delegate engine**, K0 | NEW (modern-only). Phase 2.9.1 + `presPrimary` context exist; no loop. A `needsPlayerInput: 'primary'` discriminant + a `primary?` runtime ledger. Pairs tightly with the convention subsystem. |
 | **Enthusiasm / Party-Pref engine + Score economy** — the 4-part reshuffle after legislation scoring; `Faction.score` ledger; era-end awards; lowest-faction penalty | mechanics §22.2; `modern` 96-2039 | **M–L** | the meter-model generalization (above); K3 (era-end awards) | NEW driving algorithm over the existing `enthusiasm`/`partyPreference` tables. The spine of the modern election engine. |
 | **SCOTUS named-Justice docket (divergence #7)** — per-term case docket (`src/data/scotusCases<Era>.ts`), per-Justice ideology votes, Iron-Fist/Manipulative compel-vote + compel-retire (12-yr min, conditional bargain), dynamic court size + court-packing (age-70), 64/60% confirmation + moderate-auto-confirm recovery, appointee ideology reveal + 10-yr drift (**25/10/5 mid/left/right; Puritan blocks** — §25.14/#79) | mechanics §22.7, **§25.14 (#79)**, #52; `modern` 30-2250; `drums` POST 7533 | **M–L** | K0; amendments (gates BUG-2 `Chisholm`); bill-typing (court-packing/set-count bills); **K5** (Justice vote + compel + drift = CPU handler #14) | **From-scratch over a stub** (debt #18) — the shipped court is 4 hardcoded titles + `partyPreference ±0.1` (`phaseRunners.ts:3398-3414`). The **10-yr drift table is now canonical** (25% mid / 10% left / 5% right / Puritan blocks). Case content is per-era data. **Pairs with K5 handler #14** for the per-case vote heuristic + Iron-Fist compel. |
 | **Third-party challenge trigger (2.9.3)** — party-pref-band + ideology-discontent check → spawn an independent ticket from the rule-selected faction; nationwide ballot for a Celebrity | mechanics §22.4, #48; `modern` 400-2116 | **M** | the enthusiasm/Party-Pref engine | NEW (modern). Two-party engine only today. Phase 2.9.3 exists (`phases.ts:41`) as a stub. |
 | **Military-leadership appointment tier** — JCS/Army/Navy chiefs + Generals/Admirals above `GeneralInChief`; auto-confirm; promotion back-fill; rank-mismatch + resign rules; feeds the war engine's per-battle modifiers | mechanics §22.9, #49; `modern` 214-2182 | **M** | the generic war system (#45); cabinet richness | NEW (modern). Pairs with the generic-war epic — the ranks feed its Chance-of-Success terms (SecDef + Joint-Chiefs ×2, leading-officer ×10). |
-| **53-state roster + Wyoming-Rule apportionment + two-home-state pols** — modern 53-state roster (DC/CU/PR); decennial recompute that resets EV + `bias` + focus-Rep; `Politician.homeStates?` | mechanics §22.10, #55, #34; `modern` 185-2240 | **M–L** | census-delta queue (batch 1); **scaling wall (b)** must land first (House bloat) | NEW (modern). `State.region` is partly ready (`types.ts:1322`). The Wyoming-Rule House size is *why* scaling wall (b) is a hard prerequisite. |
+| **53-state roster + Wyoming-Rule apportionment + two-home-state pols + state-roster-by-boot-year (divergence #17)** — modern 53-state roster (DC/CU/PR); decennial recompute that resets EV + `bias` + focus-Rep; `Politician.homeStates?`. **Batch 6 addition: the SAME `modern` enum needs BOTH a 50+DC fresh-modern boot roster AND the 53-state Wyoming-Rule continuation roster.** The 53-state alt roster is the **product of 60 yrs of `modern` annexation events** in the continuation; a fresh-modern boot starts at 50 + DC (`pop` POST 264). K4 keys the registry on `{era, startYear}` (or `scenarioId`); annexation chain mutates `snap.states` at fire time via `admitState` (`territories.ts:8`). | mechanics §22.10, **§26.1 (boot-year keying)**, #55, #34; `modern` 185-2240; **`pop` 264** | **M–L** | census-delta queue (batch 1); **scaling wall (b)** must land first (House bloat); **K4** (registry keys on `{era, startYear}`) | NEW (modern). `State.region` is partly ready (`types.ts:1322`). The Wyoming-Rule House size is *why* scaling wall (b) is a hard prerequisite. **Batch 6 makes the per-`{era, startYear}` roster keying explicit** — same `modern` enum, two different rosters depending on whether the player booted from `scenario1948` (continuation) or `scenario2012` (fresh-modern). |
 | **Modern legislative depth** — collective crisis-bill accountability, bill-relationship/replacement graph (amendment-tier bills repealable only by amendment), investigation special committees (#54 — **now READY**), Executive-Branch-Interference | mechanics §22.8, **§24.5 (#54/#65)**, #12b; `modern` 32-2265, `hd` I-10 | **M** | bill typing; committees; **DH-1 still needs rules authored** | Mostly extends the legislative micro-mechanics. **Batch-4 change: #54 (investigation committees) is now BUILDABLE — `hd` authored the concrete spec (#65, §24.5): Speaker-formed Chair+Ranking+3 → 5d6 + 4 modifiers → 21–25 = guilty (resign + cabinet ban), targets the dominant party.** No design task remaining for #54. **DH-1 (filibustered MUST-pass remedy) is STILL under-designed** — author the deadlock rule first (debt #21). |
 
 ### 9.3 Design divergences — keep shipped or refactor to forum?
 
 Rules where the forum and the engine genuinely disagree (mechanics §19.1, now
-**#1–#13**, plus the separate meter-model item). These are **decisions, not
+**#1–#17**, plus the separate meter-model item). These are **decisions, not
 feature-adds**. My defensible call per item. **Numbering matches mechanics §19.1:**
 #1–#3 batch 1, #4–#6 batch 2, #7 (SCOTUS) and #8 (cabinet) batch 3, **#9
-(relocation cap) is batch 4**, **#10–#13 batch 5**; the meter model is its own
-unnumbered item (mechanics §21.8). **#9 is also BUG-0.** **#13 is structural —
-it points at §25.15 (the architectural CPU-AI gaps) and is the call to make K5
-a keystone.**
+(relocation cap) is batch 4**, **#10–#13 batch 5**, **#14–#17 batch 6**; the
+meter model is its own unnumbered item (mechanics §21.8). **#9 is also BUG-0.**
+**#13 is structural** — it points at §25.15 (the architectural CPU-AI gaps) and
+is the call to make K5 a keystone. **#14 is the NEW endgame model** (meter-
+driven APOCALYPSE clock — Phase-1). **#15-#17 are all refactor calls that fold
+into existing planned work** (E16, K2, K4 respectively) — none of them are
+new keystones; they refine the keystone specs.
 
 | # | Divergence | Recommendation | Rationale |
 |---|---|---|---|
@@ -1496,6 +1772,10 @@ a keystone.**
 | **11** | **Veto override threshold** *(batch 5)* — shipped: no veto / override / cloture / filibuster code exists (grep confirms zero engine sites). Forum: **2/3 in BOTH chambers, NOT 60%** (`drums` POSTS 2180-2187, designer ruling; 60% was a reverted bug). | **Forward-only — no fix needed today.** When the legislative micro-mechanics epic builds veto + override (Phase-1 #13), hardcode `VETO_OVERRIDE_THRESHOLD = 2/3` as the constant. | Verified: no veto code exists; the "60% bug, reverted" finding is a forward-spec, not a shipped-vs-design lag. **Size: 1-line constant + the veto-override path itself. Risk: none.** |
 | **12** | **Midterm uses full meter+enthusiasm rules** *(batch 5)* — shipped: `calcStateVote` (`phaseRunners.ts:3685`) is a generic resolver keyed on `ElectionContext`; the midterm callers' assembled term set is what matters. Forum: full meter+enthusiasm/presidential rules (`drums` POSTS 299-304, Tyler's 6-way test). | **Verify-vs-build, refactor if needed.** Audit the mid-cycle Senate/House caller paths through `calcStateVote` — do they pass the same meter + enthusiasm terms as `presGeneral`? If not (likely a thinner subset), widen the caller's term assembly. Probably a small change in the callers, not in `calcStateVote`. | A "fluidity across elections" win — replaces artificial wave-swing penalties. **Size: S. Risk: low** (mostly term-assembly widening). |
 | **13** | **CPU AI architectural gaps** *(batch 5)* — shipped: no agent-decision pass at all (3 thin stubs only). Forum: the 8 architectural gaps in §25.15 (no reciprocity / no meter-guarding / no cascading-event smoothing / static governor menu / no ticket-experience VP term / Sec-of-State-only diplomacy / no coalition-counting in proposals / weak action-roll outcome bands). | **Refactor to forum — but via the K5 scaffold + handlers.** These are **not single-line rule fixes**. K5's persistent state (`cpuCommitments`, `recentScandalIds`) + the meter-impact aggregator + the state-aware governor menu live in CPU handlers, not in existing runners. **The roadmap-planner should treat the CPU-AI epic as a peer of the per-system epics** (§9.2 row above), not as a divergence-resolution item. **DH-8 RESOLVED for explicit heuristics, REMAINS open for architectural gaps** until K5 + the handler suite lands. | This is the structural lever for the whole CPU surface. Without K5 + handlers, the §25 spec lives in `game-mechanics.md` forever. **Size: K5 scaffold S + ~15 × S–M handlers. Risk: medium** (per handler — the architectural-gap handlers carry the most risk because their persistent state must be self-cleaning). |
+| **14** | **Meter-driven endgame clock** *(batch 6 — NEW endgame model)* — shipped: only event-driven endgame via `EraEvent.triggersGameEnd` (`types.ts:1476`) consumed at `phaseRunners.ts:2871` setting `game.gameEnded` (`types.ts:1635`). Forum: a meter falling into bottom-tier band starts a **10-game-year (5 half-term) countdown** to mandatory game-end; recovery clears it (`pop` POST 542, 548 — Planet Health → APOCALYPSE). | **Refactor to forum (add the meter-driven path).** Add `GameState.endgameClocks: { meter; threshold; remainingYears; startedYear }[]` + `repair()` backfill `[]` + a per-meter band-monitor in `runPhase_2_5_1_Lingering` that arms/disarms/decrements clocks + a termination path in `runCurrentPhase` (engine.ts) that fires `game.gameEnded` when `remainingYears` hits 0 + a HUD warning in `GameOverScreen.tsx`. **BOTH endgame paths must share the `game.gameEnded` sink and terminate cleanly.** | **Phase placement: Phase 1.** Rationale: `planet` meter ships today (`types.ts:1406`, ticks every era); model is **meter-agnostic** — Populism instance is one configured row per era. **Folds in with the meter-model generalization** (Phase-1 #6 ±3-clamp + crisis/cascade). Analogous bottom-tier clocks may exist for other meters/eras (Econ Stab "depression spiral"? Honest Gov "corruption collapse"?). **Size: M. Risk: low–medium** (the termination path interacts with autosave + the page-registry game-over screen, which already handles the event-driven case). |
+| **15** | **Dynamic cabinet seat list** *(batch 6)* — shipped: `cabinetSeatsForYear(year)` (`types.ts:1196`) is a **pure derived function with NO mutable state**; the cabinet phase recomputes it each turn (`phaseRunners.ts:2162`). Forum: the seat list is **mutable persisted state** driven by passed bills (`pop` §26.5: "Create Department of Environment and Climate" creates a Sec of Environment & Climate seat that persists into the next administration's cabinet). | **Refactor to forum (seat list as persisted state).** `cabinetSeatsForYear` becomes the **boot seed only**; introduce `GameState.cabinetSeats: SeatSpec[]` populated at boot from the shipped function; runners read the mutable list. Add `Legislation.createsCabinetSeat?: SeatSpec`; on bill-sign, append the payload. **Folds into E16 cabinet retention** — the cabinet pipeline is already touched there; this is one more refactor of the same code area. Pairs with #66 (Progressive institutional layer: Fed Chair / CoS / CNO / FBI). | **Size: M-ish, marginal cost folded into E16.** **Risk: low** (additive — the boot seed reproduces the shipped behavior on day 1). |
+| **16** | **Amendments toggle capabilities** *(batch 6)* — shipped: no `requires:` predicate, no `ActionRegistry`, no `AmendmentPredicate` anywhere in the engine (a single `isAvailable` match in `revolutionaryWar.ts` is unrelated). Forum: action-library entries gate on amendment ratification — "Send VP to Shore Up Support" requires 12th Amendment; income-tax bills unlock after a 16A-equivalent (`pop` POST 951, §26.7). | **Refactor to forum — via K2.** Add `requires?: AmendmentPredicate` to the `GameAction<Ctx>` shape **from day one in K2**; the picker filter step reads `game.amendments.passed` and excludes locked entries. **The K2 spec already names this** (see the K2 row above). The `AmendmentPredicate` is a new `Predicate` extension (or a sibling discriminated union) — `evalPredicate` (`eraGraph.ts:12`) gains a case. **Cheap if folded into K2** (one field + one filter); **expensive if retrofit** (every library re-traversed). | **Size: XS in K2; M+ if retrofit later.** **Risk: low if early.** **Note:** the same `requires:` mechanism also gates **bill catalog entries** (income-tax category) and **gov action entries** (some require specific amendments) — the predicate field belongs at the registry-row level, not the library level. |
+| **17** | **State roster keyed to BOOT YEAR** *(batch 6)* — shipped: `states1772.ts`/`states1856.ts` are the only rosters; `expansionStates.ts` is the post-founding admittable pool. **No notion of multiple rosters per era enum.** Forum: the 2012 fresh-modern boot needs **50 + DC** (`pop` POST 264); the 53-state alt roster (`modern` §22.10, Wyoming Rule) is the **product of 60 yrs of annexation events** in the `modern` continuation. **BOTH must exist for `modern` enum.** | **Refactor to forum — refines K4.** K4's era-content registry keys on `{era, startYear}` (or `scenarioId`) for the initial state roster. Annexation chain (era-event `postEffects`, the existing `admitState` path at `territories.ts:8`) mutates `snap.states` at fire time, walking a fresh-boot roster toward the continuation roster. **Folds into K4 + E28 (53-state roster) + E30 (modern scenario boot).** | **Size: design refinement of K4.** **Risk: low** — the registry key is one tuple change; annexation already exists. |
 
 ### 9.4 The presentation track (A1–A8) — a parallel workstream
 
@@ -1608,6 +1888,17 @@ planning. Specifically:
 > doesn't exist yet (build in the right shape from day one); **Iron-Fist split
 > (§25.9) added as an independent M epic**; **divergences #10-#13 added**;
 > **contingent-election rules #84/#10 moved to PARKING LOT** until authored.
+> **Batch-6 change:** **APOCALYPSE meter-driven endgame added at Phase-1 #6**
+> (folds in with meter-model generalization — same code area, M-sized);
+> **K4 gains the `BootSheet` schema as the cross-cutting build constraint**
+> (single shape for 1788 / 1856 / 2012 boots; per-`{era, startYear}` state
+> roster keying); **K2 gains `requires?: AmendmentPredicate` from day one**
+> (divergence #16, cheap if early); **E16 cabinet refactor gains dynamic
+> seat-list** (divergence #15); **modern era epic splits into TWO scenarios**
+> (`scenario1948` continuation + `scenario2012` fresh-boot); **CPU handler #2
+> consumes the conditional-vote-rules primitive** (`pop` POST 1111);
+> **divergences #14-#17 added**; **DH-25 career-track bootstrap moved to
+> PARKING LOT — BLOCKS modern scenario** until authored.
 
 **Cheap fixes first (do immediately — XS each, high value):**
 **BUG-0 (relocation cap `5`→`4`, `types.ts:247`, divergence #9 — the cheapest win;
@@ -1620,12 +1911,17 @@ is READY** — rules authored by `hd` #65; **#85 5%/half-term retire/death** is 
 
 **ENGINE TRACK — Phase 0 (keystones, parallelizable after K0):**
 **K0) Seed the RNG → K1) `State.policies` + `State.electionMethod` shapes →
-K2) `ActionRegistry<Ctx>` (now ~6× leverage — do first if only one lands) →
+K2) `ActionRegistry<Ctx>` (now ~6× leverage — do first if only one lands;
+**batch 6: adds `requires?: AmendmentPredicate` field on `GameAction<Ctx>`
+from day one — divergence #16**) →
 K3) `advanceEra()` + era-content registry + year-decoupling + per-era point
 BANKING (#68) →
 K4) Era enum widening (`gilded`/`progressive`) + `scenario1788` (federalism) +
-era-keyed draft-grant (#69) & amendment-ratifier (#64) tables (NOT gilded/modern
-first, §9.1.1) →
+era-keyed draft-grant (#69) & amendment-ratifier (#64) & double-points-issues
+(#87) & procedural-pol-gen-startYear (#90) tables + **the `BootSheet` schema
+(batch 6 / §26.1 / divergence #17 — per-`{era, startYear}` state roster keying;
+EXPLICITLY EMPTY at boot baseline; Senate-class verifier + `TRAIT_CONFLICTS`
+validator)** (NOT gilded/modern first, §9.1.1) →
 K5) `CpuController` scaffold (`src/engine/cpu/`) — the orchestrator + handler
 interface + tie-break utilities + `repair()` backfills for `cpuCommitments?`
 and `recentScandalIds?`. **NEW IN BATCH 5.** Parallel with K3/K4 (no scenario
@@ -1633,7 +1929,8 @@ dependency). See §6.6.1 + §9.1.3.**
 
 **ENGINE TRACK — Phase 1 (subsystems, roughly this order to minimize rework):**
 **1) Federalism era epic (`scenario1788` + content; pulls in #2-#5; needs BUG-1;
-*can ship with stubbed CPU handlers — K5 wires in later*) →
+*can ship with stubbed CPU handlers — K5 wires in later*; **rides the `BootSheet`
+schema from K4 — the 1788 boot is the first instantiation**) →
 2) Bill typing + spending cap (+ national-surplus/debt integer) →
 3) Generic cross-era war system (divergence #6; needs BUG-3; **design it
 multi-theater + tiered, with the multi-confirmed formula
@@ -1647,21 +1944,32 @@ first, then the two-theater war #56 + Reconstruction readmission #57 + Canada
 a full K5 handler suite**) →
 4) Per-state EC method (divergence #5) →
 5) Amendments-as-state (now incl. era-keyed ratifier #64 + SCOTUS-gates-bill-class
-hook; gates BUG-2) →
-6) Meter-model generalization [NEAR-TERM] (±3-clamp + crisis/cascade over the
-existing `NationalMeters`; benefits every era) →
+hook + **the K2 `requires?: AmendmentPredicate` consumer pattern lands here**;
+gates BUG-2) →
+6) Meter-model generalization + APOCALYPSE meter-driven endgame [NEAR-TERM,
+**batch 6 addition**] (±3-clamp + crisis/cascade over the existing `NationalMeters`;
+**add `GameState.endgameClocks` + per-meter band-monitor in
+`runPhase_2_5_1_Lingering` + termination path firing `game.gameEnded` when
+`remainingYears` hits 0 — divergence #14**; benefits every era; the Populism
+Planet Health 10-yr clock is one configured row) →
 7) Persist/auto-fill House slates & committees [NEAR-TERM — scaling wall b] →
-8) Procedural pol generation [NEAR-TERM — scaling wall a] →
+8) Procedural pol generation [NEAR-TERM — scaling wall a; **era-coded by
+rule 3.0.18 with a 2020 startYear for Populism (#90), plus a dataset-exhaustion
+fallback — both gates trigger the same generator**] →
 **9) CPU handler suite [batch 5 NEW] — depends on K5. ~15 lightweight PRs in
 §6.6.1 order: (a) candidate selection 75/25 #72 → (b) legislation NAY/AYE/NAY
-#74 → (c) leadership IRV #70 → (d) cabinet confirmation #73 (lands the DH-23
-fix — XS-S because the system doesn't exist yet) → (e) convention CPU #71
-(owns DH-8 + DH-17) → (f) conversion poach #76 → (g) A/B/C event vote + meter
-guard #75 + DH-21 → (h) faction-leader replacement #78 → (i) primary CPU #63 →
-(j) governor-action picker DH-19 → (k) reciprocity enforcer DH-20 → (l) scandal
-smoother DH-22 → (m) VP rubric + retention #72 → (n) Justice vote + drift #79
-→ (o) faction rename trigger #40. PARALLELIZABLE — multiple handlers can land
-concurrently.** →
+#74 + **conditional-vote-rules consumer (batch 6, `pop` POST 1111 — consults
+`factionLeader.compelledVoteRule?: Predicate → Vote` BEFORE the §25.6
+heuristic)** → (c) leadership IRV #70 → (d) cabinet confirmation #73 + **batch-6
+SCOTUS within-1-step auto-AYE rule (§26.6.1) + Manipulative-Pres compel-retire
+as a distinct trait-power** (lands the DH-23 fix — XS-S because the system
+doesn't exist yet) → (e) convention CPU #71 (owns DH-8 + DH-17) → (f)
+conversion poach #76 → (g) A/B/C event vote + meter guard #75 + DH-21 → (h)
+faction-leader replacement #78 → (i) primary CPU #63 → (j) governor-action
+picker DH-19 → (k) reciprocity enforcer DH-20 → (l) scandal smoother DH-22 →
+(m) VP rubric + retention #72 → (n) Justice vote + drift #79 → (o) faction
+rename trigger #40. PARALLELIZABLE — multiple handlers can land concurrently.**
+→
 10) Convention machinery (uses K2 + K5; the biggest single subsystem; **CPU
 side is handler 9e above — DH-8 must-own**) →
 **10b) Succession / eligibility / acting-president (#61) + contingent House
@@ -1678,9 +1986,11 @@ spec ready, #65) →
 15) Era-event extensions (multi-decider, census deltas, territory grants; resolve
 scheduling fork [#4 + BUG-1 + DH-2] here) →
 16) Cabinet & Congressional leadership richness + cabinet retention replacing
-the wipe (divergence #8 — M) + **cabinet-confirmation system (DH-23 — XS-S
-because system doesn't exist yet, lands here as a sibling of the seat-fill step)**
-+ offices-created-by-law (#66) →
+the wipe (divergence #8 — M) + **dynamic cabinet seat list — `cabinetSeatsForYear`
+becomes BOOT SEED only (divergence #15, batch 6); `GameState.cabinetSeats:
+SeatSpec[]` + `Legislation.createsCabinetSeat?: SeatSpec`** + **cabinet-
+confirmation system (DH-23 — XS-S because system doesn't exist yet, lands here as
+a sibling of the seat-fill step)** + offices-created-by-law (#66) →
 17) **Iron Fist trait split (§25.9 / debt #25) — M; designer-flagged. Split
 into ≥6 office-keyed traits; `repair()` migrates `'Iron Fist'` → all child
 traits; touches the 4 governance rows + 3 era-event readers + 6 grant-callers.
@@ -1704,10 +2014,17 @@ a stub; **25%/10%/5% Justice drift via handler 9n — #79 canonical**) →
 26) Third-party challenge trigger (**rebalance apparent Dem bias — DH-11**) →
 27) Military-leadership appointment tier (pairs with #3 war) →
 28) 53-state roster + Wyoming-Rule apportionment + two-home-state pols (needs
-#7 House-slate persistence first) →
+#7 House-slate persistence first; **roster is per-`{era, startYear}` keyed —
+divergence #17 — same `modern` enum has both the 50+DC fresh-boot roster AND
+the 53-state Wyoming-Rule continuation roster**) →
 29) Modern legislative depth (collective crisis accountability; **DH-1
 filibustered-MUST-pass still needs rules authored — PARKING LOT**) →
-30) Modern era scenario/continuation (`scenario1948`; the XL capstone).**
+30) Modern era scenarios (**TWO scenarios — `scenario1948` continuation AND
+`scenario2012` fresh-modern boot — both ride the K4 `BootSheet` schema; the
+2012 boot is the canonical Populism instance with 10 pre-built faction decks,
+Obama/Biden, 9-named SCOTUS, 50+DC roster, EXPLICITLY EMPTY at boot;
+**BLOCKED on DH-25 — career-track bootstrap rule must be authored first**;
+the XL capstone).**
 
 **PRESENTATION TRACK (parallel, different workstream):**
 **P0) ideology→color palette (K1.5) → P1) politician card + roster/congress
@@ -1732,46 +2049,104 @@ M2) Async / backend (separate L–XL epic).**
 - **DH-15** small/large-state action-impact multiplier.
 - **§25.9** Iron-Fist office-keyed trait names (6 candidates listed, but the
   exact split + cascade rules need a design call).
+- **DH-25 (batch 6) — career-track bootstrap rule (BLOCKS modern scenario
+  shipping).** 3-yr-stale design discussion has no canonical rule for which
+  existing pols start on career tracks at a mid-game boot. Zagnut's "1996+,
+  1/track" houserule is on the table; Rodja hand-populated by GM ad-hoc.
+  Author before `scenario1948` or `scenario2012` ships (Phase-2 #30).
 
-**The most important calls for the planner (batch-5 leads):**
-1. **K5 (`CpuController` scaffold) is a NEW keystone — late-keystone, after K0
-   + K2, parallel with K3/K4 + federalism.** The shipped engine has **no
-   agent-decision pass at all** (3 thin stubs); the §25 spec'd 15 subsystems
-   have nowhere to live without it. K5 itself is ~120 lines (orchestrator +
-   handler interface + tie-breaks + 2 `repair()` backfills + 1 determinism
-   test). It **unlocks ~15 follow-on handler PRs** that parallelize across
-   contributors. **K5 is a force-multiplier, not a scenario gate** —
-   federalism + the 1856-arc epic can ship with stubbed handlers and upgrade
-   together. See §6.6.1 + §9.1.3.
-2. **Cabinet-confirmation system (DH-23) is XS-S, NOT the M many digests
-   imply** — because **the broken system isn't built yet**.
-   `runPhase_2_3_1_Cabinet` (`phaseRunners.ts:2158-2223`) is a one-step scored
-   pick with no Senate vote. So the fix is "build the confirmation step in the
-   right shape from day one" (default-AYE baseline + Iron-Fist Maj-Leader
-   auto-AYE-own-picks + lobby-maximizer Admin-weighting), which is **CPU
-   handler #4** (§6.6.1). Lands as a sibling of the cabinet-retention refactor
-   (Phase-1 #16).
-3. **What's READY now vs. what still needs design.** **READY (no design task
-   remaining):** the 13 §25 subsections #25.1-#25.8 + #25.10-#25.14 — all 15
-   CPU handlers can be authored against §25 verbatim. Plus #79 25/10/5 Justice
-   drift, #80 ±3 swing cap, #82 veto override 2/3, #83 midterm meter+enthusiasm,
-   #85 5%/half-term retire-death. **NEEDS DESIGN (parking lot):** divergence
-   #10 / #84 contingent-election rules (5 rulesets invented mid-thread, no
-   canonical answer); §25.9 Iron-Fist split (the 6 child traits' exact names +
-   cascade rules); DH-1 filibustered-MUST-pass; DH-12 white-peace; DH-13
-   faithless-elector trigger; DH-14 era-aware bill impacts; DH-15 small-state
-   multiplier. These are PM/design tasks, not build tasks.
-4. **(carried, batch 4) BUG-0 (relocation cap `5`→`4`) is the cheapest win in
-   the whole roadmap — do it first.** Verified: `RELOCATION_ATTEMPTS_PER_TURN =
-   5` at `types.ts:247`; one-line const edit, no migration. Plus: per-era
-   point banking folds into K3; Civil-War / Reconstruction epic lands at
-   Phase-1 #3b; #54 investigation committees is READY; DH-8 must-own for the
-   convention epic (now CPU handler #5).
-5. **(carried) K2 remains the second-most-important keystone after K0** (~6×
-   leverage across 6 action libraries) and is a **hard prerequisite for K5**
-   — most CPU handlers pick from a registry. `scenario1788` before a
-   fully-general `advanceEra` (§9.1.1); federalism before gilded before modern;
-   deep-modern subsystems are Phase 2.
+**The most important calls for the planner (batch-6 leads):**
+1. **APOCALYPSE meter-driven endgame lands in Phase 1, sized M.** Verified:
+   the only endgame model shipped is event-driven (`EraEvent.triggersGameEnd`
+   → `phaseRunners.ts:2871` → `game.gameEnded`); no meter-watcher, no
+   countdown anywhere. The model is meter-agnostic (the Populism Planet
+   Health 10-yr clock is one configured row); the `planet` meter ships and
+   ticks every era; the sink (`game.gameEnded`) is shared with the event-
+   driven path. **Folds in with the meter-model generalization (Phase-1 #6)**
+   — same tick site (`runPhase_2_5_1_Lingering`), same termination sink, M
+   sizing. Architecturally significant (NEW endgame surface) but cheap to
+   ship because the meter and the sink both exist. See §9.3 #14 + §9.1.4 +
+   §9.6 Phase-1 #6.
+2. **K4 introduces the `BootSheet` schema as the cross-cutting build
+   constraint.** Three documented mid-government boots (1788 designed / 1856
+   shipped / 2012 designed in `pop`) share ONE shape — pre-built faction
+   roster (5 Blue + 5 Red) + per-faction archetype politicians + era-tuned
+   ideology/interest/lobby decks + sitting government keyed to start year +
+   **state roster keyed to `{era, startYear}`, NOT era alone** (divergence
+   #17 — same `modern` enum has 50+DC fresh-boot AND 53-state Wyoming-Rule
+   continuation) + EXPLICITLY EMPTY at boot (no faction leaders, no career-
+   track pols, no inherited PV/legacy/Kingmaker pairs). **Build the schema
+   ONCE in K4**, instantiate per era. **Era identity is data configuration,
+   not code paths.** Plus a **Senate-class verifier (DH-24)** + a
+   **`TRAIT_CONFLICTS` validator (DH-27)** at the boot pipeline. See K4 +
+   §9.3 #17.
+3. **K2 + E16 + E17 refactors — divergences #15, #16, and the conditional-
+   vote-rules primitive (`pop` POST 1111) fold cleanly:**
+   - **K2 adds `requires?: AmendmentPredicate` from day one** (divergence
+     #16): one field on `GameAction<Ctx>` + one filter step in the picker
+     reading `game.amendments.passed`. Cheap if early, expensive if retrofit
+     across 6 libraries. Same `requires:` mechanism gates bill catalog +
+     gov action rows; predicate is at the registry-row level.
+   - **E16 cabinet refactor gains the dynamic seat list** (divergence #15):
+     verified `cabinetSeatsForYear` (`types.ts:1196`) is pure derived with
+     NO mutable state; refactor to BOOT SEED only + `GameState.cabinetSeats:
+     SeatSpec[]` + `Legislation.createsCabinetSeat?`. Same code area as the
+     retention refactor — marginal additional cost.
+   - **E17 Iron-Fist split + CPU handler #2 consume the conditional-vote-
+     rules primitive** (`Faction.factionLeader.compelledVoteRule?: Predicate
+     → Vote`): handler #2 (legislation) consults it BEFORE the §25.6
+     heuristic; handler #4 (cabinet) consumes it for auto-AYE-own-picks AND
+     SCOTUS within-1-step auto-AYE (§26.6.1). Promotes a §25.9 sub-effect to
+     a first-class CPU primitive.
+4. **K5 (`CpuController` scaffold) is a NEW keystone — late-keystone, after K0
+   + K2, parallel with K3/K4 + federalism** *(carried from batch 5)*. The
+   shipped engine has **no agent-decision pass at all** (3 thin stubs); the
+   §25 spec'd 15 subsystems have nowhere to live without it. K5 itself is
+   ~120 lines (orchestrator + handler interface + tie-breaks + 2 `repair()`
+   backfills + 1 determinism test). It **unlocks ~15 follow-on handler PRs**
+   that parallelize across contributors. **K5 is a force-multiplier, not a
+   scenario gate** — federalism + the 1856-arc epic can ship with stubbed
+   handlers and upgrade together. See §6.6.1 + §9.1.3.
+5. **Cabinet-confirmation system (DH-23) is XS-S, NOT the M many digests
+   imply** *(carried from batch 5)* — because **the broken system isn't
+   built yet**. `runPhase_2_3_1_Cabinet` (`phaseRunners.ts:2158-2223`) is a
+   one-step scored pick with no Senate vote. So the fix is "build the
+   confirmation step in the right shape from day one" (default-AYE baseline
+   + Iron-Fist Maj-Leader auto-AYE-own-picks via the conditional-vote-rules
+   primitive + lobby-maximizer Admin-weighting + the **batch-6 SCOTUS
+   within-1-step auto-AYE** declarative rule for SCOTUS confirmations),
+   which is **CPU handler #4** (§6.6.1). Lands as a sibling of the cabinet-
+   retention refactor (Phase-1 #16, which now ALSO carries the divergence
+   #15 dynamic seat list).
+6. **What's READY now vs. what still needs design.** **READY (no design
+   task remaining):** the 13 §25 subsections #25.1-#25.8 + #25.10-#25.14
+   — all 15 CPU handlers can be authored against §25 verbatim. Plus #79
+   25/10/5 Justice drift, #80 ±3 swing cap, #82 veto override 2/3, #83
+   midterm meter+enthusiasm, #85 5%/half-term retire-death. **Batch 6
+   adds READY:** #86 scenario-boot schema (the per-era boot sheets are
+   data), #87 era double-points (a per-era table), #88 APOCALYPSE clock
+   (the 10-yr clock is parameterized), #89 dynamic seat list (refactor of
+   shipped code), #91 amendment-toggled VP actions (one field on K2).
+   **NEEDS DESIGN (parking lot):** divergence #10 / #84 contingent-election
+   rules (5 rulesets invented mid-thread, no canonical answer); §25.9
+   Iron-Fist split (the 6 child traits' exact names + cascade rules); DH-1
+   filibustered-MUST-pass; DH-12 white-peace; DH-13 faithless-elector
+   trigger; DH-14 era-aware bill impacts; DH-15 small-state multiplier;
+   **DH-25 career-track bootstrap (NEW BLOCKER on modern scenario shipping
+   — 3-yr-stale design discussion)**. These are PM/design tasks, not
+   build tasks.
+7. **(carried, batch 4) BUG-0 (relocation cap `5`→`4`) is the cheapest win
+   in the whole roadmap — do it first.** Verified:
+   `RELOCATION_ATTEMPTS_PER_TURN = 5` at `types.ts:247`; one-line const
+   edit, no migration. Plus: per-era point banking folds into K3; Civil-War
+   / Reconstruction epic lands at Phase-1 #3b; #54 investigation committees
+   is READY; DH-8 must-own for the convention epic (now CPU handler #5).
+8. **(carried) K2 remains the second-most-important keystone after K0**
+   (~6× leverage across 6 action libraries; **batch 6 adds the
+   `requires?: AmendmentPredicate` field for amendment-gating**) and is a
+   **hard prerequisite for K5** — most CPU handlers pick from a registry.
+   `scenario1788` before a fully-general `advanceEra` (§9.1.1); federalism
+   before gilded before modern; deep-modern subsystems are Phase 2.
 
 ---
 
