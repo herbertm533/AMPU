@@ -207,6 +207,15 @@
     - [26.5 Era-event-creates-office (bill installs a new cabinet seat)](#265-era-event-creates-office-bill-installs-a-new-cabinet-seat)
     - [26.6 Modern SCOTUS confirmation rules — refinements](#266-modern-scotus-confirmation-rules--refinements)
     - [26.7 12th-Amendment-gated VP actions (amendments toggle capabilities)](#267-12th-amendment-gated-vp-actions-amendments-toggle-capabilities)
+27. [Early-republic era systems & the era model (designed, not built)](#27-early-republic-era-systems--the-era-model-designed-not-built)
+    - [27.1 ★ The era model — eras are content-bands gated by game-state + territory, NOT calendar year](#271--the-era-model--eras-are-content-bands-gated-by-game-state--territory-not-calendar-year)
+    - [27.2 Era-boundary machinery (the "End of Historical Era" phase)](#272-era-boundary-machinery-the-end-of-historical-era-phase)
+    - [27.3 The 12th-Amendment before/after state machine (era-specific election mode toggle)](#273-the-12th-amendment-beforeafter-state-machine-era-specific-election-mode-toggle)
+    - [27.4 Slavery-as-state-flag + the Cohens-v-Virginia amendment-only-abolition substrate](#274-slavery-as-state-flag--the-cohens-v-virginia-amendment-only-abolition-substrate)
+    - [27.5 Statehood-by-bill + unorganized-territory gating](#275-statehood-by-bill--unorganized-territory-gating)
+    - [27.6 Second Bank recharter clock + the Bank War exec action](#276-second-bank-recharter-clock--the-bank-war-exec-action)
+    - [27.7 The ideology chart becomes a CIRCLE (mid-era rule change)](#277-the-ideology-chart-becomes-a-circle-mid-era-rule-change)
+    - [27.8 Amendments mutate core rules mid-game (the "Sexenio" experiment)](#278-amendments-mutate-core-rules-mid-game-the-sexenio-experiment)
 
 ---
 
@@ -1926,6 +1935,18 @@ adjustable by the GM). Each action drawn from:
    delegates to Faulkner, who jumps from 309 to 449 and wins by 2 delegates).
 
 #### 15.3.4 VP impact scoring — 10 binary checks (post 225, 250)
+
+> **Confirmed by the FIRST-ever fully-recorded convention (`rep1800`, batch 7).** The 1800
+> campaign captured the **most detailed first-convention record for any era** — the first
+> post-12A convention observed live — **resolving batch-1 open-Q #10** (the VP-impact checklist
+> and platform comparison were inferred from `gilded` mid-stream; `rep1800` records them from a
+> convention's *first* run). The **VP-impact 10-check** and the **platform 3-check** (§15.3.5)
+> are **confirmed verbatim** (`rep1800` §A POST 1832–1924, 2356–3107). Also confirmed there: an
+> **Iron-Fist PL's vote is the ONLY one that counts on rules changes** ("Jefferson rules
+> supreme" — corroborates §25.4 / the Iron-Fist convention powers), and the **Keynote Speaker
+> "did not officially exist until the Era of Progressivism"** (an era-gated convention feature
+> the early eras partly lack — refines §15.3.2's keynote role). Conventions are now **5–7-era
+> confirmed.**
 
 After the nominee picks the VP, score the **ticket** on ten checks; sum the +/−1s. Each
 yes = +1 unless noted:
@@ -3740,6 +3761,39 @@ The antebellum pressure pays off as a **scripted Era-Event chain**, not a passiv
 > ideology** (Conservative 50% / Traditionalist 75% / RW-Populist 90%) instead of a blanket
 > roll (POST 1495) — a sharper alternative to the current flat roll.
 
+> **★ Alt-CW VARIANTS — a 3RD campaign (`rep1800`) confirms the secession machinery has more
+> branches than `hd`'s one Southern path** (`rep1800` §C-1; multi-confirms the battle %-engine of
+> [§23.3](#233-56-civil-war--the-two-theater-combat-engine-multi-term-subsystem) across a 3rd
+> campaign + a 4th-overall war). This campaign's war diverges sharply from §23.1's blundered-John-
+> Brown trigger:
+> - **Early trigger off DomStab=1, NOT a secession convention.** Secession fired ~15 yrs early
+>   (~1846) via the era-event **"Southern States form the CSA"** triggering off **Domestic
+>   Stability = 1** (the meter floor) — **not** a John-Brown / Hartford / Nullification convention.
+>   GM flags this CSA-formation event as the **one** CW trigger that does **NOT** spawn a
+>   secession-convention gov-action (likely a missing event field — see §19 hole / DH-class).
+>   (`rep1800` §C POST 6884, 6905, 6909–6914.) **Corroborates [§23.2's DomStab-as-CW-gate](#232-59-freeslave-sectional-balance-crisis-scoring-the-nationalism-crisis-engine):
+>   DomStab is the secession/CW trigger meter.**
+> - **The sitting PRESIDENT defected to lead the CSA** ("Oaths to Two Masters" achievement): Pres
+>   James Barbour resigned, joined VA's secession, and was chosen **President of the Confederacy**
+>   — the achievement text enumerates **CSA, Hartford Convention, OR Northern Secession**,
+>   **confirming the engine models Hartford-Convention + Northern-Secession CW variants, not just a
+>   Southern one** (`rep1800` §C POST 6934, 6943). A **VP later assassinated his own President and
+>   defected to the CSA**; **all border states seceded** via a later "Secession Fervor Reaching
+>   Border States" event (POST 8002, 8142, 7256).
+> - **A UK-Intervention theater** (a **3rd theater** beyond East/West) spawned from a blundered
+>   "UK Considering Recognition of CSA" event; UK went **Hostile**, propping up the insurgency +
+>   triggering the "Enemy Takes Defenseless US" risk (§27 endgame set) (`rep1800` §C POST 6909,
+>   7253–7256, 7695).
+> - **A GUERRILLA 4th stage the war chart has no rule for.** Union won the conventional war but a
+>   CSA roll-to-not-concede (23/25) produced "ACW: Guerilla War"; the **GM had no chart rule and
+>   improvised** ("making this up as I go"), running it ~1848→1858 to a low-odds end-war roll
+>   (`rep1800` §C POST 7404, 7418, 8652). **A 4th war-stage gap to author** — pairs with §23.3's
+>   25% post-victory guerrilla roll (which *here* fired and then had no resolution rules).
+> - **Appomattox Agreement** (war won): Party Pref +4 Blue, DomStab/EconStab +1, **Pres gains a
+>   permanent +1 in future elections**; a blunder on the implementation roll does **NOT** undo the
+>   treaty (only **land-acquisition** events require successful implementation — cross-ref §27.1's
+>   "win a war but fail to claim territory") (`rep1800` §C POST 8542–8550, 8654, 8661).
+
 *(designed, not built — a `Politician.allegiance: 'union' | 'secessionist'` state + a
 "Secessionists" inactive bucket; a secession era-event chain gated on a blundered presidential
 decision; the per-pol secession roll keyed on `Southern Unionist`/`Nationalist` traits + state
@@ -3946,6 +4000,54 @@ not back in the Union (`hd` POST 1987–1988, 2320):
 > scripted events don't check active SCOTUS rulings (Munn v Illinois → Cruikshank previously
 > deactivated poll taxes, POST 2698).
 
+> **★ Re-confirmed + extended by a 3rd campaign (`rep1800`, §C-3 — the richest find of its §C).**
+> The `rep1800` Reconstruction multi-confirms `hd`/`drums` and adds the **solo-play blocker** and
+> the **design-philosophy note**:
+> - **Readmission = REPEALING state bills, not passing them** (GM-authored workaround): the named
+>   "X Reconstruction" bills **are** the state-readmission bills; you **repeal** them to readmit.
+>   "In Reconstruction" still counts as **in the Union** for later elections. (`rep1800` §C POST
+>   8737, 8893, 8910 — sharpens the per-state-readmission-bill model above, which framed it as
+>   *passing*.)
+> - **TWO competing readmission-plan bills** (sharper than the 3-plan exec-action table above):
+>   **Lenient 10% Loyalty** → Reconstruction ends **automatically** at end of half-term, all
+>   states readmitted, **no bias change**; **Strict Majority Loyalty w/ Ironclad Oath** →
+>   readmission **state-by-state**, and once readmitted **bias +2 toward Red for 4 cycles (8 yrs)**
+>   (`rep1800` §C POST 9374, 9396 — the time-boxed +2 corroborates plan (1) above).
+> - **Red-lined ex-Confederates** via FOUR Confederate-citizenship options (Restore / Strip-leaders-
+>   pardon-others / **Mass Trials & Punishments** [what passed — removes non-Nationalist seceded
+>   pols] / Strip-Citizenship [only one repealable]); ex-Confederate pols stay red-lined until
+>   citizenship is **legislatively restored** (`rep1800` §C POST 8910, 8957 — corroborates the
+>   strip-leaders/pardon bills above).
+> - **Military Governors are president-appointed, SAME-PARTY ONLY** (stricter than normal vacancy
+>   rules, which allow the opposite party); if no valid same-party pol exists, one is **generated**;
+>   re-appointed every 2 yrs (`rep1800` §C POST 8673–8677, 8910 — refines the "2-yr military Govs"
+>   line above).
+> - **Escalating 4 / 8 / 10-yr penalties** (lingering "stop dragging it out" pressure): meter-drop
+>   chances scale by #states-in-Recon; CPU factions vote to end at 50% / 75%; at **10+ yrs a 25%
+>   chance the Civil War RENEWS** (whole Upper+Deep South secedes again, all battles Difficult)
+>   (`rep1800` §C POST 8911, 9842 — distinct from §23.3's *post-victory* 25% guerrilla roll: this
+>   is a *Reconstruction-duration* renewal roll).
+> - **★ DESIGN PHILOSOPHY — hard-coded Red Southern bias even in a BLUE-won alt-history.** A Blue
+>   president won *this* war, yet Reconstruction still forces **Red +2 / Blue "zero support"** —
+>   players repeatedly call it **"historical sim, not alt-history"** (the Reconstruction bias is
+>   keyed to *real history*, not the campaign's outcome) (`rep1800` §C POST 8659, 8662, 8753).
+>   **A deliberate design stance the build must decide on**, not a bug.
+> - **★★ SOLO BLOCKER — the Strict/Ironclad plan can NEVER pass with CPU factions, so SOLO
+>   RECONSTRUCTION IS UNRESOLVABLE.** GM, **POST 9170 (verified):** *"the CPU factions will never
+>   vote for that bill… including red, only 3 factions would ever consider voting for it. A real
+>   problem when it is the historical plan passed and **in a single player game it basically can
+>   never pass.**"* The Lenient plan was considered un-passable post-guerrilla-war by the human
+>   side too (POST 9166). GM names this as a **primary driver of the in-progress CW/Reconstruction
+>   rules rewrite.** **Flag prominently — this is a solo-play blocker for ANY antebellum/CW
+>   scenario** (`game-context.md` DH-class; see also §19 below).
+> - **Mass-readmission finale (~1868):** 14 states repealed at once → "All states readmitted!"
+>   Rev/Bud +6, DomStab +1, Honest Gov +3 — **the big late-game meter relief came from ENDING
+>   Reconstruction** (`rep1800` §C POST 9871–9898).
+> - **Black politicians** added to the draft pool at the 1856 boundary but **barred from office
+>   until enfranchised**; first Black officeholders = **Frederick Douglass (Gov of NY, 1866)** +
+>   **Hiram Revels (Senator, MS)**; post-abolition draft was **heavily Red-weighted** (~100 red vs
+>   ~40 blue) (`rep1800` §C POST 8463, 8999, 9117, 9699–9700).
+
 *(designed, not built — a `State.reconstruction` status (occupied / military-gov / readmitted)
 with President-appointed 2-yr military Govs and no representation until a per-state readmission
 bill passes; the three readmission plans incl. a **time-boxed `bias +2 until year`** modifier;
@@ -3983,6 +4085,29 @@ to ever acquire Canada"). Provinces then enter via the territory → statehood b
 Nationalism; NL/NM/Utah locked until Gilded); a region-tagged Canadian draft pool; a relaxation of
 native-born eligibility once a region is fully annexed; and Canada-region election penalties (−3
 for a Canada-unpopular candidate, −1 for a no-Canadian cabinet).)*
+
+> **★ Alt-expansion in `rep1800` — a DIFFERENT map than `house-divided` (a 4th expansion region +
+> Texas-splitting).** This 1800 campaign annexed a different set of territories — independent
+> corroboration of the bill-driven-statehood + region-tagged-roster pattern across a 3rd campaign
+> (`rep1800` §C; cross-ref §21.5 + §27.5):
+> - **War for Florida vs Spain** → Treaty of St Augustine, **FL acquired** (this timeline never
+>   got FL earlier) (`rep1800` §C POST 6883, 9330, 9411–9414).
+> - **Cuba = the 36th state** via a "Cuban Statehood" bill, in a **NEW "Caribbean" region** (PR,
+>   Santo Domingo, Bahamas, Antilles, Haiti); Cuba was first bought via a "Purchase Cuba" event
+>   (`rep1800` §C POST 8556–8557, 9396, 9723). **A 4th map region beyond the mainland + Canada** —
+>   the region-tagged roster pattern (cf. the `'Canada'` region in `expansionStates.ts`) extends
+>   to `'Caribbean'`.
+> - **Mexican Cession (NM + AZ) acquired by PURCHASE bill** → "New Mexican Territory"; later a
+>   Gadsden Purchase event. **California stayed owned by Mexico throughout** (`rep1800` §C POST
+>   9396, 9607, 9720).
+> - **Texas = 4 states (W/E/N/S Texas)** — each separately reconstructed/readmitted, likely a
+>   **permanent map feature** (one acquired territory minting **multiple** states — refines §27.5)
+>   (`rep1800` §C POST 6044, 9611, 9678, 9833, 9906).
+> - **Improvised Indian wars** (Red Cloud's War, Apache Wars) ran as "**Operations**" because they
+>   are **missing from the war chart** — corroborates the Operation tier of §23.3 (`rep1800` §C
+>   POST 8944, 9906). And the **territory-before-statehood rule** (§27.5): except the 13 originals
+>   + VT/TX/CA/Deseret/Mexican-Cession/Quebec, every state must pass Territory status first
+>   (`rep1800` §C POST 9127).
 
 ---
 
@@ -5332,3 +5457,350 @@ amendments toggle CAPABILITIES, not just rule-flags; pairs with §21.3 ratificat
 > continuation — both need to ship); the **cabinet-seat-as-data** refinement (§26.5 extends
 > §24.6 / row #66); and the **NEW APOCALYPSE meter-driven endgame** (§26.4) — a NEW engine
 > surface that needs an explicit roadmap entry, not just a sub-item under the meter bank.
+
+---
+
+## 27. Early-republic era systems & the era model (designed, not built)
+
+> **Entire section is designed, not built, and fills the 1800–1856 gap.** Sourced from the
+> **7th ingested thread** — `6aa7309a`, *"AMPU 1800 Playtest — Era of Republicanism 1800–1868"*
+> (`rep1800`), a 9943-post / ~400-page multiplayer campaign run by GM `ebrk85` (the **direct
+> predecessor of batch-1's `f4c7c2c4`/`gilded`** — same GM, identical roster; the 1800 campaign
+> is now documented **end-to-end**, 1800→1868 here + 1868→Gilded in batch 1). This is the only
+> coverage of the **Jeffersonian → Era-of-Good-Feelings → Jacksonian → Manifest-Destiny**
+> early-republic band — a period with **no prior KB coverage**. Cite `rep1800#POST N` (the
+> digest's §A = 1800→1822, §B = 1822→1850, §C = 1846→1868). Cross-ref `game-context.md` rows
+> through **#99** + design-holes **DH-29..DH-35**, and the real-history framing in
+> `historical-context.md` **§2.5 / §2.6**.
+>
+> **Shipped reality check.** The shipped build has **no 1800 scenario** (only 1772 + 1856 boot),
+> a **4-value `Era` enum** (`types.ts:1337`) with no Republicanism/Democracy/Manifest-Destiny
+> bands, and **calendar-year phase gates** (`isDraftYear`/`isPresidentialYear` = `year % 4`,
+> `isElectionYear` = `year % 2`, `phases.ts:49–58`). This section documents the **content-band
+> era model** that contradicts that year-driven model (§27.1), the per-era boundary machinery
+> (§27.2), and six early-republic subsystems (§27.3–§27.8). The core turn/phase loop, skills,
+> conventions, meters, and career tracks all behave **exactly as documented** in §1–§18 — the
+> novelty here is purely the **era content + the content-band architecture**.
+
+### 27.1 ★ The era model — eras are content-bands gated by game-state + territory, NOT calendar year
+
+> **THE HEADLINE FINDING and the biggest architecture delta in the knowledge base.** It is the
+> central architecture question for the build, and it **inverts the shipped year-driven era
+> model.** (`rep1800` §0 + §B; `game-context.md` ★ note + #92.)
+
+**The claim.** An "era" in AMPU is a **fixed content-band** — a set of available
+bills + era-events + draftees + a state-bias/census table — that the game advances through on
+**game-state / meter / territory-ownership triggers, advanced per half-term**, NOT by matching a
+real calendar date. **The calendar year is essentially cosmetic.**
+
+**The evidence (this campaign's clock ran ~30 years "behind" its content):**
+
+| Content beat | Real history | This campaign | Source |
+|---|---|---|---|
+| **Louisiana Purchase** succeeds | 1803 | **calendar 1834** (after *decades* of failed implementation rolls by multiple presidents) | §B POST 4281, 4672, 4918, 5255 |
+| **Texas** acquired (purchased from Mexico via Exec Action, not annexed) | 1845 | **1834** (same Min-France son-in-law, Livingston, did both LA + Texas in 4 yrs) | §B POST 5602, 5608 |
+| **Indian Removal / Five Civilized Tribes treaties** | 1830–38 | **1834–1838** | §B POST 5248, 5879 |
+| **Federalists die / become Whigs** | ~1834 | **never** — Federalists stay the 2nd party, never become Whigs | §B POST 5255, 5669–5680 |
+
+**Territory ownership GATES content** — the mechanism that *forces* the lag:
+
+- Bills / draftees / era-events for **un-owned land are invalid**: Indian Removal is gated behind
+  owning Louisiana; Louisiana-born pols are **un-playable until LA is owned**; MO/MI/FL residency
+  is gated until those states are admitted (§B POST 5082, 5140, 5828–5837).
+- ⇒ Because content is gated on *territory you actually hold*, an era's beats can only fire **once
+  you've acquired the land** — which can be decades after the real date. This is *why* the clock
+  drifts: eras advance on game state, and game state advances at whatever pace the players play.
+
+**The contrast with shipped code (the divergence):**
+
+| | Shipped engine (`phases.ts`) | Designed model (`rep1800`) |
+|---|---|---|
+| **What gates a phase** | `year % 4` (draft/presidential), `year % 2` (elections) | half-term cadence only; *content* gated on era-band + territory |
+| **What an "era" is** | a 4-value `Era` enum (`types.ts:1337`) | a content-band (bills + events + draftees + bias table) |
+| **What advances an era** | implied by year + the Constitutional-Convention transition | a **game-state / meter / territory** boundary, advanced at half-term |
+| **Role of the calendar** | load-bearing (drives cadence AND era) | **cosmetic** — only the half-term cadence matters |
+
+> **Reconciliation.** The shipped `year % 4` / `year % 2` predicates are still correct for the
+> **cadence** of phases (a draft every 4 years, elections every 2). The delta is that the
+> **era / content-band** must NOT be derived from the year — it must be an explicit game-state
+> gate. This refines (does not contradict) the per-era point-banking boundary (§2.5 / row #68):
+> point-banking happens *at* the content-band boundary, wherever that lands on the calendar.
+
+**Internal era names are finer-grained than the shipped enum.** The forum runs **four
+sub-bands** where the engine has **one `nationalism` value**:
+
+| Forum-internal era | Year band (this campaign) | Maps to shipped `Era` |
+|---|---|---|
+| (Era of Federalism — pre-playtest) | <1800 | `federalism` |
+| **Era of Republicanism** (GM also says "Era of Democracy" for 1820–40, §B POST 4798) | 1800–1820 / 1820–1840 | sub-band of `nationalism` |
+| **Era of Manifest Destiny** | 1840–1856 | sub-band of `nationalism` |
+| **Era of Nationalism** (= antebellum / Civil-War / Reconstruction) | 1856–1868 | **`nationalism`** (confirmed — §C-9, POST 9717, 9425) |
+
+Only **"Era of Nationalism" maps to a shipped enum value** (`nationalism`, the value the 1856
+scenario boots into — `scenario1856.ts:177`). The Republicanism / Democracy / Manifest-Destiny
+bands have **no shipped enum representation at all**. (Open Q for the build: are these distinct
+enum values, sub-phases, or just content-band markers on a game-state gate? — `rep1800` open-Q 2.)
+
+*(designed, not built — replace year-derived era selection with an explicit `game.eraBand`
+content-band gate advanced at a **game-state / territory boundary** (NOT `year % …`); keep the
+year predicates for phase *cadence* only; model the era as a **registry of {bills, era-events,
+draftees, bias-table}** keyed by band; gate every bill/event/draftee on **territory ownership**
+so un-owned-land content is invalid. Pairs with §2.5 (point-banking at the boundary), §26
+(the BootSheet / era-content registry), and `game-context.md` #92.)*
+
+### 27.2 Era-boundary machinery (the "End of Historical Era" phase)
+
+> **First explicit capture of the full per-era boundary** (`rep1800` §B POST 6187 / 6201 / 6203).
+> Confirms and extends the per-era point-banking already documented at [§2.5](#25-era-boundaries--per-era-point-banking--the-new-era-boot-pipeline-designed-not-built)
+> and `game-context.md` #68 — this is the concrete step list the prior threads only inferred.
+
+At the **"End of Historical Era"** phase the game runs, in order:
+
+1. **Faction-trade window** — players may trade factions by mutual agreement; **CPU factions
+   auto-accept** offered trades (a CPU heuristic — pairs with §25).
+2. **Point-banking** (the era's lasting reward; only banked points carry to end-game):
+   | Recipient | Bank |
+   |---|---|
+   | Most-points faction | **+5** |
+   | Most-points faction of the **other** party | **+3** |
+   | 2nd-most if **same party** as the winner | **+3** |
+   | **All** factions in the top-scoring party | **+3** |
+   | **Penalty** if the winning party/faction has an allied faction finishing last / next-to-last | **−1** |
+3. **Points reset** — all **non-banked** points reset to 0 (the GM forgot once and fixed it,
+   §B POST 6421). Only banked points persist.
+4. **New-era issue brief** posted — the canonical issue-menu for the incoming band (e.g. the
+   Democracy brief: universal white-male suffrage, the national bank, federal internal
+   improvements, the tariff, slavery — §A POST 3174; the Manifest-Destiny brief — §B POST 6203).
+5. **Draft order for the new era = points from the JUST-COMPLETED era only** (NOT cumulative —
+   §B POST 6201). Worst-finishing faction drafts first the next era.
+6. **Per-era state-bias table swaps in wholesale** — each era ships a brand-new bias/census table
+   (separate from the decennial census; the Democracy table swapped in at 1820, §A POST 3167,
+   3174, 2450).
+
+*(designed, not built — already specced at §2.5; this adds the **faction-trade window with CPU
+auto-accept** (step 1), the explicit **+5/+3/+3/+3 + −1 banking table** (step 2), the
+**non-banked-points reset** (step 3), the **draft-order-by-last-era-points** rule (step 5), and
+the **wholesale per-era bias-table swap** (step 6). Bank-points persist to end-game; everything
+else resets.)*
+
+### 27.3 The 12th-Amendment before/after state machine (era-specific election mode toggle)
+
+> **A genuine era-specific election-system MODE TOGGLE, absent from every later thread** (all
+> later threads start post-12A). This is a major switch on the [§15 election machinery](#15-elections-29x-and-calcstatevote)
+> and the [§21.2 per-state election method](#212-per-state-presidential-election-method) /
+> [§24.3 EC-method-per-state](#243-63-primary-era--state-opt-in-primaries--presidential-primary-groups-15)
+> (row #44). (`rep1800` §A POST 222, 264, 276, 502, 638, 691, 708, 2468.)
+
+**PRE-12A mode (the early Republicanism band):**
+
+- **No conventions at all** — the [§15.3 convention machinery](#153-the-convention-machinery-designed-not-built) is **disabled**; nominees are produced
+  without a brokered convention.
+- **Legislature-chosen presidential electors** in many states: for those states the EV winner is
+  decided by **who holds Gov / Senate / Rep** (the **majority party** in the state's legislature;
+  the **Gov's party breaks ties**) — **NOT** by `calcStateVote`'s PV + dice. This is **directly
+  analogous to the shipped `senatePre17` per-state flag** (`types.ts:701`, which already makes
+  pre-17th-Amendment Senators legislature-chosen) — call the presidential equivalent
+  **`electorsByLegislature`**. The GM recomputes EV **after** the popular tally, swapping in the
+  legislature result for those states.
+- **Per-state, phases out by amendment.** In 1804: **CT / GA / MA / NJ / NY / SC / VT** were
+  legislature-decided; the rest were popular-vote (§A POST 691, 708, 2468).
+
+**Passing the in-game "President Elections by Party Tickets Amendment" (= the 12th) flips the
+mode:**
+
+- Unlocks **party-ticket + convention** mode (conventions become legal — the brokered convention
+  of §15.3 only exists post-12A).
+- Adds the **separate VP-on-the-ticket** rule; **"Separate VP Election"** and **"Send VP to Shore
+  Up Support"** are **gated behind 12A being active** (independently confirmed by `pop` POST 951 →
+  §26.7 / row #91). I.e. the 12th is one of the **amendments-toggle-capabilities** (§27.8).
+
+**End-state of the 12A state machine** (Manifest Destiny): the **"Nationwide Surge in Legalized
+Popular Vote"** era-event (§B POST 6650) switches **every state except SC** to popular-vote
+electors — **retiring** the legislature-chooses-electors mechanic almost entirely (only SC keeps
+it). Side-effects: +Reformists / LW-Pop / RW-Pop enthusiasm; Honest Gov +1.
+
+*(designed, not built — a per-state `electorsByLegislature` flag (mirroring `senatePre17`,
+`types.ts:701`) that, when set, resolves the state's EV by **legislature majority party (Gov
+breaks ties)** instead of `calcStateVote`; a global **pre-12A `conventionsEnabled = false`**
+gate that disables §15.3 conventions and the separate-VP rules until the "Party-Ticket Amendment"
+ratifies; the per-state flip-out by amendment and the global flip by the "Nationwide Surge"
+event. Couples to §21.2 / §24.3 and §27.8.)*
+
+### 27.4 Slavery-as-state-flag + the Cohens-v-Virginia amendment-only-abolition substrate
+
+> **The engine substrate for the WHOLE early-republic / antebellum sectional design.** Refines
+> the [§23 secession / sectional content](#23-civil-war--reconstruction-1856-arc-designed-not-built)
+> and extends batch-1's state-policy-flag pattern (Jim Crow / poll-tax, [§11.4](#114-forum-design-layer-state-level-policy-flags-designed-not-built))
+> *backward* to the gap era. (`rep1800` §A POST 2161, 2180–2182, 2675; §B POST 3363, 3366, 4329,
+> 5567, 5820.)
+
+- **Slavery ON/OFF is a persistent state-level policy flag tied to the Plantation industry.** A
+  successful abolition bill turns OFF Plantation **nationwide** and **permanently deactivates all
+  slavery legislation**; abolition only **"counts"** when **no state** has it active. (The
+  Reconstruction "Plantation Economy ends → converts Plantation → Agriculture 2:1" beat in
+  [§23.4](#234-57-reconstruction-readmission-subsystem-end-nationalism--gilded) is the same flag
+  being switched off.)
+- **★ The ahistorical `Cohens v. Virginia` precedent blocks LEGISLATIVE abolition.** This
+  timeline's Marshall court held **federal law does NOT supersede existing state law**
+  (state-supremacy — the *opposite* of the real ruling). The consequence:
+  - Slavery in a slave state can **ONLY** be ended by a **constitutional Amendment** (or a
+    **per-state Governor action**).
+  - Abolition bills can only act **where slavery already doesn't exist**; **all new
+    states/territories enter free**; **existing** slave states keep it; **spread is halted**.
+  - Net: a permanent, ahistorical **SCOTUS rule-modifier on legislation** — and there is **no
+    mechanism to reverse an ahistorical SCOTUS ruling via amendment** (a cross-thread AMPU-2
+    need; SCOTUS rulings are otherwise irreversible — §19.1, `drums` DH cluster).
+- This case is decided **at boot** via the finite era SCOTUS docket: Cohens came up as a **TIE →
+  randomized → the ahistorical Nay** (the McCulloch/Cohens/Dartmouth docket "burns out fast,"
+  only 4 cases — §A POST 231, 530). The dice picking Nay is what set the whole sectional design
+  in motion in this campaign.
+- **Free/Slave-state balance is a tracked tally** driving meter / enthusiasm / election effects —
+  the sectional-balance crisis engine already documented at [§23.2](#232-59-freeslave-sectional-balance-crisis-scoring-the-nationalism-crisis-engine)
+  (row #59). The gap-era flag is `slavery` / Plantation; §23.2 is the half-term scoring on the
+  imbalance.
+
+*(designed, not built — a per-state `slavery: boolean` flag bound to the **Plantation industry**;
+abolition counts only when the flag is **off in all states**, and turning it off deactivates all
+slavery legislation; a **persistent SCOTUS rule-modifier** representation for the `Cohens v.
+Virginia` state-supremacy precedent that **disallows legislative abolition** in a state that has
+the flag (so only an Amendment or a per-state Gov action clears it); a rule that **all new states
+enter free**; and — the AMPU-2 need — a mechanism to **reverse an ahistorical ruling** via
+amendment. Couples to §23.2 sectional-balance scoring and §27.8 amendments.)*
+
+### 27.5 Statehood-by-bill + unorganized-territory gating
+
+> **Refines [§21.5 bill-driven statehood](#215-bill-driven-statehood--auto-generated-officials)
+> and `game-context.md` #43** with the two-step **organize → admit** pipeline and the
+> draftability gate. (`rep1800` §A POST 250, 308, 332, 889, 1393, 1999–2002, 2117, 2161–2167,
+> 3350; §B POST 5082, 5140, 5828–5837; §C POST 9127.)
+
+- **Statehood-by-bill mints a state mid-game** (distinct from 1772's `admitState` era-graph):
+  Ohio, **Mississippi (11th slave state → DomStab −2)**, Alabama, Indiana, **Maine (split from
+  MA)**, etc. A newly minted state then spins up:
+  - a **Governor election**,
+  - **Class I/II/III Senator** appointments (so the new state's senators slot into the correct
+    rotation),
+  - **Electoral Votes** (it joins the EC tally).
+  A new state's **bias can init +1 Red if its enabling vote was sabotaged** (the vote's outcome
+  seeds the new state's lean).
+- **★ Unorganized-territory gating (NEW).** Land you **own but have not organized into a
+  territory** — LA-Purchase land + Michigan ("owned but never organized") — has politicians who
+  are **undraftable AND unrelocatable until an organizing bill passes**. The pipeline is
+  **two steps**: *organize the territory* → *admit the state*. Some admissions **skip the
+  territory stage** (ME / WV / TX-from-Republic / VT / CA — and per §C POST 9127, the 13
+  originals + VT/TX/CA/Deseret/Mexican-Cession/Quebec). The GM admits the **draft pool wrongly
+  includes pols from unorganized territories** — a dataset/territory-gating bug (see §19 hole 5
+  / `game-context.md` DH-class).
+
+*(designed, not built — extend §21.5 with a `Territory.organized: boolean` stage (the
+**organize → admit** two-step), a **draftability/relocatability gate** that excludes pols whose
+state/territory is un-owned or unorganized, the Class-I/II/III senator-rotation assignment on
+admission, the EV join, and the sabotaged-enabling-vote → +1-bias seeding. The dataset must
+**filter out** unorganized-territory pols from the draft pool — a content/territory-gating fix.)*
+
+### 27.6 Second Bank recharter clock + the Bank War exec action
+
+> **A NEW stateful economic/institutional subsystem** — the central-bank-as-toggleable-office.
+> Generalizes the [§24.6 institutional layer](#246-66-the-progressive-era-institutional-layer-offices-created-in-game-by-law)
+> (offices created in-game by law) to the gap era, with a recharter clock the Progressive offices
+> didn't have. (`rep1800` §A POST 954, 2123, 2161, 2350, 3175.)
+
+- **The Second Bank of the US is created as a Crisis Bill** (the Democracy band's defining
+  institution) and:
+  - **recreates the President-of-US-Bank cabinet office** (a new cabinet seat — the
+    era-event/bill-creates-office pattern of §24.6 / §26.5),
+  - carries a **20-year recharter clock** — it **lapses** unless re-chartered,
+  - the **President-of-US-Bank office is UNREMOVABLE while the Bank exists** (a same-faction /
+    firing-precedent-adjacent guard — cf. [§21.4](#214-firing-precedent-gate-on-cabinet-changes),
+    which already notes a same-faction guard on the US Bank President).
+- **The Bank War in miniature** = the President's **"Weaken US Bank by Removing Deposits → State
+  Banks"** executive action ([§14.1 exec-action library](#141-forum-design-layer-executive-actions-library-designed-not-built)).
+  In this campaign the Bank had **lapsed** by the era boundary (the next President didn't reverse
+  the deposit removal / didn't re-charter) — i.e. the clock + the exec action together **killed**
+  the Bank, mirroring the historical Bank War.
+
+*(designed, not built — a `game.secondBank` institution object with a **20-year recharter clock**
+(`charteredUntilYear`); creating it **adds the President-of-US-Bank cabinet seat** (§26.5
+dynamic-seat list) and marks that seat **unremovable while the Bank exists**; a **"Remove
+Deposits"** exec-action that disables/kills the Bank; lapse on clock expiry if not re-chartered.
+Couples to §24.6 / §26.5 (offices-by-law) and §14.1 (exec-action library).)*
+
+### 27.7 The ideology chart becomes a CIRCLE (mid-era rule change)
+
+> **The 7-point ideology scale wraps into a RING — directly contradicts a linear `Ideology`
+> enum.** Refines the [§6/§7 ideology model](#6-politician-churn-213217) and the conversion
+> adjacency rules ([§25.8](#258-conversion-ai--deterministic--rolls-with-pliable--ideology-adjacency-gating)
+> / row #76). (`rep1800` §B POST 5717, 5730.)
+
+At a **mid-era rule change**, the ideology axis stops being a line and becomes a **circle**:
+
+- **LW Populist ↔ RW Populist** — the two *ends* of the 7-point scale — become **adjacent**, with
+  shifts between them allowed at a **25% base** (the same base as any other one-step shift).
+- **Conversions extend to adjacent ideologies** under the ring: a faction may now poach
+  same-party other-faction pols of the **same OR adjacent** ideology (it was **same-only**
+  earlier, §B POST 5730).
+
+**Why it matters for the build.** The shipped `Ideology` is the 7-value linear scale
+`LW Populist → Progressive → Liberal → Moderate → Conservative → Traditionalist → RW Populist`
+(`CLAUDE.md` domain quick-ref). Adjacency math (ideology-shift, conversion gating, the SCOTUS
+auto-AYE-within-1-step rule §26.6) currently treats the two ends as **maximally distant**. The
+design **wraps the index modulo-7** so `distance(LWPop, RWPop) = 1`, not 6.
+
+*(designed, not built — make ideology adjacency **circular** (`distance = min(|a−b|, 7−|a−b|)`),
+gated behind a mid-era rule-change flag (`game.ideologyIsCircular`); allow **LWPop↔RWPop** one-
+step shifts at the standard ~25% base; extend conversion targeting to **adjacent** ideologies
+under the ring. Audit every place that computes ideology distance — shifts (§6), conversion
+gating (§25.8), SCOTUS within-1-step auto-AYE (§26.6), faction-center math — to use the circular
+metric when the flag is set.)*
+
+### 27.8 Amendments mutate core rules mid-game (the "Sexenio" experiment)
+
+> **Amendments change CORE GAME PARAMETERS, not just durable flags.** Refines
+> [§21.3 amendments-as-durable-state](#213-amendments-as-durable-separately-ratified-state),
+> [§24.4 ratifier/threshold-as-tunable](#244-64-amendment-ratification-by-34-of-state-governors--era-keyed-then-tunable),
+> and [§26.7 amendments-toggle-capabilities](#267-12th-amendment-gated-vp-actions-amendments-toggle-capabilities)
+> (#16). (`rep1800` §B POST 5352, 5484–5595, 5579, 6095, 6134, 6411, 6431.)
+
+**Ratification flow (gap-era specifics):** pass Congress → **2/3 of state Govs ratify** (an
+*earlier* amendment had **lowered the bar from 3/4 to 2/3** — itself an amendment mutating a core
+rule); take effect the **next half-term**; Govs vote per faction **except Puritan / Integrity
+overrides** (those traits force a vote regardless of faction). Ratification is **one-shot** (no
+open window; a failed amendment must be re-proposed — §A POST 2957–2959, corroborating #39/#64).
+
+**★ The "Sexenio" — three amendments ratified 1834 mutated the Presidency into a Mexico-style
+single six-year term:**
+
+| Amendment | Effect | Core parameter changed |
+|---|---|---|
+| **16th** | Universal White Male Suffrage | the **suffrage / electorate** rule |
+| **17th** | One-Term Limit | the **term-limit** rule |
+| **18th** | Six-Year Presidential Term | the **presidential term length** (4 → 6 yrs) |
+
+Together they produced a **6-year single-term Presidency** in play (with **25th-Amendment-style
+succession**: a VP elevated **past the half-way point can't run**). Later context shows terms
+**back to normal** — i.e. **player-passed amendments mutate core rules mid-game** (term length,
+one-term limit, suffrage, tariff cadence) and can be **undone by later amendments**.
+
+> **No grandfather clause modeled** (a player flagged that the real 22nd exempts the sitting
+> incumbent; GM: *"my rules"*). This is a **design hole** (contrast `modern`'s grandfather
+> clause, §21.3 / §24.4) — see `game-context.md` design-holes.
+
+*(designed, not built — amendments mutate **core engine parameters** (term length, term limit,
+suffrage rule, tariff cadence, the ratification supermajority itself), keyed in
+`game.amendments`, taking effect **next half-term**; ratification by **2/3 of Govs** (era-keyed,
+tunable per §24.4) with **Puritan/Integrity forced-vote overrides**; **one-shot** ratification
+(re-propose on failure); a **25th-style succession rule** (VP past half-way can't run); and —
+the hole — an optional **grandfather clause** flag. Extends §21.3 / §24.4 / §26.7.)*
+
+---
+
+> **Cross-reference for the roadmap (§27).** §27 is dominated by **one architecture decision** —
+> **eras-are-content-bands** (§27.1) — which the tech-lead should treat as a top-level item: the
+> era must become an explicit **game-state/territory content-band gate**, with `year % 4` / `year
+> % 2` demoted to phase *cadence* only. The rest are era-content subsystems that slot under the
+> **era-content registry** (K3/K4): the **12A election-mode toggle** (§27.3, mirrors
+> `senatePre17`), **slavery-flag + Cohens state-supremacy** (§27.4, the sectional substrate),
+> **organize→admit statehood gating** (§27.5), the **Second Bank recharter clock** (§27.6), the
+> **circular ideology metric** (§27.7, a cross-cutting math change touching §6/§25.8/§26.6), and
+> **amendments-mutate-core-params** (§27.8). All pair with §2.5 (boundary point-banking) and §26
+> (the BootSheet). New design holes DH-29..DH-35 are logged in `game-context.md` (§19 below).
