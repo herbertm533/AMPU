@@ -39,8 +39,8 @@ will hold their 2008 convention," chunk-001 post 14):
 |---|---|---|---|---|
 | 1772 Founding | "Patriots (Anti-Federalist)" | "Federalists" | BLUE (Patriots) | **Anachronistic labels** — neither party existed in 1772; see Founding §terminology |
 | 1788 Federalist | Democratic-Republicans (Jefferson) | Federalists (Hamilton) | BLUE (Dem-Reps) | The *fed* digest assigns BLUE=Dem-Rep, RED=Federalist (digest post 2) |
-| 1856 Antebellum | **Democratic Party** | **Republican Party** | **RED (Republicans)** | **POLARITY FLIP**: here the antislavery/progressive pole is RED, the conservative/pro-slavery pole is BLUE (`scenario1856.ts:18-31` enthusiasm table) |
-| 1868 Gilded Age | Democrats ("Solid South") | National Republicans | RED (Republicans) | Continues the 1856 polarity (Republicans = the Union/Reconstruction party); *gilded* digest post 298 |
+| 1856 Antebellum | **Democratic Party** | **Republican Party** | **RED (Republicans)** | **POLARITY FLIP**: here the antislavery/progressive pole is RED, the conservative/pro-slavery pole is BLUE (`scenario1856.ts:18-31` enthusiasm table) — confirmed in play, "Blue = Democrats, Red = Republicans… 1856-era Republicans are the antislavery party" (*house-divided* partial-03) |
+| 1868 Gilded Age | Democrats ("Solid South") | National Republicans | RED (Republicans) | Continues the 1856 polarity (Republicans = the Union/Reconstruction party); the *house-divided* Part-2 thread plays straight from 1856 into 1868 with this polarity intact; *gilded* digest post 298 |
 | 1896–1932 Progressive/1920s | Democrats (Bryan→Wilson; Solid South + agrarian) | Republicans (dominant, pro-business; also TR/insurgent progressives) | **Split / in flux** | **The hinge.** Progressivism lived in *both* parties; the modern left/right party mapping does **not** apply cleanly yet. See §5 terminology. |
 | 1932–1965 New Deal/postwar | **Democrats (New Deal coalition)** | Republicans | **BLUE (Democrats)** — *for economics* | **THE REALIGNMENT BEGINS.** "Liberal" acquires its modern Democratic, pro-government meaning here (1932). **But race is cross-cutting:** the Solid South is still *Democratic*, so the party's left/right identity is not yet uniform. |
 | 1965–1980 Civil Rights/Vietnam | Democrats (losing the white South) | Republicans (gaining it; "Southern Strategy") | BLUE (Democrats), nationally | **THE SOUTHERN REALIGNMENT (gradual).** Begins 1948 (Dixiecrats), accelerates 1964 (Goldwater)/1968 (Nixon) at the *presidential* level — **but not an instant flip**; see §7. |
@@ -310,6 +310,18 @@ Shipped 1856 scenario, engine era `nationalism`. Event spine runs 1856 (Bleeding
 Kansas) → 1861 (Trent Affair) (`eraEvents1856.ts`). Bounding context: Compromise
 of 1850 → Kansas-Nebraska Act (1854) → secession (1860-61).
 
+**Note on the "A House Divided" Part 2 playtest:** despite the "1856" label, that
+campaign does **not** stay in the antebellum era — it boots at 1856 and plays
+*continuously through 1900*, with explicit in-thread era transitions to the
+**Gilded Age at 1868** ("Welcome to 1868, the Era of the Gilded Age," chunk-031)
+and to **Progressivism at 1892** ("Welcome to the Era of Progressivism," chunk-106;
+final half-term 1898-1900, chunk-126). So this single thread is the real-history
+bridge from §3 *into* §4 (Gilded Age) and toward §5 (Progressive). For the
+**1868→1900** real history this campaign also traverses — Reconstruction's end,
+Stalwart/Half-Breed/Mugwump/Bourbon factional politics, the tariff/currency/
+civil-service issues, the 1896 realignment — **see §4 (and §5)**; only the
+antebellum-specific real history stays in §3 below.
+
 ### Binding facts (ground truth)
 - **The 1856 party system was brand new and three-way.** **[consensus]** The
   **Republican Party formed in 1854** out of anti-slavery Whigs, **Free-Soilers**,
@@ -326,32 +338,73 @@ of 1850 → Kansas-Nebraska Act (1854) → secession (1860-61).
   could not directly fetch the archive page — verify the 174/114/8 split before
   baking into a fixed mechanic.]** Frémont won a *plurality of free states*
   (~45% there) but had **virtually zero Southern support**; Buchanan was the only
-  truly national candidate. ([Wikipedia 1856 election](https://en.wikipedia.org/wiki/1856_United_States_presidential_election), [Britannica](https://www.britannica.com/event/United-States-presidential-election-of-1856))
+  truly national candidate. ([Wikipedia 1856 election](https://en.wikipedia.org/wiki/1856_United_States_presidential_election), [Britannica](https://www.britannica.com/event/United-States-presidential-election-of-1856)) *(The game opens at exactly this result — "174 electoral votes… Fremont 114… Fillmore only 8," chunk-001 post 1 — then diverges, see Game-treatment notes.)*
 - **The defining issue was slavery's *expansion into the territories*, not
   (yet) nationwide abolition.** Democrats backed "popular sovereignty"/expansion;
   Republicans opposed expansion (Free Soil); only a minority were abolitionists.
   **[consensus]** ([Miller Center](https://millercenter.org/president/buchanan/campaigns-and-elections))
 - **Buchanan was president (inaugurated March 1857), not in 1856.** The scenario
   correctly seats Buchanan (`scenario1856.ts` boots mid-government). **[consensus]**
+- **The Lecompton Constitution fight (1857-58) split the Democratic Party North
+  vs. South — the pivotal pre-secession party rupture.** **[consensus]** Buchanan
+  backed admitting Kansas as a slave state under the pro-slavery Lecompton
+  Constitution (his Feb 2, 1858 message to Congress); **Stephen Douglas broke
+  with him** (Dec 9, 1857) as a violation of popular sovereignty and sided with
+  Republicans to block it. The English-Bill compromise sent it back to Kansas,
+  where voters rejected it **11,300–1,788 (Aug 2, 1858)**. This intra-Democratic
+  split is what made a Republican 1860 win possible. ([Battlefield Trust — Lecompton](https://www.battlefields.org/learn/articles/lecompton-constitution), [Miller Center — Buchanan key events](https://millercenter.org/president/james-buchanan/key-events))
+- **Real secession sequence (the anchor the game's alt-history diverges from):**
+  **after Lincoln's Nov 1860 election**, **South Carolina seceded first on Dec 20,
+  1860**; six more Deep-South states followed by Feb 1, 1861; in **Feb 1861
+  Jefferson Davis** (with VP Alexander Stephens) was chosen provisional CSA
+  president, inaugurated **Feb 18, 1861, in Montgomery, AL**; the upper South
+  (VA, AR, NC, TN) seceded only **after Fort Sumter (Apr 1861)**. **[consensus]**
+  ([House History — Secession of South Carolina](https://history.house.gov/Historical-Highlights/1851-1900/The-secession-of-South-Carolina/), [Battlefield Trust — Fort Sumter](https://www.battlefields.org/learn/civil-war/battles/fort-sumter))
 
 ### Key figures
 - **James Buchanan** (Democrat) — won 1856, president 1857-61; widely ranked a
-  failure for aggravating sectional crisis. Seated in the scenario. **[consensus]**
+  failure for aggravating sectional crisis (Lecompton, *Dred Scott* deference).
+  Seated in the scenario as president and one human faction's leader (Conservative
+  Democrats, chunk-001 post 1). **[consensus]**
 - **John C. Frémont** (Republican) — first Republican presidential nominee, 1856. **[consensus]**
 - **Millard Fillmore** (American/Know-Nothing) — ex-Whig president running on the
   nativist ticket. **[consensus]**
-- **Stephen Douglas** (Democrat) — "popular sovereignty"; Kansas-Nebraska author.
-  **[consensus]**
+- **Stephen Douglas** (Democrat) — "popular sovereignty"; Kansas-Nebraska author;
+  the Lecompton break with Buchanan; the seven **Lincoln-Douglas debates (1858)**.
+  Heads the game's Popular Sovereignty Democrat faction (chunk-001 post 1). **[consensus]**
 - **Roger Taney** — Chief Justice; *Dred Scott* (1857), modeled as an era event
-  (`eraEvents1856.ts` dredScott1857). **[consensus]**
+  (`eraEvents1856.ts` dredScott1857); the game keeps him on the Court as the
+  aging CJ (chunk-001 post 1; survives repeated retire/death rolls in play). **[consensus]**
+- **Abraham Lincoln** — Free-Soil Republican; the Lincoln-Douglas debates raised
+  his national profile; **in real history won the 1860 presidency**, triggering
+  secession. *In the game's alt-timeline he is NOT the 1860 winner* — he is a
+  member of the Crittenden Republican faction at game start and is instead
+  nominated for president by the Republicans in **1868** (chunk-001 post 1;
+  partial-03). **[consensus on real history]**
+- **William H. Seward** (Republican) — NY senator/governor, antislavery leader;
+  the real-history 1860 GOP front-runner whom Lincoln beat for the nomination.
+  *In the game he is the RED party leader and the faction the campaign elevates
+  to the presidency* (see Game-treatment). **[consensus on real history]**
+- **John J. Crittenden** — Kentucky Unionist (Whig/Constitutional Unionist); his
+  Crittenden Compromise came in 1860-61. Lends his name to a game Republican
+  faction (a label stretch — see Game-treatment). **[consensus]**
+- **Jefferson Davis** — Mississippi senator/Pierce's War Secretary; the real
+  CSA president (1861). *The game's alt-timeline instead makes him the Democratic
+  party leader and seats a different figure (Quitman) as CSA president.* **[consensus on real history]**
 
 ### Timeline of relevant events
 - **1854** — Kansas-Nebraska Act; Republican Party founded. **[consensus]**
 - **1856** — "Bleeding Kansas" violence; Brooks canes Sumner; Buchanan elected. **[consensus]**
-- **1857** — *Dred Scott*; Panic of 1857. **[consensus]**
-- **1859** — John Brown's raid on Harpers Ferry. **[consensus]**
-- **1860** — Lincoln elected; South Carolina secedes (Dec). **[consensus]**
-- **1861** — Secession Winter; Fort Sumter (Apr, war begins); Trent Affair (Nov). **[consensus]**
+- **1857** — *Dred Scott*; Panic of 1857; Lecompton Constitution drafted; Douglas
+  breaks with Buchanan over it (Dec). **[consensus]**
+- **1858** — Lecompton rejected by Kansas voters (Aug 2); the seven **Lincoln-Douglas
+  debates** (Aug–Oct, for the Illinois Senate seat — chosen by the state
+  legislature, which returned Douglas). **[consensus]** ([Battlefield Trust — Lincoln-Douglas Debates](https://www.battlefields.org/learn/articles/lincoln-douglas-debates), [NPS](https://www.nps.gov/liho/learn/historyculture/debates.htm))
+- **1859** — John Brown's raid on Harpers Ferry (Oct). **[consensus]**
+- **1860** — Lincoln elected (Nov); South Carolina secedes (Dec 20). **[consensus]**
+- **1861** — Secession Winter; Davis inaugurated CSA president (Feb 18,
+  Montgomery); Fort Sumter (Apr, war begins); upper South secedes; Trent Affair
+  (Nov–Dec). **[consensus]**
 
 ### Era-appropriate factions / ideologies / interests
 **Democrats** (BLUE): the dominant national party, split North/South — Southern
@@ -362,7 +415,10 @@ coalition — Free-Soilers, antislavery ex-Whigs, a smaller radical/abolitionist
 wing, Northern industry/protectionism. **Know-Nothings** (nativist) are a
 *separate* party. **[consensus]** Interest blocs that matter: Slave Power /
 Planters, Abolitionists, Northern Industry/Manufacturers, Free-Soil Settlers,
-Immigrants vs. Nativists.
+Immigrants vs. Nativists. As the war approaches, two further real groupings the
+campaign uses appear: **Copperheads** (Northern antiwar/Peace Democrats — a game
+faction, partial-03) and **Fire-Eaters / secessionists** vs. **Southern
+Unionists** (the cleavage the game's per-politician secession rolls model).
 
 ### Period-specific terminology
 - **THE BIG ONE — polarity is flipped vs. modern usage.** In 1856 the
@@ -371,11 +427,14 @@ Immigrants vs. Nativists.
   progressive party**. The shipped enthusiasm table encodes exactly this:
   Traditionalist/RW-Populist/Conservative lean **BLUE** (Democratic);
   Progressive/Liberal/LW-Populist lean **RED** (Republican)
-  (`scenario1856.ts:18-31`). **Do not** import the modern "Democrat=left,
-  Republican=right" mapping.
+  (`scenario1856.ts:18-31`), and the playtest confirms it in plain terms — "Blue =
+  Democrats, Red = Republicans… 1856-era Republicans are the antislavery party;
+  the dominant force this era" (*house-divided* partial-03). **Do not** import the
+  modern "Democrat=left, Republican=right" mapping anywhere in 1856–1900.
 - **Use:** Free Soil, popular sovereignty, "the Slave Power," Fire-Eaters
   (Southern radical secessionists), Border Ruffians, Copperheads (later),
-  Unionist, Doughface (a Northern man with Southern sympathies, e.g. Buchanan).
+  Unionist/Southern Unionist, Doughface (a Northern man with Southern sympathies,
+  e.g. Buchanan), Lecompton, secession convention.
 - **Avoid:** treating "Republican" as the modern GOP or "Democrat" as the modern
   party; "civil rights" in the modern sense; "liberal/conservative" without the
   era-flip caveat.
@@ -386,10 +445,14 @@ Immigrants vs. Nativists.
   were a minority wing. Lincoln in 1860 ran on non-extension, not abolition.
 - **"The Know-Nothings were Republicans."** False — separate party in 1856 (see
   binding facts).
+- **"The Democratic Party split only at the 1860 convention."** **[consensus]**
+  The fracture was already structural by **1857-58 over Lecompton** (Buchanan vs.
+  Douglas); the 1860 Charleston/Baltimore split into Northern (Douglas) and
+  Southern (Breckinridge) tickets was the culmination, not the cause.
 - **"The North was solidly antislavery and the South solidly pro-secession."**
   **[consensus]** Both regions had deep internal cleavages — Northern Democrats
   and Doughfaces; Southern Unionists and non-slaveholding whites; border states
-  that never seceded.
+  (DE, MD, KY, MO) that never seceded.
 - **"Manifest Destiny was a national consensus."** **[consensus]** The term was
   coined by O'Sullivan in 1845 and became prominent largely *because Whigs
   attacked it*; Whigs and antislavery Northerners opposed expansion as a
@@ -398,11 +461,47 @@ Immigrants vs. Nativists.
   *Democratic* position, not a shared one. ([Manifest Destiny](https://en.wikipedia.org/wiki/Manifest_destiny))
 
 ### Game treatment vs. real history (divergence notes)
-- **Mostly strong fidelity.** The 1856 factions (`factions1856.ts`) are the
-  best-researched in the shipped data: Conservative/Popular-Sovereignty/
+- **Mostly strong fidelity at the START.** The 1856 factions (`factions1856.ts`)
+  are the best-researched in the shipped data: Conservative/Popular-Sovereignty/
   Unionist/Jacksonian/Loco-Foco Democrats and Crittenden/Moderate/Liberal/
-  Radical/Know-Nothing Republicans capture the real intra-party wings.
-- **Two faction-placement flags:**
+  Radical/Know-Nothing Republicans capture the real intra-party wings, and the
+  game opens *exactly* at the real 1856 result (Buchanan 174 / Frémont 114 /
+  Fillmore 8; chunk-001 post 1).
+- **THE BIG DIVERGENCE — this is an alt-history once play begins.** The campaign
+  is a multiplayer, multi-term playthrough that **rewrites the sectional crisis**:
+  - **Republican William H. Seward (not Lincoln) wins the 1860 presidency**
+    (199-103 EV over Pendleton) and is **re-elected in 1864** (219-15 over
+    Alexander Stephens) — partial-02/03. So the man who in real life *lost* the
+    1860 nomination to Lincoln is the game's wartime president.
+  - **Secession is triggered ~1863, not 1860-61, by a bungled event.** In the
+    game, secession fires when President Seward **blunders the "John Brown's Raid"
+    decision** (failed implementation roll → "automatic secession convention and
+    Civil War"); 11 states leave and form the CSA *mid-1860s* (partial-02 post
+    1166-1168; partial-03 "10 Southern states seceded late 1863"). Real history:
+    secession followed **Lincoln's 1860 election**, beginning **Dec 20, 1860**.
+  - **The CSA president is John A. Quitman (with VP John Letcher), not Jefferson
+    Davis** (partial-02). In the game, **Davis is instead the *Democratic* party
+    leader**. Capital Richmond and a UK-recognition threat match the real CSA.
+  - **Lincoln is nominated by the Republicans only in 1868** (6th ballot;
+    chunk-001 post 1, partial-03) — i.e. the game defers his rise by eight years.
+  > Game-master framing: use the **real** sectional-crisis chronology and figures
+  > for ideological/era texture, but treat this campaign's *named wartime leaders,
+  > the secession year, and who is CSA president* as its own divergent timeline.
+- **The Civil War is a large multi-term subsystem, almost certainly unbuilt in
+  the shipped engine.** The playtest fights it as a structured combat phase
+  separate from the turn loop: **two theaters (East/West), 3 naval wins gate
+  ground combat, a per-battle success formula, a per-theater War Score with a +10
+  auto-win, named historical battles, and named-officer casualties** (partial-02
+  post 1332; partial-03 posts 1710/1977). The shipped `eraEvents1856.ts` spine
+  ends at the Trent Affair (1861) and has **no** Civil War combat model — so the
+  war the campaign actually plays is host-improvised content, not in the build.
+- **Reconstruction is an end-of-era subsystem the campaign reaches (1865-68),
+  also unbuilt.** Post-victory readmission plans (Ironclad-Oath loyalty / military
+  districts requiring 14th-Amendment ratification / pardoning rank-and-file
+  Confederates), the 13th/14th/15th-equivalent amendment session, and "African-
+  Americans can now hold office" all appear as host rulings (partial-03 posts
+  1960-1988). This belongs to §4's era (Gilded Age) chronologically.
+- **Two faction-placement flags (start-of-game labels):**
   - **"Know-Nothing Republicans"** (`factions1856.ts:16`) folds the nativist
     American Party *into* RED as a Republican sub-faction. Historically the
     Know-Nothings were a **separate party** running Fillmore in 1856
@@ -414,16 +513,19 @@ Immigrants vs. Nativists.
   - **"Crittenden Republicans"** (`factions1856.ts:12`, compromise/gradual
     emancipation) is anachronistic as a label: John J. Crittenden was a Unionist
     *Whig/Constitutional Unionist*, not a Republican; his famous compromise came
-    in 1860-61. As a "moderate Unionist" wing it works; the *name* is a stretch. **[inference]**
+    in 1860-61. As a "moderate Unionist" wing it works; the *name* is a stretch.
+    The campaign uses this faction as Lincoln's home wing at start (chunk-001
+    post 1). **[inference]**
 - **Three-way race compressed to two parties.** The engine's BLUE/RED forces the
   1856 *three*-party reality (Dem / Rep / Know-Nothing) into two — an inherent
   abstraction. Fine as a game model; the game-master should know Fillmore's
   candidacy and the Whig collapse are the missing third leg
   ([Britannica](https://www.britannica.com/event/United-States-presidential-election-of-1856)).
-- **Event spine is accurate and well-dated** (Bleeding Kansas 1856, Dred Scott
-  1857, Panic 1857, John Brown 1859, secession 1860-61). The Trent Affair
+- **Shipped event spine is accurate and well-dated** (Bleeding Kansas 1856, Dred
+  Scott 1857, Panic 1857, John Brown 1859, secession 1860-61). The Trent Affair
   cabinet-decider framing (`eraEvents1856.ts:180-219`) correctly reflects the
-  Dec 26 1861 cabinet meeting. **[consensus]**
+  Dec 26 1861 cabinet meeting. **[consensus]** *(The shipped events are faithful;
+  it is the campaign's downstream play that diverges, per above.)*
 
 ---
 
@@ -434,7 +536,11 @@ The *gilded* digest runs 1868-1872; the era is conventionally **1868-1896**
 (Reconstruction tail → before the 1896 realignment). Engine: no dedicated era
 value — runs on the `modern` enum or a future `gilded`/`progressive` split
 (game-context gap-log #41). **No shipped scenario.** The forward arc the threads
-gesture at is **Gilded Age → Populist surge (1890s) → Progressive Era**.
+gesture at is **Gilded Age → Populist surge (1890s) → Progressive Era**. *(The
+"A House Divided" Part-2 campaign — see §3 — also plays this whole window,
+transitioning in at "Welcome to 1868, the Era of the Gilded Age" and running to
+its 1892 Progressive transition; so the real history here governs that thread's
+back two-thirds as well.)*
 
 ### Binding facts (ground truth)
 - **Party polarity continues from 1856: Republicans = the Union/Reconstruction
@@ -515,7 +621,12 @@ movements (feminists, prohibitionists, Populists) that "influence the next era."
   gap-log #41). The *gilded* digest (post 1) names the real issue axes —
   tariff, currency (gold vs. free silver), civil-service reform, imperialism —
   none of which exist in shipped code (gap-log #3). When built, these are the
-  *correct* era issues; slavery and 1850s sectionalism should be retired.
+  *correct* era issues; slavery and 1850s sectionalism should be retired. *(The
+  "A House Divided" thread reaches this era as an alt-history continuation of
+  1856 — by 1868 it has a CSA defeated and readmitted under a Reconstruction
+  plan, an annexed Canada with new states, and Lincoln only just nominated; so
+  its Gilded-Age roster/map diverges sharply from the real 1868 even though the
+  real *issues* converge.)*
 - **Anachronistic interest-group cards.** `factions1856.ts:24-31` ships a single
   flat `INTEREST_GROUPS` list reused across eras, including **Big Tech, Big Oil &
   Gas, Globalists, LW/RW Media** — all anachronistic for 1868. The *gilded*
@@ -541,10 +652,13 @@ movements (feminists, prohibitionists, Populists) that "influence the next era."
 
 ### Era window
 The *1948-continued* thread starts already past this era (in 2004), so it is not
-*played* in this batch — but it is the **bridge** between the documented Gilded
+*played* in that batch — but it is the **bridge** between the documented Gilded
 Age and the New Deal, and the era where the modern party polarity has **not yet**
 formed. Bounding events: Realignment of **1896** (McKinley def. Bryan) →
 **1932** (FDR). Engine: would run on `modern`/`progressive` tuning (no scenario).
+*(The "A House Divided" Part-2 campaign explicitly enters this era — "Welcome to
+the Era of Progressivism" at 1892, running through its 1898-1900 finale — so this
+section also frames that thread's closing years, as an alt-history.)*
 
 ### Binding facts (ground truth)
 - **1896 was a critical realignment that locked in Republican national dominance
@@ -632,15 +746,17 @@ farmers (Grange/Populist heirs), Prohibitionists, suffragists, nativists
   boom; the Klan revived as a mass movement. **[consensus]**
 
 ### Game treatment vs. real history (divergence notes)
-- **Not directly played in this batch; no scenario.** The *1948-continued* thread
-  starts in 2004, so the game-master's accumulated 1948+ alt-history *already
-  passed through* this era's outcomes (the 16th/17th/18th/19th Amendments, the
-  Fed, the New Deal) — but note the thread shows the game can **diverge** from
-  real amendments: e.g. in 2008 the game is still debating ratifying a
-  presidential **two-term-limit amendment** (chunk-001 post 15, "H.R.9 Two-Term
-  Limit for Presidents Amendment… would not apply to Pres Cuomo") — the real-life
-  22nd Amendment passed in **1951**. Treat the campaign's institutional history
-  as a *divergent alt-timeline*, not a mirror of real dates.
+- **Not directly played in the 1948 batch; no scenario.** The *1948-continued*
+  thread starts in 2004, so the game-master's accumulated 1948+ alt-history
+  *already passed through* this era's outcomes (the 16th/17th/18th/19th
+  Amendments, the Fed, the New Deal) — but note the thread shows the game can
+  **diverge** from real amendments: e.g. in 2008 the game is still debating
+  ratifying a presidential **two-term-limit amendment** (chunk-001 post 15,
+  "H.R.9 Two-Term Limit for Presidents Amendment… would not apply to Pres
+  Cuomo") — the real-life 22nd Amendment passed in **1951**. Treat the campaign's
+  institutional history as a *divergent alt-timeline*, not a mirror of real dates.
+  *(The "A House Divided" thread, by contrast, actually plays this era's opening
+  years 1892-1900 as a direct continuation of its 1856 alt-history.)*
 - **Polarity guidance for any future build:** if a `progressive` era is ever
   scenario-ized, the BLUE/RED → Democrat/Republican mapping should be treated as
   **in flux**, with progressivism deliberately spanning both parties — the
@@ -1143,7 +1259,7 @@ advocates/restrictionists, partisan media. **[consensus]**
   convention for most of the timeline.)
 
 ### Game treatment vs. real history (divergence notes)
-- **This is the era the batch actually plays — and the game's polarity is
+- **This is the era the 1948 batch actually plays — and the game's polarity is
   correct.** BLUE=Democrats, RED=Republicans, modern left/right (chunk-001 post
   14). No polarity caveat needed; the game-master can use plain modern political
   language.
@@ -1182,9 +1298,12 @@ Ordered by importance to this brief.
 - [Journal of the American Revolution — Adams's Rule of Thirds](https://allthingsliberty.com/2013/02/john-adamss-rule-of-thirds/) and [NPS — Loyalists](https://www.nps.gov/teachers/classrooms/loyalists-in-american-revolution.htm) — the one-third myth.
 - [Wikipedia — 1856 election](https://en.wikipedia.org/wiki/1856_United_States_presidential_election) and [Britannica — 1856 election](https://www.britannica.com/event/United-States-presidential-election-of-1856) — three-way race; EC 174/114/8.
 - [Wikipedia — History of the Republican Party](https://en.wikipedia.org/wiki/History_of_the_Republican_Party_(United_States)) and [Free Soil Party](https://en.wikipedia.org/wiki/Free_Soil_Party) — GOP founded 1854; Know-Nothings separate.
+- [American Battlefield Trust — Lecompton Constitution](https://www.battlefields.org/learn/articles/lecompton-constitution) and [Miller Center — Buchanan key events](https://millercenter.org/president/james-buchanan/key-events) — Lecompton 1857-58; Buchanan vs. Douglas split; Kansas rejects it 11,300-1,788 (Aug 1858).
+- [American Battlefield Trust — Lincoln-Douglas Debates](https://www.battlefields.org/learn/articles/lincoln-douglas-debates) and [NPS — The Lincoln-Douglas Debates of 1858](https://www.nps.gov/liho/learn/historyculture/debates.htm) — seven debates Aug-Oct 1858 for the IL Senate seat (legislature-chosen); Douglas retained.
+- [House History — The Secession of South Carolina](https://history.house.gov/Historical-Highlights/1851-1900/The-secession-of-South-Carolina/) and [American Battlefield Trust — Fort Sumter](https://www.battlefields.org/learn/civil-war/battles/fort-sumter) — SC secedes Dec 20 1860; Davis provisional CSA president Feb 18 1861; Fort Sumter Apr 1861.
 - [American History Central — Gilded Age Politics](https://www.americanhistorycentral.com/entries/gilded-age-politics/) and [Fiveable APUSH — Politics in the Gilded Age](https://fiveable.me/apush/unit-6/politics-gilded-age/study-guide/8nIh2AsuMR3xXcKSZRaq) — Stalwarts/Half-Breeds/Mugwumps/Bourbons; tariff/currency; Solid South.
 
-**Modern arc (eras 5-10) — added this batch:**
+**Modern arc (eras 5-10):**
 - [Britannica — 1896 election](https://www.britannica.com/event/United-States-presidential-election-of-1896) and [Miller Center — McKinley campaigns](https://millercenter.org/president/mckinley/campaigns-and-elections) — 1896 realignment; GOP dominance 1896-1932; Wilson the exception.
 - [Britannica — Theodore Roosevelt and the Progressive Movement](https://www.britannica.com/place/United-States/Theodore-Roosevelt-and-the-Progressive-movement) and [Britannica — The Progressive era](https://www.britannica.com/place/United-States/The-Progressive-era) — progressivism cross-party; 1912 split; reforms.
 - [Britannica — Democratic Party](https://www.britannica.com/topic/Democratic-Party) — 1932 realignment redefines "liberal"; New Deal coalition; conservative coalition.
@@ -1201,4 +1320,5 @@ Ordered by importance to this brief.
 **Internal sources:**
 - Shipped data: `src/data/factions1772.ts`, `factions1856.ts`, `scenario1772.ts`, `scenario1856.ts`, `eraEvents1772.ts`, `eraEvents1856.ts`; `CLAUDE.md` (draft pipeline).
 - Digests: `docs/game/playtest-digests/` (`1772s` 85f8e6b4, `fed` f55d3e21, `gilded` f4c7c2c4); `docs/game/game-context.md`.
-- This batch: `docs/game/sources/3a9ac985-ampu-1948-playtest-continued-2004-and-beyond/` — chunk-001 (2004-08 start; BLUE=Dem/RED=Rep mapping, "Pres Cuomo," two-term-limit amendment), per-era "Welcome to" markers (chunks 003/007/011/015/020/025/029), chunk-032 (2004+ repeals of New-Deal/Cold-War statutes). No prior digest exists for this thread.
+- 1948-continued batch: `docs/game/sources/3a9ac985-ampu-1948-playtest-continued-2004-and-beyond/` — chunk-001 (2004-08 start; BLUE=Dem/RED=Rep mapping, "Pres Cuomo," two-term-limit amendment), per-era "Welcome to" markers, chunk-032 (2004+ repeals of New-Deal/Cold-War statutes).
+- "A House Divided" 1856 Part 2 batch (added this update): `docs/game/sources/77db6e6f-a-house-divided-1856-ampu-playtest-part-2/` — chunk-001 (1856 start; Buchanan 174/Frémont 114/Fillmore 8; BLUE=Dem/RED=Rep; the four factions incl. Crittenden Republicans w/ Lincoln); "Welcome to" era markers (1860-61 chunk-011, 1868 Gilded-Age chunk-031, 1892 Progressivism chunk-106, 1898-1900 chunk-126); partial-02 (chunks 11-20: Seward wins 1860; John-Brown's-Raid blunder → secession & Civil War engine; CSA pres Quitman); partial-03 (chunks 21-30: Seward re-elected 1864; Union victory; Reconstruction; Lincoln nominated 1868). Campaign spans 1856→1900.
