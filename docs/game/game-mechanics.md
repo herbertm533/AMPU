@@ -2484,6 +2484,33 @@ Rules where the **forum and the shipped engine genuinely disagree** (not just
    above) and the **per-era point-banking** model replacing the engine's bare era-flip
    ([§2.5](#25-era-boundaries--per-era-point-banking--the-new-era-boot-pipeline-designed-not-built)).)*
 
+*New in batch 5 (`drums`, all-CPU):*
+
+10. **Contingent-election rules don't exist** (POSTS 472-474). The GM **invented 5 rulesets
+    mid-thread** when no candidate reached an EC majority and the rulebook had no answer; all
+    5 variants favored Fillmore, so the GM picked momentum-based to keep play moving.
+    **MASSIVE design gap — author rules BEFORE build.** Cross-ref [§24.2](#242-62-contingent-house-election--tied-chamber-inverse-control)
+    (already documents the `hd` deviation: top-2 vs 12A top-3). The build needs (a) the
+    contingent-election path itself + (b) a stated top-2-vs-top-3 cutoff + (c) the tied-chamber
+    inverse-control rule. (`game-context.md` DH-6 + new DH-pointer.)
+
+11. **Veto override = 2/3 in BOTH chambers, NOT 60%** (designer ruling, `drums` POSTS 2180-2187;
+    60% was a bug, reverted). The shipped behavior must be verified — if a 60% threshold is
+    coded anywhere, fix to **2/3 each chamber** as the canonical rule. (Cross-ref the
+    [§25.6 legislation heuristic note](#256-legislation-voting-heuristic-nayayenay).)
+
+12. **Midterm elections should use full meter+enthusiasm presidential rules — Tyler's 6-way
+    test fix** (`drums` POSTS 299-304, confirmed CORRECT ruling). The shipped midterm code path
+    needs verification: the same meter→election bonuses, faction enthusiasm, and party-pref
+    terms used in `presGeneral` should drive midterm House/Senate contexts — not a stripped-down
+    resolver. (Pairs with the meter→election mapping work in [§22.1](#221-the-named-meter-bank--numeric-debt--crisiscascade).)
+
+13. **CPU AI architectural gaps** — the eight architectural CPU gaps documented at
+    [§25.15](#2515-critical-missing-cpu-logic-architectural-gaps) (no reciprocity / no meter-
+    guarding on event picks / static governor menu / cascading scandal sequencing hole / etc.)
+    are **not single-line rule fixes** but require new data structures and supporting passes.
+    Together they form the dominant CPU-AI replacement workstream.
+
 > **GM-confirmed design holes from `house-divided` (DH-3..DH-11 — point to `game-context.md`, not
 > re-documented).** Eleven balance/rules flags joined the gap log this batch (full text in
 > `game-context.md` → design-holes): **DH-3** career-track pols can still run for President;
@@ -2495,6 +2522,22 @@ Rules where the **forum and the shipped engine genuinely disagree** (not just
 > inconsistent (Command vs Admin/Gov/Justice); **DH-10** blundered implementations still score
 > "as if succeeded" unless a specific event overrides ([§14.1](#141-forum-design-layer-executive-actions-library-designed-not-built));
 > **DH-11** apparent Dem 3rd-party structural bias + lobby cards too inelastic.
+
+> **New design holes from `drums` (DH-12..DH-22 — point to `game-context.md`, not re-documented
+> here).** Sixteen new design holes joined the gap log this batch (see `game-context.md` →
+> design-holes): **white-peace rules MISSING** (no spec for negotiated peace); **bill ideology
+> impacts not era-aware** (Mods on negative side of Women's Suffrage in 1916); **small/large-
+> state action-impact multiplier uncodified**; **faithless-elector trigger undocumented + over-
+> aggressive** (8-elector defection produced 232-232 tie); **reapportionment cap 435 effectively
+> never triggers**; **convention interballot cap "impractical"** (house-ruled to be limited by
+> Command); **dark-horse compromise candidates dodge resignation rolls** (loophole); **cascading
+> scandal sequencing hole** (Hearst becomes President in days); **CPU cabinet 50/50 Admin-1
+> reject + lobby-maximizing selection bug** (36% confirmation rate, designer-acknowledged);
+> **contingent-election rules don't exist** (GM invented 5 rulesets mid-thread); **CPU has NO
+> reciprocity / vote-trading**; **CPU meter-guarding missing on scripted events**; **CPU
+> running-mate logic doesn't penalize ticket experience holes**; **CPU governor menu static + no
+> industry-stack awareness**; **CPU primary attack always hits highest-PV**; **CPU compromise-
+> candidate picker rigid highest→lowest** with no cross-faction coordination.
 
 > **Confirmed shipped bugs (fixes, not features).** Defects surfaced by the forum threads are
 > catalogued in `game-context.md` → "Confirmed shipped bugs" and owned by the roadmap as fixes.
@@ -3961,3 +4004,726 @@ two-home-state mechanic §22.10 already documents (one alt-state add → now up 
 
 *(designed, not built — make the draft rookie grant a tunable `{traits, altStates}` pair; the
 current best value is **3/3** (down from 5/5), pending a canonical decision.)*
+
+---
+
+## 25. CPU AI specifications (designed, not built unless flagged)
+
+> **Sourced from `drums` (`e1776bbd`, the all-CPU 1841→mid-1924 playtest).** Because the run
+> was all-CPU, it is the **first explicit record of CPU heuristics, thresholds, tie-breaks,
+> and design-holes** the multiplayer threads couldn't surface. Every subsection below has been
+> independently confirmed in earlier threads where noted; where this is the first explicit
+> forum statement, the rule is marked **(new in `drums`)**. Cite `drums#post N`. Cross-ref
+> `game-context.md` DH-12..DH-22 and the CPU-AI cluster in the gap log.
+>
+> **Shipped status:** the engine ships only **thin CPU stubs** — `pickBestForFaction` for the
+> draft (`phaseRunners.ts:33`), `pickAIResponse` for era events (`eraGraph.ts:88`),
+> `appointDelegates`/`electCCPresident` for the CC (`continentalCongress.ts:23, 116`),
+> `aiPickDelegate` for the First-CC builder (`firstContinentalCongress.ts:153`), and
+> `autoFillCPUVotes` for the Constitutional Convention (`constitutionalConvention.ts:81`).
+> Almost **everything in this section is designed, not built** — the rules below specify what
+> the CPU should do; the build today either does nothing in that phase or does a one-line
+> heuristic that disagrees with the spec.
+>
+> **Why this matters.** In a single-player browser game, the CPU IS the engine for ~9 of
+> the 10 factions. Without these heuristics shipped, the game's mid-to-late content
+> (conventions, cabinet confirmations, leadership races, legislation, conversions) doesn't
+> *work*, even if every individual phase runner does. The CPU-AI cluster is the highest-
+> leverage gap surface in the knowledge base — and it is also where the **forum drives the
+> build** most visibly: mid-thread the designer (`vcczar`/`Tyler`) live-patched the IRV CPU
+> (POST 3419), the ±3 ideology-swing cap (POST 4574), the 5%/half-term retirement-death
+> rate (POST 5437), and the deterministic Whig→"Conservative-Party" rename (POST 7406).
+
+### 25.1 Candidate selection (open seats, primaries, conventions) — the 75/25 rule
+
+> **The single most authoritative CPU-selection statement in the run.** All five threads
+> defer to this rule; `drums` finally gets it on paper (POST 143, Tyler).
+
+**Major candidate selection** (per faction, per open seat):
+
+| Roll | Pick |
+|---|---|
+| 75% | **Party leader** (the faction's PL) |
+| 25% | random Gov / Sen / VP / Former VP / Former Pres with **≥1 Command** |
+| fallback (no eligible candidate above) | **any random candidate with ≥1 Command** |
+
+**Minor candidate selection**: CPU **always runs one** minor — random member with **≥1 Command**.
+
+**Open Q (raised by Tyler, POST 143)**: should the 75/25 rule also apply to **faction-leader
+picks** (it currently runs only on presidential-major)? — unresolved.
+
+**Auto-major-candidate triggers** (POST 2210): a CPU **automatically runs a major** if the pol
+is the **incumbent**, the **faction leader**, or holds **Celebrity**. No other gates.
+
+**Primary-against-incumbent rule** (POST 1777): a CPU **never primaries an incumbent** unless
+the faction's ideology-enthusiasm is **"extremely unhappy"** (the bottom-most band toward the
+opposition). Iron-Fist + Leadership president blocks ALL same-party challengers at 90%
+(Passive 50% / else 75%, [§25.12](#2512-cpu-primary-ai-designer-acknowledged-under-tuned)).
+
+**Open-seat selection** (a 2-step filter, POST 1777, 1784):
+
+1. **State's preferred-ideology filter** picks a shortlist.
+2. **Random pick from the shortlist** with **Kingmaker-faction members getting a primary
+   bonus** that usually beats un-bonused stars (POST 1784: "3rd-best Red politician in the
+   game" Lincoln sat unused for cycles because he wasn't in a Kingmaker faction).
+
+**Stifle Competition** by a frontrunner at convention (POSTS 1841, 2244): rolls vs a **~90
+floor**. A faction's enthusiasm must clear a **~85 floor** for it to even produce a minor
+candidate.
+
+*(designed, not built — the 75/25 picker, the ≥1-Command gate, the Kingmaker-faction
+primary-bonus rule, the auto-major triggers, and the incumbent-primary block. Cross-ref
+[§25.4](#254-convention-cpu--per-ballot-momentum--interballot-menu--compromise-picker) for the
+convention layer.)*
+
+### 25.2 VP selection — NO retention logic (designer-acknowledged bug)
+
+> **The designer-acknowledged retention bug** (POST 167, Tyler): *"the CPU picked from the
+> faction with the lowest points that had a candidate not from the President's region. So it
+> was basically random. Was thinking maybe have a chance to keep a VP but make that more
+> likely to happen in the Nuclear Era and onward."* **The CPU has no VP-retention logic.**
+
+#### 25.2.1 The 8-element VP Assessment rubric (the canonical rubric)
+
+**Deterministic, published verbatim 4× in-thread** (POSTS 5159, 5556, 5983, 6380, 7275;
+earlier echoes 788, 1183, 1530, 2572, 2904, 3318, 4109, 4435). After the nominee picks the VP,
+score the **ticket** on **8 binary checks**; each yes = **+1**:
+
+| # | Check |
+|---|---|
+| 1 | VP is **from another faction** |
+| 2 | Ticket has a **Mod / Cons / Lib** |
+| 3 | Ticket members are **≥20 years apart** in age |
+| 4 | At least one ticket member is **≥50** |
+| 5 | At least one ticket member is **<60** |
+| 6 | Ticket is an **incumbent ticket** (same Pres+VP) |
+| 7 | **Exactly one** of the two is **"independent" / out of office** (excluding military) |
+| 8 | One ticket member from a **Big State**, one from a **Small State** |
+| 9 (rolled, not binary) | **Different regions** |
+| 10 (rolled) | **Obscure roll** d6 on VP: 5-6 → loses Obscure; 3-4 → keeps + adds trait; on Harmonious/Integrity skip the negative-trait grants |
+
+**Higher-scoring ticket = Party Pref +1 + dominant-ideology +1.**
+
+#### 25.2.2 Career-track + ideology-gap rules
+
+- **Career-track gate** (vcczar, POSTS 2227-2234): a VP can be **taken off career-track for
+  *appointment*** but **NOT for *election***. Hancock was rejected as VP because he was on
+  Backroom Track.
+- **2-ideology-gap between Pres/VP rule — UNDOCUMENTED**. Tyler (POST 3797): *"I'm not finding
+  it anywhere"* — Breckinridge (Trad) + Weaver (LW Pop) were allowed at a 4-step gap. Authored
+  intent may exist but isn't in the rules doc.
+- **Open Q**: dropping a VP with no penalty (Polk dumped Seymour, POST 1176) — should it cost
+  something? Unresolved.
+
+*(designed, not built — implement the 8-element rubric verbatim at convention close; add a
+VP-retention-chance curve (Tyler suggests "more likely Nuclear Era+"); keep the career-track
+gate (appointment YES, election NO); decide the 2-step Pres/VP gap rule.)*
+
+### 25.3 Leadership / Speaker / PPT — IRV-style bloc-vote tie-break ladder
+
+> **The most-corroborated CPU heuristic in the run, now nailed across 4+ maps** (§A.1.4,
+> §B "Leadership/Speaker IRV", §C.1.1; `drums` POSTS 604, 679-680, 847-851, 1010, 1158, 2657,
+> 2992-2994, 3170-3173, 3419-3422, 3596-3597, 3885, 3980, 4175-4177, 4322-4326, 4513,
+> 4667-4671, 4872-4877, 5014, 5272, 5841, 6099, 6448, 6623, 6747, 6828, 7349, 7500).
+
+**The CPU bloc-vote IRV tie-break ladder**:
+
+1. **Ballot 1**: each faction casts as a **UNIT** for its own/closest candidate.
+2. **Closest ideology** to the surviving candidate (random among ties).
+3. **Highest PV** (1st tiebreak).
+4. **Highest Legislative skill** (2nd tiebreak — Senate races especially).
+5. **Random same-party** (last resort).
+
+**Two live patches in-thread** (POST 3419, by Tyler/`vcczar`):
+
+- The **original CPU collapsed at ballot 3 with a random pick** (anti-climactic). Patch:
+  **continuous IRV-style elimination** — no collapse.
+- Patch refinement: **randomize only on FIRST elimination, not each CPU each round**
+  ("just too chaotic") → first-round-only random scramble; subsequent eliminations
+  deterministic.
+
+**3-inconclusive-ballot collective endorsement** (confirmed in 3 places: POSTs 5272, 5841,
+6099): *"After the third ballot, the CPUs all vote randomly for a candidate."* (POST 5841:
+"After 3 ballots no one is the winner so the CPUs all select Furnifold Simmons.") **Human
+factions do NOT auto-collapse** — they must manually endorse.
+
+**No reciprocity / vote-trading** (POST 4875, designer comment): *"Sadly for
+@matthewyoung123 the CPUs don't understand reciprocity."* No side-deals, no quid-pro-quo logic
+exists — confirmation/leadership votes swing 76-24 → 91-9 by faction discipline alone. This is
+an **architectural gap** ([§25.15](#2515-critical-missing-cpu-logic-architectural-gaps)).
+
+**Closest-ideology can flip leadership to the *minority* party** (POST 3419): Magoffin/Cons-Dem
+won PPT in 1880 when Tariff Whigs jumped to him after Sidney Clarke was eliminated. The
+ideology-tiebreak isn't party-bounded.
+
+**On-win effects (asymmetric)**:
+
+| Role | On win | On re-elect |
+|---|---|---|
+| **Speaker** | loses Obscure; gains Leadership + Legis+1 + Kingmaker (POST 3597) | Legis+1 + Magician (POST 3427) |
+| **PPT** | **nothing** (POST 3430) | — |
+
+**Party-leader internal-vote heuristics** (POSTs 86, 234, 338): each pol rolls **1d12 + skill**;
+runoffs with endorsements. **Lowest-score faction endorses lowest-score remaining candidate**;
+mid-tier factions endorse highest-PV; adjacent-ideology factions back closest ideology;
+**Harmonious+Integrity candidate auto-gets Kingmaker-faction backing** (POST 1019). Defeated-
+candidate endorse = closest ideology, then by score-tied lowest; endorsee gains extra d6.
+
+*(designed, not built — the IRV ladder with continuous elimination + first-round-only random
+scramble; the 3-inconclusive-ballot collective endorse; the on-win asymmetric grant table; the
+party-leader internal-vote d12 + endorsement runoff.)*
+
+### 25.4 Convention CPU — per-ballot momentum + interballot menu + compromise picker
+
+> **The thread's richest decoded subsystem.** Stable across many cycles (§A.1.3, §B, §C.1.8;
+> `drums` POSTS 426, 429-431, 769-786, 1152-1168, 1841, 2216, 2552-2566, 3294-3318,
+> 3688-3713, 3719, 3737-3766, 4063-4117, 4419-4441, 4779-4822, 5116-5118, 7229-7244).
+
+#### 25.4.1 Per-ballot momentum
+
+- Ballot-1 frontrunner who fails to win: **−1 Momentum**.
+- 2nd place: **+1 Momentum**.
+- Largest delegate gainer on later ballots: **+1 Momentum**.
+- Frontrunner who *never* wins → **permanent −1 in future primaries** (POST 4820 — Weaver).
+
+**Nominator speech roll**: 1d6 — 1 = **−1 Mo**, 2-4 = 0, 5-6 = **+1 Mo**. **Orator** upgrades
+start at 4 instead of 5.
+
+#### 25.4.2 Per-ballot inter-ballot menu (each candidate picks ONE per ballot)
+
+1d6 success roll allocates:
+
+| Action | Trigger / gate | Notes |
+|---|---|---|
+| **No action** | default | major factions w/ name recognition |
+| **Stifle Competition** | frontrunner | rolls ≤~90 floor |
+| **Appeal to Credibility / Integrity / Charisma** | matching trait + meter-in-crisis (Credibility variant) | 1d6 ≥5 = +1 Mo |
+| **Whip Party Into Compliance** | Party Leader (needs Leadership; 4-6 with Leadership trait) | +1 per Pliable faction leader (Iron Fist multiplies) |
+| **Presidential Promise** | offer cabinet / SC / VP / plank | target rolls vs **50** (25 for VP, 50 for cabinet); **Puritan auto-declines** |
+| **Kingmaker Interference** | external Kingmaker (not running) | 1d6 ≥5 = **−1 Mo to target** |
+| **Drop out + endorse** | always available | auto **+1 Mo to endorsee** |
+| **Influence Smoke-Filled Rooms** | **Kingmaker-gated** | |
+| **Rouse Convention with Lies and Propaganda** | Manipulative trait | |
+| **Request Ballot Shift** | any | re-roll delegate alignment |
+| **Call Rules Change** | **≥ ballot 5** | passes by **weighted-kingmaker vote** (POST 3719) |
+| **Will of the People** | (CPU-confirmed action variant) | — |
+
+**Rules-change votes use weighted-kingmaker vote** (POST 3719): each faction's weight ≈ its
+Kingmaker count (e.g. Whigs Tariff 4, FT 15, Business 13, Stalwart 16, Silver 13). Needs a
+majority of weighted kingmaker votes.
+
+#### 25.4.3 Compromise at ballot 10 (rigid highest→lowest picker)
+
+> **Invented in-thread by Tyler (POST 3719) → became the canonical rule.**
+
+- Each calling faction picks ONE eligible **compromise candidate from another faction in
+  their ideology cluster** (Mod picks from Cons/Mod/Lib).
+- **Random within the picked faction.**
+- **Lowest-score faction picks first, locks their pick** — then the **rigid highest→lowest
+  faction-points picker order** (confirmed POSTS 7229-7244: *"Radical Whigs will pick your
+  faction only if you select from the Wall Street Whigs, otherwise they will choose between
+  them"*). **No cross-faction coordination.**
+- Compromise candidates **absorb delegates of originals**; originals **drop out after one ballot**.
+
+#### 25.4.4 Dark horse at ballot 25
+
+POST 3719: Party Leader picks an **eligible candidate from the lowest-scoring faction**;
+auto-nominated. (Dark-horse compromise candidates dodge resignation rolls — house-ruled
+retroactive, POSTS 7257, 7263 — a **logged loophole**.)
+
+#### 25.4.5 Stuck-convention pathology — the 11-ballot deadlocks
+
+> **Critical design hole — NOT implemented.** No auto-drop-out fires after 2-3 ballots of
+> 0 Momentum. Result: **10-13 ballot deadlocks** in practice.
+
+- **Whig 1852 went 11 ballots → Broom is compromise → loses to Polk.**
+- **Whig 1856 went 11 ballots → Anthony Ellmaker Roberts of PA.**
+- Players proposed CPU should auto-drop-out after **2-3 ballots of 0 Momentum** (POST 1162).
+  **NOT implemented** — current behavior produces deadlocks. **OPEN.**
+
+#### 25.4.6 Other convention CPU behaviors
+
+- **Kingmaker delegate-math undecided** (POST 1949): GM toggles between "d6" and "d6 + kingmakers"
+  for endorsement bonus "to counterbalance someone running the table with kingmakers." **Formula
+  undecided.**
+- **Pineapple Primary** (POSTs 2562, 2888, 3690, 5515-5520): a random presidential candidate is
+  shot at the convention. **Lethality d100 ≤ 50 = killed** (Grant 1872; Tweed 1876 33/50;
+  Cornelius Bliss 1884; Yates 1900). VP succeeds; Holcomb (3rd-party Labor Dem) becomes the
+  **first 3rd-party-elected President** via this path.
+- **Kingmakers refuse to endorse** politicians with **Lowbrow / Easily Overwhelmed / Unlikable**
+  — corroborated across cycles (§B, §C.1.2).
+- **Unanimous shortcut**: if only 2 candidates and one offers VP to the other & it's accepted
+  **before voting**, ballot 1 is unanimous (POST 4420 — Cumback/Fenton).
+- **CPU running-mate logic does NOT penalize ticket experience holes** (POST 7249): CPU-Taft
+  picked CPU-Hughes (both Justices, no prior electoral run); Tyler flagged as *"weird strategy."*
+- **Anti-frontrunner "lowest score" preference in PL endorsements** (POSTs 5642, 6119, 6247):
+  defeated CPU faction leaders endorse via **{closest ideology → highest PV → lowest score as
+  underdog/anti-frontrunner check}**. Late-round consolidation deliberately biases the underdog.
+
+*(designed, not built — the whole convention CPU subsystem. The shipped 2.9.2 is a one-line
+"log ratification" ([§15.2](#152-the-election-phases)); the above is the spec. Top priority for
+the build given it produces 11-ballot CPU-deadlock pathologies today.)*
+
+### 25.5 Cabinet confirmation — designer-acknowledged bug (36% of 88 nominees passed)
+
+> **The #1 designer-acknowledged broken system in the run.** Tyler's audit (POSTS 4702-4708):
+> *"Of the 88 nominees that needed confirmation, the CPUs voted down 40 (45%) in committee.
+> Of the 48 that went to full Senate vote, 32 (67%) passed. Overall only 36% of nominees that
+> needed confirmation got confirmed."*
+>
+> **vcczar response** (POSTS 4703, 4707): *"The chance of CPU voting against a cabinet nominee
+> is supposed to be really low. I added that rule to avoid this... I don't know what happened
+> to those rules. I'll fix them when Anthony needs them if someone marks it on the rules for me."*
+>
+> → **The "low chance to reject" rule was lost from the rules doc.** Engine-side fix required:
+> default-AYE baseline with low-% reject from opposition, modified by trait.
+
+#### 25.5.1 The two reinforcing failure modes
+
+**(a) 50/50 Admin-1 "inexperience reject" trap** (POSTS 867-876, 2494, 2663, 2792, 3023):
+
+- Admin-1 nominees roll **50/50** in committee.
+- Whig minority auto-NAY + 50/50 Dem NAY = guaranteed fail.
+- Polk's Postmaster/Interior cascaded **4 times** (Whiteaker, Wells, Bigler, Douglas, Davis,
+  Scott, Tilden).
+- **Only Integrity clears** the trap (Douglas auto-confirmed).
+- **Switching to a 2-Admin (Payne) breaks the cascade.**
+
+**(b) Lobby-maximizing selection rule picks Admin-nobodies** (POSTS 1607-1608, 1614-1626):
+
+- CPU cabinet-pick rule = **"most appeased lobbies, nets out already-satisfied lobbies."**
+- There is a **fixed priority order** for which cabinet seats fill first; later picks subtract
+  already-appeased lobbies.
+- **Result**: Granger's cabinet AI ignored all his high-Admin people and picked **1-2 Admin
+  nobodies** who held the right cards — Whig-controlled Senate refused to confirm **6 of ~11**.
+- **The two bugs reinforce each other**: the lobby-maximizer routes to Admin-1 picks; the
+  50/50 Admin-1 trap then kills them.
+
+#### 25.5.2 Iron-Fist Maj Leader + Pliable Pres feedback loop (POSTS 4896-4900)
+
+> Pres Gary is Pliable → 50% chance every nominee is picked by Sen Maj Leader **Orth (Iron
+> Fist)**. Orth then **forces confirmation votes** on his own picks.
+>
+> ebrk85: *"Please tell me these aren't the same pols Orth hand-picked himself"* —
+> Tyler: *"Based on the rules as written, yes."*
+>
+> **Designer ruling** (POST 4900): *"Then we change it! Should be no different than how a
+> President's faction votes on its own appointees (AYE to all)."*
+>
+> → **Engine TODO**: when same actor selects AND triggers vote, **auto-AYE that bloc**.
+
+#### 25.5.3 Other CPU cabinet behaviors recovered
+
+| Rule | Detail | Source |
+|---|---|---|
+| Cabinet refusal rolls | Senators in leadership posts roll to refuse lateral move (threshold ≤75 — Calhoun 92/75 → accepts) | POST 235 |
+| Former-secretary refusal | State/Treasury/War/AG former-secretaries **auto-decline Ambassadorial** | POST 885 |
+| Partial-accept | Bancroft 7/25 accepts Russia | POST 707 |
+| Replacement appointees do NOT gain skills/traits | (1960-playtest loophole) | POST 421 |
+| Cabinet retention cap = 5 | retained (cabinet + cabinet-level + ambassador) | POST 1436 |
+| PM Gen requires Kingmaker + same party as Pres | | POST 3037 |
+| Key Advisor requires Admin 3+ | **Master Kingmaker forced to Key Advisor regardless of Admin** — flagged Open Q | POSTS 2807, 5658-5660 |
+| Sec of State pinnacle rule | Anyone who has served SecState refuses any other appointment **except SecState again** | POST 4779 |
+| Region-coverage penalty | any of 5/8 regions absent from cabinet → **−1 in next presidential election** in that region | POSTS 2498, 2668, 3050, 3903, 4006, 4368, 5290 |
+| Egghead suggestions = **TIEBREAKER ONLY** | Pres usually goes with cabinet majority; Pres **overrides** on personal ideology (Pendleton overrode 3-Aye-1-Nay on Iceland/Alaska); **Uncharismatic** Pres: shown but ignored; **Pliable** Pres: cabinet majority decides | POSTS 3906, 4016, 4242, 4377-4380, 4569, 5066 |
+| Recommendation-rejection blowback | **Disharmonious** members **25% resign in protest** if Pres ignores them (Calhoun resigns over spoils); **Puritan/Disharmonious 50% resign-on-override** (Slidell 10/50) | POSTS 297, 409, 414, 904, 1053 |
+| Failed-nominee penalty | **−1..−3 Party Pref + Controversial** — designer-flagged too harsh; **proposed fix**: only apply to 5-Admin / certain-trait nominees | POSTS 1655-1661 |
+| Confirmation-failure blame | **25% Maj Leader / 75% Speaker** (or 25% Pres); 50% blame distribution applied; if so, equally split Pres vs Senate | POSTS 6262, 6311, 4541 |
+| NAY-voter Controversial gain | **20% chance** to gain Controversial unless already Integrity/Controversial (applies to ALL NAY voters) | POSTS 4541, 4552, 5049, 5063 |
+| Lifetime cabinet ban + permanent −1 election malus on **failed-Controversial nominees** | (Delano, Cole; Blaine; Sanford Church >60% EC loss) | POSTS 2497, 2106, 2271, 2794 |
+| Max 3 cross-party in cabinet | | POST 6475 |
+| Outgoing cabinet cannot move laterally | | POST 6267 |
+| Mandatory retirement at 75 | (military officers) | POST 6469 |
+| Harmonious Maj Leader skips hearings | for non-top-4 cabinet; top-4 (AG/State/Treasury/War) still get committee + floor | POST 7377 |
+
+#### 25.5.4 Replacement chain after failure
+
+- **Committee-stage fail = no blame phase** (POST 4709).
+- **Full-chamber fail = Pres + PPT (or Sen Maj Leader) jointly pick.**
+- **PPT presents 5 alternatives → replacements auto-confirmed** (no 2nd vote).
+- Compromise nominees need **3+ Admin** and **"not Controversial"** (implicit CPU autoconfirm heuristic).
+
+**Cabinet enthusiasm-via-lobbies overwhelms presidential signal** (POSTS 877, 880): Matt appointed
+3 Moderates and Mod enthusiasm moved **+3 the OTHER direction** because cards trump individual
+ideology. Designer wants ±3 to ±5 cap; **partially patched POST 4574** — Tyler's **±3 cap on
+per-phase ideology swings** ("Since ideologies can swing wildly here with the cards, I'll put a
+cap of a swing of three like the cabinet"). Mods swung +7 raw → capped at +3.
+
+*(designed, not built — replace the lost "low chance to reject" rule; fix the 50/50 Admin-1
+trap; add the lobby-maximizer Admin/competence weighting; implement the Iron-Fist+Pliable
+auto-AYE rule; add the full replacement chain + PPT-5-alternatives auto-confirm; the ±3 swing
+cap is now live.)*
+
+### 25.6 Legislation voting heuristic (NAY/AYE/NAY)
+
+> **The canonical CPU rule, multiplied across the arc.** Already summarized inline at the end
+> of [§12.3](#123-263-floor-votes--runphase_2_6_3_floor-phaserunnersts3498). Full picture:
+
+1. Bill helps **opposition Pres**'s meters/election? → **NAY**
+2. Gives points to **my ideology / lobbies**? → **AYE**
+3. Otherwise → **NAY by default**
+
+**Other CPU behaviors that ride on top** (POSTS 933, 2006, 2161, 2180-2187, 2523, 2842, 1683,
+1835, 1350):
+
+- **Crisis bills**: when a meter is in crisis, proposals are tagged **(Crisis Bill)** — CPU
+  prioritizes; **failed crisis bill still carries penalty** (POSTS 2525, 3122, 3129).
+- **Disallowed proposals**: a faction CANNOT propose a bill that COSTS points to one of its own
+  cards (mid-stream GM rule, POSTS 2530-2531, 2851 — current bills don't check this).
+- **Repeat-proposal rule informal** (POST 2842): can't re-propose a bill passed within recent
+  cycles — flagged by Tyler as informal.
+- **Bills must be checked against proposer's own cards** (POST 933) — currently slips through.
+- **Proposal-validity checker must look at active amendments** (POST 2006): "Apply Existing
+  Civil Rights to Former Slaves" auto-proposed after 14A made it invalid.
+- **CPU optimizes meter math not theme** (POST 1683): with Dom Stab as only crisis, CPU
+  proposed *"Grant States Power to Secede"* because it had a 25% Dom-Stability boost — comedic
+  but reveals the engine.
+- **Veto override = 2/3 in BOTH chambers, NOT 60%** (POSTS 2180-2187, designer ruling; 60% was
+  a bug, reverted) — **must verify shipped behavior**.
+- **Amendments can't be packaged with bills** (POST 1835).
+- **Vetoing a statehood bill**: −250 pts, −2 Party Pref, state's bias shifts +1 toward
+  opponent when admitted (POST 1350).
+
+**Filibuster as deterministic per-Senator** — fully covered at the end of
+[§12.6](#126-forum-design-layer-filibuster-designed-not-built).
+
+*(designed, not built — encode the 3-rule NAY/AYE/NAY ladder; add the proposer-cards
+self-check; the amendment validity check; the veto-override 2/3-both-chambers gate; the
+informal repeat-proposal cooldown.)*
+
+### 25.7 Scripted A/B/C event cabinet voting
+
+> **The pattern Cabinet members use to vote A/B/C on scripted era-event dilemmas.** Counts
+> map **explicitly** to ideology + lobby cards (POSTS 6501, 6503, 6504, 7406, 7524).
+
+| Ideology / lobby card | Preferred option |
+|---|---|
+| **Globalists / Moderates** | **A (intervene)** |
+| **Isolationists / Conservatives** | **B (block)** |
+
+**Examples**:
+
+- Mexican Revolution: split by Mod/Lib (A) vs Cons/Mod (B).
+- Zimmermann Telegram: 3-2 by Globalist/Mod (A) vs Isolationist/Cons (B).
+- Fascist Movement: Page+Hoover (A), Baker+Pleasant (B), Stimson+Mellon (C).
+
+**President's ideology can FORCE a pick** (POSTS 6663, 6720):
+
+- Pres Pattison *must* select the rejectionist option on Coxey's Army.
+- Nationalist trait made Stimson Doctrine "no go."
+
+**Cabinet recommendations are scored**; Pres picks the option that scores best against the
+cabinet (POSTS 7406, 7524).
+
+**Event-resolver mapping is UNDOCUMENTED** (POST 3642): *"Unclear who the cabinet member is so
+I'm going to pick Sec of Interior"* — the scripted-event→cabinet-role mapping is unspecified;
+GM defaults to a reasonable choice.
+
+> **Critical missing logic: NO meter-guarding on scripted-event options** (POST 6280, §C.1.11).
+> Under Roosevelt, both Quality-of-Life and Economic Stability **crashed to crisis
+> simultaneously**: *"Internationalist + Pro-Federal-Government + Advocate New Freedoms
+> triple-stack"* tanked all meters with no AI penalty. CPU should not stack 3 effects that all
+> drive the same meter into crisis. See [§25.15](#2515-critical-missing-cpu-logic-architectural-gaps).
+
+*(designed, not built — the ideology/lobby-card → A/B/C mapping + score-against-cabinet
+selector + president's ideology-force; the scripted-event→cabinet-role lookup; a
+meter-guarding term that down-weights options stacking into an already-bad meter.)*
+
+### 25.8 Conversion AI — deterministic %-rolls with Pliable + ideology-adjacency gating
+
+> **Two-layer model corroborated across the entire arc** (§A.1.6, §B "Conversion AI", §C.1.4;
+> `drums` POSTS 79, 213, 215, 1254, 1419, 1923, 1925, 2459, 2487, 2633, 2974, 3162, 3406-3410,
+> 4498-4499, 4641-4642, 4859, 5002, 5004, 5079, 5251, 5400, 5843, 6429, 6610-6614, 7330, 7472).
+
+#### 25.8.1 Layer 1 — Disgruntled auto-flip (deterministic, no roll)
+
+Pols whose ideology is **maxed +3 for the opposite party** flip at half-term to **the
+receiving party's faction that holds the matching ideology card** (POST 1419 — GM ruled "most
+aligns" = active cards, not raw label). Free for receiving faction.
+
+- **Whig LW Pop / Prog / Trad / RW Pop** can flip to Dems.
+- **Mod / Cons Dems** can flip to Whigs.
+- **"If no eligible pols, nothing."**
+
+#### 25.8.2 Layer 2 — Active poach (rolls + gates)
+
+| Actor | Base rate | With adjacency / bonuses |
+|---|---|---|
+| **Party Leader (cross-party)** | 10% (Pliable) +5% (same-ideology) → ~15% | Pres+Manipulative observed at **43%** |
+| Mod PL | 5% base | cross-party penalty |
+| LW Pop PL (Weaver) | 15% | **25% if target is LW Pop** |
+| Faction Leader (inter-party) | 10% base | **20% if target Moderate**; up to **48% with Kingmaker buffs** |
+| Master-Kingmaker tier | **43%** | — |
+| Roosevelt as Lib Whig PL | **48%** | **58% if target Lib** |
+| Pattison as Mod FL | 10% (×2) | **20% if target Mod** |
+| Elihu Root TW leader | 33% (×2) | — |
+| **Iron Fist** | **3 attempts** | (Sam Houston, POST 1763) |
+
+#### 25.8.3 Restrictions / immunities
+
+- **Harmonious / Passive / Predictable** faction leaders **cannot convert at all**.
+- **Manipulative** blocks a faction leader from converting (POST 1923). **Manipulative cannot
+  TARGET Manipulative** (POSTs 2459, 2633, 2974).
+- Cannot target own party; cannot target Abolitionist / Radical (POST 1254); cannot target
+  **Pres / VP / Cabinet / Speaker / Leader / Whip / FactionLeader / President**.
+- Cannot target **Harmonious** (POST 2633), **Trad Dems** (era-specific), **Pliable own-party**,
+  or factions at **+3 enthusiasm in either color** (POST 4580: *"His faction is immune to
+  conversions due to high enthusiasm"*).
+- **Targeting restrictions rotate by era**: 1880 Whigs cannot target Silver Whigs; Dems can only
+  target Mod Dems + Lib Repubs.
+- **Targets must be Pliable AND same-or-adjacent ideology** (POSTs 4310, 4313-4315 —
+  player-disliked new rule).
+
+#### 25.8.4 Failure side-effects
+
+- Target **loses Pliable** (POST 3162, Fessenden).
+- Can flip the *roller's* Pliable → Integrity (POST 3873 — Curtis vs Hamlin).
+- Survivor often gains Integrity (POST 5002 — Edwin Dun).
+
+#### 25.8.5 Collision bug
+
+> **Multi-faction CPU collisions confirmed.** §A.1.6, POSTS 79, 215. OrangeP47's complaint:
+> *"The 'target highest scoring faction pliable logic' is really causing issues with factions
+> picking the same people so I'm just chaining it."* **Multiple CPU factions all greedily
+> target the same opponent.** Needs better tie-break.
+
+**Kingmaker conversion cascade**: protégés follow their Kingmaker unless Puritan;
+**faction-leader protégés do NOT convert** (POST 5619). **Kingmaker-flip grabs the protégé(s)
+— "insanely OP"** (already DH-5; reconfirmed).
+
+*(designed, not built — the 2-layer (auto-flip + active poach) model; the rate table; the
+Pliable+adjacency gate; the failure-bounce side-effects; a tie-break for multi-faction
+collisions.)*
+
+### 25.9 Iron Fist — the overloaded trait (designer-flagged to split)
+
+> **The single largest CPU lever in the thread**, doing **≥6 distinct things by office**.
+> Designer-flagged: Iron Fist is doing TOO much; **should split into distinct traits**
+> (POST 3241 implied; reconfirmed §B, §C.1.6; `drums` POSTS 2511, 2784, 3241, 3660, 4896-4900,
+> 5353, 6293, 6471, 6568, 6703, 6852, 6881, 6907, 6912, 6922, 7012, 7224, 7364).
+
+| Office holding Iron Fist | Effect |
+|---|---|
+| **Party Leader + Honest-Gov-maxed** | Controls **ALL** gubernatorial actions for all same-party govs across factions (Granger + Estabrook simultaneously; Speed/Whigs 1878+) |
+| **Sen Maj Leader** | Forces committee votes + **forces confirmation votes on his own picks** (POST 4896 Orth); **Iron-Fist Maj-Leader auto-cloture** for majority items (POST 5920); **forces chamber to vote how he votes in committee**; **requires confirmation votes on EVERY nominee** outside own faction or retentions (POST 6471). **Pres Harmonious does NOT trump this** (DH "We need a new rule then. Lol." POST 7012). |
+| **President** | Stifles challengers (**~90%**); **90% fires officers** (20% MilPrep −1 risk per fire); **compels SCOTUS justices' votes** (POST 3660 — Cobb compels all Dem justices to Nay on Strauder v West Virginia, flips 7-2 Aye → 4-5 Nay); shares cards with allied factions (except Puritan leaders). Pres IF + Kingmaker can also block challenges except from lowest-enthusiasm factions. |
+| **Loans-from-Wealthy policy + IF PL** | Temporarily controls **all of his party's governors** (POST 2433) |
+| **Convention PL** | Can **unilaterally set ballot threshold rules** at convention **WITHOUT faction vote** (POST 7224 La Follette 2/3 backfired) |
+| **Military leaders** | Iron Fist required to **replace military leaders mid-war** (POST 5353) |
+| **Trinity-leader (Pres + PL both IF + both have cards)** | PL *"shares one of his cards with his party other than Puritan leaders"* (POST 2784) |
+| **Iron Fist Pres + Iron Fist Sen Maj Leader** | Pres IF doesn't override Sen Maj Leader IF on confirmations — *"We need a new rule then. Lol."* (POST 7012) |
+
+> **Designer-flagged to split.** The trait does too many distinct things; should become a
+> family of narrower traits keyed by office (e.g. "Stifle Competition" for primary blocking,
+> "Force Vote" for chamber compulsion, "Compel SCOTUS" for court compulsion, "Fire Officers"
+> for military mid-war replacement). Cross-ref `game-context.md` design-holes — DH-9-adjacent.
+
+*(designed, not built — split Iron Fist into distinct office-keyed traits; document the
+Pres-IF-vs-MajLeader-IF tiebreak; codify the 90% officer-fire + 20% MilPrep-risk; the
+unilateral threshold-set at convention; the cross-faction PM-General-style takeover via
+Loans-from-Wealthy.)*
+
+### 25.10 Faction-leader replacement — 4-condition removal
+
+> §B "Faction-leader replacement", §C.1.15; `drums` POSTS 226-227, 337, 354, 519, 2481, 2622,
+> 2786, 2483-2484, 2653, 5033, 6836-6845.
+
+**Must-boot leader (probabilistic)**:
+
+| Condition | Removal % |
+|---|---|
+| **Lost last presidential election** | 25% |
+| **Lacks Charisma** (and rival has it) | 25% |
+| **Uncharismatic / Lackey / Easily-Overwhelmed** | 50% |
+| **Incompetent** | 100% |
+| **Disharmonious / Incoherent** | Triggers consideration too (POSTS 2622, 2786) |
+| **Obscure** (when valid non-Obscure alts exist) | per §A.1.16 |
+
+**Hard gates (cannot replace if)**:
+
+- Replacement must hold an interest/lobby card matching faction's cards (POST 2483-2484:
+  Pierce Dems wanted Tilden — no Expansionist/Media match → forced keep).
+- Career-track members cannot be selected (POST 2653 — "first choice on career track so skipped").
+- Speakers cannot be protégés (POST 2766).
+
+**Stagnation bug** (POST 5033, designer-acknowledged): *"Right now they kinda pick someone and
+hold onto them even if better options come up."* **No mid-term swap when a better candidate
+appears.**
+
+**Negative-trait cascade bug** (POSTS 3610-3617): the 1882 Dem cycle gave all 5 leaders
+NEGATIVE traits (Leslie→Predictable, Cobb→Easily Overwhelmed, Cockrell→Incoherent, Parker→nothing,
+Davis→Incoherent). Matt: *"I hate your dice man."* **No positive-trait floor.**
+
+**Faction-leaders who secede must be replaced** (POST 1649): Pop Sov Dems → **Copperhead
+Democrats**; Conscience Whigs → **Abolitionists** (POST 856).
+
+*(designed, not built — the 4-condition removal table; the hard-gate cascade (card-match +
+not-on-track + not-protégé); a mid-term swap rule when a better candidate appears; a positive-
+trait floor preventing all-negative-leader cycles.)*
+
+### 25.11 Kingmaker / endorsement preference rules
+
+- **Kingmakers refuse to endorse** politicians with **Lowbrow / Easily-Overwhelmed / Unlikable**
+  — corroborated multiple times (§A.1.3, §B, §C.1.2).
+- **Anti-frontrunner "lowest score" preference in PL endorsements** (POSTs 5642, 6119, 6247):
+  defeated CPU faction leaders endorse via **{closest ideology → highest PV → lowest score
+  underdog}**. Late-round consolidation biases the underdog.
+- **Kingmaker delegate math undecided** (POST 1949): GM toggles between "d6" and
+  "d6 + kingmakers" for endorsement bonus. **Formula undecided.**
+- **Age 35 required for Kingmaker role** (POSTS 80, 514, 1002) — **routinely violated** in the
+  shipped behavior.
+
+*(designed, not built — the trait-refusal filter on Kingmaker endorsements; the
+closest-ideo → highest-PV → lowest-score underdog ladder; pick a final formula for the
+Kingmaker endorsement bonus; enforce the age-35 floor on Kingmaker role assignment.)*
+
+### 25.12 CPU primary AI (designer-acknowledged under-tuned)
+
+> **The designer's own admission** (§C.1.7, POST 7135 — Tyler): *"I have tweaked how the CPU
+> selects these actions to make them smarter… right now you can curb stomp the CPU bc it is
+> simple and not always optimal when there is a clear answer."*
+
+**Fixed action template** per candidate per state group (Speech + Campaign Focus + Attack
+Rival + sometimes Embrace Local Issue + sometimes Presidential Promise). Each rolls 1d6 + trait
+gates (POSTS 7135, 7154, 7173, 7184, 7195, 7207):
+
+| Action | Effect |
+|---|---|
+| **Campaign Focus** | Charisma / Likable on 4-6 → +1 state; Celebrity+6 → +2 |
+| **Speech** | Orator +1; Orator+6 → +2 |
+| **Attack Rival** | Orator (state) / Debater (group) → −1 / −2; **roll of 1 backfires** (−1 to self) |
+| **Embrace Local Issue** | 25% / 50% vs state's preference profile |
+| **Scandal Rolls** | 1d6 before each group; Controversial = 2nd roll; **Integrity skips**; Teflon halves; Propagandist can avoid (POSTS 5129, 5174, 5514, 5523) |
+
+**CPU attack target = highest-PV rival of opposite faction regardless of context** — no
+underdog logic (Estella attacks Pershing repeatedly when Pershing is the runaway frontrunner).
+
+**Pre-primary "Frontrunner" rule** (POSTS 5126, 7169):
+
+- Out-of-power party → **Party Leader is the frontrunner**.
+- In-power party → faction running a major with the highest points.
+- Frontrunner determined by **Party Leader's faction** — can hurt CPU when the PL's pol is weak.
+- Once primaries exist (Primary Era, [§24.3](#243-63-primary-era--state-opt-in-primaries--presidential-primary-groups-15)),
+  the **primary winner is the frontrunner**, overriding the PL bonus (POST 6754).
+
+**Presidential-promise acceptance** (POSTS 7173, 7184): target only accepts a withdraw-for-cabinet
+bribe **if they hold less than half the delegate target needed to win**. **Hard rule.**
+Acceptance rolls separately on ~0-100% scale modified by faction relationships (e.g. 63/50, 67/50).
+
+**Broke roll** after debates/scandal: 1d6, **5-6 → drop out** (POSTS 5132, 5523); withdrawing
+candidate's endorsement = **+1 Mo to target**.
+
+**Primary state grouping** (POSTS 5708-5732): **Groups 1-3 cap at 3 primaries each** —
+**implementation undocumented**; forum invented "pre-5 all in Group 1, then round-robin into
+4-5 once 1-3 fill."
+
+**Era trigger inconsistency** (POSTS 6754, 6755, 7163, 7165): **McGovern-Fraser legislation
+requires 15 states to have primaries first**; **Women's Suffrage 1920 triggers all states to
+have primaries** — flagged as inconsistent.
+
+*(designed, not built — improve CPU primary AI: context-aware attack targeting (prefer rival
+nearer to candidate vs runaway leader); a smarter frontrunner determination that doesn't lock
+to PL's pol when the PL is weak; document the Primary-Group cap rule (3 per group 1-3, then
+round-robin); reconcile the McGovern-Fraser vs Women's-Suffrage activation rules.)*
+
+### 25.13 Faction-rename rule — Whig auto-rename to "Conservative Party" (deterministic)
+
+> **New deterministic rename rule surfaced in `drums`** (§C.1.9; POST 7406). The rule shape is
+> documented so the build can encode it and add more like it.
+
+**Triggers ALL of**:
+
+1. **No Republican Party exists.**
+2. **Red Party leader has the Protectionist lobby card.**
+3. **Blue Party has won 3 presidential elections in a row.**
+
+→ *"The Conservative Party is formed."* New faction names auto-generated by appending
+"Conservatives" (Conservative Conservatives, Moderate Conservatives, Wall Street Conservatives,
+Liberal Conservatives, Progressive Conservatives). GM admits these are *"kinda stupid/silly"*
+(POST 7407) — **lazy default, needs a configurable name pool**.
+
+**Other rename triggers logged** (§B "Faction-rename rule"; §C.1.15):
+
+- Leader gained Easily Overwhelmed → rebrand (POST 5844 Wall Street → Justice Whigs).
+- Leader of wrong ideology → rebrand (POST 5846 Trad Dems → Bourbon Dems).
+- Identity loss → rebrand (POST 6110 Justice Dems → Dewey Dems).
+
+**Antebellum examples**: Wall Street Whigs → Clay Whigs → Dixon Whigs → Clay Whigs
+(POSTS 87, 226, 337); Agrarians → Populist Dems-RW (POST 233).
+
+**Other deterministic rename triggers (cross-era):**
+
+- **Pop Sov Dems → Copperhead Democrats** on faction-leader secession.
+- **Conscience Whigs → Abolitionists** on faction-leader secession (POST 856).
+
+*(designed, not built — encode rename triggers as **predicate → name-generator** pairs; a per-
+era authored names table + configurable name pool; the deterministic 3-condition trigger above
+is the canonical shape for the build to instantiate. Cross-ref [§20.2](#202-the-10-faction-roster--per-era-nickname-relabel-fed-2-24-140-184).)*
+
+### 25.14 Long-term Justice ideology drift (the canonical drift rule)
+
+> **First disclosed verbatim in §C.1.10, POST 7533.** Already cited as a sharpening note in
+> [§22.7](#227-scotus-subsystem-253--282); the full canonical rule:
+
+**Every 10 years on the Court**, each Justice rolls:
+
+| Roll | Effect |
+|---|---|
+| **25%** | Shift one step toward the **middle** |
+| **10%** | Shift one step **left** |
+| **5%** | Shift one step **right** |
+| (else) | No shift |
+| **Puritan trait** | **Blocks all shifts** |
+
+Justice Hughes had already flipped factions twice on the Court (POSTS 6815, 6977) before this
+rule was stated explicitly — the build was already applying *something* but it wasn't on paper.
+
+**Other SCOTUS CPU heuristics** (§A.1.13):
+
+- **"Votes Ideology" default**; **"Votes Cards" if case touches Justice's faction's lobby
+  cards** (overrides).
+- **Sway**: Debate / Manipulative attempts; **Integrity / Passive abstain** from being swayed.
+- **Compelled Justice retirement** (POST 1142): Manipulative Pres can compel **1 justice** of
+  either party to retire on d6 5-6 (~33%).
+- **2 cases / half-term**; CJ can **delay a case**.
+- **5-5 tie → lower court ruling stands** (Dred Scott 4-4 POST 726; randomized if not given).
+- **Disputed electors** (POST 462): SCOTUS rules; **Integrity NOT consulted**.
+- **Iron-Fist Pres compels cross-party justices without Integrity to vote Nay** (POST 3660 —
+  Cobb compelled all Dem justices on Strauder).
+- **Sway = ONE vote per swayer + only if initial vote not unanimous** (POSTs 4591, 4741, 5079).
+
+*(designed, not built — the 25%/10%/5% mid-left-right drift per Justice every 10 yrs with
+Puritan block; the votes-ideology vs votes-cards default-and-override; the d6-5-6 Manipulative-
+Pres compelled-retire; the per-vote sway-only-if-not-unanimous rule. Cross-ref
+[§22.7](#227-scotus-subsystem-253--282).)*
+
+### 25.15 Critical missing CPU logic (architectural gaps)
+
+> **§C.1.11-1.14, multi-confirmed across the arc.** These are the gaps the build **must own**
+> as architectural CPU work — not rules tweaks. Cross-ref `game-context.md` DH-12..DH-22.
+
+| # | Gap | Symptom | Architectural reason |
+|---|---|---|---|
+| 1 | **No reciprocity / vote-trading** | Confirmation/leadership votes swing 76-24 → 91-9 with **zero side-deals** (POST 4875). | CPU is pure faction-discipline; there is no agent-to-agent negotiation layer. |
+| 2 | **No meter-guarding on scripted-event picks** | Under Roosevelt, both Quality of Life and Economic Stability crashed to crisis simultaneously: *"Internationalist + Pro-Federal-Government + Advocate New Freedoms triple-stack"* tanked all meters with no AI penalty (§C.1.11, POST 6280). | CPU evaluates each event option in isolation; doesn't track whether stacked effects all drive the same meter into crisis. |
+| 3 | **No cascading-event smoothing** | Estella scandal → VP forced to resign → Pershing replaces with Hearst as VP → Pershing scandal one event later → Pershing resigns → **Hearst becomes President within days** of becoming VP (§C.1.14, POST 7389). | Cabinet-replacement chain resolves 3-deep in one event; no per-event smoothing for back-to-back at-most-once events. |
+| 4 | **Governor menu static; no industry-stack awareness** | Fixed menu lookup mapped to faction identity (Theocrat → Prohibition / Abortion / Ban Evolution; Mining-state → Improve Mining; Liberal/Prog → Strengthen Labor Unions; Whig-Cons → Weaken Labor Unions; Reformist → Allow State Primaries; Transportation experience → Build Railroad; Big-Ag → Major Irrigation). **No awareness of state's existing industry stacks** — Improve Industry in a state already at 10/10 **fails silently** (§C.1.13). | CPU governor picks an action by archetype rule, never reads state's current industry levels or active policy flags. |
+| 5 | **CPU running-mate logic ignores ticket experience holes** | CPU-Taft picked CPU-Hughes (both Justices, no prior electoral run); Tyler flagged as "weird strategy" (POST 7249). | CPU optimizes against the VP-rubric ([§25.2.1](#2521-the-8-element-vp-assessment-rubric-the-canonical-rubric)) but doesn't down-weight a ticket with zero prior electoral wins. |
+| 6 | **CPU diplomacy = pure Sec-of-State driven** | No adversarial logic for negative-relations countries; Pres rubber-stamps. | One actor (Sec of State) drives all diplomacy actions; no opposing-CPU model for foreign powers. |
+| 7 | **CPU keeps proposing weak bills at 10-10 / 11-9 ties** | No coalition-counting; CPU re-proposes losers in a stalemate. | No vote-prediction layer in the proposal heuristic. |
+| 8 | **3-of-6 action-phase rolls do nothing** | Election action design weak; many rolls have no effect. | Roll tables aren't dense; needs more outcome bands. |
+
+**Resolution status**: these are **not single-line rule fixes**. The build needs:
+
+- A **reciprocity / promise tracker** (data structure for cross-faction commitments + an
+  enforcement step on the next vote).
+- A **meter-impact aggregator** that scores stacked effects against each meter and applies a
+  CPU penalty for triple-stacks into already-bad meters.
+- A **per-event "recent scandal cooldown"** that prevents 3-deep back-to-back resignations.
+- A **state-aware governor action menu** that reads `state.industries` + `state.policies` + the
+  Honest-Gov-maxed top-of-ladder rules ([§22.1](#221-the-named-meter-bank--numeric-debt--crisiscascade))
+  and prunes no-op actions.
+- A **ticket-experience term** in the VP-pick scorer.
+
+*(designed, not built — these are architectural CPU additions; the rules to implement them are
+spec'd above, but the data structures and the supporting passes are new work.)*
