@@ -121,6 +121,40 @@
 >   expansion map (Cuba=36th-state Caribbean region, Texas=4 states). The core loop is now
 >   **corroborated across 5+ eras / 8 threads**. Cite `rep1800#POST N`. New design holes
 >   DH-29..DH-35 logged to `game-context.md`.
+> - **Batch 8** — two 1772-start threads: `afc6cbd7` (3614-post **first captured MULTIPLAYER
+>   1772** campaign, 10 humans, 1772→~1796, founding→federalism, `afc6cbd7`) + `ad0f2875`
+>   (157-post **solo all-CPU** 1772→1874 fast-traversal, "Stamping out America's love for tea",
+>   `ad0f2875`). **Mostly SHARPENING** of the best-documented era (founding) plus the batch-7
+>   era-model finding — additive, no new mega-section. **★ The era model is now MULTI-SAVE
+>   CONFIRMED:** `ad0f2875` (1772-start) and `rep1800` (1800-start) emit **identical era-band
+>   labels at identical in-game dates** (Federalists~1800 / Republicanism~1820 / Democracy~1840 /
+>   Manifest-Destiny~1856 / Nationalism~1868) — two independent saves started 28 in-game years
+>   apart traverse the same content-bands ⇒ the **most-corroborated architectural finding in the
+>   KB** ([§27.1](#271--the-era-model--eras-are-content-bands-gated-by-game-state--territory-not-calendar-year)).
+>   Sharpens [§27.2](#272-era-boundary-machinery-the-end-of-historical-era-phase) (**dual era-scoring**:
+>   per-era winner + cumulative "winner so far", keyed to B#/R# slots);
+>   [§24.6](#246-66-the-progressive-era-institutional-layer-offices-created-in-game-by-law)/[§26.5](#265-era-event-creates-office-bill-installs-a-new-cabinet-seat)
+>   (founding-era **offices-by-law** — `afc6cbd7` stands up the *entire* federal apparatus
+>   piecewise by bills: SCOTUS via 2 bills, Bank + President-of-Bank, Dept of Navy + SecNavy,
+>   academies, DC, Library of Congress, Mint, Marine Corps); [§23](#23-civil-war--reconstruction-1856-arc-designed-not-built)
+>   (a **3rd Civil-War outcome** — `ad0f2875` = neither defection nor UK intervention, proving the
+>   branch points are variables; **concurrent multi-phase wars** — Mexican + Apache Rds 1–4 +
+>   Navajo simultaneously; NW Indian War + Treaty-of-Greenville map expansion in `afc6cbd7`); and
+>   the founding sections ([§17](#17-era-systems)) with the **MULTIPLAYER-1772 confirmation** (two
+>   sequential 1772 drafts; full Constitutional-Convention machinery; the Washington first-President
+>   d6 4-6 unopposed rule; **independence won by combat alone, no France event required**; the
+>   Era-of-Independence ~⅓ phase-skip). Adds a small new subsection
+>   [§21.9](#219-presidential-vote-modifier-stack--era-stamped-popularunpopular-issue-list-designed-not-built)
+>   (the **presidential-vote modifier stack** + the **era-stamped Popular/Unpopular issue list**)
+>   and small rules: **SCOTUS-overturns-a-ratified-Amendment** + **amendment-threshold-itself-
+>   amendable** ([§21.3](#213-amendments-as-durable-separately-ratified-state)), **stat-collapse →
+>   forced presidential resignation** ([§24.1](#241-61-succession--eligibility--the-acting-president-state)),
+>   and the **lone-ideology minor-candidate convention EXPLOIT** ([§25.4](#254-convention-cpu--per-ballot-momentum--interballot-menu--compromise-picker)).
+>   **★ NEGATIVE RESULT:** despite its title, `ad0f2875` **stalls at 1874 (mid-Gilded), reaching
+>   no "future" era** — "Era of the Future" remains undocumented across **all** ingested threads.
+>   New design holes **DH-36..DH-44** logged to `game-context.md`; **DH-36** (manual-upkeep GM
+>   burnout killed `afc6cbd7`'s ~12-turn game) is the strongest cross-cutting case yet that the
+>   build must own all bookkeeping. Cite `afc6cbd7#POST N` / `ad0f2875#POST N`.
 >
 > **Alt-history note.** All five forum threads (and especially `modern`/`pop`) play a
 > **divergent alternate timeline**, not real history: fictional **era names** (the
@@ -180,6 +214,7 @@
     - [21.6 Bill typing + budget-gated spending cap](#216-bill-typing--budget-gated-spending-cap)
     - [21.7 Era-event scheduling model vs. `coreSpine`](#217-era-event-scheduling-model-vs-corespine)
     - [21.8 Named-ordinal meter model + ±3 swing cap + war-score meter](#218-named-ordinal-meter-model--3-swing-cap--war-score-meter)
+    - [21.9 Presidential-vote modifier stack + era-stamped Popular/Unpopular issue list](#219-presidential-vote-modifier-stack--era-stamped-popularunpopular-issue-list-designed-not-built)
 22. [Modern era systems (designed, not built)](#22-modern-era-systems-designed-not-built)
     - [22.1 The named meter bank + numeric debt + crisis/cascade](#221-the-named-meter-bank--numeric-debt--crisiscascade)
     - [22.2 Faction-enthusiasm / Party-Preference election engine + the Score economy](#222-faction-enthusiasm--party-preference-election-engine--the-score-economy)
@@ -1661,6 +1696,11 @@ the GM as the rule (post 237). *(needs roadmap-planner attention.)*
 > implies a **per-card-class scale** (interest ±50, lobby ±100, ideology ±150, faction-
 > defining ±250, era-double ±350) but the band structure is not yet documented.
 
+> **Tie-break overlay (batch 8, `ad0f2875`).** When a bill or platform plank is **ideology-
+> neutral** (the card scorer nets ~0), the GM falls back to an **era-stamped Popular/Unpopular
+> issue list** — see [§21.9](#219-presidential-vote-modifier-stack--era-stamped-popularunpopular-issue-list-designed-not-built)
+> for the list and the era-sensitivity overlay (`ad0f2875` POST 137).
+
 ---
 
 ## 13. Foreign affairs & war (2.7.x)
@@ -1835,6 +1875,13 @@ swap to a bumped magnitude when any opponent holds a listed trait. Bands `SMALL 
 / LARGE 8`. Examples: Charismatic `+MEDIUM` presGeneral; Integrity `+SMALL`, bumped `+MEDIUM`
 vs a tainted opponent; Unlikable `−MEDIUM`, bumped `−LARGE` vs a Charismatic opponent; Outsider
 `+SMALL` general but `−MEDIUM` primary; Domestic Apathy and several PR4b traits are **era-scaled**.
+
+> **Forum modifier stack (designed, not built; batch 8).** The forum layers an enumerated
+> **presidential-vote modifier stack** onto this score for the EC general (3rd-term −1,
+> trait-matchup −1, economy ±, −2/major-scandal, regional/meter swings) — fully specified at
+> [§21.9](#219-presidential-vote-modifier-stack--era-stamped-popularunpopular-issue-list-designed-not-built)
+> (`ad0f2875` POST 137, 139, 151). The same thread shows national meters can **swamp `state.bias`**,
+> producing implausible maps — `state.bias` is a soft modifier (realism gap, §21.9).
 
 ### 15.2 The election phases
 
@@ -2247,6 +2294,68 @@ and flags: `coreSpine` (inevitable openers), `realEvent` (false = counterfactual
 (empty legislature, `isColony:false`), logs a system entry. Invoked from era-event
 `postEffects`.
 
+### 17.7 Forum design layer — the MULTIPLAYER-1772 confirmation (designed, not built)
+
+> **Batch 8.** The **first captured multiplayer 1772 campaign** (`afc6cbd7`, 10 humans, one per
+> faction, 5 BLUE + 5 RED, 1772→~1796) is the best **multi-faction-rules** record for the founding
+> era and the only thread that organically transitions **Independence → Confederation → Constitution
+> → Federalism** from a 1772 start, standing up the federal apparatus piecewise (§24.6 above). It
+> **corroborates the shipped §17.1–§17.6 systems and adds founding-era detail the engine compresses.**
+> Cite `afc6cbd7#POST N`; cross-ref game-context #100–#101, DH-38..DH-44.
+
+- **Two sequential 1772 drafts.** The forum runs an **Inaugural Draft** (all established pols)
+  THEN a separate **Rookie Draft** (rookies added to the Draft Class tab after); shipped
+  `scenario1772` does **one** snake draft (POST 21, 22, 36; DELTA — game-context open-Q). Inaugural
+  rookies from the **past three draft classes** (1768/1764/1760) may be retroactively career-tracked
+  and removed the same turn (POST 55–56).
+- **Era-of-Independence ~⅓ phase-skip (confirmed multiplayer).** No President, no cabinet, no
+  parties / party-leaders, no Senate, **no Diplomacy phase even with Ambassadors present** — only
+  **factions** + faction leaders + faction names exist until the Constitution (POST 5, 48, 257, 841).
+  The federalism layer *adds the skipped phases back*; the founding era is the loop's **reduced form**
+  (matches shipped — federalism enters via `applyConvention`'s transition, §17.3). An elected
+  President auto-leads their faction.
+- **Full Constitutional Convention machinery (confirmed in real depth).** **Annapolis Convention**
+  (era event) must fire first → triggers the Convention (POST 1511, 1673). The Convention auto-elects
+  a **Convention President** (rallied around war-hero Arnold) and names a **"Father of the
+  Constitution"** (the proposer; +1 Cmd/Legis/Admin/Celebrity; Pres +1 Cmd; all delegates lose
+  Obscure). **FIVE items MUST be resolved** before the Constitution completes — **Art 1 (legislature),
+  Art 2 (executive), Art 3 (judiciary), Slave-State Compromise, Amendment Process** — each a branching
+  menu (e.g. Art 1: A bicameral / C unicameral-Senate; Slave-State: A 3/5 / B all-slaves-count /
+  C none; Amendment Process: A 3/4-of-states / B majority / D 2/3); plus trait-gated **add-on**
+  amendments (Women's Suffrage needs an LW-Activist delegate; Natural-Born Citizenship; Bill of
+  Rights; Lifetime Senate). **Each item needs 9 states to approve**; core items re-vote until one
+  hits 9, add-ons fail if <9. **Only the Convention President and Father of the Constitution can sway
+  votes** (Debater/Orator, each item independently). **Ratification = a Gov vote needing ≥9 Govs**;
+  failure → the game **continues with the Continental Congress** (POST 1693–1824). This is a **real
+  branching system**, NOT scripted to the historical text — the choices **feed forward into election
+  math** (the Slave-State choice decided the 1788 VP, §21.2). The shipped engine
+  (`constitutionalConvention.ts`, §17.3) models **seven** binding articles and a CPU auto-fill, a
+  reasonable superset of the five required items + add-ons.
+- **Washington "first-President" rule (verbatim, POST 727–749).** *"If it is the first presidential
+  election under the US Constitution, and one of the nominees has 'Celebrity' and 'Military Leader,'
+  then he becomes president **unopposed if the player rolls a 4-6**"* (50% on a d6). "Unopposed" = no
+  other candidates; the roll is a **hard stop resolved before the other party may nominate** (in the
+  computer version the first two nominees of each party are selected simultaneously, then the roll
+  resolves). In this timeline Benedict Arnold qualified (Celebrity + Military Leader), **rolled and
+  FAILED** → the full 1788 election proceeded (POST 1756, 1949, 2015–2016) — confirming it as a real
+  conditional, not a guaranteed Washington coronation. (Not in shipped code.)
+- **Independence won by COMBAT ALONE — the explicit France event is not required.** The Revolutionary
+  War was won after ~4 turns (1774–1782) **by combat rolls alone; the French-alliance event NEVER
+  fired** (players: "Did i miss it or did we get the French alliance?", "shouldn't there be a flag…
+  that was way too easy", POST 879–883). This **confirms the founding alt-history is roll-driven**:
+  the shipped 1772 spine carries an explicit "Alliance with France" event (and
+  `revolutionaryWar.ts`'s `frenchAlliance` void-the-loss-cap path, §17.4), but **independence is
+  achievable on combat luck with no France required**. The era is "railroaded" toward independence
+  via point-dominant choices — multiple game-ending loyalist off-ramps exist (Conciliatory Resolution
+  Option B; Carlisle Commission Option B) but are effectively never chosen; **CPU auto-votes AGAINST
+  any game-ending option ~75% of the time** even at a point cost (POST 637).
+
+*(designed, not built — model the **Inaugural+Rookie two-draft** founding open; the Convention's
+**five-required-items + trait-gated add-ons + 9-states-per-item + ≥9-Gov ratification + Convention-
+only sway**; the **Washington d6 4-6 unopposed** first-President hard-stop; and treat the France
+event as **optional flavor**, not a win prerequisite. Most of this is a superset of shipped
+`continentalCongress.ts` / `constitutionalConvention.ts` / `revolutionaryWar.ts`.)*
+
 ---
 
 ## 18. System interactions
@@ -2647,6 +2756,28 @@ eras — labels bumped inline):*
 - **Modern era corroborated both ways** — the modern era is the only era ingested as
   **both 60-year continuation AND fresh scenario boot**, anchoring the era-identity-as-
   data-configuration constraint above.
+
+*New in batch 8 (two 1772-start threads; mostly corroboration — see the individual sections):*
+- **Design holes DH-36..DH-44 are logged in `game-context.md`** (not re-documented here). The
+  newly-revealed *designed* surface this batch is small (it mostly sharpens existing sections):
+  the **dual era-scoring** (§27.2), **SCOTUS-overturns-an-Amendment + threshold-amendable**
+  (§21.3), the **presidential-vote modifier stack + era-stamped issue list** (§21.9),
+  **stat-collapse → forced resignation** (§24.1), and the **lone-ideology minor-candidate
+  convention exploit** (§25.4).
+- **★ META HOLE — DH-36 (the build must own all bookkeeping).** `afc6cbd7`, a 10-human
+  multiplayer 1772 campaign, **died at ~12 turns to GM burnout** — the GM resigned because the
+  manual Google-Sheets upkeep (career-track flags, formula breakage, missed gains, retro-fixes)
+  was unsustainable (POST 3607). No successor stepped up; the game stopped **before President-elect
+  Washington took any in-office action.** This is the **strongest cross-cutting case yet** that the
+  shipped build should **own all per-phase upkeep/bookkeeping** so a campaign survives to its end.
+- **★ NEGATIVE RESULT — no thread reaches a "future" era.** Despite its title, `ad0f2875` ("A 1772
+  to future") **stalls at 1874 (mid-Gilded), reaching no post-Gilded content** and never completing
+  (it stops mid-export, no game-over). Across **all** ingested threads, **"Era of the Future"
+  remains undocumented/hypothetical** — the documented timeline end-state is unchanged (see §27).
+- **Era model is now MULTI-SAVE confirmed** — `ad0f2875` (1772-start) + `rep1800` (1800-start) emit
+  identical era-band labels at identical in-game dates, cross-confirming the full 1772→Gilded
+  traversal from **two different start years** (§27.1). The content-band era architecture is the
+  most-corroborated finding in the KB.
 
 ### 19.1 Design divergences for the roadmap
 
@@ -3223,9 +3354,36 @@ flags — this is the EC selection mode.)*
 > leaves the office vacant** until the VP-vacancy-fill amendment is ratified. Engine has no
 > VP-succession path regardless.
 
+**★ SCOTUS can OVERTURN a ratified Amendment, and the amendment threshold is itself amendable
+(batch 8, `ad0f2875`).** Two new operations on the amendment substrate, both used in play:
+
+- **Judicial review of an Amendment → repeal/demotion.** A **Governor-requested judicial review**
+  can put a ratified Amendment in front of SCOTUS, which may strike it. `ad0f2875`'s **13th
+  (this-timeline "National Suffrage for White Male Property Owners") was overturned 4–3**, reverting
+  it to a mere **governor-action** (Congress may re-pass) (POST 37, 48); the separate Taylor-McDowell
+  law was overturned the same way (POST 50). So an amendment is **durable but not permanent** — there
+  is a **review/repeal loop** on top of the ratify/repeal-by-later-amendment paths. (Extends #39.)
+- **The amendment threshold is mutable in play.** The Convention set the bar at **3/4 of states**;
+  a later **"Morris 2/3 Ratification Amendment" (this timeline's 14th) lowered it 3/4 → 2/3** (POST
+  57; ratified by the normal Gov/state vote, POST 675). This is the founding-era instance of the
+  §24.4 *ratifier+threshold-is-a-tunable-field* and the §27.8 *amendments-mutate-core-rules* findings,
+  reached from a 1772 start.
+
+> **★ UNBUILT design hole — the general SCOTUS-ruling → downstream-statute cascade.** Distinct from
+> the *built* abilities to **strike a single law** (`ad0f2875`'s Republic of Texas Act was passed
+> then judicially repealed, POST 770–784) and to **overturn an Amendment on review** (above), the
+> **general cascade** — a SCOTUS ruling that *contradicts a law on the books* automatically
+> voiding/neutering that law — is **NOT modeled and was explicitly DEFERRED by `vcczar`**. A
+> spectator argued **Prigg v. Pennsylvania** should void the Fugitive Slave Act; the operator was
+> told *"V will need to think about it"* (POST 124–126). ⇒ today **a contradicting ruling leaves the
+> law operative.** This is the open design question (cross-ref §24.4's Pollock→income-tax coupling,
+> which IS a designed gate; game-context DH-class). (`ad0f2875` POST 48, 50, 124–126, 784.)
+
 *(designed, not built — add `game.amendments: { id; passedYear; data? }[]`; a cross-state
-ratification vote at the gov phase; an amendment bill type; and effect-binding checked at the
-relevant phase boundaries.)*
+ratification vote at the gov phase; an amendment bill type; effect-binding checked at the relevant
+phase boundaries; a **Gov-requested judicial-review path that can repeal/demote an amendment**; a
+**mutable ratification-threshold** field (§24.4/§27.8); and — the hole — a designed
+**SCOTUS-ruling → downstream-statute cascade** policy.)*
 
 ### 21.4 Firing-precedent gate on cabinet changes
 
@@ -3344,6 +3502,48 @@ ordinal meters with labeled steps + a ±3-per-phase swing cap + a first-class wa
 Balance proposal `1772s` C1 — enthusiasm as a graduated multiplier with a 3rd-party-at-Neutral
 rule rather than a flat election bonus — is a related human call, logged in `game-context.md`
 #18.)*
+
+### 21.9 Presidential-vote modifier stack + era-stamped Popular/Unpopular issue list (designed, not built)
+
+> **Designed, not built (batch 8, `ad0f2875`).** The GM exposed a clean enumerated modifier stack
+> for the EC general and an era-keyed issue list for bill/platform tie-breaks. Both refine the
+> shipped `calcStateVote` ([§15.1](#151-calcstatevote--the-core-resolver-phaserunnersts3685)) and
+> the modern enthusiasm engine ([§22.2](#222-faction-enthusiasm--party-preference-election-engine--the-score-economy)),
+> seen here in the 1772/Nationalism era. (`ad0f2875` POST 137, 139, 151; game-context #105.)
+
+**The presidential-vote modifier stack** — additive per-candidate modifiers layered onto the
+state-vote score, enumerated by the GM:
+
+| Modifier | Δ | Cite |
+|---|---|---|
+| **3rd-term bid** (term fatigue) | **−1** | POST 151 |
+| **"Controversial vs Integrity" trait matchup** | **−1** | POST 151 |
+| **Economy meter** | **±** (a "Great Recession" gave **−3** to the incumbent; "economic troubles" −1) | POST 139, 151 |
+| **Major scandal** | **−2 each** (scandal ×2 = −4) | POST 151 |
+| Regional / meter swings | ± (e.g. a meter "+2 to GOP") | POST 139 |
+
+The cleanest single statement is the **1868 upset** (POST 151): a GOP incumbent loses 110–178 from
+−1 third-term, −1 trait-matchup, −1 economy, and −2×2 scandals. These map onto the shipped
+`calcStateVote` as additional additive terms (alongside `baseLean×5`, `partyPref×5`, `enthusiasm×2`,
+`pvCache×0.1`, trait + faction-card terms). **Realism caveat:** this run shows national meters +
+candidate election-stat + scandal rolls **swamp state partisan-lean**, producing geographically
+implausible maps (Deep-South states voting Republican in 1860; Dems winning IA + PA in 1864 — POST
+138–139, 147). State bias is a **soft modifier** easily overridden — a logged balance/realism gap
+(game-context DH-class).
+
+**Era-stamped Popular/Unpopular issue list** — for tie-breaking bills/platforms when ideology is
+silent, the GM prints an **era-specific** issue list (POST 137). For ~1860: **Popular** =
+pro-deregulation, pro-increase-tariff, pro-increase-taxes, anti-Native-American; **Unpopular** =
+women's suffrage, pro-labor, pro-social-security, pro-welfare, pro-LGBT, going to war,
+pro-regulation, intervening in natural disasters, anti-corruption. The **anachronistic entries**
+(pro-LGBT, social-security in 1860) reveal a **single global issue list with an era-sensitivity
+overlay** — the same "era-aware popularity" the modern double-points scoring (§26.3) and the
+new-era issue brief (§27.2 step 4) point at, here used for **bill/platform tie-breaks**.
+
+*(designed, not built — add the **presidential-vote modifier stack** (3rd-term −1, trait-matchup
+−1, economy ±, −2/major-scandal, regional/meter swings) as additive `calcStateVote` terms; add an
+**era-keyed `{popularIssues, unpopularIssues}` table** consulted as a tie-break when a bill/platform
+plank is ideology-neutral. Pairs with §22.2, §26.3, §27.2.)*
 
 ---
 
@@ -3914,6 +4114,23 @@ politician generator for dataset exhaustion; and resolutions for DH-1/DH-2.)*
 > Cite `hd#POST N`. Cross-ref `game-context.md` rows **#56–#60** and the alt-history framing in
 > `historical-context.md` §3–§5 (**Seward**, not Lincoln, is the wartime president; secession
 > fires **~1863** from a bungled John Brown's Raid decision; CSA president **John A. Quitman**).
+>
+> **★ THREE-OUTCOME CONFIRMED + concurrent multi-phase wars (batch 8, `ad0f2875`).** The
+> Civil-War branch points are **decision/roll-driven variables, not a scripted path** — the corpus
+> now records **three distinct outcomes** of the *same* subsystem: `hd` (President defects to the
+> CSA), `rep1800` (UK intervention spawns a 3rd theater), and **`ad0f2875` (NEITHER** — a Republican
+> prosecutes the war from the Union side, no UK intervention; the war is triggered by a Harper's-
+> Ferry era event + a GM pardon ruling → Southern secession conventions, `ad0f2875` POST 140, 148,
+> 153). Holding the defect-branch and the intervention-branch each fixed across two threads while a
+> third sees neither is strong evidence both are **branch variables**. `ad0f2875` also confirms the
+> **war engine runs several wars CONCURRENTLY as turn-spanning multi-round campaigns**: the
+> **Mexican–American War (Phases 1–2)** ran simultaneously with the **Apache Wars (Rounds 1–4)** and
+> the **Navajo Wars (Phases 1–2)**, each with its own named general/fort/battle/treaty loop feeding
+> commander stats (POST 732, 737, 738, 785, 814). The founding-era **NW Indian War** in `afc6cbd7`
+> (post-RevWar, army already disbanded) similarly ran as a separate war track and its US victory
+> drove **map expansion via the Treaty of Greenville** (OH/IN/MI/IL/WI, POST 1461, 1486, 1936). →
+> war is a **generic, repeatable, concurrent cross-era system** (corroborates §21.1 / #45 + adds
+> the concurrency + commander-feedback detail; game-context #102, #104).
 
 ### 23.1 (#58) Secession + Southern-Unionist / Secessionist trait gating (the antebellum payoff)
 
@@ -4325,11 +4542,20 @@ for a Canada-unpopular candidate, −1 for a no-Canadian cabinet).)*
 - **"Require President to Fill VP Vacancy" Amendment** did not exist (Dems had blocked it);
   proposed/passed this cycle, **ratifies in 1888, applies only to the NEXT vacancy** (POST 5470,
   5573). **Foreign-born faction leaders are ineligible for the Presidency** (POST 5448).
+- **★ Stat-collapse → forced presidential resignation (batch 8, `ad0f2875`).** A president who
+  **loses all Command points + most of his skills** is **forced to resign** (`ad0f2875` POST 135,
+  verbatim: "Mouton forced to resign because Mouton lost all command points and most of his
+  skills"). A **stat-floor → resignation** rule that triggers succession — distinct from the
+  0-Command *acting* president above (who is *inert but stays*; this one *leaves office*).
+  Succession is exercised constantly in this run (resign/scandal/death chains → next-in-line),
+  and a **"Presidential Succession Act of 1852"** was passed in-game to set the order (POST 755,
+  157). (game-context #105.)
 
 *(designed, not built — a **configurable line of succession** (bill-mutable order); **native-born
 vs foreign-born eligibility** gating the presidency (relaxable per [§23.5](#235-60-canada-conquest--era-gated-territorystatehood--canadian-draft)); an
 **acting-president state whose `command` (often 0) gates executive actions / SCOTUS-compel /
-re-election eligibility**; and an era-keyed VP-vacancy fill rule (off pre-amendment, on after).)*
+re-election eligibility**; an era-keyed VP-vacancy fill rule (off pre-amendment, on after); and a
+**stat-floor → forced-resignation** trigger (Command 0 + most skills lost → resign → succession).)*
 
 ### 24.2 (#62) Contingent House election + tied-chamber inverse control
 
@@ -4464,6 +4690,23 @@ post-verdict trait/meter rolls. This is the concrete spec gap #54 was missing.)*
 > from the 1856-native side — and adds the key new idea: offices are CREATED in-game by
 > legislation / executive action**, and creating one office can **deactivate** another. (`hd` POST
 > 6963, 7160, 7348, 7800–7804, 8175, 8845.)
+>
+> **★ FOUNDING-ERA confirmation (batch 8, `afc6cbd7`): the offices-by-law pattern spans
+> founding→modern.** The defining shape of the founding era is that **foundational federal
+> institutions do NOT exist at game start — they are stood up piecewise by in-game bills, years
+> after the Constitution, and each new institution opens new appointable offices.** Confirmed
+> created-by-bill in the multiplayer 1772 thread: the **Supreme Court / Federal Judiciary** (built
+> by **TWO bills** — "Establish Federal Judiciary" + a *separate* "Set the Number of Supreme Court
+> Justices to 6"; GM ruled they are **NOT auto-packaged** — if the court passes but the number bill
+> fails, **the game cannot advance** until a number is agreed; era cap = 6; both failed repeatedly,
+> so the **Supreme Court Decisions phase is skipped every turn until justices exist**, POST 2317,
+> 3053, 3096); the **Bank of the United States** → a new **President of the Bank of USA** cabinet-
+> level seat (Gallatin, POST 3271); the **Department of the Navy** → a new **Secretary of the Navy**
+> seat (POST 3271); plus **US Military Academy, US Naval Academy, Library of Congress, District of
+> Columbia, US Mint, US Marine Corps, Attorney General (SR.5 — AG un-appointable until it passes,
+> POST 2251), Federal Death Penalty** — all created/attempted by bill (several as 1796 platform
+> planks). This generalizes the same `cabinetSeatsForYear`-should-be-DATA conclusion (§26.5) to the
+> earliest era. (`afc6cbd7` POST 2251, 2317, 3053, 3096, 3140–3164, 3271; game-context #103.)
 
 - **Federal Reserve + Fed Reserve Chair**: 6-yr term; **Economics/Trade/Business + Admin ≥ 3 +
   age ≥ 35**; declines 90% if previously held office. **Creating the Fed DEACTIVATES the
@@ -4791,10 +5034,23 @@ retroactive, POSTS 7257, 7263 — a **logged loophole**.)
 - **Anti-frontrunner "lowest score" preference in PL endorsements** (POSTs 5642, 6119, 6247):
   defeated CPU faction leaders endorse via **{closest ideology → highest PV → lowest score as
   underdog/anti-frontrunner check}**. Late-round consolidation deliberately biases the underdog.
+- **★ KNOWN EXPLOIT — the lone-ideology minor candidate (batch 8, `afc6cbd7`).** Once minor /
+  favorite-son candidates can win delegates **outside their home state**, a **minor candidate who
+  is the ONLY candidate of a common ideology surges to front-runner** by sweeping out-of-state
+  delegates of that ideology. **Ralph Izard (Cons) jumped 0 → 121 delegates (+102) on the 2nd Red
+  ballot** — "Izard benefits tremendously from being the only Cons candidate in the race with a lot
+  of Cons states in the country" — and was promoted from minor to major (POST 3498); **Muhlenberg
+  did the same on the Blue side** (POST 3532). The GM was **explicitly intrigued and invented a
+  live fix** (a minor → major only if it finishes 1st/2nd after a ballot, POST 3521; and, since the
+  rules don't cover one faction holding TWO majors, **split that faction's Gov/Sen delegates between
+  them like ideology delegates**, POST 3498, 3508). → a **convention-CPU design hole**: the
+  delegate-allocation rule rewards being the sole holder of a widely-held ideology, an emergent
+  exploit the build should account for. (game-context #101, DH-class.)
 
 *(designed, not built — the whole convention CPU subsystem. The shipped 2.9.2 is a one-line
 "log ratification" ([§15.2](#152-the-election-phases)); the above is the spec. Top priority for
-the build given it produces 11-ballot CPU-deadlock pathologies today.)*
+the build given it produces 11-ballot CPU-deadlock pathologies today, and the lone-ideology
+minor-candidate exploit above.)*
 
 ### 25.5 Cabinet confirmation — designer-acknowledged bug (36% of 88 nominees passed)
 
@@ -5694,6 +5950,17 @@ amendments toggle CAPABILITIES, not just rule-flags; pairs with §21.3 ratificat
 > **THE HEADLINE FINDING and the biggest architecture delta in the knowledge base.** It is the
 > central architecture question for the build, and it **inverts the shipped year-driven era
 > model.** (`rep1800` §0 + §B; `game-context.md` ★ note + #92.)
+>
+> **★ MULTI-SAVE CONFIRMED (batch 8).** Two **independent saves started 28 in-game years apart**
+> — `ad0f2875` (1772-start) and `rep1800` (`6aa7309a`, 1800-start) — emit **identical era-band
+> labels at identical in-game dates**: Era of Federalists ~1800, Age of Republicanism ~1820, Era
+> of Democracy ~1840, Era of Manifest Destiny ~1856, Era of Nationalism ~1868 (`ad0f2875` POST 21,
+> 62, 91, 130, 153; `rep1800` POST 92). Because the bands are **start-scenario-independent** and
+> game-state-gated (the `ad0f2875` Civil War opens on a Harper's-Ferry era event + pardon ruling,
+> not a date; Reconstruction ends piecemeal by three "end Reconstruction in [states]" Acts,
+> `ad0f2875` POST 153–156), this is now the **most-corroborated architectural finding in the KB**.
+> The bands are deterministic content-gates on game-state, not flavor or per-thread GM invention.
+> (game-context #92, #100; DH cross-ref below.)
 
 **The claim.** An "era" in AMPU is a **fixed content-band** — a set of available
 bills + era-events + draftees + a state-bias/census table — that the game advances through on
@@ -5784,11 +6051,27 @@ At the **"End of Historical Era"** phase the game runs, in order:
    (separate from the decennial census; the Democracy table swapped in at 1820, §A POST 3167,
    3174, 2450).
 
+**★ DUAL era-scoring (batch 8, `ad0f2875`).** At each boundary the engine declares **two**
+results, tracked independently:
+
+1. a **per-era winning faction** ("winner of this era / round"), and
+2. a running **cumulative "winner of the game so far"** spanning all bands.
+
+The two diverge in play — `ad0f2875` POST 153 announces the **per-era winner R2** while the
+**cumulative leader is B4** (cf. POST 91 round=B5/cumulative=B4; POST 130 era=B4/cumulative=B4).
+Both scores are **keyed to faction slots `B1–B5` / `R1–R5`** (B = BLUE/Anti-Federalist→Democrat
+side; R = RED/Federalist→Whig→Republican side; 1–5 by ideology rank). This dual-scoring shape
+(per-era + cumulative) is what the point-banking table (step 2) feeds: the **banked** points are
+the cumulative score; the **per-era** winner is the raw points at the moment of the boundary. The
+exact point formula behind the cumulative leader is **not visible in `ad0f2875`** (only the
+boundary announcements) — closest known formula is the `rep1800` POST 6201 step list above.
+(`ad0f2875` POST 21, 62, 91, 130, 153; game-context #100, DH-37.)
+
 *(designed, not built — already specced at §2.5; this adds the **faction-trade window with CPU
 auto-accept** (step 1), the explicit **+5/+3/+3/+3 + −1 banking table** (step 2), the
-**non-banked-points reset** (step 3), the **draft-order-by-last-era-points** rule (step 5), and
-the **wholesale per-era bias-table swap** (step 6). Bank-points persist to end-game; everything
-else resets.)*
+**non-banked-points reset** (step 3), the **draft-order-by-last-era-points** rule (step 5), the
+**wholesale per-era bias-table swap** (step 6), and the **dual per-era + cumulative scoring**
+keyed to B#/R# slots (batch 8). Bank-points persist to end-game; everything else resets.)*
 
 ### 27.3 The 12th-Amendment before/after state machine (era-specific election mode toggle)
 
@@ -6011,3 +6294,13 @@ the hole — an optional **grandfather clause** flag. Extends §21.3 / §24.4 / 
 > **circular ideology metric** (§27.7, a cross-cutting math change touching §6/§25.8/§26.6), and
 > **amendments-mutate-core-params** (§27.8). All pair with §2.5 (boundary point-banking) and §26
 > (the BootSheet). New design holes DH-29..DH-35 are logged in `game-context.md` (§19 below).
+>
+> **★ Batch 8 update.** The eras-are-content-bands finding (§27.1) is now **MULTI-SAVE CONFIRMED**
+> — `ad0f2875` (1772-start) + `rep1800` (1800-start) emit identical band labels at identical
+> in-game dates from **two different start years**, making this the most-corroborated architectural
+> finding in the KB. §27.2 gains the **dual era-scoring** model (per-era winner + cumulative leader,
+> keyed to B#/R# slots). **★ NEGATIVE RESULT:** despite its "to future" title `ad0f2875` **stalls at
+> 1874 (mid-Gilded)** and completes no era beyond Gilded — **"Era of the Future" remains
+> undocumented across all ingested threads**; the documented timeline end-state is unchanged. New
+> design holes **DH-36..DH-44** (incl. the **DH-36 meta hole** — manual-upkeep GM burnout killed a
+> 12-turn game) are logged in `game-context.md`.
