@@ -26,6 +26,30 @@
 >   the **era-event scheduling model** (and its divergence from `coreSpine`); the
 >   **named-ordinal meter model + ±3 swing cap**. Many batch-1 deltas are now
 >   **corroborated across a second era** (flagged inline). See [§19](#19-shipped-vs-designed-boundary).
+> - **Batch 3** — `3a9ac985` (1948→2020 modern multiplayer, `modern`): the
+>   **most mechanically mature surface ingested to date** — a new
+>   **[§22 Modern era systems](#22-modern-era-systems-designed-not-built)** covering the
+>   **named meter bank + numeric debt + crisis/cascade**, the **faction-enthusiasm /
+>   Party-Preference election engine + Score economy**, the full **presidential
+>   primary → convention → general** pipeline (incl. the **CPU delegate engine**), the
+>   **SCOTUS docket subsystem** (compelled votes/retirements, court-packing,
+>   appointee-ideology reveal), **investigation special committees**, the
+>   **military-leadership appointment tier**, and the **53-state alt roster + modern
+>   apportionment**. Batch 3 also **corroborates ~30 prior deltas across a fourth era**
+>   (bumping confidence) and sharpens legislation, conventions, cabinet, governors, and
+>   amendments with modern detail. See [§19](#19-shipped-vs-designed-boundary).
+>
+> **Alt-history note.** All three forum threads (and especially `modern`) play a
+> **divergent alternate timeline**, not real history: fictional **era names** (the
+> `modern` thread plays the "Era of Terror" → "Era of Populism", not "the 2000s"), a
+> game clock that **runs ~10 years behind real-world technology**, **53 states**
+> (incl. DC/Cuba/Puerto Rico as full states), and ahistorical officeholders and court
+> outcomes. **Mechanics are gated by the game's `Era` enum, not by literal calendar
+> years.** Year predicates (`year % 4`, `year % 2`) only set the *cadence* of phases;
+> *which systems are legal* is an era-enum question. The historian's real-history framing
+> lives in `historical-context.md`; this doc treats the eras as the game's own. The
+> **modern era is the one window where BLUE = left / RED = right matches everyday usage
+> with no polarity caveat** (`historical-context.md` §10).
 >
 > **Confidence flag.** A rule marked **(confirmed across federalism + gilded)** (or
 > "+ 1772 solo") has been independently observed in two/three threads — the strongest
@@ -73,6 +97,18 @@
     - [21.6 Bill typing + budget-gated spending cap](#216-bill-typing--budget-gated-spending-cap)
     - [21.7 Era-event scheduling model vs. `coreSpine`](#217-era-event-scheduling-model-vs-corespine)
     - [21.8 Named-ordinal meter model + ±3 swing cap + war-score meter](#218-named-ordinal-meter-model--3-swing-cap--war-score-meter)
+22. [Modern era systems (designed, not built)](#22-modern-era-systems-designed-not-built)
+    - [22.1 The named meter bank + numeric debt + crisis/cascade](#221-the-named-meter-bank--numeric-debt--crisiscascade)
+    - [22.2 Faction-enthusiasm / Party-Preference election engine + the Score economy](#222-faction-enthusiasm--party-preference-election-engine--the-score-economy)
+    - [22.3 Presidential primary subsystem (2.9.1)](#223-presidential-primary-subsystem-291)
+    - [22.4 Third-party-challenge trigger (2.9.3)](#224-third-party-challenge-trigger-293)
+    - [22.5 General-election library (2.9.4)](#225-general-election-library-294)
+    - [22.6 The CPU delegate engine (convention + primary apportionment)](#226-the-cpu-delegate-engine-convention--primary-apportionment)
+    - [22.7 SCOTUS subsystem (2.5.3 + 2.8.2)](#227-scotus-subsystem-253--282)
+    - [22.8 Investigation special committees (under-designed)](#228-investigation-special-committees-under-designed)
+    - [22.9 Military-leadership appointment tier (2.3.2)](#229-military-leadership-appointment-tier-232)
+    - [22.10 53-state alt roster + modern apportionment](#2210-53-state-alt-roster--modern-apportionment)
+    - [22.11 Era clock & era enum (alt-history)](#2211-era-clock--era-enum-alt-history)
 
 ---
 
@@ -852,6 +888,40 @@ Confirmed cabinet members are reported to gain `+1 Admin` after confirmation (di
 (`cabinetConfirmAdmin`, `phaseRunners.ts:2200`) — **forum confirmation** matches the
 shipped rule.
 
+#### 9.3.6 Modern cabinet detail (sharpens §9.3.1, §9.3.3; designed, not built)
+
+> **NEW depth from `modern`** (posts 214-229, 587-605, 840-871, 1499-1513, 1903-1924,
+> 2172-2182). The modern cabinet is the **fullest observed** (~30+ seats: 15 departments +
+> CIA / FBI / UN / Fed / CJCS / NSA / Key Advisor + 8 ambassadors + the
+> [§22.9](#229-military-leadership-appointment-tier-232) military tier). Cross-ref
+> `game-context.md` #25, #31.
+
+- **Retention**: **5 may be retained** each term; **CIA/FBI do not count** toward the 5.
+- **Per-officer tenure rules** (concrete in modern): **CIA** removable at appointment at
+  **25% − mil-prep** unless Incompetent / Easily-Overwhelmed / over-70; **FBI** has a fixed
+  **10-year term** (fireable; reappoint 10% +dom-stab / 10% −honest-gov); **Fed Chair** a
+  fixed multi-year term + a cabinet-service cap; **Key Advisor** locked for the half-term.
+- **Confirmation**: committee then floor; **opposing-party cabinet count is capped**
+  (Republicans "maxed at 3", post 379) — corroborating the batch-1 per-cabinet cap over the
+  shipped per-seat 10% gate; **military is auto-confirmed** (no Senate vote, post 2176).
+- **Failed-confirmation recovery** (post 379): a failed nominee is **banned from
+  cabinet/cabinet-level forever** (may still try Ambassador) **+ −1 all future elections**;
+  the Senate is **blamed** ⇒ Party-Pref −1 + nay-voters 20% gain Integrity/Controversial.
+  **Recovery flow:** the **SML offers 5 names** for the seat → the **nominator picks one** →
+  it is **auto-confirmed** (must still meet seat requirements + the opp-party cap).
+- **Scoring penalties** (sharpens §9.3.3): besides the region-coverage malus, the modern
+  scorer applies an **intra-party faction-equity penalty** (−500 / −1000 for not balancing
+  seats across the president's *allied factions*, post 229, 1223) **and a diversity floor**
+  (**≥25% women/minorities** avoids a penalty, post 604).
+- **Constraints**: **Incompetent bars cabinet service** (post 843); a **general can't be made
+  an admiral** (post 848, 1386); **Egghead** cabinet members advise decisions a Pliable/Passive
+  president follows by **majority** (corroborates [§9.3.4](#934-cabinet-auto-sign-behavior--egghead-advisory-step));
+  officers passed over for promotion may **resign** (post 1512).
+
+*(designed, not built — add per-officer tenure/term fields; the opp-party cap; the
+failed-confirmation ban + SML-5-names auto-confirm recovery; the diversity-floor and
+faction-equity scoring dimensions.)*
+
 ---
 
 ## 10. Events (2.4.x)
@@ -1059,6 +1129,25 @@ interface State {
 - Time-bounded multipliers couple to `runPhase_2_5_2_Governors` scoring: Jim Crow gov
   actions are `×3` points for 30 years following the Jim Crow era event.
 
+> **Modern sharpening (designed, not built; `game-context.md` #20, #21).** The `modern`
+> thread confirms two **persistent state fields** beyond `State.bias`/`State.industries`:
+> a partisan **Bias integer** rendered as `Red+3` / `Tossup` / `Blue+5`, shifted by events
+> and **reset at each census** (modern#post 613, 2222 "State Bias +1 toward RW-Pop party");
+> and an **ideological "loyalist fill"** that **gates governor-action success** — a governor
+> *fails* an action when the state is packed with opposing-ideology loyalists (post 25-26
+> Barrasso fails; 2245 a non-Mod governor fails an industry action), and an **Anti-Corruption**
+> action can clear a Political Machine. It also adds modern governor actions — **Set Primaries
+> WTA**, **State Primary Placement (Group N)** (which primary group a state votes in,
+> [§22.3](#223-presidential-primary-subsystem-291)), **Split Electoral Votes**, **Fill State
+> Offices with Loyalists**, **Use Office to Praise Incumbent President** (gives a reelection
+> bonus) — and a hard gate: **all voter-suppression actions** (Purge Rolls / Strict Voter ID /
+> Decrease Polling Stations / Literacy Test) are **blocked while Honest-Gov't is maxed**
+> (post 1962), the same top-of-ladder rule that deactivates Machines/Gerrymandering
+> ([§22.1](#221-the-named-meter-bank--numeric-debt--crisiscascade)). The modern industry set is
+> **Agriculture / Alt Energy / Maritime / Mining / Finance / Manufacturing / High Tech /
+> Natural Gas**, and industry leadership shifts **per-region** via era events ("Manufacturing
+> −2 in the Midwest", post 1224).
+
 ### 11.5 Industry leadership scoring (designed, not built)
 
 A per-half-term scoreboard ranks each state's `industries` and awards points to the
@@ -1208,9 +1297,55 @@ regular bill's +50 (post 196 shows three regular bills + the Crisis Bill totalin
 > Honest Government** — a subset of the gilded list (which adds Anti-Naturalization /
 > Anti-Native / Anti-Chinese), so the **crisis set is era-dependent**.
 
+> **Confirmed across 3 eras — and `modern` adds collective accountability.** The modern
+> thread re-derives the `*Crisis Bill*` tag (now an **independent** tag from `**Spending
+> Bill**` — a bill can be both, modern#post 46), crisis-resolution semantics, and the
+> spending-cap bypass. It adds a **collective-accountability Party-Preference penalty**: if a
+> chamber lets **most of its crisis bills die**, the chamber's controlling party takes a
+> Party-Pref hit (or the blame lands on the President, unless a **Charismatic** president
+> deflects it) (modern#post 943, 2015 — see `game-context.md` #11). The crisis ladders here
+> are the named meters of [§22.1](#221-the-named-meter-bank--numeric-debt--crisiscascade).
+
 *(designed, not built — introduce `game.activeCrises: CrisisId[]` entered/exited by meter
 thresholds, plus `Bill.resolvesCrisis?: CrisisId`; on passage of a crisis bill, pop the
-crisis off, **skip the spending-cap gate**, and apply a stronger scoring multiplier.)*
+crisis off, **skip the spending-cap gate**, apply a stronger scoring multiplier, and apply a
+collective-accountability Party-Pref penalty when a chamber lets most crisis bills lapse.)*
+
+### 12.9 Forum design layer: Executive-Branch-Interference & bill-relationship graph (modern; designed, not built)
+
+> **NEW from `modern` (designed, not built; under-designed on the forum).** Two modern
+> legislative subsystems with no shipped analog. Cross-reference `game-context.md` #12b, #42.
+
+- **Executive Branch Interference / cabinet-proposed bills** (modern#post 32, 1281, 1982,
+  2038): in addition to per-faction Senate/House proposer slots, a **cabinet secretary** may
+  propose **department-related legislation**, gated on **Admin 4-5** (or **Crisis-Admin**
+  while a relevant in-department crisis is active) and **subject to presidential assent**.
+  A passed bill that **creates a new cabinet department spawns a new Cabinet Sec** (modern
+  Dept of Manufacturing → seat created and filled, posts 2038, 2182). This corroborates the
+  batch-2 1772/`fed` Treasurer "free-pickup" variant ([§21.6](#216-bill-typing--budget-gated-spending-cap))
+  across a third era. **The forum rules were thin/blank and worked out in play** — flagged
+  under-designed.
+- **Bill-relationship graph** (modern#post 284, 2265-2268): bills carry **replace/repeal
+  constraints** — `Not repealable`, "can only be replaced by X" (a minimum-wage bill tied to
+  inflation can be replaced **only** by a Living-Wage bill, post 284), and a
+  **constitutional-amendment tier** whose bills are **removable only via amendment**
+  (REPEAL Protect-Gay-Marriage required an amendment, posts 2265-2268). Some passed policies
+  are **downgrade-only**. There is also a **change-cooldown**: "can't propose what we just
+  repealed unless a chamber changed" (post 646).
+- **Modern floor scale + signing rules**: floor votes run at **House 572-601 / Senate 106**
+  (53 states, [§22.10](#2210-53-state-alt-roster--modern-apportionment)); **veto override
+  needs 2/3** (a Soft-Drink-Tax override failed 326-276, post 942); a **Harmonious president
+  auto-signs all bipartisan-supported bills** (post 1618 — corroborates the batch-1
+  Passive+Pliable auto-sign, [§9.3.4](#934-cabinet-auto-sign-behavior--egghead-advisory-step)).
+- **Scoring** corroborates [§12.8](#128-forum-design-layer-bill-scoring-sums-all-faction-cards-design-divergence)
+  across a fourth era: **failed bills also score** (reverse effects + meter moves) and
+  scoring awards **±1 to specific named pols' reelection**, then triggers the 4-part
+  enthusiasm reshuffle ([§22.2](#222-faction-enthusiasm--party-preference-election-engine--the-score-economy))
+  (post 95, 316, 1373, 2038).
+
+*(designed, not built — add a cabinet-seeded proposal slot gated on Admin/crisis +
+presidential assent + new-dept→new-seat hook; a `Bill` replace/repeal-constraint graph with
+an amendment-tier; per-pol reelection deltas in the scorer.)*
 
 ### 12.8 Forum design layer: bill scoring sums ALL faction cards (design divergence)
 
@@ -1458,6 +1593,19 @@ The build's 2.9.2 is one line: "log ratification." The forum runs a multi-step c
 >   (the host is chosen by a governor / faction leader of the host state, posts 202, 481, 714).
 > - **Party leader overrules the nominee's VP pick.** Fed post 401: the **party leader's VP
 >   choice beats the nominee's** (the shipped model has the nominee pick VP unchallenged).
+>
+> **And `modern` corroborates across a fourth era + supplies the literal delegate engine.**
+> The modern thread runs the same convention (Running Mate offer, VP-impact checklist, 5-plank
+> platform with delegation, keynote, drop-out-and-endorse, rejectable Presidential Promise) at
+> every presidential cycle 2008/2012/2016 (posts 367-398, 1028-1044, 1705-1724). It adds:
+> **replacing a *sitting* VP needs a roll + a "rash/desperate" penalty roll** (post 1721); an
+> **Iron-Fist nominee cannot delegate the platform** (post 371); a **failed-platform penalty**
+> at the *next* general if the incumbent completed **<50% of his prior-term planks** (post 1728,
+> 25% party-wide enthusiasm + party-pref drop). Crucially, the modern thread dumps the **actual
+> CPU delegate-apportionment engine** to console (post 2240) — documented separately in
+> [§22.6](#226-the-cpu-delegate-engine-convention--primary-apportionment): **53 states ⇒ 1,300
+> delegates, majority 651**, delegates ≈ **EV × per-state category multiplier**. (The batch-1
+> "447 needed to win" was a smaller-roster instance of the same `total/2 + 1` rule.)
 
 #### 15.3.1 Candidate types and per-faction slate
 
@@ -2005,6 +2153,67 @@ meters and a ±3-per-phase clamp vs the 7 numeric meters.
 (adjacency rule, ≥5-pol top-up floor, lobby-activation-by-event), now fully specified by the
 1772 solo.
 
+*New items revealed by forum digest `3a9ac985` (modern 1948→2020) — the **most mechanically
+mature designed surface in the knowledge base, almost entirely unbuilt** ([§22](#22-modern-era-systems-designed-not-built)):*
+
+The modern era is the campaign's **end-state** and the richest era: it has the **full
+primaries → convention → general** election pipeline, a concrete **named meter bank**, a
+formalized **enthusiasm/Party-Pref + Score engine**, and a **SCOTUS docket** — and **none of
+it is built** (only the `modern` tuning rows + a few thin stubs exist). The biggest unbuilt
+surfaces:
+
+- **Named meter bank + numeric debt + crisis/cascade (§22.1)** — 8 banded-text meters +
+  per-ideology enthusiasm + 8 per-power relations + a numeric debt integer; crisis entry/exit
+  by tier; meter cascades; top-of-ladder hard rules (Honest-Gov't maxed deactivates
+  Machines/Gerrymandering); the canonical meter→election table.
+- **Faction-enthusiasm / Party-Pref engine + Score economy (§22.2)** — the 4-part
+  enthusiasm reshuffle after legislation scoring; a faction `Score` field; lowest-faction team
+  penalty; era-end awards.
+- **Presidential primary subsystem (§22.3)** — Major/Minor candidates + 3 focus states; the
+  charisma focus-state roll table; Iron-Fist incumbent/PL blocking; per-group debate →
+  scandal → broke-check → action loop; WTA+proportional delegate accumulation + transfer;
+  rejectable Presidential Promise.
+- **Third-party-challenge trigger (§22.4)** — fills the shipped 2.9.3 no-op (party-pref-band
+  + ideology-at-Neutral; president's-own-ideology carve-out; nationwide-ballot Celebrity).
+- **General-election library (§22.5)** — 2-round action library, 3+1 debates with per-debate
+  scandal rolls, crisis-gated October Surprise, meter→EV tally with close-state tie-breaks +
+  faithless electors, defeat maluses.
+- **CPU delegate engine (§22.6)** — per-state EV × category multiplier; 53 states ⇒ 1,300
+  delegates / majority 651; host-sets-categories advantage (drives both primary and
+  convention).
+- **SCOTUS subsystem (§22.7)** — named-Justice docket (one case/term, ideology votes);
+  Iron-Fist/Manipulative compel-vote + compel-retire (12-yr minimum, conditional-retirement
+  bargain); dynamic court size + court-packing (age-70 trigger); 64/60% confirmation with
+  failed-nominee moderate-auto-confirm recovery; appointee ideology reveal + 10-yr drift;
+  ruling → law-deactivation.
+- **Investigation special committees (§22.8)** — **under-designed** (rules left blank,
+  player-authored mid-game): investigate-a-lobby bill → special committee → evidence roll →
+  dominant-party target.
+- **Military-leadership appointment tier (§22.9)** — CJCS/Army/Navy chiefs + Generals/Admirals
+  inside 2.3.2; auto-confirmed; promotion back-fill; rank constraints; wired to the war engine.
+- **53-state alt roster + modern apportionment (§22.10)** — 53 states (incl. DC/Cuba/PR);
+  Wyoming-Rule census recompute (House 572-601, Senate 106) resetting EV + Bias; two-home-state
+  pols; persisted + auto-filled House slates/committees (scaling wall).
+- **Era clock + era enum (§22.11)** — fictional era names that gate content + rescale the card
+  economy at boundaries; clock ~10y behind real tech; dataset-exhaustion procedural generation.
+
+*Modern detail that **sharpens** already-documented systems (now corroborated across 3-4 eras —
+labels bumped inline):*
+
+- **Legislation (§12.9)** — Executive-Branch-Interference / cabinet-proposed bills
+  (Admin 4-5 / Crisis-Admin + presidential assent; new-dept→new-seat); bill-relationship graph
+  (Not-repealable / replace-only-by-X / amendment-tier); collective-accountability Party-Pref
+  penalty on lapsed Crisis Bills; failed bills score; per-pol reelection deltas.
+- **Convention (§15.3, §22.6)** — the CPU delegate engine specifics; sitting-VP-replacement
+  roll; Iron-Fist platform-delegation block; failed-platform penalty.
+- **Cabinet (§9.3.6)** — diversity floor (≥25%) + intra-party faction-equity penalty;
+  failed-confirmation recovery (SML offers 5 → nominator picks → auto-confirm); per-officer
+  tenure (CIA/FBI/Fed/Key Advisor); opp-party cap; military auto-confirm.
+- **Governors/states (§11.4)** — state **Bias** integer + ideological **loyalist-fill** gating;
+  voter-suppression actions blocked while Honest-Gov't maxed; modern primary-control actions.
+- **Amendments (§21.3)** — modern ratification by **governors at 40-of-53** + **2/3-of-572
+  House** pass gate; grandfather clause.
+
 ### 19.1 Design divergences for the roadmap
 
 Rules where the **forum and the shipped engine genuinely disagree** (not just
@@ -2045,13 +2254,38 @@ Rules where the **forum and the shipped engine genuinely disagree** (not just
    defeated commander is fired (`fed` 222, 312, 389; `1772s` 20, 22, 48, 60). (See
    [§21.1](#211-generic-cross-era-war-system).)
 
-> **Confirmed shipped bugs (fixes, not features).** Three defects surfaced by the federalism
-> thread are catalogued in `game-context.md` → "Confirmed shipped bugs" and owned by the
-> roadmap as fixes: **BUG-1** era events never deactivate for non-1772/1856 start years
-> (latent in `buildEraEventsForYear`, `phaseRunners.ts:2817`; an 1800-start wrongly loses the
-> Louisiana Purchase); **BUG-2** `Chisholm v. Georgia` needs an "11th Amendment not ratified"
-> gate (SCOTUS case content not yet seeded); **BUG-3** no fallback when there is no viable
-> PM-General candidate (`GeneralInChief`, `types.ts:1121`). Not re-documented here.
+*New in batch 3 (modern):*
+
+7. **SCOTUS model: abstract `partyPreference` nudge vs. a named-Justice docket**. Shipped
+   2.5.3 only counts conservative/liberal justices and nudges `partyPreference ±0.1`
+   ([§11.6](#116-253-supreme-court--runphase_2_5_3_court-phaserunnersts3397)); 2.8.2 retires
+   age-≥75 justices and back-fills by `judicial`. The modern design runs a **per-term named
+   docket** with **Iron-Fist/Manipulative compel-vote + compel-retire**, **dynamic court size
+   + court-packing (age-70)**, **64/60% confirmation with moderate-auto-confirm recovery**, and
+   **rulings that deactivate laws** ([§22.7](#227-scotus-subsystem-253--282)). This is a
+   replacement, not an extension.
+8. **Cabinet persistence: wipe-on-election vs. retention/firing-precedent**. Shipped
+   `runPhase_2_9_4_PresidentialGeneral` **resets the entire cabinet to empty** on a presidential
+   change ([§15.2](#152-the-election-phases)). The modern design **retains up to 5** (CIA/FBI
+   exempt) with per-officer tenure rules ([§9.3.6](#936-modern-cabinet-detail-sharpens-931-933-designed-not-built)),
+   reinforcing the federalism **firing-precedent hold-over** divergence
+   ([§21.4](#214-firing-precedent-gate-on-cabinet-changes)) across a second era — the wipe must
+   be replaced with retention + precedent-gated replacement.
+
+> **Confirmed shipped bugs (fixes, not features).** Defects surfaced by the forum threads are
+> catalogued in `game-context.md` → "Confirmed shipped bugs" and owned by the roadmap as fixes.
+> **From `fed`:** **BUG-1** era events never deactivate for non-1772/1856 start years (latent in
+> `buildEraEventsForYear`, `phaseRunners.ts:2817`; an 1800-start wrongly loses the Louisiana
+> Purchase); **BUG-2** `Chisholm v. Georgia` needs an "11th Amendment not ratified" gate (SCOTUS
+> case content not yet seeded — relates to [§22.7](#227-scotus-subsystem-253--282)); **BUG-3** no
+> fallback when there is no viable PM-General candidate (`GeneralInChief`, `types.ts:1121`).
+> **GM-confirmed design holes from `modern`** (rules gaps, not crashes): **DH-1** a filibustered
+> "MUST-pass" bill has **no rules remedy** (the GM improvised a 4-leader special-committee
+> auto-pass with a per-day shutdown penalty clock; modern#post 640, 696, 711, 716); **DH-2** the
+> modern era-event deck **fired 2008 cards in 2018** (possible scheduling bug — reported, not
+> verified; reconcile with BUG-1 and the
+> [§21.7](#217-era-event-scheduling-model-vs-corespine) scheduling fork; modern#post 2221). Not
+> re-documented here.
 
 ---
 
@@ -2302,15 +2536,24 @@ flags — this is the EC selection mode.)*
 > covers only the **initial** Constitution's binding articles ([§17.3](#173-constitutional-convention-constitutionalconventionts));
 > post-founding amendments are unmodeled. (Sharpens batch-1 [§14.2](#142-forum-design-layer-constitutional-amendments-durable-state-designed-not-built).)
 
-**Ratification flow** (`fed` 38, 76, 201, 214, 297, 306, 373):
+**Ratification flow** (`fed` 38, 76, 201, 214, 297, 306, 373; **modern** 15-29, 938, 944,
+1278, 1597):
 
-1. An amendment **passes Congress** (as a bill of an amendment type).
+1. An amendment **passes Congress** (as a bill of an amendment type). **Modern pass gate:
+   2/3 of the House** (382 of 572, modern#post 1597) + a Senate supermajority.
 2. It then goes **to the states at the next governance phase** for ratification.
-3. Ratification threshold is usually **unanimous / near-unanimous**; a **"2/3 of states to
-   ratify" amendment** itself raises the bar; **"Christianity as Official Religion" was
-   rejected 9-7** (`fed` 214) — so amendments **can fail** ratification.
+3. Ratification threshold is **era-dependent** (open question — per-era field or per-amendment
+   field):
+   - **federalism / gilded**: by **state legislatures**, usually **unanimous / near-unanimous**;
+     a **"2/3 of states to ratify"** amendment raises its own bar; **"Christianity as Official
+     Religion" was rejected 9-7** (`fed` 214) — amendments **can fail** ratification.
+   - **modern**: by **GOVERNORS** (each state's governor votes), at a **fixed state count =
+     40 of 53** (modern#post 29 Two-Term-Limit fails 39/40; post 1278 Voting-Age-18 fails 31).
 4. On ratification, the amendment becomes a **durable rule-changing flag** that persists
-   until repealed by another amendment.
+   until repealed by another amendment. A **grandfather clause** can exempt the sitting
+   officeholder (modern#post 15: the Two-Term-Limit "would not apply to the current Pres").
+   **NB:** a presidential **two-term limit does not exist** in the modern timeline until
+   ratified — it was still being debated in the campaign's 2008 (`historical-context.md` §10).
 
 **Observed durable effects:**
 
@@ -2447,3 +2690,482 @@ ordinal meters with labeled steps + a ±3-per-phase swing cap + a first-class wa
 Balance proposal `1772s` C1 — enthusiasm as a graduated multiplier with a 3rd-party-at-Neutral
 rule rather than a flat election bonus — is a related human call, logged in `game-context.md`
 #18.)*
+
+---
+
+## 22. Modern era systems (designed, not built)
+
+> **Entire section is designed, not built — and it is the most mechanically mature designed
+> surface in the knowledge base.** The `modern` enum exists only as **balance-tuning rows**
+> (`MORTALITY_RULES`/`LEADERSHIP_RULES`/`ANYTIME_EVENTS_RULES` `eraConfig`, `TRAIT_*` splits)
+> and as a few thin shipped stubs (the `partyPreference` court nudge, the 2.9.3 no-op,
+> `calcStateVote`'s `enthusiasm`/`partyPreference` terms). **No `scenarioModern` exists; no
+> modern faction roster; no meter bank, primary loop, convention loop, SCOTUS docket, or
+> 53-state roster is built.** This section is the spec, sourced from `3a9ac985` (the
+> 1948→2020 multiplayer thread). Cite `modern#post N`. The modern era is the campaign's
+> **end-state**: it has the **full primaries → convention → general** pipeline, a concrete
+> **named meter bank**, a formalized **enthusiasm/Party-Pref engine**, and a **SCOTUS docket**
+> — almost **entirely unbuilt**, and the highest-leverage build target.
+>
+> **Alt-history framing.** This era plays the game's own **"Era of Terror" → "Era of
+> Populism"** (not "the 2000s"); the clock runs **~10 years behind real tech**; there are
+> **53 states**; and BLUE = Democrats = left / RED = Republicans = right with **no polarity
+> caveat** (the one era where this holds). Mechanics here are gated by the **`modern` era enum**,
+> not literal years; the year predicates only set phase cadence. See
+> [§22.11](#2211-era-clock--era-enum-alt-history) and `historical-context.md` §10.
+
+### 22.1 The named meter bank + numeric debt + crisis/cascade
+
+> **Sharpens [§11.1](#111-251-lingering-meters--runphase_2_5_1_lingering-phaserunnersts3260)
+> and the batch-2 [§21.8](#218-named-ordinal-meter-model--3-swing-cap--war-score-meter).** The
+> shipped `NationalMeters` are 7 numeric fields (`types.ts:1399`); `modern` supplies the
+> **concrete banded-text bank** and its dynamics. Cross-ref `game-context.md` #50, #18.
+
+**The concrete bank** (modern#post 12, 114, 618, 752, 878, 944, 959, 1061, 1238). Each meter
+is a **banded-text ladder** nudged **±1** by phases, cabinet officers, "Lingering", "Revision
+to Mean", "Volatility", and legislation:
+
+| Meter | Ladder (bad → good shown) | Maps to shipped |
+|---|---|---|
+| **Revenue/Budget** | … Very Overspending → Overspending → Balanced → Underbudget … | `meters.revenue` |
+| **Economic Stability** | Panic → Stagnation → Sound → Booming | `meters.economic` |
+| **Military Preparedness** | … → Totally Prepared | `meters.military` |
+| **Domestic Stability** | … Mass Protests → Periodic Protests → Stable | `meters.domestic` |
+| **Honest Gov't** | (corruption ladder) … → Free of Corruption | `meters.honest` |
+| **Quality of Life** | … → Good → Great | `meters.quality` |
+| **Planet's Health** | … Poor → Near Crisis → Crisis | `meters.planet` |
+| **Party Preference** | Blue ↔ Red (master partisan thumb-on-scale) | `game.partyPreference` |
+| **Per-ideology enthusiasm** (×7) | each ideology's position on a Blue↔Red track ("Red +2", "lean Blue") | `game.enthusiasm[ideo][party]` |
+| **Per-power relations** (×8) | Neutral → Friendly → Nearly Allies → Allies | `game.diplomacy` (era-keyed) |
+
+- **8 tracked powers** (modern): **UK, France, Spain, Germany, Russia, China, Japan, Israel**
+  — the era-dependent roster of [§13.3.1](#1331-per-power-relations-meters--an-era-dependent-power-roster)
+  at its widest (federalism 5, gilded 6, modern 8; +Israel/Japan).
+
+**Numeric national debt** (distinct from the ordinal Revenue/Budget meter, modern#post 99,
+1537, 2042): a **signed integer** tracked alongside the meter — "National Debt now at −5"
+(post 99), "deficit of 6 / −7" (post 1537), reduced to −3 by a credit action (post 2042).
+Loans push it negative; spending bills are gated against it
+([§21.6](#216-bill-typing--budget-gated-spending-cap)). Corroborates the batch-2 "national
+surplus integer" ([§13.3.3](#1333-national-surplus-integer)) across a third era.
+
+**Crisis behavior** (modern#post 721, 1537, 2230):
+
+1. Dropping a meter into a **bad tier begins a named Crisis** with knock-ons (EconStab→Panic
+   ⇒ DomStab −1 + Periodic Protests, post 721). The crisis **ends** when the meter recovers
+   ("Stable- Crisis ends", post 2230).
+2. Meters **cascade**: one meter's tier **caps or forces** another (DomStab level forces QoL
+   down; Rev/Bud level caps EconStab gains, post 1537).
+3. **Top-of-ladder hard rules**: **Honest Gov't maxed ⇒ deactivates all Political Machines +
+   Gerrymandering** and **blocks creating new ones** (post 1238, 1554, 1962), and **blocks all
+   voter-suppression governor actions** ([§11.4 modern sharpening](#114-state-level-policy-flags-designed-not-built)).
+   (The ambiguity "require zero machines vs prevent new ones" was reworded to *"Cannot
+   create …"* across all era playtests, post 1246-1262 — see `game-context.md` DH note.)
+
+**Meter → election mapping** (the canonical "State of the Meters" table, published before
+**every** election; modern#post 114, 424, 752, 1061, 1742, 2061). Each meter contributes
+additively into the Party-Pref calc and per-ideology enthusiasm:
+
+| Meter (state) | Election effect |
+|---|---|
+| Rev/Budget (good) | +1 incumbent party in Party-Pref + Moderates enthusiasm |
+| **Economic Stability (bad)** | **−3 to the incumbent party in *all* elections** |
+| Domestic Stability (bad) | incumbent party −1 |
+| Quality of Life (good) | RW-Pop +1, Moderate +1 |
+| Planet's Health (good) | Moderate +1, Progressive −1 |
+| **Honest Gov't (good)** | **Controversial pols −2 extra** (decisive — sank vcczar's own pol's 3rd-term bid, post 1754) |
+| Party Preference | direct numeric advantage to the leading party |
+| per-ideology enthusiasm | per-ideology additive bonus into `calcStateVote` |
+
+> **Worked meter→election (the 2008 lesson).** Incumbent Cuomo swept all 53 states in 2004,
+> then **crashed the economy** (EconStab→Panic). In 2008 the −3-incumbent EconStab penalty
+> plus DomStab/QoL knock-ons flipped the map: **Cochran (R) 563 / Cuomo 143** (post 248). The
+> meter bank *is* the election engine's memory of a presidency.
+
+*(designed, not built — replace the 7 numeric meters with banded-text ladders; add the
+numeric debt integer; add crisis entry/exit by tier + cascade rules + top-of-ladder effects;
+add `metersToElectionBonus(meters)` from the canonical table. Couples to
+[§22.2](#222-faction-enthusiasm--party-preference-election-engine--the-score-economy).)*
+
+### 22.2 Faction-enthusiasm / Party-Preference election engine + the Score economy
+
+> **NEW formalized engine (designed, not built).** The shipped `Enthusiasm` table and
+> `partyPreference` exist (`calcStateVote` reads them, [§15.1](#151-calcstatevote--the-core-resolver-phaserunnersts3685)),
+> but the **driving algorithm is not in code**. `modern` supplies it. Cross-ref
+> `game-context.md` #51.
+
+**The 4-part enthusiasm reallocation** runs **after legislation scoring** each session
+(modern#post 96, 722, 945, 2039). Using the **dominant party** (the one that just gained
+more) vs the **opposition**:
+
+| Which faction | Enthusiasm move |
+|---|---|
+| Dominant party's faction that gained **most** points | its ideology cards **+1 toward the dominant party** |
+| Dominant party's faction that gained **least** | **−1 away** from the dominant party |
+| Opposition faction that gained **most** | **+1 toward the dominant party** ("needs taken care of") |
+| Opposition faction that scored **least** | **+2 toward the opposition** ("furious at the incumbent") |
+
+**The Score economy** (modern#post 134, 454, 768, 1080, 1436) drives the reshuffle and the
+elections:
+
+- A running **Score** per faction (and per party) is published as a "Nickname / Score /
+  Leader" scoreboard, grouped Blue vs Red. Score accrues from **bill scoring (all cards,
+  incl. failed bills), exec actions, governor actions, convention/primary results, industry
+  leadership, and era events**.
+- **Lowest-faction team penalty**: a team's **lowest-scoring faction penalizes its
+  teammates** — it loses **25% of its own points**, the others **10%** (post 768, 1436).
+- **End-of-era awards** (paid at each era boundary, post 1080): most era points **+5**; most
+  from the *other* party **+3**; the winning party's factions **+3**; etc. (Points **reset**
+  at the era boundary — corroborates `fed` 518.)
+
+**How a modern election resolves** (contrast the shipped `calcStateVote`): the engine
+publishes the meter bank → applies the **meter→election table** ([§22.1](#221-the-named-meter-bank--numeric-debt--crisiscascade))
+and the 4-part enthusiasm reshuffle → resolves the convention/primary
+([§22.3](#223-presidential-primary-subsystem-291)–[§22.6](#226-the-cpu-delegate-engine-convention--primary-apportionment))
+→ runs **State of the Meters → per-state EV** with tie-breakers and faithless electors
+([§22.5](#225-general-election-library-294)). The **shipped `calcStateVote`** already folds
+`enthusiasm × 2` + `partyPreference × 5` + `state.bias × 5` per candidate
+([§15.1](#151-calcstatevote--the-core-resolver-phaserunnersts3685)); the **federalism
+per-state EC method** ([§21.2](#212-per-state-presidential-election-method)) is an *orthogonal*
+resolution mode the modern thread does not exercise (modern resolves every state by popular
+vote then awards EV winner-take-all, with tie-breaks). The new work is the **Score economy +
+4-part reshuffle + meter→bonus map** feeding those existing per-candidate terms.
+
+*(designed, not built — implement the 4-part reshuffle + a faction `Score` field + era-end
+awards + the lowest-faction team penalty; wire Score into the meter→election map.)*
+
+### 22.3 Presidential primary subsystem (2.9.1)
+
+> **The biggest NEW subsystem; designed, not built.** Phase 2.9.1's `presPrimary`
+> `ElectionContext` exists (`types.ts:697`) and the shipped 2.9.1 just scores `pvCache +
+> command×5 + traitBonus` to pick one nominee ([§15.2](#152-the-election-phases)). `modern`
+> runs a full multi-stage primary. Runs in presidential years (era-gated to `modern`).
+> Cross-ref `game-context.md` #47. (modern#post 340-366, 980-1062, 1646-1704.)
+
+**Candidates** (per faction): up to **1 Major** (the **faction leader** OR a **Celebrity with
+Command**) + **1 Minor** (anyone with **Command**). Each candidate picks **3 focus states**.
+
+- **Blocking**: a **running incumbent cannot be primaried**; an **Iron-Fist + Leadership
+  president/PL blocks intra-party challengers** *unless* the challenger's **faction ideology
+  leans to the other party** (post 1663 — Cochran renominated unopposed; Jim Justice blocked).
+- **Candidate Strength** is scored numerically (post 348, 1664); a **front-runner** emerges.
+
+**Focus-state roll table by charisma trait** (post 980, 989, 1646) — each focus state rolls
+d6 for a +1 / −1 swing, the bands set by trait:
+
+| Trait | + on | − on |
+|---|---|---|
+| (base) | 5-6 | 1-2 |
+| Charisma | 4-6 | 1-2 |
+| Likable | 5-6 | (no negative) |
+| Uncharismatic | (no positive) | 1-2 |
+| Unlikable | 5-6 | 1-3 |
+| Orator | adds to the + modifier | — |
+| Debater (sole in the primary) | 5-6 for +1 **nationally** | — |
+
+**Per-Primary-Group loop.** States are grouped into **Primary Groups 1..N**, the grouping set
+by governor **State Primary Placement (Group N)** actions ([§11.4 modern sharpening](#114-state-level-policy-flags-designed-not-built)).
+For each group, in order:
+
+1. **Primary Debate** — momentum **±1**; the **front-runner is penalized −2 for losing**.
+2. **Scandal Rolls** — **1d6 = scandal**; **Integrity** is immune; **Propagandist / LW-RW
+   Media** can spin or diminish it.
+3. **Broke Candidate Check** — forces a **drop-out**; applies **only to candidates not
+   currently 1st or 2nd** (the GM corrected a misapplication, post 1008).
+4. **Primary Actions** (each candidate picks one):
+   - **Embrace [State] Issue** — 25%/50% +1; **risks an ideology shift + Flip-Flopper** if the
+     issue is non-adjacent.
+   - **Campaign Focus** — die ±; **Celebrity +2**; can backfire on a 1.
+   - **Give a Major Speech** — once per primary.
+   - **Attack [opponent]** — −1 opponent momentum, or backfire.
+   - **Presidential Promise** — offer a plank / cabinet seat for an endorsement;
+     **rejectable** (recipient needs matching expertise for the offered seat).
+   - **Withdraw + endorse / release / hold delegates.**
+
+**Delegates** accumulate per group, mixing **winner-take-all** (DC: Kennedy all 5) and
+**proportional** (CA: Kirk 178 / Blair 59) (post 1701). **Drop-outs endorse + transfer
+delegates** (post 362). Trailing candidates who stay in take **penalty rolls**
+(Disharmonious / Unlikable / −1 future Pres runs, post 1694). The delegate totals and
+majority threshold come from the **CPU delegate engine**
+([§22.6](#226-the-cpu-delegate-engine-convention--primary-apportionment)).
+
+*(designed, not built — a full primary subsystem: candidate eligibility + Iron-Fist blocking,
+the charisma focus-state table, a Strength score, the per-group debate/scandal/broke/action
+loop, delegate accumulation + transfer, and primary-group assignment from governor actions.)*
+
+### 22.4 Third-party-challenge trigger (2.9.3)
+
+> **NEW rule that fills the shipped 2.9.3 no-op** ([§15.2](#152-the-election-phases): the
+> shipped phase always logs "no third-party challenge"). Designed, not built.
+> Cross-ref `game-context.md` #48. (modern#post 400-410, 2116.)
+
+A third-party ticket spawns **at the general** when **both** hold:
+
+1. **Party Preference sits in the middle 3 boxes** of the Blue↔Red ladder, **and**
+2. an **ideology is "discontented with both parties"** (its enthusiasm sits at **Neutral**).
+
+Resolution:
+
+- The **discontented faction of the incumbent's party** runs third-party (randomize if
+  several qualify).
+- **President's-own-ideology carve-out**: if the discontented ideology is the **president's
+  own**, then the **lowest-scoring faction of his party** runs third-party even if it is
+  otherwise happy.
+- A **Celebrity** third-party candidate appears on the **ballot nationwide** (vs a normal
+  third-party candidate's narrower reach). (Lower-stakes third-party runs also appear in the
+  campaign's backstory — e.g. Arne Carlson's 1984 run.)
+
+*(designed, not built — add the party-pref-band + ideology-at-Neutral trigger check at the
+general; spawn an independent ticket from the rule-selected faction; nationwide ballot for a
+Celebrity.)*
+
+### 22.5 General-election library (2.9.4)
+
+> **Sharpens the batch-1 convention/general library ([§15.3.6](#1536-general-election-action-library-designed-not-built)–[§15.3.9](#1539-faithless-electors))
+> across a fourth era and adds modern-only pieces.** Designed, not built. Cross-ref
+> `game-context.md` #16, #17, #19. (modern#post 400-438, 1726-1749.)
+
+**General-Election Action library** (usually **2 rounds**, post 412, 1727):
+
+| Action | Effect |
+|---|---|
+| Give a Speech | Orator double-roll (state + party pref); **Incoherent** risks −1 |
+| **Incumbent Using Power of Office** | 5-6 → **+1 Party Pref** (repeatedly decisive, post 1068) |
+| Help from the Media | LW/RW Media card: 6 → ally enthusiasm, 1 → −1 party pref |
+| **Send VP to Shore Up Support** | region-targeted, trait-branched (Likable/Harmonious/Unlikable/Disharmonious/Provincial/Cosmopolitan); a **Delegator** president can send the VP **anywhere** |
+| President Focuses on a Region | region-targeted speech |
+
+- **3 Presidential Debates + 1 VP Debate** (post 1727): **Debater +2**, Leadership/Charisma
+  +1, Orator/Manipulative/Egghead rolls; the **winner moves Party Pref ±1**. **Per-debate
+  scandal rolls**. The **incumbent may kill the debates** (1-2 penalty roll), or both sides
+  agree to skip.
+- **Failed-platform penalty** (post 1728): if the incumbent completed **<50% of his
+  prior-term planks**, **25% each** of party-wide enthusiasm drop + party-pref drop ("Only 2
+  of 5 planks completed" hit Cochran).
+- **October Surprise** (post 423, 1739): a random table that **only bites if a crisis is
+  active** (or a regional disaster) — Party Pref ±1 + a regional ±1; an **Incompetent**
+  president handles it poorly.
+- **State of the Meters → EV tally**: meter readings convert to per-state bonuses
+  ([§22.1](#221-the-named-meter-bank--numeric-debt--crisiscascade)) → **tie-breakers for
+  close states** → **faithless electors** rolled (post 428: 3 faithless, 2 CA + 1 ME, stray
+  EVs to off-ticket pols) → a per-state **popular-vote % "Election Atlas"** + national totals
+  (post 438, 1082, 1749 — see `game-context.md` A7 for the auto-map requirement).
+- **EV tie-breaks**: the close-state tie-breaker resolves a tied state's EV; a tied national
+  EV count would fall to the same family of rules (the thread did not hit a national tie).
+- **Defeat maluses** (post 438, 459): a **defeated Pres/VP carries a −1 next-election malus**
+  (corroborates [§15.3.10](#15310-scoring--nominee-aftermath)); defeated incumbents who **ran**
+  auto-retire ([§16.1.2](#1612-defeated-incumbents-auto-retire)).
+
+> **Results across the window** (meter→election in action): 2008 **Cochran (R) 563 / Cuomo
+> 143**; 2012 **Cochran 432 / Franken 246**; 2016 **Kirk (D) 678–0** over a 3-term Cochran
+> sunk by accumulated penalties (lost Iron Fist, the 3rd-term malus, failed planks, scandals,
+> and the Grenada war loss). The thread **ended mid-session in 2020** before that
+> presidential election.
+
+*(designed, not built — the general-election action library, the 3+1 debates subsystem with
+per-debate scandal rolls, the October-Surprise roller (crisis-gated), the meter→EV tally with
+close-state tie-breaks + faithless electors, and the auto-generated 53-state atlas.)*
+
+### 22.6 The CPU delegate engine (convention + primary apportionment)
+
+> **NEW — the literal apportionment engine, dumped to console (designed, not built).** Post
+> 2240 shows the Python/CPU helper's `=== CONVENTION DELEGATE SETUP ===` output. This is the
+> hand-adjudication the single-player build must automate. Feeds both the primary
+> ([§22.3](#223-presidential-primary-subsystem-291)) and the convention
+> ([§15.3](#153-convention-machinery-292--full-forum-design-designed-not-built)).
+
+- **Configurable inputs**: party · **eligible-faction-by-ideology** · **4 or 5 categories** ·
+  a per-state **office-control** toggle.
+- **Per-state output**: EVs, **Category (1–5)**, **Bias (−5..+5)**, Control, Ideology, and
+  **Delegates ≈ EV × a category multiplier** (Cat1 ≈ ×1 … **Cat5 ≈ ×4** for friendly states).
+- **Totals**: **53 states ⇒ 1,300 delegates, majority 651** (`total / 2 + 1`). The batch-1
+  "447 needed to win" was the same rule on a smaller roster.
+- **Host advantage** (corroborates `fed`): the faction that **sets the delegate categories**
+  is favored — couples to the convention-host rule ([§15.3](#153-convention-machinery-292--full-forum-design-designed-not-built)).
+
+*(designed, not built — implement the delegate-apportionment engine: per-state EV × category
+multiplier, ideology/control-aware category assignment, 4-or-5 category mode, host-sets-
+categories advantage; reuse it for primary delegate counts and convention ballots.)*
+
+### 22.7 SCOTUS subsystem (2.5.3 + 2.8.2)
+
+> **NEW full subsystem; designed, not built.** The shipped court is abstract — 2.5.3 nudges
+> `partyPreference ±0.1` by conservative/liberal justice count
+> ([§11.6](#116-253-supreme-court--runphase_2_5_3_court-phaserunnersts3397)) and 2.8.2 retires
+> age-≥75 justices at 0.15 and back-fills by `judicial`
+> ([§14](#14-executive--court-management-28x)). `modern` runs a **named-Justice docket** with
+> compel mechanics and dynamic court size. Cross-ref `game-context.md` #52; relates to BUG-2.
+> (modern#post 30-31, 105-113, 277, 324-339, 911, 974, 1280, 1418, 2046, 2250.)
+
+**Docket** (2.5.3): real cases run **per term (one case/term)**; each named Justice votes
+**Yea/Nay by ideology** (post 30, 277, 898, 1280, 1558, 2250). Outcomes are steered to/away
+from history and flagged **AHISTORICAL** (NAACP v. Claiborne, Kennedy v. LA, Thompson v. OK,
+Atkins v. VA, Janus, **Dobbs v. Jackson → 6-3**). The **Chief Justice may attempt to delay**
+a case (post 30).
+
+**Compel mechanics** (Iron-Fist / Manipulative president):
+
+- **Compel a vote** — force a Justice to **switch their vote** (post 30 Sestak Nay→Yea; post
+  1280 compels 3 at once; post 2250 Kirk→Sestak ⇒ Dobbs 6-3). This is the **Iron-Fist
+  compel-vote** power.
+- **Compel a retirement** (2.8.2) — force a **same-party** Justice (or, if **Manipulative**,
+  an **opposing-party** Justice) to retire, with **separate rolls** for "retire from court"
+  vs "retire from the game" (post 105, 730, 957, 2046).
+- **Conditional / compelled retirement bargaining**: a Justice may **offer to step down only
+  if a named replacement is confirmed** (post 324).
+- **12-year minimum**: a Justice **cannot retire before 12 years** on the court **unless**
+  leaving for another office (GM ruling, post 2054).
+
+**Dynamic court size + court-packing** (post 105-113, 279, 330, 738, 911, 944):
+
+- A **court-packing bill** ("appoint an extra Justice whenever an incumbent reaches **70**")
+  was in effect (**target size 10**), then **repealed in-session**.
+- If the court is **≥ target**, a **70+ retirement shrinks** the court instead of creating a
+  vacancy (post 738).
+- Bills exist to **set the number of Justices** outright ("Set Number of SC Justices to 5",
+  post 279). (The **age-70 rule** is the packing trigger, distinct from the shipped age-75
+  retirement roll.)
+
+**Confirmation** (post 974, 1401-1421, 1625): committee then floor, **needs 64 / 60%**. A
+**failed nominee ⇒ the replacement must be a moderate / the other party's ideology / an
+other-party member, and is auto-confirmed.** Trait swaying applies (Harmonious aye; Integrity
+supports Integrity) but **no Orator/Debater shenanigans** (removed, post 1418).
+
+**Appointee ideology reveal + drift** (post 113, 339, 1418, 1558, 2250): a new Justice's
+**true ideology is discovered on joining** via a roll (LW-Pop not Prog; Mukasey Liberal not
+Mod; Lemley Cons not Mod). **After 10 years a Justice can shift ideology** (Prog→Lib; Sestak
+Cons→Mod) — the same 10-year drift confirmed in federalism.
+
+**Rulings deactivate laws** (post 31): a SCOTUS ruling **deactivates now-unconstitutional
+laws** (the death-penalty case deactivates "Set Punishment … to Death"). **House-rule gap**:
+bills tied to a court-disabled policy **should** auto-deactivate but **don't** (post 1293,
+1297) — logged with the design holes.
+
+*(designed, not built — a SCOTUS module: a per-term case docket + ideology-vote model; the
+Iron-Fist/Manipulative compel-vote and compel-retire powers (with the 12-year minimum + the
+conditional-retirement bargain); dynamic court size + court-packing (age-70 trigger, shrink
+when ≥ target, set-count bills); confirmation at 64/60% with the failed-nominee
+moderate-auto-confirm recovery; appointee ideology reveal + 10-year drift; a ruling →
+law-deactivation hook.)*
+
+### 22.8 Investigation special committees (under-designed)
+
+> **NEW — and flagged UNDER-DESIGNED.** The designer **left the rules blank**; **player
+> @10centjimmy authored them mid-game**. Designed, not built. Cross-ref `game-context.md`
+> #54. (modern#post 1294, 1369-1372.)
+
+A bill type **"Investigate Lobby or Special Interest"** (proposed in 2.6.1) forms a **special
+investigation committee** — a special **chair + ranking member + members** — that **rolls for
+whether enough evidence is found**. The **target is always a member of the dominant party**
+(not the proposer's party). The observed investigation returned **"no charges."** Because the
+rules were authored in play, the **exact roll, committee composition, and consequences are
+unsettled** — this is a **design hole**, not a finished mechanic.
+
+*(designed, not built — and **rules must be authored first**: define the investigation-bill
+type, the special-committee composition, the evidence roll + modifiers, the dominant-party
+targeting, and the consequences of a found/not-found verdict.)*
+
+### 22.9 Military-leadership appointment tier (2.3.2)
+
+> **NEW appointment tier; designed, not built.** The shipped 2.3.2 fills a single
+> `GeneralInChief` ([§9.2](#92-232-military--runphase_2_3_2_military-phaserunnersts2246)).
+> `modern` runs a **multi-rank military ladder** inside the appointment phase. Cross-ref
+> `game-context.md` #49; pairs with the war system (#45,
+> [§21.1](#211-generic-cross-era-war-system)). (modern#post 214-229, 848, 952, 1386, 2172-2182.)
+
+- **Ranks**: **Chairman of the Joint Chiefs (CJCS), Army Chief of Staff, Chief of Naval Ops
+  (CNO), Generals, Admirals** — a distinct tier alongside the civilian cabinet seats.
+- **Auto-confirmed**: military appointments take **no Senate vote** (post 2176) — contrast the
+  civilian cabinet's roll-call.
+- **Promotion back-fill**: promoting an officer up the ladder **back-fills** the vacated rank;
+  officers **passed over for promotion may resign** (post 1512).
+- **Rank constraints**: a **general can't be made an admiral** (post 848, 1386).
+- **Pre-war firing**: an **Iron-Fist** president may **fire generals before a war** (20% each
+  of −1 Mil Prep, [§21.1](#211-generic-cross-era-war-system)).
+- **Wiring to war**: the ranks feed the per-battle Chance-of-Success modifiers — **SecDef +
+  Joint-Chiefs ratings ×2**, the **leading officer's rating ×10** (a 5-skill general = +50),
+  plus **Military Preparedness +25** ([§21.1](#211-generic-cross-era-war-system)).
+
+> **Reconciliation with batch-2 cabinet (`fed`).** Federalism showed **senators refuse a
+> *military* appointment except in a major war** but accept an ambassadorship
+> ([§9.3.1](#931-expanded-cabinet-roster)) — the modern auto-confirm of the *military tier*
+> is consistent (the senators-refuse rule is about pulling a *Congress member* into uniform,
+> not about confirming a career officer). Both are designed, not built.
+
+*(designed, not built — add a military-rank ladder to 2.3.2: CJCS/Army/Navy chiefs +
+Generals/Admirals, auto-confirm, promotion back-fill, rank-mismatch + resign rules; wire the
+ratings into the generic war engine.)*
+
+### 22.10 53-state alt roster + modern apportionment
+
+> **NEW roster + apportionment; designed, not built.** Shipped rosters are `states1772.ts`
+> (13) / `states1856.ts` (31), with static `electoralVotes` and **one home state per
+> politician**. `modern` runs a **53-state** alt roster with census-driven apportionment and
+> **two-home-state** politicians. Cross-ref `game-context.md` #55, #34, A9. (modern#post 185,
+> 426, 438, 462, 495, 870, 964, 1281, 1785, 2240.)
+
+- **53 states** including **DC, Cuba (CU), Puerto Rico (PR)** as **full states** (post 426,
+  438; the delegate table at post 2240 lists Cuba 17 EV, PR 3 EV). The roster is the **modern
+  alt-history annexed set**, not the real 50 states.
+- **Modern apportionment / decennial Census**: a Census recomputes EV apportionment under a
+  **Wyoming Rule**, **resets every state's Bias**, and adds/removes a state's **"focus Rep"**
+  House seat (post 185, 870, 964: total EVs dropped **706 → 678**). Wyoming-Rule apportionment
+  **ballooned the House to 601 seats** (post 185, 420), later cited as **572** (post 1281);
+  the **Senate = 106** (53 × 2).
+- **Two home states**: a politician may carry an **alt-state add at draft** ("AOC (NY) adds
+  CO", post 462, 495, 1785), affecting relocation/Carpetbagger
+  ([§6.2.x](#62x-forum-design-layer-designed-not-built)) and Kingmaker chaining
+  ([§6.5.x](#65x-forum-design-layer-protégé-slot-cap--gains-designed-not-built)).
+- **Scaling-wall UX** (`game-context.md` A9): at this scale the manual House-election and
+  committee-staffing phases are the dominant tedium — the forum's RepElections tab is **wiped
+  every cycle**, players keep companion files, and **a player quit over it**. The build **must
+  persist + auto-fill** House candidate slates and committee rosters across cycles.
+
+*(designed, not built — a modern 53-state roster (incl. annexed states); a Wyoming-Rule
+apportionment recompute (House size + 106 Senate) that resets EV counts + state Bias at the
+decennial census + adds/removes focus-Rep seats; politician multi-home-state support; and
+persistent + auto-filled House slates / committee rosters.)*
+
+### 22.11 Era clock & era enum (alt-history)
+
+The modern thread makes the **era model** explicit and worth stating as a mechanic, not just
+framing (modern#post 1, 769, 1080, 1106, 1172, 1200, 1771):
+
+- **Eras have fictional names and gate content.** The campaign plays the **"Kindness Era"
+  (referenced) → "Era of Terror" (…–2012) → "Era of Populism" (2012–2024)** (post 725, 818,
+  9-15, 769, 1106, 1771). Era boundaries **gate which events/actions are legal** and
+  **rescale the faction-card economy** (post 1172 — card counts per ideology/interest change
+  at the boundary; post 1200 — the boundary can force the Prog/LW-Pop cards to **split across
+  two factions**). End-of-era awards are paid at each boundary (post 1080; see
+  [§22.2](#222-faction-enthusiasm--party-preference-election-engine--the-score-economy)).
+- **The clock runs ~10 years behind real tech** (post 39-41: "IBM releases first PC" in 2004;
+  the internet event hadn't fired). Real-world dates are **not** the gate — the **`Era` enum
+  is** ([§1](#1-core-model--invariants)). The shipped flat interest-group pool (Big Tech, Big
+  Oil & Gas, Globalists, LW/RW Media) is **anachronistic in 1856/1868 but correct here**
+  (`historical-context.md` §3-4 vs §10).
+- **Dataset exhaustion** (post 456, 1088-1101, 1771): the ~18.5k real-person draft dataset
+  **runs out** in the deep-modern era ⇒ the campaign **switches to procedurally generating
+  rookie classes** (~188 pols/class). This is a hard build requirement (`game-context.md`
+  #43): a procedural generator with a **plausible, ethnically-varied, toggleable name engine**
+  and procedural portraits (A1).
+- **Era-enum vs `nationalism`/`gilded`**: the engine's `Era` type today is
+  `independence | federalism | nationalism | modern` (`types.ts:1337`). The forum frames a
+  **Gilded Age** *and* the modern arc above as distinct eras, so the enum likely needs to grow
+  (`gilded` / `progressive` between `nationalism` and `modern`) — an open question in
+  `game-context.md`.
+
+> **Design holes & possible bug (point to `game-context.md`, not re-documented):**
+> - **DH-1** — a **filibustered "MUST-pass" bill has no rules remedy** (GM-confirmed gap).
+>   When a required tariff was filibustered to death, the rulebook had no answer; the GM
+>   **improvised** a 4-leader "special committee" auto-pass with a per-day "AMPU government
+>   shutdown" penalty clock (modern#post 640, 696, 711, 716). See `game-context.md` → DH-1.
+> - **DH-2** — the **modern era-event deck appears decoupled from the literal year (POSSIBLE
+>   BUG, reported-not-verified)**: in the ~2018 turn the EraEvos deck pulled **2008-era cards**
+>   (Subprime crisis, ABM/INF treaties) (modern#post 2221). Could be an intended shuffle,
+>   backlog, or a scheduling defect; reconcile with BUG-1 and the
+>   [§21.7](#217-era-event-scheduling-model-vs-corespine) scheduling fork. See
+>   `game-context.md` → DH-2.
+
+*(designed, not built — formalize an `Era` enum + per-era content gating (events, actions,
+card pool, card-count rescale at boundaries) decoupled from literal years; a procedural
+politician generator for dataset exhaustion; and resolutions for DH-1/DH-2.)*
