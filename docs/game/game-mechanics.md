@@ -275,6 +275,20 @@
     - [27.6 Second Bank recharter clock + the Bank War exec action](#276-second-bank-recharter-clock--the-bank-war-exec-action)
     - [27.7 The ideology chart becomes a CIRCLE (mid-era rule change)](#277-the-ideology-chart-becomes-a-circle-mid-era-rule-change)
     - [27.8 Amendments mutate core rules mid-game (the "Sexenio" experiment)](#278-amendments-mutate-core-rules-mid-game-the-sexenio-experiment)
+28. [Modern / Cold-War era (1948+) systems (designed, not built)](#28-modern--cold-war-era-1948-systems-designed-not-built)
+    - [28.1 ★ The 1948 modern boot](#281--the-1948-modern-boot-a-distinct-boot-alongside-1772--1856--2012)
+    - [28.2 ★ The Cold War is NOT a system — generic war engine relabeled (negative scope)](#282--the-cold-war-is-not-a-system--it-is-the-generic-war-engine-relabeled-negative-scope)
+    - [28.3 The diplomacy system (the real, working Cold-War subsystem)](#283-the-diplomacy-system--the-real-working-cold-war-subsystem-271--261)
+    - [28.4 ★ The realignment — mechanically-but-gradually enforced](#284--the-realignment--mechanically-but-gradually-enforced-not-a-single-scripted-flip)
+    - [28.5 Modern legislation, mutable cabinet & amendments](#285-modern-legislation-mutable-cabinet--amendments--the-1948-confirmations)
+    - [28.6 The modern election machine — 1948-era refinements](#286-the-modern-election-machine--1948-era-refinements)
+    - [28.7 Modern cabinet & the Era-of-Terror cabinet rework (2.3.1)](#287-modern-cabinet--the-era-of-terror-cabinet-rework-231)
+    - [28.8 Civil Rights — era content via generic mechanics](#288-civil-rights--distributed-across-systems-the-canonical-era-content-via-generic-mechanics-example)
+    - [28.9 The per-decade census + statehood/territory](#289-the-per-decade-census--statehoodterritory-the-level-b-census-mechanic)
+    - [28.10 The ~25-sub-phase modern turn loop (scale note)](#2810-the-25-sub-phase-modern-turn-loop-scale-note)
+    - [28.11 Modern draft, lobby cards & dataset](#2811-modern-draft-lobby-cards--dataset-the-era-locked-content-rotation)
+    - [28.12 ★ Design intent (solo-first), open question, timeline seam](#2812--design-intent-solo-first-the-open-question-and-the-timeline-seam)
+    - [28.13 Era-of-Terror content (2000–~2005)](#2813-era-of-terror-content-2000-2005-fired-in-the-late-game)
 
 ---
 
@@ -2778,6 +2792,44 @@ eras — labels bumped inline):*
   identical era-band labels at identical in-game dates, cross-confirming the full 1772→Gilded
   traversal from **two different start years** (§27.1). The content-band era architecture is the
   most-corroborated finding in the KB.
+
+*New in batch 9 (`nuke`, the 1948→~2005 Cold-War/modern corpus — the largest in the KB; mostly the
+new **§28** + sharpened **§27.1 / §27.7**; design holes and detail rows are in `game-context.md`,
+**not re-documented here**):*
+- **Design holes DH-45..DH-58 and detail rows #106..#114 are logged in `game-context.md`.** The
+  highest-value, build-shaping ones:
+  - **★ NEGATIVE SCOPE — the "Cold War" is NOT a system** (§28.2): it is the generic war engine
+    (§21.1) relabeled + EraEvos/A-B events + the diplomacy subsystem (§28.3). **Do NOT build**
+    nuclear/MAD/NATO/space-race/military-branch mechanics — they do not exist in the design.
+  - **★ Data-loss hole (same theme as DH-36)** — the whole Neocon-era **census/EV-delta event block
+    was lost** (events stored alphabetically-by-era; EV-change events lack "EV" in flavor text →
+    unsearchable, then mis-moved to "Era of Terror"). → **REQUIREMENT: era-event data needs a
+    structured `evDelta`/census field** (not free-text flavor) + per-era completeness so a 10-yr
+    census reallocation always fires (§28.9).
+  - **★ USSR-collapse chain broken + relation meters "beyond broken"** — the dissolution chain
+    stalls at a ~5% gate (USSR never falls, still allied in 2005); relation meters have no downward
+    pressure (allied with everyone). Needs trigger fixes + downward pressure (§28.2–§28.3).
+  - **★ The war engine never resolves + has no branches** (a §21.1 hole, reconfirmed); **white peace
+    rarely possible**; landslide margin-cap model misfires on blowouts (§28.6); event firing-rate is
+    bimodal (~5% pre-Terror vs ~25% in Terror); Wyoming Rule un-implementable without a real
+    population/apportionment model (§28.13).
+- **★ DESIGN-INTENT recorded — the digital APP is built for 1-human-vs-9-CPU** (the strongest corpus
+  statement; multiplayer "goes off the rails"; the points system is for CPUs + enthusiasm, not
+  humans). The tabletop/forum game is team-MP with CPU backfill; **both are true — the app is a solo
+  adaptation.** This **validates building solo-first with CPU-faction AI as load-bearing** (§28.12 /
+  §25). The CPU-faction AI is **entirely unexercised** by this human playtest.
+- **★ OPEN QUESTION recorded — Senate pass-threshold** (§28.5 / §28.12): a built-in **~60%
+  supermajority to PASS** the Senate, or **simple-majority-to-pass with ~60% being cloture only**?
+  Sources conflict; needs the human/codebase to settle pass vs cloture.
+- **Timeline note:** this 1948 thread is the chronological **PREDECESSOR** of the already-documented
+  `modern` 2004→2020 thread (§22) — the mechanics doc now covers a **continuous 1772→2020 timeline**;
+  the **2004 Cuomo election (§28.6) is the seam** between §28 and §22.
+- **Corroborations (confidence bumps, not new surface):** the **era-band model now holds across a
+  THIRD start year (1948)** — confirmed 1772 / 1800 / 1948 — and is **refined into TWO LEVELS**
+  (point-banked bands + a separate per-decade census, §27.1); the **ideology scale is a CIRCLE** is
+  now **two-thread confirmed** (`nuke` POST 9842 independent of `rep1800`, §27.7); **offices created
+  AND abolished by ordinary law** confirmed founding→modern (§28.5); the **"Neocons" era band was an
+  earlier-extractor MISLABEL** (a faction rebrand + decade content-rotation, corrected in §27.1).
 
 ### 19.1 Design divergences for the roadmap
 
@@ -5961,6 +6013,67 @@ amendments toggle CAPABILITIES, not just rule-flags; pairs with §21.3 ratificat
 > `ad0f2875` POST 153–156), this is now the **most-corroborated architectural finding in the KB**.
 > The bands are deterministic content-gates on game-state, not flavor or per-thread GM invention.
 > (game-context #92, #100; DH cross-ref below.)
+>
+> **★★ BATCH-9 REFINEMENT — the era model has TWO LEVELS (a THIRD start year, 1948; `nuke`).**
+> The largest corpus in the KB emits the band model again — now confirmed across **1772 / 1800 /
+> 1948** — and **refines** it into two distinct, separately-fired mechanics that an earlier
+> extractor had conflated. **Both must be built; do not collapse them.** (`nuke` mid-C H1; POST
+> 11287, 11295, 11637, 12027.)
+>
+> **Level (a) — Historical Eras = the point-banked content-bands** (the #92/#100 mechanic above).
+> `nuke` spans only TWO of them:
+> - **"Era of the Nuclear Age" = ONE band, 1948–2000** (the scenario title "Nuclear Age 1948-2004"
+>   names this single band; civil rights + Vietnam + Reagan all fold INTO it — there is **no
+>   separate "Civil Rights era" band**).
+> - **"Era of Terror" = 2000–~2012**, explicitly named and entered at a 2000 boundary ("Welcome
+>   to 2000-2002 and to the Era of Terror (2000-2012)!"). A **real band with rule deltas**, not
+>   flavor: the GM gates rules on *"Now that we are in the Era of Terror…"* — e.g. **cabinet
+>   region STOPS mattering → replaced by diversity + faction-balance checks** (§28.7). (POST
+>   11295, 11307, 11421, 11724.)
+> - **Transition trigger = the calendar YEAR hitting 2000** (reconciled from a partial
+>   disagreement): the **end-of-era point-banking formula + standings reset** of §27.2 / §2.5
+>   fires at the boundary (same +5/+3/+3/+3/−1 table), but the *trigger to cross* is the year, not
+>   a manual ceremony. (Open Q manual-vs-year: resolved here as year-fired.)
+> - **Downstream bands (Populists / Normalcy / Future) are NOT named here** — only "the future" /
+>   "the 2030s". The successor `modern` thread (§22.11) then names **Era of Populism 2012–2024**.
+>
+> **Level (b) — Decade / census boundaries WITHIN an era** (1972, 1980, 1990) = a **SEPARATE,
+> schedule-fired** mechanic (NOT a point-banking band). Each census does **three things at once**
+> (detailed at §28.9): **(1)** bulk **EV reallocation** vs the prior census; **(2)** wholesale
+> **state-bias re-lean** on the Blue5..Tossup..Red5 scale; **(3)** **content rotation** of the
+> draft pool, lobby cards / "Faction Personalities", and era-activated industries. This is the
+> per-decade `AMPU Census` doc (§28.9 / row #88), distinct from the per-era bias-table swap of
+> §27.2 step 6. (`nuke` mid-B B / mid-C S2; POST 6374–6377, 8361–8364, 8410, 8547, 10008–10010.)
+>
+> **★ CORRECTION of an earlier-extractor error (logged so it is NOT re-introduced).
+> "Neocons" / "Corporate Republicans" is a FACTION REBRAND (~1980–82), NOT an era band.** After
+> the 1980 GOP win, players self-rename factions off an era-appropriate nickname menu (dkh64 →
+> "Neocons"; pman → "Corporate Republicans"; menu also: Atari Democrats, Wall Street Democrats,
+> Internationalists, Imperialists, Anti-Communist Republicans, Neoliberals). Faction nicknames
+> are player-chosen and rotate constantly (ANKA Republicans, Foglecrats, Equality Democrats,
+> Oligarchs, Cochran Republicans, Urbanites…). The **mislabel's source** is the shared sheet's
+> own loose internal tab-naming ("Era of Neocons (1972-2000)") + GM flavor text at the 1972
+> census boundary ("as we are entering a new era…"). The spreadsheet **conflates decade
+> content-rotation with "era"**; the authoritative resolution is the two-level model above. Do
+> **not** promote any faction nickname (Neocons, Corporate Republicans, …) to a Historical-Era
+> band. (`nuke` mid-B B / mid-C H1; POST 6173, 6377, 6530–6538, 8063, 8167, 8168, 9538, 9840,
+> 10106, 10707, 10953, 11286; reconciles `historical-context-1948-coldwar.md` lines 228–242.)
+>
+> **★ Era CONTENT is hard-coded and IGNORES player history (distinct from era BANDS being
+> game-state-gated).** Three separate gates: era **bands** gate on game-state/year (above); the
+> **decennial census** fires on its 10-year schedule (level b); and era **events / content** fire
+> on a **scripted schedule decoupled from in-game history**. Scripted events land out of
+> historical order vs the clock (Hungarian Revolution, James Meredith, Woodstock, Stagflation,
+> Roe, Watergate, AIDS, Stonewall in decoupled windows); the **SCOTUS docket fires on its era
+> schedule regardless of divergence** (Roe in a 1966-equivalent cycle; Lawrence/Romer/Roper
+> "early" because the playtest ran so left). Some events are keyed to a prior choice (Nixon
+> Doctrine gated OUT because the US never entered Vietnam). **Clearest statement:** a GOP-Taft
+> player who ended Jim Crow **early** (legislation + federal troops) **cannot pre-empt the
+> Civil-Rights-Movement content** — downstream events depend on it, so the GM **house-rules a
+> ~5%/phase trigger roll** to fire it anyway. **Build implication:** era BANDS gate on game-state;
+> era CONTENT fires on its own scripted clock — two different gates. (`nuke` mid-A B / mid-B C;
+> POST 3333–3334, 3356, 5016, 5332, 6674, 6765, 7010, 7098–7099, 7413, 7451, 8258.) Worked
+> example at §28.8.
 
 **The claim.** An "era" in AMPU is a **fixed content-band** — a set of available
 bills + era-events + draftees + a state-bias/census table — that the game advances through on
@@ -6221,6 +6334,14 @@ Couples to §24.6 / §26.5 (offices-by-law) and §14.1 (exec-action library).)*
 > enum.** Refines the [§6/§7 ideology model](#6-politician-churn-213217) and the conversion
 > adjacency rules ([§25.8](#258-conversion-ai--deterministic--rolls-with-pliable--ideology-adjacency-gating)
 > / row #76). (`rep1800` §B POST 5717, 5730.)
+>
+> **★ TWO-THREAD CONFIRMED (batch 9).** The ideology-circle is no longer a single-thread finding:
+> `nuke` (the independent 1948-start modern campaign) introduces the **same** rule from scratch —
+> *"the ideology chart became a circle, not a line; LW-Pop can shift directly to RW-Pop (and vice
+> versa) at 25% base"* (`nuke` mid-C H4; **POST 9842**). Two unrelated threads (`rep1800` 1800-start,
+> `nuke` 1948-start) now independently agree the scale is a **ring with the two populist ends
+> adjacent at the standard 25% one-step base** — promoting this from "designed in one playtest" to
+> a corroborated rule. The build spec below is unchanged; the confidence is higher.
 
 At a **mid-era rule change**, the ideology axis stops being a line and becomes a **circle**:
 
@@ -6304,3 +6425,624 @@ the hole — an optional **grandfather clause** flag. Extends §21.3 / §24.4 / 
 > undocumented across all ingested threads**; the documented timeline end-state is unchanged. New
 > design holes **DH-36..DH-44** (incl. the **DH-36 meta hole** — manual-upkeep GM burnout killed a
 > 12-turn game) are logged in `game-context.md`.
+
+---
+
+## 28. Modern / Cold-War era (1948+) systems (designed, not built)
+
+> **Entire section is designed, not built.** Sourced from the **9th ingested thread** —
+> `be4e0f70`, *"AMPU 1948 Playtest: The Nuclear Age 1948–2004"* (`nuke`): a **12,228-post /
+> 156-chunk** human-multiplayer campaign, the **single largest corpus in the KB** and the
+> **fullest capture of the MODERN (Cold-War + early-21st-century) systems** anywhere in the
+> knowledge base. GM/processor = `ebrk85`; designer = `vcczar`; co-designer/rules = `MrPotatoTed`.
+> Cite `nuke#POST N` (the digest preserves `POST n` markers end-to-end across its three mid-reduce
+> partials: mid-A 1948→1960, mid-B 1960→1982, mid-C 1982→~2005).
+>
+> **This is the chronological PREDECESSOR of the already-documented `modern` thread (§22, 2004→2020).**
+> The forum physically broke at ~page 491 (Invision ~500-page cap) during the 2004–2006 half-term
+> (final point ≈ mid-2005) and a successor thread (`3a9ac985`, the `modern` digest behind §22)
+> opened at 2004→2020. **Read §28 + §22 as one continuous 1948→2020 campaign; the seam is the 2004
+> election.** With §28 the mechanics doc now spans a **continuous 1772→2020 timeline.**
+>
+> **Relationship to other sections (read-this-first).** Most modern subsystems are **already
+> documented** from the `modern`/`pop`/`drums` threads — §28 does NOT re-document them, it
+> **cross-links + adds the deltas this 1948-start corpus uniquely reveals**:
+> - The **era model** (two-level refinement) lives in **§27.1** (sharpened this batch), not here.
+> - The **named-meter bank / Score economy / faction-enthusiasm election engine** → **§22.1–§22.2**.
+> - The **presidential-primary / third-party / general-election / convention machinery** →
+>   **§15.3, §22.3–§22.6, §25.1–§25.4, §25.12** (§28.6 adds the 1948-only refinements).
+> - The **generic cross-era war system** → **§21.1, §13.3** (§28.2 = the headline negative-scope
+>   finding: the Cold War IS this engine relabeled).
+> - **Offices-by-law / amendments / SCOTUS-size** → **§21.6, §24.6, §26.5, §27.6** (§28.5 adds the
+>   modern create-AND-abolish confirmations).
+> - **CPU AI specs** → **§25**; **scenario-boot model** → **§26**.
+>
+> **Shipped reality check.** The shipped build has **no 1948 (or any modern) scenario** — only
+> 1772 + 1856 boot into the engine; `Era` is a 4-value enum (`independence | federalism |
+> nationalism | modern`, `types.ts:1337`) with the `modern` value **unreachable in play**.
+> Diplomacy, primaries, conventions, the rich war engine, mutable cabinet, and the meter bank are
+> all 1856-only or absent (§19). Everything in §28 is forum-sourced design.
+
+### 28.1 ★ The 1948 modern boot (a distinct boot, alongside 1772 / 1856 / 2012)
+
+> The value of this thread is the **1948 START STATE** — the engine booted mid-20th-century with
+> the full modern federal apparatus already populated (no Continental/Constitutional Convention
+> startup). It is a **fourth boot shape** for the BootSheet model of §26.1: 1772 (founding),
+> 1856 (antebellum mid-government), **1948 (Cold-War mid-government)**, 2012 (`pop` fresh-modern).
+> (`nuke` mid-A A; POST 1, 8.)
+
+At boot:
+
+| Boot facet | 1948 start state | Source |
+|---|---|---|
+| **Seated President / VP** | **Truman (D)** (just "re-elected" in the 1948 upset) + **VP Alben Barkley**; both chambers Democratic | POST 1, 8 |
+| **States** | **48** — **no AK/HI** (both arrive mid-game as statehood *bills*, irreversibly — §28.10) | POST 973–974 |
+| **Factions** | **10 starting factions, 5 RED / 5 BLUE** (the standard modern board) | POST 1, 17 |
+| **Foreign-relation nations** | **8 standing ambassador nations** (UK, France, Spain, West Germany, USSR, PR China, Japan, Israel) — a fixed modern roster, each with a per-nation relation meter (§28.3) | POST 270, 343 |
+| **Era clock** | **~6-yr title/clock offset** — game-years run ~6 behind the "1948" label; real cases/laws apply at the offset ("Civil Rights Act of 1964 (1948 in our case)") | POST 375, 606 |
+
+- **Cold-War cabinet offices NOT in earlier boots** (the modern apparatus pre-seated): **CIA
+  Director, FBI Director** (J. Edgar Hoover, 10-yr term), **UN Ambassador, Fed Reserve Chair**
+  (6-yr term), **National Security Advisor, Key Advisor**, plus **Sec of Defense** (the modern
+  post, not "Sec of War"). Full roster at §28.7. (POST 243, 270.)
+- **Era-appropriate starting factions, two notable for the realignment (§28.4):** the
+  **Dixiecrats sit INSIDE the BLUE party** (Murrman104 = Blue 5, "Graham Crackers", led by Rev.
+  Billy Graham; hold Russell / Byrd / Thurmond + Theocrat / RW-Activist / Law-&-Order /
+  Mil-Industrial / Big-Ag cards), and the **Reaganites start as BLUE Moderates** (ShortKing =
+  Blue 4; **Reagan starts a Democrat**). (POST 1, 17, 134.)
+- **Seed pols = the real 1948 roster** (Eisenhower, Nixon, JFK, LBJ, Taft, Rockefeller,
+  MacArthur, Thurmond, Reagan-as-Dem…) but **less curated than the 1772/1856 datasets** —
+  multiple boot bugs patched live (vacant RI/KS Senate seats; a Gov with 0 governing; Ike missing
+  a Leadership trait; Barkley command 0). A modern dataset slice will need the same curation pass
+  the founding datasets got. (POST 1, 36, 59–61, 204, 351–353, 362, 719, 733, 830.)
+
+*(designed, not built — a 1948 `BootSheet` (§26.1): seated Truman/Barkley, 48 states, the 10-faction
+5R/5B board with Dixiecrats-in-Blue + Reagan-a-Democrat, the full modern + Cold-War cabinet roster
+(§28.7), 8 ambassador nations with relation meters (§28.3), and a curated modern dataset slice. The
+~6-yr era→year offset must be explicit data, not implicit.)*
+
+### 28.2 ★ The Cold War is NOT a system — it is the generic war engine RELABELED (NEGATIVE SCOPE)
+
+> **The single biggest structural finding of the corpus, re-confirmed across all 156 chunks, and
+> the most important line for the tech-lead: DO NOT build a bespoke Cold-War subsystem.** Despite
+> the "Nuclear Age" title there is **NO purpose-built containment / nuclear / MAD / NATO /
+> space-race engine.** The Cold War is the **generic cross-era naval→land d100 war engine (§21.1 /
+> §13.3) relabeled with era-appropriate names, plus one-off events.** (`nuke` mid-A C1 / mid-B
+> §War / mid-C H2; POST 494–500, 4851, 5422–5424, 6142, 6354–6358, 8236, 8331.)
+
+**What actually exists** (all already specced at §21.1 — these are the 1948-era confirmations):
+
+- **The same battle/war roller every era runs**, relabeled: **US–Spain/Franco** (~8 in-game yrs;
+  "across all playtests it's always been Spain" — a misfit legacy war spawned by a bad-relations
+  roll, §28.3), the **"Korean War"** (explicitly "our timeline's Vietnam quagmire", dragged to its
+  ~17th–19th year in place of Vietnam), anachronistic GOP-opened wars (Invasion of Cuba,
+  Cambodia/Mayaguez, Somalia, Rwanda), the **Gulf War** (Iraq-invades-Kuwait EraEvo), and the
+  **Early War on Terror** (§28.13). The battle-resolution formula and KIA/Incompetent/momentum
+  mechanics are **exactly §21.1** — see there. (POST 116, 4851, 5094, 5427, 5732, 6354.)
+- **★ Negative findings to encode as scope boundaries:**
+
+| Claimed Cold-War system | Reality in `nuke` | Source |
+|---|---|---|
+| Army / Navy / Air branches | **None** — army generals command navies, "naval" pols die in infantry attacks (repeatedly flagged) | POST 1101–1102, 1234 |
+| Wars resolve | **They don't** — war-end roll `total war score × end-multiplier (0.5/1/2) × %` has odds so low the Korean War ran ~two decades | POST 5422, 5424, 6357 |
+| Fall of the USSR / end of Cold War | **Never modeled — the USSR NEVER FALLS** (see below) | POST 11055, 11058–11060 |
+| Nuclear / arms-race / MAD subsystem | **None** — nukes = scripted events + ONE legislative ×2 multiplier; **NASA = a bill + a prerequisite flag** | POST 400, 2508, 2650, 6765 |
+| NATO / détente / SALT / Berlin | **One-off A/B events, not systems** (NATO = a single point-swing event, no Article 5, no bloc — players picked "no NATO") | POST 2599, 2606, 6266, 7097–7099 |
+| Watergate → impeachment | **NO impeachment trigger** — Pres chose "allow the wiretapping", it succeeded undetected → pure upside (+1 all states, +100 pts) | POST 6674–6676 |
+
+- **★ The USSR NEVER FALLS (the headline negative result).** The clock crosses 1982→2005 but
+  there is no fall-of-USSR, no German reunification, no NATO, no MAD, no "peace dividend." The
+  USSR is a **live, named ally + diplomatic actor in 2004–2005** (a sitting **Ambassador to the
+  Soviet Union**; the Soviets launch Mir as a current event; the **Russo-Georgian War** event
+  treats Russia as "the USSR, a nuclear power"). The dissolution event-chain **exists but is
+  probabilistically gated and never fired**: Solidarity → Pope JPII → Glasnost/Perestroika → SDI →
+  **Gorbachev leads USSR (~5% gate — never cleared)** → Revolutions of 1989 (20%) → Dissolution
+  (10%), + a MilPrep 8–9 requirement. GM: *"we keep missing the 5% chance for the first event in
+  that chain."* End-of-Cold-War triggers are also buggy (only "Dissolution of the USSR" or the
+  "Soviet Alliance" event explicitly ends Cold-War status; an LW-Pop early alliance would prevent
+  the Cold War triggering at all). → see **§19 hole DH-class** / digest hole #1. (POST
+  11055–11060, 11398, 11466, 11706, 11750, 11752.)
+- **Wars CAN be lost, with lasting penalties** (§21.1): the US LOST the US-France War (war-score
+  −7 → 70% loss roll hit → **Treaty of Paris**: President permanent −1 all future elections, Party
+  Pref −3, JCoS chair permanent −1 + −1 Military). A fresh war gives an initial **+Party-Pref
+  patriotic boost** that decays if it drags. (POST 5620, 6070, 6354–6358.)
+
+> **★ NEGATIVE-SCOPE directive for the build.** The "Cold War" requires **no new subsystem**.
+> Build: (1) the generic war engine of §21.1 with era-relabeled battle/war names; (2) Cold-War
+> *content* as ordinary EraEvos + A/B events + a few legislative multipliers (the Soviet-Nuclear-Test
+> "arms race" ×2 flag; the NASA prerequisite flag); (3) the diplomacy subsystem of §28.3. **Do
+> NOT build** nuclear/MAD/NATO/space-race/military-branch mechanics — they do not exist in the
+> design. The USSR-dissolution chain + Cold-War-end triggers need **real population/event tuning
+> + trigger fixes** (digest hole #1), and the war engine needs a **resolution path** (it never
+> ends) and ideally **military branches** (digest hole #3) — both are §21.1 holes, not new systems.
+
+### 28.3 The diplomacy system — the real, working Cold-War subsystem (2.7.1 / 2.6.1)
+
+> **The one genuinely-exercised modern foreign subsystem** (vs the negative-scope Cold War of
+> §28.2). Extends the §13.1 shipped diplomacy stub and the §13.3 forum design with the full
+> 1948-era action set. (`nuke` mid-A C2 / mid-C S10; POST 270, 343, 475, 1089–1094, 2057–2062,
+> 9792–9998, 10841, 10914.)
+
+- **8 per-nation relation meters** (UK, France, Spain, Germany, Russia, China, Japan, Israel) on a
+  **9-point scale Hostile < Enemy < Neutral < Friendly < Allies**. Sec of State *suggests* an
+  action per ambassador; **President approves/overrides**; each ambassador sent **once/phase**.
+- **Ambassador actions** (a Diplomacy phase, 2.7.1):
+
+| Action | Effect / gate | 
+|---|---|
+| **Increase Relations** | success +1 / fail −1 |
+| **Increase Trade Relations** | needs ≥ Neutral; roll 5–6 → +Rev/Budget, 1–2 → − |
+| **Extend Credit / Take a Loan** | needs ≥ Neutral; +Rev/Budget; tracked on a Loans/National-Debt credit-debt scale, **gated by the Rev-Budget level** (stops a debt-manipulation exploit) |
+| **Provoke** | retaliatory tariff/embargo; needs Congress approval until the Pres has full tariff powers; relations ≤ Neutral; −1 relations + 1–2% war chance |
+
+- **Ambassador gating:** can't send to a nation Hostile-or-worse / at war; eligibility needs
+  **Business / Foreign-Affairs / Trade expertise + Admin 2+**. The **Naive-Strategist trait gives
+  −1 to every ambassador roll.**
+- **Détente / summitry exec actions** (2.8.3): "First President to Visit the USSR" (+100 Globalists
+  / −100 Nationalists); "Détente Policy w/ USSR" (+100 Globalists / −100 Mil-Ind, +1 Russia);
+  **US–USSR Summit** general event (25% improve / 25% worsen Russia, +to 35% if Pres has Foreign
+  Affairs or Sec State 4–5). (POST 1397, 1868, 1895, 2117, 2133.)
+- **★ Relation meters "beyond broken"** (digest hole #2 / DH-class): by the late-90s the US is
+  **Allies with EVERY nation simultaneously** (revision-to-mean + ambassador bonuses with **no
+  downward pressure**). **Cold-War status hard-caps Russia/China ≤ Neutral while active** (lifted
+  only by a "China Thaw" / "Soviet Alliance" EraEvo). A **war-on-bad-relations** rule (a meter at
+  Enemies → 10% war next events phase) spawned the absurd Spain war; a later patch REMOVED the 10%
+  chance but players ran a stale meters tab all game. (POST 494, 3710, 9952, 10841, 11058–11060.)
+- **Two parallel "war" concepts** (don't conflate): **EraEvo "wars"** (Six-Day, Yom Kippur, Coup
+  in Haiti) are **pure diplomatic event-flavor** that nudge a relation meter ±1 ("not wars being
+  fought in game"); **engine wars** (Korea/Cuba/Cambodia/Somalia/Rwanda/Gulf/War-on-Terror) are
+  the actual §21.1 battle roller. (POST 8990, 8993.)
+
+*(designed, not built — 8 per-nation relation meters (9-point Hostile→Allies); a Diplomacy phase
+(2.7.1) where Sec State suggests + Pres approves one action per ambassador/phase; the Increase-
+Relations / Trade / Credit / Loan / Provoke action set with the listed gates; the credit-debt
+scale gated on Rev-Budget; détente/summit exec actions. **Needs downward pressure** on relation
+meters (hole #2) and the Cold-War ≤Neutral cap + its lift events. Couples to §13, §21.1, §28.2.)*
+
+### 28.4 ★ The realignment — mechanically-but-GRADUALLY enforced (NOT a single scripted flip)
+
+> **The dominant strategic story of the campaign, and the resolution of an upstream "forced vs
+> gradual" ambiguity.** Designer's framing: the resorting *"began in 1964 (arguably the 1950s) and
+> concluded in the early 1990s"* — a decade-by-decade gradual process, **enforced by four
+> cooperating levers** (none of them a single scripted flip). Cross-link the historian companion
+> `historical-context-1948-coldwar.md` (the load-bearing 1948→2004 framing). (`nuke` mid-A D /
+> mid-B A / mid-C S9; POST 31, 1612, 1620–1623, 3485–3534, 4881, 6677, 7018, 7427, 8237.)
+
+**The four levers** (each is an existing mechanic tuned to point one direction):
+
+1. **Era-locked draft-pool ideology scarcity** (§28.11 / §6.3) — the per-era rookie roster starves
+   Cons / Trad / RW-Pop slots, so factions drift Moderate over time and Dixiecrats → Mods. A
+   faction loses a non-adjacent ideology because (a) you keep the ideology you have most of and
+   (b) you can't hold non-adjacent ideologies without the middle one; the leftover card is
+   reassigned to a random faction. The SAME person can get a different draft-ideology in a new
+   band — but era-anchored figures are pinned ("Ted Cruz will be drafted Red regardless"). (POST
+   31, 1612, 1620–1623, 3524, 3532–3534, 6538.)
+2. **Enthusiasm-gated one-directional disgruntled-pol party-flips** (conversion step 2.1.6, §6.4) —
+   a pol auto-flips parties (**25%**) when its faction's enthusiasm hits **max the opposite way**
+   (e.g. a Lib pol in a faction at Blue +3); **high/max-enthusiasm factions are SHIELDED** and
+   cannot be poached. Direction is **one-way toward modern polarity** (liberal Republicans → Dems;
+   Cons/Trad Democrats → GOP). (POST 3485, 3492–3496, 5497, 5966.)
+3. **Pinned party-preference** — GOP held at **Blue +3** for the realigning band so the sort has a
+   stable gradient to run down. (POST 4881.)
+4. **Per-decade CENSUS state-bias doc** (the `AMPU Census`, §28.9 — NOT era tables) **+ a "Revision
+   to Mean"** centering damper applied every Lingering phase (§11.1). (POST 4879–4883, 6677, 7018,
+   7427, 8237.)
+
+**★ BLUE/RED meaning FLIPS during a 1948 game.** Dated trajectory:
+
+| In-game date | State of the sort | Source |
+|---|---|---|
+| **1950s** | Dixiecrats INSIDE the BLUE party as its far-right wing; Moderates lean RED; Libs/Progs/LW-Pop lean BLUE; Dems hold a huge structural Party-Pref edge; Dixiecrats "completely collapsed by 1957" into Mods | POST 1, 36, 1070, 1723, 3523, 3530, 4123 |
+| **1960–1964** | NOT yet enforced — Dems still hold the Solid South | POST 4743, 4881 |
+| **1968–1972** | **transient mid-sort artifact** — players describe Dems = party of the CENTER, GOP = party of BOTH left AND right ("Fascist Liberals and Commie Conservatives"); **treat as a transient, NOT a stable alternate alignment** | POST 5966, 6155, 6234–6235 |
+| **1976** | substantially modern (Libs Blue+3, Mods Blue+2, Cons/Trad Red+3) | POST 7272 |
+| **1980** | **FULLY MODERN** — Blue=left, Red=right; Sunbelt an explicit Red strategy ("Blue a fringe leftward party" with a coastal-urban core) | POST 8000, 8041–8045, 8361, 8364 |
+
+- Auto disgruntled-flips keep running **post-realignment as cleanup** → an ongoing engine process,
+  not a one-time event. (POST 7578, 8109.)
+- **Caveat (mid-C nuance):** "realignment done" applies to party **labels**; **ideology-bloc
+  loyalty stays only PARTLY modern** — RW-Pop and LW-Pop frequently lean BLUE and Moderates swing
+  hard even in the 90s–2000s (Mods are the swing bloc whose defection triggers forced 3rd-party
+  runs, §22.4). (POST 10301, 11159, 11267.)
+
+*(designed, not built — the realignment is an **emergent property of four existing tuned mechanics**,
+not a scripted event: era-locked draft scarcity (§28.11), enthusiasm-max one-directional auto-flips
+(§6.4), a pinned party-pref gradient, and the per-decade census + Revision-to-Mean (§28.9 / §11.1).
+BLUE/RED semantics are **time-varying within a campaign** — the build must NOT hard-code which side
+is "the left.")*
+
+### 28.5 Modern legislation, mutable cabinet & amendments — the 1948 confirmations
+
+> **Confirms + extends §21.6 (bill typing / budget-gated cap), §24.6 / §26.5 (offices-by-law), and
+> §21.3 / §24.4 (amendments).** The novel finding is that **cabinet offices are created AND
+> ABOLISHED by ordinary law in the modern era too** — founding→modern both confirmed. (`nuke`
+> mid-A E / mid-B §Offices-by-law / mid-C S3; POST 379, 405, 436, 501, 1047, 1952, 6730, 6799,
+> 10910, 11779.)
+
+- **Pipeline (modern scale):** **12 Senate + 12 House proposers (era proposal cap = 24**, vs 12 in
+  the 1800 era — a tunable parameter, digest hole #18); **spending-bill cap tied to the Rev/Budget
+  meter** (a deficit caps how many spending bills can pass); committee vote → chair may **block +
+  replace** a starred bill → chair may **package** passing bills into one S.R./H.R. (used as a
+  weapon, "package tanks party pref"; ranking member may unpackage) → House (simple majority) →
+  Senate → Pres sign/veto → override (2/3 both chambers). All per §12.4–§12.5. (POST 379, 405,
+  1076, 5089, 5381–5417, 9742–9789.)
+- **★ UNRESOLVED — Senate pass-threshold (flag as open, see §28.12).** mid-A/B report a built-in
+  ~60% supermajority to **PASS** the Senate; mid-B's later partial says the GM mis-ran that and
+  corrected to **simple-majority-to-pass** (67%/65 for amendments) with ~60% being **cloture only**.
+  Genuinely ambiguous. **Needs the human/codebase to settle.** (POST 2746–2770, 8155, 8308.)
+- **★ Mutable cabinet — offices created AND abolished by law** (the modern confirmation of §24.6 /
+  §26.5): **created** across the run — OMB, HEW, HUD, Dept of Transportation, NSC + Office of
+  National Security Advisor, Job Corps, **Dept of Energy** (HR.2), **Dept of Homeland Security**
+  (Era of Terror); **HEW split into HHS + Education** (H.R.3); **Postmaster General office
+  ABOLISHED** by the postal-independence bill. Cabinet appointment slots track these. (POST 379,
+  405, 436, 501, 6730, 6799, 6946, 10910, 11779.)
+- **★ SCOTUS size is LEGISLATED and variable** (§26.6 / §27): laws seen — "Set SC Justices to 10",
+  "Set SC to 5", "Allow President to appoint an extra Justice when one turns 70" (court-packing) +
+  a 40-Year-Minimum-Age Amendment. **Excess justices are NOT replaced** until the bench drops
+  below the legislated cap (court legislated DOWN to 5 while physically holding 9–10). Platform
+  planks literally read "Set SC to 31" / "just 3 if it looks like the GOP could win". (POST 4834,
+  5095, 5442, 5687, 6371, 6710–6711, 7217–7218.)
+- **Amendments** (a Judicial-bill subtype, §21.3 / §24.4): pass House + Senate at **2/3 (70 in the
+  larger Senate)**, then **ratified by Governors needing 39 states** (52-state union). Passed &
+  ratified: "Require President to Fill VP Vacancy"; **ERA / Equal Rights for Women** (exactly 39
+  states); **Foreign-Born President Amendment** (let Canada-born Stan Stephens run); 40-yr SC age;
+  Abolish Poll Tax; **Two-Term Limit for Presidents** (Era of Terror — see §28.6). Failed:
+  Separate Election for VP; Direct Election of Federal Judges (37/39); term-limit / abolish-VP-veto
+  repeatedly crushed. **VP-vacancy / 25th-Amendment fill is ad-hoc** ("making this up as we go" —
+  digest hole #27, needs a real rule). (POST 379, 501, 5745, 6770–6798, 7800–7807, 8298, 10453.)
+- **★ "Iron Fist" party force-vote** (§25.9): an Iron-Fist Speaker/Maj-Leader who is **also Legis
+  5** controls **all** ally initial votes (LBJ as SML controls all 72 Dem votes; Nixon=1 cannot)
+  and can **force a confirmation vote** but **can't compel** one. (POST 1058, 1824, 8627, 9311.)
+- **Debate-sway** (post-floor, NEW vs build): an Orator flips 3 Senators of one faction / a Debater
+  flips 1 (not a Puritan-led faction); a same-state Senator with a 2-Legis advantage converts one
+  vote; one speech per half-term. (POST 1065–1068, 9997, 10283–10286.)
+
+*(designed, not built — most of this is already specced at §21.6 / §24.6 / §26.5 / §21.3 / §24.4;
+the 1948-era ADDS: cabinet offices **abolished** by law (not just created — §26.5 dynamic-seat list
+must support removal), legislated **SCOTUS size with excess-not-replaced** semantics, the
+**39-state Gov ratification** count in a 52-state union, the Iron-Fist **force-vote**, and
+**debate-sway**. The Senate pass-vs-cloture threshold is an OPEN question — §28.12.)*
+
+### 28.6 The modern election machine — 1948-era refinements
+
+> **The fullest election-machinery capture in the KB.** The core machine is already documented at
+> **§15.3 (conventions), §22.3–§22.6, §25.1–§25.4, §25.12** — §28.6 lists only the deltas /
+> sharpenings this 1948-start corpus adds. (`nuke` mid-A F / mid-B §Election machinery / mid-C S2;
+> POST 344–553, 1177–1490, 4456–4567, 5122–5196, 5767–6470, 7207–8052, 9385–10219, 11178–12015.)
+
+- **Cadence:** midterms each even year (gov + a Senate class + all House); president every 4; **each
+  pol runs for only ONE office per cycle** (vcczar anti-cheese fix); President → Governor → Senate
+  → House order. (POST 1165, 1174, 3355, 4059.)
+- **Primaries (2.9.1) deltas to §22.3:** state-grouped (delegate **Groups 1–5**; NH/DC first set by
+  Gov "State Primary Placement"); by 1964 every state had a primary → conventions became a
+  formality. **3 candidate types, max 2/faction:** **Major** (auto for incumbent Pres / faction
+  leaders / Celebrity), **Minor** (home-state only; **promotable to Major** if it outperforms),
+  **Favorite Son** (locks home-state delegates, never drops) — all need ≥1 Command. **Resign-to-run
+  rolls** (appointed offices always resign; SC Justices & appointed Senators 25%; 20% a Gov/Sen/Rep
+  resigns the seat; Pres/VP never; SCOTUS Justices must resign to run for President). **Incumbent
+  quash** of intra-party challengers 75% (90% w/ Leadership+Iron-Fist; 50% Passive); an
+  **Opposition Party Leader with Leadership/Iron-Fist can BLOCK an allied faction from running a
+  challenger** (Luce blocked ALL 1972 R challengers → unopposed). **Per-group loop:** focus-state
+  picks → Primary Debate → Scandal Rolls → **Primary Actions** (Presidential Promise to buy out a
+  rival w/ VP/cabinet/SC-seat/plank; Demand-for-endorsement; Embrace Local Issue; Major Speech;
+  Campaign Focus; Attack Rival; Withdraw+endorse) → Group Results → last-place penalty rolls.
+  **★ Delegate-award quirk (rules-as-written, GM-flagged):** on a tie or 1-pt win ALL candidates
+  split delegates evenly with leftovers to first → last-place candidates can tie the leaders
+  (**likely needs a floor**). (POST 344, 362, 553, 1177–1209, 5767–5816, 6428–6465, 7782–7881.)
+- **Conventions (2.9.2) deltas to §15.3:** the brokered convention is §15.3; 1948-era adds —
+  **★ brokered-convention DESIGN HOLE** (digest hole #14): ballot 1 = primary result; if no
+  majority, ballot 2 **RELEASES delegates which swing massively (80/20) to the momentum leader**,
+  **ignoring** the primary result (LBJ 509-447-294 → 1009.5 on ballot 2); GM: *"the primary results
+  should still have some kind of influence… we have not figured out [how]."* A "compromise
+  candidate" call only after **10 ballots** (1 per allied faction; of-age + ≥1 Command). **Keynote
+  speaker** chosen by the most-governors faction (a BAD keynote = −1 general + speaker gains
+  Incoherent). **Platform = 5 planks** (Economic / Domestic / Judicial / Foreign-Military + a
+  Presidential Action) + a **must-promise to resolve any ongoing crisis**; a **Pliable nominee +
+  Manipulative faction leader ⇒ the leader writes the WHOLE platform.** (POST 1350–1399,
+  5860–5872, 6466–6470, 7941–8011, 9450–9722.)
+- **General election (2.9.4) deltas to §22.5:** **3 Pres debates + 1 VP debate** (VP debate "no
+  effect" by design) → 2 General-Election Action rounds → **October Surprise** (rolled table;
+  "incumbent" = incumbent PARTY). **★ A bad "incumbent interferes" October-Surprise roll = −2 Party
+  Pref + permanent −1 + impeachment eligibility** (fired TWICE: Babbitt 1996, Kindness 2000).
+  **Faithless electors** (a state won by a candidate who is its *least*-preferred ideology → roll
+  1–5 faithless, max 3/state). **★ Tie resolution = per-state DIE ROLL, NOT a Bush-v-Gore subsystem**
+  (1996 used a per-state coin-flip; 2000 was a clean EV win so no recount arose — **LOG AS GAP if a
+  2000-specific recount is intended**, digest hole / open Q 4); a separate "challenge close states"
+  path (controversial + propagandist auto-contest → recount roll-1-to-flip → unresolved go to
+  **SCOTUS voted per-justice by ideology**; within-range candidate otherwise gets a **25% roll to
+  challenge**). **★ "Appendix B" region-weighted 3rd-party PV** (mid-game recalibration because an
+  Anderson-expy got ≥5% everywhere): **5–25% in home region, 0–4% elsewhere** — REQUIREMENT:
+  3rd-party PV must be **region-weighted, not flat** (digest hole #17; refines §22.4). **GM: the
+  game is HARD-WIRED to 2 parties** — a winning 3rd-party candidate just becomes that side's Party
+  Leader (digest hole #16; v2 wish: dynamic party creation). **Split-EV** (10%/EV defection) is
+  **acknowledged BROKEN for big states** (designed for ME/NE only — digest hole #13). **No 22nd-Amendment
+  term limits** until an explicit "Two-Term Limit for Presidents Amendment" PASSED in the Era of
+  Terror — before that a two-term limit is purely informal (LBJ could legally have run a 3rd term).
+  (POST 932, 1467–1490, 5170–5195, 7251–7269, 8044–8052, 8845–8850, 10683–10692, 11272.)
+- **Canon presidential results 1948–2004** (provenance anchors for this alt-timeline; the **2004
+  Cuomo sweep is the seam to §22**): 1948 Truman → 1952 **Taft (R) def. Reagan** (contested, SCOTUS
+  upheld 6-3) → 1956 Taft/**Brooke (first Black VP nominee)** → 1960 JFK → 1964 JFK def. **Clare
+  Boothe Luce (R)** → 1968 **Luce (R) — FIRST WOMAN ELECTED PRESIDENT** [JFK resigned mid-term on a
+  "Presidential ailment" event → VP Douglas became 38th Pres] → 1972 **LBJ 540–4 landslide** over
+  incumbent Luce → 1976 LBJ 282–266 over Shirley Temple (R) → **1980 Reagan-analog GOP landslide,
+  Stan Stephens (R) 418–132** (first human-led Red win "since Taft") → 1984 **Wesley Brown (D, Black
+  admiral)** / RFK def. G.H.W. Bush → 1988 **Tom Kindness (R)** def. incumbent Brown → 1992
+  **Shirley Chisholm (D) — 1st Black woman president** (this timeline) → 1996 Kindness (per-state
+  die tie-break) → 2000 Kindness **3rd term** (clean EV win, no recount) → **2004 ★ Mario Cuomo (D)
+  wins ALL 53 states** ("1st since Washington to win every state"; faithless electors gave Cuomo
+  **700 EV**; coattails Senate 78D-28R, House 566D-35R). **The 2004 blowout exposed the
+  landslide-margin-model misfire** (digest hole #8 — max-margin caps keyed to historical lean
+  produce absurdities: won Idaho by 50, capped at +10 in tossup NH). (POST 4543–4567, 5191–5196,
+  5894–5898, 7251–7259, 8045, 8830–8833, 9508–9518, 9831–9833, 10093–10219, 11272, 11998–12015.)
+
+*(designed, not built — the machine is already specced at §15.3 / §22.3–§22.6 / §25; the 1948-era
+ADDS/sharpens: the **3 candidate types** + Minor→Major promotion, the **Opposition-Leader challenger
+BLOCK**, the **ballot-2 80/20 delegate-release hole + 10-ballot compromise call**, the **October-Surprise
+"incumbent interferes" → impeachment-eligible** outcome, the **per-state-die tie resolution** (NOT a
+recount subsystem — open Q 4), **region-weighted "Appendix B" 3rd-party PV**, and the **landslide
+margin-cap misfire** (hole #8). The 2-party hard-wire (hole #16) and split-EV-for-big-states (hole #13)
+are roadmap items.)*
+
+### 28.7 Modern cabinet & the Era-of-Terror cabinet rework (2.3.1)
+
+> **The fullest cabinet capture, and the Era-of-Terror rule delta that proves era BANDS carry rule
+> changes (§27.1).** Extends §9 (shipped cabinet) and §22.9 (military tier). (`nuke` mid-A F5 /
+> mid-B §Cabinet / mid-C H3+S4; POST 813, 1809–1844, 2456–2477, 4686–4748, 8516–8519, 9920–9942,
+> 11398–11427, 11724.)
+
+- **Full roster:** top-4 (State, Defense, AG, Treasury) + cabinet (Interior, Agriculture, Commerce,
+  Labor, HEW→HHS+Education, HUD, Transportation, Energy) + **cabinet-level** (CIA Director, FBI
+  Director [10-yr], Fed Reserve Chair [6-yr], UN Ambassador, National Security Advisor, Key
+  Advisor) + **8 named-country Ambassadors** (incl. **Ambassador to the USSR**) + military officer
+  corps (Chair JCoS, Army Chief of Staff, Chief of Naval Ops [4-yr], 6 Army Generals, 6 Squadrons).
+- **★ Appointment ideology constraint: a President can only appoint pols within ±1 ideology step of
+  his own** (reconfirmed modern — "a Prog won't serve under a Cons"; the transient inverted
+  coalition of §28.4 made cross-ideology cabinets nearly impossible). (POST 6237–6239, 8184, 9928,
+  11476, 11585.)
+- **Retain ≤5 incumbents/term** (Key Advisor + CIA Director don't count; FBI/Fed terms don't count;
+  military exempt, fired only for cause). **Sec of State = "the pinnacle"** — anyone who held it
+  refuses any lesser post. Cross-party cap = 3 (≤1 in top-4); decline rolls (90% if previously held
+  office; 75% Treasury/Commerce). Office requirements enforced (AG needs Justice exp; Fed Chair
+  Admin ≥3; ambassadors Admin 2+ & Business/Foreign-Affairs/Trade; **FBI Director needs the Justice
+  trait**; service chiefs need Military-Leadership). **Confirmation = committee (50%+1) → full Senate
+  60%, later 70 (60→70% scaling with Senate size);** failed nominee = lifetime cabinet ban + −1 all
+  future elections → SML names 5 acceptable replacements, Pres picks one, auto-confirmed.
+- **Cabinet meter impact capped at ±1 per meter** (nerfed twice). **Cabinet → enthusiasm
+  acknowledged BROKEN** (a strong cabinet swung Mod enthusiasm Red+3→Blue+3 in one shot; reworked
+  mid-band into a **lobby-posts model**: 0 wanted posts → enthusiasm drop, 1 → neutral, ≥2 →
+  increase, at 3 tiers — digest hole #15). **Incompetent President** = −3 to all blunder rolls, VP
+  makes exec decisions, can't be retained.
+- **★ Era-of-Terror cabinet rework (a BAND rule delta — proves §27.1 bands carry rules):**
+  **pre-Terror**, a region absent from the cabinet = **−1 to the Pres in that region next
+  presidential election**. **From the Era of Terror, region STOPS mattering** → replaced by:
+  - a **diversity check** — factions with Civil Rights / Reformist / LW-Activist cards take **−2
+    faction enthusiasm** if **<25%** of cabinet + cabinet-level are women / racial minorities; and
+  - a **faction-balance check** — the Pres must balance appointments across **ALL same-party
+    factions**; **−500 pts per slighted faction**.
+  (POST 11398–11427, 11724.)
+
+*(designed, not built — most is §9 / §22.9; the modern ADDS the **±1-ideology appointment gate**,
+the **60→70% confirmation scaling**, the **lobby-posts enthusiasm model** (hole #15 — replaces the
+broken direct swing), and — the era-BAND delta — the **Era-of-Terror diversity + faction-balance
+checks replacing the region rule** (concrete proof that §27.1 era bands carry rule deltas, not just
+content).)*
+
+### 28.8 Civil Rights — distributed across systems, the canonical "era content via generic mechanics" example
+
+> **The canonical worked example for §27.1's "era CONTENT fires on its own clock and is distributed
+> across generic mechanics, not a bespoke subsystem."** Civil Rights is **never a standalone
+> mechanic** — it is spread across THREE existing systems, with counter-historical play allowed.
+> (`nuke` mid-A D / mid-B Civil Rights; POST 390–474, 1944, 2117, 3320–3405, 4767–5417, 6371.)
+
+1. **Scripted / era EVENTS:** "Major Civil Rights Protests" (QoL −1); **Enrollment of James
+   Meredith** (Response A federalize vs B let state block — JFK's cabinet picked B, segregationists
+   win); "2nd Great Migration" (EV shifts + Civil Rights pts); Operation Wetback. (POST 4767, 5008,
+   5029, 5332.)
+2. **Ordinary ideology/lobby-scored BILLS:** Ban Discrimination in Housing, Ban Discriminatory
+   Voting Practices, **Affirmative Action** (passes 1966), nationwide equal-access school funding,
+   "Make lynching illegal" (Gov action), **Abolish Poll Tax** (ratified 1972, "deactivating Jim
+   Crow nationwide") — scored vs Civil Rights / LW Activists / Human Rights cards. A GOP-Taft
+   faction passed "Ban Racial Segregation…" as a **Crisis Bill in 1950** (Party-of-Lincoln framing,
+   Dixiecrats voting no), later rendering Brown v Board moot in-game. (POST 390–474, 5108, 5155,
+   5361, 5395, 6371.)
+3. **SCHEDULE-FIRED SCOTUS docket that ignores in-game history:** Hernandez v US, Williams v Lee,
+   **Heart of Atlanta Motel v US** (upholds CRA Title II 9-1), **Roe v Wade** (legal 7-3, fired in
+   a **1966-equivalent** cycle!) — all flagged **"this is the historical outcome"** and award Civil
+   Rights / Public Healthcare pts. (POST 4803, 5048, 5363.)
+
+- **Per-state Jim-Crow / poll-tax law switches** (the §11.4 / §27.4 state-flag pattern, modern
+  instance): active/inactive flags; **activating** needs a same-party Senator + RW-Activist;
+  **deactivating** needs a same-party Senator + Civil Rights; Governor actions toggle them. **"Apply
+  Federal Force to End Jim Crow Laws"** Presidential exec action ends Jim Crow but with **25% chance
+  of −1 Dom-Stab per Jim-Crow state** + **−1 GOP in Upper/Deep South next presidential election**.
+  (POST 1944, 2117, 2133.)
+- **MLK = a historical-figure event pack** (the per-politician scripted-gate pattern): draftable in
+  the **1956 class** (Red Lib; Orator/Leadership/Integrity + Obscure + Frail), hard-gated by **3
+  attached events @5%/phase once the CR Movement begins** (assassination / survives / enters
+  politics). He **cannot run / be nominated / party-flip** until "Martin Luther King Jr Seeks
+  Political Office" fires; he later gave the **1964 Dem keynote**. (POST 3320–3405, 4913, 5163.)
+- **Counter-historical play allowed; minority penalties until the CR era fires:** a woman in cabinet
+  / a female presidential nominee pre-CR = −1 Party Pref; first Black VP nominee (Brooke, 1956).
+  (POST 2456, 3138, 4485, 5164.) **The ~5%/phase trigger that fires the CR Movement even after a
+  player ends Jim Crow early is the §27.1 worked proof** that era CONTENT runs on its own clock.
+
+*(designed, not built — no bespoke Civil-Rights subsystem: it is **(a)** scripted EraEvos +
+**(b)** ordinary ideology/lobby-scored bills (some Crisis Bills) + **(c)** the schedule-fired SCOTUS
+docket (§28.5 / §22.7), over the per-state Jim-Crow/poll-tax flag (§11.4 / §27.4) and the
+per-politician scripted-gate pattern (MLK). The pre-CR minority Party-Pref penalty and the
+~5%/phase CR-Movement trigger are the concrete encodings.)*
+
+### 28.9 The per-decade census + statehood/territory (the level-(b) census mechanic)
+
+> **The detail behind §27.1 level (b).** The decennial census is a **schedule-fired** mechanic
+> distinct from the per-era bias-table swap (§27.2 step 6). Refines §21.5 (statehood) and §22.10
+> (apportionment). (`nuke` mid-A E / mid-B §Roster / mid-C S2+S10; POST 973–974, 1163, 2705–4325,
+> 4879–4883, 6374–6377, 8410, 8547, 9806–10108, 10539.)
+
+- **Census every 10 yrs** reapportions EVs + Focus Reps + state bias from an external **`AMPU
+  Census` doc** — **per-decade, NOT era tables** (era-bias tables deprecated). Worked deltas: **1972**
+  CA +13, NY −2, IL −2 (+ "focus Reps" shifts); **1990** CA +3, FL +5, TX +4, NY −4, OH −3. The
+  sheet tracks its own EV column vs a historical-EV column. Some EV swings also come from **scripted
+  events** (FL +3, PA −3, ME −1; Air Conditioner pre-loads AZ/FL; "Losing Jobs Overseas" ×2 kills
+  US manufacturing → big EV penalties next census). Post-census, incumbents may run outside their
+  old district that cycle. (POST 1163, 4879–4883, 6374–6377, 8410, 10008–10010.)
+- **Wholesale state-bias re-lean** at each census on the Blue5..Tossup..Red5 scale (1970→72 shifted
+  ~30 states mostly toward Tossup; 1980 shifted 10 states almost all toward Red; 1990: GA Blue+2→Red+3,
+  MS Tossup→Red+3, CA/NY/IL/MD bluer). (POST 6376, 8364.)
+- **Statehood is legislation, partisan-coded, and irreversible** (§21.5): **AK** admitted
+  ~game-1950; **HI** a recurring football (Republicans blocked it twice — **blocking permanently
+  LEFT-shifts a state's ideology**; on admission a special Hawaii election runs Gov-first → Gov
+  appoints the Class I Senator). **DC + Puerto Rico admitted as 51st/52nd, Cuba as 53rd** (Cuba: 17
+  EV / 3 focus reps, via Occupy → Annex → Territory → Statehood). New-state rules: 2 senators split
+  Class I/II; **DC pols gain +1 Gov or Legis**; **PR/Cuba offices filled by randomly-generated
+  Spanish-named pols** (70% Dem, 90% Hispanic, age 45) handed to the lowest-scoring player; **each
+  future draft adds 2 random pols per new ahistorical state.** **Voting AGAINST a statehood bill
+  carries a Party-Pref penalty.** (POST 973–974, 2705–2820, 3833–3838, 4321–4325, 9806–10108.)
+- **Relocation (2.1.4, §6.2):** alt-state moves + overpopulated→underpopulated moves (d100 vs 25;
+  gain Carpetbagger −1 until +10 yrs). (POST 8428, 9567–9576, 10539.)
+
+*(designed, not built — a **per-decade `AMPU Census`** schedule-fired mechanic (EV reallocation +
+Focus-Reps + wholesale state-bias re-lean) distinct from §27.2's per-era table swap; partisan-coded
+**irreversible** statehood-by-bill (§21.5) with the blocked-state left-shift, the special-election
+Gov-first admission, and auto-generated Spanish-named officials for PR/Cuba; the +2-pols-per-new-state
+draft additive. **★ Data-loss hole (DH-class, digest hole #4):** the whole Neocon-era census/EV-delta
+event block was accidentally moved to "Era of Terror" in the Sheet (events stored alphabetically-by-era
++ EV-change events lack "EV" in flavor text → unsearchable) — same theme as DH-36; → REQUIREMENT: era-event
+data needs a **structured `evDelta`/census field** (not free-text flavor) + per-era completeness so a
+10-yr census reallocation always fires.)*
+
+### 28.10 The ~25-sub-phase modern turn loop (scale note)
+
+> **The modern turn is far deeper than the shipped (draft / election / legislation / era-events)
+> loop and the founding/1856 loops.** Each turn = **2 years / a half-term**; the numbered cycle is
+> consistent with the shipped phase taxonomy (§2) but **much deeper** (~25 sub-phases). The full
+> ordered list is documented at **§2 (shipped) and across §6–§16**; this is a scale callout, not a
+> re-listing. (`nuke` mid-A G / mid-B §Roster / mid-C S1; POST 98, 136–178, 4571–4628, 9547–10286.)
+
+The forum game adds, on top of the shipped loop: **career tracks (2.1.2), ideology shifts (2.1.5),
+conversions (2.1.6), kingmaker/protégé (2.1.7), faction-personality drift (2.1.8), committees +
+faction/party leaders (2.2.2–2.2.4), cabinet ±1-ideology gates (2.3.1), governor actions (2.5.2),
+SCOTUS decisions + compelled retirements (2.5.3 / 2.8.4), diplomacy (2.7.1), exec actions (2.8.3),
+filibuster + debate-sway + bill packaging (2.6.x), and the full primary→convention→general (2.9.x).**
+
+- **★ Living, separately-versioned ruleset (the build targets a MOVING spec — digest hole #32):**
+  mid-band revamps observed — cabinet→enthusiasm reworked (POST 9920–9921); faction-leader
+  eligibility reordered (POST 9902, 10178); death + retirement recombined (POST 10823–10835);
+  ideology-circle added (POST 9842). Closest design-freeze signal: vcczar says **Anthony is
+  actively programming the app and has already coded all of phase 2.1**; rules are "as set as
+  possible" because "changing one thing can break eight others" (POST 12064–12067). **Open Q
+  (§28.12):** is "all of phase 2.1 coded, rules set" the authoritative app scope, or
+  playtest-specific?
+
+### 28.11 Modern draft, lobby cards & dataset (the era-locked content rotation)
+
+> **The level-(b) content-rotation detail + the modern dataset facts.** Refines §4 (draft) and §7.4
+> (card distribution). (`nuke` mid-A G / mid-B §Roster / mid-C S8+H3; POST 99, 3516–3519, 6538–6592,
+> 8068–8093, 10762–10983, 11303, 11359, 12028–12120.)
+
+- **Draft (2.1.1):** rookie classes per draft year (1952 = 168 pols; 1956 class has MLK); snake
+  order **worst-score-picks-first**. **Draft-ideology is era-locked** (≠ faction cards) — the lever
+  that drives realignment (§28.4). **★ Command is no longer granted at draft** ("V removed Command
+  from rookies") — earned via Kingmakers, ~160 general events, faction leadership, moving meters as
+  Congress/Gov, Gov re-election, and a 10% chance from passing a crisis bill. Modern-name cohorts
+  enter on schedule (1968: Pelosi, Biden, Bernie, McConnell, Gingrich, Cheney; 1972: Bill/Hillary
+  Clinton, Trump, Romney, GW Bush; 1980: Feingold, Oprah, Condi Rice, Roberts, Petraeus). (POST 99,
+  3516–3519, 6538, 6589, 8068–8093.)
+- **Lobby roster is era-banded** (content rotation): only ONE faction per party gets LW Media /
+  LW Activist this era; modern lobbies emerge (Big Tech, Big Pharma, Military-Industrial, Wall
+  Street, Free Trade, Human Rights, RW Media, RW Activists, Big Oil & Gas) — but the **lobby-card
+  LAYER is era-agnostic** (Big Tech already tradable in the late-90s). Era-activated **industries**
+  (High-Tech, Alt-Energy) rotate in too. (POST 6589–6592, 8909, 10762, 10983.)
+- **★ Dataset facts for the modern slice:** **2000 + 2004 real draft classes** seeded from the
+  dataset, **incl. designer vcczar and forum users drafted in as draftable pols** — 2000: Sununu,
+  Stacey Abrams, Nikki Haley, Andrew Yang, Amy Coney Barrett, Beto O'Rourke, MTG, Elon Musk, Steve
+  Bannon, Donald Trump; 2004: Clay Aiken, Ro Khanna, Andy Beshear, Wes Moore, **@vcczar drafted as
+  "Jonathan Hobratsch"**, Tom Cotton, Ron DeSantis, Josh Hawley, Donald Trump Jr, **@matthewyoung123**.
+  **★ Modern pols are overpowered / recency-biased** (digest hole #7): "Elon Musk… way too
+  overpowered; we need to go through all recently added 'modern era' pols to ensure parity" → a
+  balance pass on the modern dataset slice. (POST 11303, 12028, 12036, 11460.)
+
+### 28.12 ★ Design intent (SOLO-first), the open question, and the timeline seam
+
+> **The roadmap-load-bearing findings from this corpus.** (`nuke` digest holes #33 + open Q 1;
+> POST 6518, 6966–6970, 7932, 2746–2770, 8155, 8308.)
+
+- **★ DESIGN-INTENT — the digital APP is built for 1-human-vs-9-CPU** (the strongest corpus
+  statement). Multiplayer "goes off the rails"; the **points system is for CPUs + enthusiasm, not
+  humans** (low points = better draft order, so humans can tank). The tabletop/forum game is team
+  multiplayer with CPU backfill; **both are true — the app is a solo adaptation.** Consequence: the
+  app's **CPU-faction AI is entirely UNEXERCISED by this (human) playtest**, and a large
+  multiplayer-only apparatus (party-leader elections, conversions, kingmaker pairings, committee
+  assignment, cross-faction endorsements, forced 3rd-party runs) must be **AI-driven** in the solo
+  build (§25). Designers also repeatedly defer fine mechanics to "when the computer game comes out."
+  **This validates building solo-first with CPU-faction AI as load-bearing.** (POST 6518, 6966–6970,
+  7932, 1134.)
+- **★ OPEN QUESTION — Senate pass-threshold** (§28.5): a built-in **~60% supermajority to PASS** the
+  Senate, OR **simple-majority-to-pass with ~60% being cloture only**? The mid-digests conflict and
+  the rules text ("procedural rules may establish stricter rules") is genuinely ambiguous. **Needs
+  the human/codebase to settle pass vs cloture.** (POST 2746–2770, 8155, 8308.)
+- **Other open Qs** (digest): does the Era of Terror formally end at **2012** and what band follows
+  (unnamed here; the successor `modern` names **Era of Populism 2012–2024**, §22.11); is a
+  Bush-v-Gore **recount** intended for 2000 (absent — ties resolve by per-state die; §28.6).
+- **Timeline seam:** this 1948 thread is the chronological **PREDECESSOR** of the already-documented
+  `modern` 2004→2020 thread (§22). With §28 the mechanics doc now covers a **continuous 1772→2020
+  timeline** (founding → early-republic § 27 → antebellum/Civil-War § 23–24 → Gilded/Progressive
+  → Cold-War/modern § 28 → Era-of-Terror/Populism § 22). The 2004 Cuomo election (§28.6) is the
+  exact seam to §22.
+
+### 28.13 Era-of-Terror content (2000–~2005, fired in the late game)
+
+> **The 2000-boundary BAND's distinctive content** (entered at the §27.1 level-(a) 2000 boundary).
+> (`nuke` mid-C H3; POST 11359–12120.)
+
+- **9/11-analog chain:** **1993 WTC Bombing** (truck bomb, "terrorist cell out of Afghanistan";
+  choosing to invade = "**Trigger Early War on Terror**") + Terrorist Attack on US Troops (−1
+  MilPrep, fires twice), Terrorist insurgency in Yemen (al-Qaeda; airstrike/drone option),
+  Terrorists Strike London. (POST 11466, 11750.)
+- **★ Early War on Terror = a Major war actually FOUGHT AND WON via the generic naval→ground engine**
+  (unlike most wars here, §28.2): win 1 naval battle (Indian Ocean) → ground phase (Herat) → war-end
+  roll `total War Score × 0.5` (rolled 23/30 → won) → "Agreement in Kabul": +3 Party Pref Red,
+  generals gain Celebrity/Command, **Pres gains permanent +1 in ALL elections**. **STILL no
+  NATO/MAD/space-race/nuke subsystem** — "Korea announces it has nukes" is just an event with
+  sanction options. (POST 11583, 11858, 11859.)
+- **Patriot-Act-analog bills (NEW content):** Mass Phone Data Collection for National Security; FBI
+  covert searches w/o court order; State Surveillance Systems; **military drone program**; indefinite
+  detainment of immigrants; **Create Dept of Homeland Security**; Regulate the Internet. (POST
+  11466, 11506, 11524, 11779, 11784, 11790.)
+- **2000s culture-war docket:** Protect/Recognize Gay Marriage, Ban Bump Stocks, Cryptocurrency,
+  Subsidize Flight to Mars, Gradual Reduction of Carbon Emissions, Negative-Income-Tax/UBI,
+  Federally Fund High-Speed Rail, Flat Tax 20%, **Two-Term Limit for Presidents Amendment (PASSED)**,
+  **Wyoming Rule for Electoral College** (passed but **un-implementable** — the game has only EVs,
+  no population, no 435 House cap, so the rule "literally can't exist"; GM hand-mapped real-2000
+  math, admits it breaks "by the 2030s" → digest hole #5: BUILD must add a real
+  population/apportionment model OR remove/redesign population-dependent content). A 2000s SCOTUS
+  docket of era-appropriate real cases, often adjudicated ahistorically. (POST 11538–11618.)
+- **Modern lobby cards** present on factions: Big Tech, RW Media, Big Pharma, Big Oil & Gas,
+  Military-Industrial, Wall Street, Free Trade, Theocrats, Science, Nationalists, Isolationists,
+  Globalists, Civil Rights, Public Healthcare/Education, LW/RW Activists, Reformists, Welfare, Human
+  Rights, Environmentalists. (POST 11359, 11676, 12120.)
+
+*(designed, not built — Era-of-Terror is the §27.1 level-(a) BAND after 2000: 9/11-analog event
+chain → a winnable War on Terror via the §21.1/§28.2 generic engine, Patriot-Act surveillance/drone/
+detention bills, DHS-by-law (§28.5), a 2000s culture-war legislative + SCOTUS docket (incl. the
+un-implementable Wyoming Rule — hole #5), and modern lobby cards. Event firing-rate is bimodal —
+~5% pre-Terror (USSR chain never starts) vs ~25% in the Era of Terror (first-ever hit of the
+15-event/era cap) — digest hole #6.)*
+
+---
+
+> **Cross-reference for the roadmap (§28).** The headline for the tech-lead is **NEGATIVE SCOPE**:
+> the "Cold War" / "Nuclear Age" requires **no bespoke subsystem** — it is the generic war engine
+> (§21.1) relabeled + ordinary EraEvos/A-B events + the diplomacy subsystem (§28.3). **Do NOT build**
+> nuclear/MAD/NATO/space-race/military-branch mechanics. The genuinely-new build surface from this
+> corpus is small and mostly **deltas to already-specced systems**: the **two-level era model**
+> (§27.1, sharpened — point-banked bands + a separate per-decade census), the **diplomacy subsystem**
+> (§28.3), the **Era-of-Terror cabinet rework** (§28.7, the cleanest proof that bands carry rule
+> deltas), **mutable-cabinet abolition + legislated SCOTUS size** (§28.5), and the **realignment as
+> an emergent property of four tuned mechanics** (§28.4, with BLUE/RED semantics time-varying). The
+> **data-loss hole** (§28.9 / DH-class — lost census/EV events → structured `evDelta` field, same
+> theme as DH-36) and the **broken USSR-collapse + relation-meter** holes (§28.2–§28.3) are the
+> top tuning items. The **1-human-vs-9-CPU design intent** (§28.12) validates the roadmap's
+> solo-first sequencing. New design holes from this batch are logged in `game-context.md`
+> **DH-45..DH-58** and detail rows **#106..#114** (§19, not re-documented here). With §28 the doc
+> now covers a continuous **1772→2020** timeline (the 2004 Cuomo election is the seam to §22).
