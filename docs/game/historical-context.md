@@ -1286,6 +1286,13 @@ farmers (Grange/Populist heirs), Prohibitionists, suffragists, nativists
 
 ## 6. New Deal / WWII / postwar consensus (1932–1965) — the realignment that redefines "liberal"
 
+> **§6–§10 companion:** for reading a continuous **1948→2004** campaign (the
+> `be4e0f70` "Nuclear Age" batch), see
+> [`historical-context-1948-coldwar.md`](historical-context-1948-coldwar.md) —
+> it consolidates §6–§10 around the load-bearing **Civil-Rights/Southern
+> realignment** framing (the BLUE/RED polarity flips *during* the game) plus the
+> hard election/statehood/amendment anchors.
+
 ### Era window
 **1932** (FDR's first win; the New Deal realignment) → **1964/65** (LBJ landslide;
 Great Society; Civil Rights & Voting Rights Acts open the next phase). The
