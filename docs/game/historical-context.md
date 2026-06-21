@@ -85,6 +85,15 @@ left/right meaning of the labels.
 
 ## 1. Founding / Revolution / Confederation (1772–1788)
 
+> **Playtest corroboration (batch 8):** two more 1772-start campaigns confirm §1 —
+> `afc6cbd7` (the first **multiplayer** 1772 run, 10 players; 1772→1796,
+> founding→federalism, abandoned at GM burnout) and `ad0f2875` (a solo all-CPU
+> 1772→1874 fast-traversal). The latter independently re-emits the **same era-band
+> labels at the same in-game dates** as the `rep1800` 1800-start save
+> (Federalists~1800 → Republicanism~1820 → Democracy~1840 → Manifest-Destiny~1856 →
+> Nationalism~1868), confirming eras are game-state content-bands, not calendar
+> gates. Neither reaches a "future" era — that remains undocumented.
+
 ### Era window
 1772 (Gaspee Affair) → 1788 (ninth state ratifies the Constitution, **June 21,
 1788**). Engine era `independence`; transitions to `federalism` on ratification
