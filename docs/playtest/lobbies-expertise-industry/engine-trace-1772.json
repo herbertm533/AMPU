@@ -1,0 +1,452 @@
+{
+  "scenario": "1772",
+  "startYear": 1772,
+  "finalYear": 1834,
+  "phasesRun": 538,
+  "phasesSkipped": 62,
+  "errorPhases": [],
+  "totalEvents": 1727,
+  "contractTests": {
+    "passed": 119,
+    "failed": 0,
+    "failures": []
+  },
+  "expertiseGrantCount": 201,
+  "industryRiseCount": 33,
+  "expertiseGrantSamples": [
+    {
+      "year": 1772,
+      "phase": "2.1.2",
+      "text": "Fisher Rutledge gains Business expertise from the Merchants lobby."
+    },
+    {
+      "year": 1772,
+      "phase": "2.1.2",
+      "text": "Gouverneur Smith gains Business expertise from the Merchants lobby."
+    },
+    {
+      "year": 1772,
+      "phase": "2.1.2",
+      "text": "Lemuel Bartlett gains Agriculture expertise from the Planters lobby."
+    },
+    {
+      "year": 1772,
+      "phase": "2.1.2",
+      "text": "Daniel Boone gains Agriculture expertise from the Planters lobby."
+    },
+    {
+      "year": 1772,
+      "phase": "2.1.2",
+      "text": "Philip Schuyler gains Agriculture expertise from the Planters lobby."
+    },
+    {
+      "year": 1772,
+      "phase": "2.1.2",
+      "text": "Timothy Pickering gains Agriculture expertise from the Planters lobby."
+    },
+    {
+      "year": 1772,
+      "phase": "2.1.2",
+      "text": "Jonathan Trumbull gains Agriculture expertise from the Planters lobby."
+    },
+    {
+      "year": 1772,
+      "phase": "2.1.2",
+      "text": "William Samuel Johnson gains Agriculture expertise from the Planters lobby."
+    },
+    {
+      "year": 1772,
+      "phase": "2.1.2",
+      "text": "George Mason gains Agriculture expertise from the Planters lobby."
+    },
+    {
+      "year": 1772,
+      "phase": "2.1.2",
+      "text": "Rufus Gadsden gains Agriculture expertise from the SmallFarmers lobby."
+    },
+    {
+      "year": 1772,
+      "phase": "2.1.2",
+      "text": "John Trumbull gains Agriculture expertise from the SmallFarmers lobby."
+    },
+    {
+      "year": 1772,
+      "phase": "2.1.2",
+      "text": "Josiah Pratt gains Business expertise from the Merchants lobby."
+    },
+    {
+      "year": 1772,
+      "phase": "2.1.2",
+      "text": "John Adams gains Business expertise from the Merchants lobby."
+    },
+    {
+      "year": 1772,
+      "phase": "2.1.2",
+      "text": "Daniel Bartlett gains Business expertise from the Merchants lobby."
+    },
+    {
+      "year": 1772,
+      "phase": "2.1.2",
+      "text": "Henry Pinckney gains Business expertise from the Merchants lobby."
+    },
+    {
+      "year": 1772,
+      "phase": "2.1.2",
+      "text": "Ralph Izard gains Business expertise from the Merchants lobby."
+    },
+    {
+      "year": 1772,
+      "phase": "2.1.2",
+      "text": "Rufus Gadsden gains Business expertise from the Merchants lobby."
+    },
+    {
+      "year": 1772,
+      "phase": "2.1.2",
+      "text": "Thomas Read gains Business expertise from the Merchants lobby."
+    },
+    {
+      "year": 1772,
+      "phase": "2.1.2",
+      "text": "Tristram Dalton gains Business expertise from the Merchants lobby."
+    },
+    {
+      "year": 1772,
+      "phase": "2.1.2",
+      "text": "Rufus Gadsden gains Justice expertise from the Lawyers lobby."
+    },
+    {
+      "year": 1772,
+      "phase": "2.1.2",
+      "text": "Henry Howard gains Justice expertise from the Lawyers lobby."
+    },
+    {
+      "year": 1774,
+      "phase": "2.1.2",
+      "text": "Charles Trumbull gains Agriculture expertise from the Planters lobby."
+    },
+    {
+      "year": 1774,
+      "phase": "2.1.2",
+      "text": "Arthur St. Clair gains Agriculture expertise from the Planters lobby."
+    },
+    {
+      "year": 1774,
+      "phase": "2.1.2",
+      "text": "Caleb Pratt gains Agriculture expertise from the Planters lobby."
+    },
+    {
+      "year": 1774,
+      "phase": "2.1.2",
+      "text": "Thomas Reed gains Agriculture expertise from the SmallFarmers lobby."
+    },
+    {
+      "year": 1774,
+      "phase": "2.1.2",
+      "text": "Edward Pratt gains Agriculture expertise from the SmallFarmers lobby."
+    },
+    {
+      "year": 1774,
+      "phase": "2.1.2",
+      "text": "Josiah Burke gains Agriculture expertise from the SmallFarmers lobby."
+    },
+    {
+      "year": 1774,
+      "phase": "2.1.2",
+      "text": "William Gadsden gains Agriculture expertise from the SmallFarmers lobby."
+    },
+    {
+      "year": 1774,
+      "phase": "2.1.2",
+      "text": "Daniel Gibbs gains Agriculture expertise from the SmallFarmers lobby."
+    },
+    {
+      "year": 1774,
+      "phase": "2.1.2",
+      "text": "Benjamin Rutledge gains Business expertise from the Merchants lobby."
+    }
+  ],
+  "industryRiseSamples": [
+    {
+      "year": 1772,
+      "phase": "2.1.8",
+      "text": "Massachusetts shipping industry rises (Merchants)."
+    },
+    {
+      "year": 1772,
+      "phase": "2.1.8",
+      "text": "Rhode Island shipping industry rises (Merchants)."
+    },
+    {
+      "year": 1772,
+      "phase": "2.1.8",
+      "text": "Connecticut shipping industry rises (Merchants)."
+    },
+    {
+      "year": 1772,
+      "phase": "2.1.8",
+      "text": "New York shipping industry rises (Merchants)."
+    },
+    {
+      "year": 1772,
+      "phase": "2.1.8",
+      "text": "New York finance industry rises (Merchants)."
+    },
+    {
+      "year": 1772,
+      "phase": "2.1.8",
+      "text": "New Jersey agriculture industry rises (SmallFarmers)."
+    },
+    {
+      "year": 1772,
+      "phase": "2.1.8",
+      "text": "Pennsylvania shipping industry rises (Merchants)."
+    },
+    {
+      "year": 1772,
+      "phase": "2.1.8",
+      "text": "Pennsylvania agriculture industry rises (SmallFarmers)."
+    },
+    {
+      "year": 1772,
+      "phase": "2.1.8",
+      "text": "Delaware agriculture industry rises (SmallFarmers)."
+    },
+    {
+      "year": 1772,
+      "phase": "2.1.8",
+      "text": "Maryland tobacco industry rises (Planters)."
+    },
+    {
+      "year": 1772,
+      "phase": "2.1.8",
+      "text": "Maryland agriculture industry rises (SmallFarmers)."
+    },
+    {
+      "year": 1772,
+      "phase": "2.1.8",
+      "text": "Virginia tobacco industry rises (Planters)."
+    },
+    {
+      "year": 1772,
+      "phase": "2.1.8",
+      "text": "Virginia agriculture industry rises (SmallFarmers)."
+    },
+    {
+      "year": 1772,
+      "phase": "2.1.8",
+      "text": "North Carolina tobacco industry rises (Planters)."
+    },
+    {
+      "year": 1772,
+      "phase": "2.1.8",
+      "text": "North Carolina agriculture industry rises (SmallFarmers)."
+    },
+    {
+      "year": 1772,
+      "phase": "2.1.8",
+      "text": "South Carolina shipping industry rises (Merchants)."
+    },
+    {
+      "year": 1772,
+      "phase": "2.1.8",
+      "text": "South Carolina agriculture industry rises (SmallFarmers)."
+    },
+    {
+      "year": 1774,
+      "phase": "2.1.8",
+      "text": "Rhode Island shipping industry rises (Merchants)."
+    },
+    {
+      "year": 1774,
+      "phase": "2.1.8",
+      "text": "Connecticut shipping industry rises (Merchants)."
+    },
+    {
+      "year": 1774,
+      "phase": "2.1.8",
+      "text": "New York finance industry rises (Merchants)."
+    },
+    {
+      "year": 1774,
+      "phase": "2.1.8",
+      "text": "New Jersey agriculture industry rises (SmallFarmers)."
+    },
+    {
+      "year": 1774,
+      "phase": "2.1.8",
+      "text": "Pennsylvania shipping industry rises (Merchants)."
+    },
+    {
+      "year": 1774,
+      "phase": "2.1.8",
+      "text": "Pennsylvania agriculture industry rises (SmallFarmers)."
+    },
+    {
+      "year": 1774,
+      "phase": "2.1.8",
+      "text": "Delaware agriculture industry rises (SmallFarmers)."
+    },
+    {
+      "year": 1774,
+      "phase": "2.1.8",
+      "text": "Maryland tobacco industry rises (Planters)."
+    },
+    {
+      "year": 1774,
+      "phase": "2.1.8",
+      "text": "Maryland agriculture industry rises (SmallFarmers)."
+    },
+    {
+      "year": 1774,
+      "phase": "2.1.8",
+      "text": "North Carolina tobacco industry rises (Planters)."
+    },
+    {
+      "year": 1774,
+      "phase": "2.1.8",
+      "text": "South Carolina shipping industry rises (Merchants)."
+    },
+    {
+      "year": 1774,
+      "phase": "2.1.8",
+      "text": "Georgia agriculture industry rises (SmallFarmers)."
+    },
+    {
+      "year": 1776,
+      "phase": "2.1.8",
+      "text": "Connecticut shipping industry rises (Merchants)."
+    },
+    {
+      "year": 1776,
+      "phase": "2.1.8",
+      "text": "North Carolina tobacco industry rises (Planters)."
+    },
+    {
+      "year": 1776,
+      "phase": "2.1.8",
+      "text": "South Carolina shipping industry rises (Merchants)."
+    },
+    {
+      "year": 1776,
+      "phase": "2.1.8",
+      "text": "Georgia agriculture industry rises (SmallFarmers)."
+    }
+  ],
+  "finalIndustries": {
+    "nh": {
+      "fishing": 3,
+      "lumber": 3
+    },
+    "ma": {
+      "fishing": 4,
+      "manufacturing": 3,
+      "shipping": 5
+    },
+    "ri": {
+      "manufacturing": 2,
+      "shipping": 5
+    },
+    "ct": {
+      "manufacturing": 2,
+      "shipping": 5
+    },
+    "ny": {
+      "shipping": 5,
+      "manufacturing": 3,
+      "finance": 5
+    },
+    "nj": {
+      "agriculture": 5
+    },
+    "pa": {
+      "manufacturing": 3,
+      "agriculture": 5,
+      "shipping": 5
+    },
+    "de": {
+      "agriculture": 5
+    },
+    "md": {
+      "agriculture": 5,
+      "tobacco": 5
+    },
+    "va": {
+      "agriculture": 5,
+      "tobacco": 5
+    },
+    "nc": {
+      "agriculture": 5,
+      "tobacco": 5
+    },
+    "sc": {
+      "agriculture": 5,
+      "cotton": 3,
+      "shipping": 5
+    },
+    "ga": {
+      "agriculture": 5
+    }
+  },
+  "factionData": {
+    "fact_blue_lw_1772": {
+      "center": 2,
+      "rawMeanFloat": 2.3157894736842106,
+      "biasedMeanFloat": 2.3157894736842106,
+      "shift": 0
+    },
+    "fact_blue_cl_1772": {
+      "center": 2,
+      "rawMeanFloat": 2,
+      "biasedMeanFloat": 2.0625,
+      "shift": 0.0625
+    },
+    "fact_blue_c_1772": {
+      "center": 5,
+      "rawMeanFloat": 5.142857142857143,
+      "biasedMeanFloat": 5.476190476190476,
+      "shift": 0.33333333333333304
+    },
+    "fact_blue_cr_1772": {
+      "center": 6,
+      "rawMeanFloat": 5.6,
+      "biasedMeanFloat": 6.1,
+      "shift": 0.5
+    },
+    "fact_blue_rw_1772": {
+      "center": 5,
+      "rawMeanFloat": 4.714285714285714,
+      "biasedMeanFloat": 5.214285714285714,
+      "shift": 0.5
+    },
+    "fact_red_lw_1772": {
+      "center": 1,
+      "rawMeanFloat": 1,
+      "biasedMeanFloat": 1.1666666666666667,
+      "shift": 0.16666666666666674
+    },
+    "fact_red_cl_1772": {
+      "center": 4,
+      "rawMeanFloat": 3.5,
+      "biasedMeanFloat": 4,
+      "shift": 0.5
+    },
+    "fact_red_c_1772": {
+      "center": 3,
+      "rawMeanFloat": 3.2666666666666666,
+      "biasedMeanFloat": 3.3380952380952382,
+      "shift": 0.07142857142857162
+    },
+    "fact_red_cr_1772": {
+      "center": 5,
+      "rawMeanFloat": 4.466666666666667,
+      "biasedMeanFloat": 4.5738095238095235,
+      "shift": 0.10714285714285676
+    },
+    "fact_red_rw_1772": {
+      "center": 4,
+      "rawMeanFloat": 4,
+      "biasedMeanFloat": 4.25,
+      "shift": 0.25
+    }
+  }
+}

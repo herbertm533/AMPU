@@ -1,0 +1,559 @@
+{
+  "scenario": "1856",
+  "startYear": 1856,
+  "finalYear": 1894,
+  "phasesRun": 562,
+  "phasesSkipped": 38,
+  "errorPhases": [],
+  "totalEvents": 2123,
+  "contractTests": {
+    "passed": 119,
+    "failed": 0,
+    "failures": []
+  },
+  "expertiseGrantCount": 156,
+  "industryRiseCount": 56,
+  "expertiseGrantSamples": [
+    {
+      "year": 1856,
+      "phase": "2.1.2",
+      "text": "Howell Cobb gains Agriculture expertise from the SlavePower lobby."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.2",
+      "text": "Hiram Jones gains Agriculture expertise from the SlavePower lobby."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.2",
+      "text": "Samuel Walker gains Agriculture expertise from the SlavePower lobby."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.2",
+      "text": "Lewis Cass gains Foreign Affairs expertise from the Expansionists lobby."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.2",
+      "text": "George B. McClellan gains Foreign Affairs expertise from the Expansionists lobby."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.2",
+      "text": "Thomas Johnson gains Foreign Affairs expertise from the Expansionists lobby."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.2",
+      "text": "Daniel Adams gains Foreign Affairs expertise from the Expansionists lobby."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.2",
+      "text": "Samuel Harris gains Agriculture expertise from the SmallFarmers lobby."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.2",
+      "text": "Robert Taylor gains Agriculture expertise from the SmallFarmers lobby."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.2",
+      "text": "John A. Dix gains Labor expertise from the UrbanLabor lobby."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.2",
+      "text": "Stephen Johnson gains Labor expertise from the UrbanLabor lobby."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.2",
+      "text": "Henry Moore gains Labor expertise from the UrbanLabor lobby."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.2",
+      "text": "James Adams gains Business expertise from the NorthernIndustry lobby."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.2",
+      "text": "Richard Thompson gains Agriculture expertise from the SlavePower lobby."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.2",
+      "text": "Albert Martin gains Agriculture expertise from the SlavePower lobby."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.2",
+      "text": "Andrew Anderson gains Agriculture expertise from the SlavePower lobby."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.2",
+      "text": "Joseph Moore gains Foreign Affairs expertise from the Expansionists lobby."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.2",
+      "text": "Joseph Anderson gains Foreign Affairs expertise from the Expansionists lobby."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.2",
+      "text": "William Lee gains Agriculture expertise from the SmallFarmers lobby."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.2",
+      "text": "Richard King gains Agriculture expertise from the SmallFarmers lobby."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.2",
+      "text": "Henry Green gains Agriculture expertise from the SmallFarmers lobby."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.2",
+      "text": "David Young gains Agriculture expertise from the SmallFarmers lobby."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.2",
+      "text": "Hiram Harris gains Labor expertise from the UrbanLabor lobby."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.2",
+      "text": "Edward Allen gains Labor expertise from the UrbanLabor lobby."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.2",
+      "text": "Albert Johnson gains Business expertise from the NorthernIndustry lobby."
+    },
+    {
+      "year": 1858,
+      "phase": "2.1.2",
+      "text": "James Buchanan gains Agriculture expertise from the SlavePower lobby."
+    },
+    {
+      "year": 1858,
+      "phase": "2.1.2",
+      "text": "Henry Green gains Foreign Affairs expertise from the Expansionists lobby."
+    },
+    {
+      "year": 1858,
+      "phase": "2.1.2",
+      "text": "Benjamin Walker gains Foreign Affairs expertise from the Expansionists lobby."
+    },
+    {
+      "year": 1858,
+      "phase": "2.1.2",
+      "text": "David Wilmot gains Agriculture expertise from the SmallFarmers lobby."
+    },
+    {
+      "year": 1858,
+      "phase": "2.1.2",
+      "text": "Benjamin Garcia gains Agriculture expertise from the SmallFarmers lobby."
+    }
+  ],
+  "industryRiseSamples": [
+    {
+      "year": 1856,
+      "phase": "2.1.8",
+      "text": "New Hampshire agriculture industry rises (Expansionists)."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.8",
+      "text": "Vermont agriculture industry rises (SmallFarmers)."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.8",
+      "text": "Connecticut manufacturing industry rises (NorthernIndustry)."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.8",
+      "text": "New Jersey agriculture industry rises (Expansionists)."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.8",
+      "text": "New Jersey manufacturing industry rises (NorthernIndustry)."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.8",
+      "text": "Pennsylvania agriculture industry rises (Expansionists)."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.8",
+      "text": "Pennsylvania manufacturing industry rises (NorthernIndustry)."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.8",
+      "text": "Maryland agriculture industry rises (Expansionists)."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.8",
+      "text": "Virginia tobacco industry rises (SlavePower)."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.8",
+      "text": "Virginia agriculture industry rises (SmallFarmers)."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.8",
+      "text": "North Carolina tobacco industry rises (SlavePower)."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.8",
+      "text": "North Carolina agriculture industry rises (SmallFarmers)."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.8",
+      "text": "South Carolina agriculture industry rises (SmallFarmers)."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.8",
+      "text": "Georgia agriculture industry rises (Expansionists)."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.8",
+      "text": "Alabama agriculture industry rises (Expansionists)."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.8",
+      "text": "Louisiana cotton industry rises (SlavePower)."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.8",
+      "text": "Arkansas cotton industry rises (SlavePower)."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.8",
+      "text": "Tennessee tobacco industry rises (SlavePower)."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.8",
+      "text": "Tennessee agriculture industry rises (SmallFarmers)."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.8",
+      "text": "Kentucky tobacco industry rises (SlavePower)."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.8",
+      "text": "Kentucky agriculture industry rises (SmallFarmers)."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.8",
+      "text": "Missouri agriculture industry rises (Expansionists)."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.8",
+      "text": "Ohio agriculture industry rises (Expansionists)."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.8",
+      "text": "Indiana agriculture industry rises (Expansionists)."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.8",
+      "text": "Illinois agriculture industry rises (Expansionists)."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.8",
+      "text": "Illinois manufacturing industry rises (NorthernIndustry)."
+    },
+    {
+      "year": 1856,
+      "phase": "2.1.8",
+      "text": "Wisconsin agriculture industry rises (SmallFarmers)."
+    },
+    {
+      "year": 1858,
+      "phase": "2.1.8",
+      "text": "New Hampshire agriculture industry rises (Expansionists)."
+    },
+    {
+      "year": 1858,
+      "phase": "2.1.8",
+      "text": "Vermont agriculture industry rises (SmallFarmers)."
+    },
+    {
+      "year": 1858,
+      "phase": "2.1.8",
+      "text": "New Jersey agriculture industry rises (Expansionists)."
+    },
+    {
+      "year": 1858,
+      "phase": "2.1.8",
+      "text": "New Jersey manufacturing industry rises (NorthernIndustry)."
+    },
+    {
+      "year": 1858,
+      "phase": "2.1.8",
+      "text": "Pennsylvania agriculture industry rises (Expansionists)."
+    },
+    {
+      "year": 1858,
+      "phase": "2.1.8",
+      "text": "Maryland agriculture industry rises (Expansionists)."
+    },
+    {
+      "year": 1858,
+      "phase": "2.1.8",
+      "text": "North Carolina tobacco industry rises (SlavePower)."
+    },
+    {
+      "year": 1858,
+      "phase": "2.1.8",
+      "text": "Tennessee tobacco industry rises (SlavePower)."
+    },
+    {
+      "year": 1858,
+      "phase": "2.1.8",
+      "text": "Missouri agriculture industry rises (Expansionists)."
+    },
+    {
+      "year": 1858,
+      "phase": "2.1.8",
+      "text": "Illinois manufacturing industry rises (NorthernIndustry)."
+    },
+    {
+      "year": 1858,
+      "phase": "2.1.8",
+      "text": "Wisconsin agriculture industry rises (SmallFarmers)."
+    },
+    {
+      "year": 1860,
+      "phase": "2.1.8",
+      "text": "New Hampshire agriculture industry rises (Expansionists)."
+    },
+    {
+      "year": 1860,
+      "phase": "2.1.8",
+      "text": "Florida cotton industry rises (SlavePower)."
+    }
+  ],
+  "finalIndustries": {
+    "me": {
+      "fishing": 3,
+      "lumber": 4
+    },
+    "nh": {
+      "manufacturing": 5,
+      "agriculture": 5
+    },
+    "vt": {
+      "agriculture": 5,
+      "lumber": 2
+    },
+    "ma": {
+      "manufacturing": 5,
+      "finance": 4,
+      "fishing": 3
+    },
+    "ri": {
+      "manufacturing": 5
+    },
+    "ct": {
+      "manufacturing": 5,
+      "finance": 3
+    },
+    "ny": {
+      "finance": 5,
+      "manufacturing": 5,
+      "shipping": 5
+    },
+    "nj": {
+      "manufacturing": 5,
+      "agriculture": 5
+    },
+    "pa": {
+      "manufacturing": 5,
+      "coal": 5,
+      "agriculture": 5
+    },
+    "de": {
+      "manufacturing": 5,
+      "agriculture": 5
+    },
+    "md": {
+      "agriculture": 5,
+      "shipping": 3
+    },
+    "va": {
+      "agriculture": 5,
+      "tobacco": 5
+    },
+    "nc": {
+      "agriculture": 5,
+      "tobacco": 5
+    },
+    "sc": {
+      "agriculture": 5,
+      "cotton": 5
+    },
+    "ga": {
+      "agriculture": 5,
+      "cotton": 5
+    },
+    "fl": {
+      "agriculture": 5,
+      "cotton": 5
+    },
+    "al": {
+      "cotton": 5,
+      "agriculture": 5
+    },
+    "ms": {
+      "cotton": 5,
+      "agriculture": 5
+    },
+    "la": {
+      "cotton": 5,
+      "sugar": 4,
+      "shipping": 4
+    },
+    "tx": {
+      "cattle": 3,
+      "cotton": 3
+    },
+    "ar": {
+      "cotton": 5,
+      "agriculture": 5
+    },
+    "tn": {
+      "agriculture": 5,
+      "tobacco": 5
+    },
+    "ky": {
+      "agriculture": 5,
+      "tobacco": 5
+    },
+    "mo": {
+      "agriculture": 5,
+      "shipping": 2
+    },
+    "oh": {
+      "manufacturing": 5,
+      "agriculture": 5
+    },
+    "in": {
+      "agriculture": 5
+    },
+    "il": {
+      "agriculture": 5,
+      "manufacturing": 5
+    },
+    "mi": {
+      "lumber": 4,
+      "mining": 3
+    },
+    "wi": {
+      "agriculture": 5,
+      "lumber": 3
+    },
+    "ia": {
+      "agriculture": 5
+    },
+    "ca": {
+      "mining": 4,
+      "shipping": 3
+    }
+  },
+  "factionData": {
+    "fact_blue_cons": {
+      "center": 4,
+      "rawMeanFloat": 3.5641025641025643,
+      "biasedMeanFloat": 3.8272604588394064,
+      "shift": 0.26315789473684204
+    },
+    "fact_blue_popsov": {
+      "center": 3,
+      "rawMeanFloat": 2.953488372093023,
+      "biasedMeanFloat": 2.977297895902547,
+      "shift": 0.023809523809523725
+    },
+    "fact_blue_unionist": {
+      "center": 3,
+      "rawMeanFloat": 2.7560975609756095,
+      "biasedMeanFloat": 2.8310975609756097,
+      "shift": 0.07500000000000018
+    },
+    "fact_blue_jackson": {
+      "center": 3,
+      "rawMeanFloat": 2.789473684210526,
+      "biasedMeanFloat": 3.1052631578947367,
+      "shift": 0.3157894736842106
+    },
+    "fact_blue_locofoco": {
+      "center": 3,
+      "rawMeanFloat": 2.8947368421052633,
+      "biasedMeanFloat": 2.8233082706766917,
+      "shift": -0.07142857142857162
+    },
+    "fact_red_critt": {
+      "center": 3,
+      "rawMeanFloat": 3,
+      "biasedMeanFloat": 3.022727272727273,
+      "shift": 0.02272727272727293
+    },
+    "fact_red_mod": {
+      "center": 3,
+      "rawMeanFloat": 2.902439024390244,
+      "biasedMeanFloat": 3.0149390243902436,
+      "shift": 0.11249999999999982
+    },
+    "fact_red_lib": {
+      "center": 3,
+      "rawMeanFloat": 2.8867924528301887,
+      "biasedMeanFloat": 2.925253991291727,
+      "shift": 0.038461538461538325
+    },
+    "fact_red_radical": {
+      "center": 2,
+      "rawMeanFloat": 1.75,
+      "biasedMeanFloat": 1.75,
+      "shift": 0
+    },
+    "fact_red_know": {
+      "center": 3,
+      "rawMeanFloat": 3.4390243902439024,
+      "biasedMeanFloat": 3.4390243902439024,
+      "shift": 0
+    }
+  }
+}
