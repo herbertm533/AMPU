@@ -38,8 +38,26 @@
 >   apportionment**. Batch 3 also **corroborates ~30 prior deltas across a fourth era**
 >   (bumping confidence) and sharpens legislation, conventions, cabinet, governors, and
 >   amendments with modern detail. See [§19](#19-shipped-vs-designed-boundary).
+> - **Batch 4** — `77db6e6f` (1856-native "A House Divided", a 1856→1904 multiplayer
+>   campaign, `house-divided`/`hd`): the **first 1856-native record** and the **only
+>   source for the Civil-War / Reconstruction machinery**. Adds a new
+>   **[§23 Civil War & Reconstruction](#23-civil-war--reconstruction-1856-arc-designed-not-built)**
+>   (the **two-theater combat engine**, the **Reconstruction readmission subsystem**,
+>   **secession + Southern-Unionist trait gating**, the **free/slave sectional-balance
+>   crisis**, **Canada conquest → era-gated statehood**) and a
+>   **[§24 other 1856-arc systems](#24-other-1856-arc-systems-revealed-by-house-divided-designed-not-built)**
+>   (succession/eligibility + the **0-Command acting president**, the **contingent-election
+>   top-2 house rule**, the **Primary Era** origin, **amendment ratification by 3/4 of
+>   Governors**, the authored **investigation "3.0.40" 5d6 spec**, the Progressive
+>   **institutional layer**, the **~16-meter Lingering** bank, and the **3-traits/3-alt-states**
+>   draft re-rule). It also **reconciles per-era point-banking into the turn loop**
+>   ([§2.5](#25-era-boundaries--per-era-point-banking--the-new-era-boot-pipeline-designed-not-built))
+>   and supplies the **★ "forum DRIVES the build"** divergence — the **relocation cap is `5`
+>   in the shipped build but `4` in the running playtest** ([§19.1 #9](#191-design-divergences-for-the-roadmap)).
+>   Mostly **corroborates** the existing gap log across ~5 eras (conventions, legislation,
+>   SCOTUS, cabinet, governors, churn) — flagged "confirmed 1856-native" inline.
 >
-> **Alt-history note.** All three forum threads (and especially `modern`) play a
+> **Alt-history note.** All four forum threads (and especially `modern`) play a
 > **divergent alternate timeline**, not real history: fictional **era names** (the
 > `modern` thread plays the "Era of Terror" → "Era of Populism", not "the 2000s"), a
 > game clock that **runs ~10 years behind real-world technology**, **53 states**
@@ -109,6 +127,21 @@
     - [22.9 Military-leadership appointment tier (2.3.2)](#229-military-leadership-appointment-tier-232)
     - [22.10 53-state alt roster + modern apportionment](#2210-53-state-alt-roster--modern-apportionment)
     - [22.11 Era clock & era enum (alt-history)](#2211-era-clock--era-enum-alt-history)
+23. [Civil War & Reconstruction (1856-arc) (designed, not built)](#23-civil-war--reconstruction-1856-arc-designed-not-built)
+    - [23.1 Secession + Southern-Unionist / Secessionist trait gating](#231-58-secession--southern-unionist--secessionist-trait-gating-the-antebellum-payoff)
+    - [23.2 Free/Slave sectional-balance crisis scoring](#232-59-freeslave-sectional-balance-crisis-scoring-the-nationalism-crisis-engine)
+    - [23.3 Civil War — the two-theater combat engine](#233-56-civil-war--the-two-theater-combat-engine-multi-term-subsystem)
+    - [23.4 Reconstruction readmission subsystem](#234-57-reconstruction-readmission-subsystem-end-nationalism--gilded)
+    - [23.5 Canada conquest → era-gated statehood + Canadian draft](#235-60-canada-conquest--era-gated-territorystatehood--canadian-draft)
+24. [Other 1856-arc systems revealed by `house-divided` (designed, not built)](#24-other-1856-arc-systems-revealed-by-house-divided-designed-not-built)
+    - [24.1 Succession / eligibility / the acting-president state](#241-61-succession--eligibility--the-acting-president-state)
+    - [24.2 Contingent House election + tied-chamber inverse control](#242-62-contingent-house-election--tied-chamber-inverse-control)
+    - [24.3 Primary Era — state-opt-in primaries → Groups 1–5](#243-63-primary-era--state-opt-in-primaries--presidential-primary-groups-15)
+    - [24.4 Amendment ratification by 3/4 of Governors — era-keyed, tunable](#244-64-amendment-ratification-by-34-of-state-governors--era-keyed-then-tunable)
+    - [24.5 Investigations — the authored "3.0.40" 5d6 spec](#245-65-investigations--the-authored-3040-5d6-special-committee-spec)
+    - [24.6 The Progressive-era institutional layer](#246-66-the-progressive-era-institutional-layer-offices-created-in-game-by-law)
+    - [24.7 Lingering — the ~16-meter homeostasis engine](#247-67-lingering--the-16-meter-homeostasis-engine-era-gated-foreign-meters)
+    - [24.8 Draft rookie grants re-ruled — "3 traits + 3 alt-states"](#248-69-draft-rookie-grants-re-ruled--3-traits--3-alt-states)
 
 ---
 
@@ -225,6 +258,37 @@ Year gates apply first (`phases.ts:64–77`). Then, for `independence`:
 - **First-turn skips** (1772 `year===startYear`): 2.1.3, 2.5.1, 2.6.x, 2.7.x, and CC
   leadership 2.2.1/2.2.2 (`phases.ts:125–131`).
 - 2.7.2 (battles) runs only if `revolutionaryWar.active` (`phases.ts:134`).
+
+### 2.5 Era boundaries — per-era point banking + the new-era boot pipeline (designed, not built)
+
+> **Resolves the long-open "does the point-reset fire at an era boundary?" question.**
+> Confirmed across **federalism** (`fed` 518), **modern** ([§22.2](#222-faction-enthusiasm--party-preference-election-engine--the-score-economy)),
+> and now **1856-native** (`hd` digest §II, POST 6679–6816). **Faction points do NOT carry
+> over linearly across eras — they BANK per era toward an end-of-game total**, and a heavyweight
+> boot pipeline runs at each era boundary. (Shipped engine has no notion of this: `currentEra`
+> flips at a single trigger — `constitutionalConvention.ts:198` — with no point reset or boot
+> sequence.)
+
+The campaign is **one continuous game across an era ladder** (a 1856 start traverses
+Nationalism → Gilded `1868` → Progressivism `1892` → … toward WW1; `hd` reached mid-1904). At
+each boundary a **~12-step new-era boot pipeline** fires (`hd` POST 6679–6816):
+
+1. **End-of-era awards** are paid (most era points, most from the *other* party, the
+   winning party's factions — the same award table as `modern` [§22.2](#222-faction-enthusiasm--party-preference-election-engine--the-score-economy), `modern` post 1080).
+2. **Faction points reset to per-era banks** — the era's accumulated score is **banked**, then
+   the running total zeroes for the new era. The cumulative scores seen *mid-era* are
+   **within-era**; the banked sub-totals are what accumulate toward the end-of-game total.
+3. **Faction trades** (rosters reshuffle for the new era).
+4. **Full 2.1.x → 2.3.1 re-run** under the new era's rules (re-draft, re-elect leadership,
+   re-form cabinet).
+5. **New card pool + new draft pool** for the era ([§7.4.1](#741-era-gated-multi-pool-card-library-designed-not-built));
+   the boundary can **split an ideology's cards across two factions** (`modern` post 1200).
+
+> **Win-condition implication (open question for the human, carried from the digest).** Because
+> points bank per era rather than reset-and-discard, **the per-era bank → cumulative end-of-game
+> total** is the candidate **cross-era win condition** for a full-timeline campaign. Whether
+> this is the canonical scoring and whether *any* of it is in the build are open (the shipped
+> build is pre-late-game-loop). Cross-ref `game-context.md` #2, #68.
 
 ---
 
@@ -848,6 +912,17 @@ Forum 2.3.1 fills a **much wider** roster than `cabinetSeatsForYear` (post 87, 9
 > **will accept an ambassadorship** (fed posts 71-73 — stops Congress→military stat-laundering);
 > and a no-viable-PM-General candidate is an **undefined, crash-prone path** escalated to the
 > dev (fed post 5 — see `game-context.md` BUG-3).
+>
+> **Confirmed 1856-native (`house-divided`).** The full confirmation pipeline is corroborated:
+> **≥2/≥3 Admin gates**, **≤16 cumulative cabinet-years**, a **60% Senate Big-4 confirmation**
+> (committee, then ~68-floor), a **5-name Majority-Leader "recovery list"** offered on a failed
+> nomination, **≤1 cross-party in the Big-4 / ≤3 total**, a **status hierarchy** (an ex-SecState
+> only takes State), **retain ≤5** across an administration, **−1 party-pref per uncovered
+> region**, and a **minority-appointee-pre-Civil-Rights-era −1 party-pref** (avoided by
+> re-appointing to the same post). A **Controversial-nominee failure = a lifetime cabinet ban +
+> permanent −1 in all elections** (`hd` POST 3720, 4988–5019, 6010–6090, 7156–7174, 7982, 8060).
+> The Progressive-era roster grows to **~21 posts** with offices **created in-game by law** —
+> documented separately in [§24.6](#246-66-the-progressive-era-institutional-layer-offices-created-in-game-by-law).
 
 *(designed, not built — extend `Office` enum with Minister-* offices and admiral-bench
 slots, **keyed per era**; add the cross-party cap and the senators-refuse-military rule.)*
@@ -1099,6 +1174,18 @@ Some actions also award **+1 Command** to the acting governor on first success (
 `runPhase_2_5_2_Governors` interactive action library with d100/20·gov resolver, skill/trait
 prereqs, and per-action effect schema.)*
 
+> **Confirmed 1856-native (`house-divided`, corroborated across ~5 eras now).** Same resolver:
+> **# actions = Gov level (Efficient +1)**, **d100 vs 20×Gov**, **skill-match doubles** the
+> success chance, **5-Gov autopass**, **10% +1 Command on success**, and a national-meter-impact
+> action triggers a **lose-Obscure / +Command** roll. The 1856 arc adds the late-game menu items:
+> **Activate State Primaries** ([§24.3](#243-63-primary-era--state-opt-in-primaries--presidential-primary-groups-15)),
+> the Deep-South voter-suppression set (**Jim Crow / Literacy / Disenfranchise / Poll Tax**, ×2
+> in the Deep South), **Women's Suffrage**, Praise/Criticize President, and Challenge-law-to-
+> SCOTUS. **Gov incumbency decay** sets in after **8/12 yrs**. The "+1 Command except on autopass
+> actions" reword is retroactive (`hd` POST 2936–2945, 3134, 3338–3354, 4179–4195, 5477–5505,
+> 6119–6153, 6997). Govs are **designer-acknowledged underpowered** (DH-13-adjacent;
+> `game-context.md`).
+
 ### 11.4 State-level policy flags (designed, not built)
 
 Forum tracks **persistent state-level policy switches** (post 125), separate from
@@ -1207,6 +1294,18 @@ if the bill improves any meter, the sponsor may gain `+1 command`. `startWar` ef
 a `War` and push it onto `game.wars`.
 
 ### 12.4 Forum design layer: committee block-and-replace (designed, not built)
+
+> **Confirmed 1856-native (`house-divided`) — the whole pipeline (§12.4–§12.8).** The full
+> legislative loop is corroborated across the 1856→1904 arc: proposers → **committee block/replace**
+> (chair Legislative > proposer's **AND** proposer lacks Efficient) → committee vote → **package**
+> (amendments stand alone) → floor → **Shenanigans** (Debater/Orator/Magician/Puritan flips) →
+> **filibuster** (Disharmonious can filibuster twice; carries to the next session, re-passes both
+> chambers; **no Cloture until the Cloture bill passes**, ⅔) → sign/veto (override ⅔) → points +
+> enthusiasm resolution. **Crisis bills** carry failure penalties (a majority-fail blames the
+> Speaker); **"a faction cannot propose a bill that hurts its own faction"** (even when free);
+> **procedure bills skip presidential assent**; and cabinet **free department proposals** lose
+> **−50/−100** if unused (`hd` POST 3492–3524, 5123–5177, 6179–6211, 8166–8167). Reconstruction
+> readmission and amnesty are themselves bills through this pipeline ([§23.4](#234-57-reconstruction-readmission-subsystem-end-nationalism--gilded)).
 
 The forum routes 2.6.2 through an interactive **committee chair veto** step (posts
 160-163):
@@ -1606,6 +1705,18 @@ The build's 2.9.2 is one line: "log ratification." The forum runs a multi-step c
 > [§22.6](#226-the-cpu-delegate-engine-convention--primary-apportionment): **53 states ⇒ 1,300
 > delegates, majority 651**, delegates ≈ **EV × per-state category multiplier**. (The batch-1
 > "447 needed to win" was a smaller-roster instance of the same `total/2 + 1` rule.)
+>
+> **Confirmed 1856-native (`house-divided`, 5th era to corroborate).** Same full ballot loop with
+> **Momentum** (carries across cycles; drop-outs transfer it), **Command = # inter-ballot
+> actions**, candidate tiers (Major/Minor/Favorite-Son), nominator/keynote d6, **rejectable
+> Presidential Promises**, host-Governor delegate setup, VP-pick + PL override. The 1856 detail
+> that sharpens this: **R/D thresholds are asymmetric** — **Dems 3/4 vs GOP 2/3 → ½+1** — and are
+> **mutable and persistent across conventions** (an **Iron-Fist PL can unilaterally lower the
+> GOP threshold**, DH-7); the platform is **5 planks** with **3-test scoring**, planks-passed-as-
+> law scoring **×3**; and the **Presidential-promise DIRECTION** is fixed **offer-DOWN /
+> request-UP only** (`hd` POST 3261, 3262, 3268, 3893, 3922–3924, 4646–4726, 5594–5713, 6917,
+> 8247). Host-Governor delegate grouping is flagged **exploitable corruption** (DH-12-adjacent;
+> `game-context.md`).
 
 #### 15.3.1 Candidate types and per-faction slate
 
@@ -2251,8 +2362,12 @@ Rules where the **forum and the shipped engine genuinely disagree** (not just
    `milPower×10 + d100 > enemyPower×10 + 50`, war ends at `±50` (`phaseRunners.ts:3593-3627`).
    The forum uses a **per-battle Chance-of-Success formula** + a **warscore + momentum → %**
    resolution with an **escalating ×2 multiplier** and a **confirmation cascade** when a
-   defeated commander is fired (`fed` 222, 312, 389; `1772s` 20, 22, 48, 60). (See
-   [§21.1](#211-generic-cross-era-war-system).)
+   defeated commander is fired (`fed` 222, 312, 389; `1772s` 20, 22, 48, 60). **Batch 4
+   (1856-native) is the sharpest confirmation:** the **Civil War** is the **Major-tier** instance
+   of this engine — **two theaters, naval-victories-gate-land, per-theater WarScore with a +10
+   auto-win, a Major/Minor/Operation multiplier, named-officer casualties, and a permanent
+   president +1-all-elections** on victory — none of which the shipped resolver has. (See
+   [§21.1](#211-generic-cross-era-war-system) and the full [§23.3](#233-56-civil-war--the-two-theater-combat-engine-multi-term-subsystem).)
 
 *New in batch 3 (modern):*
 
@@ -2271,6 +2386,36 @@ Rules where the **forum and the shipped engine genuinely disagree** (not just
    reinforcing the federalism **firing-precedent hold-over** divergence
    ([§21.4](#214-firing-precedent-gate-on-cabinet-changes)) across a second era — the wipe must
    be replaced with retention + precedent-gated replacement.
+
+*New in batch 4 (`house-divided`, 1856-native):*
+
+9. **★ Relocation cap: shipped `5` vs design's `4` — the clearest "forum DRIVES the build"
+   evidence.** Mid-thread the engine **designer (`vcczar`) asked whether relocation was too easy**;
+   the GM proposed a **cap of 4** non-alt-state relocations and **it went LIVE in the running
+   playtest** ("You can ATTEMPT to move a TOTAL of FOUR pols. Alt-state moves don't count," `hd`
+   POST 7062–7066, 7555). **The shipped build is still at `RELOCATION_ATTEMPTS_PER_TURN = 5`
+   (`types.ts:247`)** — the browser engine has **not** caught up to a design change the forum
+   already plays. This is a **concrete, dated shipped-vs-design divergence** and the single
+   strongest proof that the canonical spec is the latest playtest, not a frozen rulebook
+   ([§6.2.x](#62x-forum-design-layer-designed-not-built); `game-context.md` ★ note + #38). The
+   shipped value also exceeds `RELOCATIONS_CAP`-adjacent intent; **direction = lower to 4.**
+   *(Two further batch-4 design replacements are documented in full in their own sections rather
+   than re-listed here: the **Civil-War two-theater engine** replacing the flat resolver
+   ([§23.3](#233-56-civil-war--the-two-theater-combat-engine-multi-term-subsystem), folded into #6
+   above) and the **per-era point-banking** model replacing the engine's bare era-flip
+   ([§2.5](#25-era-boundaries--per-era-point-banking--the-new-era-boot-pipeline-designed-not-built)).)*
+
+> **GM-confirmed design holes from `house-divided` (DH-3..DH-11 — point to `game-context.md`, not
+> re-documented).** Eleven balance/rules flags joined the gap log this batch (full text in
+> `game-context.md` → design-holes): **DH-3** career-track pols can still run for President;
+> **DH-4** "Extend Credit to all nations" is a near-auto-win foreign loop; **DH-5** flipping a
+> Kingmaker also grabs his protégés ("insanely OP"); **DH-6** contingent-election top-2 vs top-3
+> ([§24.2](#242-62-contingent-house-election--tied-chamber-inverse-control)); **DH-7** R/D
+> convention-threshold asymmetry + an Iron-Fist PL can unilaterally lower it; **DH-8** CPU
+> convention AI unstable + ballot-shift rule ambiguous; **DH-9** exec/gov-action ability stat
+> inconsistent (Command vs Admin/Gov/Justice); **DH-10** blundered implementations still score
+> "as if succeeded" unless a specific event overrides ([§14.1](#141-forum-design-layer-executive-actions-library-designed-not-built));
+> **DH-11** apparent Dem 3rd-party structural bias + lobby cards too inelastic.
 
 > **Confirmed shipped bugs (fixes, not features).** Defects surfaced by the forum threads are
 > catalogued in `game-context.md` → "Confirmed shipped bugs" and owned by the roadmap as fixes.
@@ -3041,6 +3186,16 @@ laws** (the death-penalty case deactivates "Set Punishment … to Death"). **Hou
 bills tied to a court-disabled policy **should** auto-deactivate but **don't** (post 1293,
 1297) — logged with the design holes.
 
+> **Confirmed 1856-native (`house-divided`).** This whole subsystem is corroborated across the
+> 1856→1904 arc: named (often **ahistorical**) docket voted by Justice ideology with **Chief +100
+> / Associate +50** weighting; **dynamic court size** (grew to 10); **compelled retirement**
+> (Manipulative/Iron-Fist, age ≥ 75 OR ≥ 12 yrs; **5-Judicial + Integrity immune**); justice
+> ideology drift ~every 10 yrs; a **5-5 tie affirms the lower court and sets no precedent**. The
+> sharper 1856 detail is **rulings that change what legislation is legal**: **Pollock v.
+> Farmers' Loan 5-4** ruled income tax a direct tax → **blocked income-tax bills until an
+> amendment passed** ([§24.4](#244-64-amendment-ratification-by-34-of-state-governors--era-keyed-then-tunable)),
+> plus **Cruikshank** and **Plessy** (`hd` POST 4616–4632, 7250, 7252, 7273, 8181, 8536, 8651).
+
 *(designed, not built — a SCOTUS module: a per-term case docket + ideology-vote model; the
 Iron-Fist/Manipulative compel-vote and compel-retire powers (with the 12-year minimum + the
 conditional-retirement bargain); dynamic court size + court-packing (age-70 trigger, shrink
@@ -3169,3 +3324,495 @@ framing (modern#post 1, 769, 1080, 1106, 1172, 1200, 1771):
 *(designed, not built — formalize an `Era` enum + per-era content gating (events, actions,
 card pool, card-count rescale at boundaries) decoupled from literal years; a procedural
 politician generator for dataset exhaustion; and resolutions for DH-1/DH-2.)*
+
+---
+
+## 23. Civil War & Reconstruction (1856-arc) (designed, not built)
+
+> **Entire section is designed, not built — and uniquely sourced.** This is the **only**
+> documented playthrough of the antebellum → Civil-War → Reconstruction machinery, from the
+> **first 1856-native** thread (`77db6e6f`, "A House Divided" Part 2, a 1856→1904 alt-history
+> multiplayer campaign). The **shipped** 1856 scenario (`scenario1856.ts:177`, era
+> `nationalism`) stops at the antebellum *start*: its era-event spine **ends at the Trent
+> Affair (1861)** and it has **no Civil-War combat engine, no secession resolution, no
+> Reconstruction**. What ships is the *pressure* (Dred Scott / John Brown / **Secession Winter**
+> era events that decay cabinet loyalty and modulate meters — [§10.3](#103-243-era-events--runphase_2_4_3_era-phaserunnersts2796),
+> `phaseRunners.ts:2834–3000`; `SLAVE_STATES_1856` at `types.ts:1152`), not the war itself.
+> Cite `hd#POST N`. Cross-ref `game-context.md` rows **#56–#60** and the alt-history framing in
+> `historical-context.md` §3–§5 (**Seward**, not Lincoln, is the wartime president; secession
+> fires **~1863** from a bungled John Brown's Raid decision; CSA president **John A. Quitman**).
+
+### 23.1 (#58) Secession + Southern-Unionist / Secessionist trait gating (the antebellum payoff)
+
+The antebellum pressure pays off as a **scripted Era-Event chain**, not a passive drift:
+
+1. **Trigger = a blundered presidential decision.** Seward took response **B** to the **John
+   Brown's Raid** "Hard" event with **0 Judicial** → blunder; the event's rule text reads
+   *"Automatic secession convention and Civil War if response B blunders"* (`hd` POST 1166).
+   **One bungled presidential decision forced the war** — the clearest demonstration that
+   implementation/blunder rolls ([§14.1](#141-forum-design-layer-executive-actions-library-designed-not-built), DH-9/DH-10) can branch the whole timeline.
+2. **CSA forms as an event** (`hd` POST 1168): **11 states leave** (FL GA AL MS LA TX SC NC TN
+   AR VA). The **4 border slave states (DE MD KY MO)** are handled **separately** — the *state*
+   may stay while its *politicians* individually secede.
+3. **Per-politician secession roll** (`hd` POST 1175): a pol of a seceded/border state
+   **becomes inactive** (moved to a **"Secessionists" tab**) **UNLESS** they hold the
+   **`Southern Unionist` trait**; **`Nationalist` → a roll to stay** "Andrew Johnson style"
+   (Alexander Stephens stayed and became the **1864 Democratic nominee**, POST 1422–1425).
+   **302 pols seceded**; loyal notables stayed (Andrew Johnson, Stephens, CJ Taney of MD).
+4. **The draft dataset carries the trait.** Newly drafted / career-track pols from
+   seceded/border states **without `Southern Unionist` auto-become Secessionists** — most
+   Southern *Republicans* have the trait, few Southern *Democrats* do (POST 1446, 1452, 2152).
+5. **Relocation is one-way during the war:** pols **can move OUT of rebelling states, never IN**
+   (POST 1469, 1607) — interacts with the relocation cap ([§6.2.x](#62x-forum-design-layer-designed-not-built)).
+6. **CSA gets its own gov structures as events:** Provisional Pres **Quitman**, VP **Letcher**,
+   Army Cmdr **A.S. Johnston**, Sr Admiral **Buchanan**, capital Richmond, a UK-recognition
+   threat (POST 1168).
+
+> **Unadopted player house-rule** (logged for the designer): border-state secession **by
+> ideology** (Conservative 50% / Traditionalist 75% / RW-Populist 90%) instead of a blanket
+> roll (POST 1495) — a sharper alternative to the current flat roll.
+
+*(designed, not built — a `Politician.allegiance: 'union' | 'secessionist'` state + a
+"Secessionists" inactive bucket; a secession era-event chain gated on a blundered presidential
+decision; the per-pol secession roll keyed on `Southern Unionist`/`Nationalist` traits + state
+region; one-way relocation out of rebel states; the CSA officer/structure events.)*
+
+### 23.2 (#59) Free/Slave sectional-balance crisis scoring (the Nationalism crisis engine)
+
+The **defining Nationalism-era mechanic** — a sectional counter that punishes the side that
+loses the free-vs-slave state balance at each half-term close, **retired on emancipation**.
+
+- **Trigger** (`hd` POST 302, 747, 1070): at half-term close, when **free states outnumber
+  slave states** (it fired when KS + OR were admitted free). One bloc "wins" the balance; the
+  *other* bloc's faction/officers take the hit.
+- **Effect package when free > slave** (the antebellum North pulling ahead):
+  **Speaker & Senate Pro-Tem each −250 points + −1 next election; all Moderate factions −250;
+  Domestic Stability −2; Party-Preference +2 toward Red; Civil-Rights faction +250 /
+  RW-Activists −250; ALL RW-Activist candidates +2 next election** ("livid").
+- **Retirement** (`hd` POST 1766): the whole crisis is **removed once slavery is abolished**
+  (the 13th-Amendment-equivalent beat) — it is era-bounded to Nationalism, not permanent.
+
+This is a **sectional free-vs-slave state counter** feeding **score + meter + election**
+effects, keyed to the era and sunset on emancipation. (Codebase note: `SLAVE_STATES_1856`
+exists at `types.ts:1152` but **no such crisis scoring** is wired — the shipped antebellum
+beats are the loyalty-decay/meter-modulation events only.)
+
+*(designed, not built — a `freeStateCount`/`slaveStateCount` derived counter; an
+end-of-half-term check that, while the imbalance holds and the era is Nationalism, applies the
+Speaker/Pro-Tem/Moderate/Civil-Rights/RW-Activist score + DomStab + Party-Pref + next-election
+package; retire the whole subsystem on the abolition era event.)*
+
+### 23.3 (#56) Civil War — the two-theater combat engine (multi-term subsystem)
+
+> **The headline unbuilt system.** Fought over **multiple half-terms** as a structured
+> subsystem **separate from the normal turn loop** (`hd` POST 1332, 1710, 1977, 1979). It is
+> the **tiered general case** of the batch-2 generic war system ([§21.1](#211-generic-cross-era-war-system))
+> and bears almost no resemblance to the **shipped flat resolver** (`runPhase_2_7_2_Military`,
+> `phaseRunners.ts:3593–3627`: `milPower×10 + d100 > enemyPower×10 + 50`, `warScore += win?10:−5`,
+> ends at `±50`). Divergence **#6** ([§19.1](#191-design-divergences-for-the-roadmap)) is the
+> shipped-vs-design gap this thread most sharply confirms.
+
+**Structure — two theaters, naval gates land.**
+
+- **Two theaters (East & West); BOTH must be fought.** Each theater requires **3 naval
+  victories before any ground combat can begin** (Admirals + Ironclads first). `Naval
+  experience` is **a prerequisite to be an Admiral and is NOT the same as a `Naval` trait**
+  (`hd` POST 1325, 1329).
+
+**Per-battle success %** (`hd` POST 1332 ff.) — additive, then a **d100**:
+
+```
+Success% = base
+  − Difficulty            // Easy 0 / Moderate −10 / Difficult −15
+  + Planning              // Sec War + Senior General skills  (Sec Navy + Sr Admiral for naval)
+  + Officer               // commanding officer Military ×10, +10 if Decisive General
+  + Meters                // +15
+  + Benchmarks            // +15
+roll d100 ≤ Success% ⇒ battle won
+```
+
+This is the **same additive battle-card shape** as [§21.1](#211-generic-cross-era-war-system)
+(difficulty + planning + officer + meters + benchmarks → single %), with the officer-rating ×10
+and the appointment-tier feed ([§22.9](#229-military-leadership-appointment-tier-232)) made
+explicit for the Civil War.
+
+**War Score per theater** (`hd` POST 1977):
+
+| Event | War-Score delta |
+|---|---|
+| Easy / naval win | **+1** |
+| Difficult land win | **+3** |
+| Loss | **−1** |
+| **War Score reaches +10** | **theater AUTO-WINS** |
+
+If neither theater has auto-won, an **end-of-phase roll vs `WarScore × multiplier %`** decides
+whether the war **carries to the next half-term** (it carried repeatedly). Contrast the shipped
+`±50` cliff and the batch-2 `warscore + momentum → %` with an **escalating ×2** the longer the
+war runs — the Civil War is the **Major-tier** instance of that multiplier.
+
+**Named historical battles kill named pols on the military career track** (both sides):
+Hampton Roads, Charleston, New Orleans, Galveston, Mobile Bay, Antietam, Shiloh, Chickamauga,
+Vicksburg, Wilderness, Atlanta, Drewry's Bluff. **Rufus Bullock KIA at Mobile Bay** (POST
+1332); **Lee can win Chickamauga for the CSA**. **Winning officers gain** Leadership / Military
+Leader / +1 Military / **Decisive General** / Celebrity and **lose Obscure** — feeding the
+career-track ([§5](#5-career-tracks--the-expertise-pipeline-212)) and the down-ballot war-hero
+bonus below.
+
+**Global modifiers while the war is active:**
+
+- At **crisis Domestic-Stability**, the **incumbent party takes −2 in ALL elections** (POST 1408).
+- The **opposition-VP penalty is reduced by 1** (POST 1396).
+- Per-term **"Major War Impacts"** Lingering rolls fire ([§11.1](#111-251-lingering-meters--runphase_2_5_1_lingering-phaserunnersts3260); POST 888, 1196).
+
+**War end — Union victory** (`hd` POST 1977, "Treaty of Appomattox"):
+
+1. **+250 points** to Nationalists / Civil-Rights / Wall-St / Big-Corp / Mil-Ind / Globalists.
+2. **The President gains a PERMANENT +1 in ALL elections** for winning the war.
+3. Seceded states enter **Reconstruction** ([§23.4](#234-57-reconstruction-readmission-subsystem-end-nationalism--gilded)) — **not** "back in the Union."
+4. A **25% post-victory "CSA Guerilla War" roll** (didn't trigger here).
+
+**War-hero down-ballot bonus** (`hd` POST 3942, 4767): a **General with a Military skill gets +1
+in EVERY state** if a major war ended **< 20 years prior** — this **decided the 1884 race**.
+**NB:** the in-timeline war end-year is ambiguous (**1866 vs 1867**), which shifts the 20-year
+window — flagged **verify** (open question, `game-context.md` `hd`/#56).
+
+**Tiered war framework (generalizes #45 / divergence #6).** The same engine runs **Major /
+Minor / Operation** tiers with different end-war multipliers and reward packages:
+
+| Tier | Example (`hd`) | Notes |
+|---|---|---|
+| **Major** | the Civil War | two theaters, +10 auto-win, permanent president bonus |
+| **Minor** | US–China Naval War (Treaty of Melbourne, POST 1723); Naval War with Spain → US gains **Puerto Rico** (Treaty of Charleston, POST 2985, 3195) | allies (UK, Russia) assist |
+| **Operation** | Red Cloud's War / "Generic Indian War" (**Operation ×2**, Treaty of Palo Duro, POST 1871, 1979) | smallest multiplier |
+
+> **Data defects logged in-thread** (for the build's content pass, not engine bugs): two distinct
+> China-war events (POST 1725–1729); stale **"Generic Indian War"** event text used for what is
+> really **Red Cloud's War** (POST 1872–1874).
+
+*(designed, not built — a tiered `War` model: theaters with a naval-victories-gate-land
+prerequisite, the additive per-battle Success% (difficulty/planning/officer×10/meters/benchmarks),
+per-theater WarScore with a +10 auto-win, the WarScore×multiplier carry roll with a Major/Minor/
+Operation multiplier, named-battle officer casualties + trait grants, the active-war global
+election modifiers, and the win package incl. the **permanent president +1-all-elections** and the
+**<20-yr war-hero +1-all-states** bonus. Fold the shipped flat resolver and the 1772 Rev-War loop
+in as configured instances.)*
+
+### 23.4 (#57) Reconstruction readmission subsystem (end-Nationalism → Gilded)
+
+After Union victory the **10–11 ex-Confederate states** sit under **Military Reconstruction** —
+not back in the Union (`hd` POST 1987–1988, 2320):
+
+- **Military occupation / districts**; the **President appoints military Governors (2-yr terms)**;
+  **no congressional representation** until a state is readmitted.
+- **Readmission is a per-state BILL** through the normal committee → floor pipeline
+  ([§12](#12-legislation-26x)) — "Tennessee/Florida/Louisiana/… Reconstruction." On passage the
+  state re-enters and its **Gov / Rep / Senate elections fire** (POST 2111, 2332, 2589, 2670).
+
+**Three readmission plans** (a presidential Executive Action, `hd` POST 1987–1988):
+
+| Plan | Mechanic |
+|---|---|
+| **(1) Ironclad Oath / Strict Loyalty** | readmitted state gets **+2 toward the incumbent party for 4 cycles (8 yrs)** — a **time-boxed, event-sourced bias modifier** (e.g. "SC +2 Red until 1882") |
+| **(2) Military Districts / Martial Law** | 5 districts, appointed Govs, no representation; **requires the 14th-equiv Amendment to readmit**; **ex-Confederate pols barred until pardon** |
+| **(3) Pardon Confederate Soldiers** | rank-and-file only; **cannot be deactivated** |
+
+- **The +2-toward-incumbent bias SUNSETS** mid-**1882** for AR/MS/SC/TX/VA (TN earlier) — a
+  concrete time-boxed `until`-year on a per-state bias modifier.
+- **Readmission also adds Black voters** (enfranchisement can flip down-ballot races; **P.B.S.
+  Pinchback = first Black governor**), after which Southern Govs deploy **segregation / literacy
+  / disenfranchisement** governor actions ([§11.3](#113-governors-actions-library-designed-not-built); POST 3532–3561, 3945–3965, 4179–4297, 4493).
+- **Amnesty / citizenship is itself contested law** via competing bills ("Strip citizenship of
+  Confederate leaders, pardon others"; "Mass Trials"). On passage of **strip-leaders** the engine
+  **removes the named CSA leadership pols from the game** (Pres/VP/Generals/Admirals/Cabinet +
+  state officeholders at secession) and **returns all other pardoned pols to their origin
+  factions**; players then prune Kingmaker pairings whose members were removed (POST 2640, 2641).
+- **Moving INTO a recently-reconstructed state doubles the Carpetbagger chance** (POST 2445,
+  3024) — a Reconstruction-specific modifier on the relocation trait grant ([§6.2.x](#62x-forum-design-layer-designed-not-built)).
+- **Reconstruction era-event spine:** First KKK, Reconstruction Riots, Lost Cause, **Plantation
+  Economy ends → converts the Plantation industry → Agriculture at 2:1**, Colfax Massacre,
+  White League / Red Shirts, KKK / habeas bills, **Jim Crow Laws** (unlocks a Gov **"State
+  Segregation"** action = triple points for 30 yrs, POST 3094).
+
+> **GM house-ruling gap (era-inconsistent).** The fate of **loyal Senators/Reps from seceded
+> states** was put to an A–E vote with **no fixed rule** — "in 1840/1856 we did option D" (POST
+> 1182–1194). A build needs a stated rule. See `game-context.md` design-holes.
+
+*(designed, not built — a `State.reconstruction` status (occupied / military-gov / readmitted)
+with President-appointed 2-yr military Govs and no representation until a per-state readmission
+bill passes; the three readmission plans incl. a **time-boxed `bias +2 until year`** modifier;
+Black-voter enfranchisement on readmission feeding `calcStateVote`; the strip-leaders / pardon
+bills that remove-or-return named pols; the doubled-Carpetbagger-into-reconstructed-state rule;
+the 2:1 Plantation→Agriculture industry conversion; and the Reconstruction era-event spine.)*
+
+### 23.5 (#60) Canada conquest → era-gated territory→statehood + Canadian draft
+
+This alt-timeline **annexes Canada** (the **Mid-Century War**, `hd` POST 528–531: "1st playtest
+to ever acquire Canada"). Provinces then enter via the territory → statehood bill pipeline
+([§21.5](#215-bill-driven-statehood--auto-generated-officials)), **era-gated**:
+
+- **In the 1856/Nationalism era**: only **Quebec → straight to statehood** (no territory step);
+  **Ontario** must be a territory first; **Newfoundland, New Mexico, Utah/Deseret statehood are
+  LOCKED until the Gilded Age (1868)** (POST 787, 916–933). Era gates *which* territories may
+  become states.
+- **Quebec admitted as a STATE mid-war** (POST 1307) with a **special Canadian draft of ~70
+  historical Canadian pols** (Cartier, Galt, McGee, Mackenzie, George Brown, Laurier, Macdonald;
+  region "Canada"; POST 1301, 1321).
+- **Canadian-born pols can run for President once ALL of Canada is in the US** (POST 2009) — a
+  relaxation of the native-born rule (ties to [§24.1](#241-61-succession--eligibility--the-acting-president-state)).
+- **Canada-states electoral penalties (1856-specific):** a candidate unpopular in Canada takes
+  **−3 in Canadian states**; a cabinet with **no Canadian member → −1 for the President in
+  Canada** (POST 3731, 3942, 4154). Reached **9 Canadian states by 1884** (BC = "Vancouver"/"New
+  Albion," vetoed then admitted).
+
+> **Codebase note:** `src/data/expansionStates.ts` already lists all Canadian provinces (region
+> `'Canada'`), so the **roster exists** — but the **era-gated admission rules, the Canadian draft
+> pool, and the Canada election penalties do not.**
+
+*(designed, not built — era-gating on which territories may be admitted (Quebec-statehood-only in
+Nationalism; NL/NM/Utah locked until Gilded); a region-tagged Canadian draft pool; a relaxation of
+native-born eligibility once a region is fully annexed; and Canada-region election penalties (−3
+for a Canada-unpopular candidate, −1 for a no-Canadian cabinet).)*
+
+---
+
+## 24. Other 1856-arc systems revealed by `house-divided` (designed, not built)
+
+> The non-Civil-War systems first surfaced by the **1856-native** thread. Several **extend**
+> existing modern/cross-era sections (succession, the Primary Era, amendment ratification,
+> investigations, the institutional cabinet, the Lingering meter bank) — this section adds the
+> **sharper 1856 detail and the era-keyed boundaries**, not a re-statement. Cite `hd#POST N`.
+> Cross-ref `game-context.md` rows **#61–#69** and design-holes **DH-3..DH-11**.
+
+### 24.1 (#61) Succession / eligibility / the acting-president state
+
+> **Highest-value constitutional gap.** The shipped engine has **no succession logic** beyond
+> the cabinet/leadership it already tracks; two `hd` succession crises expose what is missing.
+
+- **VP-vacancy gap (1883):** Pres **Matthews assassinated** (random Random-Evo; motive =
+  opposing women's suffrage). VP **Morton succeeds** but there is **no mechanism to fill the VP
+  vacancy pre-25th-Amendment** → the seat **stays empty**; party leadership passes to the
+  highest-PV faction leader (POST 4472–4480). Era-aware: the fill mechanism does not exist yet.
+- **Foreign-born ineligibility + the 0-Command acting president (1886):** Pres **Grant AND VP
+  Shufeldt die in the same death batch**. Speaker **Alexander Mackenzie is foreign-born
+  (Scottish) → constitutionally INELIGIBLE**; per **rule 2.4** the **Senate Pro Tempore becomes
+  ACTING President** → **Paris Gibson, with 0 Command**, becomes the 21st President and is
+  **fully inert**: can take **no executive actions**, **cannot compel SCOTUS retirements**, and
+  is **ineligible to be elected** in 1888 (POST 5414–5471, 5581). **Command (often 0) governs
+  what an acting president can do.**
+- **Line of succession is house-ruled by passed legislation** — they made the **Speaker
+  3rd-in-line** (instead of SoS) back in 1864 (POST 5466); later a Progressive-era bill **moved
+  SoS back to 3rd** (POST 7795). → the order is a **configurable, bill-mutable field**.
+- **"Require President to Fill VP Vacancy" Amendment** did not exist (Dems had blocked it);
+  proposed/passed this cycle, **ratifies in 1888, applies only to the NEXT vacancy** (POST 5470,
+  5573). **Foreign-born faction leaders are ineligible for the Presidency** (POST 5448).
+
+*(designed, not built — a **configurable line of succession** (bill-mutable order); **native-born
+vs foreign-born eligibility** gating the presidency (relaxable per [§23.5](#235-60-canada-conquest--era-gated-territorystatehood--canadian-draft)); an
+**acting-president state whose `command` (often 0) gates executive actions / SCOTUS-compel /
+re-election eligibility**; and an era-keyed VP-vacancy fill rule (off pre-amendment, on after).)*
+
+### 24.2 (#62) Contingent House election + tied-chamber inverse control
+
+> **Documented house-rule deviation — fills the shipped gap.** The shipped general always
+> resolves to a winner; there is **no contingent path** when no candidate reaches an EC majority.
+
+The **1888** race went 3-way (Blaine R 197 / Shortridge D 196 / Saltonstall "Conservative" 23;
+**208 needed**) → no EC majority → **contingent election in the House** (`hd` POST 5713):
+
+- **DEVIATES from the 12th Amendment:** the GM uses the **top 2**; a player cited the
+  constitutional **top 3** and the GM **overruled with "Game rules"** (POST 5720–5721). The
+  build **must pick a stated rule** (DH-6).
+- **Each state casts 1 vote** by the **majority party of its House delegation** (tie →
+  **Governor's party**); **29 of 56 needed**. **Shortridge won 35-21** (first elected Democratic
+  President since 1856 in-timeline; first **LW-Populist**). The **Senate elects the VP** by party
+  vote (→ Hancock) (POST 5713–5762).
+- **Tied-House control (edge case):** the 1890 House was **152-152**; control of a tied House
+  goes to **whoever does NOT control the Senate** (inverse tiebreaker). Senate stayed Dem → GOP
+  got the tied House (POST 6229, 6257).
+
+*(designed, not built — a contingent-election path: when no candidate reaches the EC majority,
+run a **one-vote-per-state House election among the top N** (pick a stated N — top-2 house rule
+vs top-3 12th-Amendment, DH-6), delegation-majority with Governor-party tiebreak; Senate elects
+the VP; and the **inverse tied-chamber control rule**.)*
+
+### 24.3 (#63) Primary Era — state-opt-in primaries → Presidential-Primary Groups 1–5
+
+> **Sharpens [§22.3 (modern primary subsystem)](#223-presidential-primary-subsystem-291) and dates
+> its ORIGIN.** The 1856-native arc shows the Primary Era **BEGINS in the Progressive era
+> (≈1892+)** — primaries are not a modern-only fixture; they are an era-gated subsystem that
+> *switches on* mid-campaign. The modern §22.3 loop is corroborated; the new detail is **when it
+> turns on and how a state opts in.** (`hd` POST 6879, 6900–6907; full dumps 8200–8237, 8947–9051.)
+
+- **The calendar is emergent, not fixed.** A **Governor action "Allow/Activate State Primaries"**
+  ([§11.3](#113-governors-actions-library-designed-not-built)) turns a state into a primary state,
+  sets **winner-take-all / plurality / proportional**, and assigns it a **Primary Group 1–5 by
+  random roll** (POST 8103). Once **any** state has primaries, the game **enters the Primary Era**
+  (primaries run **before** the convention). 1896 ≈ 11 primary states → by **1904 ALL states have
+  primaries** (player-pushed via bills + Gov actions; debated 8947–8949 because primaries grant
+  "more actions" + **less party-leader control**).
+- **Delegate bucketing:** the party's designated Gov also **buckets states into 5 delegate
+  Classes/Groups** (POST 8530); larger group → more delegates; delegate math **differs per party
+  per state** (1896 GOP 1090/546, Dems 957/638; 1904 GOP 1211/606, Dems 1119/746).
+- **Groups vote in sequence; Momentum carries between groups but HALVES when large**; per-group
+  **debate** scored numerically (win-by-2 → +Momentum + ideology-meter shift); **1st in Group 1 =
+  +1 enthusiasm + +2 next group**.
+- **Per-group candidate actions** (d6, trait-modified) — the §22.3 menu, with the 1856-native
+  specifics: pick **3 Focus States**; **Presidential Promise** (VP/cabinet/SC seat for a
+  drop+endorse); **Embrace Local Issue** (risks an ideology shift); **Withdraw + endorse** (75%
+  delegates to endorsee) **/ + release** (split **25/25/25/25** similar-ideology / front-runner /
+  party leader / lowest faction) **/ + hold**; **Major Speech** (once per primary); **Campaign
+  Focus**; **Attack Rival**. A **Broke check** each group (d6) knocks out underfunded trailers
+  (POST 9045).
+- **Incumbent block (sharper than §22.3):** an **Iron-Fist + Leadership** incumbent (Blaine) has
+  **90%** to block ALL same-party challengers (**Passive 50%**, else **75%**); if blocked, only
+  **sub-half-enthusiasm** factions (or a **Pacifist** in a major war) may challenge; a
+  **Kingmaker** president → only the **lowest-enthusiasm** faction may. **Rule:** a LW/RW-Pop
+  **cannot endorse a Moderate** unless a Moderate is the only other candidate (POST 8226).
+- **Resign-to-run** (POST 9016): appointees must resign to run (**SC Justices & appointed
+  Senators only 25%**); Congressional officers resign the **post** but keep the **seat**; **20%**
+  a Gov/Sen/Rep resigns the **seat**; **Pres/VP never resign to run**.
+
+*(designed, not built — this is mostly the §22.3 subsystem, era-gated to switch on in the
+**Progressive** era when the first state opts in via a Gov action; add the **per-state primary
+type + Primary-Group 1–5 assignment**, the per-party delegate bucketing, the Momentum-halves-when-
+large carry, the sharper Iron-Fist/Kingmaker incumbent-block ladder, and the resign-to-run table.)*
+
+### 24.4 (#64) Amendment ratification by 3/4 of state Governors — era-keyed, then tunable
+
+> **Reconciles [§21.3 (amendments as durable, separately-ratified state)](#213-amendments-as-durable-separately-ratified-state)
+> across a third era and confirms the "ratifier + threshold is an era-keyed, in-game-changeable
+> field" reading.** (`hd` POST 503, 518, 1721–1722, 2974.)
+
+- **1856/Nationalism rule:** an amendment needs **2/3 of BOTH chambers**, then **3/4 of state
+  GOVERNORS** to ratify — i.e. **ratifier = Governors; threshold = 3/4 of states** (National
+  Suffrage **failed** ratification 24-9, needed 25/33). This **matches modern's
+  ratifier=Governors** (§21.3 step 3) at a **3/4** threshold rather than modern's fixed 40/53.
+- **Made a TUNABLE game mechanic mid-campaign:** a later amendment changed the **threshold to
+  2/3**, accompanied by a posted **Ratification-Options table** (POST 1721–1722):
+
+  | Option | Side effect |
+  |---|---|
+  | **2/3 of states** | +Moderates |
+  | **3/4 of states** | (the prior baseline) |
+  | **50%+1** | +Progressives / +LW-Activists, −Traditionalists / −RW-Activists |
+  | **Unanimous** | +Traditionalists / +RW-Activists, −Progressives / −LW-Activists |
+  | **Popular Vote** | +Progressives / +Reformers |
+
+  By the **Gilded Age the default is 2/3 of states** (the 1865 14th-equiv set it, POST 2974).
+- **SCOTUS ↔ legislation coupling enforces amendment necessity** (extends [§22.7](#227-scotus-subsystem-253--282) /
+  gap #52): income tax ruled a direct tax by **Pollock v. Farmers' Loan 5-4** in the SCOTUS phase
+  → **blocks any income-tax bill until a Constitutional Amendment passes** (POST 7250, 7252,
+  7273); the Income Tax Amendment needs ⅔, failed repeatedly, **ratified by 1904** (POST 8979). A
+  SCOTUS ruling that **changes what legislation is legal**.
+
+*(designed, not built — make the amendment **ratifier + threshold an era-keyed field** (Gov vote;
+3/4 in Nationalism, 2/3 from Gilded), itself **changeable by a passed amendment** carrying a
+faction-enthusiasm side effect from the Ratification-Options table; and a SCOTUS-ruling effect
+that gates a bill category until an amendment passes. Extends gap #39.)*
+
+### 24.5 (#65) Investigations — the authored "3.0.40" 5d6 special-committee spec
+
+> **Fills the under-designed [§22.8 investigation special committees](#228-investigation-special-committees-under-designed)
+> with a concrete rule.** §22.8 noted the modern thread left investigations **rules-blank**; the
+> 1856-native thread **authored the spec** (and shows the early stopgap). (`hd` POST 202, 2585,
+> 2591, 2651.)
+
+- **Early stopgap (1856):** with no rules, the GM **borrowed Court-Martial rules** — **d6**: 1-2
+  removed from game / 3-4 removed from office / 5-6 absolved (Bonham, the Sumner-caner, rolled 4 →
+  removed from House) (POST 202).
+- **Authored rule "3.0.40 Congressional Special Committee Rules" (Gilded):** the **Speaker forms
+  a committee** (Chair + Ranking + 3 members); **roll 5d6** + modifiers:
+
+  | Modifier | Δ |
+  |---|---|
+  | Target has **Leadership** | **−2** |
+  | **No** committee member shares the target's faction | **+1** |
+  | Target's ideology is **>1 slot from all same-party members** | **+3** |
+  | Target is **Controversial** | **+4** |
+
+  **Total 21–25 ⇒ guilty** (resign, **barred from cabinet**). On guilt: same-party **5%
+  Integrity**; opp-party **10% Leadership / 5% Integrity**; **10% +1 Honest-Gov** (POST 2585, 2591,
+  2651). (Worked case: AG Begole / the Trader-Post Scandal.)
+
+*(designed, not built — implement 2.6.1's investigation-bill → a Speaker-formed Chair+Ranking+3
+committee → **5d6 + the four modifiers**, **21–25 = guilty** (resign + cabinet ban), with the
+post-verdict trait/meter rolls. This is the concrete spec gap #54 was missing.)*
+
+### 24.6 (#66) The Progressive-era institutional layer (offices created in-game by law)
+
+> **Sharpens [§9.3.1 (expanded cabinet roster)](#931-expanded-cabinet-roster) and [§9.3.6](#936-modern-cabinet-detail-sharpens-931-933-designed-not-built)
+> from the 1856-native side — and adds the key new idea: offices are CREATED in-game by
+> legislation / executive action**, and creating one office can **deactivate** another. (`hd` POST
+> 6963, 7160, 7348, 7800–7804, 8175, 8845.)
+
+- **Federal Reserve + Fed Reserve Chair**: 6-yr term; **Economics/Trade/Business + Admin ≥ 3 +
+  age ≥ 35**; declines 90% if previously held office. **Creating the Fed DEACTIVATES the
+  Independent Treasury** (an office-creation that retires a prior institution).
+- **Chief of Staff** (+1 exec action) and **Chief of Naval Operations** (replaces "Senior
+  Admiral," 4-yr term) — **each grants the President an extra Command point** (Blaine 5 → 6),
+  feeding executive-action and SCOTUS-compel counts.
+- **FBI** created by bill (SR.6) → **FBI Director** (10-yr term, **Justice + Admin ≥ 3**, declines
+  90% if ever held elected office, **doesn't count vs the 5-retention cap**, Senate-confirmed).
+- **Commerce AND Labor split into two departments** (POST 7160). Other artifacts: National
+  Monetary Commission, Border Patrol, FDA, National Commission for Conservation, Guam Territory.
+- **Cabinet reaches ~21 posts** (Pres, VP, Key Advisor, State, Treasury, War, AG, Interior, PMG,
+  Agriculture, Commerce, Labor, Navy, FBI, Fed Chair + 7 Ambassadors). **PMG must be same-party +
+  have the Kingmaker trait.** (Corroborates & extends gaps #25/#31/#49.)
+
+*(designed, not built — model offices as **data created/destroyed by bills + exec actions** (not a
+fixed `cabinetSeatsForYear`): the Fed Chair / Chief of Staff / CNO / FBI Director with their
+distinct terms, skill+age gates, decline odds, Command grants, and the **create-Fed-deactivates-
+Independent-Treasury** coupling; the Commerce/Labor split; and the same-party+Kingmaker PMG rule.)*
+
+### 24.7 (#67) Lingering — the ~16-meter homeostasis engine (era-gated foreign meters)
+
+> **Extends [§22.1 (the named meter bank)](#221-the-named-meter-bank--numeric-debt--crisiscascade)
+> with the 1856-native confirmation and the era-gating detail.** §22.1's bank is corroborated
+> meter-for-meter; the **new** facts are that the **foreign-relation tracks are added as nations
+> become relevant** (so the set is ~16 but **era-gated**), an **inactive "Israel" placeholder**
+> exists even in 1900, and **Planet's Health is live in a 19th-century scenario**. (`hd` POST 6431,
+> 6863, 7216, 8503, 8896, 8897.)
+
+- **Meter set (~16):** Revenue-Budget, Economic-Stability, **8 foreign-relation tracks**
+  (UK/France/Spain/Germany/Russia/China/Japan + **"Israel" — present but INACTIVE/0**; the
+  resolver literally prints **"Skipping Israel — inactive"**), Military-Prep, Domestic-Stability,
+  Honest-Government, Quality-of-Life, **Planet's-Health**, Party-Preference, + **7 per-ideology
+  enthusiasm tracks** (±3, named bands). **Foreign meters are era-gated** (added as nations become
+  relevant; **Israel's activation rule is unknown** — open question). **Planet's Health was
+  activated in 1890** by the "Conservation Movement Begins" Era-Evo (set 7 = Stable) — active in
+  this 19th-century game.
+- **2.5.1 Lingering = a deterministic ~9-part resolution** (confirms the shipped layering at
+  [§11.1](#111-251-lingering-meters--runphase_2_5_1_lingering-phaserunnersts3260) and the §22.1
+  dynamics): top/bottom-2 econ; **maxed-meter caps (Mil-Prep & Planet-Health hard-capped at 8)**;
+  lingering bill/action effects; **middle-of-meter drift (revision-to-mean −1)**; volatility rolls
+  for tax/tariff bills; income/tariff decay (bills expire at 10 yrs; **tariff rate locked 8 yrs**
+  after a change); **administrative modifications** (each cabinet officer rolls ± its department's
+  meter); ongoing wars; corruption.
+- **Policy-gated caps (sharper than §22.1):** **QoL can't exceed 7 without national Healthcare**
+  ("No Healthcare, so still capped at 7"); **Honest-Gov 8 → all Controversial candidates −1 next
+  election**; **Honest-Gov 9 → forbids Gerrymander & political machines**.
+- The output reads **engine-automated** ("net change," "Capping meters to avoid overflow") yet the
+  GM calls it **hand-computed** (POST 8897) — a spreadsheet macro, not a true engine.
+
+> **Codebase note:** shipped `NationalMeters` has only the **7 base** numeric meters incl.
+> `planet` (`types.ts:1399`) — **no per-power relations, no per-ideology enthusiasm tracks, no
+> Israel placeholder.** Strongly extends gap #50.
+
+*(designed, not built — extend the §22.1 bank with **era-gated foreign-relation tracks** (added as
+nations become relevant; an **inactive-placeholder** state for not-yet-active powers like Israel);
+keep Planet's Health era-activatable (Conservation Era-Evo); and the policy-gated caps (QoL≤7
+without Healthcare; Honest-Gov 8/9 effects).)*
+
+### 24.8 (#69) Draft rookie grants re-ruled — "3 traits + 3 alt-states"
+
+> **Sharpens [§4 (Draft)](#4-draft-211) / the modern two-home-state rule
+> ([§22.10](#2210-53-state-alt-roster--modern-apportionment)).** A **mid-campaign re-rule** of
+> what a drafted rookie receives. (`hd` POST 2155.)
+
+At the **1868 draft** ("Ted's revisions") the per-rookie grant changed to **3 traits + 3 alt-state
+adds**, **down from an earlier 5 traits / 5 alt-states**. This is the 1856-native value for the
+two-home-state mechanic §22.10 already documents (one alt-state add → now up to **3**). **Whether
+3/3 is the canonical going-forward rule is an open question** (`game-context.md` `hd`/#69, DH-list).
+
+*(designed, not built — make the draft rookie grant a tunable `{traits, altStates}` pair; the
+current best value is **3/3** (down from 5/5), pending a canonical decision.)*
