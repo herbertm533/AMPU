@@ -2,7 +2,9 @@
 
 > **Ingest mode, by era.** One section per era the knowledge base touches:
 > **Founding/Revolution (1772–1788)**, **Federalist era (1788–1800)**,
-> **Antebellum (c. 1856)**, **Gilded Age (1868–1892)**, and the **modern arc the
+> **Jeffersonian Republic / Era of Good Feelings (1800–1828)**, **Jacksonian /
+> Second Party System (1828–1856)**, **Antebellum (c. 1856)**, **Gilded Age
+> (1868–1892)**, and the **modern arc the
 > 1948 campaign traverses** — **Progressive/WWI/1920s (1896–1932)**, **New
 > Deal/WWII/postwar (1932–1965)**, **Civil Rights/Vietnam (1965–1980)**,
 > **Reagan/end-of-Cold-War (1980–1992)**, **post-Cold-War 1990s (1992–2000)**,
@@ -39,7 +41,9 @@ will hold their 2008 convention," chunk-001 post 14):
 |---|---|---|---|---|
 | 1772 Founding | "Patriots (Anti-Federalist)" | "Federalists" | BLUE (Patriots) | **Anachronistic labels** — neither party existed in 1772; see Founding §terminology |
 | 1788 Federalist | Democratic-Republicans (Jefferson) | Federalists (Hamilton) | BLUE (Dem-Reps) | The *fed* digest assigns BLUE=Dem-Rep, RED=Federalist (digest post 2) |
-| 1856 Antebellum | **Democratic Party** | **Republican Party** | **RED (Republicans)** | **POLARITY FLIP**: here the antislavery/progressive pole is RED, the conservative/pro-slavery pole is BLUE (`scenario1856.ts:18-31` enthusiasm table) — confirmed in play, "Blue = Democrats, Red = Republicans… 1856-era Republicans are the antislavery party" (*house-divided* partial-03) |
+| **1800–1828 Jeffersonian** | **Democratic-Republicans ("Republicans"/Jeffersonians)** | **Federalists (dying; gone nationally by ~1820)** | **BLUE (Dem-Reps)** | **Same polarity as 1788.** The 1800-playtest names it explicitly: "the 'Blue Party' or Democratic-Republicans… the 'Red Party' or Federalists" (6aa7309a chunk-001 post 1). Note "Republican" here = **Jeffersonian Dem-Rep**, NOT the modern GOP and NOT the 1856 antislavery party. The game's "**Era of Republicanism**" label = this Dem-Rep dominance. |
+| **1828–1856 Jacksonian / 2nd Party System** | **Democrats (Jackson; the modern Democratic Party is born here)** | **National Republicans → Whigs (Clay; anti-Jackson)** | **Split / cross-cutting** (Jacksonians = the *popular/common-man* pole; Whigs = the *commercial/improvement* pole) | The real parties realign. **The game keeps the OLD 1788 labels far too long** — Daniel Webster is "leader of the **Federalists**" as late as 1840 in-game (chunk-074 post 6204) — so its BLUE=Dem-Rep / RED=Federalist tokens persist where real history had already become **Democrat vs. Whig** by ~1834. The game's internal era names for this span are "**Era of Manifest Destiny (1840-1856)**" (chunk-074 post 6203) preceded by the late Era of Republicanism. |
+| 1856 Antebellum | **Democratic Party** | **Republican Party** | **RED (Republicans)** | **POLARITY FLIP**: here the antislavery/progressive pole is RED, the conservative/pro-slavery pole is BLUE (`scenario1856.ts:18-31` enthusiasm table) — confirmed in play, "Blue = Democrats, Red = Republicans… 1856-era Republicans are the antislavery party" (*house-divided* partial-03). The game calls this the "**Era of Nationalism**" (6aa7309a chunk-117: "the final turn of the Era of Nationalism"). |
 | 1868 Gilded Age | Democrats ("Solid South") | National Republicans | RED (Republicans) | Continues the 1856 polarity (Republicans = the Union/Reconstruction party); the *house-divided* Part-2 thread plays straight from 1856 into 1868 with this polarity intact; *gilded* digest post 298 |
 | 1896–1932 Progressive/1920s | Democrats (Bryan→Wilson; Solid South + agrarian) | Republicans (dominant, pro-business; also TR/insurgent progressives) | **Split / in flux** | **The hinge.** Progressivism lived in *both* parties; the modern left/right party mapping does **not** apply cleanly yet. See §5 terminology. |
 | 1932–1965 New Deal/postwar | **Democrats (New Deal coalition)** | Republicans | **BLUE (Democrats)** — *for economics* | **THE REALIGNMENT BEGINS.** "Liberal" acquires its modern Democratic, pro-government meaning here (1932). **But race is cross-cutting:** the Solid South is still *Democratic*, so the party's left/right identity is not yet uniform. |
@@ -54,6 +58,17 @@ range: a *position* in 1787-88 (pro-Constitution), then *Hamilton's party*
 Anti-Federalist/Jeffersonian left-of-center to the antebellum Southern
 Democratic right. Treat every era's party framing as independent.
 
+**[consensus]** The label "**Republican**" is the single worst terminology trap
+in the whole timeline: in **1788–1828** it means **Jefferson's Democratic-
+Republican Party** (the ancestor of today's *Democrats*); the **modern
+Democratic Party** splits off and takes the bare name "**Democrats**" under
+**Jackson (~1828)**; and the name "**Republican**" is then *reused for an
+entirely unrelated, opposite party* — the **antislavery GOP founded in 1854**
+(§3). Three different "Republicans"/"Democrats" across three eras. See §2.5/§2.6
+terminology. The game compounds this by keeping the *Federalist* label alive
+into the 1840s (see polarity-map note), so always anchor to the **year**, never
+the bare party word.
+
 **[consensus]** The two **biggest** polarity events in the whole timeline are
 the **New Deal realignment (1932)** — which redefines "liberal" and makes the
 *economic* left Democratic — and the **Civil Rights / Southern realignment
@@ -61,7 +76,10 @@ the **New Deal realignment (1932)** — which redefines "liberal" and makes the
 lines the *South* up with the national party polarity. Only *after* both, by
 roughly **2000**, do BLUE=Democrat=left / RED=Republican=right mean what they
 mean in everyday modern usage. The 1856/1868 polarity is the **reverse** of
-this; the 1896–1932 era is the muddled hinge in between.
+this; the 1896–1932 era is the muddled hinge in between. The **1828 Jacksonian
+realignment** (§2.6) is a third, earlier hinge: it ends the First Party System
+and *creates the Democratic Party*, but does **not** produce the modern
+left/right meaning of the labels.
 
 ---
 
@@ -303,6 +321,456 @@ era," post 136) — strong support for an era-specific drafting profile (gap-log
 
 ---
 
+## 2.5 Jeffersonian Republic / Era of Good Feelings (1800–1828) — game era: "Era of Republicanism"
+
+### Era window
+**1800/01** (Jefferson's "Revolution of 1800") → **1824/28** (the disputed
+1824 election → Jackson's 1828 win, which ends one-party rule). The
+**6aa7309a "1800 Playtest: Era of Republicanism (1800-1868)"** thread *opens*
+here and plays it continuously forward; this thread is the **early half of the
+same campaign** whose later half (1868+, the Gilded Age) was ingested in batch 1
+(`f4c7c2c4` *gilded* digest). The game's internal era label for this span is
+"**Era of Republicanism**" (chunk-001 post 1; chunk-002 post: "Era of
+Republicanism in more ways than one"). No engine `nationalism`/`federalism`
+boundary is documented for it in shipped code; it is a host-run era. **No shipped
+scenario.**
+
+### Binding facts (ground truth)
+- **"Republican" in this era = Jefferson's Democratic-Republican Party — the
+  ancestor of today's *Democrats*, NOT the modern GOP and NOT the 1854
+  antislavery Republicans.** **[consensus]** This is the single most important
+  terminology pin for the section. The 1800-playtest names it directly: "the
+  'Blue Party' or Democratic-Republicans… the 'Red Party' or Federalists"
+  (chunk-001 post 1). ([First Party System](https://en.wikipedia.org/wiki/First_Party_System))
+- **The "Revolution of 1800" was the first peaceful transfer of power between
+  rival parties — and it nearly broke.** **[consensus]** Jefferson and his
+  running mate Aaron Burr **tied at 73 electoral votes each** (Adams 65,
+  C.C. Pinckney 64) because electors could not yet distinguish president from
+  vice-president. The tie threw the election to the lame-duck Federalist House,
+  which deadlocked for **36 ballots** before electing **Jefferson on Feb 17,
+  1801, by a 10-state-to-4 delegation vote** (with Hamilton quietly steering
+  Federalists away from Burr). ([Constitution Center](https://constitutioncenter.org/blog/on-this-day-a-true-constitutional-crisis-ends-in-the-washington), [Britannica — 1800 election](https://www.britannica.com/event/United-States-presidential-election-of-1800), [Monticello](https://www.monticello.org/research-education/thomas-jefferson-encyclopedia/election-1800/)) *(The 73/73/65/64 split and the 36-ballot/10-4 outcome appear across National Archives, Britannica, and Monticello; treat as consensus.)*
+- **The 12th Amendment (ratified 1804) fixed the flaw** by having electors cast
+  *separate* ballots for president and vice-president — in force for the 1804
+  election onward. **[consensus]** ([Constitution Center](https://constitutioncenter.org/blog/on-this-day-a-true-constitutional-crisis-ends-in-the-washington))
+- **The Louisiana Purchase (1803) doubled the country and forced Jefferson to
+  swallow his own strict-construction principles.** **[consensus]** Treaty signed
+  **April 30, 1803** (~$15 million for ~827,000 sq. mi.); Senate ratified
+  **24-7 on Oct 20, 1803**. Jefferson privately believed the Constitution gave no
+  power to acquire/incorporate foreign territory and drafted an amendment, then
+  dropped it for speed ("the less that is said about any constitutional
+  difficulty, the better"). ([State Dept Office of the Historian](https://history.state.gov/milestones/1801-1829/louisiana-purchase), [National Archives — Prologue](https://www.archives.gov/publications/prologue/2003/spring/louisiana-purchase.html), [Senate — ratification](https://www.senate.gov/about/powers-procedures/treaties/senate-approves-louisiana-purchase-treaty.htm))
+- **The Embargo Act (1807) and War of 1812 were Republican policies opposed by
+  the Federalists** — the reverse of the modern war/trade alignment. **[consensus]**
+  Jefferson's 1807 embargo (a response to British/French seizures of US shipping)
+  devastated New England trade; the **War of 1812** (declared June 1812 under
+  Madison) was a Republican "war hawk" project that New England Federalists
+  bitterly opposed. The 1800-playtest frames exactly this: "the 'Blue Party'
+  favors an aggressive response to Britain, going so far as to seek an embargo or
+  war, [while] the 'Red Party' wishes to do nothing that could disrupt trade"
+  (chunk-001 post 1; in-game "Welcome to 1812-1814," chunk-025). ([Era of Good Feelings](https://en.wikipedia.org/wiki/Era_of_Good_Feelings))
+- **The Federalist Party collapsed as a national force after the Hartford
+  Convention (1814-15); the "Era of Good Feelings" was effective one-party
+  Democratic-Republican rule.** **[consensus]** Monroe won 1816 over Federalist
+  Rufus King and ran essentially unopposed in 1820. By the end of Monroe's
+  presidency the Democratic-Republicans held ~90% of Congress (Senate 44-4, House
+  189-24). ([Era of Good Feelings](https://en.wikipedia.org/wiki/Era_of_Good_Feelings), [ushistory.org](https://www.ushistory.org/us/23a.asp))
+- **The Missouri Compromise (1820) was the era's great sectional rupture and a
+  preview of everything to come.** **[consensus]** It admitted **Missouri as a
+  slave state** and **Maine as a free state** (preserving the 11-11 balance) and
+  banned slavery in the Louisiana Territory **north of 36°30′**. The Tallmadge
+  Amendment (Feb 1819) to restrict slavery in Missouri passed the House on
+  Northern votes but died in the Senate. Congress passed it March 3, Monroe
+  signed it **March 6, 1820**. Jefferson called the crisis "a fire bell in the
+  night." ([National Archives — Missouri Compromise](https://www.archives.gov/milestone-documents/missouri-compromise), [Battlefield Trust](https://www.battlefields.org/learn/articles/missouri-compromise))
+- **The 1824 election shattered the one-party system into personal factions.**
+  **[consensus]** Four Democratic-Republicans ran (Jackson, J.Q. Adams, Crawford,
+  Clay); **Jackson won the popular vote and the most electoral votes but not a
+  majority**, so the House chose **John Quincy Adams** — the "**Corrupt
+  Bargain**" (Clay backed Adams, then became Secretary of State). This is the
+  proximate trigger for the Democrat/Whig split. ([Era of Good Feelings](https://en.wikipedia.org/wiki/Era_of_Good_Feelings))
+
+### Key figures
+- **Thomas Jefferson** (Dem-Rep) — president 1801-09; Louisiana Purchase, the
+  embargo, the *Marbury v. Madison* (1803) confrontation with the courts. The
+  1800-playtest seats him as the **Blue 5 (Con/Trad/RW Pop)** faction leader at
+  game start (chunk-001 post 1) — *note:* placing the era's dominant figure at
+  the **right** pole reflects his strict-construction/states'-rights identity,
+  the game's standing forward-projection (cf. §1). **[consensus on his real role]**
+- **James Madison** (Dem-Rep) — president 1809-17; the War of 1812. Game start:
+  "Sec of State James Madison" heads **Blue 3 (Moderates)** (chunk-001 post 1). **[consensus]**
+- **James Monroe** (Dem-Rep) — president 1817-25; the "Era of Good Feelings," the
+  Missouri Compromise, the Monroe Doctrine (1823). Game start: "Gov James Monroe"
+  in Blue 3 (chunk-001 post 1). **[consensus]**
+- **Aaron Burr** (Dem-Rep) — Jefferson's VP via the 1800 tie; later killed
+  Hamilton in an 1804 duel and was tried for treason (1807). Game start: "VP
+  Aaron Burr" heads **Blue 1 (LW Pop/Prog/Lib/Mod)** (chunk-001 post 1). **[consensus]**
+- **Albert Gallatin** (Dem-Rep) — Jefferson/Madison Treasury Secretary; the
+  Republican answer to Hamilton on finance. Game start: in **Blue 2** (chunk-001). **[consensus]**
+- **John Quincy Adams** — son of John Adams; here a *Federalist-turned-Republican*
+  diplomat (Treaty of Ghent, the Monroe Doctrine) who wins the contested 1824
+  election and becomes a National Republican. Game start: heads **Red 2
+  (Moderates)** (chunk-001 post 1). **[consensus]**
+- **Alexander Hamilton** — leader of the dying Federalists until his 1804 death;
+  the game keeps him alive as **Red 4 (Conservatives)** leader at the 1800 start
+  (chunk-001 post 1), an acceptable game-start convenience. **[consensus on real death 1804]**
+- **John Marshall** — Federalist Chief Justice (1801-35); *Marbury v. Madison*
+  (1803) established judicial review; *McCulloch v. Maryland* (1819) upheld the
+  national bank and "implied powers." Game start: heads **Red 5 (Conservatives)**
+  (chunk-001 post 1). **[consensus]**
+- **Andrew Jackson** — in **1800 a minor figure**; the game correctly seats him
+  *small*, as a member of **Blue 4 (Conservatives)** at the 1800 start (chunk-001
+  post 1), a generation before he leads the next era. **[consensus]**
+- **Henry Clay** — Speaker/"War Hawk," author of the "American System" and the
+  Missouri Compromise; the "Corrupt Bargain" maker of 1824. In the game he rises
+  across the era to become its top politician by ~1840 ("Rep Henry Clay 305…
+  continues to lead his faction," chunk-074 post 6204). **[consensus]**
+
+### Timeline of relevant events
+- **1801** — House resolves the 1800 tie (Feb 17, 36th ballot); Jefferson
+  inaugurated; *Marbury v. Madison* litigation begins. **[consensus]**
+- **1803** — Louisiana Purchase (treaty Apr 30; ratified Oct 20); *Marbury v.
+  Madison* decided (judicial review). **[consensus]**
+- **1804** — 12th Amendment ratified; Jefferson re-elected in a landslide;
+  Burr-Hamilton duel. **[consensus]**
+- **1807** — Embargo Act; Chesapeake-Leopard affair. **[consensus]**
+- **1812-15** — War of 1812 (declared June 1812; Treaty of Ghent Dec 1814; Battle
+  of New Orleans Jan 1815). **[consensus]**
+- **1814-15** — Hartford Convention; Federalist Party's terminal decline. **[consensus]**
+- **1816** — Monroe elected; Second Bank of the United States chartered. **[consensus]**
+- **1819** — *McCulloch v. Maryland*; Panic of 1819; Adams-Onís Treaty (Florida);
+  Tallmadge Amendment fight begins. **[consensus]**
+- **1820** — Missouri Compromise (signed Mar 6); Monroe re-elected ~unopposed. **[consensus]**
+- **1823** — Monroe Doctrine. **[consensus]**
+- **1824** — Four-way Dem-Rep election; no majority → House chooses J.Q. Adams. **[consensus]**
+- **1825** — "Corrupt Bargain" charge; Clay made Secretary of State. **[consensus]**
+
+### Era-appropriate factions / ideologies / interests
+The story of the era is **one party fragmenting into personal factions**.
+**Democratic-Republicans** (BLUE) dominate throughout — but split between
+**Old Republicans / "Quids"** (strict-construction purists, e.g. John Randolph,
+Nathaniel Macon — note the game seats "Speaker Nathaniel Macon" in Blue 5,
+chunk-001) and **National Republicans / nationalists** (Clay's "American System":
+tariff, national bank, internal improvements — the wing that becomes the Whigs).
+**Federalists** (RED) shrink to a New England rump and vanish nationally after
+1815. Live interests: **Western farmers/settlers** (cheap land, expansion),
+**Southern planters** (slavery, low tariff), **Northern merchants/manufacturers**
+(tariff protection after 1816), and the new **sectional fault line over slavery
+in the territories** (Missouri). **[consensus]**
+
+### Period-specific terminology
+- **THE TERMINOLOGY PIN.** In **1800-1828, "Republican" = Jefferson's
+  Democratic-Republican Party = the BLUE party = the ancestor of the modern
+  *Democrats***. It is **not** the modern GOP and **not** the 1854 antislavery
+  Republicans. The game's era name "**Era of Republicanism**" refers to *this*
+  Dem-Rep dominance. **[consensus]**
+- **Use:** Democratic-Republican / "Republican" / Jeffersonian; Federalist
+  (dying); "Old Republican" / "Quid" (strict-construction wing); National
+  Republican (Clay/Adams nationalist wing, emerging ~1824); the "American
+  System"; strict vs. loose construction; the "Era of Good Feelings";
+  "war hawk"; "Corrupt Bargain" (1824).
+- **Avoid:** "Democrat" as a *party* name before ~1828 (the Democratic Party
+  proper is born under Jackson — see §2.6); "Whig" before ~1834; modern
+  "liberal/conservative" (the live axes are agrarian/commercial and
+  strict/loose construction, not the modern left/right). **Never** read the
+  era's "Republican" as the GOP.
+
+### Common pop-history simplifications and what they get wrong
+- **"Jefferson's Republicans are today's Republicans."** **[consensus]** False —
+  opposite lineage; they become the *Democrats*. The modern GOP (§3) is the
+  *anti*-Jacksonian, antislavery party founded 30 years later in 1854.
+- **"The Era of Good Feelings was a time of real consensus and no conflict."**
+  **[consensus]** Misleading — it had no second *party*, but it was riven by the
+  **Panic of 1819**, the **Missouri crisis (1820)**, and intense *personal*
+  rivalries that exploded in 1824. One-party did not mean harmonious.
+- **"Jefferson the strict-constructionist would never have stretched the
+  Constitution."** **[consensus]** He did — the Louisiana Purchase (1803) was a
+  loose-construction act he undertook against his own stated principles, dropping
+  a planned constitutional amendment for expediency. ([Office of the Historian](https://history.state.gov/milestones/1801-1829/louisiana-purchase))
+- **"Andrew Jackson dominated this whole period."** **[consensus]** No — in 1800
+  he was a minor figure; his national rise begins with the 1824/1828 elections.
+  The 1800-playtest correctly starts him small (Blue 4 member, chunk-001).
+
+### Game treatment vs. real history (divergence notes)
+- **Period-correct party framing at the START.** The 1800-playtest opens with
+  exactly the right First-Party-System polarity: **"the 'Blue Party' or
+  Democratic-Republicans… the 'Red Party' or Federalists,"** with the Blue party
+  "champion[ing] the expanded rights of the common American over those of the
+  Eastern establishment" and the Red party tied to "Northern banks and foreign
+  trade" (chunk-001 post 1). This is faithful — and it preserves the **§2
+  polarity (BLUE = Dem-Rep = the left-of-center/agrarian-democratic pole)**, the
+  *same* mapping as the Federalist era, **not** the 1856 flip.
+- **The starting faction roster is well-cast** to the real Jeffersonian board:
+  Jefferson, Burr, Gallatin, Madison, Monroe, Macon, A. Jackson (BLUE);
+  Rufus King, J.Q. Adams, Hamilton, John Marshall, Gouverneur Morris (RED)
+  (chunk-001 post 1) — all genuine 1800-era figures in roughly correct
+  party/wing positions.
+- **THE BIG DIVERGENCE — the game keeps the dead "Federalist" label alive far
+  too long, and it becomes an alt-history.** In real history the **Federalist
+  Party was gone nationally by ~1820** and the **Whig Party formed ~1834**
+  (§2.6). The game instead keeps **RED = "Federalists"** running for *decades*
+  past their real death: by 1840 in-game, "Daniel Webster [is] Current leader of
+  the **Federalists**" (chunk-074 post 6204) and players are still asking "Are we
+  Whigs yet?" / "Maybe we'll finally get the Whig party lol" (chunk-088 post 929;
+  chunk-073 post 457). So the game runs the **First-Party-System labels straight
+  through the period that was historically the Second Party System** — a
+  deliberate label-persistence, but a real divergence the game-master should
+  flag. Real anchor: Federalists dead ~1815-20; Democrats 1828; Whigs ~1834.
+- **Alt-history personnel accumulate fast.** By the late era the game's
+  presidents are fictional/alt (e.g. "Pres Wood," "Pres Wilson" who *resigns*,
+  "Pres Cahoon," "Pres Randolph Jr.," then "President Martin Van Buren" elected
+  ~1838-40; chunk-074 post 6204) and a "Sec of the Treasury Edward Livingston…
+  finally achieved the successful purchase of the Louisiana territory from
+  France" — i.e. the **Louisiana Purchase happens via a player action on a
+  divergent schedule**, not Jefferson's 1803 treaty. Game-master framing: use the
+  real Jeffersonian chronology/figures for *texture*, but treat named
+  officeholders and the *timing* of set-piece events (Louisiana, war) as the
+  campaign's own timeline.
+- **The game models the era's real issue axis well** even as outcomes diverge:
+  the embargo/war-vs-trade split (chunk-001), the tariff and the seeds of
+  nullification (carried into the next era), and Western expansion all appear as
+  live in-game issues. The **Era of Good Feelings** is even invoked by name as
+  flavor ("Era of good feelings moment," chunk-017).
+
+---
+
+## 2.6 Jacksonian democracy / Second Party System (1828–1856) — game eras: "Era of Manifest Destiny" (1840–1856) and late "Era of Republicanism"
+
+### Era window
+**1828** (Jackson's election; birth of the Democratic Party) → **1854/56**
+(Kansas-Nebraska Act → Whig collapse → Republican founding, which opens §3). The
+6aa7309a 1800-playtest plays this whole span continuously (in-game markers
+"Welcome to 1828-1830," chunk-055; "Welcome to the **Era of Manifest Destiny
+(1840-1856)**," chunk-074; through "Welcome to 1850-1852," chunk-092, into the
+1856 Era of Nationalism). The game's internal era names here are the late "Era of
+Republicanism," then "**Era of Manifest Destiny (1840-1856)**" (explicitly
+bounded, chunk-074 post 6203; chunk-086), and the engine references a
+"**Jacksonian**" era in its secession logic (chunk-082). **No shipped scenario.**
+
+### Binding facts (ground truth)
+- **The modern Democratic Party is born here (~1828), and the Whig Party forms
+  to oppose it (~1833-34) — this is the Second Party System.** **[consensus]**
+  The **Democratic Party** (the oldest continuous US party) coalesced in **1828**
+  around Andrew Jackson, organized by **Martin Van Buren** out of state machines.
+  The **Whig Party** formed **~1833-34** from National Republicans, Anti-Masons,
+  and anti-Jackson men; the name cast Jackson as "**King Andrew**" (English Whigs
+  = the anti-monarchy party). Historians date the system **~1828-1854**.
+  ([Second Party System](https://en.wikipedia.org/wiki/Second_Party_System), [Whig Party](https://en.wikipedia.org/wiki/Whig_Party_(United_States)), [History of the Democratic Party](https://en.wikipedia.org/wiki/History_of_the_Democratic_Party_(United_States)))
+- **The Jackson/Whig divide was NOT the modern left/right divide.** **[consensus]**
+  **Democrats** = Jackson's coalition of the "common man," Western farmers,
+  Southern planters, urban workers; pro-territorial-expansion, anti-national-bank,
+  states'-rights-leaning, low-tariff, limited federal economic role. **Whigs** =
+  Clay/Webster's coalition of commercial and manufacturing interests, the
+  "American System" (national bank, protective tariff, federally funded internal
+  improvements), evangelical reform, and *skepticism* of rapid expansion. So the
+  **pro-government-economic-activism** pole was the **Whigs**, not the Democrats —
+  the reverse of the post-1932 alignment. ([Second Party System](https://en.wikipedia.org/wiki/Second_Party_System), [Whig Party — HISTORY](https://www.history.com/articles/whig-party))
+- **The Nullification Crisis (1832-33) pitted South Carolina's states'-rights
+  doctrine against Jackson's Unionism — and previewed secession.** **[consensus]**
+  Reacting to the **Tariff of 1828 ("Tariff of Abominations")**, VP **John C.
+  Calhoun** anonymously wrote the *South Carolina Exposition and Protest* (1828)
+  arguing a state could **nullify** federal law; SC's convention nullified the
+  tariffs **Nov 24, 1832**. Jackson called it treason; Congress passed the
+  **Force Bill** authorizing military enforcement, paired with **Henry Clay's
+  Compromise Tariff of 1833** (gradual reduction to 1842). SC repealed its
+  ordinance. ([Nullification crisis](https://en.wikipedia.org/wiki/Nullification_crisis), [Battlefield Trust](https://www.battlefields.org/learn/articles/nullification-crisis), [House History — Tariff of Abominations](https://history.house.gov/Historical-Highlights/1800-1850/The-Tariff-of-Abominations/))
+- **The Bank War (1832-36) was Jackson's defining domestic fight.** **[consensus]**
+  Jackson **vetoed the re-charter of the Second Bank of the United States on July
+  10, 1832** (a class-framed veto: "the planters, the farmers, the mechanic and
+  the laborer" vs. "the monied interest"), won re-election, then removed federal
+  deposits to state "**pet banks**." The **Specie Circular (1836)** (gold/silver
+  only for federal land) plus the credit contraction helped trigger the **Panic
+  of 1837** and a depression lasting to ~1843. ([Bank War](https://en.wikipedia.org/wiki/Bank_War), [LoC — Bank veto](https://guides.loc.gov/this-month-in-business-history/july/renewal-second-bank-united-states-vetoed), [Hermitage](https://thehermitage.com/andrew-jackson-the-bank-war))
+- **"Manifest Destiny" was a Democratic, partisan, and CONTESTED idea — not a
+  national consensus.** **[consensus]** The term was coined by editor **John L.
+  O'Sullivan in 1845**; it expressed the (largely Democratic) expansionist
+  program, while **Whigs and antislavery Northerners actively opposed** expansion
+  as a slave-power scheme. Treat it as a partisan slogan, not a settled creed.
+  ([American Yawp — Manifest Destiny](http://www.americanyawp.com/text/12-manifest-destiny/), [HISTORY — Manifest Destiny](https://www.history.com/topics/19th-century/manifest-destiny))
+- **The Mexican-American War (1846-48) was a Democratic (Polk) war the Whigs
+  opposed; its conquests reignited the slavery-in-the-territories fight.**
+  **[consensus]** War 1846-48; the **Treaty of Guadalupe Hidalgo (Feb 2, 1848)**
+  ceded California, the Southwest, and more. The **Wilmot Proviso (Aug 8, 1846)**
+  — to bar slavery from any conquered land — passed the House on sectional lines
+  but died in the Senate, framing the next 15 years. ([Treaty of Guadalupe Hidalgo](https://en.wikipedia.org/wiki/Treaty_of_Guadalupe_Hidalgo), [OpenStax — Mexican-American War](https://openstax.org/books/us-history/pages/11-4-the-mexican-american-war-1846-1848), [Wilmot Proviso](https://en.wikipedia.org/wiki/Wilmot_Proviso))
+- **The Compromise of 1850 was a five-bill package that postponed disunion.**
+  **[consensus]** Designed by **Whig Henry Clay** and **Democrat Stephen
+  Douglas**, signed by **Whig president Millard Fillmore**, passed as **five
+  separate statutes in September 1850**: California admitted free; Utah and New
+  Mexico territories on popular sovereignty; a Texas boundary/debt settlement;
+  the DC slave *trade* abolished; and a tougher **Fugitive Slave Act**.
+  ([Compromise of 1850 — National Archives](https://www.archives.gov/milestone-documents/compromise-of-1850), [Bill of Rights Institute](https://billofrightsinstitute.org/essays/the-compromise-of-1850/))
+- **The Kansas-Nebraska Act (1854) destroyed the Whigs, split the Democrats, and
+  created the Republican Party — the hinge into §3.** **[consensus]** Douglas's
+  act (signed **May 30, 1854**) organized Kansas/Nebraska on **popular
+  sovereignty**, **repealing the Missouri Compromise's 36°30′ line**. The
+  backlash birthed the **Republican Party** (the name first adopted at Ripon, WI,
+  **March 20, 1854**; first state convention at Jackson, MI, **July 6, 1854**)
+  from anti-Nebraska Whigs, Free-Soilers, and anti-slavery Democrats; the **Whig
+  Party collapsed**. ([Kansas-Nebraska Act](https://en.wikipedia.org/wiki/Kansas%E2%80%93Nebraska_Act), [Senate — Kansas-Nebraska](https://www.senate.gov/artandhistory/history/minute/Kansas_Nebraska_Act.htm), [EBSCO — Birth of the Republican Party](https://www.ebsco.com/research-starters/history/birth-republican-party))
+
+### Key figures
+- **Andrew Jackson** (Democrat) — president 1829-37; founder/figurehead of the
+  Democratic Party; Indian Removal (Trail of Tears), the Bank War, Unionist in
+  the Nullification Crisis. **[consensus]**
+- **Martin Van Buren** (Democrat) — the *organizer* who built the Democratic
+  Party machine; VP then president 1837-41 (inherited the Panic of 1837). The
+  1800-playtest elects an alt-history **"President Martin Van Buren"** ~1838-40
+  (chunk-074 post 6204) — right figure, divergent timeline. **[consensus]**
+- **Henry Clay** (National Republican → Whig) — "the Great Compromiser":
+  American System, the 1833 Compromise Tariff, the Compromise of 1850; perennial
+  losing presidential candidate. The game tracks his rise to era-dominant PV by
+  ~1840 (chunk-074 post 6204). **[consensus]**
+- **Daniel Webster** (Whig) — nationalist orator (Webster-Hayne debate; "Liberty
+  and Union"); Whig leader. The game **mislabels him "leader of the Federalists"
+  in 1840** (chunk-074 post 6204) — the live divergence (real: he was a *Whig*).
+  Players also reference "Dan Webster" and the 1840s suffrage/Dorr-War fights as
+  Whig-vs-Democrat class issues (chunk-086). **[consensus]**
+- **John C. Calhoun** (Democrat, S. Carolina) — VP under Adams then Jackson;
+  architect of nullification and the intellectual of states'-rights/pro-slavery
+  doctrine. **[consensus]**
+- **Stephen A. Douglas** (Democrat) — "popular sovereignty"; floor-manager of the
+  Compromise of 1850 and author of Kansas-Nebraska (1854) — the bridge into §3.
+  Appears as a notable draftee in the game's 1840 class (chunk-074 post 6203). **[consensus]**
+- **Millard Fillmore** (Whig) — president 1850-53; signed the Compromise of 1850;
+  later the 1856 Know-Nothing/American candidate (§3). Appears as a notable RED
+  draftee in the game's 1828 class (chunk-055 post 4525). **[consensus]**
+- **James K. Polk** (Democrat) — president 1845-49; the Manifest-Destiny
+  president (Texas annexation completed, Mexican-American War, Oregon settlement). **[consensus]**
+
+### Timeline of relevant events
+- **1828** — Jackson elected; Democratic Party founded; "Tariff of Abominations." **[consensus]**
+- **1830** — Indian Removal Act; Webster-Hayne debate. **[consensus]**
+- **1832** — Jackson vetoes the Bank re-charter (Jul 10); SC nullifies the tariff
+  (Nov 24); Jackson re-elected. **[consensus]**
+- **1833** — Force Bill + Clay's Compromise Tariff resolve the crisis; the Whig
+  Party begins to coalesce. **[consensus]**
+- **1834** — "Whig" name adopted by the anti-Jackson coalition. **[consensus]**
+- **1836** — Specie Circular; Van Buren elected; Texas wins independence from
+  Mexico. **[consensus]**
+- **1837** — Panic of 1837; depression to ~1843. **[consensus]**
+- **1840** — "Log Cabin" campaign; Whig W. H. Harrison defeats Van Buren (the
+  Whigs' first presidential win). **[consensus]** *(In-game: an alt-history Van
+  Buren wins instead, chunk-074.)*
+- **1844** — Polk (Democrat) elected on expansion ("Fifty-Four Forty or Fight"). **[consensus]**
+- **1845** — Texas annexed; O'Sullivan coins "Manifest Destiny." **[consensus]**
+- **1846-48** — Mexican-American War; Wilmot Proviso (Aug 1846, fails); Treaty of
+  Guadalupe Hidalgo (Feb 2, 1848). **[consensus]**
+- **1850** — Compromise of 1850 (five bills, September); Fugitive Slave Act. **[consensus]**
+- **1852** — Whig Winfield Scott crushed; the Whig Party's last presidential run. **[consensus]**
+- **1854** — Kansas-Nebraska Act (May 30); Republican Party founded; Whigs
+  collapse → **into §3**. **[consensus]**
+
+### Era-appropriate factions / ideologies / interests
+**Democrats** (the Jacksonian coalition): the "common man," Western/frontier
+farmers, Southern planters and slaveholders, urban immigrant workers (esp. Irish
+Catholics later); pro-expansion, anti-Bank, low-tariff, hard-money, limited
+federal economic role, states'-rights-leaning. **Whigs**: Northern manufacturers
+and merchants, commercial farmers, evangelical/reform-minded Protestants, much of
+the planter elite who wanted the American System's credit/infrastructure;
+pro-Bank, pro-tariff, pro-internal-improvements, expansion-skeptical. Internal
+cleavages that matter (and which Kansas-Nebraska detonates): **"Conscience
+Whigs"** (antislavery) vs. **"Cotton Whigs"** (pro-Southern); the **Free Soil
+Party** (1848, anti-expansion); and the nativist **Know-Nothing/American** surge
+(1850s, reacting to Irish/German Catholic immigration — the game flags "a rise in
+nativist views" explicitly, chunk-074 post 6203). The slavery-in-the-territories
+question is the cross-cutting axis that ultimately breaks *both* parties.
+**[consensus]**
+
+### Period-specific terminology
+- **Use:** Democrat / Jacksonian / "the Democracy" (period self-name for the
+  Democratic Party); Whig / "Conscience Whig" / "Cotton Whig"; National Republican
+  (the pre-Whig anti-Jackson label, ~1825-33); the "American System";
+  nullification / states'-rights / "the Force Bill"; the Bank War / "pet banks" /
+  Specie Circular; "King Andrew"; Manifest Destiny; popular sovereignty; Free
+  Soil; Wilmot Proviso; Fugitive Slave Act; Know-Nothing / American Party
+  (nativist). **The Democratic Party is now a real, named party** — unlike §2/§2.5.
+- **Avoid / handle with care:** **"Republican"** in this era — the Jeffersonian
+  "Republicans" are *over* (their nationalist wing became Whigs, their Jacksonian
+  wing became Democrats), and the **antislavery Republican Party does not exist
+  until 1854** (the very end of the window). Calling anyone a "Republican" mid-era
+  is wrong on both counts. Also avoid modern "liberal/conservative": the
+  *pro-government-activism* pole here is the **Whigs**, the reverse of post-1932.
+- **THE GAME-SPECIFIC TRAP:** the game keeps **RED = "Federalists"** alive into
+  the 1840s instead of "Whigs," and **BLUE = "Democratic-Republicans"** instead
+  of "Democrats." When narrating real history, use **Democrat vs. Whig** for
+  ~1834-1854; treat the game's persistent First-Party labels as its own
+  convention (see Game-treatment).
+
+### Common pop-history simplifications and what they get wrong
+- **"The Jacksonian Democrats were the modern left / the Whigs the modern
+  right."** **[consensus]** No — the activist-government, pro-tariff,
+  pro-infrastructure pole was the **Whigs**; the small-federal-government,
+  hard-money, states'-rights pole was the **Democrats**. The economic polarity is
+  the *reverse* of the post-New-Deal alignment.
+- **"Manifest Destiny was a shared national mission."** **[consensus]** It was a
+  *partisan Democratic* slogan (coined 1845) that **Whigs and antislavery
+  Northerners opposed**. ([American Yawp](http://www.americanyawp.com/text/12-manifest-destiny/))
+- **"Jacksonian democracy expanded democracy for everyone."** **[consensus,
+  neutral framing]** It expanded the white-male franchise (dropping property
+  qualifications) while presiding over **Indian Removal** and the entrenchment of
+  slavery; "the common man" meant white men. State it as the franchise mechanic
+  it was, without modern editorializing.
+- **"The slavery crisis only started in the 1850s."** **[consensus]** The
+  territorial-slavery fight runs continuously from the Missouri Compromise (1820,
+  §2.5) through the Wilmot Proviso (1846) and Compromise of 1850 to
+  Kansas-Nebraska (1854); the 1850s were the *culmination*, not the start.
+- **"The Compromise of 1850 was one law (Clay's omnibus)."** **[consensus]** The
+  omnibus *failed*; Douglas broke it into **five separate bills** that each passed
+  with different coalitions in September 1850. ([National Archives](https://www.archives.gov/milestone-documents/compromise-of-1850))
+
+### Game treatment vs. real history (divergence notes)
+- **The game's internal era names track the real periodization loosely but
+  rename it.** The span the game calls late "**Era of Republicanism**" → "**Era
+  of Manifest Destiny (1840-1856)**" → "**Era of Nationalism (1856-1868)**"
+  (chunk-074; chunk-117) maps onto real Jacksonian/Second-Party-System →
+  expansion/sectional-crisis → Civil-War periodization. The **"Era of Manifest
+  Destiny" framing text is era-accurate**: it names the Pacific gaze, Mexican/
+  British-Canada border tension, the Texas purchase, the *contained* (non-
+  expanding) slavery question, the **tariff→nullification→Union** debate, and the
+  **nativist reaction to Irish/German Catholic immigration** (chunk-074 post
+  6203) — all real 1840s issues. **[consensus that these are the right issues]**
+- **THE LOAD-BEARING DIVERGENCE — persistent First-Party labels.** As in §2.5,
+  the game runs **BLUE = "Democratic-Republicans"** and **RED = "Federalists"**
+  through a period that was historically **Democrat vs. Whig**. Daniel Webster
+  (a real Whig) is "leader of the **Federalists**" in 1840 (chunk-074 post 6204);
+  players openly note the gap ("IRL, the Democratic-Republicans wouldn't lose the
+  House majority until 1841 when the Whigs took over," chunk-034 post 2783; "Are
+  we Whigs yet?", chunk-088). Game-master guidance: when grounding play in real
+  history, **say Democrat/Whig for ~1834-1854**; the game's token labels are a
+  continuity convenience, not the historical party names. **This is the single
+  most important note for this section.**
+- **It is an alt-history of officeholders and event-timing, not a re-enactment.**
+  Fictional/alt presidents (Wood, Wilson-who-resigns, Cahoon, Randolph Jr.) and a
+  player-driven **Louisiana Purchase on a divergent schedule** (Treasury Sec
+  Livingston "finally achieved the successful purchase," chunk-074 post 6204)
+  show the campaign diverging from the real Jackson→Van Buren→Harrison→Polk
+  sequence even while drafting the real *figures* (Van Buren, Clay, Webster,
+  Douglas, Fillmore, Stephens, Stanton — chunks 055/074). Use the real
+  chronology for texture; treat named leaders and set-piece *dates* as the
+  campaign's timeline.
+- **Era-gated mechanics roughly match real chronology, with noted slips.**
+  Players observe content that *should* be available earlier being gated late
+  (e.g. "Increase state jobs doesn't enter… until the Era of Nationalism, so he's
+  about 12 years early," chunk-083; a constitutional-convention item "historically
+  passed in 1787… doesn't become an option for us until the Era of Manifest
+  Destiny," chunk-083). These are *gating* quirks, not history errors, but they
+  indicate the era-event scheduling is approximate.
+- **Secession/Unionism logic already encodes the era's real fault line.** The
+  engine's secession rules branch on "**Jacksonian** or Era of Manifest Destiny/
+  Era of Nationalism" and weight Trad/RW-Pop/Conservative ideologies toward
+  secession with **"Southern Unionists will never vote for it"** (chunk-082) —
+  i.e. it correctly carries the nullification-era states'-rights cleavage forward
+  into the Civil-War subsystem (§3). **[consensus that this is the right cleavage]**
+- **Connects directly to §3.** Because this is the *same campaign* as the
+  1868-Gilded-Age batch, the Kansas-Nebraska → Republican-founding hinge at the
+  end of this window is exactly where the game transitions into its "Era of
+  Nationalism" (1856) — the antebellum era documented in §3, whose polarity then
+  **flips** (RED becomes the antislavery party). The polarity continuity of
+  §2.5/§2.6 (BLUE = the Jeffersonian/Jacksonian descent) **ends here**.
+
+---
+
 ## 3. Antebellum / sectional crisis (c. 1856)
 
 ### Era window
@@ -333,13 +801,13 @@ President Hearst: League of Nations debate, Kellogg-Briand pact, London Naval
 Treaty, Nazi Party emergence). So it corroborates §3 (antebellum/Civil War) and
 extends it backward into the **1840s Whig-Democrat era** — and the same thread
 also corroborates §4 (Gilded Age) and §5 (Progressive/WWI/1920s). It surfaces
-no new real-history detail beyond what §3-§5 already document; the historical
-content is the same Whig/Democrat → Republican/Democrat → Progressive arc.
-**The 1840s opening framing** (Harrison/Tyler/Webster/Clay/Calhoun; Whigs vs.
+no new real-history detail beyond what §2.6 and §3-§5 already document; the
+historical content is the same Whig/Democrat → Republican/Democrat → Progressive
+arc. **The 1840s opening framing** (Harrison/Tyler/Webster/Clay/Calhoun; Whigs vs.
 Democrats; Mexican-border tensions; "Manifest Destiny" debates) is era-accurate
 for the late-Jacksonian/Whig second party system that immediately precedes the
-1856 Republican founding — see §3 *Common pop-history* for the Manifest-Destiny
-note and §2 terminology for the "Democrat" party-name origin under Jackson.
+1856 Republican founding — see **§2.6** for that period's real history and the
+Manifest-Destiny note.
 
 ### Binding facts (ground truth)
 - **The 1856 party system was brand new and three-way.** **[consensus]** The
@@ -449,7 +917,9 @@ Unionists** (the cleavage the game's per-politician secession rolls model).
   (`scenario1856.ts:18-31`), and the playtest confirms it in plain terms — "Blue =
   Democrats, Red = Republicans… 1856-era Republicans are the antislavery party;
   the dominant force this era" (*house-divided* partial-03). **Do not** import the
-  modern "Democrat=left, Republican=right" mapping anywhere in 1856–1900.
+  modern "Democrat=left, Republican=right" mapping anywhere in 1856–1900. **Also
+  note** this RED=Republican party is a *brand-new* party (1854), unrelated to the
+  Jeffersonian "Republicans" of §2.5 (which were the *Democrats'* ancestor).
 - **Use:** Free Soil, popular sovereignty, "the Slave Power," Fire-Eaters
   (Southern radical secessionists), Border Ruffians, Copperheads (later),
   Unionist/Southern Unionist, Doughface (a Northern man with Southern sympathies,
@@ -566,7 +1036,11 @@ its 1892 Progressive transition; so the real history here governs that thread's
 back two-thirds as well.)* *(The "Drums of War" all-CPU stress-test thread —
 see §3 — likewise transits this entire era continuously from a 1841 start, so
 the real history here also governs its 1868-1892 in-game years; it surfaces no
-new real-history detail beyond what this section already documents.)*
+new real-history detail beyond what this section already documents.)* *(The
+6aa7309a "1800 Playtest" — see §2.5/§2.6 — is the **early half of the same
+campaign** as the *gilded* batch and runs *into* this era at its 1868 finale
+("Welcome to 1866-1868!", chunk-117; "the final turn of the Era of Nationalism"),
+i.e. it hands off to the Gilded Age this section documents.)*
 
 ### Binding facts (ground truth)
 - **Party polarity continues from 1856: Republicans = the Union/Reconstruction
@@ -1419,6 +1893,21 @@ Ordered by importance to this brief.
 - [American Battlefield Trust — The Rise of Political Parties](https://www.battlefields.org/learn/articles/rise-political-parties) — Hamilton/Jefferson/Madison party formation.
 - [National Archives — A More Perfect Union](https://www.archives.gov/founding-docs/more-perfect-union) and [Constitution Center — The Day the Constitution Was Ratified](https://constitutioncenter.org/blog/the-day-the-constitution-was-ratified) — nine-state rule; close state votes; NH ninth June 21 1788.
 - [Journal of the American Revolution — Adams's Rule of Thirds](https://allthingsliberty.com/2013/02/john-adamss-rule-of-thirds/) and [NPS — Loyalists](https://www.nps.gov/teachers/classrooms/loyalists-in-american-revolution.htm) — the one-third myth.
+
+**Jeffersonian–Jacksonian (1800–1856; eras 2.5-2.6):**
+- [Constitution Center — A tied presidential election ends in Washington](https://constitutioncenter.org/blog/on-this-day-a-true-constitutional-crisis-ends-in-the-washington), [Britannica — 1800 election](https://www.britannica.com/event/United-States-presidential-election-of-1800), [Monticello — Election of 1800](https://www.monticello.org/research-education/thomas-jefferson-encyclopedia/election-1800/) — the 73-73 tie, 36 House ballots, Jefferson 10-4 on Feb 17 1801, Hamilton's role, the 12th Amendment.
+- [State Dept Office of the Historian — Louisiana Purchase, 1803](https://history.state.gov/milestones/1801-1829/louisiana-purchase), [National Archives — Prologue: Louisiana Purchase](https://www.archives.gov/publications/prologue/2003/spring/louisiana-purchase.html), [Senate — Louisiana Purchase Treaty ratified](https://www.senate.gov/about/powers-procedures/treaties/senate-approves-louisiana-purchase-treaty.htm) — Apr 30 1803, $15M, doubled the country, ratified 24-7 Oct 20 1803, Jefferson's strict-construction qualms.
+- [Wikipedia — Era of Good Feelings](https://en.wikipedia.org/wiki/Era_of_Good_Feelings) and [ushistory.org — Era of Good Feelings & Two-Party System](https://www.ushistory.org/us/23a.asp) — Federalist collapse after the 1814-15 Hartford Convention; Monroe's ~90%-of-Congress one-party dominance; the 1824 split.
+- [National Archives — Missouri Compromise (1820)](https://www.archives.gov/milestone-documents/missouri-compromise) and [American Battlefield Trust — The Missouri Compromise](https://www.battlefields.org/learn/articles/missouri-compromise) — Missouri slave / Maine free; 36°30′ line; Tallmadge Amendment; signed Mar 6 1820.
+- [Wikipedia — Second Party System](https://en.wikipedia.org/wiki/Second_Party_System), [Wikipedia — Whig Party (US)](https://en.wikipedia.org/wiki/Whig_Party_(United_States)), [Wikipedia — History of the Democratic Party](https://en.wikipedia.org/wiki/History_of_the_Democratic_Party_(United_States)), [HISTORY — Whig Party](https://www.history.com/articles/whig-party) — Democrats founded 1828 (Van Buren/Jackson), Whigs ~1833-34 ("King Andrew"), system ~1828-1854, the non-modern economic polarity.
+- [Wikipedia — Nullification crisis](https://en.wikipedia.org/wiki/Nullification_crisis), [American Battlefield Trust — Nullification Crisis](https://www.battlefields.org/learn/articles/nullification-crisis), [House History — The Tariff of Abominations](https://history.house.gov/Historical-Highlights/1800-1850/The-Tariff-of-Abominations/) — Tariff of 1828, Calhoun's Exposition, SC ordinance Nov 24 1832, Force Bill + Compromise Tariff 1833.
+- [Wikipedia — Bank War](https://en.wikipedia.org/wiki/Bank_War), [LoC — Renewal of the Second Bank vetoed (Jul 10 1832)](https://guides.loc.gov/this-month-in-business-history/july/renewal-second-bank-united-states-vetoed), [Andrew Jackson's Hermitage — Bank War](https://thehermitage.com/andrew-jackson-the-bank-war) — the July 10 1832 veto, pet banks, Specie Circular (1836), Panic of 1837.
+- [American Yawp — Manifest Destiny](http://www.americanyawp.com/text/12-manifest-destiny/) and [HISTORY — Manifest Destiny](https://www.history.com/topics/19th-century/manifest-destiny) — O'Sullivan coined the term 1845; contested, Whig-opposed.
+- [Wikipedia — Treaty of Guadalupe Hidalgo](https://en.wikipedia.org/wiki/Treaty_of_Guadalupe_Hidalgo), [OpenStax — The Mexican-American War 1846-1848](https://openstax.org/books/us-history/pages/11-4-the-mexican-american-war-1846-1848), [Wikipedia — Wilmot Proviso](https://en.wikipedia.org/wiki/Wilmot_Proviso) — war 1846-48, treaty Feb 2 1848, Wilmot Proviso Aug 8 1846 (passed House, died Senate), Whig opposition.
+- [National Archives — Compromise of 1850](https://www.archives.gov/milestone-documents/compromise-of-1850) and [Bill of Rights Institute — The Compromise of 1850](https://billofrightsinstitute.org/essays/the-compromise-of-1850/) — five separate bills, September 1850, Clay/Douglas/Fillmore, Fugitive Slave Act.
+- [Wikipedia — Kansas-Nebraska Act](https://en.wikipedia.org/wiki/Kansas%E2%80%93Nebraska_Act), [Senate — The Kansas-Nebraska Act](https://www.senate.gov/artandhistory/history/minute/Kansas_Nebraska_Act.htm), [EBSCO — Birth of the Republican Party](https://www.ebsco.com/research-starters/history/birth-republican-party) — signed May 30 1854; repealed the Missouri Compromise line; destroyed Whigs, founded the GOP (Ripon Mar 20 1854, Jackson MI Jul 6 1854).
+
+**Antebellum & Gilded Age (eras 3-4):**
 - [Wikipedia — 1856 election](https://en.wikipedia.org/wiki/1856_United_States_presidential_election) and [Britannica — 1856 election](https://www.britannica.com/event/United-States-presidential-election-of-1856) — three-way race; EC 174/114/8.
 - [Wikipedia — History of the Republican Party](https://en.wikipedia.org/wiki/History_of_the_Republican_Party_(United_States)) and [Free Soil Party](https://en.wikipedia.org/wiki/Free_Soil_Party) — GOP founded 1854; Know-Nothings separate.
 - [American Battlefield Trust — Lecompton Constitution](https://www.battlefields.org/learn/articles/lecompton-constitution) and [Miller Center — Buchanan key events](https://millercenter.org/president/james-buchanan/key-events) — Lecompton 1857-58; Buchanan vs. Douglas split; Kansas rejects it 11,300-1,788 (Aug 1858).
@@ -1447,5 +1936,6 @@ Ordered by importance to this brief.
 - Digests: `docs/game/playtest-digests/` (`1772s` 85f8e6b4, `fed` f55d3e21, `gilded` f4c7c2c4); `docs/game/game-context.md`.
 - 1948-continued batch: `docs/game/sources/3a9ac985-ampu-1948-playtest-continued-2004-and-beyond/` — chunk-001 (2004-08 start; BLUE=Dem/RED=Rep mapping, "Pres Cuomo," two-term-limit amendment), per-era "Welcome to" markers, chunk-032 (2004+ repeals of New-Deal/Cold-War statutes).
 - "A House Divided" 1856 Part 2 batch: `docs/game/sources/77db6e6f-a-house-divided-1856-ampu-playtest-part-2/` — chunk-001 (1856 start; Buchanan 174/Frémont 114/Fillmore 8; BLUE=Dem/RED=Rep; the four factions incl. Crittenden Republicans w/ Lincoln); "Welcome to" era markers (1860-61 chunk-011, 1868 Gilded-Age chunk-031, 1892 Progressivism chunk-106, 1898-1900 chunk-126); partial-02 (chunks 11-20: Seward wins 1860; John-Brown's-Raid blunder → secession & Civil War engine; CSA pres Quitman); partial-03 (chunks 21-30: Seward re-elected 1864; Union victory; Reconstruction; Lincoln nominated 1868). Campaign spans 1856→1900.
-- "Drums of War" all-CPU Civil War stress-test batch: `docs/game/sources/e1776bbd-drums-of-war-an-allcpu-playtest-of-the-civil-war/` — chunk-001 (1841 start under Pres Harrison/VP Tyler; Whig/Democrat second-party system; Webster/Clay/Calhoun/Jefferson Davis/Lincoln/Seward all on the board); chunk-117 (mid-1924 finale under President Hearst — League of Nations and Kellogg-Briand decisions, London Naval Treaty, Dada/Surrealism, Nazi Party emergence). All-CPU mechanical stress-test of the Civil War subsystem; covers ~83 in-game years (1841→1924), corroborating §3 antebellum, §4 Gilded Age, and §5 Progressive/WWI/1920s without surfacing new real-history detail beyond those sections.
-- "Era of Populism" playtest batch (added this update): `docs/game/sources/c50d9da7-era-of-populism-playtest/` — chunk-001 post 1 (2012 start; "reelection campaign of President Barack Obama"; faction roster pairing Sanders/RBG/Frank as LW-Populist B1 with Trump/Paul/Palin as RW-Populist R1; BLUE=Dem/RED=Rep modern polarity); chunk-007 post 528 (Keystone XL + Dakota pipelines, federal surveillance funding, federal drilling subsidies as period-accurate bill content); chunk-008 posts 1305-1551 (immigration reform and "border wall" as in-game presidential/legislative actions); chunk-013 rule 3.0.18 (the "Era of Populism" → forthcoming "Era of the Future" ~2024 transition where generated draft pols replace real ones); chunk-014 (governor actions: state Green New Deal, "arm teachers," legalize marijuana, animal-cruelty bans). Corroborates §10 modern-polarized era — including the alt-history era-naming convention and the dual left/right populism academic frame — without surfacing new real-history detail beyond §10.
+- "Drums of War" all-CPU Civil War stress-test batch: `docs/game/sources/e1776bbd-drums-of-war-an-allcpu-playtest-of-the-civil-war/` — chunk-001 (1841 start under Pres Harrison/VP Tyler; Whig/Democrat second-party system; Webster/Clay/Calhoun/Jefferson Davis/Lincoln/Seward all on the board); chunk-117 (mid-1924 finale under President Hearst — League of Nations and Kellogg-Briand decisions, London Naval Treaty, Dada/Surrealism, Nazi Party emergence). All-CPU mechanical stress-test of the Civil War subsystem; covers ~83 in-game years (1841→1924), corroborating §2.6/§3 antebellum, §4 Gilded Age, and §5 Progressive/WWI/1920s without surfacing new real-history detail beyond those sections.
+- "1800 Playtest: Era of Republicanism (1800-1868)" batch (added this update): `docs/game/sources/6aa7309a-ampu-1800-playtest-era-of-republicanism-18001868/` — chunk-001 post 1 (1800 start; "the 'Blue Party' or Democratic-Republicans… the 'Red Party' or Federalists"; embargo/war-vs-trade split; opening faction roster: Jefferson/Burr/Gallatin/Madison/Monroe/Macon/A.Jackson BLUE, King/J.Q.Adams/Hamilton/Marshall/Morris RED); chunk-002 ("Era of Republicanism in more ways than one"); chunk-017 ("Era of good feelings moment"); chunk-025 ("Welcome to 1812-1814"); chunk-034 (player note: "IRL, the Democratic-Republicans wouldn't lose the House majority until 1841 when the Whigs took over"); chunk-055 ("Welcome to 1828-1830"; 1828 draft incl. Fillmore/Seward RED); chunk-073/088 ("Are we Whigs yet?"); chunk-074 ("Welcome to the **Era of Manifest Destiny (1840-1856)**"; alt-history "President Martin Van Buren," "Daniel Webster… leader of the **Federalists**," "Henry Clay 305," Treasury Sec Livingston's player-driven Louisiana Purchase); chunk-082 (engine secession logic branching on "Jacksonian or Era of Manifest Destiny/Era of Nationalism," Southern-Unionist exception); chunk-083 (era-gating slips); chunk-086 (1840s Dorr-War/suffrage Whig-vs-Democrat issue); chunk-092 ("Welcome to 1850-1852"); chunk-117 ("Welcome to 1866-1868! …the final turn of the Era of Nationalism"). **This thread is the EARLY half (1800-1868) of the same campaign whose later half (1868+) is the `f4c7c2c4` *gilded* batch (§4).** Corroborates and now anchors the new §2.5/§2.6 (Jeffersonian/Jacksonian) and the §3 lead-in; the load-bearing divergence is the **persistence of the Federalist label into the 1840s** where real history had Democrat vs. Whig.
+- "Era of Populism" playtest batch: `docs/game/sources/c50d9da7-era-of-populism-playtest/` — chunk-001 post 1 (2012 start; "reelection campaign of President Barack Obama"; faction roster pairing Sanders/RBG/Frank as LW-Populist B1 with Trump/Paul/Palin as RW-Populist R1; BLUE=Dem/RED=Rep modern polarity); chunk-007 post 528 (Keystone XL + Dakota pipelines, federal surveillance funding, federal drilling subsidies as period-accurate bill content); chunk-008 posts 1305-1551 (immigration reform and "border wall" as in-game presidential/legislative actions); chunk-013 rule 3.0.18 (the "Era of Populism" → forthcoming "Era of the Future" ~2024 transition where generated draft pols replace real ones); chunk-014 (governor actions: state Green New Deal, "arm teachers," legalize marijuana, animal-cruelty bans). Corroborates §10 modern-polarized era — including the alt-history era-naming convention and the dual left/right populism academic frame — without surfacing new real-history detail beyond §10.
