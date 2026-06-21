@@ -13,6 +13,15 @@ redirect from my phone. Keep each checkpoint summary tight (a few lines).
 If the vision is vague, ask me clarifying questions BEFORE step 1 rather than
 guessing.
 
+**Game knowledge base.** Lean on the living docs in `docs/game/` (see
+`docs/game/README.md`) throughout this pipeline — they are the durable, compact
+distillation of the playtest sources, so read them instead of raw forum exports:
+`game-context.md` (what the game is + the Built-vs-Designed gap log),
+`game-mechanics.md` (how the rules work), `technical-guide.md` (architecture /
+build guide), and `roadmap.md` (the ordered backlog this feature should trace
+to). Skim `game-context.md` now to situate the feature; the PM and architect
+steps below read the rest.
+
 ### 1. Historical context (mandatory; no checkpoint)
 Invoke the `historian` agent FIRST. The historian researches the era(s) the
 feature touches (using WebSearch + WebFetch to ground claims in real sources)
@@ -27,14 +36,19 @@ alongside the spec/brief/code artifacts.
 Invoke the `product-manager` agent to turn the vision into `docs/specs/<slug>.md`.
 Tell the PM to read the historian's research brief at
 `docs/research/<slug>-historical-context.md` BEFORE drafting the spec, and to
-treat its binding facts as constraints on the design.
+treat its binding facts as constraints on the design. Also tell the PM to read
+`docs/game/game-context.md` (esp. the Built-vs-Designed gap log) and
+`docs/game/game-mechanics.md` so the spec fits the documented game design, the
+known deltas, and the existing rules.
 Then present the user story, acceptance criteria, and the riskiest assumptions.
 **CHECKPOINT 1 — approve the spec.** Wait for my go (or revise and re-present).
 
 ### 3. Explore + brief
 Invoke the `Explore` agent to map the affected code, then the `architect` agent to
 write `docs/briefs/<slug>.md` (state/type changes, engine-vs-UI split, exact file
-list, test plan, risks). Present the approach, the file list, and the top risk.
+list, test plan, risks). Tell the architect to read
+`docs/game/technical-guide.md` (the living architecture / build guide) alongside
+the Explore map. Present the approach, the file list, and the top risk.
 **CHECKPOINT 2 — approve the brief.** Wait for my go (or revise and re-present).
 
 ### 4. Build
