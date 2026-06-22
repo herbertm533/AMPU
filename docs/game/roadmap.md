@@ -29,9 +29,10 @@
 > re-sequence)** but is no longer "optional/late"; (4) **strengthens E16** (mutable
 > cabinet → **create-AND-abolish** seats: DOE/DHS created, **Postmaster General
 > ABOLISHED**, HEW split — `Legislation.abolishesCabinetSeat?`); (5) records the
-> **Senate pass-threshold RESOLVED IN CODE = simple majority** (`phaseRunners.ts:3562`,
-> `yea > nay` both chambers, no cloture) — the DESIGN question (require 60%/cloture?)
-> stays an OPEN human decision; (6) **adds TWO parking-lot items → 12** — a
+> **Senate pass-threshold RESOLVED + DESIGN CHOSEN**: code today is simple majority
+> (`phaseRunners.ts:3562`, `yea > nay` both chambers, no cloture); human picked the
+> **real-Senate model — 60% cloture, then simple-majority floor vote** (lands in
+> E14c, `CLOTURE_THRESHOLD = 0.6`); (6) **adds TWO parking-lot items → 12** — a
 > **population model + House cap** (DH-49, the one genuinely-new infra item; the
 > Wyoming Rule + per-decade census are un-implementable without it) and an
 > **impeachment / VP-vacancy / succession ruleset** (DH-54 — never in the rules doc
@@ -330,15 +331,13 @@
 > era-content registry). **Frame the Nuclear Age as a DATA era, like every other
 > era.** (Mirrors the no-future-era guard; the same kind of negative result.)
 >
-> **★ Resolved-in-code / open-design (batch 9) — the Senate pass-threshold is a
-> SIMPLE MAJORITY in code.** `runPhase_2_6_3_Floor` (`phaseRunners.ts:3562`) passes
-> a bill iff `house.yea > house.nay && senate.yea > senate.nay` — no cloture /
-> supermajority step (the only supermajority anywhere is the Articles-of-Confederation
+> **★ Resolved-in-code, design CHOSEN post-batch-9 — Senate threshold = 60% CLOTURE, then simple majority.** Engine today is simple majority: `runPhase_2_6_3_Floor`
+> (`phaseRunners.ts:3562`) passes a bill iff `house.yea > house.nay && senate.yea > senate.nay`
+> — no cloture step (the only supermajority anywhere is the Articles-of-Confederation
 > 2/3-of-states path in the independence-era CC, `continentalCongress.ts:224` — a
-> different mechanism). So the **engine side is settled**; the **DESIGN question
-> (should the Senate require 60% / a cloture step?) stays OPEN for the human** — when
-> the filibuster/cloture epic (E14c) lands, the human decides and the constant goes
-> there. Not a queued item; a recorded resolution + open question (debt #27).
+> different mechanism). **Human pick:** target the real-Senate model — a **60% cloture
+> step (end-debate)** before the simple-majority floor vote. Lands as part of the
+> **filibuster/cloture epic (E14c)** — that epic now has its threshold (`CLOTURE_THRESHOLD = 0.6` of voting senators) and its sequencing locked: filibuster toggles on by law → cloture vote at 60% → floor vote at simple majority. No new keystone; the constant lives in E14c.
 
 ---
 
