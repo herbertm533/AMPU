@@ -167,7 +167,7 @@
 >   **first 1820-START scenario** in the KB, `dem1820`): a short campaign (stalled ~1822–23, never
 >   reached 1824/Jackson) that nonetheless produced a **concrete cluster of GA rulings + rule
 >   clarifications** worth capturing as mechanics. Adds a new
->   **[§29 The 1820 "Era of Democracy" start](#29-the-1820-era-of-democracy-start--scenario-boot-procedure-ga-rulings--unsettled-forks-mostly-designedruled)**
+>   **[§29 The 1820 "Era of Democracy" start](#29-the-1820-era-of-democracy-start--scenario-boot-the-full-18201840-arc-ga-rulings--forks-mostly-designedruled)**
 >   covering the **★ scenario-boot procedure as practiced** (the live first-10 draft, the contested
 >   **"strip Command from ≤40 boot pols w/o a job"** house rule, **inaugural career-track seeding from
 >   the last 3 draft classes**, era-keyed industry init, Senate-class assignment, vacant-seat fill —
@@ -317,13 +317,18 @@
     - [28.11 Modern draft, lobby cards & dataset](#2811-modern-draft-lobby-cards--dataset-the-era-locked-content-rotation)
     - [28.12 ★ Design intent (solo-first), open question, timeline seam](#2812--design-intent-solo-first-the-open-question-and-the-timeline-seam)
     - [28.13 Era-of-Terror content (2000–~2005)](#2813-era-of-terror-content-2000-2005-fired-in-the-late-game)
-29. [The 1820 "Era of Democracy" start — scenario-boot procedure, GA rulings & unsettled forks (mostly designed/ruled)](#29-the-1820-era-of-democracy-start--scenario-boot-procedure-ga-rulings--unsettled-forks-mostly-designedruled)
+29. [The 1820 "Era of Democracy" start — scenario boot, the FULL 1820→1840 arc, GA rulings & forks (mostly designed/ruled)](#29-the-1820-era-of-democracy-start--scenario-boot-the-full-18201840-arc-ga-rulings--forks-mostly-designedruled)
     - [29.1 ★ The scenario-boot procedure as practiced (gap #115)](#291--the-scenario-boot-procedure-as-practiced-gap-115)
     - [29.2 ★ Unsettled fork A — player-controlled SCOTUS (gap #52)](#292--unsettled-fork-a--player-controlled-scotus-gap-52)
-    - [29.3 ★ Unsettled fork B — the meter→enthusiasm→election model (gap #18/#51)](#293--unsettled-fork-b--the-meterenthusiasmelection-model-gap-1851)
+    - [29.3 ★ Meter→enthusiasm→election — #51 RESOLVED, #18 state-scope still open (gap #18/#51)](#293--the-meterenthusiasmelection-model--51-resolved-drums-4-step-18-state-scope-still-open-gap-1851)
     - [29.4 GA appointment & eligibility rulings (Senate fill order, card distribution, replacement-gains)](#294-ga-appointment--eligibility-rulings-senate-fill-order-card-distribution-replacement-gains)
     - [29.5 The focus-Rep House abstraction (gap #55)](#295-the-focus-rep-house-abstraction-gap-55)
     - [29.6 Corroborations & the era slice (1820–23)](#296-corroborations--the-era-slice-182023)
+    - [29.7 ★ NEW — the Bank-War → Independent-Treasury economic engine (gap #116)](#297--new--the-bank-war--independent-treasury-long-run-economic-engine-gap-116)
+    - [29.8 ★ NEW — the constitutional-amendment lifecycle (gap #119)](#298--new--the-constitutional-amendment-lifecycle-propose--committee--floor--governor-ratify--activeblocking-gap-119)
+    - [29.9 ★ EXTENDED — death/assassination → VP succession → acting-president (gap #61)](#299--extended--deathassassination--vp-succession--acting-president-end-to-end-gap-61)
+    - [29.10 ★★ The canonical 4-step enthusiasm-shift rule + crisis-bill-failure scoring (#51 RESOLVED)](#2910--the-canonical-4-step-enthusiasm-shift-rule--crisis-bill-failure-scoring-51-resolved)
+    - [29.11 Batch-11 corroborations (the full arc), bugs & the roadmap hand-off](#2911-batch-11-corroborations-the-full-arc-bugs--the-roadmap-hand-off)
 
 ---
 
@@ -1650,10 +1655,21 @@ regular bill's +50 (post 196 shows three regular bills + the Crisis Bill totalin
 > deflects it) (modern#post 943, 2015 — see `game-context.md` #11). The crisis ladders here
 > are the named meters of [§22.1](#221-the-named-meter-bank--numeric-debt--crisiscascade).
 
+> **★ Crisis-bill-FAILURE scoring — the −100 / ideology-waiver rule (`arkzag`, batch 11; refines
+> #11).** A **failed CRISIS bill scores −100 points**, **BUT the penalty is WAIVED if the bill
+> conflicts with the faction's ideology → instead +1 enthusiasm toward its party** (`arkzag` ch24
+> POST 1536). Worked: the recurring **Abolish-Slavery CRISIS amendment** fails every Congress — a
+> pro-slavery faction's −100 is waived (→ +1 enthusiasm), an antislavery faction eats the −100. This
+> is the failure-side counterpart of the +150 crisis-bill *passage* bonus above, and it feeds the
+> §29.10 4-step enthusiasm reshuffle. Full statement + couplings:
+> **[§29.10](#2910--the-canonical-4-step-enthusiasm-shift-rule--crisis-bill-failure-scoring-51-resolved)**.
+
 *(designed, not built — introduce `game.activeCrises: CrisisId[]` entered/exited by meter
 thresholds, plus `Bill.resolvesCrisis?: CrisisId`; on passage of a crisis bill, pop the
 crisis off, **skip the spending-cap gate**, apply a stronger scoring multiplier, and apply a
-collective-accountability Party-Pref penalty when a chamber lets most crisis bills lapse.)*
+collective-accountability Party-Pref penalty when a chamber lets most crisis bills lapse;
+**on FAILURE of a crisis bill, apply −100 pts, WAIVED → +1 enthusiasm if the bill conflicts with the
+faction's ideology**.)*
 
 ### 12.9 Forum design layer: Executive-Branch-Interference & bill-relationship graph (modern; designed, not built)
 
@@ -1998,6 +2014,20 @@ The build's 2.9.2 is one line: "log ratification." The forum runs a multi-step c
 > (offer+accept VP pre-vote ⇒ ballot 1 unanimous) are all CPU-confirmed. Full per-ballot menu &
 > behavior dump → **[§25.4](#254-convention-cpu--per-ballot-momentum--interballot-menu--compromise-picker)**.
 > Designer's overall ruling: the convention CPU is **"rough/awful, needs a 2.9 rework"** (DH-8).
+>
+> **Confirmed again 1820-native (`arkzag`, batch 11; the full 1832 + 1840 conventions).** A
+> human-run multi-cycle confirmation of: brokered convention with **Command = # inter-ballot
+> actions**, **Orator-nominator d6 momentum**, **party-specific nomination thresholds** (NatRep
+> **2/3** = 436/649 vs DemRep **50%+1** = 343/685 — the asymmetric-threshold rule, DH-7), **5-plank
+> platform + 3-test scoring**, the **multi-check VP rubric** (digest counts 11 checks vs §15.3.4's 10
+> — an enumeration variant, same rubric), and **per-cycle convention venues** (1840 Albany NY /
+> Winston-Salem NC). **★ Presidential-promise buyouts DECIDE the 1832 nomination:** Cheves wins on
+> ballot 2 by buying endorsements (**VP-for-Key, Sec-State-for-Clay**, offer-DOWN to fewer-delegate
+> candidates — the §15.3.3 direction rule). **NEW unsettled fork:** **delegate-class assignment** —
+> Zagnut moved it to **AI-auto** (5-category EV×1…×4 formula, to kill the §15.3 host-rigging
+> exploit) but the **1840 convention reverted to human-set**; Ted holds player-rigging is *intended*.
+> Full detail + the fork: **[§29.11](#2911-batch-11-corroborations-the-full-arc-bugs--the-roadmap-hand-off)**.
+> (`arkzag` ch7 POST 584–606; ch21 POST 367–488, 1717–1750; ch32 POST 2462–2466; ch33 POST 2530.)
 
 #### 15.3.1 Candidate types and per-faction slate
 
@@ -3791,18 +3821,26 @@ vote then awards EV winner-take-all, with tie-breaks). The new work is the **Sco
 >    **uncapped**). This is the **election-engine** instance of the cross-era **±3 swing cap**
 >    ([§21.8](#218-named-ordinal-meter-model--3-swing-cap--war-score-meter)) — confirmed here from a
 >    3rd start. A **"State of the Meters" table** is published before the election (POST 618).
-> - **★ THE FORK — which states does the enthusiasm box touch?** Three live GA models (logged
->   `game-context.md` #18, recorded in full in **[§29.3](#293--unsettled-fork-b--the-meterenthusiasmelection-model-gap-1851)**):
->   **(Ted)** **every state UNLESS that state penalizes the ideology** (his deliberate divergence
->   from V — "V's version takes populists a huge hit in every state… in reality that's when
->   populists rise: Tea Party, Bernie, MAGA"); **(V/vcczar)** **only states that LEAN that
->   ideology**; **(Matt)** enthusiasm matters **only in primaries** + ideology-leaning states. The
->   build must pick one.
+> - **★ THE STATE-SCOPE SUB-QUESTION (#18) — which states does the enthusiasm box touch?** Three
+>   live GA models (logged `game-context.md` #18, recorded in full in **[§29.3](#293--the-meterenthusiasmelection-model--51-resolved-drums-4-step-18-state-scope-still-open-gap-1851)**):
+>   **(Ted)** **every state UNLESS that state penalizes the ideology**; **(V/vcczar)** **only states
+>   that LEAN that ideology**; **(Matt)** enthusiasm matters **only in primaries** + ideology-leaning
+>   states. The build must pick one **— but note this is now the ONLY open piece (see next).**
 
-*(designed, not built — implement the 4-part reshuffle + a faction `Score` field + era-end
-awards + the lowest-faction team penalty; wire Score into the meter→election map; **implement the
-meters-move-enthusiasm-boxes step + the hard ±3 cap on ideology/party-pref bonuses (uncapped
-state-specific); pick ONE state-scope model from the §29.3 fork.**)*
+> **★★ #51 RESOLVED by `arkzag` (batch 11): the 4-step reshuffle ALGORITHM is settled.** The
+> `arkzag` final chunk publishes the 4-step faction-performance → enthusiasm rule **VERBATIM**
+> (`arkzag#POST 195–207`) and it **matches the `modern`/`drums` model in this section exactly** —
+> two GAs (Zagnut + Ark) on a third start year converging on the canonical reshuffle, applied
+> **per-Congress** on the legislation tally. So the **algorithm above is no longer in dispute** (it
+> is settled to this version); **only the #18 state-scope sub-question** (which states a settled box
+> touches) remains a human call. Full settled rule + the **crisis-bill-failure −100/waiver scoring**
+> it pairs with: **[§29.10](#2910--the-canonical-4-step-enthusiasm-shift-rule--crisis-bill-failure-scoring-51-resolved)**.
+
+*(designed, not built — implement the 4-part reshuffle (now SETTLED to the §29.10 form) + a faction
+`Score` field + era-end awards + the lowest-faction team penalty; wire Score into the meter→election
+map; **implement the meters-move-enthusiasm-boxes step + the hard ±3 cap on ideology/party-pref
+bonuses (uncapped state-specific); the only remaining human call is the #18 state-scope model from
+§29.3.**)*
 
 ### 22.3 Presidential primary subsystem (2.9.1)
 
@@ -4370,6 +4408,18 @@ batch 10) — it is the **slavery-era** crisis engine, not a Nationalism-only me
   (the 13th-Amendment-equivalent beat) — era-bounded to the slavery eras (Democracy → Nationalism),
   not permanent.
 
+> **★ Confirmed across the FULL 1820→1840 arc (`arkzag`, batch 11) + the crisis-bill-failure
+> scoring rule.** The continuation campaign ran the slavery crisis for ten in-game years: a
+> **recurring "Abolish Slavery Amendment" tagged CRISIS** appears **every Congress** and **always
+> fails** (e.g. **3-9**) — the antebellum trajectory (`arkzag` ch20/24/28/33; §29.8). This exposes
+> the **crisis-bill-failure scoring rule** ([§29.10](#2910--the-canonical-4-step-enthusiasm-shift-rule--crisis-bill-failure-scoring-51-resolved),
+> `arkzag` ch24 POST 1536, refines #11): **failing a CRISIS bill is −100 points, BUT the penalty is
+> WAIVED if the bill conflicts with the faction's ideology → instead +1 enthusiasm toward its
+> party.** So the perpetually-failing Abolish-Slavery amendment **waives** the −100 for a pro-slavery
+> faction (→ +1 enthusiasm) while an antislavery faction eats the −100 — a per-faction-ideology
+> asymmetry layered on top of the sectional-balance package above. Named CRISIS states derive from
+> **meter thresholds** ([§21.8](#218-named-ordinal-meter-model--3-swing-cap--war-score-meter)).
+
 This is a **sectional free-vs-slave state counter** feeding **score + meter + election** effects,
 firing on imbalance either way and sunset on emancipation. **It interacts directly with
 statehood/admission** ([§21.5](#215-bill-driven-statehood--auto-generated-officials),
@@ -4710,6 +4760,17 @@ for a Canada-unpopular candidate, −1 for a no-Canadian cabinet).)*
   Succession is exercised constantly in this run (resign/scandal/death chains → next-in-line),
   and a **"Presidential Succession Act of 1852"** was passed in-game to set the order (POST 755,
   157). (game-context #105.)
+- **★ END-TO-END corroboration on ONE president (`arkzag`, batch 11): assassination → succession →
+  acting-president, full chain.** **Pres Cheves is assassinated** ("dies 2/50", an "Assassination
+  Attempt" Anytime-Evo resolved by a survival roll); **VP Enoch Lincoln assumes the presidency "in
+  accordance with the 13th Amendment"** (the VP-vacancy/succession amendment) and **must nominate a
+  new VP**; the **acting-president mechanic fires** — Lincoln has **Easily Overwhelmed**, so **50%
+  of the time the VP performs presidential actions in his stead** (and Lincoln *gains* Easily
+  Overwhelmed + Pliable). vcczar: **"first presidential assassination this run."** This is the
+  **whole chain on one office-holder** (trigger = death Evo; recovery = succession + VP-vacancy fill
+  + acting-state) — the strongest #61 corroboration in the KB. Full beat-by-beat + the gating on the
+  amendment lifecycle: **[§29.9](#299--extended--deathassassination--vp-succession--acting-president-end-to-end-gap-61)**.
+  (`arkzag` ch27 POST 270–507.)
 
 *(designed, not built — a **configurable line of succession** (bill-mutable order); **native-born
 vs foreign-born eligibility** gating the presidency (relaxable per [§23.5](#235-60-canada-conquest--era-gated-territorystatehood--canadian-draft)); an
@@ -6430,6 +6491,15 @@ admission, the EV join, and the sabotaged-enabling-vote → +1-bias seeding. The
   the deposit removal / didn't re-charter) — i.e. the clock + the exec action together **killed**
   the Bank, mirroring the historical Bank War.
 
+> **★ The long-run content arc this institution sits inside (`arkzag`, batch 11) → [§29.7](#297--new--the-bank-war--independent-treasury-long-run-economic-engine-gap-116).**
+> Where §27.6 is the *institution object* (the President-of-US-Bank seat + recharter clock +
+> Bank-War exec action), `arkzag` plays the *content state machine* around it across a full arc: a
+> recurring **"Establish Bank of the United States" CRISIS bill** that filibusters and returns, an
+> active **Panic-of-1837 EconStab CRISIS**, and — under President Dudley (1840) — an
+> **Independent-Treasury CRISIS bill that literally "Replaces Bank of the United States"** (Senate
+> 35-17), plus a **tariff-change cooldown** ("can't change tariff rates until 1836") and a near-literal
+> **Force Bill**. See §29.7 for the engine + its EconStab/Panic couplings (`game-context.md` #116).
+
 *(designed, not built — a `game.secondBank` institution object with a **20-year recharter clock**
 (`charteredUntilYear`); creating it **adds the President-of-US-Bank cabinet seat** (§26.5
 dynamic-seat list) and marks that seat **unremovable while the Bank exists**; a **"Remove
@@ -7157,28 +7227,49 @@ un-implementable Wyoming Rule — hole #5), and modern lobby cards. Event firing
 
 ---
 
-## 29. The 1820 "Era of Democracy" start — scenario-boot procedure, GA rulings & unsettled forks (mostly designed/ruled)
+## 29. The 1820 "Era of Democracy" start — scenario boot, the FULL 1820→1840 arc, GA rulings & forks (mostly designed/ruled)
 
-> **Source: `cc37d770` "1820 — The Era of Democracy" (`dem1820`, batch 10)** — a 947-post,
-> 10-human multiplayer **first 1820-START scenario**, GA'd by `@MrPotatoTed` (+`@matthewyoung123`,
-> with `@ebrk85` / `@Arkansas Progressive` / `@vcczar` assisting). The campaign **stalled ~1822–23
-> after ~1.5 turns** (GA burnout, DH-36) and **never reached 1824 / Jackson / Nullification** — so
-> the Jacksonian set-pieces are framing, not played. Its durable value is a **cluster of concrete
-> GA rulings + rule clarifications** and **two unsettled design forks**. **Almost everything here is
-> DESIGNED/RULED, not SHIPPED** — the shipped engine boots only 1772 and 1856 (`scenario1772.ts`,
-> `scenario1856.ts`); there is no 1820 scenario, no live SCOTUS docket
+> **Two playtests share this exact 1820 start; this section now covers BOTH.**
+> - **Batch 10 — `cc37d770` "1820 — The Era of Democracy" (`dem1820`)** — a 947-post, 10-human
+>   multiplayer **first 1820-START scenario**, GA'd by `@MrPotatoTed` (+`@matthewyoung123`,
+>   `@ebrk85`/`@Arkansas Progressive`/`@vcczar`). It **stalled ~1822–23 after ~1.5 turns** (GA
+>   burnout, DH-36) and **never reached 1824 / Jackson / Nullification**. Durable value: the
+>   **scenario-boot procedure (§29.1)**, two design forks (§29.2 SCOTUS, §29.3), and the GA-rulings
+>   cluster (§29.4–29.6). Cite `dem1820#POST N`.
+> - **Batch 11 — `152c2881` "Ark and Zags — The Era of Democracy" (`arkzag`)** — the **direct
+>   continuation of the SAME save** ("working off of where Ted quit"), now GA'd by **@Zagnut + @Ark**
+>   (+ @vcczar/@ebrk85/@Ted as advisors). It ran the **FULL arc 1822 → 1824 → 1828 → 1832 → 1834 →
+>   1836 → the 1840 conventions** — exercising a mountain of **late-game systems batch 10 never
+>   reached**: multi-cycle presidential elections (8-stage general + brokered conventions +
+>   presidential-promise buyouts), the **Bank War → Independent-Treasury** economic arc (§29.7), a
+>   near-literal **Force Bill** + tariff fights, **constitutional-amendment machinery** (§29.8), a
+>   **presidential assassination → VP succession → acting-president** chain (§29.9), an active
+>   **Panic-of-1837 EconStab crisis**, and **late-game faction churn**. Its single most valuable
+>   finding: the **final chunk publishes the canonical 4-step enthusiasm-shift rule verbatim**,
+>   which **matches `drums`** and therefore **SETTLES the #51 fork** (§29.3, §29.10). Cite
+>   `arkzag#POST N` (chunk markers `===== POST n =====`).
+>
+> **Almost everything here is DESIGNED/RULED, not SHIPPED** — the shipped engine boots only 1772 and
+> 1856 (`scenario1772.ts`, `scenario1856.ts`); there is no 1820 scenario, no live SCOTUS docket
 > ([§22.7](#227-scotus-subsystem-253--282); shipped court = `runPhase_2_5_3_Court` coin-flip
 > ±0.1 partyPref + `runPhase_2_8_2_CourtMgmt` age-75 retire, `phaseRunners.ts:3397, 3648`), no
-> focus-Rep House model, and no sectional-balance crisis ([§23.2](#232-59-freeslave-sectional-balance-crisis-scoring-the-slavery-era-crisis-engine)).
-> Cite `dem1820#POST N`. Cross-ref `game-context.md` **#115** (the only NEW gap) + #1/#18/#24/#44/
-> #51/#52/#55/#59/#61/#76/#92/#101/#108 and DH-24/25/27/36/53/56.
+> focus-Rep House model, no sectional-balance crisis ([§23.2](#232-59-freeslave-sectional-balance-crisis-scoring-the-slavery-era-crisis-engine)),
+> and **no economic-arc / amendment-lifecycle / death→succession→acting-president state machine**
+> (§29.7–29.9). Cross-ref `game-context.md` **#115/#116/#119** (the NEW gaps) + #1/#9/#11/#13/#18/
+> #25/#40/#44/#51/#52/#54/#55/#59/#61/#76/#85/#92/#101/#108/#111 and DH-24/25/27/36/53/57/59/60.
 >
-> **Polarity (historian's discipline).** At 1820 **BLUE = Democratic-Republicans** (dominant,
-> agrarian/states'-rights pole) and **RED = the dying Federalists / nascent "National Republicans"**
-> — the **same** polarity as 1788/1800, **NOT** the 1856 RED=antislavery flip. "National Republican"
-> is ~5–10 yrs early (historically RED in 1820 = Federalists). The **"Civil Rights" ideology token**
-> is, at 1820, **antislavery / restrictionism** (Missouri-debate / Rufus-King kind), not the 20th-c.
-> movement. See `historical-context-1820-democracy.md` §5, §7.
+> **Polarity & alt-history discipline (historian's discipline — `historical-context-1820-democracy.md`
+> §§9–16).** At 1820 **BLUE = Democratic-Republicans** (dominant, agrarian/states'-rights pole) and
+> **RED = the dying Federalists / "National Republicans"** — the **same** polarity as 1788/1800,
+> **NOT** the 1856 RED=antislavery flip. The party system **never realigns**: through **1840** it is
+> still **D-R (BLUE) vs "National Republicans"/"Federalists" (RED)** — **no Jackson presidency, no
+> Whig Party, no Democratic-Party formation**. The fictional D-R president line is **Benton**
+> (re-elected 1828) → **Cheves** (1832, re-elected 1836) → **Enoch Lincoln** (succeeds on Cheves's
+> *assassination*) → **Dudley** (1840 incumbent). **"President Lincoln" = Enoch Lincoln of Maine,
+> NOT Abraham Lincoln** (who is a separately-drafted rookie, `arkzag` ch30 POST 1378). The in-game
+> **"13th Amendment" = a presidential-SUCCESSION rule, NOT abolition**. The **"Civil Rights"
+> ideology token** is, at 1820–40, **antislavery / restrictionism** (Missouri-debate / Rufus-King
+> kind), not the 20th-c. movement.
 
 ### 29.1 ★ The scenario-boot procedure as practiced (gap #115)
 
@@ -7271,31 +7362,57 @@ it there, so the gov-actions library and the SCOTUS docket are linked. SCOTUS ru
 **deactivate now-unconstitutional laws** ([§22.7](#227-scotus-subsystem-253--282)) and feed
 `partyPreference` — so the player's delay/dismiss choices ripple into legislation and elections.
 
-### 29.3 ★ Unsettled fork B — the meter→enthusiasm→election model (gap #18/#51)
+### 29.3 ★ The meter→enthusiasm→election model — #51 RESOLVED (drums 4-step), #18 state-scope still OPEN (gap #18/#51)
 
-> **DESIGNED/RULED + UNSETTLED — the biggest GA ruling of the batch.** The processing rule + the
-> hard ±3 cap are recorded inline at [§22.2](#222-faction-enthusiasm--party-preference-election-engine--the-score-economy);
-> this is the **state-scope fork** the build must resolve. None of it is shipped beyond the bare
-> `enthusiasm × 2` / `partyPreference × 5` terms in `calcStateVote`
-> ([§15.1](#151-calcstatevote--the-core-resolver-phaserunnersts3685)). (`dem1820#POST 569, 575,
-> 618`; #18/#51.)
+> **UPDATE (batch 11 `arkzag`): this is no longer an open three-way fork.** Batch 10 framed the
+> *whole* meter→enthusiasm→election pipeline as unsettled. Batch 11's **final chunk publishes the
+> canonical 4-step faction-performance → enthusiasm rule VERBATIM**, and it **matches the `drums`
+> model exactly** — so the **algorithm half (#51) is now SETTLED to the `drums` 4-step model** (full
+> rule in [§29.10](#2910--the-canonical-4-step-enthusiasm-shift-rule--crisis-bill-failure-scoring-51-resolved) and
+> [§22.2](#222-faction-enthusiasm--party-preference-election-engine--the-score-economy)). The **only
+> piece still open is the #18 sub-question: which STATES a settled enthusiasm box applies to.** None
+> of it is shipped beyond the bare `enthusiasm × 2` / `partyPreference × 5` terms in `calcStateVote`
+> ([§15.1](#151-calcstatevote--the-core-resolver-phaserunnersts3685)). (`dem1820#POST 569, 575, 618`;
+> `arkzag#POST 195–207`; #18/#51.)
 
-The agreed mechanics (settled): **non-enthusiasm meters move the per-ideology enthusiasm boxes →
-those boxes apply to the per-state vote → a HARD ±3 cap on ideology + party-pref bonuses**
-(state-specific bonuses uncapped). The disagreement is **which states the enthusiasm box touches**:
+**SETTLED (the algorithm, #51).** The per-Congress pipeline (now confirmed across `modern`, `drums`,
+and `arkzag`):
 
-| Model | Proponent | "An enthusiasm box of +3 Blue LW-Pop applies to…" |
+1. **Non-enthusiasm meters MOVE the per-ideology enthusiasm boxes** — a meter effect worded "−1 for
+   Progs/Libs" shifts Prog + Lib enthusiasm +1 toward Red each (upstream of §22.1's meter→election
+   table).
+2. **Legislation is scored by-card → by-faction; then the 4-step enthusiasm reshuffle fires**
+   ([§29.10](#2910--the-canonical-4-step-enthusiasm-shift-rule--crisis-bill-failure-scoring-51-resolved)): MOST-points dominant
+   faction +1 toward dominant; LEAST-points dominant −1 away; MOST-points opposition faction +1
+   toward **dominant** (only if it actually GAINED points); LEAST-points opposition faction +2 toward
+   **opposition** (even if it gained). The four shifts **stack**, computed per-ideology-card then
+   aggregated by faction.
+3. **Enthusiasm boxes then apply to the per-state vote** (a +3 Blue LW-Pop box adds +3 to Blue LW-Pop
+   candidates) — gated by the #18 state-scope question below.
+4. **HARD ±3 CAP on the ideology + party-pref bonuses** (state-specific bonuses **uncapped**) — the
+   election-engine instance of the cross-era ±3 swing cap ([§21.8](#218-named-ordinal-meter-model--3-swing-cap--war-score-meter)),
+   plus a **±meter clamp** to avoid overflow (`arkzag` ch32 POST 155–177) and the standard
+   **Lingering 10-step** meter movement (`arkzag` ch4 POST 360).
+
+**Why batch 11 settles #51, not opens a new fork:** two GAs (Zagnut + Ark) on a third start year
+**converged on the canonical `drums`/#51 reshuffle** — applied per-Congress on the legislation tally
+— and explicitly did **not** adopt batch 10's Ted "every state unless penalized" or Matt "primaries
+only" *variants of step 3*. Those variants survive only as the **#18 state-scope** question.
+
+**STILL OPEN (#18 — which states a settled box touches).** Step 3 above expresses shifts
+**per-ideology-card**; the remaining unresolved question is the **state-application step** of the
+meter→election map:
+
+| Model | Proponent | "A settled +3 Blue LW-Pop box applies to…" |
 |---|---|---|
-| **Every state unless penalized** | `Ted` (GA) | …**every** state's Blue LW-Pop candidate **UNLESS that state penalizes LW-Pop**. Deliberate divergence from V — *"V's version takes populists a huge hit in every state… in reality that's when populists rise: Tea Party, Bernie, MAGA."* |
-| **Ideology-leaning states only** | `V` / vcczar (designer) | …only states that **lean** LW-Pop. |
-| **Primaries only** | `Matt` | …only in **primaries** + ideology-leaning states (general elections largely ignore it). |
+| **Every state unless penalized** | `Ted` (GA, batch 10) | …**every** state's Blue LW-Pop candidate **UNLESS that state penalizes LW-Pop** (*"in reality that's when populists rise: Tea Party, Bernie, MAGA"*). |
+| **Ideology-leaning states only** | `V`/vcczar (designer) | …only states that **lean** LW-Pop. |
+| **Primaries only** | `Matt` (batch 10) | …only in **primaries** + ideology-leaning states. |
 
-**Why it's load-bearing:** this is the upstream half of the §22.1 meter→election table and the
-hinge of the whole election engine — it determines how a budget/economy meter swing translates into
-votes. The three models produce very different maps (Ted's spreads enthusiasm broadly; V's
-concentrates it; Matt's confines it to the nomination). **The build must pick one** before the
-election engine is tuned. (Two GAs ran two different models *in the same era* — strong evidence
-this is genuinely unsettled, not a one-off.)
+**Why #18 is still load-bearing:** the three models produce very different maps (Ted's spreads
+enthusiasm broadly; V's concentrates it; Matt's confines it to the nomination). **The build must
+pick one state-scope rule** before the election engine is tuned — but the **scoring → reshuffle
+algorithm itself is no longer in dispute** (use the §29.10 4-step model).
 
 ### 29.4 GA appointment & eligibility rulings (Senate fill order, card distribution, replacement-gains)
 
@@ -7452,17 +7569,325 @@ the A9 scaling wall demands the build **persist + auto-fill** across cycles.
   sheet repair). **The strongest cross-cutting case yet** that the build must own all bookkeeping
   *and* publish a deterministic, disclosed ruleset (incl. the #115 boot spec). (POST 900-905; DH-36.)
 
-> **Cross-reference for the roadmap (§29).** The concrete build items: **(1) the #115 scenario-boot
-> spec** — `scenarioBoot(era, year)` encoding the inaugural live draft + career-track-seed-from-last-3-
-> classes + the boot-Command decision + era-keyed industry init + Senate-class assignment/verifier +
-> vacant-seat fill ([§29.1](#291--the-scenario-boot-procedure-as-practiced-gap-115)); **(2) resolve
-> the two forks** — player-vs-CPU SCOTUS ([§29.2](#292--unsettled-fork-a--player-controlled-scotus-gap-52))
-> and the meter→enthusiasm state-scope model ([§29.3](#293--unsettled-fork-b--the-meterenthusiasmelection-model-gap-1851));
-> **(3) the focus-Rep House** ((EV−2)/5 + seat-locked incumbency vs full district sim,
-> [§29.5](#295-the-focus-rep-house-abstraction-gap-55)); **(4) couple statehood admission to the
-> sectional-balance crisis** ([§23.2](#232-59-freeslave-sectional-balance-crisis-scoring-the-slavery-era-crisis-engine));
+> **Cross-reference for the roadmap (batch-10 items, §29.1–29.6).** The concrete build items: **(1)
+> the #115 scenario-boot spec** — `scenarioBoot(era, year)` encoding the inaugural live draft +
+> career-track-seed-from-last-3-classes + the boot-Command decision + era-keyed industry init +
+> Senate-class assignment/verifier + vacant-seat fill ([§29.1](#291--the-scenario-boot-procedure-as-practiced-gap-115));
+> **(2) resolve the SCOTUS fork** — player-vs-CPU ([§29.2](#292--unsettled-fork-a--player-controlled-scotus-gap-52))
+> (the meter→enthusiasm **algorithm** is now resolved — §29.3 / §29.10 — only the #18 **state-scope**
+> sub-question remains); **(3) the focus-Rep House** ((EV−2)/5 + seat-locked incumbency vs full
+> district sim, [§29.5](#295-the-focus-rep-house-abstraction-gap-55)); **(4) couple statehood
+> admission to the sectional-balance crisis** ([§23.2](#232-59-freeslave-sectional-balance-crisis-scoring-the-slavery-era-crisis-engine));
 > **(5) the appointment-order ladder + replacement-gains timing + card-distribution precedence**
 > ([§29.4](#294-ga-appointment--eligibility-rulings-senate-fill-order-card-distribution-replacement-gains));
 > **(6) the bill EV-effect sign-check pass** (DH-53) and **boot-time validators** (DH-24 Senate-class,
 > DH-27 trait-conflict). DH-36 (GA burnout) re-confirms: **own the bookkeeping + ship a disclosed,
-> deterministic ruleset.** New gap context logged to `game-context.md` **#115**.
+> deterministic ruleset.** Gap context logged to `game-context.md` **#115**. **The batch-11 full-arc
+> late-game systems (§29.7–29.11) — the economic engine #116, amendment lifecycle #119, succession
+> chain #61, and the resolved #51 enthusiasm rule — are the load-bearing additions; see their own
+> roadmap note at the end of [§29.11](#2911-batch-11-corroborations-the-full-arc-bugs--the-roadmap-hand-off).**
+
+### 29.7 ★ NEW — the Bank-War → Independent-Treasury long-run economic engine (gap #116)
+
+> **NEW this batch (`arkzag`, the headline late-game content batch 10 never reached). DESIGNED, not
+> built.** A multi-cycle **economic-content state machine**: a recurring **Second-Bank CRISIS** bill
+> that filibusters/returns and is ultimately **replaced by an Independent Treasury**, a near-literal
+> **Force Bill** + tariff fights with a **tariff-change cooldown**, all coupled to the EconStab meter
+> and a **Panic-of-1837 EconStab CRISIS**. The shipped engine has **none of it** — no Bank/Treasury/
+> nullification tokens, no economic-arc state machine; `applyEffect` only nudges the 7 numeric meters
+> ([§11.1](#111-251-lingering-meters--runphase_2_5_1_lingering-phaserunnersts3260)). This **extends**
+> the §27.6 Second-Bank-as-toggleable-office finding (the recharter clock + Bank-War exec action)
+> with the **long-run content arc** that office sits inside. (`arkzag` ch11/ch20/ch24/ch25/ch33;
+> `game-context.md` #116. Historian: `historical-context-1820-democracy.md` §9, §11, §13.)
+
+**The arc, in order (a recurring CRISIS-bill economic content engine):**
+
+| Beat | Mechanic | Cite |
+|---|---|---|
+| **Bank as a recurring CRISIS bill** | "Establish Bank of the United States" is tagged a **CRISIS** bill ([§12.7](#127-forum-design-layer-crisis-bill-tag-designed-not-built)) that is **filibustered** (Puritan senators with ≥2 legislative delay the vote a full half-term, [§12.6](#126-forum-design-layer-filibuster-designed-not-built)), **returns next session** ("Returning from last half-term's filibuster…"), and eventually **passes the House 123-92**. | ch11 POST 26; ch20 POST 344; ch25 POST 66 |
+| **Panic-of-1837 EconStab CRISIS** | **EconStab sits in a named CRISIS state** ("Panic"/Stagnation step of the named-ordinal Economic-Stability meter, [§21.8](#218-named-ordinal-meter-model--3-swing-cap--war-score-meter)) across several half-terms; **meter-crater Evos** fire ("Economic Collapse of the United States", EconStab → 3) under Cheves/Lincoln. | ch17 POST 402; ch19 POST 2005; ch27 |
+| **Independent Treasury REPLACES the Bank** | Under President **Dudley** (1840) an **Independent-Treasury CRISIS bill** passes (Senate 35-17), **Dudley signs it**, and it carries the literal effect **"Replaces Bank of the United States"** — with full meter/point effects (**Agriculture states +100, Finance states −100, ±RevBudget/EconStab/HonestGov rolls**). | ch33 POST 106 |
+| **Force Bill (nullification analog)** | A near-literal **Force Bill**: *"Expand Presidential Power to Allow the President to Force States to Comply with Federal Revenue Laws"* (Sen Duncan) — an exec-power expansion bill in the marquee 1834 policy Congress. | ch24 POST 906/1107 |
+| **★ Tariff-change COOLDOWN** | **Dueling tariff bills (40% vs 10%) are BLOCKED by a tariff-rate cooldown:** *"we can't change tariff rates until 1836."* A passed tariff **can't be re-touched for N cycles** — an era-keyed legislation gate echoing the real 1833 Compromise-Tariff timing. | ch24 POST 928 |
+
+**System interactions (economic engine ↔ EconStab meter ↔ Panic crisis ↔ legislation):**
+
+- The **Bank CRISIS bill ↔ EconStab meter** loop is the engine's spine: a low EconStab meter **enters
+  the Panic CRISIS state**, which tags Bank/Treasury bills as **CRISIS bills** (stronger scoring,
+  spending-cap bypass, [§12.7](#127-forum-design-layer-crisis-bill-tag-designed-not-built)); passing
+  one **resolves the crisis** and applies the sectional ±100 (Agriculture vs Finance) meter package.
+- The **tariff cooldown** is the economic-content instance of the general **bill change-cooldown**
+  ([§12.9](#129-forum-design-layer-executive-branch-interference--bill-relationship-graph-modern-designed-not-built):
+  *"can't propose what we just repealed unless a chamber changed"*) — here keyed to a **fixed era
+  year (1836)** rather than a chamber-flip, i.e. an **era-gated legislation cadence** ([§21.6](#216-bill-typing--budget-gated-spending-cap),
+  [§92 era-gating](#296-corroborations--the-era-slice-182023)).
+- This arc **subsumes** §27.6's recharter-clock + "Remove Deposits" exec action: §27.6 is the
+  *institution object* (the President-of-US-Bank seat + 20-year clock + Bank-War exec action), and
+  §29.7 is the *content state machine* (CRISIS bill → filibuster → return → pass → later replaced)
+  that drives it. **Open design question (`game-context.md` #116 / §29.11):** is the Bank→Treasury
+  sequence a **scripted branch**, or **emergent** from recurring EconStab-crisis legislation? (The
+  save played it as **emergent** recurring CRISIS bills resolving an EconStab crisis.)
+
+*(designed, not built — a `game.economy` state machine: a recurring **Bank CRISIS bill** keyed to a
+**Panic/EconStab CRISIS state** ([§21.8](#218-named-ordinal-meter-model--3-swing-cap--war-score-meter),
+[§22.1](#221-the-named-meter-bank--numeric-debt--crisiscascade)); a **`Bill.replaces` field** so the
+Independent-Treasury bill marks "Replaces Bank of the United States" and removes the Bank
+institution (§27.6); a **per-bill-class change cooldown** (`Bill.lockedUntilYear`) implementing the
+tariff cadence; sectional ±100 (Agriculture/Finance) meter effects on resolution. Couples to §12.7
+crisis bills, §12.6 filibuster, §27.6 Bank office, §21.6 budget/era gating.)*
+
+### 29.8 ★ NEW — the constitutional-amendment lifecycle (propose → committee → floor → governor-ratify → active/blocking) (gap #119)
+
+> **NEW this batch (`arkzag`). DESIGNED, not built.** Amendments are **first-class era content with a
+> full lifecycle**, and an **active amendment can BLOCK a whole legislation-class**. The shipped
+> engine has no amendment object at all ([§14.2](#142-forum-design-layer-constitutional-amendments-durable-state-designed-not-built),
+> [§21.3](#213-amendments-as-durable-separately-ratified-state)). This **sharpens** the existing
+> amendment-substrate findings (§21.3 ratification flow, §24.4 governor-ratify-by-3/4, the E5
+> amendment design) with the **end-to-end lifecycle + the legislation-class-block** observed across a
+> full played arc. (`arkzag` ch7/ch13/ch17/ch24/ch25/ch28/ch33; `game-context.md` #119. Cross-ref
+> §52/#90 amendment-blocks-a-legislation-class.)
+
+**The lifecycle (each step observed in play):**
+
+1. **Propose** — an amendment is introduced as a **bill of an amendment type** (it goes through the
+   normal proposal slots). **Amendments CANNOT be bundled** with ordinary bills (ch24 POST 1530) —
+   distinct from the §12.5 bill-packaging rule for ordinary legislation.
+2. **Committee** — reviewed in committee like any bill (the suffrage amendment cleared committee
+   **12-0**, ch24 POST 1502).
+3. **Floor** — a supermajority floor vote (the suffrage amendment passed the **House 163-52**, ch25
+   POST 63).
+4. **★ Governor-ratify** — goes to the states for a **governor vote** ([§24.4](#244-64-amendment-ratification-by-34-of-state-governors--era-keyed-then-tunable):
+   ratification by governors at an era-keyed state count); pending → ratified (the VP-vacancy
+   amendment "ratified by governors", ch17 POST 453/496).
+5. **Active / blocking** — once ratified the amendment is a **durable rule-changing flag**
+   ([§21.3](#213-amendments-as-durable-separately-ratified-state)); some amendments **block a class
+   of legislation until repealed.**
+
+**Era-content amendments observed (the load-bearing instances):**
+
+| Amendment | Lifecycle role / durable effect | Cite |
+|---|---|---|
+| **VP-Vacancy ("13th") Amendment** | Lets the president nominate a new VP if one dies/resigns; **pending → ratified by governor vote**. **This is the rule invoked when Enoch Lincoln succeeds Cheves** (§29.9). | ch17 POST 453/496 |
+| **National Suffrage for White Male Property Owners** | The Era-of-Democracy suffrage fight; committee 12-0 → House 163-52. **An era-flavored *restriction*** (narrower than existing suffrage), not an expansion — players flag it (ch25 POST 25). **The active suffrage amendment BLOCKS a legislation-class.** | ch24 POST 1502; ch25 POST 63 |
+| **Abolish Slavery Amendment** (tagged **CRISIS**) | Recurs **every Congress** and **always FAILS** (e.g. **3-9**) — the real antebellum trajectory; the **perpetually-failing** amendment. Failure triggers the crisis-bill-failure scoring rule ([§29.10](#2910--the-canonical-4-step-enthusiasm-shift-rule--crisis-bill-failure-scoring-51-resolved) / [§23.2](#232-59-freeslave-sectional-balance-crisis-scoring-the-slavery-era-crisis-engine)). | ch20, ch24, ch28, ch33 |
+| **Abolish Federal Excise Tax** | A **law-class-block-until-repealed** amendment — **bans any federal excise tax until repealed** (corroborates the #52/#90 amendment-blocks-a-legislation-class pattern). | ch24 |
+| **40-Year Minimum Age for SC Justices** | Corroborates the SCOTUS-min-age amendment (#52). | ch24 |
+| **Christianity as Official Religion** | Recurs as a faction-flavored amendment (corroborates `fed`'s rejected-9-7 instance, [§21.3](#213-amendments-as-durable-separately-ratified-state)). | ch24 |
+
+**System interactions (amendment lifecycle ↔ crisis engine ↔ legislation-class blocking):**
+
+- **Amendment ↔ crisis engine:** the **Abolish-Slavery amendment is a CRISIS bill** ([§12.7](#127-forum-design-layer-crisis-bill-tag-designed-not-built))
+  that perpetually fails — so its failure feeds the **crisis-bill-failure scoring rule** (−100 pts,
+  waived → +1 enthusiasm if ideology-aligned, [§29.10](#2910--the-canonical-4-step-enthusiasm-shift-rule--crisis-bill-failure-scoring-51-resolved)),
+  and the underlying **free/slave sectional-balance crisis** ([§23.2](#232-59-freeslave-sectional-balance-crisis-scoring-the-slavery-era-crisis-engine))
+  is the meter the amendment never resolves. The amendment lifecycle and the slavery-era crisis
+  engine are thus **coupled at the Abolish-Slavery amendment.**
+- **Amendment ↔ legislation-class blocking:** an **active amendment can BLOCK a whole legislation
+  class until repealed** — the suffrage amendment blocks a class; the excise-tax-ban amendment bans
+  a class. This is the **amendment-tier** of the §12.9 bill-relationship graph (bills removable only
+  via amendment) made into a **proactive block** on *future* bills, not just a repeal constraint on
+  existing ones.
+- **Amendment ↔ succession:** the **VP-Vacancy ("13th") amendment is the precondition** for the
+  §29.9 succession chain — without it ratified, a dead president's VP-successor **cannot fill the VP
+  vacancy** (cf. [§21.3](#213-amendments-as-durable-separately-ratified-state): "a dead VP leaves
+  the office vacant until the VP-vacancy-fill amendment is ratified").
+
+*(designed, not built — a `game.amendments[]` object with an explicit **lifecycle state**
+(`proposed → inCommittee → onFloor → pendingRatification → active`), a **governor-ratify** vote at
+the gov phase (§24.4), an **un-bundleable** flag, and an **`active amendment → blocks legislation
+class`** effect binding checked at proposal time (suffrage class, excise-tax class). Couples to §21.3
+amendment substrate, §24.4 governor ratify, §12.7 crisis bills, §23.2 slavery crisis, §29.9
+succession.)*
+
+### 29.9 ★ EXTENDED — death/assassination → VP succession → acting-president, end-to-end (gap #61)
+
+> **CORROBORATED + EXTENDED (`arkzag`). DESIGNED, not built** — a **strong end-to-end corroboration**
+> of the existing **#61** ([§24.1](#241-61-succession--eligibility--the-acting-president-state)), not
+> a new ID. Batch 11 plays the **entire chain on one president**: an assassination Evo **kills a
+> sitting president**, the VP **succeeds under the "13th"/VP-vacancy amendment** and must nominate a
+> new VP, and the successor becomes an **acting president** whose actions a trait can divert. The
+> shipped engine has **only** an "assassination survived" anytime event + a Succession-History UI;
+> there is **no death → succession → acting-state engine** (`runPhase_2_4_2_Anytime`,
+> `phaseRunners.ts:2782`). (`arkzag` ch27 POST 270–507; `game-context.md` #61.)
+
+**The chain, end to end (President Cheves, ~1834–35):**
+
+| Step | Mechanic | Cite |
+|---|---|---|
+| **Trigger — assassination kills the president** | An **"Assassination Attempt" Anytime-Evo** fires on the incumbent, resolved by a **survival roll**. **Cheves dies (2/50).** vcczar: **"first presidential assassination this run"** (a rare event). | ch27 POST 276 |
+| **Succession — VP assumes the presidency** | **VP Enoch Lincoln assumes the presidency "in accordance with the 13th Amendment"** (the VP-vacancy/succession amendment, §29.8) and **must nominate a new VP** (filling the VP vacancy the amendment authorizes). | ch27 POST 276 |
+| **Acting-president decision** | On first assuming office after a death/resignation, the successor must **decide whether to refuse to be acting President.** | ch27 POST 441/454 |
+| **★ Trait-divert (acting-president action divert)** | Because Lincoln has **Easily Overwhelmed**, **50% of the time the VP performs presidential actions in his stead.** Lincoln also **GAINS Easily Overwhelmed + Pliable** from being overwhelmed (a trait-acquisition side-effect). | ch27 POST 306/441 |
+| **Meter-crater Evos fire** | The assassination/instability cascade fires meter-crater Evos — EconStab **"Economic Collapse"**, DomStab **"Govt Overthrown"** — coupling the succession beat to the economic crisis (§29.7). | ch27 |
+
+**System interactions (assassination ↔ succession ↔ acting-president ↔ VP-vacancy ↔ meters):**
+
+- The chain is **gated on the §29.8 amendment lifecycle**: succession invokes the **VP-Vacancy
+  ("13th") amendment**, and the *fill-a-new-VP* step is only available **because that amendment is
+  ratified.** No ratified amendment ⇒ the VP seat stays empty (the `hd` 1883 Matthews/Morton case,
+  [§24.1](#241-61-succession--eligibility--the-acting-president-state)).
+- The **acting-president state is trait-gated**: this run shows the **action-divert roll** specifically
+  (Easily Overwhelmed → 50% of actions performed by the VP), distinct from the `hd` **0-Command acting
+  president** who is fully inert ([§24.1](#241-61-succession--eligibility--the-acting-president-state)).
+  Together they confirm the acting-president state is governed by **(a) Command (what an acting
+  president *can* do) and (b) divert traits (whether the VP acts in his stead).**
+- The succession also **couples to the economic engine (§29.7)**: the assassination cascade fires the
+  EconStab/DomStab meter-crater Evos, so the **death → succession → acting-president** beat and the
+  **Panic/EconStab CRISIS** are linked at the assassination event.
+
+*(designed, not built — extends #61's spec ([§24.1](#241-61-succession--eligibility--the-acting-president-state)):
+an **assassination/death Evo that can KILL the president** (not only "survived"); a **succession
+engine** that promotes the VP and triggers the §29.8 **VP-vacancy fill** (gated on the amendment
+being ratified); an **acting-president state** with an **action-divert roll** keyed to traits (Easily
+Overwhelmed → 50% VP-acts) layered on the existing Command-gates-actions rule; and the
+**trait-acquisition side-effect** (overwhelmed successor gains Easily Overwhelmed + Pliable). Couples
+to §24.1, §29.8 amendment lifecycle, §29.7 economic engine.)*
+
+### 29.10 ★★ The canonical 4-step enthusiasm-shift rule + crisis-bill-failure scoring (#51 RESOLVED)
+
+> **★★ The single most valuable finding of batch 11. RULED (settled) — DESIGNED, not built.** The
+> `arkzag` final chunk publishes the **legislation-scoring → enthusiasm** rule **VERBATIM**, and it
+> **matches the `drums` model exactly** ([§22.2](#222-faction-enthusiasm--party-preference-election-engine--the-score-economy)).
+> This is therefore a **fork-RESOLUTION** of #51, not a new fork: the GAs here converged on the
+> canonical `drums`/#51 model rather than batch 10's variants (§29.3). The shipped engine has only
+> the bare `enthusiasm × 2` / `partyPreference × 5` terms in `calcStateVote`
+> ([§15.1](#151-calcstatevote--the-core-resolver-phaserunnersts3685)). (`arkzag#POST 195–207`; #51.)
+
+**The 4-step reshuffle (settled — fires per-Congress after bills are scored by-card → by-faction; the
+four shifts STACK, and are computed by ideology-card then aggregated by faction):**
+
+| # | Which faction | Enthusiasm move | Gate |
+|---|---|---|---|
+| 1 | Faction that gained the **MOST** points for the **dominant** party | its ideology cards **+1 toward the dominant party** | — |
+| 2 | Faction that gained the **LEAST** points for the **dominant** party | **−1 away** from the dominant party | — |
+| 3 | Faction that gained the **MOST** points for the **opposition** party | **+1 toward the DOMINANT party** ("the dominant party is taking care of the opposition faction's needs") | **only if it actually GAINED points** (not merely lost the least) |
+| 4 | Faction that scored the **LEAST** points from the **opposition** party | **+2 toward the OPPOSITION party** ("furious at the incumbent") | applies **even if it gained points** |
+
+- **"Dominant party" = the party that just gained more points** on the Congress's legislation tally;
+  the other is the "opposition."
+- Paired with the **±meter clamp** (meters clamp to avoid overflow, `arkzag` ch32 POST 155–177) and
+  the standard **Lingering 10-step** meter movement (`arkzag` ch4 POST 360); the downstream
+  per-state application carries the **hard ±3 cap** on ideology + party-pref bonuses (§29.3 step 4).
+- **The #18 state-scope question is the only piece still open** — this model expresses shifts
+  **per-ideology-card**; *which states* a card's enthusiasm then applies to is unresolved (§29.3).
+
+**★ Crisis-bill-failure scoring (the −100 / waiver rule — CORROBORATED, refines #11):**
+
+A **failed CRISIS bill scores −100 points**, **BUT the penalty is WAIVED if the bill conflicts with
+the faction's ideology → instead that faction's enthusiasm shifts +1 toward its party** (`arkzag`
+ch24 POST 1536; refines [§12.7](#127-forum-design-layer-crisis-bill-tag-designed-not-built) + #11).
+Worked: the recurring **Abolish-Slavery CRISIS amendment** fails every Congress (§29.8) — a
+pro-slavery faction's −100 is **waived** (the bill conflicts with its ideology) and instead it gets
+**+1 enthusiasm**, while an antislavery faction eats the −100. Named CRISIS states are derived from
+**meter thresholds** ([§21.8](#218-named-ordinal-meter-model--3-swing-cap--war-score-meter)
+named-ordinal meters: EconStab "Panic", HonestGov, DomStab), and the crisis-bill *bypass* (stronger
+scoring + spending-cap skip) is the §12.7 rule.
+
+**System interactions:** this scorer is the **hinge between legislation and elections** — bill scores
+(incl. failed bills, [§12.8](#128-forum-design-layer-bill-scoring-sums-all-faction-cards-design-divergence))
+→ the 4-step reshuffle → enthusiasm boxes → `enthusiasm × 2` in `calcStateVote`. It also couples to
+the **crisis engines**: a failed **economic** CRISIS bill (§29.7) or a failed **Abolish-Slavery**
+CRISIS amendment (§29.8/§23.2) routes through the **−100/waiver** rule, so the economic and
+slavery-era crisis engines both feed enthusiasm via this scorer.
+
+*(designed, not built — implement the 4-step reshuffle exactly as tabled (per-ideology-card,
+aggregated by faction, stacking, with the step-3 "gained points" gate and step-4 "even if gained"
+clause); the **−100 crisis-bill-failure penalty with the ideology-conflict waiver → +1 enthusiasm**;
+wire both into the §22.2 Score economy + the §29.3 per-state application. Couples to §12.7/#11 crisis
+bills, §23.2 slavery crisis, §29.7 economic engine.)*
+
+### 29.11 Batch-11 corroborations (the full arc), bugs & the roadmap hand-off
+
+> **Mostly CORROBORATION — strengthened by the SAME save run across a full 1822→1840 arc** (the
+> strongest possible confirmation: one continuous campaign exercising every system many times). Plus
+> two NEW shipped bugs and one NEW unsettled fork. (`arkzag#POST` as cited.)
+
+**(a) ★ Convention + general-election machinery — CORROBORATED + sharpened (#13/#111, DH-57).** The
+full multi-cycle presidential-election engine ([§15.3](#153-convention-machinery-292--full-forum-design-designed-not-built))
+was exercised across the **1832 and 1840** conventions and confirms, with `arkzag` specifics:
+
+| Mechanic | `arkzag` confirmation | Cite |
+|---|---|---|
+| **Brokered convention** | Each faction runs a **major candidate** (with a **nominator**; an **Orator** nominator gives a d6 momentum bonus) + minor/favorite-son candidates; multi-ballot. | ch21 POST 1717–1750 |
+| **Command-gated convention actions** | A candidate with N command may take **N** of: force a rules change / offer a presidential promise / appeal to credibility / drop out (±endorsement). | ch21 POST 367/425 |
+| **★ Presidential-promise buyouts decide a nomination** | **Cheves wins the 1832 D-R nomination on ballot 2 by buying endorsements** — **VP-for-Key, Sec-State-for-Clay** (offer-DOWN to candidates with **fewer** delegates, the §15.3.3 direction rule). | ch21 POST 444–488 |
+| **★ Party-specific nomination thresholds** | **National-Republican convention needs 2/3 (436/649); Democratic-Republican needs 50%+1 (343/685)** — the historical 2/3 rule modeled **for one party only** (corroborates the asymmetric-threshold finding, DH-7). | ch32 POST 2465–2466 |
+| **VP-selection scoring** | A **balance questionnaire** (digest counts it an **11-question** rubric; matches the §15.3.4 multi-check VP rubric — VP-from-another-faction? Mod/Cons/Lib on ticket? age gap? >50/<60? incumbent? can-be-independent/not-in-office? big+small state? different regions? VP obscure? → numeric VP score; **the lowest-scoring faction tends to get the VP**). *(Minor count variance vs the §15.3.4 10-check table — same rubric, treat the 10/11 difference as an enumeration variant, not a contradiction.)* | ch21 POST 1721 |
+| **★ 8-stage general election** | **1st Pres Debate → 1st Action Phase → VP Debate → 2nd Pres Debate → 2nd Action Phase → 3rd Pres Debate → October Surprise → Election Day** (some unlocked by era/traits). **Action Phase:** send the **VP or faction leader** to *give a speech* (any state) or *shore up support* (surrogate's home region); each rolls a **d6** for ±1. **The presidential candidate CANNOT campaign in person until the Primary Era** ("campaigning as nominee was socially forbidden"); an incumbent may *Use the Incumbent Power of the Office*. **Scandal roll** each phase is **skipped for Integrity** pols, only bites a **Controversial** candidate. **Per-state result = d6 vs d6**, majority EV = president-elect; **loser of the presidency takes −1 on all future presidential bids.** | ch7 POST 584–606; ch15 POST 1232 |
+| **Platform scoring** | **5 planks** (Economic/Domestic/Judicial/Foreign-military/**a Presidential pledge**), tallied **by-card → by-faction → by-party**, then the **3 yes/no questions** set Party Pref ±1 (§15.3.5). | ch7 POST 548; ch21 POST 1750; ch33 POST 2530 |
+| **Per-cycle convention venues** | Conventions are **hosted in a named city per cycle** (1840: **Albany NY** / **Winston-Salem NC**). | ch32 POST 2462 |
+
+**(b) ★ NEW UNSETTLED FORK — delegate-class assignment (AI-allocator vs player-rigged).** Distinct
+from the now-resolved #51, a **new fork** opened on **who sets convention delegate classes**:
+
+| Model | Proponent | Position |
+|---|---|---|
+| **AI-auto allocation** | **Zagnut** (house rule, ch3 POST 276–289) | Replace the human-governor "set delegate categories" step with **AI assignment** ("eliminates self-dealing… and saves time"), publishing the full **5-category EV×1…×4 formula** (Cat 1 = EV×1, Cat 2 = ×2, Cat 3 = ×3, Cat 4 = ×4, Cat 5 = ×3, with party-pref modifiers). |
+| **Player-rigged (intended)** | **Ted** (ch3 POST 286) | **Delegate-rigging is *intended* design** — insiders rigging the convention is the point (corroborates the §15.3 host-Governor "the convention was rigged in my favor as I set the delegates" advantage). |
+
+**Practice did NOT converge:** the **1840 convention reverted to human-set delegate classes** (ch32
+POST 2466). **The build must pick one** (`game-context.md` §8 open Q). This is the convention-host
+analog of the §29.2/§29.3 forks — record it as **unsettled**, separate from the resolved #51.
+
+**(c) Other corroborations (existing IDs strengthened from the full arc):**
+
+| ID | `arkzag` confirmation | Cite |
+|---|---|---|
+| **#44 per-state EC method** | **DE + SC still choose electors by LEGISLATURE** in the 1828 presidential election (era-keyed elector-appointment method persisting, [§21.2](#212-per-state-presidential-election-method)). | ch15 POST 1425 |
+| **#85 death/retire rate** | **3% retirement + 2% death per faction** per half-term + era modifiers — **itemizes** batch 10's "5%/half-term" into the 3+2 split. | ch4 POST 313/319 |
+| **#10 filibuster** | **Puritan senators with ≥2 legislative** may filibuster, delaying a vote a full half-term (the Bank bill recurs through this, §29.7). | ch11 POST 26 |
+| **#54 investigations** | Fire during Congress-in-Session (2.6) against an officeholder who gained **Controversial in the SAME half-term** (not a prior one). | ch2 POST 192 |
+| **#25 cabinet rules** | ≥2 Admin, ≥1 relevant expertise; **≥1 secretary from each of NE / Mid-Atlantic / Deep South / Upper South / Midwest** or a **50% chance of −1 DomStab** (the 5-region model); **≤1 cross-party in the top four**, **≤3 cross-party total**; **up to 5 retained** across administrations. | ch3 POST 267; ch16 POST 1412; ch23 POST 1028 |
+| **#52 SCOTUS** | By-ideology docket continues: **US v. Amistad** ("ahistorical −50 Human Rights"), **Barron v. Baltimore**, **The Antelope Case**; SCOTUS-min-age amendment (§29.8). **Docket runs dry** — the GA had to **invent** the Amistad case (a content-supply gap). | ch5 POST 394; ch13 POST 71; ch32 |
+| **#59 sectional balance** | Recurring **Abolish-Slavery CRISIS amendments always fail** — the antebellum trajectory continuing from the 1820 start ([§23.2](#232-59-freeslave-sectional-balance-crisis-scoring-the-slavery-era-crisis-engine), §29.8). | ch20/24/28/33 |
+| **#1 multiplayer + CPU + transfer** | Mass CPU-conversion mid-run (BlockCPU/ConsECPU/KevinCPU/LarsCPU/VicxCPU; @ebrk85 takes over a Red faction) — **CPU is a true per-faction fallback** + factions are transferable. | POST 2, 14 |
+| **#40 per-(party,era) nicknames** | RED **fragments into ~6 micro-factions** by 1832 (National Republicans, Carroll/Prentiss/Comegys Republicans, Adams/Arch-Federalists) — all under the **frozen "Federalist/National-Republican" RED label**; party-leader elections recur each cycle (Marshall 1822 → Scott 1828 → 1832 contenders). | ch16; ch22 |
+| **#101 era-gated office creation** | **Minister to Japan** creatable by exec action **only in the Manifest-Destiny era**; military-academy / state-university only in later eras. | ch4 POST 359; ch5 |
+| **Leadership eligibility (#51-adjacent)** | The verbatim **faction-leader eligibility cascade** + omission-fallback order (ch3 POST 229/233); **an elected President auto-leads his faction**; **incumbent-challenge gate** = can't challenge a same-party incumbent leader unless he fails prerequisites OR the challenger faction's ideology enthusiasm drops below neutral (ch2 POST 137). | ch2/ch3 |
+
+**(d) ★ NEW shipped bugs (build-relevant):**
+
+- **★ DH-59 — foreign-relations meter UNDER-FLOORS below its minimum.** *"Japan: 1 → 0 (↓ -1) #
+  Error, should be 1 minimum lmao"* (`arkzag` ch9 POST 1259) — a **missing clamp**: a relations
+  meter is allowed to fall **below the documented floor of 1** (the named-ordinal meters of
+  [§21.8](#218-named-ordinal-meter-model--3-swing-cap--war-score-meter) / per-power relations
+  [§13.3.1](#1331-per-power-relations-meters--an-era-dependent-power-roster) have a floor that isn't
+  enforced). → **NEW BUG: clamp relations/meters to their floor.**
+- **★ DH-60 — era-events fire with NO territory/asset prerequisite.** *"Force Open Trade with
+  Japan"* fires with **no Pacific port**; *"Stubborn Cherokee"* fires **without owning the relevant
+  territory** (`arkzag` ch4 POST 335/337/340). This is the **concrete face of #92's territory-content
+  gating** (and BUG-1): the **era-Evo deck is not territory/asset-gated**. → **NEW BUG: add a
+  per-event territory/asset prerequisite check** ([§10.3](#103-243-era-events--runphase_2_4_3_era-phaserunnersts2796),
+  [§10.4](#104-forum-design-layer-for-era-events-designed-not-built)).
+- **DH-53 (corroborated):** the "until passed −1 EV" vs "when passed +1 EV" bill-effect mis-signing
+  persists in the shared sheet (several land/Indian bills still carry punish-until-passed wording).
+
+**(e) Design-friction notes (point to `game-context.md`, not re-documented):** the relentless manual
+upkeep drove an **aggressive automation push** (Zagnut/Ark script deaths/retirements, conventions,
+delegate classes — DH-36 class, but **no GA-burnout collapse this time** because they scripted around
+it); **heavy player attrition** (most factions CPU'd by ~1832 — reinforces the **solo-vs-CPU build**
+as the natural shape, #114); a **party-flipper TRADE house-rule** design wish (trade one "can party
+flip" pol per half-term; loser gains Flip-Flopper — **not in the build**, a candidate mechanic); and
+**career-track replacement-eligibility still ad hoc** (DH-25, when Benton's Senate seat opened on
+winning the presidency).
+
+> **★ Roadmap hand-off — the load-bearing batch-11 build items (for the tech-lead / roadmap-planner).**
+> The full-arc late-game systems are the batch's load-bearing additions, in priority order:
+> 1. **#116 — the Bank-War → Independent-Treasury economic engine** ([§29.7](#297--new--the-bank-war--independent-treasury-long-run-economic-engine-gap-116)):
+>    a recurring Bank CRISIS bill ↔ Panic/EconStab CRISIS state ↔ Independent-Treasury **`Bill.replaces`**
+>    resolution, plus a **per-bill-class tariff cooldown** (`lockedUntilYear`). Extends §27.6.
+> 2. **#119 — the constitutional-amendment lifecycle** ([§29.8](#298--new--the-constitutional-amendment-lifecycle-propose--committee--floor--governor-ratify--activeblocking-gap-119)):
+>    `proposed → committee → floor → governor-ratify → active`, **un-bundleable**, with an **active
+>    amendment → blocks-a-legislation-class** effect. Sharpens §21.3/§24.4.
+> 3. **#61 — the death/assassination → succession → acting-president chain** ([§29.9](#299--extended--deathassassination--vp-succession--acting-president-end-to-end-gap-61)):
+>    an Evo that **kills** the president, a succession engine that **fills the VP vacancy** (gated on
+>    the §29.8 amendment), and an **acting-president action-divert roll** (Easily Overwhelmed → 50%).
+>    Extends §24.1.
+> 4. **#51 RESOLVED** — implement the [§29.10](#2910--the-canonical-4-step-enthusiasm-shift-rule--crisis-bill-failure-scoring-51-resolved)
+>    **4-step enthusiasm reshuffle** + the **−100/waiver crisis-bill-failure** rule; **only the #18
+>    state-scope** sub-question remains a human call (§29.3).
+> 5. **Convention machinery** — the §15.3 engine + **party-specific thresholds (2/3 vs 50%+1)**,
+>    **presidential-promise buyouts**, **VP-scoring rubric**, **8-stage general** are now multi-campaign
+>    confirmed (§29.11a); **resolve the NEW delegate-class fork** (AI-allocator vs player-rigged, §29.11b).
+> 6. **Two NEW bug fixes:** **DH-59** (clamp relations/meters to floor) and **DH-60** (territory/asset
+>    prerequisite on era events). New gap context logged to `game-context.md` **#116/#119** (+ DH-59/60).
