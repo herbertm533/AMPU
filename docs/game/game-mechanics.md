@@ -155,6 +155,34 @@
 >   New design holes **DH-36..DH-44** logged to `game-context.md`; **DH-36** (manual-upkeep GM
 >   burnout killed `afc6cbd7`'s ~12-turn game) is the strongest cross-cutting case yet that the
 >   build must own all bookkeeping. Cite `afc6cbd7#POST N` / `ad0f2875#POST N`.
+> - **Batch 9** — `nuke` (a ~12k-post 1948→~2005 Cold-War/modern corpus, the largest in the KB):
+>   the **chronological predecessor of `modern`**, completing a continuous 1772→2020 timeline. Adds
+>   **[§28 Modern / Cold-War era (1948+)](#28-modern--cold-war-era-1948-systems-designed-not-built)**
+>   (the 1948 boot, the **NEGATIVE-SCOPE finding** that the Cold War is the generic war engine
+>   relabeled, the diplomacy subsystem, the gradual realignment, mutable cabinet + legislated SCOTUS
+>   size, the two-level era model + per-decade census). **★ The strongest design-intent statement in
+>   the KB**: the digital app is built **1-human-vs-9-CPU** — validating solo-first sequencing. New
+>   design holes **DH-45..DH-58** + rows **#106..#114**. Cite `nuke#POST N`.
+> - **Batch 10** — `cc37d770` (a 947-post "1820 — The Era of Democracy" 10-human multiplayer, the
+>   **first 1820-START scenario** in the KB, `dem1820`): a short campaign (stalled ~1822–23, never
+>   reached 1824/Jackson) that nonetheless produced a **concrete cluster of GA rulings + rule
+>   clarifications** worth capturing as mechanics. Adds a new
+>   **[§29 The 1820 "Era of Democracy" start](#29-the-1820-era-of-democracy-start--scenario-boot-procedure-ga-rulings--unsettled-forks-mostly-designedruled)**
+>   covering the **★ scenario-boot procedure as practiced** (the live first-10 draft, the contested
+>   **"strip Command from ≤40 boot pols w/o a job"** house rule, **inaugural career-track seeding from
+>   the last 3 draft classes**, era-keyed industry init, Senate-class assignment, vacant-seat fill —
+>   the canonical answer to gap **#115 "no rules for CREATING a game"**), the **GA appointment /
+>   card-distribution / replacement-gains rulings**, and the **two unsettled design forks**
+>   (player-controlled SCOTUS; the meter→enthusiasm→election model). Also **sharpens** §22.7 (the
+>   player-SCOTUS fork: delay/dismiss is a player action, votes by ideology chart), §23.2 (the
+>   sectional-balance crisis fires on imbalance in **either** direction — earliest observation, from
+>   a 1820 start), §22.10/§29.5 (the **focus-Rep House abstraction: rep count = (EV−2)/5**, seat-locked
+>   incumbency w/ census-year exception, vcczar POST 676), and §22.2/§21.8 (the meter→enthusiasm
+>   processing rule + the **hard ±3 cap** on ideology/party-pref bonuses). Mostly **corroborates** the
+>   gap log from a **3rd start year** (#92 era-bands, #1, #18/#51, #52, #55, #59, #44, #24, #76/#108,
+>   #9, #20, #25b, #101, #61; DH-24/25/27/36/53/56). The only NEW gap is **#115**. **Polarity = 1788/1800
+>   (BLUE = Democratic-Republicans, RED = dying Federalists / nascent National-Republicans), NOT the
+>   1856 flip.** Cite `dem1820#POST N`. New design hole context logged to `game-context.md` (#115).
 >
 > **Alt-history note.** All five forum threads (and especially `modern`/`pop`) play a
 > **divergent alternate timeline**, not real history: fictional **era names** (the
@@ -229,7 +257,7 @@
     - [22.11 Era clock & era enum (alt-history)](#2211-era-clock--era-enum-alt-history)
 23. [Civil War & Reconstruction (1856-arc) (designed, not built)](#23-civil-war--reconstruction-1856-arc-designed-not-built)
     - [23.1 Secession + Southern-Unionist / Secessionist trait gating](#231-58-secession--southern-unionist--secessionist-trait-gating-the-antebellum-payoff)
-    - [23.2 Free/Slave sectional-balance crisis scoring](#232-59-freeslave-sectional-balance-crisis-scoring-the-nationalism-crisis-engine)
+    - [23.2 Free/Slave sectional-balance crisis scoring](#232-59-freeslave-sectional-balance-crisis-scoring-the-slavery-era-crisis-engine)
     - [23.3 Civil War — the two-theater combat engine](#233-56-civil-war--the-two-theater-combat-engine-multi-term-subsystem)
     - [23.4 Reconstruction readmission subsystem](#234-57-reconstruction-readmission-subsystem-end-nationalism--gilded)
     - [23.5 Canada conquest → era-gated statehood + Canadian draft](#235-60-canada-conquest--era-gated-territorystatehood--canadian-draft)
@@ -289,6 +317,13 @@
     - [28.11 Modern draft, lobby cards & dataset](#2811-modern-draft-lobby-cards--dataset-the-era-locked-content-rotation)
     - [28.12 ★ Design intent (solo-first), open question, timeline seam](#2812--design-intent-solo-first-the-open-question-and-the-timeline-seam)
     - [28.13 Era-of-Terror content (2000–~2005)](#2813-era-of-terror-content-2000-2005-fired-in-the-late-game)
+29. [The 1820 "Era of Democracy" start — scenario-boot procedure, GA rulings & unsettled forks (mostly designed/ruled)](#29-the-1820-era-of-democracy-start--scenario-boot-procedure-ga-rulings--unsettled-forks-mostly-designedruled)
+    - [29.1 ★ The scenario-boot procedure as practiced (gap #115)](#291--the-scenario-boot-procedure-as-practiced-gap-115)
+    - [29.2 ★ Unsettled fork A — player-controlled SCOTUS (gap #52)](#292--unsettled-fork-a--player-controlled-scotus-gap-52)
+    - [29.3 ★ Unsettled fork B — the meter→enthusiasm→election model (gap #18/#51)](#293--unsettled-fork-b--the-meterenthusiasmelection-model-gap-1851)
+    - [29.4 GA appointment & eligibility rulings (Senate fill order, card distribution, replacement-gains)](#294-ga-appointment--eligibility-rulings-senate-fill-order-card-distribution-replacement-gains)
+    - [29.5 The focus-Rep House abstraction (gap #55)](#295-the-focus-rep-house-abstraction-gap-55)
+    - [29.6 Corroborations & the era slice (1820–23)](#296-corroborations--the-era-slice-182023)
 
 ---
 
@@ -3742,8 +3777,32 @@ resolution mode the modern thread does not exercise (modern resolves every state
 vote then awards EV winner-take-all, with tie-breaks). The new work is the **Score economy +
 4-part reshuffle + meter→bonus map** feeding those existing per-candidate terms.
 
+> **★ Sharpened by `dem1820` (batch 10): a concrete meter→enthusiasm→election PROCESSING rule +
+> the hard ±3 cap — but its STATE-SCOPE is an unsettled 3-way fork.** GM `Ted` re-derived and
+> published (from his 2000 playtest) the load-bearing per-step rule the modern engine above only
+> sketched (`dem1820` POST 569, 575, 618):
+> 1. **Non-enthusiasm meters MOVE the per-ideology enthusiasm boxes.** A meter effect worded
+>    "−1 for Progs/Libs" (e.g. Revenue/Budget) **shifts Prog + Lib enthusiasm +1 toward Red each**.
+>    (This is the upstream half of the §22.1 meter→election table — meters feed enthusiasm, which
+>    feeds the per-candidate `enthusiasm × 2` term.)
+> 2. **Enthusiasm boxes then apply to the per-state vote** — e.g. a **+3 Blue LW-Pop** box adds
+>    **+3 to all Blue LW-Pop candidates** — gated by the state-scope fork below.
+> 3. **HARD ±3 CAP on the ideology + party-preference bonuses** (state-specific bonuses are
+>    **uncapped**). This is the **election-engine** instance of the cross-era **±3 swing cap**
+>    ([§21.8](#218-named-ordinal-meter-model--3-swing-cap--war-score-meter)) — confirmed here from a
+>    3rd start. A **"State of the Meters" table** is published before the election (POST 618).
+> - **★ THE FORK — which states does the enthusiasm box touch?** Three live GA models (logged
+>   `game-context.md` #18, recorded in full in **[§29.3](#293--unsettled-fork-b--the-meterenthusiasmelection-model-gap-1851)**):
+>   **(Ted)** **every state UNLESS that state penalizes the ideology** (his deliberate divergence
+>   from V — "V's version takes populists a huge hit in every state… in reality that's when
+>   populists rise: Tea Party, Bernie, MAGA"); **(V/vcczar)** **only states that LEAN that
+>   ideology**; **(Matt)** enthusiasm matters **only in primaries** + ideology-leaning states. The
+>   build must pick one.
+
 *(designed, not built — implement the 4-part reshuffle + a faction `Score` field + era-end
-awards + the lowest-faction team penalty; wire Score into the meter→election map.)*
+awards + the lowest-faction team penalty; wire Score into the meter→election map; **implement the
+meters-move-enthusiasm-boxes step + the hard ±3 cap on ideology/party-pref bonuses (uncapped
+state-specific); pick ONE state-scope model from the §29.3 fork.**)*
 
 ### 22.3 Presidential primary subsystem (2.9.1)
 
@@ -4013,12 +4072,31 @@ bills tied to a court-disabled policy **should** auto-deactivate but **don't** (
 > flipping 7-2 Aye to 4-5 Nay); **disputed electors → SCOTUS rules, Integrity NOT consulted**
 > (POST 462). Full Justice drift table → **[§25.14](#2514-long-term-justice-ideology-drift-the-canonical-drift-rule)**.
 
+> **★ UNSETTLED FORK (`dem1820`, batch 10): is the court PLAYER-controlled or all-CPU?**
+> `dem1820` ran a **player-controlled Supreme Court** "for the first time in years" and it
+> triggered a multi-party design argument. The fork — fully recorded in
+> **[§29.2](#292--unsettled-fork-a--player-controlled-scotus-gap-52)** — is between
+> **all-CPU-by-ideology** (`Ted`/`Matt`'s default + the shipped abstraction) and
+> **player-controllable-with-restrictions** (`ebrk`/`Lars`: "how the game should be"), with a
+> **trait-gated** middle (`Vee`). What it **resolves cleanly** (the canonical rule the table
+> agreed on): a player Justice does **NOT** vote individual cases — **votes follow vcczar's
+> by-ideology chart, ties roll a die**; what the *player* controls is **delay / dismiss** —
+> a case may be **delayed**, but may be **DISMISSED only if it was brought by a Gov Action**
+> (never a historical case), and the controlling party **must hear ≥ 1 case** (can't delay
+> them all; CPU only delays when it lacks the numbers). This **re-enables** player control
+> that **`pop` (batch 6) recorded the designer as having disabled** (`pop` POST 479-480) — both
+> sides are an open design question, logged `game-context.md` #52. The **tie-affirms-the-lower-
+> court** + **ahistorical-flag** mechanics are *corroborated* here (Worcester v. Georgia NAY 5-1
+> "historical"; Charles River Bridge 3-3 → split affirms lower court → randomly rolled AYE
+> "ahistorical"). (`dem1820#POST 420-443`.)
+
 *(designed, not built — a SCOTUS module: a per-term case docket + ideology-vote model; the
 Iron-Fist/Manipulative compel-vote and compel-retire powers (with the 12-year minimum + the
 conditional-retirement bargain); dynamic court size + court-packing (age-70 trigger, shrink
 when ≥ target, set-count bills); confirmation at 64/60% with the failed-nominee
 moderate-auto-confirm recovery; appointee ideology reveal + 10-year drift; a ruling →
-law-deactivation hook.)*
+law-deactivation hook; **a player-vs-CPU control decision (§29.2) — if player-controllable, the
+delay/dismiss-only model gated by "dismiss only Gov-Action cases, must hear ≥1".**)*
 
 ### 22.8 Investigation special committees (under-designed)
 
@@ -4092,6 +4170,19 @@ ratings into the generic war engine.)*
   House seat (post 185, 870, 964: total EVs dropped **706 → 678**). Wyoming-Rule apportionment
   **ballooned the House to 601 seats** (post 185, 420), later cited as **572** (post 1281);
   the **Senate = 106** (53 × 2).
+- **★ Sharpened by `dem1820` (batch 10): the focus-Rep abstraction has a clean cross-era
+  formula + a seat-locked incumbency rule.** The House is **abstracted** to "focus Reps," each
+  controlling a roughly equal share of a state's hidden seats; **rep count per state =
+  (EV − 2) / 5, rounded up** (`dem1820` POST 643). **Incumbency is seat-specific**: vcczar ruled
+  focus Reps "should be viewed as incumbents" of a specific seat (POST 676), so you keep the **+2
+  incumbency bonus only in your own seat/district**, **EXCEPT in census/redistricting years
+  (1822, 1832, 1842…)** when you may run in **any** seat and keep it (a Rep whose focus-seat is
+  eliminated in redistricting keeps the bonus elsewhere). **Census timing**: the decennial census
+  changes House seats in the **following half-term** and is reflected in the **first election of
+  the new decade** (1820 census → 1822 midterm), with **EV/presidential impact at the first
+  year-ending-in-2 presidential election** (1810 census → 1812 pres; 1830 → 1832). Full ruling +
+  the vcczar long-term-wish fork → **[§29.5](#295-the-focus-rep-house-abstraction-gap-55)**.
+  (`dem1820#POST 643, 676, 682-686, 696`.)
 - **Two home states**: a politician may carry an **alt-state add at draft** ("AOC (NY) adds
   CO", post 462, 495, 1785), affecting relocation/Carpetbagger
   ([§6.2.x](#62x-forum-design-layer-designed-not-built)) and Kingmaker chaining
@@ -4224,7 +4315,7 @@ The antebellum pressure pays off as a **scripted Era-Event chain**, not a passiv
 >   Stability = 1** (the meter floor) — **not** a John-Brown / Hartford / Nullification convention.
 >   GM flags this CSA-formation event as the **one** CW trigger that does **NOT** spawn a
 >   secession-convention gov-action (likely a missing event field — see §19 hole / DH-class).
->   (`rep1800` §C POST 6884, 6905, 6909–6914.) **Corroborates [§23.2's DomStab-as-CW-gate](#232-59-freeslave-sectional-balance-crisis-scoring-the-nationalism-crisis-engine):
+>   (`rep1800` §C POST 6884, 6905, 6909–6914.) **Corroborates [§23.2's DomStab-as-CW-gate](#232-59-freeslave-sectional-balance-crisis-scoring-the-slavery-era-crisis-engine):
 >   DomStab is the secession/CW trigger meter.**
 > - **The sitting PRESIDENT defected to lead the CSA** ("Oaths to Two Masters" achievement): Pres
 >   James Barbour resigned, joined VA's secession, and was chosen **President of the Confederacy**
@@ -4252,30 +4343,47 @@ The antebellum pressure pays off as a **scripted Era-Event chain**, not a passiv
 decision; the per-pol secession roll keyed on `Southern Unionist`/`Nationalist` traits + state
 region; one-way relocation out of rebel states; the CSA officer/structure events.)*
 
-### 23.2 (#59) Free/Slave sectional-balance crisis scoring (the Nationalism crisis engine)
+### 23.2 (#59) Free/Slave sectional-balance crisis scoring (the slavery-era crisis engine)
 
-The **defining Nationalism-era mechanic** — a sectional counter that punishes the side that
-loses the free-vs-slave state balance at each half-term close, **retired on emancipation**.
+A sectional counter that punishes whichever side **loses the free-vs-slave state balance** at a
+half-term close, **retired on emancipation**. **★ Now confirmed to fire on imbalance in EITHER
+direction with the SAME effect package, and from as early as a 1820 start** (`dem1820`,
+batch 10) — it is the **slavery-era** crisis engine, not a Nationalism-only mechanic.
 
-- **Trigger** (`hd` POST 302, 747, 1070): at half-term close, when **free states outnumber
-  slave states** (it fired when KS + OR were admitted free). One bloc "wins" the balance; the
-  *other* bloc's faction/officers take the hit.
-- **Effect package when free > slave** (the antebellum North pulling ahead):
-  **Speaker & Senate Pro-Tem each −250 points + −1 next election; all Moderate factions −250;
-  Domestic Stability −2; Party-Preference +2 toward Red; Civil-Rights faction +250 /
-  RW-Activists −250; ALL RW-Activist candidates +2 next election** ("livid").
+- **Trigger — imbalance in EITHER direction.** At half-term close, when the free/slave state
+  count goes **lopsided**:
+  - `hd` (1856 start, POST 302, 747, 1070): **free > slave** (fired when KS + OR admitted free).
+  - **`dem1820` (1820 start, POST 521, 526, 532): slave > free at 14 slave / 12 free** (after
+    Arkansas + Michigan statehood — AR slave, MI free), narrated as **"ending the Era of Good
+    Feelings."** **Earliest observation of this engine in the KB.**
+  In both cases one bloc "wins" the balance and the *other* bloc's faction/officers take the hit.
+- **Effect package (the SAME in both directions — the key cross-start finding):**
+  **Speaker & Senate Pro-Tem each −250 points + −1 next election; all Moderate factions −250/−500;
+  Domestic Stability −2; Party-Preference +2 toward Red; Civil-Rights / antislavery faction
+  +250 (and +2 in the next elections) / RW-Activists −250; ALL RW-Activist candidates +2 next
+  election** ("livid"). That **the Party-Pref shift is +2 toward RED regardless of which side wins**
+  the balance is a deliberate design tilt — see the **#59 design philosophy** (the engine
+  structurally advantages the antislavery/Republican pole, cross-ref §23.4's "Red+2"). For a 1820
+  start, narrate the "Civil-Rights faction" buff as **antislavery / restrictionism** per the
+  historian's polarity discipline, not the 20th-c. movement.
 - **Retirement** (`hd` POST 1766): the whole crisis is **removed once slavery is abolished**
-  (the 13th-Amendment-equivalent beat) — it is era-bounded to Nationalism, not permanent.
+  (the 13th-Amendment-equivalent beat) — era-bounded to the slavery eras (Democracy → Nationalism),
+  not permanent.
 
-This is a **sectional free-vs-slave state counter** feeding **score + meter + election**
-effects, keyed to the era and sunset on emancipation. (Codebase note: `SLAVE_STATES_1856`
-exists at `types.ts:1152` but **no such crisis scoring** is wired — the shipped antebellum
-beats are the loyalty-decay/meter-modulation events only.)
+This is a **sectional free-vs-slave state counter** feeding **score + meter + election** effects,
+firing on imbalance either way and sunset on emancipation. **It interacts directly with
+statehood/admission** ([§21.5](#215-bill-driven-statehood--auto-generated-officials),
+[§29.6](#296-corroborations--the-era-slice-182023)): every statehood bill changes the
+free/slave count, so admitting a slave or free state can *itself* trip the crisis at the next
+half-term close (in `dem1820` the AR+MI admissions did exactly this). (Codebase note:
+`SLAVE_STATES_1856` exists at `types.ts:1152` but **no such crisis scoring** is wired — the
+shipped antebellum beats are the loyalty-decay/meter-modulation events only.)
 
 *(designed, not built — a `freeStateCount`/`slaveStateCount` derived counter; an
-end-of-half-term check that, while the imbalance holds and the era is Nationalism, applies the
-Speaker/Pro-Tem/Moderate/Civil-Rights/RW-Activist score + DomStab + Party-Pref + next-election
-package; retire the whole subsystem on the abolition era event.)*
+end-of-half-term check that, **while the count is lopsided in EITHER direction** and the era is a
+slavery era (Democracy/Nationalism), applies the Speaker/Pro-Tem/Moderate/Civil-Rights/RW-Activist
+score + DomStab + Party-Pref-toward-Red + next-election package; couple it to statehood admission
+so a new state can trip it; retire the whole subsystem on the abolition era event.)*
 
 ### 23.3 (#56) Civil War — the two-theater combat engine (multi-term subsystem)
 
@@ -6258,7 +6366,7 @@ event. Couples to §21.2 / §24.3 and §27.8.)*
   only 4 cases — §A POST 231, 530). The dice picking Nay is what set the whole sectional design
   in motion in this campaign.
 - **Free/Slave-state balance is a tracked tally** driving meter / enthusiasm / election effects —
-  the sectional-balance crisis engine already documented at [§23.2](#232-59-freeslave-sectional-balance-crisis-scoring-the-nationalism-crisis-engine)
+  the sectional-balance crisis engine already documented at [§23.2](#232-59-freeslave-sectional-balance-crisis-scoring-the-slavery-era-crisis-engine)
   (row #59). The gap-era flag is `slavery` / Plantation; §23.2 is the half-term scoring on the
   imbalance.
 
@@ -7046,3 +7154,315 @@ un-implementable Wyoming Rule — hole #5), and modern lobby cards. Event firing
 > solo-first sequencing. New design holes from this batch are logged in `game-context.md`
 > **DH-45..DH-58** and detail rows **#106..#114** (§19, not re-documented here). With §28 the doc
 > now covers a continuous **1772→2020** timeline (the 2004 Cuomo election is the seam to §22).
+
+---
+
+## 29. The 1820 "Era of Democracy" start — scenario-boot procedure, GA rulings & unsettled forks (mostly designed/ruled)
+
+> **Source: `cc37d770` "1820 — The Era of Democracy" (`dem1820`, batch 10)** — a 947-post,
+> 10-human multiplayer **first 1820-START scenario**, GA'd by `@MrPotatoTed` (+`@matthewyoung123`,
+> with `@ebrk85` / `@Arkansas Progressive` / `@vcczar` assisting). The campaign **stalled ~1822–23
+> after ~1.5 turns** (GA burnout, DH-36) and **never reached 1824 / Jackson / Nullification** — so
+> the Jacksonian set-pieces are framing, not played. Its durable value is a **cluster of concrete
+> GA rulings + rule clarifications** and **two unsettled design forks**. **Almost everything here is
+> DESIGNED/RULED, not SHIPPED** — the shipped engine boots only 1772 and 1856 (`scenario1772.ts`,
+> `scenario1856.ts`); there is no 1820 scenario, no live SCOTUS docket
+> ([§22.7](#227-scotus-subsystem-253--282); shipped court = `runPhase_2_5_3_Court` coin-flip
+> ±0.1 partyPref + `runPhase_2_8_2_CourtMgmt` age-75 retire, `phaseRunners.ts:3397, 3648`), no
+> focus-Rep House model, and no sectional-balance crisis ([§23.2](#232-59-freeslave-sectional-balance-crisis-scoring-the-slavery-era-crisis-engine)).
+> Cite `dem1820#POST N`. Cross-ref `game-context.md` **#115** (the only NEW gap) + #1/#18/#24/#44/
+> #51/#52/#55/#59/#61/#76/#92/#101/#108 and DH-24/25/27/36/53/56.
+>
+> **Polarity (historian's discipline).** At 1820 **BLUE = Democratic-Republicans** (dominant,
+> agrarian/states'-rights pole) and **RED = the dying Federalists / nascent "National Republicans"**
+> — the **same** polarity as 1788/1800, **NOT** the 1856 RED=antislavery flip. "National Republican"
+> is ~5–10 yrs early (historically RED in 1820 = Federalists). The **"Civil Rights" ideology token**
+> is, at 1820, **antislavery / restrictionism** (Missouri-debate / Rufus-King kind), not the 20th-c.
+> movement. See `historical-context-1820-democracy.md` §5, §7.
+
+### 29.1 ★ The scenario-boot procedure as practiced (gap #115)
+
+> **THE build-relevant headline + a NEW gap.** The single most-repeated meta-complaint was that
+> **there are NO documented rules for CREATING a game** — the rulebook is written for *players*, not
+> GMs (`Ted`: *"rules, or a how-to guide, on how to create a playtest is maybe our greatest need
+> but to date nobody has stepped up to write one"*, POST 92; *"there aren't any written rules about
+> how to create a game"*, POST 84). The setup was **improvised**, so house rules were undisclosed
+> until challenged. **The build's scenario-boot pipeline IS the missing setup spec** — this is the
+> canonical procedure-as-practiced, with every undocumented decision flagged. Extends the cross-era
+> mid-government boot shape ([§26.1](#261-the-mid-government-boot-shape-general)) with a **third
+> start year (1820)** and the **first explicit account of an inaugural live draft + career-track
+> seed**. (`dem1820#POST 1, 2, 14, 23-34, 62, 79, 82, 84, 92, 117, 532, 859`; gap #115.)
+
+The **1820 boot is a mid-government continuation boot** (same shape as 1856/1800/2012): sitting
+**President Monroe + VP + Cabinet + a 6-then-9-member SCOTUS + Speaker + Senate Pro-Tem + full
+Congress** pre-seated, **some seats VACANT** and appointment-filled in setup; **5 BLUE + 5 RED
+named factions** (B1–B5 / R1–R5) spanning **LW-Pop → RW-Pop** across each party (the per-party-5
+ideology-ladder pattern, here holding an **8th era**). The era pool is **Mod/Cons/Trad-heavy**;
+"there are not a lot of Libs in this era" and Progressives barely exist (POST 943 — corroborates
+the early-era drafting profile from a 3rd early-era thread).
+
+**The procedure, in order:**
+
+| # | Step | What happens | SHIPPED? |
+|---|---|---|---|
+| 1 | **Live first-10 draft** | A **live Discord draft of 10 marquee figures** (Marshall 1st overall, DeWitt Clinton, Rufus King, Macon, Clay, Webster, Monroe, Howard, Madison, Adams), then the rest by offline tiered lists (POST 2, 14). | DESIGNED — no draft-UI for a live first round. The shipped 1772 draft is dataset-driven ([§4](#4-draft-211)). |
+| 2 | **Rookie (25-yr-old class) snake draft** | A snake **1820 Rookie Draft** of the ~1820 class — John Church Hamilton, Edward Everett, Thaddeus Stevens, G.M. Dallas, J.K. Polk, etc. (POST 23-26). | SHIPPED mechanic (draft on `year % 4`), but seeded by the boot, not live. |
+| 3 | **Faction ideology assignment** | Fixed at **B1-B5 / R1-R5** spanning LW-Pop→RW-Pop per party (POST 1; reconfirmed POST 946). | DESIGNED (boot data). |
+| 4 | **★ Inaugural career-track seed (the last 3 draft classes)** | **Verbatim rule (POST 28):** during the inaugural draft you may place rookies **from the past three draft classes** onto career tracks — a 1820 start seeds from **1820 / 1816 / 1812 / 1808** (4 classes incl. the current; POST 32). **Pols who begin already in a position (Rep, General, etc.) CANNOT be career-tracked.** | DESIGNED/RULED — the stated rule for the mid-game career-track-bootstrap hole (DH-25). Debated as too harsh (Zagnut wants "no >1 ability + 3-4/yr cap", POST 29; Largo wants pulled pols reset to year-1 stats, POST 34). |
+| 5 | **★ "Strip Command from ≤40 boot pols w/o a job" (contested house rule)** | The GA **removed Command from anyone ≤ 40 without a non-career-track job** at boot, rationale: *"nobody should be born with command, or else people become President out of nowhere"* (POST 62, 79, 82). `KevinStorm` objected loudly — he'd drafted pols *specifically* for starting Command (POST 79, 91) — and it's **nowhere in the rules** ("vibes-based rules", POST 97). | DESIGNED/RULED — **NEW, undocumented house rule (#115).** The build's boot pipeline **must decide**: do inaugural-draft pols keep their dataset Command, or is Command zeroed below an age/office threshold? (Open Q, `game-context.md` #115.) |
+| 6 | **Relocations / ideology shifts / kingmaker-protégé / faction-personality cards** | Standard 2.1.x churn run as part of setup; faction-personality cards drawn for the **1821-1823** band. | SHIPPED phases (2.1.3–2.1.8); run at boot here. |
+| 7 | **Disgruntled-pol party-flips (2.1.6)** | **Fired turn 1** because the President IS a faction leader at this boot (note: `rep1800` SKIPPED 2.1.6 because no leaders exist at its boot — see [§29.6](#296-corroborations--the-era-slice-182023)). BLUE is **maxed enthusiasm** for Mod/Cons/Trad/RW-Pop, so **6 RED pols defected to BLUE** + 3 gained "Can Party Flip" (POST 72). | SHIPPED-adjacent — confirms the one-directional enthusiasm-gated auto-flip ([§6](#6-politician-churn-213217); #76/#108); flip direction is RED→BLUE because BLUE is maxed. |
+| 8 | **Leadership + committees + faction/party leaders** | Speaker, PPT, committees, faction leaders, party leaders selected ([§8](#8-leadership-selection-22x)). PPT/Speaker incumbents **can't be challenged** unless they fail prerequisites OR a challenger's ideology enthusiasm drops below neutral (POST 159, 168, 172); **minority leadership offices don't exist this era** (POST 156). | SHIPPED phases; era-gated office set. |
+| 9 | **Era-keyed industry init for new states** | (continues through play) new states init with **era-keyed industry, NOT zero**: Arkansas + Michigan each start with **1 Agriculture** (AR also **+1 Plantation**) per the era industry table (POST 532-534). | DESIGNED — `admitState` (`territories.ts`) doesn't seed era-keyed industry. |
+| 10 | **Senate-class assignment + vacant-seat fill** | Senators assigned to a class; vacant seats filled by the appointment order in [§29.4](#294-ga-appointment--eligibility-rulings-senate-fill-order-card-distribution-replacement-gains). **Boot Senate-class data was WRONG** (ran the 1822 midterm as Class I, should be Class II — full re-submission, POST 758) — corroborates **DH-24**, now 2-thread; the boot needs a **Senate-class verifier**. | DESIGNED — boot data + a verifier (DH-24). |
+
+> **★ Self-contradictory career-track eligibility (sharpens DH-25/DH-56).** §2.1 says career-track
+> pols "will be unavailable to run in elections / to be appointed," but **many other sections let CT
+> pols be pulled** — `Ted`: *"we'll ignore the 'cannot run or be appointed' rule because it isn't
+> consistently applied"* (POST 850, 859). The build must pick **ONE coherent CT-eligibility rule**
+> (and the appointment order in [§29.4](#294-ga-appointment--eligibility-rulings-senate-fill-order-card-distribution-replacement-gains)).
+> Corroborated from a 3rd thread.
+
+> **Build item for the tech-lead / roadmap-planner (#115).** The canonical `scenarioBoot(era,
+> year)` pipeline must encode: (a) the 5+5 ideology-ladder faction roster + era-tuned ideology/
+> interest/lobby decks; (b) the sitting-government seed (Pres/VP/Cabinet/SCOTUS/Speaker/PPT/Congress/
+> governors) with **vacant-seat fill**; (c) the **inaugural career-track seed from the last 3 draft
+> classes**, excluding already-in-office pols; (d) **the boot-Command decision** (keep dataset
+> Command vs zero below an age/office threshold — currently unresolved); (e) **era-keyed industry
+> init** for states; (f) **Senate-class assignment + a verifier** (DH-24); (g) a `TRAIT_CONFLICTS`
+> validator at boot (DH-27 — see below). This is the same `BootSheet` schema as
+> [§26.1](#261-the-mid-government-boot-shape-general), now with the inaugural-draft + strip-Command
+> + industry-init steps made explicit.
+
+### 29.2 ★ Unsettled fork A — player-controlled SCOTUS (gap #52)
+
+> **DESIGNED/RULED + UNSETTLED.** A player-controlled Supreme Court appeared "for the first time in
+> years" (`ebrk`, POST 420) and triggered a multi-party design argument. This **re-enables player
+> control that `pop` (batch 6) recorded the designer as having disabled** (`pop` POST 479-480) — so
+> the corpus now has **two conflicting signals** on whether the court is player-touchable. The
+> shipped court is fully abstract/CPU (no docket, no player input — `phaseRunners.ts:3397, 3648`).
+> Sharpens [§22.7](#227-scotus-subsystem-253--282). (`dem1820#POST 420-443`; #52.)
+
+**The canonical rule the table DID agree on** (the part that is *settled*):
+
+| Aspect | Rule | Cite |
+|---|---|---|
+| **Votes** | **NOT player-decided** — each Justice votes by **vcczar's by-ideology voting chart**; **ties roll a die.** A player Justice does **not** vote individual cases. | POST 424 |
+| **Delay** | **IS a player action** — the controlling player may **delay** a case. | POST 430 |
+| **Dismiss** | **IS a player action, but ONLY for a case brought by a Gov Action** — never a historical case. | POST 430 |
+| **Must hear ≥ 1** | The controlling party **cannot delay them all** — must hear at least one case. A majority-party-on-the-court always hears; **CPU only delays when it lacks the numbers.** | POST 430 |
+| **Tie outcome** | A **tie affirms the lower court** and is flagged **ahistorical** if it diverges from the real ruling. | POST 442-443 |
+
+Worked: **Worcester v. Georgia → NAY 5-1** (flagged "historical", lone dissenter Todd); **Charles
+River Bridge → 3-3, no swaying succeeds → split affirms the lower court, randomly rolled AYE
+(ahistorical)**.
+
+**★ THE UNSETTLED FORK — who controls the court?**
+
+| Model | Proponent | Position |
+|---|---|---|
+| **All-CPU by ideology** | `Ted` / `Matt` (default) + the shipped abstraction | The court votes itself; players never touch it (matches `pop`'s "designer disabled it"). |
+| **Player-controllable with restrictions** | `ebrk` / `Lars` | A player-controlled court is *"how the game should be"* (POST 421-422). The delay/dismiss-only model above is the restriction set. |
+| **Trait-gated middle** | `Vee` | Only **Integrity / Disharmonious / Predictable** justices auto-vote; **Controversial / Pliable / Lackey** let the player decide, gated by a **Manipulative leader** (POST 426) — an unbuilt design wish. |
+
+**System interactions:** the **delay/dismiss split couples the docket to Gov Actions** — a case
+can only be *dismissed* if a **Gov Action** ([§11.3](#113-governors-actions-library-designed-not-built)) put
+it there, so the gov-actions library and the SCOTUS docket are linked. SCOTUS rulings also
+**deactivate now-unconstitutional laws** ([§22.7](#227-scotus-subsystem-253--282)) and feed
+`partyPreference` — so the player's delay/dismiss choices ripple into legislation and elections.
+
+### 29.3 ★ Unsettled fork B — the meter→enthusiasm→election model (gap #18/#51)
+
+> **DESIGNED/RULED + UNSETTLED — the biggest GA ruling of the batch.** The processing rule + the
+> hard ±3 cap are recorded inline at [§22.2](#222-faction-enthusiasm--party-preference-election-engine--the-score-economy);
+> this is the **state-scope fork** the build must resolve. None of it is shipped beyond the bare
+> `enthusiasm × 2` / `partyPreference × 5` terms in `calcStateVote`
+> ([§15.1](#151-calcstatevote--the-core-resolver-phaserunnersts3685)). (`dem1820#POST 569, 575,
+> 618`; #18/#51.)
+
+The agreed mechanics (settled): **non-enthusiasm meters move the per-ideology enthusiasm boxes →
+those boxes apply to the per-state vote → a HARD ±3 cap on ideology + party-pref bonuses**
+(state-specific bonuses uncapped). The disagreement is **which states the enthusiasm box touches**:
+
+| Model | Proponent | "An enthusiasm box of +3 Blue LW-Pop applies to…" |
+|---|---|---|
+| **Every state unless penalized** | `Ted` (GA) | …**every** state's Blue LW-Pop candidate **UNLESS that state penalizes LW-Pop**. Deliberate divergence from V — *"V's version takes populists a huge hit in every state… in reality that's when populists rise: Tea Party, Bernie, MAGA."* |
+| **Ideology-leaning states only** | `V` / vcczar (designer) | …only states that **lean** LW-Pop. |
+| **Primaries only** | `Matt` | …only in **primaries** + ideology-leaning states (general elections largely ignore it). |
+
+**Why it's load-bearing:** this is the upstream half of the §22.1 meter→election table and the
+hinge of the whole election engine — it determines how a budget/economy meter swing translates into
+votes. The three models produce very different maps (Ted's spreads enthusiasm broadly; V's
+concentrates it; Matt's confines it to the nomination). **The build must pick one** before the
+election engine is tuned. (Two GAs ran two different models *in the same era* — strong evidence
+this is genuinely unsettled, not a one-off.)
+
+### 29.4 GA appointment & eligibility rulings (Senate fill order, card distribution, replacement-gains)
+
+> **DESIGNED/RULED** — a cluster of GA rulings that sharpen appointment/eligibility mechanics. None
+> are shipped as stated (the engine's back-fill is the simple "highest relevant skill, same party"
+> sort, e.g. `runPhase_2_8_2_CourtMgmt`). (`dem1820#POST 149-154, 215-227, 291, 309-347, 837, 859,
+> 882`.)
+
+**(a) ★ Senate appointment / vacancy-fill order (the mid-thread re-ruling, POST 859).** After a
+long argument the GA **changed the appointment-eligibility rule mid-thread** to a strict priority
+ladder:
+
+1. **Your-party, NOT on a career track** →
+2. **Your-party, on a career track** →
+3. **Opposite-party, NOT on a career track** →
+4. **Opposite-party, on a career track** →
+5. **Generate a 1-skill politician.**
+
+Plus hard constraints: **you CANNOT leave a full-term Senate seat vacant** (must fill it);
+**you cannot pull a career-track pol if any non-CT pol of your party is eligible** (preserves the
+strategic cost of career-tracking — and resolves the §29.1 CT-eligibility contradiction *in
+practice* by making CT pols **pulled last within each party**, not barred); and **Senate appointees
+must be 30+** (a 27-yr-old was rejected, POST 882). Distinct from the **sudden-vacancy fill order
+(3.0.28, POST 837)** — death/retirement/appointment-out may leave a seat empty in *some* cases, but
+the **normal Senate appointment is separate** and may not.
+
+**(b) Card-distribution order-of-operations (the 3 dilemmas, POST 149-154 — refines #24).**
+
+1. A card is **NOT distributed if no faction has ≥ 5 of the relevant experience** (e.g. **no
+   Environment card in 1820** — nobody has the experience).
+2. An **interest card conflicting with a faction's ideology** goes to the **non-conflicting**
+   faction; if none qualifies, it is **not given**.
+3. **Era minimums are MINIMUMS, not maximums** — but the **bordering-ideology rule is the "prime
+   directive"**: give a 1-Trad faction the **Trad** card so it can *also* hold the required RW-Pop
+   card (adjacency wins over the bare minimum). The full card-distribution algorithm lives at
+   [§7.4](#74-forum-design-layer-the-card-distribution-algorithm-designed-not-built); this is the
+   precedence among its rules.
+
+**(c) Replacement-gains timing (POST 291).** **New replacements (including faction leaders) get NO
+gains until they hold the post through the next appointment/election phase — EXCEPT military
+positions, which are always eligible for gains on appointment.** (`Ted` revoked a Command point he
+had wrongly given a mid-turn faction-leader replacement.) Interacts with leadership churn
+([§8](#8-leadership-selection-22x), [§25.10](#2510-faction-leader-replacement--4-condition-removal))
+— a defection/death that installs a replacement does **not** immediately grant that pol the office's
+stat bonuses.
+
+**(d) Confirmation gating by trait (POST 309-347).** A **Controversial** senior general needs a
+**full Senate vote** (no Majority Leader exists this era to waive it) — Gaines confirmed **26/48**
+(needed 25). A **non-Controversial** general (Zachary Taylor) **auto-confirms**. Mirrors the
+modern cabinet/SCOTUS trait-sway rules ([§9](#9-cabinet--military-appointments-23x),
+[§25.5](#255-cabinet-confirmation--designer-acknowledged-bug-36-of-88-nominees-passed)).
+
+**(e) Kingmaker rule (2.1.7, POST 117).** An **active Kingmaker must be ≥ 35 and NOT on a career
+track**; **max one active Kingmaker per state**; **no age limit on protégés**. Sharpens
+[§6.5](#65-217-kingmakers--protégés) / [§25.11](#2511-kingmaker--endorsement-preference-rules).
+
+**(f) Faction-nickname "era exits" (POST 215-227).** A nickname **cannot be used once its exit-era
+begins** — `Ted` uses handles for the forum but notes the constraint is *"true for the computer game
+once programmed"* (POST 227), confirming the per-(party, era) nickname-table gate (#40) is a build
+requirement.
+
+**(g) PPT gains nothing (POST 159, 168, 172).** The **Senate Pro-Tem gets no traits, only 100 pts**
+(because pre-Majority-Leader the PPT rotated). An incumbent Speaker/PPT can't be challenged unless
+they fail prerequisites or a challenger's ideology enthusiasm drops below neutral.
+
+### 29.5 The focus-Rep House abstraction (gap #55)
+
+> **DESIGNED/RULED — the most contested ruling of the batch (vcczar weighed in directly).** The
+> House is **abstracted**: only "focus Reps" exist. Recorded inline at
+> [§22.10](#2210-53-state-alt-roster--modern-apportionment); the full ruling + the long-term fork
+> are here. None of it is shipped (the engine has no House-seat model; "focus Rep" appears only in
+> the designed modern apportionment). The 1822 midterm took **~10 forum pages / 8 real days** ("the
+> congressional election from hell", POST 938) — pure A9 scaling-wall tedium. (`dem1820#POST 643,
+> 665-696, 704, 733, 758`; #55/A9.)
+
+| Rule | Detail | Cite |
+|---|---|---|
+| **Rep count per state** | **(EV − 2) / 5, rounded up.** Each focus Rep controls a roughly equal share of a state's hidden seats. | POST 643 |
+| **Incumbency is seat-specific** | vcczar: focus Reps "should be viewed as **incumbents**" of a specific seat (POST 676). You keep the **+2 incumbency bonus only in your own seat/district.** | POST 676, 682, 696 |
+| **Census-year exception** | In **census/redistricting years (1822, 1832, 1842…)** you may run in **any** seat and keep the bonus. A Rep whose focus-seat is **eliminated in redistricting keeps the bonus elsewhere.** | POST 682, 696 |
+| **Census timing** | The decennial census changes House seats in the **following half-term** (1820-22), reflected in the **first election of the new decade (1822)**; EV/presidential impact lands at the **first year-ending-in-2 presidential election** (1810 census → 1812 pres; 1830 → 1832). | POST 683-686 |
+
+**★ The unsettled long-term fork:** the per-thread ruling above is **seat-locked incumbency with a
+census-year exception**, but vcczar's stated long-term wish is **full per-district simulation** —
+*"every real US House district + 30,000 more pols"* eventually (POST 704), flagged out-of-scope for
+now. The build picks: the abstracted (EV−2)/5 focus-Rep model, or full district simulation.
+
+**System interactions:** rep count keys off **EV** ([§22.10](#2210-53-state-alt-roster--modern-apportionment)),
+so the **census** (which reapportions EV) drives both rep count *and* the incumbency-bonus
+exception window; the **(EV−2)/5** formula and per-seat biases are the unbuilt House-election surface
+the A9 scaling wall demands the build **persist + auto-fill** across cycles.
+
+### 29.6 Corroborations & the era slice (1820–23)
+
+> **Mostly CORROBORATION from a 3rd start year (1820).** The 1820 start independently confirms a
+> wide swath of the gap log — strongest where a finding now holds across **1772 / 1800 / 1820**
+> start years. (`dem1820#POST` as cited.)
+
+**Confirmed mechanics (existing IDs strengthened):**
+
+| ID | Confirmation from the 1820 start | Cite |
+|---|---|---|
+| **#92 era-bands** | The game's own per-faction draft-ideology table prints **"Era of Democracy (1820-1840)"** then **"Manifest Destiny (1840-1856)"** — the same content-bands the 1772/1800/1948 saves emit. **3rd start-year corroboration** of the content-band model. | POST 946 |
+| **#1 multiplayer + handover + CPU fallback** | Two mid-thread faction handovers (RingTheDink→Saucialiste; Euri CPU'd twice) — confirms factions are transferable + CPU is a true per-faction fallback. | POST 412-414, 591, 601 |
+| **#76/#108 enthusiasm-gated party-flips** | RED→BLUE defections at boot (BLUE maxed across Mod/Cons/Trad/RW-Pop) — see [§29.1](#291--the-scenario-boot-procedure-as-practiced-gap-115) step 7. **Note 2.1.6 RAN here** (President is a leader at boot) where `rep1800` skipped it (no leaders at its boot) — the phase is gated on a leader existing. | POST 42, 72 |
+| **#59 sectional-balance crisis** | Fired at **14 slave / 12 free** "ending the Era of Good Feelings" — earliest observation; folded into [§23.2](#232-59-freeslave-sectional-balance-crisis-scoring-the-slavery-era-crisis-engine). | POST 521, 526 |
+| **#44 popular-vote-surge event** | "Nationwide Surge in Popular Vote" — **every state except DE + SC** gets the popular vote (the end-state of the legislature-electors retirement, [§21.2](#212-per-state-presidential-election-method)/[§27.3](#273-the-12th-amendment-beforeafter-state-machine-era-specific-election-mode-toggle)); DE separately repealed "legislature selects President" by a **gov action** (POST 381). | POST 350, 381 |
+| **#9 bill packaging** | All legislation passed via **6 bundled packages** (no crisis, booming budget). | POST 462-521 |
+| **#101 office-creation-by-bill** | **Postmaster General → cabinet** by bill ([§24.6](#246-66-the-progressive-era-institutional-layer-offices-created-in-game-by-law)/[§26.5](#265-era-event-creates-office-bill-installs-a-new-cabinet-seat)). | POST 487 |
+| **#61 legislatable succession order** | **Speaker → 3rd in line of succession** by bill ([§24.1](#241-61-succession--eligibility--the-acting-president-state)). | POST 487 |
+| **#25b era-gated power roster** | Diplomacy roster is **4 powers: UK / France / Spain / Russia** (Prussia = "minister since 1797"; Germany doesn't exist yet) — players want a Prussia→Germany resigns-ambassador event at the Franco-Prussian War. | POST 528, 535-546 |
+| **#20 gov-action library** | Era-flavored gov actions: force-Native-assimilation (×5, all failed), build state university, **property requirement for voting** (passed in IN → Mod/Cons/Trad +1 there), 4-yr Gov terms, build Political Machine, two-term Gov limits, anti-corruption, improve-industry, comply-with-Fugitive-Slave-Act (×2 because Plantation leads in LA). | POST 378-415 |
+
+**Era content observed (the 1820-23 slice):**
+
+- **Era events fired** (POST 350): **Caroline Affair** (Pres A/B/C → "condemn but not war"; UK
+  relations −1); **Nationwide Surge in Popular Vote**; **Uruguay independence** (Brazil rivalry
+  reduced); **Spain reconquest attempt**; **westward-migration EV shift** (NJ −1, NY −6, OH +2,
+  PA −4 next census).
+- **Deaths/events** (2.4): Van Buren dies (July 1821, 38); Justice Duvall dies; **Andrew Jackson
+  dies (1822, 53)** just after being made B5's faction leader; **John Adams dies (July 4, 1821)** —
+  pure alt-history personnel divergence.
+- **Bills passed:** 8% tariff (down from 25%), **Indian Removal** ("remove the Five Civilized
+  tribes by treaty or force"), Florida Territory, **Arkansas + Michigan statehood**, **Set SCOTUS
+  to 9**, Postmaster→cabinet, Speaker→3rd-in-line, US Naval Academy, Standardize Military Manuals,
+  Land Grants for the Great Plains. **Two-Year Presidential Term Amendment FAILED** in committee
+  3-9 (POST 489).
+- **Exec actions implemented:** "Civilizing" Natives + Strict Fugitive Slave Act; 3 new SCOTUS
+  justices appointed (**AG appoints 2, President 1**) + confirmed (POST 521-ff).
+
+**Bugs / data holes corroborated (point to `game-context.md`, not re-documented):**
+
+- **★ Bill EV-effect sign bug (corroborates DH-53).** Several laws are worded **"Until passed, −1
+  EV in each state"** instead of **"When passed, +1 EV"** — `Ted`: *"Nobody is checking laws that
+  were NOT passed when calculating EVs… should have just been a simple 'when passed'."* The
+  Native-American laws "punish EVs until passed" (the "Offer Land Grants" + Indian-Removal laws are
+  concrete instances). **Per-bill EV/meter effect tables need an authored, sign-checked pass.**
+  (POST 462-466; DH-53.)
+- **★ Dataset demographic corruption (BUG class).** The shared "Master" tab rendered **every
+  politician as Black, openly LGBT, several as women** ("James Monroe comes up as Black and gay")
+  — root cause a **column mismatch from trimmed columns**; fixed by re-deriving with INDEX/MATCH.
+  The build **owning the data model eliminates this entire class** (reinforces DH-36). (POST 104-125.)
+- **Stale-territory data.** The Lingering tab pulled phantom "Alabama/Arkansas Territory" rows
+  after those became states — stale-territory data not cleaned on statehood. (POST 522.)
+- **Trait-conflict not flagged in boot data (corroborates DH-27).** The GA hand-built conditional
+  formatting for **"3.0.34" trait conflicts** across all 10 sheets — the conflict check isn't
+  native; boot/draft seed data slips conflicting traits through. **`TRAIT_CONFLICTS` must run at
+  boot/import** (cross-ref [§26.1](#261-the-mid-government-boot-shape-general)). (POST 577, 596;
+  DH-27.)
+- **★ GA burnout killed the game (DH-36, 2nd in the KB after `afc6cbd7`).** `Ted` ended it at POST
+  900 — *"these used to be a lot of fun to run and now it just feels argumentative."* Proximate
+  cause: **player friction over undocumented/inconsistent rules** (strip-Command, House-incumbency,
+  CT-eligibility flip) **compounded** by relentless manual bookkeeping (10-page elections, constant
+  sheet repair). **The strongest cross-cutting case yet** that the build must own all bookkeeping
+  *and* publish a deterministic, disclosed ruleset (incl. the #115 boot spec). (POST 900-905; DH-36.)
+
+> **Cross-reference for the roadmap (§29).** The concrete build items: **(1) the #115 scenario-boot
+> spec** — `scenarioBoot(era, year)` encoding the inaugural live draft + career-track-seed-from-last-3-
+> classes + the boot-Command decision + era-keyed industry init + Senate-class assignment/verifier +
+> vacant-seat fill ([§29.1](#291--the-scenario-boot-procedure-as-practiced-gap-115)); **(2) resolve
+> the two forks** — player-vs-CPU SCOTUS ([§29.2](#292--unsettled-fork-a--player-controlled-scotus-gap-52))
+> and the meter→enthusiasm state-scope model ([§29.3](#293--unsettled-fork-b--the-meterenthusiasmelection-model-gap-1851));
+> **(3) the focus-Rep House** ((EV−2)/5 + seat-locked incumbency vs full district sim,
+> [§29.5](#295-the-focus-rep-house-abstraction-gap-55)); **(4) couple statehood admission to the
+> sectional-balance crisis** ([§23.2](#232-59-freeslave-sectional-balance-crisis-scoring-the-slavery-era-crisis-engine));
+> **(5) the appointment-order ladder + replacement-gains timing + card-distribution precedence**
+> ([§29.4](#294-ga-appointment--eligibility-rulings-senate-fill-order-card-distribution-replacement-gains));
+> **(6) the bill EV-effect sign-check pass** (DH-53) and **boot-time validators** (DH-24 Senate-class,
+> DH-27 trait-conflict). DH-36 (GA burnout) re-confirms: **own the bookkeeping + ship a disclosed,
+> deterministic ruleset.** New gap context logged to `game-context.md` **#115**.

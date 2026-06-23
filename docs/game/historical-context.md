@@ -332,6 +332,15 @@ era," post 136) — strong support for an era-specific drafting profile (gap-log
 
 ## 2.5 Jeffersonian Republic / Era of Good Feelings (1800–1828) — game era: "Era of Republicanism"
 
+> **§2.5–§2.6 companion:** for the **1820 scenario start** (the `cc37d770` "Era of
+> Democracy" batch — opens in Monroe's second term, Panic of 1819, Missouri
+> Compromise, foreshadowed Monroe Doctrine), see
+> [`historical-context-1820-democracy.md`](historical-context-1820-democracy.md) —
+> it adds the **era-taxonomy reconciliation** (Republicanism→Democracy→Manifest
+> Destiny), 1820-specific binding facts/figures, and divergence flags (the
+> "National Republican Party" is ~5–10 yrs early; polarity is the **1788/1800**
+> alignment, NOT the 1856 flip).
+
 ### Era window
 **1800/01** (Jefferson's "Revolution of 1800") → **1824/28** (the disputed
 1824 election → Jackson's 1828 win, which ends one-party rule). The

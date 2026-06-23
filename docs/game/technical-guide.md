@@ -837,6 +837,22 @@ politicians, seats Senators/Reps/Governors, wires the cabinet/court, sets starti
 `meters`/`enthusiasm`/`interestGroups`, builds the snake draft order, and stamps
 the `GameState`. The two builders are the template for any new scenario.
 
+> **SHIPPED vs PROPOSED — there is NO shared boot abstraction (batch 10, #115).**
+> Each builder is **hand-authored from scratch**: `startNewGame`
+> (`GameContext.tsx:264`) switches on a literal `'1772' | '1856'`; `build1856Scenario`
+> (`scenario1856.ts:44-214`) seats Congress in nested per-state loops with raw
+> `Math.random` (`:83,99,113`), assigns Senate classes naively (`:86`,
+> `classId = senators.length + 1` — DH-24), seeds the House as full `electoralVotes - 2`
+> reps (`:93` — not the (EV−2)/5 focus-Rep model, #55), and stamps a 47-field
+> `GameState` literal by hand. A 1820/1788/1800/1948 scenario today means **copying
+> that ~200-line builder** — which is how the undocumented GM boot house-rules
+> (strip-Command, career-track seeding, vacant-seat fill) proliferate, none of them in
+> code. **PROPOSED (the #115 build target): a canonical `scenarioBoot(BootSheet)`
+> pipeline + a typed `BootSheet` schema (mechanics §26.1 / §29.1) that all eras share,
+> so era identity is data, not a code path. This is promoted to the front of the queue
+> — see §9.1.9 for the exact factoring + the undocumented setup-rules the pipeline must
+> encode.**
+
 > **`scenario1856` is the template for the next scenario, not `scenario1772`.**
 > The buildable batch-2 target is **federalism via `scenario1788.ts`** — a
 > **mid-government boot** (pre-seated Washington administration, start past the
@@ -1356,8 +1372,8 @@ draft runner instantiates the year's class via `instantiateDraftees`
 
 | # | Issue | Location | Impact / fix |
 |---|---|---|---|
-| 1 | **Raw `Math.random` in election scoring** | `phaseRunners.ts:3711` (`calcStateVote`'s `(Math.random()-0.5)*8` jitter) | The flagship determinism leak — every state vote is unseeded. Blocks reproducible elections (and any future replay/multiplayer sync). Route through `rng.ts`. |
-| 2 | **Raw `Math.random` elsewhere in the engine** | draft rookie fallback gen `phaseRunners.ts:188-198` (8 calls); generic-war enemy power `:3603`; `calcStateVote` jitter `:3711`; `revolutionaryWar.ts:89,97`; `continentalCongress.ts:271` | Same class of bug. **14 raw calls across the engine** (verified: 11 in `phaseRunners.ts` incl. #1; 2 in `revolutionaryWar.ts`; 1 in `continentalCongress.ts`). `eraGraph.ts` is already clean — its only `Math.random` mention is the "no Math.random" comment at `:8`. Migrate all to `rng.ts` wrappers as part of the seeding work. |
+| 1 | **Raw `Math.random` in election scoring** | `phaseRunners.ts:3711` (`calcStateVote`'s `(Math.random()-0.5)*8` jitter) | The flagship determinism leak — every state vote is unseeded. Blocks reproducible elections (and any future replay/multiplayer sync). Route through `rng.ts`. **Batch-10 note (#18/#51): this is also where the enthusiasm→election model binds.** The full score is `50 + baseLean*5 + partyPref*5 + enthusiasm*2 + pv*0.1 + factionBias + traitBonus + jitter` (`:3709-3711`); enthusiasm is read RAW (`enthusiasm[ideology][party]`, `:3696`) and applied UNIFORMLY to every state, with **NO ±3 cap and NO per-state ideology penalty.** The forum's ±3 cap (POST 575) is a missing clamp; the "every state UNLESS the state penalizes that ideology" rule is the **unbuilt #18/#51 fork** (Ted vs V vs Matt — DECISION-GATED, see §9 batch-10 #2). The ±3 clamp itself is XS and queued (Phase-1 #6 / #80), but **where it binds + whether enthusiasm is state-scoped wait on the human's fork pick.** |
+| 2 | **Raw `Math.random` elsewhere in the engine** | draft rookie fallback gen `phaseRunners.ts:188-198` (8 calls); generic-war enemy power `:3603`; `calcStateVote` jitter `:3711`; `revolutionaryWar.ts:89,97`; `continentalCongress.ts:271` | Same class of bug. **14 raw calls across the engine** (verified: 11 in `phaseRunners.ts` incl. #1; 2 in `revolutionaryWar.ts`; 1 in `continentalCongress.ts`). `eraGraph.ts` is already clean — its only `Math.random` mention is the "no Math.random" comment at `:8`. Migrate all to `rng.ts` wrappers as part of the seeding work. **Batch-10 note: the scenario *builders* also use raw `Math.random`** (`scenario1856.ts:83,99,113` Congress-seat tie-breaks; `politicians1856.ts` author-fill 12×) — these are in the **scenario-boot blast radius (#115)**, so K0 + the `scenarioBoot` pipeline (§9.1.9) should route boot rolls through `rng.ts` too. |
 | 3 | **`rng.ts` is not actually seeded** | `rng.ts:1-5` | The wrappers exist but wrap `Math.random`. Determinism is *aspirational* until a real PRNG (e.g. mulberry32/xoshiro) is dropped in and a seed is stored on `GameState`. Prerequisite for replay + multiplayer. |
 | 4 | **No `DB_VERSION` migration path** | `db.ts:60`; `repair()` `GameContext.tsx:91` | All migration is app-side `repair()`. Fine for additive fields; **a store-level change has no precedent** and would need a real `idb` upgrade. `repair()` also grows unbounded — each f4c7c2c4 delta adds another block. |
 | 5 | **`nationalism`/`modern` eras are partly inert; enum likely needs `gilded`+`progressive`; AND era-advance is hard-coded, not condition-driven** | only transition is `constitutionalConvention.ts:198` (`→ 'federalism'`); `Era` `types.ts:1337` | `Era` has 4 values and rules consts key all 4, but **no runtime path enters `nationalism` or `modern`** — 1856 *starts* in `nationalism` and never advances. The `modern` era is the **best-documented unbuilt era** (2276-post spec) but is wholly inert. The forum frames a Gilded Age *and* a progressive era *and* the modern arc → the enum likely needs `gilded` + `progressive`. **Batch 7 sharpens this into the era-model reframe (divergence #18 / §9.1.5): the ONLY era advance is the hard-coded `currentEra = 'federalism'` at `:198`; there is NO year→era derivation. The fix is a CONDITION-DRIVEN `advanceEra(snap)` (game-state/meter/territory triggers, per half-term) + content gated on `eraBand` + a `territoryOwned` predicate, NOT the calendar.** Content-gating must key off the **era band, not literal year** (alt-history clock). New eras need content + an `advanceWhen` condition + (maybe) the enum value. See K3/K4 in §9. |
@@ -1373,9 +1389,9 @@ draft runner instantiates the year's class via `instantiateDraftees`
 | 15 | **Per-state EC method divergence (batch 2, #5)** | `calcStateVote('presGeneral')` (`phaseRunners.ts:3752`) vs mechanics §21.2 | Shipped resolves *every* state by popular vote; federalism needs legislature-chosen states (CT/GA/MA/NJ/NY/RI/SC in 1796) awarding EV by seated-legislature majority. Needs `State.electionMethod`. Debt the moment a federalism/1800 scenario ships. See §9.3 #5. |
 | 16 | **Generic war resolver divergence (batch 2, #6)** | `runPhase_2_7_2_Military` flat `milPower×10 + d100` (`phaseRunners.ts:3593-3627`, incl. `Math.random` at `:3603`) vs mechanics §21.1 | Shipped non-Rev-War wars use a flat one-roll resolver; forum uses additive per-battle Chance-of-Success + warscore/momentum/×2 resolution + a confirmation cascade. The rich path exists *only* for the Rev War (`revolutionaryWar.ts`). Generalize one `War` model. See §9.3 #6. |
 | 17 | **Cabinet wipe-on-election (divergence #8) — CORRECTED: there IS a wipe** | unconditional clear at `phaseRunners.ts:3804-3812` in `runPhase_2_9_4_PresidentialGeneral`; re-fill at `:2166` next turn | **Batch-3 correction of a batch-2 error.** Earlier note claimed "no wipe exists" — wrong; it missed the election-phase loop. The cabinet is vacated and cleared after **every** presidential general (even on incumbent re-election), then re-staffed from scratch at 2.3.1 next turn. The fix is **replace the wipe with retention** (keep ≤5, CIA/FBI exempt) **gated by `firingPrecedentSet` + per-officer tenure + same-faction US-Bank guard** — **M, not S**. See §2.1.1 grounding note. |
-| 18 | **SCOTUS is a stub (divergence #7), not a system** | court ruling `phaseRunners.ts:3398-3414` (4 hardcoded titles, `partyPreference ±0.1`); retire/backfill `:3648-3671` | The shipped court has the *entity* (`supremeCourtIds`/`chiefJusticeId`, `types.ts:1584`) but no docket, per-case effects, compel-vote/retire, dynamic size, or ruling→law-deactivation. Modern #52 is a from-scratch SCOTUS module — there is no balance-tuned court to preserve, so framing it as a "replacement" overstates what ships. Gates BUG-2 (`Chisholm` needs amendments). M–L. |
+| 18 | **SCOTUS is a stub (divergence #7), not a system** | court ruling `phaseRunners.ts:3397-3414` (a `chance(0.5)` coin-flip whether the court acts at all, then 4 hardcoded titles + a conserv-vs-liberal majority → `partyPreference ±0.1`); retire/backfill `:3648-3671` (age≥75 + `chance(0.15)` retire, replace with highest-judicial same-party pol) | The shipped court has the *entity* (`supremeCourtIds`/`chiefJusticeId`, `types.ts:1584`) but no docket, per-case effects, compel-vote/retire, dynamic size, or ruling→law-deactivation. Modern #52 is a from-scratch SCOTUS module — there is no balance-tuned court to preserve, so framing it as a "replacement" overstates what ships. Gates BUG-2 (`Chisholm` needs amendments). M–L. **Batch-10 (#52, the player-SCOTUS fork — DECISION-GATED):** `dem1820` (POST 420-443) surfaced THREE live models — votes-by-ideology-chart + player delay/dismiss-only (the forum's working rule), trait-gated player-vote (`vcczar`), fully-player-controlled (two players) — **none settled.** Regardless of fork, the build needs a **docket data structure**: per-era case rows in `src/data/scotusCases<Era>.ts` (`templateId`, ideology-vote chart, ahistorical-flag, optional ruling→bill-class modifier) + a `GameState.scotusDocket` ledger; the fork only changes the *resolution* + the player-action surface (delay/dismiss = one ActionRegistry row; trait-gated player-vote = a different one). **Author the fork before building the docket epic (Phase-2 #25).** Pairs with DH-32 (state-can't-be-voided guard) + DH-41 (ruling→statute cascade, parking lot) + #94 (`Cohens` rule-modifier). |
 | 19 | **Dataset exhaustion (scaling wall a)** | runtime load `standardDraftClasses.ts:13`; finite ~18.5k JSON | The real-person dataset **runs out in the deep-modern era** → no draft pool for late-era play. Needs a **runtime, seeded procedural pol generator** (`src/engine/`, emitting `ImportedDraftee` rows, reusing `instantiateDraftees` `phaseRunners.ts:114`). Also fixes "sparse new states need filler officials" (#43) + BUG-3 stopgap. Connects to portraits (A1). **Needed for ANY late-era play.** M–L. |
-| 20 | **House bloat → manual-staffing tedium (scaling wall b)** | no slate/committee persistence across cycles; election + committee phases re-run from empty each cycle | Wyoming-Rule House ~572–601 (Senate 106) makes the manual House-election + committee-staffing phases unbearable — **a player quit over it**. Needs **persist + carry-forward/auto-fill** of House slates + committee rosters on the snapshot. **Near-term** (improves 1856's 31-state congress too), not modern-only. M. |
+| 20 | **House bloat → manual-staffing tedium (scaling wall b)** | no slate/committee persistence across cycles; election + committee phases re-run from empty each cycle; House modeled as **full `electoralVotes - 2` reps per state** (boot `scenario1856.ts:93`; re-elected per-seat `phaseRunners.ts:3913-3939`) | Wyoming-Rule House ~572–601 (Senate 106) makes the manual House-election + committee-staffing phases unbearable — **a player quit over it**. Needs **persist + carry-forward/auto-fill** of House slates + committee rosters on the snapshot. **Near-term** (improves 1856's 31-state congress too), not modern-only. M. **Batch-10 (#55, focus-Rep abstraction — DESIGNED-not-shipped):** the forum abstracts the House to **"focus Reps" at `(EV − 2) / 5` rounded up** (`dem1820` POST 643), each controlling an equal share of a state's hidden seats — NOT the full per-seat model shipped. Collapsing per-seat reps to focus-Reps is the change that makes the "congressional election from hell" (10 forum pages / 8 real days in `dem1820`) tractable; build it WITH this scaling-wall item. The **seat-specific-incumbency-except-census-year +2 bonus** (POST 682/696, `vcczar`) is a balance dial on top. Folds into the census/apportionment epic (#34/#55). |
 | 21 | **DH-1: filibustered "MUST-pass" bill has no rules remedy** | no deadlock rule (filibuster itself unbuilt); `modern` 640-716 | A GM-confirmed **design hole** (rules, not code): when a required bill is filibustered to death the rulebook has no answer (GM improvised a 4-leader special-committee auto-pass with a per-day "shutdown" penalty clock). **Rules must be *authored* (a PM/design task) before this can be built.** Couples to the filibuster epic. **(NB: investigation-committees #54, formerly grouped here as under-designed, is now READY — `hd` authored the 5d6 spec, §24.5/#65.)** |
 | 22 | **DH-2: modern era-deck fired off-year cards** | possible scheduling defect; reconcile with BUG-1 + the §6.4 scheduling fork; `modern` 2221 | In ~2018 the deck pulled 2008-era cards. **Reported, not verified** — could be intended shuffle/backlog or a real defect. Resolve **together with divergence #4 (era-event scheduling)** and BUG-1's era-lock filter, since all three are the same scheduling surface. |
 | 23 | **The engine has NO agent-decision pass at all** (batch 5 / DH-8 + DH-20/21/22) | three thin CPU stubs — `pickBestForFaction` (`phaseRunners.ts:33-53`), `pickAIResponse` (`eraGraph.ts:88-103`), `autoFillCPUVotes` (`constitutionalConvention.ts:81`); everything else either does nothing or runs a one-line placeholder | Every faction except the player is CPU. Most mid-to-late content (conventions, cabinet confirmations, leadership races, conversion, A/B/C events) **doesn't *work*** without a real CPU surface, even if every phase runner ships. **The fix is K5** — a `CpuController` scaffold (`src/engine/cpu/`) that the §25 spec'd handlers plug into. **This is the highest-leverage gap in the codebase after K2.** See §6.6.1 + §9.1.3. |
@@ -1391,7 +1407,9 @@ design holes (`DH-*`: DH-1/2 from `modern`, DH-3..DH-11 from `hd`,
 **DH-12..DH-23 from `drums`**, **DH-24..DH-28 from `pop`**, **DH-29..DH-35 from
 `rep1800`**, **DH-36..DH-44 from the two batch-8 1772 threads: DH-36..DH-40 +
 DH-43/DH-44 from `new1772`, DH-41/DH-42 from `tea1772`**, **DH-45..DH-57 from the
-batch-9 `nuke` Cold-War/modern corpus**). **`BUG-*` are fixes,
+batch-9 `nuke` Cold-War/modern corpus**, **#115/#115a/#115b + the
+DH-24/DH-25/DH-27/DH-36/DH-53 re-corroborations from the batch-10 `dem1820`
+1820-start**). **`BUG-*` are fixes,
 not features** — small and high-value;
 **BUG-0 (the relocation-cap stale constant) is the cheapest win in the roadmap**
 and BUG-1 is a hard blocker the moment a federalism/1800 scenario ships
@@ -1588,6 +1606,10 @@ codebase where quick.
 | **DH-55 (`nuke`)** — engine HARD-WIRED to 2 parties | `nuke` POST 8845-8850: a winning 3rd-party candidate just becomes that side's Party Leader; no dynamic party creation. | **constraint; folds into the 3rd-party trigger (#48).** Treat as a known constraint; dynamic party creation is an AMPU-2 wish. | **Folds into the 3rd-party trigger (#48); dynamic parties are AMPU-2.** |
 | **DH-56 (`nuke`)** — conflicting career-track interest rule-sets | `nuke`: multiple incompatible career-track rule-sets observed. Relates to DH-25 career-track bootstrap. | **author one canonical rule.** Parking lot, with DH-25. | **Parking lot; pairs with DH-25.** |
 | **DH-57 (`nuke`)** — brokered-convention ballot-2 delegate-release ignores the primary | `nuke` POST 6466-6470: ballot 2 releases delegates that swing 80/20 to the momentum leader, IGNORING the primary result; GM flagged it unresolved ("the primary results should still have some kind of influence… we have not figured out [how]"). | **convention DESIGN hole.** Owned by the convention epic / CPU handler #5; the GM has no canonical fix yet — author one. | **Folds into the convention epic / handler #5 (DH-8 family).** |
+| **#115 (`dem1820`)** — ★★ NO documented scenario-CREATE procedure ("no rules for how to create a game") | `dem1820` POST 92: *"rules… on how to create a playtest is maybe our greatest need but to date nobody has stepped up to write one."* Verified: no shared boot abstraction (`GameContext.tsx:264` → hand-authored `scenario*.ts` builders). **The build's scenario-boot pipeline IS the spec.** | **PROMOTE to front of queue (NOT a new keystone — lands in K4's `BootSheet`).** Factor `scenarioBoot(BootSheet)` ONCE, with the first new scenario. Encode the undocumented setup rules (boot-Command, CT-seeding, Senate-class, vacant-seat fill, era-industry). | **Headline batch-10 item; see §9.1.9.** |
+| **#115a (`dem1820`)** — boot-Command house rule (strip Command from ≤40 boot pols w/o a job) | `dem1820` POST 62/79/82: GA stripped Command at boot — *"nobody should be born with command"* — undocumented; a player drafted pols *for* their Command and was blindsided (POST 79/91). | **DECISION-GATED (open Q #1).** A `bootCommandPolicy` sheet field; **human decides** whether dataset Command survives below an age/office threshold. Author before wiring; the pipeline itself is unblocked. | **XS once decided; needs a human call (balance-load-bearing).** |
+| **#115b (`dem1820`)** — appointment-eligibility ladder + replacement-gains timing | `dem1820` POST 859 (Senate-appointment ladder: your-party-not-on-CT → … → generate 1-skill pol; appointees 30+; no vacant full-term seat; can't pull a CT pol if a non-CT same-party pol is eligible) + POST 291 (a replacement gets **no stat gains until held through the next appointment/election phase, EXCEPT military — eligible on appointment**). | **author-into the boot/appointment rules.** The ladder is the deterministic vacant-seat-fill the boot pipeline (#115) + the Senate/cabinet phases run; the gains-timing is a one-rule guard on the ability-grant path (`ABILITY_EARN_RULES` area). | **XS each; ladder pairs with DH-25 CT-eligibility (PARKING LOT until that rule is authored).** |
+| **DH-24/DH-25/DH-27/DH-36/DH-53 (`dem1820`)** — RE-CORROBORATED from a 1820 start | Senate-class boot wrong → wrong-class 1822 midterm (DH-24); CT "can't run/be appointed" vs "pulled last" contradiction again (DH-25/DH-56, POST 850/859); trait-conflict not flagged in boot data (DH-27, "3.0.34"); **2nd GM-burnout-killed game** (DH-36, POST 900); bill EV-effect mis-signed "until-passed −1 EV" vs "when-passed +1 EV" (DH-53, POST 462-466). | See each DH's row + §9 batch-10 block. DH-53 verified as an **unbuilt** mechanic (`EraEventResponseEffect` has no EV field — `types.ts:1448`), so it lands in the structured-bill-effect tables (DH-14/DH-48), not as a sign-flip. | (carried; confidence + the DH-36 automation-reduces-upkeep argument is now 2-thread) |
 
 ---
 
@@ -1602,7 +1624,158 @@ codebase where quick.
 > confirmed bugs (incl. BUG-0), and the GM design holes (DH-1/DH-2 + DH-3..DH-11 +
 > DH-12..DH-23 + DH-24..DH-28 + DH-29..DH-35 + **DH-36..DH-44**). Source: codebase
 > + `gilded` + `fed` + `1772s` + `modern` + `hd` + `drums` + `pop` + `rep1800` +
-> **`new1772` + `tea1772`**.
+> **`new1772` + `tea1772` + `dem1820`**.
+>
+> **★★★ Batch-10 changes to the plan (`dem1820`, the first 1820-START scenario — a
+> short stalled campaign that is mostly CORROBORATION, but it PROMOTES the
+> scenario-boot pipeline and SHARPENS two unsettled forks into decision-gates. NO
+> new keystone; ONE promotion + two decision-gates + a handful of sized fixes):**
+> 1. **★★ #115 scenario-boot is PROMOTED to the FRONT of the queue (a hard
+>    prerequisite, NOT a new keystone — it folds into K4's `BootSheet` schema, but
+>    its priority rises above everything except the determinism/registry
+>    keystones).** The game-master frames it correctly: *"the build's scenario-boot
+>    pipeline IS the missing setup spec"* and it is **the single most-requested
+>    missing item** across the corpus (the forum has "**no rules for how to CREATE
+>    a game**," `dem1820` POST 92 — Ted: *"rules… on how to create a playtest is
+>    maybe our greatest need but to date nobody has stepped up to write one"*).
+>    **Verified vs shipped (the reason this is foundational, not cosmetic): there is
+>    NO shared boot abstraction today.** `startNewGame` (`GameContext.tsx:264`)
+>    branches to `build1772Scenario` / `build1856Scenario`; each builder
+>    (`scenario1856.ts:44-214`) **hand-assembles everything from scratch** — seats
+>    senators/reps/governors in nested loops, wires cabinet/court, stamps a 47-field
+>    `GameState` literal — and **uses raw `Math.random` at boot** (`scenario1856.ts:83,99,113`,
+>    the K0 blast radius). A 1820/1788/1800/1948 scenario today means **copy-pasting
+>    that ~200-line builder**, which is exactly how the undocumented house-rules
+>    (strip-Command-at-boot, inaugural career-track seeding, Senate-class assignment,
+>    vacant-seat fill) proliferate — none of them are in code. **The build target is
+>    the canonical `scenarioBoot(BootSheet)` pipeline + a typed `BootSheet` schema
+>    (mechanics §26.1 / §29.1) that 1772/1856/1820/1788/1948 all share** — so era
+>    identity is **data**, not a hand-authored code path. **This stays inside K4
+>    structurally** (the `BootSheet` schema was already K4's cross-cutting
+>    constraint) but **rises in priority to "do it with the first new scenario, and
+>    factor the shared pipeline THEN, not after the third copy-paste."** See §9.1.9
+>    (new) for the exact factoring + the boot-sheet field list + the
+>    undocumented-setup-rules the pipeline must encode. **This is the headline of
+>    batch 10.**
+> 2. **★ The TWO unsettled forks are DECISION-GATED — flag them NOT-ready-to-build.**
+>    `dem1820` surfaced both as live multi-party design arguments that the forum did
+>    **not** settle; each needs a **human design decision before any build**, so the
+>    roadmap-planner must place them behind a decision gate, not in the build queue:
+>    - **Player-SCOTUS (#52, the fork).** `dem1820` (POST 420-443) resolved the
+>      forum's *own* working rule as **votes-by-ideology-chart (ties roll a die),
+>      player gets delay/dismiss only** (dismiss only Gov-Action cases; must hear
+>      ≥1) — but the designer (`vcczar`) wants it **trait-gated** (only
+>      Integrity/Disharmonious/Predictable justices auto-vote; Controversial/Pliable/
+>      Lackey let a Manipulative leader's player decide), and two players want a
+>      **fully player-controlled court**. **Three live models, no decision.**
+>      Verified shipped: the court is a `chance(0.5)` coin-flip + ±0.1 partyPref
+>      (`phaseRunners.ts:3397`) + age-75 retire (`:3648`) — **no docket, no case
+>      data, no player surface AT ALL** (debt #18). So this is not "pick a fork on
+>      existing code" — it is "design the fork, THEN build the from-scratch docket."
+>      The docket data structure lands in `src/data/scotusCases<Era>.ts` + a
+>      `GameState.scotusDocket` ledger regardless of which fork wins; the fork only
+>      changes the *resolution* + the player-action surface (delay/dismiss is one
+>      ActionRegistry row; trait-gated player-vote is a different one). **Gate:
+>      human picks CPU-by-ideology vs trait-gated vs player-controlled → THEN the
+>      SCOTUS docket epic (Phase-2 #25) builds it.**
+>    - **Meter→enthusiasm→election (#18/#51, the fork).** `dem1820` (POST 569/575/618)
+>      published a concrete processing rule — **non-enthusiasm meters shift the
+>      per-(ideology) enthusiasm boxes; the boxes then apply to EVERY state UNLESS a
+>      state penalizes that ideology; hard ±3 cap on ideology + party-pref bonuses**
+>      — but it is **explicitly a GA-vs-designer fork**: Ted's "every state unless
+>      penalized" vs V's "ideology-leaning states take the hit" vs Matt's "primaries
+>      only." **Verified shipped: `calcStateVote` (`phaseRunners.ts:3709-3711`) reads
+>      enthusiasm raw (`enthusiasm[ideology][party] * 2`), applies it UNIFORMLY to
+>      every state, with NO ±3 cap and NO per-state ideology penalty** — so the ±3
+>      cap is a missing clamp and the state-scope decision is the unbuilt fork. The
+>      ±3 cap itself is XS and **already queued** (the meter-model ±3-clamp, Phase-1
+>      #6 / #80) — but **WHERE the cap binds and WHETHER enthusiasm is state-scoped
+>      depend on which fork wins.** **Gate: human picks the state-scope model →
+>      THEN the meter-model/election-math epic binds the cap + the per-state penalty.**
+> 3. **★ Sized, corroborated quick-fixes (all fold into existing rows; no
+>    re-sequence):**
+>    - **DH-53 (bill EV-effect sign) — XS-to-S, but NOT a sign-flip in existing
+>      code.** Verified: `EraEventResponseEffect` / `Legislation.effects`
+>      (`types.ts:1448` / `:1515`) has **NO per-state EV field**, and `applyEffect`
+>      (`phaseRunners.ts:3209`) **cannot mutate `State.electoralVotes`**. The
+>      "until-passed −1 EV vs when-passed +1 EV" bug is about a per-bill EV-effect
+>      mechanic that **does not exist yet** — so the fix is **author the structured
+>      per-bill effect tables with sign-checked "when-passed +N" semantics** (the
+>      SAME surface as DH-14 era-aware bill impacts + DH-48 structured era-event
+>      `evDelta`). Lands in the bill-catalog / era-content work (Phase-1 #20 +
+>      K4), not as a standalone patch.
+>    - **DH-24 (Senate-class boot validator) — XS, now 2-thread.** Verified: the
+>      boot assigns classes naively (`scenario1856.ts:86`, `classId =
+>      senators.length + 1` → only ever 1/2, never 3) and the election rotation
+>      **hard-codes the 1856 base year** (`phaseRunners.ts:3885`,
+>      `senateClass = ((year - 1856) / 2) % 3 + 1`) — both **wrong for an 1820
+>      start** (the `dem1820` GA ran the 1822 midterm as the wrong class and had to
+>      resubmit every appointment). Fix = a Senate-class assigner+verifier that runs
+>      **in the scenario-boot pipeline** (#115) and a start-year-relative rotation
+>      (replace the literal `1856`). Folds into the `BootSheet` boot-pipeline hooks.
+>    - **Focus-Rep House (EV−2)/5 (#55) — M, DESIGNED-not-shipped.** Verified: the
+>      House is modeled as **full (EV−2) reps per state** (`scenario1856.ts:93`,
+>      `electoralVotes - 2`; re-elected per-seat at `phaseRunners.ts:3913-3939`) —
+>      the abstracted **(EV−2)/5 focus-Rep model (POST 643) is NOT in code.** This
+>      is the scaling-wall-(b) surface (#55 / A9): collapsing per-seat reps to
+>      focus-Reps is the change that makes the "congressional election from hell"
+>      (10 forum pages / 8 real days in `dem1820`) tractable. Folds into
+>      **scaling-wall-(b) House-slate persistence (Phase-1 #7)** + the census/
+>      apportionment epic (#34/#55). The seat-specific-incumbency-except-census-year
+>      rule (POST 682/696) is a balance dial on top, not a separate build.
+>    - **Statehood→sectional-crisis coupling (#59) — S additive, DESIGNED-not-shipped.**
+>      Verified: `State.isSlaveState` (`types.ts:1329`) exists + is populated but is
+>      **only READ in `StatesPage.tsx`** (display); `admitState` (`territories.ts:8`)
+>      does **no free/slave balance check**. The `dem1820` "Era of Good Feelings
+>      ends" crisis (14 slave / 12 free → DomStab −2 + Party-Pref +2 + faction
+>      penalties, POST 521) fired from a 1820 start — **earliest observation of
+>      #59**, but it is a GM hand-computation. The build is a **cheap additive
+>      derived-count crisis** hooked at `admitState` (and at era-event resolution
+>      that flips a flag): same code area as the 1856-arc sectional crisis (#59) —
+>      **note it is NOT 1856-only; it must fire from 1820/Nationalism-era starts
+>      too.** Folds into the Civil-War/Reconstruction epic's cheap-additive front
+>      (Phase-1 #3b, secession #58 + sectional #59).
+>    - **Appointment-order ladder + replacement-gains timing — XS each, author-into
+>      the boot/appointment rules.** `dem1820` settled two rules mid-thread the
+>      build should adopt: the **Senate-appointment-eligibility ladder** (POST 859:
+>      your-party-not-on-CT → your-party-on-CT → opp-party-not-on-CT → opp-party-on-CT
+>      → generate a 1-skill pol; can't leave a full-term Senate seat vacant; can't
+>      pull a CT pol if any non-CT same-party pol is eligible; appointees 30+) — a
+>      concrete spec for the vacancy-fill order the boot pipeline + the cabinet/
+>      Senate phases need; and **replacement-gains timing** (POST 291: a new
+>      replacement — incl. faction leaders — gets **no stat gains until they hold
+>      the post through the next appointment/election phase, EXCEPT military
+>      positions which are eligible on appointment**) — a one-rule guard on the
+>      ability-grant path (`ABILITY_EARN_RULES` area). Both are XS rules-table
+>      additions; the eligibility ladder pairs with DH-25's career-track-eligibility
+>      decision (still PARKING-LOT — the "CT pols can't run/be appointed" vs "CT
+>      pulled last" contradiction is re-corroborated here, POST 850/859).
+> 4. **★ DH-36 (2nd GA-burnout death in the KB) — the META-signal, reinforced.**
+>    `dem1820` is the **second campaign in the corpus killed by GM burnout** (after
+>    `new1772`): Ted quit (POST 900) — *"these used to be a lot of fun to run and
+>    now it just feels argumentative"* — under the compounding weight of
+>    undocumented-rule friction + relentless manual bookkeeping (10-page elections,
+>    constant spreadsheet repair, a demographic-corruption data bug that rendered
+>    every pol Black/LGBT from a column mismatch). His tell: *"I'm currently helping
+>    run an all-CPU game for a reason."* **This is NOT a row to schedule — it is the
+>    prioritization argument for the items that REDUCE manual upkeep:** the
+>    scenario-boot pipeline (#115, eliminates the boot/data-corruption class), the
+>    focus-Rep House abstraction (#55, kills the election tedium), the CPU handler
+>    suite (K5/E9, owns the bookkeeping a human GM can't sustain), and the
+>    disclosed-deterministic-ruleset theme (the engine must SHIP the rules the
+>    forum improvises — that is the whole point of #115). Cite it behind those
+>    items; the **automation-reduces-upkeep argument is now 2-thread.**
+> 5. **CORROBORATION (no movement, confidence only):** #92 era-bands (a **THIRD
+>    start year, 1820** — "Era of Democracy (1820-1840)" / "Manifest Destiny
+>    (1840-1856)" printed, POST 946 — joining 1772/1800/1948); #1 multiplayer +
+>    faction-handover + CPU fallback (2 mid-thread handovers); #76/#108
+>    enthusiasm-gated party-flips (RED→BLUE at boot, POST 72); #24 card-distribution
+>    order-of-operations (POST 149-154); #9 bill packaging; #20 gov-action library;
+>    #25b era-gated 4-power diplomacy roster (UK/France/Spain/Russia); #101
+>    office-by-bill (Postmaster→cabinet — note this also reconfirms divergence #15:
+>    `cabinetSeatsForYear` auto-adds Postmaster at 1829 regardless, the WRONG model);
+>    #61 legislatable succession order (Speaker→3rd); #44 popular-vote-surge event.
+>    None move the keystones.
 >
 > **★★ Batch-9 changes to the plan (`nuke`, the Cold-War/modern half — a big
 > NEW-ERA gap-fill, but mostly CONFIDENCE + NEGATIVE-SCOPE + small placements;
@@ -2433,6 +2606,93 @@ Watergate had no impeachment trigger.
 engine + diplomacy (both already on the roadmap) + content. Frame the Nuclear Age
 as a DATA era on top of those, exactly like every other era.**
 
+#### 9.1.9 ★★ The scenario-boot pipeline (batch 10, #115) — promote it, factor it ONCE
+
+> **The single most important call in batch 10, and the planner's grounding for why
+> #115 jumps the queue. Lift it directly.** This is the "how to CREATE a game" spec
+> the forum has been missing for three years (`dem1820` POST 92).
+
+**The finding (#115 / mechanics §29.1 / §26.1).** Every documented scenario is a
+**mid-government boot** with the SAME shape — `dem1820` (1820), 1856 (shipped), 1788
+(designed), 1800 (designed), 1948 (designed) all pre-seat a sitting President + VP +
+Cabinet + an N-member SCOTUS + Speaker/PPT + a full Congress (some seats VACANT and
+appointment-filled in setup), a 5-Blue/5-Red faction ladder, era-tuned decks, and
+are EXPLICITLY EMPTY at boot (no faction leaders, no career-track pols, no inherited
+PV/legacy/Kingmaker pairs). **The forum has no documented procedure for any of this**
+— so each GA improvises undocumented house-rules (strip-Command-at-boot, inaugural
+career-track seeding, Senate-class assignment, vacant-seat fill), and they conflict
+thread-to-thread. **The build's scenario-boot pipeline IS that missing spec.**
+
+**Verified vs. shipped — the reason this is foundational.** There is **NO shared boot
+abstraction.** `startNewGame` (`GameContext.tsx:264`) branches on a literal
+`'1772' | '1856'` to `build1772Scenario` / `build1856Scenario`. Each builder
+(`scenario1856.ts:44-214`) is a **~200-line hand-authored function** that:
+- instantiates politicians, then **seats senators/reps/governors in nested loops**
+  (`:60-118`) with raw `Math.random` tie-breaks (`:83,99,113`, the K0 blast radius);
+- assigns **Senate classes naively** (`:86`, `classId = senators.length + 1` — only
+  ever 1 or 2, never 3, never validated — **DH-24**);
+- seeds the **House as full `electoralVotes - 2` reps** (`:93` — not the (EV−2)/5
+  focus-Rep abstraction, **#55**);
+- wires the cabinet/court by scanning `currentOffice` types (`:124-142`);
+- stamps a **47-field `GameState` literal** (`:147-193`) by hand.
+
+So adding a 1820/1788/1800/1948 scenario today = **copy-paste that builder and edit
+the literals.** That is precisely how the undocumented house-rules proliferate (and
+how the `dem1820` Master-sheet demographic corruption — every pol rendered Black/LGBT
+from a column mismatch — became possible: the data model lives in a fragile sheet, not
+the code). **The build owning the boot pipeline + data model eliminates the entire
+class.**
+
+**The build target — factor `scenarioBoot(BootSheet)` ONCE (it lives in K4).**
+
+| Concern | Today (per-scenario hand-code) | The pipeline |
+|---|---|---|
+| Entry | `startNewGame` switch on a string literal | `startNewGame(scenarioId)` → look up the `BootSheet` in a registry, call one `scenarioBoot(sheet)` |
+| Sitting government | scan `currentOffice` types in each builder | declared in the sheet (`sittingGovernment: { presidentId, vpId, cabinet, court, speaker, ppt }`); the pipeline seats them |
+| Congress fill | nested per-state loops + `Math.random` | one seat-filler pass; **all rolls through `rng.ts` (K0)** |
+| Senate classes | `classId = senators.length + 1` (DH-24) | a **class assigner + verifier** that produces a valid 3-class rotation keyed to the start year (and the election rotation reads the start year, not a literal `1856`) |
+| State roster | `STATES_1856` import | `stateRoster` keyed on `{era, startYear}` (divergence #17) — era-keyed industry seed, not zero (POST 532) |
+| Vacant seats | n/a (all filled) | a `vacancies[]` list + the **appointment-eligibility ladder** (POST 859) the pipeline runs to fill them |
+| Boot-Command / career-track | n/a (no rule) | sheet-level policy flags (see the undocumented-rules list below) |
+| Validators | none | `TRAIT_CONFLICTS` validator (DH-27) + the Senate-class verifier (DH-24) run as boot hooks |
+
+The `BootSheet` schema is the one already specced in §9.1.5/K4 +
+`{era, startYear}`-keyed state roster (divergence #17). **Era identity is data, not a
+code path** — the 1820 sheet, the 1788 sheet, the 2012 "Trumpism-deck" sheet are
+rows, not branches.
+
+**The undocumented setup rules the pipeline MUST encode (each a sheet-level policy
+the human DECIDES once, then it is disclosed + deterministic — the §29 forks):**
+1. **Boot-Command (open Q #1).** Do inaugural-draft pols keep their dataset `command`,
+   or is it **zeroed below an age/office threshold** at boot (the `dem1820`
+   strip-Command-at-≤40-without-a-job house rule, POST 62/82)? A `bootCommandPolicy`
+   field; **needs a human call** (KevinStorm drafted pols *for* their Command and was
+   blindsided — POST 79/91 — so this is balance-load-bearing).
+2. **Inaugural career-track seeding (DH-25, re-corroborated).** The stated rule
+   (POST 28): seed career tracks from the **last 3 draft classes** (a 1820 start →
+   1820/1816/1812/1808); pols already holding an office can't be tracked. But this
+   collides with the **"CT pols can't run/be appointed" vs "CT pulled last"**
+   contradiction (POST 850/859, DH-25/DH-56) — **PARKING LOT until the human authors
+   ONE coherent CT-eligibility rule.** Do not build the seeding until the eligibility
+   rule is settled.
+3. **Senate-class assignment (DH-24).** Resolved above — the verifier.
+4. **Vacant-seat fill order (POST 859).** The appointment-eligibility ladder
+   (your-party-not-on-CT → … → generate a 1-skill pol; appointees 30+; can't leave a
+   full-term Senate seat vacant). A deterministic rule the pipeline runs.
+5. **Era-keyed industry init (POST 532).** New states enter with era-keyed industry
+   (1 Agriculture, etc.), not zero — already a per-era table concern (K4).
+
+**Placement.** **#115 is NOT a new keystone** — it lands inside K4's `BootSheet`
+schema. But its **priority rises to the front of the subsystem queue:** do the shared
+`scenarioBoot` factoring **with the first new scenario (`scenario1788`, Phase-1 #1),
+not after the third copy-paste.** The dependency order is **K0 (so boot rolls are
+seeded) → the `scenarioBoot` pipeline + `BootSheet` schema (with K4) → every scenario
+(1788, then 1856-refactored-to-ride-it, then 1820/1800/1948) is a data row.** The
+boot pipeline is also where the XS validators (DH-24 Senate-class, DH-27 trait-
+conflict) and the appointment-ladder live. **The two §29 forks (boot-Command,
+CT-eligibility) are decision-gated** — author the policies before wiring them, but
+the *pipeline itself* is unblocked and should be built first.
+
 ### 9.2 Major subsystems (do these after the keystones)
 
 Slot the heavyweights. Within each row I call out the keystones it depends on so
@@ -2719,6 +2979,32 @@ planning. Specifically:
 > DH-55 → 3rd-party #48; DH-57 → convention/handler #5). **★ The KB now spans a
 > CONTINUOUS 1772→2020 timeline** (this 1948 thread is the predecessor of the
 > `modern` 2004-2020 thread, joined at the 2004 election).
+> **Batch-10 change (`dem1820`, first 1820-START — ONE promotion + two decision-gates +
+> sized fixes; NO new keystone, NO re-sequence of the keystones):**
+> **★★ #115 SCENARIO-BOOT pipeline PROMOTED to the front of the subsystem queue** —
+> verified NO shared boot abstraction (`GameContext.tsx:264` → hand-authored
+> `scenario*.ts`; `scenario1856.ts:44-214` is a copy-paste-per-scenario builder with
+> raw `Math.random` at `:83,99,113`). Factor `scenarioBoot(BootSheet)` ONCE, **with
+> the first new scenario (Phase-1 #1), inside K4's `BootSheet` schema** — it is the
+> "how to CREATE a game" spec the forum has lacked for 3 years (POST 92); see §9.1.9.
+> **★ TWO decision-gated forks (NOT ready-to-build — human design call first):**
+> player-SCOTUS (#52 — CPU-by-ideology vs trait-gated vs player-controlled, all live in
+> `dem1820`; the docket data structure is needed either way → SCOTUS docket epic
+> Phase-2 #25) and meter→enthusiasm→election (#18/#51 — every-state-unless-penalized vs
+> ideology-leaning-only vs primaries-only; verified `calcStateVote` `:3709-3711` applies
+> enthusiasm uniformly with NO ±3 cap → the cap is a queued XS clamp but its binding +
+> state-scope wait on the fork). **★ Sized corroborated fixes:** DH-53 bill-EV-sign is
+> an **unbuilt** mechanic (`EraEventResponseEffect` has no EV field, `types.ts:1448`) →
+> structured-bill-effect tables (Phase-1 #20 + K4), NOT a sign-flip; DH-24 Senate-class
+> validator → the boot pipeline (replace the literal `1856` at `phaseRunners.ts:3885`);
+> #55 focus-Rep (EV−2)/5 House → scaling-wall-(b) (Phase-1 #7) + census epic; #59
+> statehood→sectional-crisis → cheap additive at `admitState` (`territories.ts:8`),
+> fires from 1820/Nationalism starts too, folds into 3b; #115a boot-Command +
+> #115b appointment-ladder/replacement-gains → boot/appointment rules.
+> **★ DH-36 (2nd GM-burnout-killed game) reinforces the automation-reduces-upkeep
+> argument (now 2-thread)** behind #115, #55, and the CPU handler suite — cite, don't
+> queue. **CORROBORATION only:** #92 era-bands (3rd start year, 1820), #1, #76/#108,
+> #24, #9, #20, #25b, #101, #61, #44 — no keystone moves.
 
 **Cheap fixes first (do immediately — XS each, high value):**
 **BUG-0 (relocation cap `5`→`4`, `types.ts:247`, divergence #9 — the cheapest win;
@@ -2753,7 +3039,13 @@ era-keyed draft-grant (#69) & amendment-ratifier (#64) & double-points-issues
 (#87) & procedural-pol-gen-startYear (#90) tables + **the `BootSheet` schema
 (batch 6 / §26.1 / divergence #17 — per-`{era, startYear}` state roster keying;
 EXPLICITLY EMPTY at boot baseline; Senate-class verifier + `TRAIT_CONFLICTS`
-validator)** + **the per-era CONTENT-BAND registry `{bills, eraEvents, draftees,
+validator)** + **★ batch-10 (#115): the shared `scenarioBoot(BootSheet)` PIPELINE
+itself — verified NO shared boot abstraction today (`scenario*.ts` are hand-authored
+copy-paste builders); factor it ONCE here + encode the undocumented setup rules
+(boot-Command #115a, CT-seeding [PARKING LOT until DH-25 settled], Senate-class
+[replace the `1856` literal at `phaseRunners.ts:3885`], vacant-seat fill ladder #115b,
+era-industry init). PROMOTED — do it WITH the first new scenario, §9.1.9** + **the
+per-era CONTENT-BAND registry `{bills, eraEvents, draftees,
 biasTable, advanceWhen}` (batch 7) — early-republic sub-bands (Republicanism/
 Democracy/Manifest-Destiny) are content-band markers, NOT new enum values**
 (NOT gilded/modern first, §9.1.1) →
