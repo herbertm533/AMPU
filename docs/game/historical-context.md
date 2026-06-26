@@ -810,6 +810,30 @@ Shipped 1856 scenario, engine era `nationalism`. Event spine runs 1856 (Bleeding
 Kansas) → 1861 (Trent Affair) (`eraEvents1856.ts`). Bounding context: Compromise
 of 1850 → Kansas-Nebraska Act (1854) → secession (1860-61).
 
+**Note on the "A House Divided" Part 1 playtest (this is a SEPARATE, earlier run
+from the Part-2 thread below).** Part 1 (`c015a0cb`, politicslounge topic 4555,
+2699 posts) is an 1856-start that runs the **antebellum → Civil War → onset of
+Reconstruction and ends the Era of Nationalism at 1868** (chunk-032 post 531:
+"the half term of 1866-68 has ended, and so has the Era of Nationalism"); it then
+crosses into the 1868 draft / start of the Gilded Age (chunks 32-43) and
+**terminates and restarts as a fresh 1856 simulation with revised Reconstruction
+rules** (chunk-044 posts 2693-2694) rather than continuing to 1900. So Part 1 is
+the antebellum-through-Reconstruction-onset half; **Part 2 (`77db6e6f`, topic
+5306) is a DISTINCT LATER RUN of the same campaign concept, with a DIFFERENT
+alt-history cast** — do not conflate them. The two runs diverge in who leads the
+crisis: in **Part 1, the Red/Republican wartime president is Salmon P. Chase with
+Abraham Lincoln as Vice-President**; secession fires when **Chase bungles the John
+Brown's Raid decision** (Option B confiscation + rumored pardon), pushing the
+South out in **1860→1861 — close to the real timing** (chunk-013 posts ~890-894:
+"Secession, which had only been whispered of in 1860, now turns into loud shouts
+in 1861"). The **CSA president in Part 1 is Herschel V. Johnson of GA (VP Oran
+Roberts, TX), with Jefferson Davis serving only as CSA War Secretary** — a
+"demotion" the players note (chunk-013 post 894). This contrasts with Part 2's
+cast (President **Seward**, secession ~1863, CSA president **Quitman**, Davis as
+*Democratic* party leader, Lincoln nominated only in 1868). The Game-treatment
+divergence notes below were written from the Part-2 thread; **treat the named
+wartime leaders / secession year / CSA president as run-specific in BOTH cases.**
+
 **Note on the "A House Divided" Part 2 playtest:** despite the "1856" label, that
 campaign does **not** stay in the antebellum era — it boots at 1856 and plays
 *continuously through 1900*, with explicit in-thread era transitions to the
@@ -1116,7 +1140,29 @@ i.e. it hands off to the Gilded Age this section documents.)*
   event that catalyzed the Pendleton Act. **[consensus]** ([Garfield assassination, Wikipedia](https://en.wikipedia.org/wiki/Assassination_of_James_A._Garfield))
 
 ### Timeline of relevant events
-- **1868** — Grant elected; 14th Amendment ratified. **[consensus]**
+- **1863 (Dec 8)** — Lincoln's **Proclamation of Amnesty and Reconstruction**, the
+  "**Ten Percent Plan**": a Confederate state could re-form a government once 10%
+  of its 1860 voters swore a loyalty oath and accepted emancipation. **[consensus]**
+  ([Wade-Davis Bill / National Archives](https://www.archives.gov/milestone-documents/wade-davis-bill))
+- **1864 (Feb-Jul)** — **Wade-Davis Bill**: the Radical Republican alternative,
+  requiring a **50%** loyalty oath before a state government was recognized;
+  **Lincoln pocket-vetoed it**. The 10%-vs-50% split is the real
+  Lincoln/Johnson-vs-Radical-Republicans fault line the run plays as competing
+  Reconstruction "plans." **[consensus]** ([US House History](https://history.house.gov/Historical-Highlights/1851-1900/The-Wade-Davis-Reconstruction-Bill/))
+- **1865 (Dec 6)** — **13th Amendment ratified** (abolishes slavery; passed
+  Congress Jan 31, 1865). **[consensus]** ([National Archives](https://www.archives.gov/milestone-documents/13th-amendment))
+- **1867 (Mar 2)** — **First Reconstruction Act**: divided the ten ex-Confederate
+  states (all except Tennessee) into **FIVE military districts** under Union
+  generals; required each to write a new constitution with **manhood (incl. Black)
+  suffrage** and ratify the 14th Amendment before readmission — the real "military
+  district plan" (vs. the 10% plan and the Ironclad-Oath / Wade-Davis plan).
+  **[consensus]** ([Britannica](https://www.britannica.com/topic/Reconstruction-Acts))
+- **1868** — Grant elected; **14th Amendment ratified (July 9)**; **readmission
+  begins** — **Arkansas first (June 22, 1868)**; most ex-Confederate states
+  readmitted in 1868. **[consensus]** ([Readmission timeline, US Senate](https://www.senate.gov/artandhistory/history/common/generic/Civil_War_AdmissionReadmission.htm))
+- **1870** — **15th Amendment ratified (Feb 3)** (no race bar on voting); **all 11
+  ex-Confederate states readmitted by July 1870**, **Georgia last (July 15, 1870)**
+  after being re-expelled in 1869 for purging Black legislators. **[consensus]** ([Readmission timeline, US Senate](https://www.senate.gov/artandhistory/history/common/generic/Civil_War_AdmissionReadmission.htm))
 - **1871** — U.S. Expedition to Korea (Shinmiyangyo; USS Monocacy among the
   squadron) — an early imperial-reach naval action. **[consensus]** ([U.S. expedition to Korea](https://en.wikipedia.org/wiki/United_States_expedition_to_Korea))
 - **1873** — Coinage Act ("Crime of '73," demonetizing silver); Panic of 1873. **[consensus]**

@@ -1787,7 +1787,7 @@ continental congress era system) + #120 (dataset umbrella — one coordinated
 | **DH-22 (`drums`)** — cascading scandal sequencing hole | Estella → VP forced to resign → Pershing replaces with Hearst → Pershing scandal → Pershing resigns → Hearst becomes President within days (POST 7389). No smoothing for back-to-back at-most-once events. | **CPU-AI (architectural).** Needs `GameState.recentScandalIds?` persistent field + an event-walker filter. **Handler #12, §6.6.1.** | **Folds into K5; one of the three architectural CPU gaps.** |
 | **DH-23 (`drums`)** — cabinet 50/50 Admin-1 reject + lobby-maximizing selection = 36% confirmation pass rate | Two reinforcing bugs (POSTS 4702-4708); designer-acknowledged "low chance to reject" rule was lost from the rules doc. | **CPU-AI + content.** **The system doesn't exist today** — `runPhase_2_3_1_Cabinet` (`phaseRunners.ts:2158-2223`) is a one-step pick with no Senate vote — so the fix is **building the confirmation step in the right shape from day one**: default-AYE baseline + Iron-Fist Maj-Leader auto-AYE-own-picks + lobby-maximizer with Admin weighting. **Handler #4, §6.6.1.** | **XS-S; smaller than expected because the broken system isn't shipped yet.** |
 | **DH-24..DH-28 (`pop`)** — boot-data quality / career-track bootstrap / 3rd-party VP-trait / trait-conflict-in-boot / meter-tag-completeness | Classified in the batch-6 provenance block above. DH-25 (career-track bootstrap) is the **parking-lot BLOCKER on modern scenario**; DH-24/DH-27 are XS boot validators; DH-26 is a 3rd-party balance dial; DH-28 is a dataset-build tag validator. | See the batch-6 classification + the K4 boot-pipeline hooks. | (carried) |
-| **DH-29 (`rep1800`)** — ★★ Reconstruction Strict/Ironclad plan can NEVER pass with CPU → solo Reconstruction UNRESOLVABLE | GM-verified (`rep1800` POST 9170): *"only 3 factions would ever consider voting for it… in a single player game it basically can never pass."* Reconstruction unbuilt (#57). | **BUILD REQUIREMENT on E3b** (not a balance dial): the 1856-arc is unwinnable solo without a **CPU-passable readmission path** — (1) a CPU default-vote bias for the flagged historical plan (K5 handler #2) AND/OR (3) an era-boundary auto-resolution (K3). See §9.1.6. | **A hard gate on E3b's Reconstruction half; ties to K5 + K3.** |
+| **DH-29 (`rep1800` → ★ STRUCTURAL reframe `hd1`)** — ★★ Reconstruction readmission DEADLOCKS → solo (AND deadlocked-human) Reconstruction UNRESOLVABLE | GM-verified (`rep1800` POST 9170): *"only 3 factions would ever consider voting for it… in a single player game it basically can never pass."* **★ Batch-16 (`hd1` POST 2678) ESCALATES this from CPU-only to STRUCTURAL:** the FIRST run with HUMANS on both sides still deadlocked — *"The Congress could never agree on a Reconstruction guideline… NEITHER PASSED and states just started coming back into the Union with NO reconstruction plan at all."* Mutual filibuster → null drift. So it is NOT a CPU-heuristic gap; it is a both-chambers-must-agree paralysis. Reconstruction still unbuilt (#57; 0 hits in `types.ts`). | **BUILD REQUIREMENT on E3b — now with the AUTHORED FIX in hand (#156).** vcczar's restart rewrite (`hd1` POST 2693) resolves it: a **4-plan model on BOTH Pres + Congress** gated by *"a plan adopted by Congress OR by the President"* → **the President can adopt a plan UNILATERALLY**, so solo AND deadlocked-human Reconstruction always resolves. The §9.1.6 options 1/2/3 are SUPERSEDED by this authored prerequisite. See #156 + §9.1.6. | **A hard gate on E3b's readmission half; the FIX = #156 (the unilateral-adopt prerequisite). DH-29's "author the rule" step is now DONE — build the authored design.** |
 | **DH-30 (`rep1800`)** — era-event scheduler has a MAX per half-term but NO MIN floor | `rep1800` POST 2919-2932: events scale by a fixed number; "the limit is a max not a min… which isn't what we discussed." Companion to BUG-1. | **quick-win.** Fix = **minimum 20% of the era's max (round down)**; if still none fire (all prereq-gated), spill to the 5 generic anytime events. Lands with BUG-1 / the era-event work — same scheduling surface. | **XS; pair with BUG-1.** |
 | **DH-31 (`rep1800`)** — procedure-subtype bills BYPASS the veto but the engine MIS-ROUTES them to the President | `rep1800` POST 2342-2348: `subtype: procedure` bills (Institute Filibuster, create-whip-offices) wrongly sent to the President for sign/veto. | **verify-and-fix (divergence #21).** Confirm the bill `subtype` taxonomy; skip the President sign/veto step for procedure bills. Lands in the bill-typing epic (#42). | **XS-S; in the bill-typing epic.** |
 | **DH-32 (`rep1800`)** — SCOTUS can void a STATE ("Pickens v. Maine's Existence" voided Maine after a census) | `rep1800` §B 3632, 3646-3652: a state ruled unconstitutional 5-1. No state-existence guard in the SCOTUS ruling-effect path. | **one-rule guard.** Add: **a state cannot be ruled unconstitutional** (a territory can be revoked; secession is the only un-making of a state). Lands in the SCOTUS docket epic. | **XS; a guard in the SCOTUS ruling-effect path.** |
@@ -1833,6 +1833,10 @@ continental congress era system) + #120 (dataset umbrella — one coordinated
 | **★ #149 (`gild1868`)** — civil-service merit-vs-spoils axis (+ era-gated reform content) UNBUILT (DESIGNED) | **VERIFIED:** **NO civil-service / spoils / merit mechanic** in code. The Gilded brief's "merit not party loyalty … has not happened yet" (POST 1) is a real designed system: the in-game Pendleton Act bill PASSES the 41st Congress (POST 842); "Increase/Decrease State Gov Jobs" gov actions feed DomStab + the spoils economy (POST 770, 803); reform content era-gated (Social Mobility gov action + income-tax bill are Progressive-era-only, POST 811, 2936). | **Add a civil-service/spoils axis:** a merit-reform bill that shifts how appointments are filled + the State-Gov-Jobs spoils lever feeding DomStab + the Honest-Gov't/corruption interplay; **gate reform content** (Social Mobility, income tax) to later eras via the era-content registry. Sharpens #3. | **S–M; gilded-content epic (§9.1.10). Depends on K3/K4 (era-gating).** |
 | **★ #150 (`gild1868`)** — "1872 Rule" disorganized-loser-runs-opposite-party-independents special election UNBUILT (DESIGNED) | **VERIFIED:** **NO special-election-condition path** (every state resolves via `calcStateVote` `phaseRunners.ts:3752`). Rule 3.0.17 (Tyler, POST 49): the post-CW disorganized losing party does not nominate normally — at the first election after Reconstruction begins, if party-pref is Red+2/+3 AND a d6 lands 1-2, an opposite-party-independent ticket is fielded, run by the loser's weakest faction (POST 774-775). | **Add a meter-gated "disorganized party" special-election branch** for the era after a civil war: opposite-party-independent nominee, gated by a party-pref band + d6, run by the weakest faction of the loser. | **S; gilded-content epic (§9.1.10). Niche; pairs with #57/#148 + the #48 third-party trigger.** |
 | **★ DH-63 (`gild1868`)** — mutually-exclusive currency regimes can both be active (no exclusivity constraint) | **VERIFIED:** `Legislation` (`types.ts:1506`) has no `type`/`replaces` field → currency bills are independent. `gild1868` design-hole: **Bimetallism AND the Gold-Standard Act both active at once despite being mutually exclusive** (POST 6245-6246). Also flags the filibuster carry-over ambiguity (POST 939 — matches the `drums`/`hd` open Q on #10). | **Make currency-regime bills a mutually-exclusive set in the bill-relationship graph:** activating one auto-deactivates the contradictory regimes; resolve the filibuster carry-over ambiguity. | **XS–S; FOLDS INTO #42 (bill-relationship graph) + #147's `MonetaryRegime`. Not a standalone epic — it is the exclusivity constraint those two already build.** |
+| **★★ #156 (`hd1`)** — 4-plan Reconstruction model + the UNILATERAL-ADOPT prerequisite UNBUILT (DESIGNED — the canonical DH-29 fix) | **VERIFIED:** the ENTIRE Reconstruction subsystem is absent — grep `Reconstruction\|Ironclad\|readmission\|Confederate\|CSA` in `src/types.ts` → **0 hits** (only the Secession-Winter loyalty scaffold: `// Secession Winter` at `types.ts:981/1149-1157`, `secessionDefectionCount?` at `:1481`). No `game.reconstruction`, no plan enum, no plan-adopted gate, no +2/+1 bias, no appointed-Gov→Sen/Rep cascade. vcczar's restart rewrite (POST 2692-2694): **4 plans (No-plan / 10% / Ironclad-Wade-Davis / Military-district) on BOTH Pres + Congress**; prereq = *"a plan adopted by Congress OR by the President"* (Pres can adopt UNILATERALLY); individual readmission only under Ironclad/Military-district; 15th-Amd = **+2 Deep-South / +1 other-seceded incumbent-party bias while active** + AA men hold office; pardon types both branches; CSA-victory branch. | **The CANONICAL DH-29 FIX — build the authored model into E3b's readmission half:** add `game.reconstruction = { plan; adoptedBy: 'congress'\|'president'\|null; startYear }`; expose the 4 plans as ActionRegistry rows usable from BOTH `runPhase_2_8_1_Executive` (`phaseRunners.ts:3632`) AND the legislation pipeline; the plan-adopted gate fronts every per-state readmission; the +2/+1 **time-boxed bias-while-active** rides the `calcStateVote` bias term (`:3709-3711`, distinct from static `State.bias`). | **M–L within E3b — the HIGHEST-VALUE Reconstruction target: it UNBLOCKS DH-29 (now a designed fix, not an open blocker). Supersedes the §9.1.6 options menu. Depends on the war engine + K2; the unilateral-adopt path removes the K5 soft-dependency for the SOLO case.** |
+| **★ #155 (`hd1`)** — war "too easy for the Union" balance pass UNBUILT (the war model itself is unbuilt) | **VERIFIED:** the shipped resolver `runPhase_2_7_2_Military` (`phaseRunners.ts:3593-3627`) is flat `milPower*10 + d100 > enemyPower*10 + 50` (`:3602-3605`), `warScore += win?10:-5` (`:3613`), end at `warScore ±50` (`:3615-3620`); `enemyPower = 1 + Math.random()*4` (`:3603` — RANDOM placeholder, determinism leak AND no real enemy-strength). Generic `War` shell (`types.ts:1532-1546`) has ONE `warScore`, `generals: string[]`, flat `battles[]` — no theaters, no per-theater scoring, no battle-size, no Officer-Mil cap, no end-multiplier. `hd1` critique (POST 1000-1004): end-multiplier too high (LIVE 1.0→0.5), Officer-Mil dominates (5-Mil > all else combined), no enemy-strength term, no battle-SIZE weighting, −1 loss too small; scoring made per-theater LIVE. | **Add to the generic `War` model (built by the war engine #56):** a real **enemy-strength term** (replacing the `Math.random` placeholder, routed through `rng.ts`), **battle-size weighting**, a **cap on the Officer-Mil share** of the success%, and **per-theater scoring + per-theater war-end**. Bake the end-multiplier (1.0-vs-0.5 is a human DECISION-GATE). | **M within E3 — EXTENDS the war engine; pairs with #152 (war-DEFEAT package) on the same model. ★ HARD CONSTRAINT: do NOT over-harden — the 1772 RevWar is a GAME-OVER on loss (`revolutionaryWar.ts`), so keep that war winnable (Euri, POST 1004).** |
+| **★ #157 (`hd1`)** — CSA-government seeding under-specified UNBUILT (needed for the CSA-victory branch) | **VERIFIED:** no CSA government in code — `startWar` is injected by the Civil-War EraEvent (`phaseRunners.ts:2978-2981`, `against: 'Confederate States'`), materialized by `applyEffect` (`phaseRunners.ts:3240-3253`) into the generic `War` shell; no CSA Pres/VP/cabinet/general seeding, no Secessionists pool. `hd1` rules define only CSA Pres/VP/Sr-General (Pres = random among seceded Command-holders; Comm-Gen = sole seceded Military-Leader); the GM improvised a full cabinet "for flavor" (POST 893-894), flagged for the suggestions thread (POST 912). | **Add a CSA-government seeding spec** (cabinet + multiple generals/admirals drafted from the seceded Command/Military pool) inside the #58 secession + war epic. Needed for vcczar's CSA-victory branch (POST 2692: seceded pols removed, Unionists move to the nearest loyal state, eventual reintegration). | **S — folds into the #58 secession + war epic. Depends on the per-pol Southern-Unionist/Secessionist gate (also unbuilt — DH-64/#158).** |
+| **★ DH-64 / #158 (`hd1`)** — `Southern Unionist` trait mislabeled on Southern draftees (DATASET; trait not even a wired gate) | **VERIFIED:** `Southern Unionist` appears NOWHERE in `src/` as a trait — the only `Unionist` hits are the unrelated faction `fact_blue_unionist` "Unionist Democrats" (`factions1856.ts:7`) + a `// Blue Unionist` comment (`politicians1856.ts:43`). `hd1` (POST 1446, 2682): many Union-officer-settled-South, Black-Republican, and Northern-residing-Southern draftees were UNlabeled → GM hand-fixed across the 1864/1868/1872 drafts. | **(a) DATASET-labeling fix:** audit `Southern Unionist` in `scripts/seedDataset.mjs` CURATED_ROWS (the trait array, alongside the existing `'Nationalist'` tags at `:137-229`) + regenerate `standard-draft-classes.json`, validated at dataset-build time. **(b)** the FUTURE per-pol secession gate (#58) READS this trait. | **XS — joins the #120 dataset-umbrella pass (the `Southern Unionist` column on VA/MS/FL/Border draftees). The reader (#58 gate) is separate engine work.** |
 
 ---
 
@@ -1969,6 +1973,155 @@ continental congress era system) + #120 (dataset umbrella — one coordinated
 > > Command use-it-or-lose-it (the Ambitious-Judge event), DH-25 career-track
 > > bootstrap (ebrk seeds ~2 pols/track/faction at boot), DH-24/DH-27 poor modern
 > > boot-data quality. **No NEW CPU sub-gaps** beyond the OC-1…OC-8/#143 set.
+>
+> **★★ Batch-16 changes to the plan (`hd1` / `c015a0cb` — "A House Divided" PART 1,
+> a SEPARATE EARLIER run from the Part-2 `hd` thread; an 1856-start, partly-HUMAN
+> antebellum → Civil War → Reconstruction → restart run; GM matthewyoung123, GAs
+> vcczar + Ted rule LIVE. Polarity 1856: BLUE=Dem, RED=Rep. NO new keystone, NO
+> re-sequence of the top-of-queue; but it delivers the SINGLE highest-value
+> Reconstruction finding in the KB — a DESIGNED FIX in hand for the DH-29
+> solo-blocker — plus a substantive war-balance pass.):**
+>
+> > **★ Read this block if you only read one for batch 16. The headline: this run
+> > REFRAMES DH-29 from a CPU-only artifact to a STRUCTURAL deadlock, and hands the
+> > CANONICAL FIX. DH-29 has been on file since batch 8 (`rep1800`) as "the
+> > Strict/Ironclad readmission plan can NEVER pass with CPU factions → solo
+> > Reconstruction unwinnable." `hd1` is the FIRST run to play the
+> > Civil-War→Reconstruction arc with HUMANS ON BOTH SIDES of the tug-of-war (a
+> > human Southern-Dem wanting it short vs a human Radical-Republican wanting it
+> > prolonged) — and the marquee result (GM-stated, `POST 2678`) is that **even
+> > with humans the Ironclad-vs-10% choice DEADLOCKED and states drifted back into
+> > the Union with NO plan at all** (mutual filibuster → null result). So the
+> > blocker is NOT a CPU heuristic gap; it is STRUCTURAL (a both-chambers-must-agree
+> > paralysis). vcczar's authoritative RESTART rewrite (`POST 2692-2694`) is the
+> > fix: a **4-plan Reconstruction model (No-plan / 10% / Ironclad-Wade-Davis /
+> > Military-district) available to BOTH the President AND Congress**, gated by a
+> > single prerequisite — **"there is a reconstruction plan adopted by Congress OR
+> > by the President"** — so the **President can adopt a plan UNILATERALLY**,
+> > guaranteeing resolution in solo play AND in deadlocked-human play. This is the
+> > #156 build target, and it FOLDS INTO the existing E3b Reconstruction epic as the
+> > definition-of-done for its readmission half (§9.1.6 — which is hereby upgraded
+> > from "author the rule, then build" to "build vcczar's authored rule"). This is
+> > the **3rd Civil-War run** (after `hd` Part 2 and the all-CPU `drums`) and the
+> > **5th antebellum source** — HIGH corroboration confidence on the
+> > war/Reconstruction/secession cluster. **It does NOT move the top of the queue:
+> > QW0 → K0/K2 → K3/K4 + scenarioBoot → E1 still lead** (these are subsystem-track
+> > items on the already-placed E3/E3b epics).
+> >
+> > **Verified shipped-state of every batch-16 item (grep/Read-confirmed):**
+> > **(1) #156 — the 4-plan Reconstruction model + the unilateral-adopt
+> > prerequisite — ENTIRELY UNBUILT (the canonical DH-29 fix).** The whole
+> > Reconstruction subsystem is absent: grep for `Reconstruction|Ironclad|
+> > readmission|Confederate|CSA` in `src/types.ts` returns **ZERO** subsystem hits
+> > (only the Secession-Winter loyalty-decay scaffold: a `// Secession Winter`
+> > comment at `types.ts:981/1149-1157`, the antebellum slave-state set, and
+> > `secessionDefectionCount?` at `types.ts:1481`). There is NO `game.reconstruction`
+> > state, no readmission-plan enum, no plan-adopted gate, no +2/+1 Solid-South bias,
+> > no appointed-Gov→Sen/Rep cascade, no pardon tiers. **Where it lands:** a new
+> > `game.reconstruction = { plan: 'none'|'ten-percent'|'ironclad'|'military-district'
+> > | null; adoptedBy: 'congress'|'president' | null; startYear; ... }` regime block,
+> > plus the 4 plans as ActionRegistry rows usable from BOTH the exec-action path
+> > (`runPhase_2_8_1_Executive`, `phaseRunners.ts:3632`) AND the legislation pipeline;
+> > the plan-adopted gate fronts every per-state readmission; the +2 Deep-South / +1
+> > other-seceded **time-boxed `bias-toward-incumbent-while-active`** modifier rides
+> > the `calcStateVote` bias term (`phaseRunners.ts:3709-3711`, distinct from static
+> > `State.bias`). **Size: M–L within E3b** — it is the largest single Reconstruction
+> > build target, but it is now a DESIGNED fix (vcczar-authored), not an open
+> > blocker; the planner's §9.1.6 "author the rule" step is DONE. **This is the
+> > highest-value Reconstruction work** because it UNBLOCKS DH-29 — the named
+> > solo-blocker gating every antebellum/CW/Reconstruction-bearing scenario.
+> > game-mechanics §23.4.1 (the new 4-plan section) + §23.4.
+> > **(2) DH-29 — REFRAMED from CPU-only to STRUCTURAL; the #156 model is its fix.**
+> > The existing DH-29 row (§8.1) + §9.1.6 frame it as "CPU-can't-pass-Ironclad."
+> > `hd1` proves it is **deeper**: humans on both sides filibustered each other to
+> > the same NULL result (`POST 2678`). So the §9.1.6 options 1/2/3 (CPU default-vote
+> > bias / crisis-bill / era-boundary auto-resolve) are no longer the only menu — the
+> > AUTHORED fix is the **President-can-unilaterally-adopt-a-plan prerequisite** (#156),
+> > which resolves BOTH the solo case (no CPU vote needed at all) AND the
+> > deadlocked-human case. **No size of its own** — DH-29's fix IS #156. game-mechanics
+> > §23.4.1.
+> > **(3) #155 — war "too easy for the Union" balance pass — UNBUILT (the war engine
+> > itself is unbuilt as a real model).** The shipped generic resolver
+> > `runPhase_2_7_2_Military` (`phaseRunners.ts:3593-3627`) is a flat per-phase
+> > `milPower*10 + d100 > enemyPower*10 + 50` (`:3602-3605`) with `war.warScore += win
+> > ? 10 : -5` (`:3613`) and end at `warScore ±50` (`:3615-3620`); `enemyPower = 1 +
+> > Math.random()*4` (`:3603`, a RANDOM placeholder — both a determinism leak [debt
+> > #2/#16] and NOT a real enemy-strength term). The generic `War` shell
+> > (`types.ts:1532-1546`) has a SINGLE `warScore`, `generals: string[]`, and a flat
+> > `battles[]` — **no two-theater split, no per-theater scoring, no enemy-strength,
+> > no battle-size, no Officer-Mil cap, no war-end multiplier.** `hd1`'s critique
+> > (`POST 1000-1004`, BOTH human players + the GA): the end-war multiplier is too
+> > high (changed LIVE 1.0→0.5), Officer-Mil dominates the formula (a 5-Mil officer >
+> > all other terms combined), there is no enemy-strength term, no battle-SIZE
+> > weighting, and a −1 loss is too small; scoring was made per-theater LIVE. **The
+> > hard constraint (Euri, `POST 1004`): do NOT over-harden — the 1772 start fights
+> > the Revolutionary War, which is a GAME-OVER on loss** (`revolutionaryWar.ts`), so
+> > a harder war engine risks ending games before they begin. **Where it lands:** the
+> > #155 balance terms (enemy-strength + battle-size + an Officer-Mil-share cap +
+> > per-theater scoring) bind on the generic `War` model that the war engine
+> > (Phase-1 #3 / #56) already must build — **bounded by the 1772-RevWar-winnable
+> > floor.** **Size: M within E3** — it EXTENDS the war engine; it pairs tightly with
+> > #152 (the batch-15 war-DEFEAT loss package) on the same model. game-mechanics
+> > §23.3.
+> > **(4) #157 — CSA-government seeding under-specified — UNBUILT (and the trait gate
+> > behind it is unbuilt).** No CSA government exists in code: `startWar` is injected
+> > by the Civil-War EraEvent (`phaseRunners.ts:2978-2981`, `out.startWar = { name:
+> > 'American Civil War', against: 'Confederate States' }`) and materialized by the
+> > `applyEffect` handler (`phaseRunners.ts:3240-3253`) into the generic `War` shell —
+> > there is no CSA president/VP/cabinet/general seeding and no Secessionists pool. The
+> > `hd1` rules define only CSA Pres/VP/Sr-General (CSA Pres = random among seceded
+> > Command-holders, Comm-Gen = the sole seceded Military-Leader); the GM improvised a
+> > full CSA cabinet "for flavor" (`POST 893-894`) and flagged it for the suggestions
+> > thread (`POST 912`). **Where it lands:** a CSA-government seeding spec (cabinet +
+> > multiple generals/admirals drafted from the seceded Command/Military pool) inside
+> > the secession/war epic — **needed for the CSA-VICTORY branch** (vcczar's `POST
+> > 2692` ruling: if the South wins, seceded pols are removed, Unionists move to the
+> > nearest loyal state, events drive eventual reintegration). **Size: S** — folds
+> > into the #58 secession + war epic; depends on the per-pol Southern-Unionist/
+> > Secessionist gate also being built (which is itself unbuilt — see DH-64).
+> > **(5) DH-64 / #158 — `Southern Unionist` trait mislabeled on Southern draftees —
+> > DATASET fix; the trait is not even a wired gate yet.** grep confirms `Southern
+> > Unionist` appears NOWHERE in `src/` as a trait (the only `Unionist` hits are an
+> > unrelated faction `fact_blue_unionist` "Unionist Democrats" at
+> > `factions1856.ts:7` and a `// Blue Unionist` comment at `politicians1856.ts:43`).
+> > So DH-64 has two layers: (a) the dataset-LABELING fix — many Union-officer-settled-
+> > South, Black-Republican, and Northern-residing-Southern draftees were UNlabeled,
+> > forcing the GM to hand-fix across the 1864/1868/1872 drafts (`POST 1446, 2682`);
+> > and (b) the FUTURE per-pol secession gate (#58) that will READ the trait. The fix
+> > is a `scripts/seedDataset.mjs` CURATED_ROWS audit (the trait array, alongside the
+> > existing `'Nationalist'` tags at `seedDataset.mjs:137-229`) + regeneration of
+> > `standard-draft-classes.json`, validated at dataset-build time. **Size: XS** —
+> > joins the #120 dataset-umbrella pass (the `Southern Unionist` column specifically
+> > on VA/MS/FL/Border draftees). game-mechanics §23.1.
+> >
+> > **Decision-gated RECOUNT (batch 16 nets 0 — but DH-29 changes CATEGORY):** no item
+> > leaves or enters the user/designer Decision-gated bucket. **DH-29's "author the
+> > rule" gate is RESOLVED OUT of §9.1.6's open-options menu** — vcczar authored the
+> > rule (#156), so E3b's readmission half moves from "design-then-build" to
+> > "build-the-authored-design." The four cross-run OPEN QUESTIONS the digest raises
+> > stay human-gated (they are tuning, not blockers): (a) permanent-vs-one-term
+> > war-hero presidential bonus (Part 2 = permanent +1 all elections; `hd1` = one-term
+> > +1 in 1864); (b) 3-naval-wins hard-gate (#56/Part 2) vs naval-then-land
+> > continue-roll chain (`hd1`); (c) war-end multiplier 1.0 (original) vs 0.5 (adopted
+> > LIVE here); (d) does the #156 prerequisite HARD-gate all readmission (none until a
+> > plan is adopted) or allow a default No-plan. These all bind inside E3/E3b and are
+> > flagged at §30.x for the human.
+> >
+> > **CORROBORATION only (no keystone moves):** #56 two-theater war (deepest spec yet:
+> > E/W theaters, the per-battle success% formula `base − Difficulty + Planning +
+> > Officer×10 + Prep + Benchmarks → d100`, WarScore naval/easy +2 / Difficult-land +3
+> > / loss −1, Decisive-General +2, named-battle officer casualties, temp-general
+> > fallback, court-martial, Major-War lingering penalty bundle, the Appomattox
+> > victory package); #57 Reconstruction onset (vcczar's `POST 1320-1323` ruling:
+> > appointed Govs/Sen/Reps + NO EVs + Loyalist representation, Pres→Gov→Sen/Rep
+> > cascade re-run each term, 2-yr no-limit Govs, generate-a-Gov-if-none, 3 pardon
+> > tiers); #58 secession (bungled-Presidential-decision trigger on JUDICIAL skill,
+> > the blunder ALONE fires it; CSA event chain LA-first-by-d6; per-pol secession gate
+> > Southern-Unionist-stays / Nationalist-rolls / else-inactive; no-relocate-into-
+> > rebel-state); #59 free/slave crisis (the exact §59 package fires on imbalance
+> > after a statehood bill; retired on emancipation); #92/#109 era-content gating; the
+> > full standard turn loop. **No NEW keystone, NO re-sequence; top of queue
+> > UNCHANGED.**
 >
 > **★ Batch-14 changes to the plan (`gild1868` / `bf590684` — the first dedicated
 > NATIVE-1868 Gilded-Age campaign, 6318 posts, the LARGEST thread in the KB; runs
@@ -3196,6 +3349,22 @@ queue behind federalism or the modern epic.** The reasoning:
   may prefer federalism first if the cross-era systems it forces — per-state EC,
   amendments — are wanted sooner).
 
+> **★ BATCH-16 UPDATE (`hd1`) — the internal ordering inside E3/E3b is now better
+> resolved, and the Reconstruction half's hardest open question is ANSWERED.** Build
+> the heavy parts in this order: (1) the **generic war engine (#6/#56)** with the
+> **#155 balance terms** (enemy-strength + battle-size + Officer-Mil cap +
+> per-theater scoring) and the **#152 DEFEAT loss package** on the SAME `War` model —
+> keep the **1772 RevWar winnable** (`hd1#POST 1004`); (2) the **secession gate (#58)
+> + #157 CSA-government seeding** (the cheap-additive antebellum payoff + the
+> CSA-victory branch); (3) the **Reconstruction onset (#57) + the #156 4-plan model**,
+> which now ships with the **DH-29 solo-blocker SOLVED** (the unilateral-adopt
+> prerequisite — §9.1.6, §9.1.12). The batch-7 worry that E3b's readmission half
+> needed K5 + CPU handler #2 before it could ship winnable is **relaxed for the solo
+> case** by #156: the player-President adopts a plan directly via the exec path, so
+> the readmission half no longer HARD-depends on K5. **DH-64** (the `Southern
+> Unionist` dataset audit) is a prerequisite for the #58 per-pol gate but is XS and
+> rides the #120 dataset pass independently.
+
 #### 9.1.3 Where K5 (the CpuController scaffold) sits — and why
 
 > **The single most important call in batch 5.** This subsection is the planner's
@@ -3596,6 +3765,56 @@ handler #2 (or carry the era-boundary auto-resolution as its self-contained
 fallback). This is the one place the 1856-arc epic genuinely **needs** the CPU
 handler suite rather than merely benefiting from it.
 
+> **★★ BATCH-16 UPDATE (`hd1`, #156) — DH-29 is REFRAMED from CPU-only to
+> STRUCTURAL, and vcczar has AUTHORED the fix. This subsection is upgraded from
+> "author the rule, then build" to "build the authored rule."**
+>
+> `hd1` is the FIRST run to play the Civil-War→Reconstruction arc with **HUMANS on
+> both sides** of the readmission tug-of-war. The GM-stated outcome (`POST 2678`):
+> *"The Congress could never agree on a Reconstruction guideline… NEITHER PASSED
+> and states just started coming back into the Union with NO reconstruction plan at
+> all."* So DH-29 is **not a CPU-heuristic gap** — competing HUMAN factions
+> filibustered each other to the same null result. The blocker is **structural**:
+> a both-chambers-must-agree paralysis that fires regardless of who is at the
+> table.
+>
+> **The authored fix (vcczar's restart rewrite, `POST 2692-2694`) — the canonical
+> #156 model:** a **4-plan Reconstruction model — No-plan / 10% / Ironclad
+> (Wade-Davis) / Military-district — available to BOTH the President AND Congress**,
+> gated by ONE prerequisite: *"there is a reconstruction plan adopted by Congress
+> OR by the President."* Because the **President can adopt a plan UNILATERALLY** (it
+> no longer has to be agreed by both chambers), Reconstruction always resolves —
+> in solo play (no CPU vote needed at all) AND in deadlocked-human play. Individual
+> per-state readmission is required only under the Ironclad or Military-district
+> plan; under No-plan/10% the states just come back. The 15th-Amendment rider
+> formalizes #57's Solid-South bias: **+2 toward the incumbent party in all Deep-
+> South states + +1 in all other former-seceded states, for as long as
+> Reconstruction is active** (sunsets when it ends).
+>
+> **What this changes for E3b's order:** the three options above (CPU default-vote
+> bias / crisis-bill / era-boundary auto-resolution) are **SUPERSEDED** by the
+> authored unilateral-adopt prerequisite. Specifically:
+> - The **K5 soft-dependency is REMOVED for the solo case.** Option 1 needed CPU
+>   handler #2 to *vote* the plan through; #156 lets the **President adopt it
+>   directly via the exec-action path** (`runPhase_2_8_1_Executive`,
+>   `phaseRunners.ts:3632`), so no CPU vote is required for the player-President's
+>   own plan. (CPU handler #2 is still wanted for a CPU-President's choice and for
+>   Congressional adoption, but it is no longer a HARD gate on shipping a winnable
+>   solo Reconstruction.)
+> - The **era-boundary auto-resolution (option 3) becomes a backstop, not the
+>   primary mechanism** — useful if a player-President simply never adopts a plan,
+>   but the unilateral-adopt path is the intended resolution.
+> - **Build surface:** `game.reconstruction = { plan; adoptedBy; startYear }` + the
+>   4 plans as ActionRegistry rows (K2) callable from BOTH the exec path and the
+>   legislation pipeline; the plan-adopted gate fronts every per-state readmission;
+>   the +2/+1 time-boxed bias rides the `calcStateVote` bias term. **Size: M–L
+>   within E3b** — the largest single Reconstruction build target, but now a
+>   DESIGNED fix.
+>
+> **One OPEN QUESTION remains for the human** (tuning, not a blocker): does the
+> prerequisite HARD-gate ALL readmission (no state returns until a plan is adopted)
+> or allow a default No-plan drift? The digest flags this; author it, then build.
+
 #### 9.1.7 Ideology-as-circle (batch 7) — foundational, era-gated, place it early-ish
 
 > **The third structural call in batch 7.** Is it a foundational ideology-model
@@ -3948,6 +4167,112 @@ engine (E3) gains a required completion (#152); E16 is re-scoped a third time
 (#124+#151); a NEW small end-condition module appears (#88, pairing with the
 APOCALYPSE clock); #153/#154 are XS/S add-ons. **Top of queue UNCHANGED**; #18 + #88
 are the attractive mid-tier wins this batch surfaces.
+
+#### 9.1.12 ★★ The Reconstruction-fix + war-balance cluster (batch 16, `hd1`)
+
+> **For the roadmap-planner: lift this section directly.** `hd1` ("A House
+> Divided" Part 1) is the first HUMANS-on-both-sides Civil-War→Reconstruction run.
+> It adds NO keystone and does NOT move the top of the queue (QW0 → K0/K2 → K3/K4 +
+> scenarioBoot → E1 still lead), but it hands the **canonical fix for the DH-29
+> solo-blocker** that has gated every antebellum/CW/Reconstruction scenario since
+> batch 8 — turning DH-29 from an open blocker into a designed build target inside
+> E3b. Dependency-ordered:
+
+**(A) #156 — the 4-plan Reconstruction model + the UNILATERAL-ADOPT prerequisite:
+the canonical DH-29 fix; HIGHEST-VALUE Reconstruction target; folds into E3b.**
+Verified: the entire Reconstruction subsystem is unbuilt (`Reconstruction|Ironclad|
+readmission|Confederate|CSA` → 0 hits in `src/types.ts`; only the Secession-Winter
+loyalty scaffold exists, `types.ts:981/1149-1157/1481`). vcczar's restart rewrite
+(`POST 2692-2694`) is an **authored design**, not just an open gap: **4 plans
+(No-plan / 10% / Ironclad-Wade-Davis / Military-district) usable by BOTH the
+President AND Congress**, gated by *"a plan adopted by Congress OR by the
+President"* — the President can adopt UNILATERALLY, so solo AND deadlocked-human
+Reconstruction always resolve. **This is the single highest-value Reconstruction
+build target** because it UNBLOCKS DH-29 (the named solo-blocker). **Where it
+lands:** add `game.reconstruction = { plan; adoptedBy: 'congress'|'president'|null;
+startYear }`; the 4 plans become ActionRegistry rows (K2) callable from BOTH the
+exec path (`runPhase_2_8_1_Executive`, `phaseRunners.ts:3632`) AND the legislation
+pipeline; the plan-adopted gate fronts every per-state readmission; the 15th-Amd
+**+2 Deep-South / +1 other-seceded time-boxed bias-while-active** rides the
+`calcStateVote` bias term (`phaseRunners.ts:3709-3711`, distinct from static
+`State.bias`). It SUPERSEDES the §9.1.6 options menu and **removes the K5
+soft-dependency for the solo case** (the player-President adopts directly; CPU
+handler #2 is still wanted for a CPU-President / Congressional adoption but is no
+longer a HARD gate). It composes with #148 (`gild1868`'s 20-yr Reconstruction
+timer + Solid-South sunset — same `game.reconstruction` block) and #57 (the onset
+cascade). **Size: M–L within E3b.** game-mechanics §23.4.1.
+
+**(B) #155 — war-balance pass: enemy-strength + battle-size + Officer-Mil cap +
+per-theater scoring; EXTENDS the war engine (E3 / #56/#152), bounded by the
+1772-RevWar-winnable floor.** Verified: the shipped resolver
+`runPhase_2_7_2_Military` (`phaseRunners.ts:3593-3627`) is flat `milPower*10 + d100`
+(`:3602-3605`) with `enemyPower = 1 + Math.random()*4` (`:3603`, a random
+placeholder — NOT a real enemy-strength term), `warScore ±50` end (`:3615-3620`);
+the generic `War` shell (`types.ts:1532-1546`) is single-`warScore`, no theaters.
+`hd1`'s critique (BOTH human players + the GA, `POST 1000-1004`): the end-multiplier
+is too high (changed LIVE 1.0→0.5), Officer-Mil dominates (a 5-Mil officer > all
+other terms combined), there is no enemy-strength term, no battle-SIZE weighting,
+and a −1 loss is too small; scoring was made per-theater LIVE. **The hard constraint
+(`POST 1004`): do NOT over-harden** — the 1772 start fights the Revolutionary War,
+which is a GAME-OVER on loss (`revolutionaryWar.ts`), so a harder engine risks
+ending games before they begin; war "isn't the main focus." **Where it lands:** the
+balance terms bind on the generic `War` model the war engine (#56) already builds —
+**route enemy-strength through `rng.ts`** (this also closes the `:3603`
+determinism leak, debt #2/#16). It PAIRS tightly with #152 (the batch-15 war-DEFEAT
+loss package) on the same model. **Resolve the three cross-run OPEN QUESTIONS while
+here** (all human DECISION-GATES, all tuning): the war-end multiplier (1.0 vs the
+LIVE-adopted 0.5); the naval phase (a 3-naval-wins HARD gate per #56/Part 2 vs the
+naval-then-land continue-roll chain `hd1` ran); the war-hero presidential bonus
+(permanent +1-all-elections per Part 2 vs the one-term +1 `hd1` applied in 1864 —
+this term also feeds the #18 election scorer). **Size: M within E3.** game-mechanics
+§23.3.
+
+**(C) #157 — CSA-government seeding: small; folds into the #58 secession + war
+epic; needed for the CSA-victory branch.** Verified: no CSA government in code —
+`startWar` (`phaseRunners.ts:2978-2981`) + `applyEffect` (`:3240-3253`) only spin up
+the generic `War` shell; no CSA Pres/VP/cabinet/general seeding, no Secessionists
+pool. `hd1` rules define only CSA Pres/VP/Sr-General (Pres = random among seceded
+Command-holders; Comm-Gen = sole seceded Military-Leader); the GM improvised a full
+cabinet "for flavor" (`POST 893-894`). **Where it lands:** a CSA-government seeding
+spec (cabinet + multiple generals/admirals from the seceded Command/Military pool)
+inside the #58 epic — required for vcczar's CSA-victory branch (`POST 2692`: seceded
+pols removed, Unionists move to the nearest loyal state, eventual reintegration).
+**Depends on the per-pol Southern-Unionist/Secessionist gate being built (also
+unbuilt — DH-64). Size: S.**
+
+**(D) DH-64 / #158 — `Southern Unionist` dataset audit: XS; joins the #120 dataset
+umbrella.** Verified: `Southern Unionist` is NOWHERE in `src/` as a trait (the only
+`Unionist` hits are the unrelated faction `fact_blue_unionist` "Unionist Democrats",
+`factions1856.ts:7`, + a `// Blue Unionist` comment, `politicians1856.ts:43`). `hd1`
+(`POST 1446, 2682`): Union-officer-settled-South, Black-Republican, and Northern-
+residing-Southern draftees were UNlabeled → GM hand-fixed across the 1864/1868/1872
+drafts. **Where it lands:** a `scripts/seedDataset.mjs` CURATED_ROWS audit (the trait
+array, alongside the existing `'Nationalist'` tags at `:137-229`) + regenerate
+`standard-draft-classes.json`, validated at dataset-build time. The trait READER (the
+#58 per-pol secession gate) is separate engine work. **Size: XS** — slot into the
+#120 dataset-umbrella pass (the `Southern Unionist` column on VA/MS/FL/Border
+draftees).
+
+**Does the DH-29 fix change priority?** DH-29 has been the named solo-blocker for
+every antebellum/CW/Reconstruction-bearing scenario. With #156 now a **designed fix
+in hand**, the Reconstruction epic (E3b) becomes **more attractive and less risky** —
+its hardest open question (how does solo Reconstruction ever resolve?) is answered,
+so E3b's readmission half moves from "design-then-build" to "build the authored
+design." BUT E3b is still **downstream of the keystones** (it depends on the generic
+war engine + K2 ActionRegistry, and enhances an already-shipped scenario rather than
+unblocking the spine). So **the top of the queue is UNCHANGED: QW0 → K0/K2 → K3/K4 +
+scenarioBoot → E1.** What changes is E3b's *internal confidence*: build the war
+engine (#56 + #155 + #152) first, then the Reconstruction half (#57 onset + #156
+4-plan model) with the solo-blocker already solved.
+
+**Net for the planner:** DH-29 changes CATEGORY (CPU-only → structural; open-blocker
+→ designed-fix) but stays inside E3b; #156 is the new highest-value Reconstruction
+target (M–L); #155 is an M war-engine extension bounded by the RevWar floor, pairing
+with #152; #157 is an S addition to the secession epic; DH-64 is an XS dataset audit
+under #120. **No item leaves/enters the Decision-gated bucket** (the four cross-run
+open questions are tuning, not blockers). **3rd Civil-War run + 5th antebellum
+source → HIGH corroboration confidence** on the war/Reconstruction/secession
+cluster. **Top of queue UNCHANGED.**
 
 ### 9.2 Major subsystems (do these after the keystones)
 
@@ -4466,6 +4791,40 @@ planning. Specifically:
 > after `pop` 2012). **CORROBORATION only:** #113/#56/#106/#51/#85/#90/#92/#102/#1/
 > #135/#143/DH-25/DH-24 — no keystone moves; **top of queue UNCHANGED** (QW0 → K0/K2 →
 > K3/K4 + scenarioBoot → E1).
+>
+> **★★ Batch-16 change (`hd1` / "A House Divided" Part 1, the first HUMANS-on-both-
+> sides Civil-War→Reconstruction run — DH-29 REFRAMED + its AUTHORED fix in hand; NO
+> new keystone, NO re-sequence of the top of queue):** **★★ #156 4-PLAN
+> RECONSTRUCTION MODEL → the canonical DH-29 fix; FOLDS INTO E3b** as the
+> definition-of-done for its readmission half — vcczar's authored rewrite
+> (`hd1#POST 2692-2694`): 4 plans (No-plan / 10% / Ironclad-Wade-Davis /
+> Military-district) on **BOTH Pres + Congress**, gated by *"a plan adopted by
+> Congress OR by the President"* so the **President adopts UNILATERALLY** →
+> solo AND deadlocked-human Reconstruction always resolve; `game.reconstruction =
+> {plan, adoptedBy, startYear}` + ActionRegistry rows + the +2/+1 time-boxed
+> bias-while-active on the `calcStateVote` term; **M–L within E3b; the
+> highest-value Reconstruction target** (UNBLOCKS DH-29; removes the K5
+> soft-dependency for the solo case). **★ DH-29 RE-CLASSIFIED: CPU-only →
+> STRUCTURAL** (`hd1#POST 2678`: humans on both sides filibustered to the same
+> NO-plan null result) — the §9.1.6 options menu is SUPERSEDED by the unilateral-
+> adopt prerequisite; its "author the rule" step is DONE. **★ #155 WAR-BALANCE PASS
+> → EXTENDS the war engine (E3 / #56/#152)**: add a real enemy-strength term
+> (replacing the `Math.random` placeholder at `phaseRunners.ts:3603`, routed through
+> `rng.ts`) + battle-size weighting + an Officer-Mil-share cap + per-theater scoring;
+> **★ HARD CONSTRAINT — keep the 1772 RevWar winnable** (game-over on loss,
+> `hd1#POST 1004`); bake the open tuning (multiplier 1.0-vs-0.5; naval hard-gate-vs-
+> continue-roll; permanent-vs-one-term war-hero bonus); M within E3, pairs with #152.
+> **★ #157 CSA-GOVERNMENT SEEDING → folds into the #58 secession + war epic** (cabinet
+> + generals/admirals from the seceded Command/Military pool; needed for the
+> CSA-victory branch, `hd1#POST 2692`); S; depends on the per-pol Southern-Unionist
+> gate. **★ DH-64/#158 `Southern Unionist` DATASET audit → joins the #120 dataset
+> umbrella** (CURATED_ROWS trait audit in `scripts/seedDataset.mjs` + regen; the trait
+> is not even a wired gate yet — VA/MS/FL/Border draftees); XS. **★ Decision-gated
+> RECOUNT: 0** (DH-29 changes category but stays in E3b; the 4 cross-run open
+> questions are tuning). **3rd Civil-War run + 5th antebellum source — HIGH
+> corroboration** on war/Reconstruction/secession. **CORROBORATION only:** #56 (the
+> deepest two-theater spec yet) / #57 onset / #58 / #59 / #92/#109 — no keystone
+> moves; **top of queue UNCHANGED** (QW0 → K0/K2 → K3/K4 + scenarioBoot → E1).
 
 **Cheap fixes first (do immediately — XS each, high value):**
 **★ BUG-0/QW0 (relocation cap `5`→`4`, `types.ts:247`, divergence #9 — ★ batch-12

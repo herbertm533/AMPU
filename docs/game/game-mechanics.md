@@ -260,6 +260,7 @@
     - [23.2 Free/Slave sectional-balance crisis scoring](#232-59-freeslave-sectional-balance-crisis-scoring-the-slavery-era-crisis-engine)
     - [23.3 Civil War — the two-theater combat engine](#233-56-civil-war--the-two-theater-combat-engine-multi-term-subsystem)
     - [23.4 Reconstruction readmission subsystem](#234-57-reconstruction-readmission-subsystem-end-nationalism--gilded)
+        - [23.4.1 ★ `hd1` human-played Reconstruction + vcczar's revised ruleset (#156, the DH-29 fix)](#2341--hd1--reconstruction-played-by-humans-on-both-sides--vcczars-authoritative-rewrite-156-the-canonical-reconstruction-design)
     - [23.5 Canada conquest → era-gated statehood + Canadian draft](#235-60-canada-conquest--era-gated-territorystatehood--canadian-draft)
 24. [Other 1856-arc systems revealed by `house-divided` (designed, not built)](#24-other-1856-arc-systems-revealed-by-house-divided-designed-not-built)
     - [24.1 Succession / eligibility / the acting-president state](#241-61-succession--eligibility--the-acting-president-state)
@@ -335,6 +336,7 @@
     - [30.3 Rulings folded from `smallbugs` (vcczar spot rulings)](#303-rulings-folded-from-smallbugs-vcczar-spot-rulings)
     - [30.5 Rulings folded from `oopscpu` (Ted-run all-CPU 1788 stress-test)](#305-rulings-folded-from-oopscpu-ted-run-all-cpu-1788-stress-test)
     - [30.6 Rulings folded from `terror2000` (Ted-run 2000-start modern campaign)](#306-rulings-folded-from-terror2000-ted-run-2000-start-modern-campaign)
+    - [30.7 Reconstruction rulings folded from `hd1` (vcczar — AUTHORITATIVE)](#307-reconstruction-rulings-folded-from-hd1-vcczar--authoritative)
     - [30.4 Authority hierarchy reminder](#304-authority-hierarchy-reminder)
 31. [Gilded-Age era systems (designed, not built)](#31-gilded-age-era-systems-designed-not-built)
     - [31.1 (#147) Tariff-as-national-%-rate + the mutually-exclusive MonetaryRegime](#311-147-tariff-as-national-rate--the-mutually-exclusive-monetaryregime-designed)
@@ -3762,14 +3764,20 @@ Rules where the **forum and the shipped engine genuinely disagree** (not just
     next half-term, **undoable by later amendments**, with **Puritan/Integrity forced-vote
     overrides** and **no grandfather clause** (a hole vs `modern`). (See [§27.8](#278-amendments-mutate-core-rules-mid-game-the-sexenio-experiment).)
 
-22. **Reconstruction Strict/Ironclad plan can NEVER pass with CPU → SOLO RECONSTRUCTION IS
-    UNRESOLVABLE.** GM-verified (`rep1800` POST 9170): only 3 factions would ever vote for the
-    historical Ironclad-Oath plan, "in a single player game it basically can never pass." A
-    **solo-play blocker for ANY antebellum/CW scenario** and a primary driver of the in-progress
-    CW/Reconstruction rules rewrite. Also: Reconstruction **hard-codes a Red +2 Southern bias
-    even in a Blue-won alt-history** ("historical sim, not alt-history") — a **deliberate design
-    stance the build must decide on**, not a bug. (See [§23.4](#234-57-reconstruction-readmission-subsystem-end-nationalism--gilded);
-    `game-context.md` DH-class.)
+22. **Reconstruction readmission-plan vote STRUCTURALLY DEADLOCKS → no plan adopted (DH-29).**
+    First logged from `rep1800` as a **CPU-only** blocker (POST 9170: only 3 factions would ever
+    vote for the historical Ironclad-Oath plan, "in a single player game it basically can never
+    pass"). **★ `hd1` REFRAMED it to STRUCTURAL** (POST 2678): with **HUMANS on both sides**, the
+    Ironclad-vs-10% choice **still deadlocked — neither passed, states drifted back with NO plan**
+    (mutual filibuster). So it is not a CPU artifact; the plan *vote itself* is the failure point.
+    **★ FIXED in design by #156** (vcczar, `hd1` POST 2693): all readmissions require a plan
+    **adopted by Congress OR the President** → **the President can adopt one UNILATERALLY**, so
+    Reconstruction always resolves in solo **and** deadlocked-human play. **The build must implement
+    the President-can-adopt-unilaterally rule** ([§23.4.1d/e](#2341--hd1--reconstruction-played-by-humans-on-both-sides--vcczars-authoritative-rewrite-156-the-canonical-reconstruction-design)).
+    Also: Reconstruction **hard-codes a Red +2 Southern bias even in a Blue-won alt-history**
+    ("historical sim, not alt-history") — a **deliberate design stance the build must decide on**,
+    not a bug. (See [§23.4](#234-57-reconstruction-readmission-subsystem-end-nationalism--gilded);
+    `game-context.md` DH-29, #156.)
 
 > **★ New design holes from `rep1800` (DH-29..DH-35 — point to `game-context.md`, not
 > re-documented here).** Seven new design holes joined the gap log this batch (see
@@ -5073,18 +5081,35 @@ politician generator for dataset exhaustion; and resolutions for DH-1/DH-2.)*
 
 ## 23. Civil War & Reconstruction (1856-arc) (designed, not built)
 
-> **Entire section is designed, not built — and uniquely sourced.** This is the **only**
-> documented playthrough of the antebellum → Civil-War → Reconstruction machinery, from the
-> **first 1856-native** thread (`77db6e6f`, "A House Divided" Part 2, a 1856→1904 alt-history
-> multiplayer campaign). The **shipped** 1856 scenario (`scenario1856.ts:177`, era
-> `nationalism`) stops at the antebellum *start*: its era-event spine **ends at the Trent
-> Affair (1861)** and it has **no Civil-War combat engine, no secession resolution, no
-> Reconstruction**. What ships is the *pressure* (Dred Scott / John Brown / **Secession Winter**
-> era events that decay cabinet loyalty and modulate meters — [§10.3](#103-243-era-events--runphase_2_4_3_era-phaserunnersts2796),
-> `phaseRunners.ts:2834–3000`; `SLAVE_STATES_1856` at `types.ts:1152`), not the war itself.
-> Cite `hd#POST N`. Cross-ref `game-context.md` rows **#56–#60** and the alt-history framing in
-> `historical-context.md` §3–§5 (**Seward**, not Lincoln, is the wartime president; secession
-> fires **~1863** from a bungled John Brown's Raid decision; CSA president **John A. Quitman**).
+> **Entire section is designed, not built — and now multi-campaign sourced.** The antebellum →
+> Civil-War → Reconstruction machinery is documented across **five campaigns**: the **first
+> 1856-native** thread (`hd` = `77db6e6f`, "A House Divided" **Part 2**, a 1856→1904 alt-history
+> multiplayer campaign — the spine of this section), plus `drums` (all-CPU), `rep1800` (1800-start
+> traversal), and **`hd1` (`c015a0cb`, "A House Divided" PART 1, batch 16)** — a SEPARATE, EARLIER
+> 1856 run with a **different cast**, and the **first to play Reconstruction with HUMANS on both
+> sides** (the source of #155–#157, DH-64, and the DH-29 reframe). The **shipped** 1856 scenario
+> (`scenario1856.ts:177`, era `nationalism`) stops at the antebellum *start*: its era-event spine
+> **ends at the Trent Affair (1861)** and it has **no Civil-War combat engine, no secession
+> resolution, no Reconstruction**. What ships is the *pressure* (Dred Scott / John Brown / **Secession
+> Winter** era events that decay cabinet loyalty and modulate meters —
+> [§10.3](#103-243-era-events--runphase_2_4_3_era-phaserunnersts2796), `phaseRunners.ts:2834–3000`;
+> the John Brown event is `eraEvents1856.ts:84` as a **flat captured-narrative event, NOT** the
+> blunder-triggers-secession decision; `startWar: { against: 'Confederate States' }` at
+> `eraEvents1856.ts:115,149`; the generic `warScore` + `BattleRecord[]` shell at `types.ts:1360,1538`;
+> `SLAVE_STATES_1856` at `types.ts:1152`), not the war itself. **grep confirms 0
+> Reconstruction/readmission/Ironclad/CSA hits in `types.ts`.** Cite `hd#POST N` / `hd1#POST N`.
+> Cross-ref `game-context.md` rows **#56–#60, #155–#157, DH-29, DH-64**.
+>
+> **★ Two DISTINCT alt-history casts — do NOT conflate** (both are valid alt-histories of the same
+> 1856 concept; cross-ref `historical-context.md` §3):
+> - **`hd` Part 2:** wartime president **Seward** (not Lincoln); secession **~1863** from a bungled
+>   John Brown's Raid decision (**0-Judicial** blunder); CSA president **John A. Quitman**; Davis =
+>   *Democratic* party leader; Lincoln nominated only 1868.
+> - **`hd1` Part 1:** wartime president **Salmon P. Chase** (VP **Lincoln**); secession **1860→1861**
+>   when **Chase blunders the John Brown's Raid decision** (Judicial-skill roll); CSA president
+>   **Herschel V. Johnson (GA)**, Davis only **CSA War Secretary**; **Union wins late 1864**; ends
+>   the Era of Nationalism at **1868**, then restarts with vcczar's revised Reconstruction rules.
+>   **Polarity (1856): BLUE = Democrats, RED = Republicans.**
 >
 > **★ THREE-OUTCOME CONFIRMED + concurrent multi-phase wars (batch 8, `ad0f2875`).** The
 > Civil-War branch points are **decision/roll-driven variables, not a scripted path** — the corpus
@@ -5166,10 +5191,59 @@ The antebellum pressure pays off as a **scripted Era-Event chain**, not a passiv
 >   treaty (only **land-acquisition** events require successful implementation — cross-ref §27.1's
 >   "win a war but fail to claim territory") (`rep1800` §C POST 8542–8550, 8654, 8661).
 
+> **★ `hd1` (3rd-campaign corroboration of #58) — sharpened secession trigger + RANDOM CSA
+> leadership + ★ #157 the CSA-government-seeding gap + ★ DH-64 the trait dataset bug** (`hd1` =
+> `c015a0cb`, "A House Divided" **Part 1**; cast: **Chase president / Lincoln VP**, secession
+> **1860→1861**, **CSA president Herschel V. Johnson**; cross-ref `game-context.md` **#58 CORROB**,
+> **#157 NEW**, **DH-64 NEW**). Confirms §23.1's blundered-decision trigger + Southern-Unionist gate
+> from a 3rd CW campaign, with these sharper details:
+> - **★ The blunder trigger rolls on the President's JUDICIAL skill** (Admin for cabinet). The
+>   **John Brown's Raid** Era-Event fires a **President A/B decision** (A respect the VA hanging /
+>   B federal-force confiscate). Chase picks **B**; the implementation is rolled on the **President's
+>   Judicial skill** (Chase 3 → >50% not to blunder). **Chase BLUNDERS, 85/60 → automatic
+>   secession** (POST 877–878). A rumor he intends to **pardon Brown** ignites the South. **★ The
+>   Presidential blunder ALONE fired secession** even though the AG + SecWar (both 5 Admin)
+>   implemented fine — sharper than §23.1's general "blunder triggers it" (the *relevant skill is
+>   Judicial for the President*, Admin for cabinet).
+> - **CSA event chain** (POST 878, 922–924): **LA seceded first** (a d6 among the Deep South), then
+>   SC/AL/FL/MS, then GA → **6 states form the CSA** at a Milledgeville convention (CSA constitution:
+>   **single 6-yr presidential term + line-item veto**); then TX/AR/TN/VA/NC join (**11 states
+>   total**). **MO + KY conventions stayed Union** (border-state pols handled separately — they may
+>   individually secede even if the state stays).
+> - **Per-pol secession** (POST 922–924): seceded-state pols go to an inactive **"Secessionist
+>   politicians" tab** UNLESS they hold **`Southern Unionist`** (stays loyal) or **`Nationalist`**
+>   (rolls to stay). **~260 Blue + ~100 Red pols left** (11 Govs, 24 Senators, 2 Generals, 1
+>   Ambassador, the SecWar). **Can't relocate INTO a rebelling state.**
+> - **★ CSA Pres/VP = a RANDOM roll among all seceded pols WITH Command** (POST 924) — **Herschel V.
+>   Johnson (GA) president, Oran Roberts (TX) VP**. **Commanding General = the only seceded
+>   Military-Leader with Mil** (Robert E. Lee, by default).
+> - **★ #157 — CSA government is UNDER-SPECIFIED.** The rules **only define CSA Pres / VP /
+>   Senior-General** — so the GM had to **improvise the entire CSA cabinet "for flavor"** (**Davis =
+>   War Secretary**, a "demotion"; **Benjamin = Treasury**; **Bell = State**; plus 5 generals + 4
+>   admirals drawn from seceded Military pols) and **flagged it for the low-priority suggestions
+>   thread** (POST 893–894, 912). → **A CSA-government seeding gap:** a CSA-victory or a long war
+>   leaves the Confederacy a **3-office shell**. The build needs a defined CSA-seeding spec (full
+>   cabinet + multiple generals/admirals from the seceded Command/Military pool), so the CSA is a
+>   real opposing government — pairs with #56's war engine and #156's CSA-victory branch.
+> - **★ DH-64 — the `Southern Unionist` trait is MIS-LABELED on many Southern/Black draftees
+>   (dataset bug).** The secession gate keys on `Southern Unionist`, but the standard draft classes
+>   labeled it wrong: **Union officers who settled South**, **Black Republicans** (e.g. **Robert
+>   Smalls**, given Union-Loyalist by GM hand-fix, POST 1446), and **Northern-residing Southerners**
+>   were left **unlabeled** — so they'd **auto-join the Secessionists and be unable to hold office**.
+>   The GM had to **hand-fix the labeling across the 1864 / 1868 / 1872 drafts** (POST 1446, 2682).
+>   → **Build TODO: audit + correct `Southern Unionist` on `standard-draft-classes.json`** (esp.
+>   VA/MS/FL + all Black Republicans), via `scripts/seedDataset.mjs` `CURATED_ROWS`, **validated at
+>   dataset-build time** (cross-ref the draft-class authoring playbook). Without the audit, correct
+>   secession would wrongly deactivate loyal Southern (and Black) pols.
+
 *(designed, not built — a `Politician.allegiance: 'union' | 'secessionist'` state + a
 "Secessionists" inactive bucket; a secession era-event chain gated on a blundered presidential
-decision; the per-pol secession roll keyed on `Southern Unionist`/`Nationalist` traits + state
-region; one-way relocation out of rebel states; the CSA officer/structure events.)*
+decision (**Judicial-skill roll for the President; a Pres blunder alone fires it**); the per-pol
+secession roll keyed on `Southern Unionist`/`Nationalist` traits + state region; one-way relocation
+out of rebel states; **a CSA-government seeding spec beyond 3 offices** (full cabinet + multiple
+generals/admirals from the seceded Command/Military pool — #157); **random CSA Pres/VP among seceded
+Command-holders, Comm-Gen = sole seceded Military-Leader**; and a **dataset audit of the
+`Southern Unionist` trait** on the draft classes — #158/DH-64.)*
 
 ### 23.2 (#59) Free/Slave sectional-balance crisis scoring (the slavery-era crisis engine)
 
@@ -5209,6 +5283,18 @@ batch 10) — it is the **slavery-era** crisis engine, not a Nationalism-only me
 > faction (→ +1 enthusiasm) while an antislavery faction eats the −100 — a per-faction-ideology
 > asymmetry layered on top of the sectional-balance package above. Named CRISIS states derive from
 > **meter thresholds** ([§21.8](#218-named-ordinal-meter-model--3-swing-cap--war-score-meter)).
+
+> **★ `hd1` (5th-campaign corroboration of #59).** "A House Divided" Part 1 fired the **EXACT §59
+> package** when **free outnumbered slave after a statehood bill** (KS + OR admitted free): **Speaker
+> + PPT −250 + −1 next election; all Moderate factions −250; DomStab −2; Party-Pref +2 Red; Civil
+> Rights +250 / RW-Activists +2 next election** ("livid") — `hd1` POST 273. The whole crisis is
+> **retired on emancipation** when the **"Abolish Slavery by Compensating Owners Act"** passes,
+> folding **Plantation → Agriculture** (POST 1004). Also corroborates the antebellum docket:
+> **Dred Scott** decided **6-2** as a SCOTUS-phase case ("7-2 IRL but a justice died") → **+500
+> Traditionalists** (POST 160–165); **Panic of 1857** EraEvo; the **Bleeding Kansas / Popular
+> Sovereignty / Lecompton** statehood lever (a wartime "admit Kansas as a slave state" proposal was
+> mocked and the proposer **expelled from the Senate**, POST 935–938); the **1860 election + 3rd-party
+> fracture**; and the **1868 era-end boundary** → restart-with-revised-rules.
 
 This is a **sectional free-vs-slave state counter** feeding **score + meter + election** effects,
 firing on imbalance either way and sunset on emancipation. **It interacts directly with
@@ -5323,6 +5409,71 @@ in EVERY state** if a major war ended **< 20 years prior** — this **decided th
 **NB:** the in-timeline war end-year is ambiguous (**1866 vs 1867**), which shifts the 20-year
 window — flagged **verify** (open question, `game-context.md` `hd`/#56).
 
+> **★ `hd1` — the DEEPEST per-battle spec (the 3rd Civil-War run, deepest war record yet) + the
+> "Union wins too easily" balance critique that changed the engine LIVE** (`hd1` = `c015a0cb`,
+> "A House Divided" **Part 1**; cast: **Chase president / Lincoln VP**, **Union wins late 1864**;
+> cross-ref `game-context.md` **#56 CORROB + #155 NEW**). This 4th-overall CW run re-derives the
+> per-battle formula with sharper coefficients and **surfaces + partially fixes a structural
+> balance problem in real time.**
+>
+> **Per-battle Success% as run in `hd1`** (POST 987, 1314) — same additive shape as above with
+> `hd1`'s exact coefficients:
+> ```
+> Success% = base
+>   − Difficulty           // Easy 0 / Moderate −15 / Difficult −20  (hd1's values)
+>   + Planning             // Sec War + Senior General   (Sec War + Senior Admiral for naval)
+>   + Officer              // commanding Military ×10 (5→+50, 4→+40); a REPLACEMENT general is −1 (so 4→+30)
+>   + MilPrep              // +15
+>   + Benchmarks           // +15, then +20 later
+> roll d100 ≤ Success% ⇒ battle won
+> ```
+> **War-Score in `hd1`** (POST 987–989, corrected live): **naval / easy win +2, Difficult land
+> win +3, loss −1** (the GA first used −3, **corrected to −1**); a **Decisive General adds +2
+> EXTRA** to WS on a Difficult win (Grant at Vicksburg, POST 1318). *(NB the coefficient table
+> differs slightly from the `drums`/§23.3 above — Easy/naval **+2** here vs **+1** in `drums`,
+> Difficulty −15/−20 here vs −10/−25 — these are tuning-variant rolls of the SAME formula; bake
+> one when building.)*
+> - **Naval-then-land per battle, but NO hard 3-naval-win gate here.** `hd1` ran a **continue-roll
+>   chain** (~50% to chain the next battle within a theater); a battle resolves **naval first, then
+>   land**, but **3 naval wins were NOT strictly required** before ground combat — contrast §23.3's
+>   "3 naval victories gate land" (from Part 2) and `drums`'s **per-war** N-naval gate. **Reconcile:
+>   hard naval gate vs continue-roll chain** (open question below).
+> - **Court-martial rule** (POST 1314): an officer who loses an **Easy** battle, OR a
+>   **Controversial / Easily-Overwhelmed** officer who loses a **Moderate** battle, can be
+>   **court-martialed by a Congressional leader** next term.
+> - **Temp-general fallback** (POST 1318): running out of officers promotes a **non-officeholding
+>   Military-track pol to a temporary general** (McPherson the rookie won Petersburg).
+> - **Named-battle casualties** (both sides): winners +1 Mil / Leadership / Military Leader /
+>   Decisive General / Celebrity, lose Obscure; losers −1 Mil / gain Incompetent; **−500 pts to the
+>   losing officer's faction** on a loss (POST 1314).
+> - **Major-War lingering package while active** (POST 987): **80% −rev/budget; 20% ±economy;
+>   20% −QoL; 30% −incumbent-party preference.**
+> - **Appomattox (Union-victory) package in `hd1`** (POST 1318–1319): **25% guerrilla-war roll**
+>   (failed here); **+2 incumbent party pref**; **President +1 incumbent-faction enthusiasm +
+>   200 pts**; **250 pts to winning factions + Nationalists / Civil-Rights / Wall-St / Big-Corp /
+>   Mil-Industrial / Globalists**; DomStab +1; **seceded states → Reconstruction**. *(NB: `hd1`
+>   applied a **one-term +1 war-hero** bonus in 1864, NOT the **permanent +1-all-elections** that
+>   §23.3 records from Part 2 / `rep1800` — permanent-vs-one-term is a cross-run open question.)*
+>
+> **★ #155 — "The Union wins too easily" (NEW balance critique; both human players AND the GA flag
+> it, POST 1000–1004).** After the 1st war phase: *"This has been 2 civil wars where the Union is
+> winning easily… feature or bug?"* (Will). The diagnosed problems + the live fix:
+>
+> | Problem | `hd1` finding | Status |
+> |---|---|---|
+> | **End-war multiplier too high** | at **1.0**, WS 7 → 70% end-chance — too generous | **CHANGED LIVE to 0.5** (WS 7 → 35%), POST 1314 |
+> | **War scoring should be per-theater** | one global WS made both theaters resolve together | **ADOPTED — scoring + ending made PER-THEATER**, POST 1314 (Union won West 15→75%, East 9→45%) |
+> | **Officer-Mil dominates the formula** | *"a 5-Mil leading officer gives a larger bonus than all other factors combined"*; a board of 4–5 Mil Union officers makes any war a near-lock | **OPEN — cap Officer-Mil's share** |
+> | **No real enemy-strength term** | *"repelling a British invasion is only slightly easier than a native tribe, and is **easier** than the Civil War"* | **OPEN — add an enemy-strength term** |
+> | **A Difficult-battle loss (−1) is too small** | battle **SIZE** should matter (Bull Run small vs Gettysburg / Wilderness large) | **OPEN — add battle-size weighting** |
+>
+> **★ COUNTER-CONSTRAINT (cross-run balance tension; Euri, POST 1004):** do **NOT** over-harden the
+> war. The **1772 start fights the Revolutionary War, which causes a game-over on a loss**
+> (`revolutionaryWar.ts`), so a harder war engine risks ending games before they begin. War *"isn't
+> the main focus of the game."* → The tech-lead must add enemy-strength + battle-size + a
+> Officer-Mil cap **while keeping the 1772 RevWar floor playable** — a genuine design tension, not a
+> one-way "make it harder."
+
 **Tiered war framework (generalizes #45 / divergence #6).** The same engine runs **Major /
 Minor / Operation** tiers with different end-war multipliers and reward packages:
 
@@ -5342,7 +5493,22 @@ per-theater WarScore with a +10 auto-win, the WarScore×multiplier carry roll wi
 Operation multiplier, named-battle officer casualties + trait grants, the active-war global
 election modifiers, and the win package incl. the **permanent president +1-all-elections** and the
 **<20-yr war-hero +1-all-states** bonus. Fold the shipped flat resolver and the 1772 Rev-War loop
-in as configured instances.)*
+in as configured instances. **Add (per #155):** an enemy-strength term + battle-size weighting + a
+cap on Officer-Mil's share, **bounded by the 1772-RevWar-must-stay-winnable constraint.**)*
+
+> **★ Cross-run reconciliations the build must bake (the war engine has been run 4×: `hd` Part 2,
+> `drums`, `rep1800`, `hd1`):**
+> 1. **War-end multiplier — 1.0 vs 0.5.** Part 2 / `drums` use **×2** family multipliers (the
+>    longer-war escalation); `hd1` ran **1.0 then changed it LIVE to 0.5** on the balance critique.
+>    Pick the canonical value (and whether it scales with war length).
+> 2. **Naval gate — hard 3-win gate vs continue-roll chain.** §23.3 (Part 2) gates ground combat
+>    behind **3 naval wins per theater**; `drums` makes the N **per-war** (Mexico 3, WWI 2); `hd1`
+>    ran a **naval-then-land continue-roll chain with no hard gate.** Reconcile.
+> 3. **War-hero presidential bonus — permanent vs one-term.** Part 2 / `rep1800` give the President
+>    a **permanent +1 in ALL elections** on victory; `hd1` applied a **one-term +1** in 1864. Bake
+>    which.
+> 4. **Per-theater scoring/ending** is now an **adopted improvement** (`hd1` POST 1314) — make WS
+>    and the end-roll resolve **per theater**, not globally.
 
 ### 23.4 (#57) Reconstruction readmission subsystem (end-Nationalism → Gilded)
 
@@ -5449,14 +5615,141 @@ not back in the Union (`hd` POST 1987–1988, 2320):
 >   **Hiram Revels (Senator, MS)**; post-abolition draft was **heavily Red-weighted** (~100 red vs
 >   ~40 blue) (`rep1800` §C POST 8463, 8999, 9117, 9699–9700).
 
-*(designed, not built — a `State.reconstruction` status (occupied / military-gov / readmitted)
-with President-appointed 2-yr military Govs and no representation until a per-state readmission
-bill passes; the three readmission plans incl. a **time-boxed `bias +2 until year`** modifier;
-Black-voter enfranchisement on readmission feeding `calcStateVote`; the strip-leaders / pardon
-bills that remove-or-return named pols; the doubled-Carpetbagger-into-reconstructed-state rule;
-the 2:1 Plantation→Agriculture industry conversion; the Reconstruction era-event spine; and
-the **Reconstruction END exec action** (AG-Admin roll + lobby payouts + White-League/Red-Shirts
-trigger).)*
+#### 23.4.1 ★ `hd1` — Reconstruction played by HUMANS on BOTH sides + vcczar's AUTHORITATIVE rewrite (#156, the canonical Reconstruction design)
+
+> **★★ The single highest-value addition in batch 16.** `hd1` (`c015a0cb`, "A House Divided"
+> **Part 1**) is the **first run to play the Civil-War → Reconstruction tug-of-war with HUMANS on
+> BOTH sides** — a human Southern-Democrat (Davis faction, wants Reconstruction **short**) vs a
+> human Radical/Liberal-Republican (Chase faction, wants it **prolonged**). The result reframes
+> DH-29 and produces **vcczar's authoritative revised ruleset** — the canonical Reconstruction
+> design (cross-ref `game-context.md` **#156 NEW/AUTHORITATIVE**, **DH-29 MOVEMENT**; index in
+> [§30.7](#307-reconstruction-rulings-folded-from-hd1-vcczar--authoritative)). **vcczar rules
+> live** here (POST 1320, 2692), so these carry **designer authority** (same class as `tedchange`).
+
+**(a) Onset ruling — the end-of-war default** (vcczar, `hd1` POST 1320–1322 — sharpens the §23.4
+"Military Reconstruction" opening with the appointment cascade):
+
+1. The South **immediately goes into Military Reconstruction**.
+2. Reconstruction states have **Governors, US Senators, and US Reps APPOINTED — and get NO
+   Electoral Votes** — until the state is no longer in Reconstruction; they regain the presidential
+   vote when Reconstruction is **repealed for the state**.
+3. **The President appoints Govs; the Govs appoint the Reps/Senators** — **the whole cascade is
+   re-run EVERY term** until Reconstruction is repealed. Ex-Confederate states get **2-yr Gov
+   terms with NO term limits** for these appointed Govs.
+4. **If no valid Gov-skill pol exists, GENERATE one** (or "place anyone and give them an automatic
+   1 at Gov").
+5. Reconstruction states still get **"Loyalist" House/Senate representation** (so they have voices
+   in Congress, just appointed ones).
+
+**(b) Onset procedure as run** (the GA's canonical onset spec, `hd1` POST 1323, from V's ruling +
+the "3.0 Reconstruction Rules") — adds **three pardon Exec actions** (sharper than §23.4's older
+3-plan exec table):
+
+| Pardon Exec action | Who is pardoned |
+|---|---|
+| **A) Pardon Confederate Soldiers** | rank-and-file — **NO CSA-government office-holders** (Pres / VP / State / War / Comm-Gen / Generals / Admirals); all others OK |
+| **B) Pardon High-Ranking Confederates except Pres + Comm-Gen** | everyone but the CSA President and Commanding General |
+| **C) Pardon CS Pres + Comm-Gen** | everyone |
+
+- **Secessionist pols stay separate from their origin factions** until Congress / the President
+  acts. Congress can additionally **forgive all / punish only Confederate leaders / ban all who
+  left forever.** A state in Reconstruction **won't let a seceded pol serve it**, and draftees from
+  seceded states **without Union-Loyalist can't hold office until pardons issue** (ties DH-64 —
+  trait labeling must be correct or loyal Southern/Black pols are wrongly held out).
+
+**(c) The human-played tug-of-war** (chunks 25–31): the **Southern-Dem side pushed "Establish
+Lenient 10% Loyalty Reconstruction State Readmission Plan"** (POST 1644 — short/lenient) and
+embedded it in the **1868 Democratic platform** (POST 1996); the **Radical-Republican side pushed
+"Mass Trials and Punishments of Confederate Leaders"** (Chase-approved, POST 1640) + the
+**15th-equivalent "Give Former Slaves the Right to Vote" Amendment** + the Freedmen's Bureau. **Both
+sides repeatedly FILIBUSTERED each other** (Mass Trials filibustered across chunks 26–30; the 10%
+plan stalled).
+
+**(d) ★★ THE DH-29 OUTCOME — REFRAMED from "CPU-only" to "STRUCTURAL"** (GM, `hd1` POST 2678,
+verified): *"The Congress could never agree on a Reconstruction guideline. The Democrats favored
+the 10% plan, and the Republicans wanted the ironclad oath. In the end, **NEITHER PASSED and states
+just started coming back into the Union with NO reconstruction plan at all.**"*
+
+- **This is the decisive reframe.** DH-29 was first logged from `rep1800` as a **CPU-only** blocker
+  (the CPU factions will never vote for the Ironclad plan, so **solo** Reconstruction is
+  unresolvable — §23.4 SOLO BLOCKER note above, POST 9170). `hd1` proves the blocker is
+  **STRUCTURAL, not a CPU artifact:** **even with HUMANS on both sides**, the Ironclad-vs-10%
+  choice **deadlocked** — competing human factions filibustered each other to the **same null
+  "no-plan" drift.** The readmission-plan *vote* itself is the failure point, regardless of who
+  controls the factions.
+- → **Re-characterize DH-29:** from *"the CPU can't pass the Ironclad plan solo"* to *"the
+  readmission-plan vote structurally deadlocks (CPU **and** humans) → states drift back with no
+  plan."* **The fix is vcczar's #156 below** (a plan adopted by **Congress OR the President** — the
+  President can adopt one **unilaterally**, guaranteeing resolution in solo **and** deadlocked-human
+  play). This deadlock **drove the rules rewrite.**
+
+**(e) ★★ #156 — vcczar's REVISED Reconstruction ruleset (the restart; AUTHORITATIVE design)**
+(`hd1` POST 2692–2694, at the chunk-044 restart). This is the **canonical Reconstruction design**
+that fixes the deadlock:
+
+- **FOUR readmission plan types**, each selectable on **BOTH the President AND Congress**:
+
+  | # | Plan | Behavior |
+  |---|---|---|
+  | **(1)** | **No-reconstruction-plan** | states just come back — **no individual readmission needed** |
+  | **(2)** | **Ten-Percent plan** | lenient; states just come back — **no individual readmission needed** |
+  | **(3)** | **Ironclad plan (Wade-Davis)** | strict loyalty oath; **states need INDIVIDUAL readmission** |
+  | **(4)** | **Military-district plan** | = historical Congressional Reconstruction; **states need INDIVIDUAL readmission** |
+
+- **★ THE KEY PREREQUISITE that resolves the deadlock** (POST 2693): ALL Southern-state
+  readmissions now require **"there is a reconstruction plan adopted by Congress OR by the
+  President."** Because a plan can be adopted by **either** branch, **the President can adopt one
+  UNILATERALLY** — a plan no longer has to be *agreed by both chambers* to avoid paralysis. This is
+  the **direct mechanical fix for DH-29's structural deadlock** (and the solo-play blocker): there
+  is always a path to a plan, so Reconstruction always resolves.
+- **Individual readmission is required ONLY under plan (3) Ironclad or (4) Military-district**;
+  under (1) No-plan or (2) Ten-Percent the states simply come back.
+- **Pardon types** added to **both** the President and Congress (extends (a)/(b)'s pardon actions).
+- **15th-Amendment effect (adjusted, POST 2693)** — *formalizes #57's Solid-South bias, now keyed
+  to ACTIVE Reconstruction (sunsets when Reconstruction ends):* **state bias shifts +2 toward the
+  incumbent party in all Deep-South states**, and **+1 in all other former-seceded states**, **for
+  as long as Reconstruction is active**; **African-American men can now hold office.**
+- **13th + 14th Amendments adjusted**; the ideology / interest / lobby impacts of the plans +
+  pardons were **re-tuned**.
+- **★ CSA-VICTORY branch ruling** (POST 2692): if the **South wins**, **seceded pols are removed**,
+  **Unionists stay and move to the nearest loyal state**, and **events drive eventual
+  reintegration** (keep drafting pols for the breakaway states). *(This is the only documented spec
+  for the lose-the-war branch — pairs with #157's CSA-government gap.)*
+- **Restart also did an "ideology shuffle"** (POST 2699): a new faction-ideology ladder (e.g.
+  **BlueCons** now exists; Tilden is in BlueCons) — a re-tune of the antebellum faction roster, not
+  a Reconstruction mechanic per se.
+
+> **Pre-restart design proposals captured** (`hd1` POST 2680–2687, became part of vcczar's rewrite):
+> a plan should be **required at war's close (the Exec phase)** — the President picks a basic option,
+> Congress approves/replaces; **guaranteed state "drops" for each 2-yr period with NO plan in place**
+> (the anti-stall pressure, cf. `rep1800`'s escalating 4/8/10-yr penalties); military districts =
+> appointed Govs doing Gov actions only + no congressional representation until amendments ratified
+> OR Reconstruction ended; an optional **"Reconstitute Rebelling Territories to Create Several
+> Majority-Black States"** state-redraw bill.
+
+> **Open question for the build (cross-ref `game-context.md` #156):** does the new prerequisite act
+> as a **hard gate** (NO readmission at all until *some* plan is adopted) or does it permit a
+> **default No-plan** that lets states drift back (the `hd1` null outcome, now made an explicit
+> *option (1)* rather than an accident)? vcczar's wording makes No-plan a deliberate plan choice, so
+> the cleanest read is: **always require an explicit adoption, but make "No-plan" one of the four
+> adoptable options** — which still guarantees the President can resolve it unilaterally.
+
+*(designed, not built — **the canonical model is now #156's 4-plan ruleset** (§23.4.1e): a
+`State.reconstruction` status (occupied / military-gov / readmitted) with President-appointed
+2-yr no-limit military Govs (Pres → Gov → Sen/Rep cascade re-run each term, generate a Gov if none)
+and **no EVs + Loyalist representation** until repealed; a **`reconstructionPlan` enum
+{ none | tenPercent | ironclad | military }** adoptable by **the President OR Congress** (the
+deadlock-breaking prerequisite — President can adopt unilaterally), where **individual readmission
+is required only under ironclad/military**; the **+2 Deep-South / +1 other-seceded incumbent-party
+bias keyed to active Reconstruction** (sunsets on end) feeding `calcStateVote`; pardon tiers (A/B/C)
+on both branches; the older time-boxed `bias +2 until year` modifier as the Ironclad variant;
+Black-voter enfranchisement on readmission (15th-equiv) + AA-men-can-hold-office; the strip-leaders
+/ pardon bills that remove-or-return named pols; a **CSA-victory branch** (remove seceded, Unionists
+move to nearest loyal state, eventual reintegration); the doubled-Carpetbagger-into-reconstructed-
+state rule; the 2:1 Plantation→Agriculture industry conversion; the Reconstruction era-event spine;
+**guaranteed state "drops" per 2-yr no-plan period**; and the **Reconstruction END exec action**
+(AG-Admin roll + lobby payouts + White-League/Red-Shirts trigger). Reconcile with the Gilded-Age
+**20-yr auto-expiry timer + Speaker/PPT-faction appointment** ([§31.2](#312-148-20-year-auto-expiring-reconstruction-regime--appointment-by-leadership--solid-south-bias-sunset-designed)).)*
 
 ### 23.5 (#60) Canada conquest → era-gated territory→statehood + Canadian draft
 
@@ -9073,6 +9366,13 @@ winning the presidency).
 > resolution + multi-phase wars), **#153** (0-Command rookies + doubled gain + no-reroll expertise),
 > **#154** (sudden-vacancy fill ladder) — plus produced the **first proven game-over (#88, the
 > Autocratic Coup)**. Indexed in **§30.6** below.
+>
+> **Companion thread (`hd1` = `c015a0cb`, "A House Divided" Part 1, batch 16)** — **vcczar ruled
+> LIVE** in this playtest, so its Reconstruction rulings carry **designer authority** (same
+> hierarchy). It RULED **#156** (the revised 4-plan Reconstruction ruleset + the deadlock-breaking
+> "plan-adopted-by-Congress-OR-President" prerequisite — the **canonical Reconstruction design and
+> the fix for DH-29**), the **Reconstruction onset ruling**, and the **CSA-victory branch**.
+> Indexed in **§30.7** below.
 
 ### 30.1 Rulings folded into existing topical sections
 
@@ -9257,6 +9557,34 @@ predates conventions). The **#18 meter→election state-scope fork RECURS unreso
 > trait-driven swing-NAYs, static faction-keyed gov menus, candidate selection) rather than extending
 > it. Passive FLs make no conversion attempts (corroborates #76/#78, POST 1232).
 
+### 30.7 Reconstruction rulings folded from `hd1` (vcczar — AUTHORITATIVE)
+
+> **vcczar ruled LIVE in `hd1`** (`c015a0cb`, "A House Divided" Part 1) — both at Reconstruction
+> **onset** (POST 1320) and at the **restart rewrite** (POST 2692–2694). These carry **designer
+> authority** (same class as `tedchange` / `smallbugs` / the Ted-run threads). The revised
+> Reconstruction ruleset (#156) is **authoritative design like `tedchange`** and is the **canonical
+> fix for DH-29**. All folded into [§23.4.1](#2341--hd1--reconstruction-played-by-humans-on-both-sides--vcczars-authoritative-rewrite-156-the-canonical-reconstruction-design). Cite `hd1#POST n`.
+
+| # | Topic | Ruling | Folded into | `hd1` POSTs |
+|---|---|---|---|---|
+| **★ #156** | **Revised Reconstruction ruleset (4-plan model + the deadlock-breaking prerequisite)** | RULED — **4 plan types (No-plan / Ten-Percent / Ironclad-Wade-Davis / Military-district) on BOTH the President AND Congress**; **prerequisite = a plan adopted by Congress OR the President** (President can adopt UNILATERALLY → the direct fix for DH-29); **individual readmission only under Ironclad/Military-district**; 15th-Amd = **+2 Deep-South / +1 other-seceded incumbent-party bias while Reconstruction active** + AA men hold office; pardon tiers on both branches; 13th/14th adjusted + plan/pardon ideology tables re-tuned. **AUTHORITATIVE design — the canonical Reconstruction spec; feeds #57.** | [§23.4.1e](#2341--hd1--reconstruction-played-by-humans-on-both-sides--vcczars-authoritative-rewrite-156-the-canonical-reconstruction-design) | 2680–2687, 2692–2694, 2699 |
+| **★ Onset ruling** | End-of-war default Reconstruction state | RULED — appointed Govs/Senators/Reps + **no EVs** + **Loyalist** House/Senate rep until repealed; **Pres appoints Govs → Govs appoint Reps/Senators, re-run EACH term**; 2-yr **no-limit** Govs; **GENERATE a Gov (or auto-1-Gov) if none**; 3 pardon tiers (A Soldiers / B High-Ranking-except-Pres+CommGen / C everyone); secessionists held out of factions until pardoned | [§23.4.1a/b](#2341--hd1--reconstruction-played-by-humans-on-both-sides--vcczars-authoritative-rewrite-156-the-canonical-reconstruction-design) | 1320–1323 |
+| **★ CSA-victory branch** | What happens if the South wins | RULED — **seceded pols removed; Unionists stay and move to the nearest loyal state; events drive eventual reintegration** (keep drafting pols for the breakaway states) | [§23.4.1e](#2341--hd1--reconstruction-played-by-humans-on-both-sides--vcczars-authoritative-rewrite-156-the-canonical-reconstruction-design) (+ §23.1 #157) | 2692 |
+
+**GM rulings (designer-adjacent — the GM owns the war chart + onset procedure; same campaign):**
+
+| Topic | Ruling | Folded into | `hd1` POSTs |
+|---|---|---|---|
+| **John Brown decision uses JUDICIAL skill for the President** | RULED — Admin for cabinet; **a Presidential blunder ALONE triggers secession** even when the cabinet implements fine | [§23.1 `hd1` block](#231-58-secession--southern-unionist--secessionist-trait-gating-the-antebellum-payoff) | 877–878 |
+| **War multiplier 1.0 → 0.5 + per-theater scoring** | ADOPTED LIVE on the "Union wins too easily" balance critique (#155) | [§23.3 `hd1` block](#233-56-civil-war--the-two-theater-combat-engine-multi-term-subsystem) | 1000–1004, 1314 |
+| **CSA full cabinet is GA-improvised "flavor"** | NOTED — rules define only Pres/VP/Sr-Gen → seeding gap (#157); flagged for the suggestions thread | [§23.1 #157](#231-58-secession--southern-unionist--secessionist-trait-gating-the-antebellum-payoff) | 893, 912 |
+
+**★ DH-29 status after `hd1`:** REFRAMED — from a **CPU-only** solo blocker (`rep1800` POST 9170) to
+a **STRUCTURAL** deadlock (the readmission-plan vote fails with **CPU and humans alike**, `hd1` POST
+2678) — **now FIXED in design** by #156's "plan adopted by Congress OR President" prerequisite (the
+President can adopt unilaterally). See [§23.4.1d](#2341--hd1--reconstruction-played-by-humans-on-both-sides--vcczars-authoritative-rewrite-156-the-canonical-reconstruction-design)
+and `game-context.md` **DH-29 (★ movement)**.
+
 ### 30.4 Authority hierarchy reminder
 
 When rule sources disagree:
@@ -9333,9 +9661,14 @@ bill-relationship graph (§12.9 / #42).)*
 ### 31.2 (#148) 20-year auto-expiring Reconstruction regime + appointment-by-leadership + Solid-South bias sunset (designed)
 
 > **Extends — does NOT duplicate — [§23.4](#234-57-reconstruction-readmission-subsystem-end-nationalism--gilded)
-> (#57, the readmission / war-victory spec).** `gild1868` (native 1868) models Reconstruction as a
-> **time-boxed regime**, adding three things §23.4 lacked: a **20-year timer**, **appointment of
-> seceded-state seats by congressional leadership**, and a **bias sunset to a Blue Solid South**.
+> (#57, the readmission / war-victory spec) and reconciles with the canonical
+> [§23.4.1e #156 4-plan model](#2341--hd1--reconstruction-played-by-humans-on-both-sides--vcczars-authoritative-rewrite-156-the-canonical-reconstruction-design).**
+> `gild1868` (native 1868) models Reconstruction as a **time-boxed regime**, adding three things
+> §23.4 lacked: a **20-year timer**, **appointment of seceded-state seats by congressional
+> leadership**, and a **bias sunset to a Blue Solid South**. (The #156 ruleset and this 20-yr-timer
+> view are compatible: #156 supplies the **plan-adoption + per-state-readmission** mechanics and the
+> active-Reconstruction **+2/+1 incumbent bias**; `gild1868` supplies the **auto-expiry clock** and
+> the **Speaker/PPT-faction appointment** of the appointed seats — the build should layer both.)
 
 - **Auto-expiring timer.** Reconstruction begins **1864** and **auto-ends 20 years later = 1884**,
   explicitly **"to prevent a one-party state"** (`gild1868` POST 73, 76). This is a regime clock,
