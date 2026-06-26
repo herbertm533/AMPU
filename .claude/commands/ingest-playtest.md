@@ -17,6 +17,17 @@ for the file path(s) before proceeding. If the argument is `bootstrap`, skip
 step 0 and run each role in **bootstrap mode** (source = the current codebase;
 no thread digest is produced).
 
+### Pre-flight: branch base (do this BEFORE any work)
+Create the batch branch off the **remote** main, never stale local `main`:
+`git fetch origin && git checkout -b claude/ingest-<era-slug> origin/main`
+(if continuing an unmerged same-era branch instead, confirm it already descends
+from origin/main: `git merge-base --is-ancestor origin/main HEAD` must succeed).
+**A branch cut from a stale local `main` silently misses prior batches' doc
+content, so every role then edits outdated files and the branch can't fast-forward
+main.** This actually happened once (a batch branched off a 5-batch-old local
+main); the fix was an expensive mid-batch `git reset --hard origin/main` + redo.
+Pin the base up front to avoid it.
+
 ### 0. Preprocess (no checkpoint)
 For each uploaded CSV, run:
 `node scripts/playtestToText.mjs <path> [more...]`
@@ -64,6 +75,11 @@ added/changed, the tech-lead's top sequencing call, and the top of the updated
 roadmap. Use `AskUserQuestion` so the user can approve or redirect from their
 phone.
 
+Before presenting the gate, run a **final integrity check** on every changed
+living doc: line count ≥ its `origin/main` version and `diff` of section headers
+shows additions only (per the large-doc guardrail in Notes). Surface any
+discrepancy in the summary.
+
 Only after explicit approval: commit the digest + the five `docs/game/*.md`
 living docs (historical-context, game-context, game-mechanics, technical-guide,
 roadmap — NOT the gitignored `docs/game/sources/`) and push to the working
@@ -71,6 +87,22 @@ branch. Never push to main, never open a PR, and never use destructive git
 without explicit instruction.
 
 ### Notes
+- **★ Protect the large living docs (`game-mechanics.md` ≈9k lines,
+  `technical-guide.md` ≈5k, `roadmap.md` ≈3k, `game-context.md` ≈1.5k).** They are
+  too large to safely rewrite wholesale — an agent that does a whole-file `Write`
+  can silently truncate the tail or drop earlier batches' content. In each role
+  prompt (steps 1–5) instruct the agent: **edit its living doc with targeted
+  `Edit` calls ONLY — never `Write`; note `wc -l` before and after and confirm the
+  count GREW, not shrank.** (The `historian` agent has only `Write`, so for big
+  parent files have it return a *targeted-additions list* or write a small
+  companion file instead of rewriting — see how `historical-context-*.md`
+  companions are used.) **After each role returns, the orchestrator VERIFIES the
+  doc against `origin/main`:** `diff <(git show origin/main:<doc> | grep -E '^#+ ')
+  <(grep -E '^#+ ' <doc>)` must show **additions only** (no lost section headers),
+  and the line count must not drop. If a doc was truncated/degraded, restore it
+  (`git checkout origin/main -- <doc>`) and re-apply that batch's additions before
+  continuing. Catching this early (right after the role) is cheap; catching it at
+  the review gate is not.
 - The five roles run **in order** (historian → game-pm → game-master → tech-lead
   → roadmap-planner; each later role reads the earlier outputs), so do not
   parallelize them within a batch. (When a single batch has multiple threads, the
