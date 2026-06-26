@@ -327,6 +327,20 @@ era," post 136) — strong support for an era-specific drafting profile (gap-log
   gating* defect, not a history error — but note the Louisiana Purchase (1803)
   is genuinely a *nationalism*-era event, not federalism, so era-locking it
   correctly is also a chronology question. **[consensus]**
+- **Batch-13 (`oopscpu`, the `699113d6` all-CPU 1788 speedrun) — §2 already
+  covers it; treat cast/outcomes as alt-history, era issues as real-grounded.**
+  This is the KB's **third 1788-region source** (after the `f55d3e21` *fed*
+  digest and the founding scenarios) and a **hands-off all-CPU stress-test**, so
+  officeholders diverge from history fast. Most load-bearing divergence:
+  **Washington dies in office (~1796) and VP John Adams succeeds by
+  VP-inheritance** — Adams "ascends to the (acting) Presidency, refuses the title
+  'Acting,' sets precedent for VP inheritance" (chunk-006 posts 326-327) — vs.
+  real history where Adams won the contested 1796 election. This is a live
+  in-game exercise of the **VP-succession-on-death chain (gap #61)**. The real
+  *issues* (Hamiltonian finance, 1793 Neutrality + the **Citizen Genêt** strain,
+  Whiskey Rebellion, Jay Treaty) track history; the *who/when* do not. Polarity =
+  original founding alignment (BLUE = Dem-Reps, RED = Federalists), NOT the 1856
+  flip. **[consensus]**
 
 ---
 

@@ -1227,19 +1227,19 @@ the scaffold introduces; `(K2)` = consumes an `ActionRegistry`):
 
 | Order | Handler | Spec | Reads | Writes | Notes |
 |---|---|---|---|---|---|
-| 1 | **Candidate selection (75/25 + minor + open-seat)** | §25.1 / #72 | `Politician.{currentOffice,command,traits,pvCache}`, `Faction.leadershipPolId`, `state.preferredIdeologies` | candidate id | Cheapest win (table lookup + 1 roll); blocks no other handler. |
-| 2 | **Legislation NAY/AYE/NAY + conditional-vote-rules consumer** | §25.6 / #74 + `pop` POST 1111 | `Bill.cards`, `Faction.cards`, opposition president's meters, **`Faction.factionLeader.compelledVoteRule?: Predicate → Vote`** (consults BEFORE the §25.6 heuristic) | vote | Replaces the floor-vote stub; pairs with `Bill.type` (#42). **Batch 6: handler consults the conditional-vote-rules primitive first** — if a faction-leader has published a declarative `Predicate → {AYE/NAY}` policy (e.g. "NAY any nominee with Admin<3"), the predicate decides the vote; the §25.6 heuristic is the fallback. Same primitive used by handler #4 below (cabinet). Predicate extension (the existing `Predicate` tree at `types.ts:1487`) is the shape. |
-| 3 | **Leadership IRV bloc-vote + 3-ballot collective endorse** | §25.3 / #70 | `Politician.{ideology,pvCache,skills.legislative}` per round | per-round vote | The most-corroborated CPU heuristic. Deterministic continuous elimination + first-round random scramble. |
-| 4 | **Cabinet selection + confirmation (default-AYE baseline + conditional-vote-rules + SCOTUS-style within-1-step auto-AYE)** | §25.5 / DH-23 / #73 + `pop` §26.6.1 | `Politician.{admin,governing,expertise,traits}`, `Faction.cards` (lobbies), Sen Maj Leader Iron-Fist + Pres Pliable, `Faction.factionLeader.compelledVoteRule?`, **per-faction ideology-center distance from nominee** (`pop` §26.6.1: within-1-step auto-AYE rule for SCOTUS confirmation; applies the same principle to cabinet confirmation as a declarative pattern) | seat + vote | **Replaces the one-step pick at `phaseRunners.ts:2158-2223` with a 2-step pick→Senate-vote.** Default-AYE; Iron-Fist Maj-Leader auto-AYE-own-picks (via the conditional-vote-rules primitive — same shape as handler #2); lobby-maximizer with Admin weighting. **Batch 6: SCOTUS uses a declarative within-1-step auto-AYE rule (§26.6.1) that bypasses the 50/50 cabinet trap** — fold this into the same handler for SCOTUS confirmations + the Manipulative-Pres-compel-retire (gated on `!Integrity OR Jud<5`) as separate trait-powers, NOT under the Iron-Fist overload. |
-| 5 | **Convention CPU (per-ballot menu + compromise + dark horse)** (K2) | §25.4 / #71 | convention runtime state + the convention `ActionRegistry` | inter-ballot action + ballot vote | Highest-complexity handler. Owns DH-8 (the GM-confirmed unstable surface). **Includes the 11-ballot deadlock fix** (auto-drop-out after 2-3 ballots of 0 Momentum, currently NOT implemented — DH-17). |
-| 6 | **Conversion poach (Pliable + adjacency gating)** (*) | §25.8 / #76 | actor's leader traits + target's `Pliable`/ideology gap | flip outcome | Add a multi-faction-collision tie-break (DH-bug). The rate table is per-leader. |
-| 7 | **A/B/C event vote + president ideology force + meter-guarding** (*) | §25.7 / DH-21 | event option's declared `meterEffects` + cabinet ideology + `GameState.meters` | option pick | **First handler to use the meter-impact aggregator** — it down-weights triple-stacks driving an already-bad meter into crisis. |
-| 8 | **Faction-leader replacement (4-condition removal + hard gates)** | §25.10 / #78 | leader's traits + bench + faction cards | new leader id | Adds the missing positive-trait floor + mid-term-swap rule (stagnation bug). |
+| 1 | **Candidate selection (75/25 + minor + open-seat)** | §25.1 / #72 | `Politician.{currentOffice,command,traits,pvCache}`, `Faction.leadershipPolId`, `state.preferredIdeologies` | candidate id | Cheapest win (table lookup + 1 roll); blocks no other handler. **★ Batch-13 field-validated (`oopscpu`): pre-12A nomination trio (#144)** — (a) incumbent Pres re-nominates incumbent VP if eligible (VP retention), (b) nominate an alternate when none exists (anti-tie), (c) own-faction priority; + the same-state-EV exclusion (two same-state candidates can't both take a state's EVs). No-primary-incumbent corroborated (`oopscpu#POST 294`). |
+| 2 | **Legislation NAY/AYE/NAY + conditional-vote-rules consumer** | §25.6 / #74 + `pop` POST 1111 | `Bill.cards`, `Faction.cards`, opposition president's meters, **`Faction.factionLeader.compelledVoteRule?: Predicate → Vote`** (consults BEFORE the §25.6 heuristic) | vote | Replaces the floor-vote stub (no floor-vote CPU pass exists today; the only `autoFillCPUVotes` is the CC path); pairs with `Bill.type` (#42). **Batch 6: handler consults the conditional-vote-rules primitive first** — if a faction-leader has published a declarative `Predicate → {AYE/NAY}` policy (e.g. "NAY any nominee with Admin<3"), the predicate decides the vote; the §25.6 heuristic is the fallback. Same primitive used by handler #4 below (cabinet). Predicate extension (the existing `Predicate` tree at `types.ts:1487`) is the shape. **★ Batch-13 field-validated + OC-3 (★ BALANCE-CRITICAL, `oopscpu#POST 162-180`): the crisis-vote gate is the highest-priority sub-rule here.** The all-CPU run abolished slavery peacefully by 1792 because every faction (incl. Southern) AYEd the Abolish-Slavery crisis bill on crisis-priority grounds. Add **(i) an ideology-floor gate** (down-weight or floor-to-NAY the crisis-priority boost when the bill costs the faction's own ideology/lobby cards) + **(ii) a secession/slavery-active check** before an Abolish-Slavery crisis bill can pass (it never tripped a CSA check). Also corroborated: theme-blindness (point-math not theme, `oopscpu#POST 95-96` — same class as DH-21) + era-gated law-unlocked filibuster (`#POST 90-92, 284`). |
+| 3 | **Leadership IRV bloc-vote + 3-ballot collective endorse** | §25.3 / #70 | `Politician.{ideology,pvCache,skills.legislative}` per round | per-round vote | The most-corroborated CPU heuristic. Deterministic continuous elimination + first-round random scramble. **★ Batch-13 field-validated end-to-end across multiple cycles (`oopscpu#POST 42, 115, 256, 329, 332`): IRV ladder + bloc-vote-by-faction + ties broken by the Party-Leader's backed candidate.** **OC-2 (`oopscpu#POST 151`): the marquee collision bug.** Closest-ideology leadership can hand chairs to the MINORITY party; the "≥60%-chamber → may propose" gate then reads chamber control differently → minority chairs propose under the majority's threshold. **Fix: ONE canonical `chamberControl(snap, chamber)` helper** shared by leadership-select + the proposer gate — consolidate the inline `senateMajority`/`houseMajority` duplication at `phaseRunners.ts:1863-1864`. The handler replaces the top-PV-of-majority-party stub there. |
+| 4 | **Cabinet selection + confirmation (default-AYE baseline + conditional-vote-rules + SCOTUS-style within-1-step auto-AYE)** | §25.5 / DH-23 / #73 + `pop` §26.6.1 | `Politician.{admin,governing,expertise,traits}`, `Faction.cards` (lobbies), Sen Maj Leader Iron-Fist + Pres Pliable, `Faction.factionLeader.compelledVoteRule?`, **per-faction ideology-center distance from nominee** (`pop` §26.6.1: within-1-step auto-AYE rule for SCOTUS confirmation; applies the same principle to cabinet confirmation as a declarative pattern), **`GameState.recentScandalIds?` (OC-1 cooldown)**, **`firingPrecedentSet` (OC-5 gate)** | seat + vote | **Replaces the flat highest-score pick at `phaseRunners.ts:2158-2223` (`scoreCabinetCandidate` = admin+governing+expertise, seats immediately, NO vote) with a 2-step pick→Senate-vote.** Default-AYE; Iron-Fist Maj-Leader auto-AYE-own-picks (via the conditional-vote-rules primitive — same shape as handler #2); lobby-maximizer with Admin weighting. **Batch 6: SCOTUS uses a declarative within-1-step auto-AYE rule (§26.6.1) that bypasses the 50/50 cabinet trap** — fold this into the same handler for SCOTUS confirmations + the Manipulative-Pres-compel-retire (gated on `!Integrity OR Jud<5`) as separate trait-powers, NOT under the Iron-Fist overload. **★ Batch-13 field-validated: the crisis cabinet-fill LADDER (`oopscpu#POST 322`)** — highest-Admin first → eligible refuses → lobbies-tiebreak → next refuses → unemployed pol accepts (accept-roll). **OC-1 (`oopscpu#POST 65`): scandal-resignee re-appointment cooldown** — the CPU recycles disgraced pols onto new appointed offices because it has no scandal-smoother memory; this is the concrete instance of **DH-22 / §25.15.3** and reads the K5-introduced `recentScandalIds?`. **OC-5 (`oopscpu#POST 184-187`): court-as-firing loophole** — gate a cabinet-vacating SCOTUS appointment behind the firing-precedent rule (§21.4). |
+| 5 | **Convention CPU (per-ballot menu + compromise + dark horse)** (K2) | §25.4 / #71 | convention runtime state + the convention `ActionRegistry` | inter-ballot action + ballot vote | Highest-complexity handler. Owns DH-8 (the GM-confirmed unstable surface). **Includes the 11-ballot deadlock fix** (auto-drop-out after 2-3 ballots of 0 Momentum, currently NOT implemented — DH-17). **★ Batch-13 COVERAGE GAP: #71 is the ONE handler `oopscpu` could NOT field-validate** — 1788 predates conventions, so this handler is still `drums`-only-spec. **A post-12A all-CPU run would validate #71** exactly as `oopscpu` validated #70/#72/#73/#74 (see the all-CPU-test methodology note, §9.1.3). |
+| 6 | **Conversion poach (Pliable + adjacency gating)** (*) | §25.8 / #76 | actor's leader traits + target's `Pliable`/ideology gap | flip outcome | Add a multi-faction-collision tie-break (DH-bug). The rate table is per-leader. **★ Batch-13 field-validated: the ideology-circle LW↔RW-Pop 25% cross-step (`oopscpu#POST 117-119, 127`)** — confirms the #99/§27.7 circle-adjacency conversion live (rides the central `ideologyDistance(a,b,circular)` helper, §9.1.7). |
+| 7 | **A/B/C event vote + president ideology force + meter-guarding** (*) | §25.7 / DH-21 | event option's declared `meterEffects` + cabinet ideology + `GameState.meters` | option pick | **First handler to use the meter-impact aggregator** — it down-weights triple-stacks driving an already-bad meter into crisis. **★ Batch-13 field-validated (`oopscpu#POST 335-337`): Pliable Pres defers to cabinet majority; tie among advisors → President decides (Egghead-tiebreaker-only).** Also corroborated: CPU SKIPS its exec-action budget when no action nets points (`oopscpu#POST 191` — points-maximizing only; same class as #75/#23 + DH-21 theme-blindness). |
+| 8 | **Faction-leader replacement (4-condition removal + hard gates)** | §25.10 / #78 | leader's traits + bench + faction cards | new leader id | Adds the missing positive-trait floor + mid-term-swap rule (stagnation bug). **★ Batch-13: feeds the #61 death-succession branch** — a VP who inherits the Presidency on a clean death is NOT auto party/faction leader, so the party re-runs leadership IRV (handler #3) → this replacement handler picks the new PL. |
 | 9 | **Primary CPU (5-action template + frontrunner rule)** (K2) | §25.12 / #63 | primary state group + actor traits | action + target | Designer-flagged under-tuned; smarter attack-targeting + better frontrunner rule. |
 | 10 | **Governor action picker (state-stack-aware)** | §25.15 #4 / DH-19 / #20 | `State.industries` + `State.policies` + Honest-Gov caps | gov-action id | Prunes no-op actions (e.g. Improve Industry at 10/10). |
 | 11 | **Reciprocity / vote-trading enforcer** (*) | §25.15 #1 / DH-20 | `GameState.cpuCommitments` | per-vote bump | The first DH-* gap that's "architectural" — needs the scaffold's persistent state. |
 | 12 | **Cascading-scandal smoother** (*) | §25.15 #3 / DH-22 | `GameState.recentScandalIds` | filtered event pool | Era-event walker calls this to drop back-to-back at-most-once events. |
-| 13 | **VP selection (8-element rubric + retention curve)** | §25.2 / #72 | ticket data + region/age/state-size + era-curve | VP id | The retention curve is era-keyed ("more likely Nuclear+"). |
+| 13 | **VP selection (8-element rubric + retention curve)** | §25.2 / #72 | ticket data + region/age/state-size + era-curve | VP id | The retention curve is era-keyed ("more likely Nuclear+"). **★ Batch-13 RULED (`oopscpu#POST 192`, #144): VP retention is now a HARD rule, not a curve, at least pre-12A** — an incumbent Pres always re-nominates the incumbent VP if eligible (closes the `drums` #72 "no retention" gap). The era-keyed "chance" softening is subsumed by this; the question of whether later eras soften it is open. |
 | 14 | **SCOTUS justice vote + Iron-Fist compel + 10-yr drift** | §25.14 / #79 | docket + Justice ideology + Iron-Fist presence | per-case vote | Rides the SCOTUS docket (E-modern). |
 | 15 | **Faction rename trigger** | §25.13 / #40 | rename-trigger registry + election history | renamed faction | Reads the rename-trigger predicate→name-generator registry (§6.7.1 pattern). |
 
@@ -1262,6 +1262,22 @@ the snapshot.
 > federalism epic can ship before K5** by accepting today's CPU behavior in
 > 1788, and the K5 wiring then upgrades both scenarios together. This is the
 > "K5 is a force-multiplier, not a gate" property.
+
+> **★ Batch-13 (`oopscpu`) — the E9 handler specs are now FIELD-VALIDATED, not just
+> designed.** The Ted-run all-CPU 1788 stress-test exercised the CPU ruleset on a
+> running board and stopped at each spot the rules were vague/contradictory/impossible.
+> The effect on this table: **handlers #70 (leadership 9c), #72 (candidate/VP 9a/9m),
+> #73 (cabinet 9d), #74 (legislation 9b), #75 (event 9g), #76 (conversion 9f) are now
+> "spec-complete + field-validated with concrete failure modes + Ted's fixes"** — a
+> meaningful build-confidence bump (lower spec-risk per handler PR). The OC-1…OC-8
+> sub-gaps fold into the handler rows above as sub-rules: **OC-1 + OC-5 → handler #4
+> (cabinet)**, **OC-2 → handler #3 (leadership: the shared `chamberControl` helper)**,
+> **OC-3 → handler #2 (legislation: the crisis-vote gate — the highest-priority
+> sub-rule, balance-critical)**, **OC-6 → handler kingmaker (§25.11)**. **The one
+> handler NOT validated is #71 (convention, 9e)** — 1788 predates conventions, so it
+> stays `drums`-only-spec; a post-12A all-CPU run would close that gap (the all-CPU-test
+> methodology, §9.1.3). `oopscpu` does **not** change the handler build ORDER — it
+> de-risks the specs and pins the OC-* sub-rules to their handler homes.
 
 ### 6.7 How to add a system — playbook for the f4c7c2c4 batch
 
@@ -1507,7 +1523,17 @@ codebase where quick.
 - **CPU-AI handler (folds into the K5 handler suite, §6.6.1):** DH-19 (gov
   menu industry-stack-aware), DH-20 (reciprocity), DH-21 (meter-guarding),
   DH-22 (cascading scandals), DH-23 (cabinet 36% bug — but smaller than
-  expected because the system isn't built yet).
+  expected because the system isn't built yet). **★ Batch-13 OC-* sub-rules fold
+  into specific handlers as field-validated sub-rules (NOT new epics):** **OC-1**
+  (scandal-resignee re-appointment cooldown — instance of DH-22) + **OC-5**
+  (court-as-firing loophole gate) → **handler #4 (cabinet, §25.5.4)**; **OC-2**
+  (one canonical `chamberControl` definition shared by leadership-select + the
+  ≥60% proposer gate) → **handler #3 (leadership, §25.3)**; **★ OC-3
+  (BALANCE-CRITICAL — crisis-vote ideology-floor + secession check)** →
+  **handler #2 (legislation, §25.6)** as its **highest-priority sub-rule**;
+  **OC-6** (kingmaker multi-protégé pairing tiebreak = highest Com+Leg+Gov) →
+  the kingmaker handler (§25.11). All six are now spec-complete + field-validated
+  (`oopscpu`); see §6.6.1 + §9 batch-13 lead.
 - **Per-subsystem owns it (the subsystem epic must address it):** DH-5
   (Kingmaker-pairing dissolution on flip — conversion epic), DH-7 (R/D
   threshold asymmetry + Iron-Fist unilateral lower — convention epic), DH-8
@@ -1538,7 +1564,11 @@ codebase where quick.
   migration block, **DH-30 (event-scheduler min-floor = 20%-of-max + spill;
   companion to BUG-1 — batch 7)**, **DH-27/DH-24 (boot-data validators)**,
   **DH-43 (batch 8 — Vermont has no home-state mapping → its pols can't relocate
-  home; a dataset/data fix)**.
+  home; a dataset/data fix)**, **★ #143 (batch 13 — post-election Command-decay
+  pass: 40% / −1 Command for every living pol NOT on a Pres/VP ticket that cycle;
+  binds at `runPhase_2_10_End` `phaseRunners.ts:4171`, gated on `isPresidentialYear`,
+  after the 2.9.4 ticket roster is known; applies via the existing `loseCommand`
+  `abilities.ts:15`. NEW, RULED, standalone — `oopscpu#POST 1, 224`)**.
 - **Per-subsystem owns it (batch 8):** **DH-38 (no late-ratification / "Rogue
   Island" / multi-year amendment window — folds into the Constitutional-Convention
   era system / E1 federalism; the founding thread pulled decliners in instead of
@@ -1697,14 +1727,31 @@ continental congress era system) + #120 (dataset umbrella — one coordinated
   SCOTUS-overturns-amendment branch; E25 keeps the docket + Justice
   drift + court size + DH-32 state-guard but DROPS Gov-requested
   judicial-review-of-an-amendment.** This is a sequencing simplification.
-- **Designer-gated OPEN items (NEW Decision-gated SUB-BUCKET):** the 9
+- **Designer-gated OPEN items (Decision-gated SUB-BUCKET):** the 9
   open `tedchange` items per game-mechanics §30.2 — Mil-Prep lvl 4 fix,
   UEM (#125), Crisis trait consolidation, term-limit Gov pre-Senate,
   faithless-elector rewording, party rename PL-vs-EraEvo, VP-must-be-
   same-party-on-resignation, cabinet enthusiasm percentages, cabinet
-  ideology weighting. **NOT ready-to-build until Ted/vcczar closes
-  them in `tedchange`/`smallbugs`.** Add the "designer-gated" sub-bucket
-  to the existing PARKING LOT (alongside the user-gated bucket).
+  ideology weighting; **★ batch-13 ADDS TWO: OC-4** (CPU draft off-ideology
+  gate — Ted wants "a better third way" than draft-strong-pol-off-ideology
+  vs. uncontested; do NOT silently ship a hard gate; `oopscpu#POST 227-228,
+  234`) **+ OC-8** (define "office" for the Scandalous-Non-Office-Holder
+  forced-out event + rewrite the contradictory event text; flagged to
+  `@vcczar`; `oopscpu#POST 334, 336`). **NOT ready-to-build until Ted/vcczar
+  closes them in `tedchange`/`smallbugs`/a follow-up.** These join the
+  "designer-gated" sub-bucket of the PARKING LOT (alongside the user-gated
+  bucket). The cabinet OC-3/OC-1/OC-5/OC-2 sub-rules, by contrast, are NOT
+  designer-gated — they fold straight into the E9 handler rows as
+  field-validated sub-rules (above).
+- **Per-subsystem owns it (batch 13):** **DH-61 (★ scenario-boot must seed
+  era-active wars — folds into the `scenarioBoot` pipeline / K4 + the generic
+  `War` model; a HARD prerequisite for `scenario1788`; `oopscpu#POST 338-344`)**,
+  **DH-62 (★ pre-12A two-votes-per-state / no-ticket EC mode — folds into the
+  per-state-EC + 12A-toggle epic #93/#5 as an era-keyed election-mode variant;
+  also a HARD prerequisite for `scenario1788`; `oopscpu#POST 192-199`)**. Both
+  sequence WITH E1 / `scenario1788`. Also **#143 (post-election Command-decay)**
+  is an XS standalone quick-win (above), and **OC-1/OC-2/OC-3/OC-5/OC-6** fold
+  into the E9 handler rows (above).
 
 | Bug | Location (verified) | Fix | Size / when |
 |---|---|---|---|
@@ -1773,7 +1820,10 @@ continental congress era system) + #120 (dataset umbrella — one coordinated
 | **DH-60 (`arkzag`)** — ★ era-events fire with NO territory/asset prerequisite | `arkzag` ch4 POST 335/337/340: "Force Open Trade with Japan" fires with no Pacific port; "Stubborn Cherokee" fires without owning the territory. Verified: `buildEraEventsForYear(year)` (`eraEvents1856.ts:4`) gates ONLY by `year >= X && year <= Y`; the `EraEvent` type (`types.ts:1466`) carries **NO precondition field** (only 2.4.3 graph nodes use `Predicate`). | **per-event prerequisite gate (the concrete face of #92 territory-gating + BUG-1).** Add a `requires?: Predicate` (territory/asset/state) on the era-event row + a filter at the firing path. SAME surface as BUG-1's era-lock filter (`phaseRunners.ts:2817`) + K3's `territoryOwned` predicate — build it with those. | **S; the concrete instance of #92's territory-content gating. Lands with E15 / BUG-1.** |
 | **#116 (`arkzag`)** — ★ NO long-run economic-content state machine | `arkzag` ch11/20/24/25/33: a recurring Bank CRISIS bill that filibusters/returns and is REPLACED by an Independent Treasury; a multi-half-term EconStab CRISIS (Panic-of-1837). Verified: NO economic state machine — `applyEffect` (`phaseRunners.ts:3209`) only nudges the 7 meters; `Legislation` (`types.ts:1506`) has no `type`/`replaces`/`lockedUntilYear`/`resolvesCrisis`. EconStab IS `meters.economic` (`types.ts:1401`). | **NEW economic content engine over the EXISTING EconStab meter.** A `game.economy?` state machine (recurring Bank CRISIS bill keyed to a Panic/EconStab CRISIS state) + a `Bill.replaces` field (Independent-Treasury removes the Bank) + a `Bill.lockedUntilYear` per-bill-class cooldown (tariff cadence). **Sits ON TOP of E4b(b)'s Second-Bank institution object — does not replace it.** See §9 batch-11 #1. | **NEW; depends on E2 (Bill.type/crisis) + E6 (named EconStab + crisis/cascade) + E4b(b) (the Bank institution).** |
 | **#119 (`arkzag`)** — ★ amendment lifecycle + legislation-class-block | `arkzag` ch7/13/17/24/25/28/33: amendments propose→committee→floor→**governor-ratify**→active, are **un-bundleable**, and an **active amendment BLOCKS a legislation class** (excise-tax ban; suffrage). Verified: NO `amendments` field today (grep). | **EXTENDS E5.** E5 specs `amendments?: { id; passedYear; data? }[]` + governor-ratify + the *Pollock* bill-class-gate; #119 adds an **explicit lifecycle state** + the **active-amendment-blocks-a-class** hook (the proactive face of the *Pollock* gate, checked at proposal time) + the un-bundleable flag. See §9 batch-11 #1. | **Re-scope E5 to carry the lifecycle + block-hook (do NOT open a new epic).** |
-| **#61 (`arkzag`, EXTENDED)** — death→succession→acting-president chain UNBUILT | `arkzag` ch27: assassination KILLS the president → VP succeeds under the "13th"/VP-vacancy amendment → must fill VP → acting-president whose actions a trait DIVERTS (Easily Overwhelmed → 50% VP-acts). Verified: the KILL exists (`assassination-killed` anytime event, `anytimeEvents.ts:232`) but death just sets `presidentId = null` (`vacateOffice`, `phaseRunners.ts:2449`) — **NO succession engine.** | **EXTENDS E10b.** E10b scopes the leaf (`successionOrder?`/`bornForeign?`/`actingPresident?`, the 0-Command-inert state); #61 here adds the **assassination→succeed→fill→action-DIVERT-roll wiring** (gated on the §29.8 VP-Vacancy amendment being `active`) + the trait-acquisition side-effect. See §9 batch-11 #1. | **Re-scope E10b to carry the full chain (do NOT open a new epic). Gated on E5's VP-vacancy amendment.** |
+| **#61 (`arkzag`, EXTENDED; ★ `oopscpu` RECONCILED)** — death→succession→acting-president chain UNBUILT | `arkzag` ch27: assassination KILLS the president → VP succeeds under the "13th"/VP-vacancy amendment → must fill VP → acting-president whose actions a trait DIVERTS (Easily Overwhelmed → 50% VP-acts). Verified: the KILL exists (`assassination-killed` anytime event, `anytimeEvents.ts:232`) but death just sets `presidentId = null` (`vacateOffice`, `phaseRunners.ts:2446-2449`) — **NO succession engine.** | **EXTENDS E10b.** E10b scopes the leaf (`successionOrder?`/`bornForeign?`/`actingPresident?`, the 0-Command-inert state); #61 here adds the **assassination→succeed→fill→action-DIVERT-roll wiring** (gated on the §29.8 VP-Vacancy amendment being `active`) + the trait-acquisition side-effect. **★ Batch-13 (`oopscpu#POST 324-329`, Ted-RULED) gives E10b a RECONCILED two-branch spec: a clean DEATH → VP = FULL President (refuses "Acting", NO action-divert roll, NOT auto party/faction leader → re-run the leadership IRV, handler #3); the acting-president + action-divert read is SCOPED to incapacity / 0-Command-inert / ineligible-substitute ONLY.** This SUPERSEDES the `arkzag` framing for the death case and removes the spec ambiguity. See §9 batch-11 #1 + batch-13 lead #3. | **Re-scope E10b to carry the full RECONCILED chain (do NOT open a new epic). Gated on E5's VP-vacancy amendment. The death-branch (full-President + leadership-IRV re-run) is the `oopscpu` addition — S within E10b.** |
+| **★ #143 (`oopscpu`)** — post-election Command-decay pass UNBUILT (RULED) | **VERIFIED:** `loseCommand` (`abilities.ts:15`) is called ONLY at `phaseRunners.ts:2410` (old-age/Anytime loss) + `:2709` (event effect); the defeat penalty at `revolutionaryWar.ts:137` uses `loseSkill`, not `loseCommand`. **NO post-election Command-decay pass.** Ted-RULED (`oopscpu#POST 1, 224`): every living pol NOT on a Pres/VP ticket that cycle has a **40% chance of −1 Command** ("shit or get off the pot"). | **Add one pass** at `runPhase_2_10_End` (`phaseRunners.ts:4171`), gated on `isPresidentialYear` (`year % 4 === 0`), AFTER the 2.9.4 ticket roster is known; roll 40% per eligible pol; apply −1 via `loseCommand`. NEW, RULED, standalone — no design gate. Pairs with the #85/#130 death-schedule discipline (same `runPhase_2_10_End` site). | **XS quick-win; ship with the other XS consistency PRs (Phase-1 #19) or near QW0.** |
+| **★ DH-61 (`oopscpu`)** — scenario-boot does NOT seed era-active wars | **VERIFIED:** only the 1772 Rev War is boot-seeded (`revolutionaryWar.ts`); every other start boots at peace. Ted-noted (`oopscpu#POST 338-344`): 1788 should start with the **Northwest Indian War** running (20%-loss / WS −2) — the GMs forgot it. | **Add `BootSheet.activeWars` + a boot hook** in `scenarioBoot` that reads a start-year "active wars by start date" table and instantiates each as a running `War` via the generic `War` model (Phase-1 #3). | **S; folds into the `scenarioBoot` pipeline (K4, §9.1.9). A HARD prerequisite for `scenario1788` — land WITH E1.** |
+| **★ DH-62 (`oopscpu`)** — pre-12A two-votes-per-state / no-ticket EC mode UNBUILT | **VERIFIED:** `calcStateVote('presGeneral')` (`phaseRunners.ts:3752`) resolves every state by PV+dice with a Pres+VP ticket; no two-vote/no-ticket mode exists. `oopscpu#POST 192-199` exercised the pre-12A mode (top EV = Pres, runner-up = VP, no separate VP ballot) + same-state-EV exclusion (`#POST 197`) across 1788/1792/1796. | **Add an era-keyed election-mode variant** (a new resolution branch alongside `electorsByLegislature`): two undifferentiated votes per state, top-2 take Pres/VP, same-state EV exclusion, anti-tie via the §25.1 pre-12A nomination trio (handler #1). | **M; folds into the per-state-EC + 12A-toggle epic (#93/#5, Phase-1 #4). A HARD prerequisite for `scenario1788` — land WITH E1.** |
 
 ---
 
@@ -1781,15 +1831,134 @@ continental congress era system) + #120 (dataset umbrella — one coordinated
 
 > **This section is written for the roadmap-planner to lift directly.** It is my
 > engineering opinion on order, dependencies, and rough size/risk for the
-> game-pm gap log (~142 rows across 5+ eras + A1–A9 presentation + the CPU-AI
+> game-pm gap log (~146 rows across 5+ eras + A1–A9 presentation + the CPU-AI
 > cluster #70–#85 + the **batch-6 scenario-boot / endgame cluster #86–#91** + the
 > **batch-7 early-republic cluster #92–#99** + the **batch-8 founding/era cluster
-> #100–#105** + the **batch-12 designer-rulings cluster #120–#142**), the design
-> divergences (mechanics §19.1, now **#1–#21**), the confirmed bugs (incl. BUG-0),
-> and the GM design holes (DH-1/DH-2 + DH-3..DH-11 + DH-12..DH-23 + DH-24..DH-28 +
-> DH-29..DH-35 + **DH-36..DH-44**). Source: codebase + `gilded` + `fed` + `1772s` +
-> `modern` + `hd` + `drums` + `pop` + `rep1800` + **`new1772` + `tea1772` +
-> `dem1820` + `arkzag` + `tedchange` + `smallbugs`**.
+> #100–#105** + the **batch-12 designer-rulings cluster #120–#142** + the
+> **batch-13 `oopscpu` CPU-validation cluster #143–#146 + OC-1…OC-8 + DH-61/DH-62**),
+> the design divergences (mechanics §19.1, now **#1–#21**), the confirmed bugs
+> (incl. BUG-0), and the GM design holes (DH-1/DH-2 + DH-3..DH-11 + DH-12..DH-23 +
+> DH-24..DH-28 + DH-29..DH-35 + **DH-36..DH-44 + DH-61/DH-62**). Source: codebase +
+> `gilded` + `fed` + `1772s` + `modern` + `hd` + `drums` + `pop` + `rep1800` +
+> **`new1772` + `tea1772` + `dem1820` + `arkzag` + `tedchange` + `smallbugs` +
+> `oopscpu`**.
+>
+> **★★★ Batch-13 changes to the plan (`oopscpu` — Ted-run all-CPU 1788 stress-test;
+> the K5/E9 VALIDATION source; designer-authoritative, same class as `tedchange`.
+> NO new keystone, NO re-sequence — `oopscpu` DE-RISKS the existing E9 plan):**
+>
+> > **★ Read this block if you only read one for batch 13. The big picture:
+> > `oopscpu` is the first batch that systematically validates a whole subsystem's
+> > spec (the K5 CpuController + the E9 §25 handler suite) BEFORE it is built. Ted
+> > ran every faction on the CPU rules and stopped, live, at each spot where the
+> > rules are vague, contradictory, or impossible without human judgment. The
+> > result: it does NOT change the K5/E9 build ORDER, but it turns the E9 handler
+> > specs #70/#72/#73/#74/#75/#76 from "designed" into "designed + field-validated
+> > with concrete failure modes + Ted's fixes." Higher build-confidence; lower
+> > spec-risk. The OC-1…OC-8 sub-gaps fold into the relevant handler rows as
+> > sub-rules (the handler-order table in §6.6.1 is updated below). Two NEW
+> > prerequisites for ANY 1788 boot — DH-61 (boot-seed active wars) + DH-62 (pre-12A
+> > EC mode) — must land WITH `scenario1788` (E1). Two NEW open design calls —
+> > OC-4 (off-ideology draft gate) + OC-8 (define "office") — go to the
+> > designer-gated parking bucket.**
+> >
+> > **Verified shipped-state of the load-bearing CPU items (re-grounded for this
+> > batch):** The engine has CPU code ONLY for the meta-passes — draft auto-pick
+> > (`pickBestForFaction` `phaseRunners.ts:33-53`; pick loop `:241-262`), relocation
+> > (`RELOCATION_ODDS.cpuGate`), ideology shifts (`IDEOLOGY_SHIFT_ODDS.cpu`),
+> > conversions (`CONVERSION_ODDS.cpu`), kingmaker auto-assign, cabinet auto-fill,
+> > era-event `pickAIResponse` (`eraGraph.ts:88-103`), and CC consensus
+> > (`autoFillCPUVotes`, `constitutionalConvention.ts:81`). **There is NO
+> > leadership-IRV / legislation-vote / event-vote / SCOTUS-vote handler.** Spot-
+> > verified the load-bearing ones: **(1) cabinet auto-fill** (`runPhase_2_3_1_Cabinet`,
+> > `phaseRunners.ts:2158`) is a **flat highest-score pick** (`scoreCabinetCandidate`
+> > = admin·w + governing·w + expertise bonus) → seats immediately with `cabinet[seat]
+> > = pick.id` — **NO Senate vote, NO ladder/refuse-roll, NO scandal-guard, NO
+> > firing-precedent gate**; **(2) leadership** (`runPhase_2_2_1_CongressLeadership`,
+> > `:1844`) computes `senateMajority`/`houseMajority` INLINE TWICE (`:1863-1864`,
+> > `blue >= red`) and picks Speaker/PPT as the top-PV member of that majority party —
+> > **NO IRV bloc-vote, NO closest-ideology cross-party rule, NO single shared
+> > "chamber control" definition** (the OC-2 collision surface); **(3) legislation**:
+> > no per-CPU NAY/AYE/NAY pass exists on the floor at all (the only `autoFillCPUVotes`
+> > is the CC path); **(4) `loseCommand`** (`abilities.ts:15`) is called ONLY at
+> > `phaseRunners.ts:2410` (old-age/Anytime loss) and `:2709` (event effect) — **NO
+> > post-election Command decay** (note: the battle/defeat penalty at
+> > `revolutionaryWar.ts:137` uses `loseSkill`, not `loseCommand`); **(5) succession**:
+> > `vacateOffice` (`:2446`) just sets `presidentId = null` on death — **NO VP-inherits
+> > branch, NO acting state, NO leadership re-run**; **(6) `scenario1788` does not
+> > exist** (only `scenario1772` / `scenario1856`), and no boot seeds active wars except
+> > the 1772 Rev War; `calcStateVote:3711` still carries the raw-`Math.random` jitter
+> > (debt #1).**
+> >
+> > **The load-bearing build items this batch sizes (each binds in code as noted):**
+> > 1. **OC-3 crisis-vote gate (★ BALANCE-CRITICAL).** Maps to the **legislation-vote
+> >    handler (§25.6 / E9 handler 9b / #74)**. Without it, CPUs vote AYE on crisis
+> >    bills that hurt their own ideology/lobby cards (the all-CPU run abolished
+> >    slavery peacefully by 1792, no secession, `oopscpu#POST 162-180`). Two sub-checks:
+> >    an **ideology-floor gate** (don't AYE a crisis bill that costs your own cards)
+> >    + a **secession/slavery-active check** before an Abolish-Slavery crisis bill
+> >    can pass. **S** (two predicates on the handler the epic already builds); the
+> >    exact weighting is a design dial. **This is the single highest-priority sub-rule
+> >    inside handler 9b.**
+> > 2. **#143 post-election Command-decay pass.** NEW, RULED, standalone. After every
+> >    presidential cycle close, every living pol NOT on a Pres/VP ticket has a **40%
+> >    chance of −1 Command** ("shit or get off the pot", `oopscpu#POST 1, 224`).
+> >    Binds in **`runPhase_2_10_End` (`phaseRunners.ts:4171`), gated on
+> >    `isPresidentialYear`, after the 2.9.4 ticket roster is known**; applies via the
+> >    existing `loseCommand` (`abilities.ts:15`). **XS** — one new pass, one roll,
+> >    needs the ticket roster from the election phase. Pairs with #85/#130
+> >    death-schedule discipline (same `runPhase_2_10_End` site).
+> > 3. **#61 death-succession branch.** Reconciled spec (game-mechanics §24.1 +
+> >    §29.9): a Presidential **DEATH** → VP becomes **FULL President** (refuses
+> >    "Acting", **no action-divert roll**), is **NOT auto party/faction leader** →
+> >    **re-run the leadership IRV**. This is **distinct from** the incapacity /
+> >    0-Command / ineligible-substitute case, which keeps the `arkzag`
+> >    acting-president + action-divert read. **Extends E10b** (already re-scoped in
+> >    batch 11 for the kill→succeed→fill chain) — `oopscpu` supplies the reconciled
+> >    death-branch spec. Binds at `vacateOffice`/the death path
+> >    (`phaseRunners.ts:2446`) + the leadership runner (`:1844`). **S** within E10b.
+> > 4. **OC-2 single "chamber control" definition.** Maps to **§25.3 / E9 handler 9c
+> >    (#70)**. The marquee collision bug: closest-ideology leadership can hand chairs
+> >    to the minority party, then the "≥60%-chamber → may propose" gate reads chamber
+> >    control differently → minority chairs propose under the majority's threshold
+> >    (`oopscpu#POST 151`). Fix: **ONE canonical `chamberControl(snap, chamber)`
+> >    helper** shared by leadership-select AND the proposer gate. The inline
+> >    `senateMajority`/`houseMajority` duplication at `:1863-1864` is exactly the
+> >    surface to consolidate. **S** (one helper + two call-site migrations).
+> > 5. **OC-1 scandal-resignee re-appointment cooldown + OC-5 court-as-firing gate.**
+> >    Both map to the **cabinet/appointment handler (§25.5.4 / E9 handler 9d / #73)**.
+> >    OC-1 (`oopscpu#POST 65`): a scandal-resignee is immediately re-appointed to
+> >    another appointed office — the CPU has no scandal-smoother memory. It is the
+> >    concrete instance of **DH-22 / §25.15.3** and reads the K5-introduced
+> >    `recentScandalIds?` state. OC-5 (`oopscpu#POST 184-187`): the CPU dumps
+> >    un-fireable cabinet members onto SCOTUS to evade the firing-precedent rule — gate
+> >    a cabinet-vacating SCOTUS appointment behind the firing-precedent gate (§21.4).
+> >    **XS each** within handler 9d; OC-1 needs the scandal-cooldown persistent field.
+> > 6. **Pre-12A election mode (DH-62) + boot-seed active wars (DH-61) — BOTH 1788-boot
+> >    prerequisites.** DH-62: a pre-12A two-votes-per-state / no-ticket EC mode (top
+> >    EV = Pres, runner-up = VP, no separate VP ballot) + same-state-EV exclusion
+> >    (`oopscpu#POST 197`) + the throwaway-tie defense (the §25.1 pre-12A nomination
+> >    trio incl. VP retention). An **era-keyed election-mode variant** for
+> >    1788/1792/1796 — a genuinely new resolution branch alongside the per-state EC
+> >    method (#5 / divergence #20) and the `electorsByLegislature` flag. DH-61: the
+> >    `scenarioBoot` pipeline must read a start-year **active-wars table** and
+> >    instantiate each historically-running war (1788 → Northwest Indian War, 20%-loss
+> >    / WS −2) — they boot at peace today except the 1772 Rev War. **Both gate ANY
+> >    `scenario1788`**: DH-62 is **M** (new EC resolution branch; lands with E1 / the
+> >    per-state-EC epic #4); DH-61 is **S** (a `BootSheet.activeWars` field + a boot
+> >    hook in `scenarioBoot`, lands in K4 / the boot pipeline with E1).
+> >
+> > **OPEN design calls (NOT ready-to-build — designer-gated):** **OC-4** (off-ideology
+> > CPU draft gate — Ted wants "a better third way" than draft-strong-pol-off-ideology
+> > vs. uncontested; `oopscpu#POST 227-228, 234`) and **OC-8** (define "office" for the
+> > Scandalous-Non-Office-Holder forced-out event + rewrite the event text; flagged to
+> > `@vcczar`, `oopscpu#POST 334, 336`). Add both to the **designer-gated** parking
+> > sub-bucket (alongside the 9 open `tedchange` items). The all-CPU run also RESOLVES
+> > **#52 for the all-CPU case** (CPU SCOTUS by ideology-distance) — the player-vs-CPU
+> > fork stays user-gated for human games — and **could NOT reach the convention CPU
+> > (#71)** because 1788 predates conventions: a **post-12A all-CPU run would validate
+> > #71** the same way `oopscpu` validated #70/#72/#73/#74. **Recommend the
+> > all-CPU-test as a repeatable spec-validation methodology** (see §9.1.3).
 >
 > **★★★★★ Batch-12 changes to the plan (`tedchange` + `smallbugs` — TWO DISCUSSION
 > THREADS, not playtests; the DESIGNER's official rulings channel. NO new keystone,
@@ -2869,6 +3038,25 @@ of pure decision code, with the heuristic verbatim from §25.
 > to start scenario work; **do** wait on K5 to ship the §25 heuristics — they
 > have no other home.
 
+> **★ BATCH-13 — the all-CPU-test IS a spec-validation methodology (recommend it).**
+> `oopscpu` is the first batch that **systematically validates a whole subsystem's
+> spec before it is built**: Ted ran every faction on the CPU rules and stopped, live,
+> at each spot the rules were vague/contradictory/impossible-without-human-judgment.
+> The payoff for the build is concrete — the E9 handler specs #70/#72/#73/#74/#75/#76
+> moved from "designed" to "designed + field-validated with named failure modes + Ted's
+> fixes" (lower spec-risk per handler PR; see §6.6.1). **`oopscpu` does NOT change the
+> K5/E9 order** — it de-risks E9 and pins the OC-* sub-rules to handler homes. **Two
+> recommendations:** (1) the **OC-* sub-rules are field-validated, not new epics** — fold
+> them into the relevant handler rows (OC-3 is the highest-priority sub-rule of handler
+> #2 because it is balance-breaking — peaceful 1792 abolition); (2) **run a post-12A
+> all-CPU test before building the convention handler (#71 / handler 9e)** — 1788
+> predates conventions, so #71 is the ONE handler `oopscpu` could not exercise; it
+> stays `drums`-only-spec and DH-8-flagged-unstable. A post-12A all-CPU run would
+> validate #71 exactly as `oopscpu` validated the rest, and it would surface the
+> convention CPU's holes (DH-8/DH-17/DH-57) live before they cost a build PR. The
+> methodology is cheap (an all-CPU game needs no players — and so is immune to the
+> GM-burnout death mode DH-36) and high-leverage for the most fragile handler.
+
 #### 9.1.4 Where the APOCALYPSE meter-driven endgame lands (batch 6) — Phase 1, not Phase 2
 
 > **The single most important call in batch 6.** This subsection is the planner's
@@ -3282,6 +3470,7 @@ class.**
 | State roster | `STATES_1856` import | `stateRoster` keyed on `{era, startYear}` (divergence #17) — era-keyed industry seed, not zero (POST 532) |
 | Vacant seats | n/a (all filled) | a `vacancies[]` list + the **appointment-eligibility ladder** (POST 859) the pipeline runs to fill them |
 | Boot-Command / career-track | n/a (no rule) | sheet-level policy flags (see the undocumented-rules list below) |
+| **Active wars (★ batch-13 DH-61)** | **n/a — every boot starts at peace except the 1772 Rev War** | **a `BootSheet.activeWars` field read from a start-year "active wars by start date" table; the pipeline instantiates each as a running `War` (loss-odds + War-Score applied). 1788 → Northwest Indian War (20%-loss / WS −2). The GMs FORGOT this entirely in `oopscpu` (`#POST 338-344`).** |
 | Validators | none | `TRAIT_CONFLICTS` validator (DH-27) + the Senate-class verifier (DH-24) run as boot hooks |
 
 The `BootSheet` schema is the one already specced in §9.1.5/K4 +
@@ -3309,6 +3498,21 @@ the human DECIDES once, then it is disclosed + deterministic — the §29 forks)
    full-term Senate seat vacant). A deterministic rule the pipeline runs.
 5. **Era-keyed industry init (POST 532).** New states enter with era-keyed industry
    (1 Agriculture, etc.), not zero — already a per-era table concern (K4).
+6. **★ Active-war seeding (DH-61, batch 13, `oopscpu#POST 338-344`).** The pipeline
+   must read a start-year **"active wars by start date" table** and instantiate each
+   historically-running war as a live `War` (loss-odds + War-Score applied) — every
+   boot starts at peace today EXCEPT the 1772 Rev War. The 1788 boot needs the
+   **Northwest Indian War** (20%-loss / WS −2). A `BootSheet.activeWars` field + a boot
+   hook; depends on the generic `War` model (Phase-1 #3) for the shape but is a thin
+   seed-and-register pass on its own. **S, and a HARD prerequisite for `scenario1788`.**
+
+**★ Batch-13 — two 1788-boot prerequisites the pipeline gates.** A `scenario1788`
+boot CANNOT run correctly without **(a) DH-61** (the active-war seed above — they
+literally forgot it in `oopscpu`) and **(b) DH-62** (the pre-12A two-votes-per-state /
+no-ticket EC mode — see the election section / §9.2's per-state-EC row). Sequence both
+WITH `scenario1788` (E1 / Phase-1 #1): DH-61 as the `BootSheet.activeWars` field +
+boot hook here; DH-62 as an **era-keyed election-mode variant** in the per-state-EC
+epic (#4 / divergence #20), keyed to the 1788/1792/1796 EC rounds.
 
 **Placement.** **#115 is NOT a new keystone** — it lands inside K4's `BootSheet`
 schema. But its **priority rises to the front of the subsystem queue:** do the shared
@@ -3317,9 +3521,9 @@ not after the third copy-paste.** The dependency order is **K0 (so boot rolls ar
 seeded) → the `scenarioBoot` pipeline + `BootSheet` schema (with K4) → every scenario
 (1788, then 1856-refactored-to-ride-it, then 1820/1800/1948) is a data row.** The
 boot pipeline is also where the XS validators (DH-24 Senate-class, DH-27 trait-
-conflict) and the appointment-ladder live. **The two §29 forks (boot-Command,
-CT-eligibility) are decision-gated** — author the policies before wiring them, but
-the *pipeline itself* is unblocked and should be built first.
+conflict), the appointment-ladder, and **the active-war seed (DH-61)** live. **The two
+§29 forks (boot-Command, CT-eligibility) are decision-gated** — author the policies
+before wiring them, but the *pipeline itself* is unblocked and should be built first.
 
 ### 9.2 Major subsystems (do these after the keystones)
 
@@ -3336,12 +3540,12 @@ are deep-modern subsystems that build last.
 | **Governor's actions library (2.5.2)** — ~14 named actions, era-flavored, d100 vs 20·governing, per-action prereqs | gilded §11.3; **fed** 33-558 (corroborated, 3 eras) | **M** | K1, K2 | Replaces the passive `bias` nudge at `phaseRunners.ts:3382`. Actions read & write `State.policies` (K1). Era-flavored row sets are a per-era registry index. |
 | **Executive actions library (2.8.1)** — persistent active actions, `Easily Overwhelmed` VP hand-off, green/yellow auto-deactivate-on-admin-change | gilded §14.1; **fed** 46-575 (corroborated) | **M** | K2; needs an **admin-change hook** (presidency change) for the auto-deactivate sweep | Replaces the 4 hardcoded one-shots at `phaseRunners.ts:3636`. Persistent state on `GameState.activeExecutiveActions`. `fed` adds the **control-handoff chain** (Incompetent Pres → VP → Manipulative advisor) with an undefined multi-manipulator tie-break (open Q). |
 | **Diplomacy actions library (2.7.1)** *(batch 9: THE real modern foreign system — see §9.1.8)* — Increase Relations / Trade / Extend Credit / Provoke; per-power meters with era roster + renames | gilded §13.3; **fed** 45-572; **`nuke` §28.3** (corroborated 4 eras) | **M** | K2 (action shape); diplomacy shape already right (`GameState.diplomacy` is `Record<string, number>`) | `fed` confirms the **era-dependent power roster** (5 in federalism; 6 in gilded +China; Prussia→Germany 1871). **★ Batch 9 makes the MODERN action set canonical and elevates this to the real Cold-War foreign subsystem** (§9.1.8 / §28.3): **8 per-nation relation meters** (9-point Hostile→Allies; UK/France/Spain/Germany/USSR/China/Japan/Israel) + a **Provoke** action (retaliatory tariff/embargo, 1-2% war chance) + Sec-State-suggests/Pres-approves, one action per ambassador per phase. **Build holes to own: DH-46** (add **downward pressure** — the US ends up allied with everyone) + the **Cold-War ≤Neutral cap** on USSR/China; **DH-45** (the USSR-collapse trigger chain stalls at a ~5% gate → re-tune so it can fire). Couples to the national-surplus integer (Extend Credit / Take a Loan adds debt, gated on Rev/Budget). |
-| **Generic cross-era war system** *(batch 9: this is THE engine the "Cold War" relabels — §9.1.8)* — multi-theater additive Chance-of-Success per battle: `Win% = Difficulty + Planning(SecWar/Navy+CoS/CNO) + Officer×10 + MilPrep + Benchmarks` (d100); per-theater WarScore with `WS ≥ +11` auto-win; war-end check `WarScore × 2 = %`; post-war defeat `\|WS\| × 2 × 10 = %`; officer KIA on natural-1; catastrophic 100/100; momentum bonus (+1/-2 turn-vs-turn); Major / Minor / Operation tiers with per-tier multipliers; **naval-N-then-ground gating per-war** (Mexico=3, WWI=2); **Treaty A-D tier with Basic-vs-Special routing by Admin** + 3-roll treaty chain (Pres → Sec State → Amb); confirmation cascade (defeated commander → Incompetent + fired → Senate-confirmation drama) | mechanics §21.1, **§23.3 (deepest spec, multi-confirmed)**; `fed` 222-573, `1772s` 20-60, `hd` I-1, **`drums` POSTS 123, …, 6928**; **`nuke` §28.2 (5+ wars, Korea/Cuba/Gulf/War-on-Terror)** | **M–L** | K0 (lots of rolls); **BUG-3** (no-PM-General fallback is in this blast radius) | **Divergence #6. Verified: only `src/engine/revolutionaryWar.ts` exists — NO generic and NO Cold-War engine; build ONE.** Generalize one `War` model usable in any era; the Cold War is THIS engine relabeled + content (§9.1.8). **The formula is canonical** (`drums` re-derives it across 5+ wars/4 eras; `nuke` confirms it across the Cold-War wars). **Design it multi-theater + tiered from day one** — the Civil-War row below is its Major-tier instance. Outcome grants/denies territory; **+permanent president +1-all-elections on Major victory**. **★ Batch-9 LOAD-BEARING holes (DH-47): wars NEVER resolve today** (the war-end roll's odds are so low Korea ran ~2 decades) → **build a real resolution/peace path** (couples to DH-12 white-peace), and **there are no army/navy/air branches** (army generals command navies, "naval" pols die in infantry) → **design the branch model.** Pairs with the A4 battle-card UI + the military-leadership tier (#49). **Build the K5 CPU touchpoints inside this epic** (commander selection, theater focus, surrender/peace decision); war-epic-internal, not separate handlers. |
+| **Generic cross-era war system** *(batch 9: this is THE engine the "Cold War" relabels — §9.1.8)* — multi-theater additive Chance-of-Success per battle: `Win% = Difficulty + Planning(SecWar/Navy+CoS/CNO) + Officer×10 + MilPrep + Benchmarks` (d100); per-theater WarScore with `WS ≥ +11` auto-win; war-end check `WarScore × 2 = %`; post-war defeat `\|WS\| × 2 × 10 = %`; officer KIA on natural-1; catastrophic 100/100; momentum bonus (+1/-2 turn-vs-turn); Major / Minor / Operation tiers with per-tier multipliers; **naval-N-then-ground gating per-war** (Mexico=3, WWI=2); **Treaty A-D tier with Basic-vs-Special routing by Admin** + 3-roll treaty chain (Pres → Sec State → Amb); confirmation cascade (defeated commander → Incompetent + fired → Senate-confirmation drama) | mechanics §21.1, **§23.3 (deepest spec, multi-confirmed)**; `fed` 222-573, `1772s` 20-60, `hd` I-1, **`drums` POSTS 123, …, 6928**; **`nuke` §28.2 (5+ wars, Korea/Cuba/Gulf/War-on-Terror)** | **M–L** | K0 (lots of rolls); **BUG-3** (no-PM-General fallback is in this blast radius) | **Divergence #6. Verified: only `src/engine/revolutionaryWar.ts` exists — NO generic and NO Cold-War engine; build ONE.** Generalize one `War` model usable in any era; the Cold War is THIS engine relabeled + content (§9.1.8). **The formula is canonical** (`drums` re-derives it across 5+ wars/4 eras; `nuke` confirms it across the Cold-War wars). **Design it multi-theater + tiered from day one** — the Civil-War row below is its Major-tier instance. Outcome grants/denies territory; **+permanent president +1-all-elections on Major victory**. **★ Batch-9 LOAD-BEARING holes (DH-47): wars NEVER resolve today** (the war-end roll's odds are so low Korea ran ~2 decades) → **build a real resolution/peace path** (couples to DH-12 white-peace), and **there are no army/navy/air branches** (army generals command navies, "naval" pols die in infantry) → **design the branch model.** Pairs with the A4 battle-card UI + the military-leadership tier (#49). **Build the K5 CPU touchpoints inside this epic** (commander selection, theater focus, surrender/peace decision); war-epic-internal, not separate handlers. **★ Batch-13 DH-61: the `War` model must be SEEDABLE AT BOOT** — `scenarioBoot` reads a start-year "active wars by start date" table and instantiates each as a running `War` (1788 → NW Indian War, 20%-loss / WS −2; `oopscpu#POST 338-344`). Expose a `War` constructor the boot pipeline calls; the seed-and-register pass itself is a thin S item that lands with `scenario1788` (§9.1.9). |
 | **[1856-arc, batch 4/7] Civil-War combat engine + Reconstruction subsystem — COMPLETES the shipped 1856 scenario** — two theaters (3 naval wins gate land), per-theater WarScore (+10 auto-wins) + Major/Minor/Operation tiers, named-battle officer casualties, permanent-president-+1-all-elections on Union victory, **+ the batch-7 CW VARIANTS (#97): DomStab=1 early-trigger, President-defects-to-CSA, Hartford/Northern-secession variants, UK-intervention 3rd theater, guerrilla 4th stage, internal CSA government**; then Reconstruction status (occupied/military-gov/readmitted) + per-state readmission **bills (readmit-by-REPEAL, `rep1800` §C)** + time-boxed `+2-until-year` bias + strip-leaders/pardon laws + secession gating (`Southern Unionist`/Secessionists pool) + free/slave sectional-balance crisis | mechanics §23 (§23.1–§23.5); `hd` I-1..I-5; **`rep1800` §C (2nd CW campaign + the solo-blocker)** | **L** | **generic war (#6)** (this is its Major-tier instance), **K2** (Reconstruction readmission + the 3-plan exec action are ActionRegistry rows), the bill pipeline (readmission bills), `State.isSlaveState` (`types.ts:1329`, **per-state flag EXISTS**) + `SLAVE_STATES_1856` (`types.ts:1152`) for the sectional crisis; **for the SOLO-BLOCKER fix: K5 + CPU handler #2 (option 1) OR K3's condition-driven `advanceEra` (option 3, era-boundary auto-resolution)** | **★★ BUILD REQUIREMENT (batch 7 / DH-29): the Reconstruction half is UNWINNABLE solo without a CPU-passable readmission path.** GM-verified (`rep1800` POST 9170) the Strict/Ironclad plan can NEVER pass with CPU factions → **the epic delivers an unwinnable scenario unless E3b ships option (1) a CPU default-vote bias for the flagged historical plan, (2) a guaranteed-pass crisis path, or (3) an era-boundary auto-resolution** (my rec: 1+3). See §9.1.6. **Otherwise: place EARLY-ish — after #6 + K2, does NOT wait behind federalism or the deep-modern tail.** Rationale: unlike federalism (a *new* scenario), this **enhances the already-shipped 1856 scenario** (`scenario1856.ts`, era `nationalism`), whose spine dead-ends at the Trent Affair (1861). Secession (#58) + the sectional crisis (#59) are cheap additive parts that can land first as the antebellum payoff; the two-theater war (#56) + Reconstruction (#57) are the heavy parts. The **readmission half should land AFTER K5 handler #2** (for the solo-blocker fix) or carry the era-boundary auto-resolution as its self-contained fallback. See §9.1.2 + §9.1.6. |
-| **[1856-arc, batch 4] Succession / eligibility / acting-president** — configurable bill-mutable line of succession; native-born vs foreign-born presidency gate (relaxable per #60 Canada); an acting-president state whose `command` (often 0) gates exec actions / SCOTUS-compel / re-election; era-keyed VP-vacancy-fill amendment | mechanics §24.1, #61; `hd` I-6 | **M** | the amendments item (#39, VP-vacancy fill); ties to the cabinet/leadership pipeline | **An election-system / constitutional addition.** `vicePresidentId` exists (`types.ts:1568`) but no eligibility gate, no configurable line, no acting state. Best landed *with* the convention/election work — the foreign-born gate also constrains convention Major candidacy. Folds DH-3 (career-track pols can't run for President). |
+| **[1856-arc, batch 4; batch-11 E10b; ★ batch-13 reconciled] Succession / eligibility / acting-president** — configurable bill-mutable line of succession; native-born vs foreign-born presidency gate (relaxable per #60 Canada); an acting-president state whose `command` (often 0) gates exec actions / SCOTUS-compel / re-election; era-keyed VP-vacancy-fill amendment | mechanics §24.1, **§29.9**, #61; `hd` I-6; **`arkzag` ch27; ★ `oopscpu#POST 324-329`** | **M** | the amendments item (#39, VP-vacancy fill); ties to the cabinet/leadership pipeline (the death-branch re-runs the leadership IRV — handler #3) | **An election-system / constitutional addition.** `vicePresidentId` exists (`types.ts:1568`) but no eligibility gate, no configurable line, no acting state — and death only sets `presidentId = null` at `vacateOffice` (`phaseRunners.ts:2446`), with NO succession engine. **★ Batch-13 reconciles the death-vs-incapacity SPLIT (Ted-RULED, designer-authoritative, supersedes the `arkzag` read for the death case):** a Presidential **DEATH** → VP becomes the **FULL President** (refuses "Acting", **NO action-divert roll**), is **NOT auto party/faction leader** → **re-run the leadership IRV** (handler #3) to pick a new PL (matches `nuke` #112 unelected-succession). The `arkzag` **acting-president + action-divert** read is now **SCOPED to the distinct incapacity / 0-Command-inert / foreign-born-ineligible cases ONLY**. So E10b carries TWO branches: **death → full President**; **incapacity → acting (Command-gated / trait-diverted)**. Best landed *with* the convention/election work — the foreign-born gate also constrains convention Major candidacy. Folds DH-3 (career-track pols can't run for President) + #105 (stat-collapse → forced resignation). |
 | **[1856-arc, batch 4] Contingent House election + tied-chamber inverse control** | mechanics §24.2, #62; `hd` I-7 | **S–M** | the EC tally path (`calcStateVote('presGeneral')`, `phaseRunners.ts:3752`) | **Election-system addition.** On no EC majority: 1-vote-per-state by House-delegation majority (Governor-party tiebreak), Senate elects VP; **pick a stated cutoff** (DH-6: config `contingentTopN` top-2 vs top-3) + the tied-chamber inverse-control rule. Slots into the same tally code as per-state EC method (#5). |
 | **Offices created in-game by law (institutional layer)** *(batch 4 / **batch 8: confirmed FOUNDING→MODERN**)* | mechanics §24.6, #66/#101; `hd` I-11; **`new1772` §24.6 (founding offices-by-law)** | **M** | **K2** (offices created by exec action/bill are ActionRegistry-adjacent); the cabinet-retention refactor (#25); shares its substrate with divergence #15 (dynamic seat list) | **Generalizes the cabinet beyond `cabinetSeatsForYear`** (`types.ts:1196`, year-keyed/fixed today): model offices as data **created/destroyed by bills + exec actions** with their own terms/eligibility/decline/Command-grant rules. **★ Batch 8 makes this an END-TO-END theme, not a Gilded/Progressive-only need:** Gilded/Progressive adds Fed Chair / CoS / CNO / FBI Director (incl. create-Fed-deactivates-Independent-Treasury); **founding (`new1772`) stands up SCOTUS, the Bank-of-US (→ President-of-Bank seat), Dept of Navy (→ SecNavy), the AG, academies/Mint/Marine-Corps ALL by in-game bill** — the founding era is *defined* by offices-not-existing-until-legislated. Pairs with #49 (military-leadership tier) + #25 (retention) + the divergence-#15 dynamic-seat-list refactor (same substrate). **Note DH-40: the SCOTUS-establish + set-count two-bill pattern can STALL the game if the count bill fails — guard it here.** |
-| **Per-state presidential-election method + the 12th-Amendment mode toggle** — `State.electionMethod`/`electorsByLegislature` resolved from seated-legislature majority (Gov breaks ties) for legislature-states; **a pre-12A global `conventionsEnabled = false` gate**; flip per-state by event, globally by amendment / the "Nationwide Surge" event | mechanics §21.2, **§27.3 (#93, the before/after state machine)**; `fed` 194-373; **`rep1800` §A** | **M** | K1 (the field), amendments (global flip), conventions (the gate disables §15.3) | **Divergence #5 + batch-7 #93.** Diverges from `calcStateVote('presGeneral')` (`phaseRunners.ts:3752`), which resolves *every* state by PV+dice. **Correction: the shipped `senatePre17` context (`types.ts:701`) is NOT a legislature-majority tally** — it's the same `calcStateVote` formula with a different `ctx` tag (`phaseRunners.ts:3896`); so `electorsByLegislature` needs a **genuinely new resolution branch** (award EV by seated Gov/Senate/Rep party majority, recomputed after the popular tally). Federalism + the early Republicanism band both *need* it (CT/GA/MA/NJ/NY/SC legislature-chosen pre-12A, decisive). The 12A also **gates the convention machinery + separate-VP rules** (§27.3). Best landed *with* the federalism/early-republic epic. |
+| **Per-state presidential-election method + the 12th-Amendment mode toggle (+ ★ batch-13 DH-62 pre-12A EC mode)** — `State.electionMethod`/`electorsByLegislature` resolved from seated-legislature majority (Gov breaks ties) for legislature-states; **a pre-12A global `conventionsEnabled = false` gate**; **a pre-12A two-votes-per-state / NO-ticket EC ballot mode (DH-62)**; flip per-state by event, globally by amendment / the "Nationwide Surge" event | mechanics §21.2, **§27.3 (#93, the before/after state machine)**, **DH-62**; `fed` 194-373; **`rep1800` §A; ★ `oopscpu#POST 192-199`** | **M** | K1 (the field), amendments (global flip), conventions (the gate disables §15.3); **the `scenarioBoot` pipeline (DH-62 is a 1788-boot prerequisite)** | **Divergence #5 + batch-7 #93 + batch-13 DH-62.** Diverges from `calcStateVote('presGeneral')` (`phaseRunners.ts:3752`), which resolves *every* state by PV+dice. **Correction: the shipped `senatePre17` context (`types.ts:701`) is NOT a legislature-majority tally** — it's the same `calcStateVote` formula with a different `ctx` tag (`phaseRunners.ts:3896`); so `electorsByLegislature` needs a **genuinely new resolution branch** (award EV by seated Gov/Senate/Rep party majority, recomputed after the popular tally). **★ Batch-13 DH-62 adds a SECOND new resolution branch — the pre-12A two-votes-per-state, no-Pres/VP-ticket EC mode** (each elector casts two votes; top EV = President, runner-up = VP; no separate VP ballot) + the **same-state-EV exclusion** (two candidates from one state can't both take that state's EVs, `oopscpu#POST 197`) + the throwaway-tie defense via the §25.1 pre-12A nomination trio (handler #1). It is an **era-keyed election-mode variant** for 1788/1792/1796 and is a **HARD prerequisite for `scenario1788`** (the all-CPU run exercised it across all three EC rounds). Federalism + the early Republicanism band both *need* the legislature-chosen branch too (CT/GA/MA/NJ/NY/SC pre-12A, decisive). The 12A also **gates the convention machinery + separate-VP rules** (§27.3). Best landed *with* the federalism/early-republic epic — DH-62 lands WITH the `scenario1788` boot. |
 | **Constitutional amendments durable state** — `GameState.amendments`; **cross-state ratification vote** (can fail); bill-of-amendment type; effects on term-length / popular-vote-everywhere / VP-vacancy / suffrage / court-size; **era-keyed + in-game-tunable ratifier + threshold** (#64) | mechanics §21.3, **§24.4 (#64)**; gilded + `fed` + **`hd`** (corroborated 3 eras) | **M** | K0; K4 (era-keyed table) | Sharpened across batches: the **ratification vote** + **failure case** (batch 2), and **batch 4: the ratifier + threshold are an ERA-KEYED, bill-changeable field** — 1856 = 2/3 of both chambers then **3/4 of state GOVERNORS**; Gilded default drops to 2/3 of states; a passed amendment can change the threshold (options table → faction-enthusiasm side effects). Plus a **SCOTUS-ruling-gates-a-bill-class-until-amendment** hook (*Pollock* → no income-tax bill until ratified) couples to #52. Couples to per-state EC (#5), firing-precedent, succession (#61). Gates BUG-2. |
 | **Bill typing + budget-gated spending cap** — `Bill.type` (Foundational/Spending/Crisis); numeric per-turn spending budget gating non-crisis spending bills at the floor; crisis-bypass; cabinet free-proposal slot | mechanics §21.6; `1772s` B4, `fed` 159-703 (corroborated) | **M** | K0; **national-surplus integer** (the cap reads it, not the ordinal `revenue`) | New `Bill.type` tag (none today, grep-confirmed). A bill can pass the floor and still be "BLOCKED DUE TO BUDGET." Prerequisite for crisis bills and the Hamiltonian financial program. |
 | **Bill-driven statehood + unorganized-territory gating + auto-generated officials** — statehood/territory bills → `admitState`; event/war annexation; **generate filler pols** for sparse new states; a **`Territory.organized: boolean` ORGANIZE→ADMIT two-step**; a **draftability/relocatability gate** excluding un-owned/unorganized-territory pols; Class-I/II/III senator-rotation assignment + EV join on admission; sabotaged-enabling-vote → +1-bias seed | mechanics §21.5, **§27.5 (#95, the organize→admit pipeline)**; `fed` 81-718; **`rep1800` §A/§B/§C** | **M** | bill typing (the bill route); generic war (war annexation); **BUG-3** shares the auto-generate-officials need; **the territory-gate is the SAME predicate as §9.1.5's content-gate** | `admitState` (`territories.ts:8`) exists, is idempotent, invoked only from 1772 era-event `postEffects` today. **Batch-7 adds the two-step** (land you own but haven't *organized* has undraftable/unrelocatable pols until an organizing bill passes — LA-Purchase land, Michigan) + the draft-pool filter for unorganized-territory pols. Some admissions skip the territory stage (ME/WV/TX-from-Republic/VT/CA + the 13 originals). Federalism admits VT/KY/OH/TN/AL + MS/IN/MI/IL/LA territories this way. |
@@ -3697,6 +3901,63 @@ planning. Specifically:
 > cabinet ideology weighting) — NOT ready-to-build until Ted/vcczar closes
 > them. The authority hierarchy is now Ted/vcczar > GA > inference; the
 > roadmap's parking lot splits Decision-gated into "user-gated" + "designer-gated."
+> **★★★ Batch-13 change (`oopscpu`, Ted-run all-CPU 1788 stress-test — the K5/E9
+> VALIDATION source; designer-authoritative; NO new keystone, NO re-sequence — it
+> DE-RISKS E9 + adds two 1788-boot prerequisites + one XS standalone):**
+> **★ E9 handler CONFIDENCE rises (no order change):** handlers #70 (leadership 9c),
+> #72 (candidate/VP 9a/9m), #73 (cabinet 9d), #74 (legislation 9b), #75 (event 9g),
+> #76 (conversion 9f) are now **spec-complete + FIELD-VALIDATED with concrete failure
+> modes + Ted's fixes** — treat each handler PR as lower spec-risk. **FOLD the OC-*
+> sub-rules into the relevant handler rows (NOT new epics):** **★ OC-3 (BALANCE-CRITICAL)
+> → handler 9b (legislation) as its HIGHEST-priority sub-rule** — a crisis-vote
+> ideology-floor gate (don't AYE a crisis bill that costs your own cards) + a
+> secession/slavery-active check before an Abolish-Slavery crisis bill can pass
+> (without it CPUs peacefully abolished slavery by 1792, no secession; `oopscpu#POST
+> 162-180`); **OC-2 → handler 9c (leadership)** — ONE canonical `chamberControl(snap,
+> chamber)` helper shared by leadership-select + the ≥60% proposer gate (consolidate
+> the inline `senateMajority`/`houseMajority` dup at `phaseRunners.ts:1863-1864`, the
+> collision bug); **OC-1 + OC-5 → handler 9d (cabinet)** — a scandal-resignee
+> re-appointment cooldown (reads K5's `recentScandalIds?`; instance of DH-22) + gate a
+> cabinet-vacating SCOTUS appointment behind the firing-precedent rule; **OC-6 →
+> kingmaker handler (§25.11)** — multi-protégé pairing tiebreak = highest Com+Leg+Gov.
+> Handler 9d also gets the validated crisis cabinet-fill LADDER (`oopscpu#POST 322`);
+> handler 9a/9m gets the pre-12A nomination trio + VP retention (#144, RULED). **#71
+> (convention 9e) is the ONE handler NOT validated** (1788 predates conventions) —
+> stays `drums`-only-spec + DH-8-unstable; recommend a post-12A all-CPU run to validate
+> it (the all-CPU-test methodology, §9.1.3).
+> **★ #143 post-election Command decay (RULED, XS standalone)** — add a pass at
+> `runPhase_2_10_End` (`phaseRunners.ts:4171`), gated on `isPresidentialYear`, after
+> the 2.9.4 ticket roster is known: every living pol NOT on a Pres/VP ticket has a
+> 40% chance of −1 Command via the existing `loseCommand` (`abilities.ts:15`). Ship
+> with the XS consistency PRs (Phase-1 #19) / near QW0.
+> **★ #61 death-succession branch (RECONCILED → folds into E10b)** — a clean DEATH →
+> VP = FULL President (refuses "Acting", NO action-divert roll, NOT auto party/faction
+> leader → re-run the leadership IRV, handler 9c); the acting-president + action-divert
+> read is SCOPED to incapacity / 0-Command-inert ONLY. SUPERSEDES the `arkzag` read for
+> the death case; S within the already-re-scoped E10b (`oopscpu#POST 324-329`).
+> **★★ DH-61 + DH-62 are 1788-BOOT PREREQUISITES — sequence them WITH E1 /
+> `scenario1788`:** DH-61 (boot-seed era-active wars — 1788 → NW Indian War, 20%-loss /
+> WS −2) is a `BootSheet.activeWars` field + a boot hook in the `scenarioBoot` pipeline
+> (K4 / §9.1.9) over the generic `War` model (Phase-1 #3) — **S**; DH-62 (pre-12A
+> two-votes-per-state / no-ticket EC mode + same-state-EV exclusion + the §25.1
+> anti-tie trio) is an **era-keyed election-mode variant** that lands in the per-state-EC
+> + 12A-toggle epic (Phase-1 #4 / #93/#5) — **M**. Both gate ANY `scenario1788` and must
+> land alongside it.
+> **★ OC-4 + OC-8 → designer-gated parking** (NOT ready-to-build): OC-4 (CPU draft
+> off-ideology gate — Ted wants "a better third way"; do NOT silently ship a hard gate;
+> `oopscpu#POST 227-228, 234`) + OC-8 (define "office" + rewrite the
+> Scandalous-Non-Office-Holder event; flagged to `@vcczar`; `#POST 334, 336`). Add to
+> the designer-gated sub-bucket alongside the 9 open `tedchange` items.
+> **★ METHODOLOGY recommendation:** the all-CPU test is itself valuable — it validates
+> a whole subsystem's spec before it is built, needs no players (immune to GM-burnout
+> DH-36), and a post-12A all-CPU run would validate the convention handler #71 (the
+> only handler 1788 couldn't reach). §9.1.3.
+> **CORROBORATION only (no keystone moves):** #70/#72/#73/#74/#75/#76 (the whole CPU
+> cluster, from a founding-era angle), #52 (all-CPU SCOTUS by ideology-distance —
+> resolves the player-vs-CPU fork FOR THE ALL-CPU CASE; human games still user-gated),
+> #20/DH-19 (CPU gov menu + the OC-7 help-allies term-config sub-rule, RULED #145),
+> #99/#127 (ideology-circle LW↔RW Pop 25%). The #18 meter→election state-scope fork
+> RECURS unresolved (still user-gated).
 > **Batch-10 change (`dem1820`, first 1820-START — ONE promotion + two decision-gates +
 > sized fixes; NO new keystone, NO re-sequence of the keystones):**
 > **★★ #115 SCENARIO-BOOT pipeline PROMOTED to the front of the subsystem queue** —
@@ -3743,7 +4004,11 @@ unconditionally ready, binds at `calcStateVote` `:3709-3711`**) · auto-Carpetba
 **Challenge-Legislation-can't-target-REPEAL (#132)** (one filter helper per
 rule) · **★ batch-12 Pres signature in 2.6 (#139)** (phase-sequence reorder) ·
 **★ batch-12 FL trait gain 5%+/3%- (#141)** (refines existing const) ·
-**★ batch-12 CPU CJ ladder (#142)** (the ladder spec is authored).**
+**★ batch-12 CPU CJ ladder (#142)** (the ladder spec is authored) ·
+**★ batch-13 #143 post-election Command decay** (RULED, standalone — add a 40%/−1
+Command pass at `runPhase_2_10_End` `phaseRunners.ts:4171`, gated on
+`isPresidentialYear`, after the 2.9.4 ticket roster is known; applies via the
+existing `loseCommand` `abilities.ts:15`).**
 (BUG-2 rides SCOTUS content; **#54 investigation committees is READY** — rules
 authored by `hd` #65; **#85 5%/half-term retire/death** is a 1-line rules-const
 refinement; **DH-31 procedure-bills-bypass-veto** is a small verify-and-fix in
@@ -3791,7 +4056,13 @@ boot scope) — #136 random skill on draft has NO Command (verify the existing p
 exclusion at `phaseRunners.ts:187-197`); #137 no cross-party draft (gate
 `partyId` to IRL party at draft time + exclude cross-party drafting in
 `pickBestForFaction` at `phaseRunners.ts:33-53`); #138 3 random traits + 3
-random alt-states per draft (re-rule into era-config; SUPERSEDES 5/5)**) →
+random alt-states per draft (re-rule into era-config; SUPERSEDES 5/5)**;
+**★ batch-13: TWO HARD PREREQUISITES land WITH the 1788 boot — DH-61 (boot-seed
+the start-year's active wars: 1788 → NW Indian War, 20%-loss / WS −2; a
+`BootSheet.activeWars` field + a `scenarioBoot` hook over the generic `War` model
+from #3 — they FORGOT it in `oopscpu#POST 338-344`) + DH-62 (the pre-12A
+two-votes-per-state / no-ticket EC mode — see #4 below; an era-keyed election-mode
+variant exercised across 1788/1792/1796). Neither is optional for `scenario1788`.**) →
 2) Bill typing + spending cap (+ national-surplus/debt integer; **batch-7: fix
 the procedure-subtype veto MIS-ROUTING — DH-31 / divergence #21 — procedure bills
 skip the President sign/veto step**) →
@@ -3816,7 +4087,11 @@ land AFTER K5 handler #2 or carry the era-boundary auto-resolution as its
 fallback**) →
 4) Per-state EC method (divergence #5) + **the 12A legislature-elector toggle
 (divergence #20 / #93 — a NEW legislature-majority resolution branch, NOT a `ctx`
-re-tag; + the pre-12A `conventionsEnabled=false` gate)** →
+re-tag; + the pre-12A `conventionsEnabled=false` gate)** + **★ batch-13 DH-62: the
+pre-12A two-votes-per-state / NO-ticket EC mode (a SECOND new resolution branch —
+top EV = Pres, runner-up = VP, no separate VP ballot) + the same-state-EV exclusion
+(`oopscpu#POST 197`) + the throwaway-tie defense via the §25.1 pre-12A nomination
+trio (handler 9a). M; a HARD prerequisite for `scenario1788` — land WITH E1 (#1)** →
 4b) **[early-republic, batch 7] Slavery-as-state-flag + Cohens-v-Virginia
 (#94 — bind the EXISTING `State.isSlaveState` to Plantation; abolition-toggle-off;
 the persistent `Cohens` SCOTUS rule-modifier disallowing legislative abolition;
@@ -3901,21 +4176,40 @@ SAME surface as the meter-model + APOCALYPSE work — same tick site
 8) Procedural pol generation [NEAR-TERM — scaling wall a; **era-coded by
 rule 3.0.18 with a 2020 startYear for Populism (#90), plus a dataset-exhaustion
 fallback — both gates trigger the same generator**] →
-**9) CPU handler suite [batch 5 NEW] — depends on K5. ~15 lightweight PRs in
-§6.6.1 order: (a) candidate selection 75/25 #72 → (b) legislation NAY/AYE/NAY
-#74 + **conditional-vote-rules consumer (batch 6, `pop` POST 1111 — consults
-`factionLeader.compelledVoteRule?: Predicate → Vote` BEFORE the §25.6
-heuristic)** → (c) leadership IRV #70 → (d) cabinet confirmation #73 + **batch-6
-SCOTUS within-1-step auto-AYE rule (§26.6.1) + Manipulative-Pres compel-retire
-as a distinct trait-power** (lands the DH-23 fix — XS-S because the system
-doesn't exist yet) → (e) convention CPU #71 (owns DH-8 + DH-17; **batch-8: guard
-the lone-ideology minor-candidate convention exploit #104 — a single
-ideologically-isolated minor candidate can game the convention**) → (f)
-conversion poach #76 → (g) A/B/C event vote + meter guard #75 + DH-21 → (h)
+**9) CPU handler suite [batch 5 NEW; ★ batch-13 FIELD-VALIDATED] — depends on K5.
+~15 lightweight PRs in §6.6.1 order. ★ Batch-13 (`oopscpu`) does NOT change the
+ORDER but turns #70/#72/#73/#74/#75/#76 from "designed" into "designed +
+field-validated with concrete failure modes + Ted's fixes" (lower spec-risk) and
+FOLDS the OC-* sub-rules into the handler rows:**
+(a) candidate selection 75/25 #72 **+ batch-13: the pre-12A nomination trio +
+VP retention (#144, RULED) + same-state-EV exclusion** → (b) legislation
+NAY/AYE/NAY #74 + **conditional-vote-rules consumer (batch 6, `pop` POST 1111 —
+consults `factionLeader.compelledVoteRule?: Predicate → Vote` BEFORE the §25.6
+heuristic)** + **★ batch-13 OC-3 (BALANCE-CRITICAL, the HIGHEST-priority sub-rule
+here): a crisis-vote ideology-floor gate (don't AYE a crisis bill that costs your
+own cards) + a secession/slavery-active check before an Abolish-Slavery crisis bill
+can pass — `oopscpu#POST 162-180`** → (c) leadership IRV #70 **+ batch-13 OC-2: ONE
+canonical `chamberControl(snap, chamber)` helper shared by leadership-select + the
+≥60% proposer gate (consolidate the inline `senateMajority`/`houseMajority` dup at
+`phaseRunners.ts:1863-1864`)** → (d) cabinet confirmation #73 + **batch-6 SCOTUS
+within-1-step auto-AYE rule (§26.6.1) + Manipulative-Pres compel-retire as a
+distinct trait-power** + **★ batch-13 OC-1 (scandal-resignee re-appointment
+cooldown, reads `recentScandalIds?`) + OC-5 (gate a cabinet-vacating SCOTUS
+appointment behind the firing-precedent rule) + the validated crisis cabinet-fill
+ladder `oopscpu#POST 322`** (lands the DH-23 fix — XS-S because the system doesn't
+exist yet) → (e) convention CPU #71 (owns DH-8 + DH-17; **batch-8: guard
+the lone-ideology minor-candidate convention exploit #104**; **★ batch-13: this is
+the ONE handler `oopscpu` could NOT validate — 1788 predates conventions; stays
+`drums`-only-spec; recommend a post-12A all-CPU run to validate it, §9.1.3**) → (f)
+conversion poach #76 **+ batch-13 ideology-circle LW↔RW Pop 25% confirmed** → (g)
+A/B/C event vote + meter guard #75 + DH-21 **+ batch-13: Pliable-Pres-defers +
+Egghead-tiebreaker validated `oopscpu#POST 335-337`** → (h)
 faction-leader replacement #78 → (i) primary CPU #63 → (j) governor-action
-picker DH-19 → (k) reciprocity enforcer DH-20 → (l) scandal smoother DH-22 →
-(m) VP rubric + retention #72 → (n) Justice vote + drift #79 → (o) faction
-rename trigger #40. PARALLELIZABLE — multiple handlers can land concurrently.**
+picker DH-19 **+ batch-13 OC-7 help-allies term-config sub-rule (RULED #145)** →
+(k) reciprocity enforcer DH-20 → (l) scandal smoother DH-22 **(OC-1 reads its
+`recentScandalIds?`)** → (m) VP rubric + retention #72 → (n) Justice vote + drift
+#79 → (o) faction rename trigger #40 **+ kingmaker handler OC-6 pairing tiebreak**.
+PARALLELIZABLE — multiple handlers can land concurrently.**
 →
 10) Convention machinery (uses K2 + K5; the biggest single subsystem; **CPU
 side is handler 9e above — DH-8 must-own**; **★ batch-11: the ballot loop / momentum
@@ -3939,7 +4233,13 @@ VP-Vacancy amendment being `active`) → acting-president ACTION-DIVERT roll key
 traits (Easily Overwhelmed → 50% VP-acts, layered on the 0-Command-inert state) +
 the trait-acquisition side-effect (overwhelmed successor gains Easily Overwhelmed +
 Pliable). The VP-succeeds + acting-divert path is ready to spec (rule documented
-end-to-end); the line-of-succession/impeachment half stays parking-lot (DH-54)**] →
+end-to-end); the line-of-succession/impeachment half stays parking-lot (DH-54);
+**★ batch-13 (`oopscpu#POST 324-329`, Ted-RULED) gives this a RECONCILED two-branch
+spec: a clean DEATH → VP = FULL President (refuses "Acting", NO action-divert roll,
+NOT auto party/faction leader → re-run the leadership IRV, handler 9c); the
+acting-president + action-divert read above is now SCOPED to incapacity /
+0-Command-inert / ineligible-substitute ONLY (SUPERSEDES the `arkzag` framing for
+the death case). S addition within E10b**] →
 11) Governor's actions library (state-stack-aware via handler 9j) →
 12) Diplomacy actions library (**★ batch-9 #107/§28.3: THE real Cold-War foreign
 subsystem — 8 per-nation relation meters + ambassador actions incl. Provoke;
