@@ -1523,6 +1523,8 @@ draft runner instantiates the year's class via `instantiateDraftees`
 | 42 | **★ #163/#164 career-track pre-placement + mid-gov start-state (batch 18) — BOOT; folds into DH-25 + K4 BootSheet** | the draft/career-track path (DH-25 family); the K4 `BootSheet` start-state field (no precedent today) | **#163** the GA pre-placed randomized statesmen onto career tracks at game start (by draft-cohort + ability) to fix the "generational pols stuck at floor stats" problem (the Buttigieg problem, POST 32-41) — a GA house rule, NOT designer-authoritative; **joins the DH-25 career-track-bootstrap PARKING LOT** (already BLOCKS the modern scenario). **#164** the inaugural-cabinet-holdover question (election-start vs president-in-place vs president-with-historical-cabinet, POST 184-188; Ted: *"I don't know that we've ever landed on a solid answer"*) is the **unsettled mid-government start-state model** — fold into the K4 `BootSheet` start-state field; players favor president-in-place but it is **human-gated**. **XS each once the rules are authored; both are BOOT-pipeline (K4) items.** game-mechanics §26.1. |
 | 43 | **★★ NO no-eligible-successor constitutional-crisis subsystem — #167, the ONE new mechanical gap (batch 19 / `fixes2022`); FOLDS INTO E10b; reuses #62** | the vacancy site `vacateOffice` (`phaseRunners.ts:2446`, sets `presidentId = null` at `:2449` with NO successor path); `vicePresidentId` (`types.ts:1568`) exists with no eligibility/line gating; **grep `successionCrisis\|actingPresident\|emergencyCongress\|coup` in `src/` = ZERO hits** | The fallback the rest of §24.1 does NOT cover: a President dies/resigns with **no eligible successor at all** (empty VP + no installed third-in-line, or every line member ineligible) — distinct from #61 (the normal VP-succession line) and #62 (the no-EC-majority contingent ELECTION). vcczar + Ted hammered out the full procedure (`fixes2022#POST 841-882`, designer-authoritative). **The build surface (a new `game.successionCrisis` flow off the vacancy path):** (i) an **emergency-Congress agenda-locked-to-succession-laws** vote loop (random-FL proposer, CPU auto-support, **auto-signed/un-vetoable**, loops until pass); (ii) a **House 1-vote-per-state acting-President election** between the two party leaders (ineligibility→highest-PV-eligible-FL cascade; CPU party-line except Integrity→incumbent-party, Can-Be-Independent→closest-ideology; tied state abstains; state-count tie → SCOTUS/game-over); (iii) a **DomStab penalty scaled 0/−1/−2/−3** by outcome legitimacy; (iv) a **coup branch** (Controversial+LW/RW-Pop OR Military Leader → 3.0.2 coup rules → possible game-over, same end-condition family as debt #28). **★ Step (ii) is the SAME 1-vote-per-state delegation-majority machinery as the #62 contingent House election** (debt-adjacent §9.2) — **build #62 once, reuse for both.** **★ SHIPPABLE-FIRST: the interim PPT-as-acting-President default** (`POST 849-850` — the PPT becomes acting President, then resigns from Congress) ships FIRST; layer the full House-election procedure later. **Couples to #61 (succession line) + #88/debt #28 (anti-game-over CPU bias) + DH-54/DH-33/DH-66 (impeachment) — treat all as ONE E10b constitutional-crisis family.** **Size: M for the full procedure (Step-ii reuses #62); S for the PPT-interim default alone.** **★ `fixes2022` is the EARLIEST source** (predates terror2000/ted1772/oopscpu — designer intent from the start). game-mechanics §24.1.2 + §30.10. |
 | 44 | **★ NO era-event firing-rate budget — the one OPEN era-event piece (batch 19 / `fixes2022`); small, folds into the era-event epic** | the era-event runner `runPhase_2_4_3_Era` (`phaseRunners.ts:2796`) + `buildEraEventsForYear` (`eraEvents1856.ts:4`, gates ONLY by `year >= X && year <= Y`) — no per-era firing cap/budget anywhere | vcczar removed the old **"2-min / 8-max events per half-term"** cap (via an "Era Exit" column, then removed that too), intends a cap **">8"**; OrangeP47 flagged an **1840 log-jam** (only ~25% of an era's events fired by era-end) and wants a **dynamic limit so ~70% fire per era** (`fixes2022#POST 114-123`). **The era-event system has NO firing-rate model today** — events fire purely by year-window. **The fix is a dynamic per-era firing BUDGET** (target ~70% of an era's events fire), NOT a fixed cap. **Small addition to the era-event scheduling epic (E15 / divergence #4)** — the SAME scheduling surface as BUG-1 + the late-start boot-filter (`POST 413-423`, INTENDED, also corroborates #92). The scripted-event BUILD-OUT this thread carries is **CORROBORATION of the shipped `EraEvent` model** (`types.ts:1466` — `responses[]`/`Predicate`/`addPolitician` all support the Shaw/John-Brown removal + demographic-gated-entry patterns), **NOT a gap.** **S.** game-mechanics §10.4.6. |
+| 45 | **★ NO mid-campaign presidential-replacement event — #169, the ONE new runtime mechanic (batch 20 / `biden2021`); small addition to the era-event epic (E15)** | the presidential general resolver `runPhase_2_9_4_PresidentialGeneral(snap, blueCand, redCand)` (`phaseRunners.ts:3752` — takes the ticket candidates as params, no drop-out/swap path); `vicePresidentId` (`types.ts:1568`); the age roll it gates on = `ABILITY_LOSS_RULES.oldAge` decay (`minAge: 70`, `types.ts:521`, fired at `phaseRunners.ts:2384-2393`) + `MORTALITY_RULES` death/retire brackets (70/80, `types.ts:488-498`); **grep `dropOut\|replaceOnTicket\|endorseVP\|midCampaign\|forcedOut\|stepAside` in `src/` = ZERO hits** | The "Elderly President Drops Out → endorses VP" event (the Biden-2024 → Harris analog; vcczar, `biden2021#POST 20, 28`): an `EraEvent` firing during an aged incumbent's reelection that (1) gates on the president having been **hit by the existing age roll** (the 70-keyed old-age decay roll, `:2384`; NB the digest's "70/75" — the candidate-relevant roll is keyed at **70**; 75 is the separate SCOTUS retire roll `:3655`) AND running for reelection; (2) **50% pull** from the ticket; (3) a flat **−1 party election malus** that **lands on the VP even when the pres is pulled**; (4) the VP **replaces the president on the ticket** (NOT an open convention) — i.e. swap `blueCand`/`redCand` to the VP inside the `runPhase_2_9_4` candidate flow and inject the −1 into the §21.9 presidential-vote modifier stack; (5) a fallback to the pre-primary/compromise-candidate convention machinery if the VP can't/won't step up, with a pre-12A "designate a successor" path. **Guards (designed, unsettled):** a VP-younger-than-pres check; an alternative stiffer trigger (80+ / Frail-Easily Overwhelmed-Incoherent / older-than-VP / Party-Pref-against). **Era-of-Populism-scoped until it fires twice** (the twice-before-generalizing rule). **Distinct from #37/debt #29 (defeat-then-retire / war-defeat President malus): #169 removes the candidate DURING the campaign, not after a loss.** The age-roll substrate ALL EXISTS; the ticket-swap + the malus + the VP-replaces flow are NET-NEW. **Size: S — a small addition to the era-event epic (E15) (or the election epic E20b).** game-mechanics §10.4.7. |
+| 46 | **★ #168 PROCESS/AUTHORING-quality pass — NOT a runtime feature (batch 20 / `planb`)** | NO code surface — it produces a **terminology contract** the build must honor + audits the AUTHORED content (datasets + the legislation/event/gov-action catalogs the era-content epics consume); it pairs with the `scripts/seedDataset.mjs` author-time pipeline (§7) + the #120 dataset umbrella | The Plan-B non-coding slate's pre-coding cleanup, logged as a **quality bar the build inherits**, not a code epic: (a) a **canonical terminology contract** — ideology short forms (`LW Pop / Prog / Lib / Mod / Cons / Trad / RW Pop`, matching the 7-point scale at `types.ts` / CLAUDE.md); the Skills/levels/Experience/Interests vocabulary buckets; the **military-Experience → "Army" rename** (incomplete across the data — "Army" is mislabeled as a starting expertise, should be Military); **human-rights → "criminal reform"**; demographic-category standardization (add Middle Eastern ethnicity; drop no-op Protestant/White defaults). (b) the **branch-path / meter-direction / percentage-multiplier sanity audit** (+budget meter must move + when it makes money [= the DH-53 effect-SIGN family]; the Afghanistan-War-Phase-I multiplier; alt-state event enter/exit columns swapped; legislation repealability; the half-broken Split-Electoral-Votes gov action). (c) the **trait/interest compilation** (how each is gained + what each does). **This is an authoring-process GATE, not a roadmap code task** — it standardizes + audits the content the era-content/dataset epics (#120, the #92/§28.13 modern band, the bill/event catalogs) consume. **Governance: all changes go through vcczar (`planb#POST 37`); content/authoring work proceeds CHRONOLOGICALLY because Anthony imports pols/events in chronological order (`planb#POST 72`)** — a sequencing constraint on ALL content authoring, not just this pass. Mark **PROCESS/authoring (no engine size).** game-mechanics §30.11.2. |
 
 ### 8.1 Confirmed shipped bugs + GM-confirmed design holes
 
@@ -1898,6 +1900,128 @@ continental congress era system) + #120 (dataset umbrella — one coordinated
 > `oopscpu` + `gild1868` + `hd1` + `terror2000` + `ted1772` + `ideo1928` +
 > `fixes2022`**.
 >
+> **★ Batch-20 changes to the plan (FOUR meta/design threads — `planb` [`094cc3a2`,
+> the build-FINISHING PROCESS plan, NOT a playtest], `dbomit` [`4be5a005`, a
+> missing-pol REQUEST thread → #120], `biden2021` [`24061ad6`, a modern era-CONTENT
+> brainstorm], `ampu2wish` [`888ba777`, the OUT-OF-SCOPE AMPU-2 wishlist]. LIGHT
+> batch: ONE new runtime mechanic, ONE authoring-process gate, the rest dataset /
+> quarantine. NO new keystone, NO re-sequence, TOP-OF-QUEUE UNCHANGED.):**
+>
+> > **★ Read this block if you only read one for batch 20. Almost nothing here is new
+> > code. The single runtime delta is **#169** — the "Elderly President Drops Out of
+> > Reelection → endorses VP" mid-campaign replacement event (the Biden-2024 → Harris
+> > analog) — a **small addition to the era-event epic (E15)**, size S, that gates on the
+> > age roll the engine ALREADY has and swaps the VP onto the ticket inside the existing
+> > presidential general resolver. **#168** is a **pre-build AUTHORING-quality pass** (a
+> > terminology contract + a branch-path/meter/% sanity-audit + a trait/interest
+> > compilation) — it is **process/authoring work, NOT a code epic**; the roadmap NOTES it
+> > as an authoring gate, it does not SCHEDULE it as a code task. **`biden2021`** is
+> > modern era-CONTENT that extends the modern band past 2020 (folds into the §28.13
+> > modern content tail / #92/#41; the pardon pres-actions block on #122). **`dbomit`** is
+> > pure dataset work → **#120** (no per-pol rows). **★ `ampu2wish` is OUT OF SCOPE — do
+> > NOT roadmap ANY AMPU-2 wishlist item for AMPU 1** (day-by-day Paradox rebuild, full
+> > House, dynamic regions/biases, etc.); quarantine only. The one cross-cutting process
+> > constraint to carry forward: **all content authoring proceeds CHRONOLOGICALLY** (Anthony
+> > imports pols/events in chronological order; all changes route through vcczar). The top
+> > of the queue does NOT move: QW0 → K0/K2 → K3/K4 + scenarioBoot → E1 still lead.**
+> >
+> > **Verified shipped-state of every batch-20 item (grep/Read-confirmed):**
+> > **(1) ★ #169 mid-campaign drop-out → endorse-VP event — DESIGNED, not built; FOLDS
+> > INTO E15 (era-event epic); the age roll it gates on ALREADY EXISTS.** grep for
+> > `dropOut|replaceOnTicket|endorseVP|midCampaign|forcedOut|stepAside` across `src/`
+> > returns **ZERO** hits — there is **no mid-campaign presidential-replacement / ticket-
+> > swap path** anywhere. **But the trigger substrate ships:** the age-penalty die roll the
+> > event gates on is the **old-age ability-decay roll** (`ABILITY_LOSS_RULES.oldAge`,
+> > `minAge: 70`, `types.ts:521`; fired at `phaseRunners.ts:2384-2393`) plus the
+> > `MORTALITY_RULES` death/retire brackets (70/80, `types.ts:488-498`) and the PV age
+> > penalty (`pv.ts:85`, `age > 70`). **★ Note on the digest's "70-or-75 age roll": the
+> > candidate-relevant roll is keyed at 70, not 75** — the only 75-gated roll is the SCOTUS
+> > retirement roll (`age >= 75`, `phaseRunners.ts:3655`), which is unrelated to the
+> > president. **Where the drop-out event binds:** a new `EraEvent` (the shipped data model,
+> > `types.ts:1466`) firing during an aged incumbent's reelection campaign, whose effect (i)
+> > checks the president was hit by the §10.1 age roll AND is running for reelection; (ii)
+> > rolls **50% to pull** him; (iii) injects a flat **−1 party malus** into the §21.9
+> > presidential-vote modifier stack — **landing on the VP even when the pres is pulled**;
+> > (iv) **swaps the VP onto the ticket** by replacing `blueCand`/`redCand` inside
+> > `runPhase_2_9_4_PresidentialGeneral(snap, blueCand, redCand)` (`phaseRunners.ts:3752`,
+> > which already takes the ticket candidates as params; the VP id is at `types.ts:1568`);
+> > (v) a fallback to the §15.3 pre-primary/compromise-candidate convention machinery (+ a
+> > pre-12A "designate a successor" path) if the VP can't/won't step up. **Designed-but-
+> > unsettled guards:** a VP-younger-than-pres check before defaulting to the VP; the
+> > alternative stiffer trigger (80+ / Frail-Easily Overwhelmed-Incoherent / older-than-VP /
+> > Party-Pref-against). **Era-of-Populism-scoped until it fires twice** (the twice-before-
+> > generalizing rule). **★ Distinct from #37 / debt #29 (defeat-then-retire / the war-
+> > defeat President-loss package): #169 removes the candidate DURING the campaign, not
+> > after a loss.** **Size: S — a small addition to E15 (or the election epic E20b).** debt
+> > #45; game-mechanics §10.4.7.
+> > **(2) ★ #168 — a PRE-BUILD AUTHORING-QUALITY PASS, NOT a roadmap code epic.** There is
+> > **NO code surface.** It produces (a) a **terminology contract** the build must honor
+> > (ideology short forms `LW Pop/Prog/Lib/Mod/Cons/Trad/RW Pop`, matching the `types.ts`
+> > 7-point scale; the Skills/levels/Experience/Interests vocabulary buckets; the military-
+> > Experience → **"Army" rename** — currently incomplete: "Army" is mislabeled as a
+> > *starting expertise* and should be Military, a `dbomit` corroboration; **human-rights →
+> > "criminal reform"**; demographic-category standardization — add Middle Eastern
+> > ethnicity, drop the no-op Protestant/White defaults); (b) a **branch-path / meter-
+> > direction / percentage-multiplier sanity audit** of the AUTHORED content (+budget meter
+> > must move + when it makes money = the **DH-53 effect-SIGN family**; the Afghanistan-War-
+> > Phase-I multiplier; alt-state event enter/exit columns swapped; legislation
+> > repealability; the half-broken Split-Electoral-Votes gov action); (c) a **trait/interest
+> > compilation** (how each is gained + what each does). **This is an AUTHORING-PROCESS GATE
+> > the roadmap NOTES but does NOT schedule as a code task** — it standardizes + audits the
+> > content the era-content/dataset epics consume, and it pairs with the
+> > `scripts/seedDataset.mjs` author-time pipeline (§7) + the **#120 dataset umbrella**.
+> > **Governance: all changes go through vcczar** (`planb#POST 37`). debt #46; game-mechanics
+> > §30.11.2.
+> > **(3) ★ THE CHRONOLOGICAL-IMPORT PIPELINE CONSTRAINT — a PROCESS note for the roadmap.**
+> > Anthony imports pols + events **chronologically** (he was on 1772-1774; everything else
+> > is edited from after 1772 forward) and **all changes route through vcczar**
+> > (`planb#POST 37, 72`). **Implication: content/authoring work should be SEQUENCED
+> > CHRONOLOGICALLY** — founding-era content before antebellum before modern. This does not
+> > reorder the ENGINE track (keystones/subsystems are dependency-ordered, not chronological)
+> > but it DOES order the per-era CONTENT authoring (the bill/event/SCOTUS catalogs the
+> > era-content epics consume, the #120 dataset pass, the #168 audit). A scheduling note, not
+> > a build item. game-mechanics §30.11.1.
+> > **(4) `biden2021` → MODERN ERA-CONTENT, folds into the modern content tail (NOT a new
+> > epic).** The 2021-2025 Biden content list (the IRA/Infrastructure bill splits, the SC-
+> > reform amendments, the Israel-Hamas/Gaza/NATO event chain, the climate pres actions, the
+> > 2021-2024 SC docket) **extends the modern band past 2020** and maps onto the shipped
+> > `EraEvent` + `Predicate` + `addPolitician` model — it is content-authoring, not new
+> > architecture. It folds into the modern-era content work (#92/#41 / §28.13). **The ONE new
+> > mechanic in the thread is #169** (above). **The "Pardon Controversial Allies/Family"
+> > pres actions BLOCK on #122** (pardon mechanics unspecified — #122 must define what a
+> > pardon does first). All other modern presidents are done (`biden2021#POST 47`); Trump-
+> > 2nd-term content deferred to ~midterms (`POST 52`). game-mechanics §28.13.
+> > **(5) `dbomit` → #120 (pure dataset); the standardization rulings pair with #168.** The
+> > ~167-pol missing-name catalog + the dataset-quality bugs (wrong/missing starting
+> > expertise; "Army"-as-expertise→Military; missing post-2022 death dates) all fold into the
+> > **#120 dataset umbrella** via `scripts/seedDataset.mjs` `CURATED_ROWS`/`ERA_FIGURES`
+> > (NOT by hand-editing the JSON/CSV) — **no per-pol gap rows.** The small standardization
+> > rulings (add Middle Eastern ethnicity; drop no-op Protestant/White; **"Crazy" trait
+> > permanently REJECTED — use Controversial**) are the SAME pass as the #168 terminology
+> > contract. The reusable **inclusion bar** (0-9%-of-winning US Rep/Sen/Gov, or a missing US
+> > Rep; sub-floor rookie stats; name-generator for the deep future) feeds the draft-class
+> > authoring playbook (§7). game-mechanics §30.11.3.
+> > **(6) ★★ `ampu2wish` → OUT OF SCOPE — the roadmap MUST NOT schedule any AMPU-2 item for
+> > AMPU 1.** This thread is the forum's quarantined "for next time" brainstorm (OrangeP47:
+> > "unlikely to make it into AMPU 1"; vcczar's AMPU-2 thesis = a day-by-day Paradox-style
+> > timeline, full House, federal judiciary, AMPU 1 finished first). **Nothing here is a
+> > buildable AMPU-1 gap.** Two wishes are ALREADY-LOGGED AMPU-2 gaps, corroborated NOT
+> > re-logged: **DH-37** (player-to-player politician trading = "the #1 AMPU-2 wishlist
+> > item") + **DH-34** (dynamic/policy-reactive state biases — vcczar confirms biases are
+> > census-updated but PREDETERMINED by history, a deliberate history-sim DESIGN CHOICE, not
+> > a bug). Everything else (day-by-day timeline, dynamic regions, dynamic eras, more states,
+> > achievements, scouting/hidden-stats) stays quarantined. game-mechanics §30.11.5.
+> > **(7) FOLDS / CORROBORATIONS (no keystone moves):** **dbomit → #120** (dataset); the
+> > **post-1772 start-game guide → #115** (scenario-boot — populating the career track with
+> > recent draft classes + the named-starting-Reps-not-in-game bug); **the pol-trading wish →
+> > DH-37**; **the dynamic-biases wish → DH-34** (a ROADMAP DECISION, ship-static stance
+> > stands); **the "Army"-expertise / effect-sign audit → DH-53**; **the conflicting-trait
+> > flag macro → DH-27**; **no-rookie-Command → #136/#153**. **Decision-gated RECOUNT: 0**
+> > (no item enters or leaves the user/designer Decision-gated bucket; #169 is a designer-
+> > authoritative procedure with a couple of tuning guards, #168 is an authoring gate).
+> > **No NEW keystone, NO re-sequence; top of queue UNCHANGED** (QW0 → K0/K2 → K3/K4 +
+> > scenarioBoot → E1).
+> >
 > **★★ Batch-19 changes to the plan (`fixes2022` / `2d3ffb3e` — "Suggested fixes —
 > Fall 2022," the EARLIEST captured discussion thread; Oct 2022 → Sept 2023; the
 > pre-early-release content-build + to-do-clear window — @vcczar [the designer]
@@ -5417,6 +5541,36 @@ planning. Specifically:
 > #167-couplings / #153/#135/#124/#121/#88 earliest-source / #18/#51 perennial-fork /
 > #120 + DH-53 / the `EraEvent` model / #92 / BUG-1 — **top of queue UNCHANGED** (QW0
 > → K0/K2 → K3/K4 + scenarioBoot → E1).
+> **★ Batch-20 change (FOUR meta/design threads: `planb` build-finishing PROCESS plan /
+> `dbomit` missing-pol requests / `biden2021` modern era-content / `ampu2wish` OUT OF
+> SCOPE — LIGHT batch, ONE runtime mechanic, ONE authoring gate; NO new keystone, NO
+> re-sequence, TOP-OF-QUEUE UNCHANGED):** **★ #169 drop-out → endorse-VP event → SMALL
+> addition to the era-event epic (E15)** (or the election epic E20b): an `EraEvent`
+> (`types.ts:1466`) gated on the EXISTING age roll (`ABILITY_LOSS_RULES.oldAge` `minAge
+> 70` `types.ts:521` / `MORTALITY_RULES` brackets) → 50% pull → −1 party malus injected
+> into the §21.9 modifier stack (lands on the VP even when the pres is pulled) → swap the
+> VP onto the ticket inside `runPhase_2_9_4_PresidentialGeneral` (`phaseRunners.ts:3752`,
+> VP id `types.ts:1568`); pre-primary-convention fallback + VP-age guard; Era-of-Populism-
+> scoped until it fires twice; **distinct from #37/debt #29 (defeat-then-retire)**; S; debt
+> #45. **★ #168 = a PRE-BUILD AUTHORING-QUALITY PASS, NOT a roadmap code epic** — the
+> terminology contract (ideology short forms; Skills/levels/Experience/Interests; "Army"
+> Experience rename; human-rights→criminal-reform; demographic categories) + the branch-
+> path/meter-direction/percentage-multiplier sanity-audit (= DH-53 effect-sign family) +
+> the trait/interest compilation; the roadmap NOTES it as an authoring gate, it does NOT
+> schedule it as a code task; pairs with the #120 dataset pipeline (§7); debt #46. **★ The
+> CHRONOLOGICAL-IMPORT pipeline constraint — a PROCESS note: all content authoring proceeds
+> CHRONOLOGICALLY** (Anthony imports pols/events in chronological order, all changes through
+> vcczar, `planb#POST 37, 72`) — orders the per-era CONTENT work, not the engine track.
+> **★ `biden2021` → modern era-content** (extends the modern band past 2020, #92/#41 /
+> §28.13; the ONE new mechanic is #169; the pardon pres-actions BLOCK on #122) — folds into
+> the modern-era content work, NOT a new epic. **★ `dbomit` → #120** (pure dataset, no
+> per-pol rows; standardization rulings pair with #168); **post-1772 start-game guide →
+> #115**; **pol-trading wish → DH-37**; **dynamic-biases wish → DH-34**. **★★ `ampu2wish`
+> → OUT OF SCOPE — do NOT schedule ANY AMPU-2 wishlist item for AMPU 1** (day-by-day Paradox
+> rebuild, full House, dynamic regions/biases, scouting/hidden-stats); quarantine only.
+> **Decision-gated RECOUNT: 0.** **CORROBORATION only:** DH-53 (effect-sign audit) / DH-27
+> (conflicting-trait macro) / #136/#153 (no-rookie-Command) / the `EraEvent` + modern band
+> (#92/#41/#109/#113) — **top of queue UNCHANGED** (QW0 → K0/K2 → K3/K4 + scenarioBoot → E1).
 
 **Cheap fixes first (do immediately — XS each, high value):**
 **★ BUG-0/QW0 (relocation cap `5`→`4`, `types.ts:247`, divergence #9 — ★ batch-12

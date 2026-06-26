@@ -343,6 +343,7 @@
     - [30.8 Rulings folded from `ted1772` (Ted-run mostly-CPU 1772 founding campaign)](#308-rulings-folded-from-ted1772-ted-run-mostly-cpu-1772-founding-campaign)
     - [30.9 Rulings folded from `ideo1928` (GA-run interwar 1928 campaign — one Ted designer ruling)](#309-rulings-folded-from-ideo1928-ga-run-interwar-1928-campaign--one-ted-designer-ruling)
     - [30.10 Rulings folded from `fixes2022` (the EARLIEST designer source — Fall 2022 pre-early-release build window)](#3010-rulings-folded-from-fixes2022-the-earliest-designer-source--fall-2022-pre-early-release-build-window)
+    - [30.11 The `planb` build-finishing PROCESS + authoring-pipeline rulings + the AMPU-2 quarantine (batch 20 — meta)](#3011-the-planb-build-finishing-process--authoring-pipeline-rulings--the-ampu-2-quarantine-batch-20--meta)
     - [30.4 Authority hierarchy reminder](#304-authority-hierarchy-reminder)
 31. [Gilded-Age era systems (designed, not built)](#31-gilded-age-era-systems-designed-not-built)
     - [31.1 (#147) Tariff-as-national-%-rate + the mutually-exclusive MonetaryRegime](#311-147-tariff-as-national-rate--the-mutually-exclusive-monetaryregime-designed)
@@ -1964,6 +1965,48 @@ fits it; the two build pieces are the **late-start boot-filter** (DESIGNED, inte
 pre-start-era events on a later start, honor an evergreen flag) and the **dynamic per-era firing-rate
 budget** (DESIGNED, OPEN — target ~70% of an era's events fire). Plus the prereq/office-existence
 fixes (DH-60). Cite `fixes2022#POST 2-3, 92-110, 289, 413-423, 114-123, 675-679`.)*
+
+#### 10.4.7 ★ #169 (NEW, `biden2021`) — the "Elderly President Drops Out of Reelection → endorse-VP" mid-campaign replacement event (DESIGNED, not built)
+
+> **★ #169 (NEW, `biden2021`). DESIGNED, not built.** The marquee NEW mechanic from the
+> `biden2021` modern-content thread (the Biden-2024 → Harris analog) — a **mid-campaign
+> presidential-replacement** event that disrupts the election flow ([§15](#15-elections-29x-and-calcstatevote)).
+> **Authority: vcczar (designer) > community.** Cite `biden2021#POST n`. The Biden 2021-2025
+> CONTENT BAND this thread defines is folded into [§28.13](#2813-era-of-terror-content-2000-2005-fired-in-the-late-game)
+> (the modern band's post-2020 tail).
+
+A new **Era-event** (`EraEvent` model, §10.3) firing during a presidential reelection
+campaign for an aged incumbent. The procedure (vcczar, `biden2021#POST 20, 28`):
+
+| Step | Rule | Source |
+|---|---|---|
+| **1. Trigger gate** | The president must already have been **hit by the existing age-penalty die roll** (the 70-or-75 age roll, [§10.1](#101-241-deaths-retirements--decay--runphase_2_4_1_deaths-phaserunnersts2341) / #36) **and be running for reelection**. No age-hit ⇒ the event can't fire. | POST 20 |
+| **2. 50% pull roll** | If gated, a **50% chance the president is PULLED from the ticket** (forced out of reelection). | POST 20 |
+| **3. −1 party election malus** | A **−1 election penalty applies to the party** for the cycle — reflecting the disorganization / in-fighting / alleged-cover-up + the unorthodox 11th-hour swap. **★ The −1 lands on the VP even when the president is pulled** (the replacement inherits the damage), so the malus is unavoidable once the event fires. | POST 20, 28 |
+| **4. Replacement = endorse the VP** | **Canonical path (vcczar's design + player consensus, POST 28-35): the president drops out and ENDORSES the VP — the VP REPLACES the president on the ticket.** This is deliberately **NOT** an open convention (the Democrats avoided an 11th-hour convention fight). The VP becomes the party's presidential nominee mid-campaign, carrying the −1. | POST 28-35 |
+| **5. Fallback (only if VP can't/won't)** | If the VP cannot or will not step up, **reuse the pre-primary / compromise-candidate convention machinery** ([§15.3](#153-convention-machinery-292--full-forum-design-designed-not-built)) to pick a replacement; a **pre-12A "designate a successor"** path covers older eras. (Floated, POST 9-13, 17, 28 — secondary to the endorse-VP default.) | POST 9-13, 17, 28 |
+
+**Guards / open edges (DESIGNED, unsettled):**
+- **VP-younger-than-Pres guard (POST 30-32):** the endorse-VP path assumes the VP isn't *more*
+  geriatric than the president; needs a check before defaulting to the VP.
+- **Refined "make-it-hard" trigger (community, POST 33):** an alternative stiffer gate —
+  president **80+**, holding a negative trait (**Frail / Easily Overwhelmed / Incoherent**),
+  **older than the VP**, and **Party-Pref neutral-or-against**. vcczar's own version keys it
+  simply to the age-roll + 50% (table above). Open which gate ships.
+- **Scope = Era-of-Populism event, NOT a general event (POST 20):** it stays a scripted era
+  event *"if we have this incident happen twice then I'll convert it"* to a general event —
+  the **same twice-before-generalizing rule** seen elsewhere (e.g. the Gaza humanitarian
+  crisis, `planb#POST 135-136`).
+
+**System interactions.** This is the first **mid-campaign nominee swap**: it sits between the
+age-decay roll (§10.1 / #36) and the election resolver (§15.1 `calcStateVote`), applying a
+candidate replacement + a flat party/VP modifier into the presidential-vote modifier stack
+([§21.9](#219-presidential-vote-modifier-stack--era-stamped-popularunpopular-issue-list-designed-not-built)).
+Distinct from #37 (defeat-then-retire) — #169 removes the candidate *during* the campaign,
+not after a loss. *(designed, not built — add an age-roll-gated reelection event: 50% pull,
+−1 to the party applied to the VP, VP-replaces-on-ticket flow, the pre-primary-convention
+fallback + VP-age guard; Era-of-Populism-scoped until it fires twice. Cite `biden2021#POST
+20, 28, 29-35`.)*
 
 ---
 
@@ -9299,6 +9342,49 @@ un-implementable Wyoming Rule — hole #5), and modern lobby cards. Event firing
 > Conventions held in **NYC "milking the 9/11 angle"** (`POST 368`). (`terror2000#POST 484-520,
 > 602-650, 619/623, 639, 60/132, 508, 368`.)
 
+> **★ #169 (NEW, `biden2021`) — the modern band EXTENDS PAST 2020 (a 2021-2025 Biden content
+> band). DESIGNED, not built.** The `biden2021` thread (`24061ad6`, vcczar OP) catalogues the
+> **post-2020 content tail** that pushes the modern band beyond the 2004→2020 span the `modern`
+> campaign covers (corroborates the era-content-band model, [§27.1](#271--the-era-model--eras-are-content-bands-gated-by-game-state--territory-not-calendar-year)
+> / #92 / #41, and the era-event/era-content system #109/#113). It is **content authoring**, not
+> new architecture — the shipped `EraEvent` + `Predicate` + `addPolitician` model already supports
+> it — **EXCEPT** the genuinely-new drop-out event ([§10.4.7](#1047--169-new-biden2021--the-elderly-president-drops-out-of-reelection--endorse-vp-mid-campaign-replacement-event-designed-not-built)).
+> Catalog (vcczar marked `**to be added**`; cite `biden2021#POST n`):
+>
+> - **Bills:** the **Inflation-Reduction-Act SPLIT** = 4 "Reduce Inflation by…" bills (domestic
+>   energy / clean energy & climate / lower drug prices / tax reform + IRS); the
+>   **Infrastructure-Act SPLIT** = 3 "Rebuild Crumbling Infrastructure w/…" bills (broadband /
+>   coastal-waterways-clean-water / roads-railways); Juneteenth federal holiday; Protect Gay
+>   Marriage; Ban Lynching; Ban Race-Based Hair Discrimination; rename Confederate bases;
+>   moderate pandemic-relief package — *to add:* **CHIPS Act**, bipartisan border bill, symbolic
+>   antisemitism bill, and **3 SCOTUS-reform amendments** (Eliminate Presidential Immunity /
+>   Biannual 18-yr-term Justices / Binding Code of Conduct for Justices). (POST 1, 4, 49.)
+> - **Era Events:** Student Debt Crisis; Russia Invades Ukraine; New Coronavirus Variant; Supply
+>   Chain Inflation; Elon-Musk-Wealthiest-Man; **Afghanistan Withdrawal**; Uyghur Genocide —
+>   *to add:* the **Elderly/Impaired-President-Forced-Out event (#169, [§10.4.7](#1047--169-new-biden2021--the-elderly-president-drops-out-of-reelection--endorse-vp-mid-campaign-replacement-event-designed-not-built))**; Join-Picket-Line;
+>   **Israel-Hamas War → Humanitarian Crisis in Gaza** (auto-follow-on regardless of response) +
+>   **NATO Expansion** (auto-event if the US sides with Ukraine) — corroborates the **auto-event /
+>   event-chain** pattern (§10.4 + the Gaza twice-before-generalizing note). (POST 1.)
+> - **Pres Actions (SPARSE BY DESIGN):** Federal-Worker Vaccine Requirement; Forgive $10k Student
+>   Loan Debt — *to add:* Create American Climate Corps; Create US Special Envoy for Climate (must
+>   be filled immediately); Recognize Armenian Genocide; **Pardon Personal Controversial Allies/
+>   Family** (← **depends on #122 pardon mechanics, still UNSPECIFIED** — the pardon Pres-actions
+>   in the Biden band can't be authored until #122 defines what a pardon does). **★ vcczar
+>   ruling (POST 41-42, 55):** Biden was *light* on unique pres actions (a former Senator who
+>   governed through Congress — "the opposite of Trump"); end-of-term "junk" + symbolic
+>   first-week actions **don't count**; a repeal doesn't need its own action — so the Pres-action
+>   list stays short **on purpose**.
+> - **SCOTUS docket:** Google v. Oracle; Dobbs v. Jackson; NFIB v. OSHA; NY Rifle & Pistol v.
+>   Bruen; Thompson v. Clark — *to add:* US v. Cooley, 303 Creative v. Elenis, Kennedy v.
+>   Bremerton, US v. Rahimi, Grants Pass v. Johnson, Oklahoma v. Castro-Huerta, FEC v. Ted Cruz
+>   (could take a random existing senator's name, wished), Carson v. Makin, **Trump v. US (2024)**.
+>   (POST 1, 4, 25-27.)
+>
+> **★ Designer SCOPE ruling (POST 47, 52):** all OTHER modern presidents are **done** — only
+> Biden needs this pass now; **Trump-2nd-term additions are DEFERRED to ~midterms** (can't yet
+> tell what's textbook-significant; most of it is undoing Biden, and repeals don't get their own
+> content); everything else comes **after release**. (`biden2021#POST 1, 41-55`.)
+
 ---
 
 > **Cross-reference for the roadmap (§28).** The headline for the tech-lead is **NEGATIVE SCOPE**:
@@ -10246,6 +10332,16 @@ winning the presidency).
 > It also delivered the **3rd-source canonical confirmation of #153** (+ the emergent-President demo),
 > the **#155 RevWar-winnability floor data** (the three safety floors), the **#159 Constitutional-
 > Convention subsystem**, and **DH-65** (founding dataset bugs). Indexed in **§30.8** below.
+>
+> **Batch 20 = the META/PROCESS batch (`planb` / `dbomit` / `biden2021` / `ampu2wish`).** Four
+> small DISCUSSION/DESIGN threads (no GA played a game). Their durable extracts are mostly
+> **authoring/pipeline PROCESS rulings** (all-changes-through-vcczar; chronological import order;
+> the Plan-B team structure) + the **AMPU-2 quarantine** (vcczar's day-by-day-Paradox-rebuild
+> thesis, AMPU 1 finished first) — indexed in **§30.11** below. The one genuinely-NEW runtime
+> mechanic, the **elderly-president-drop-out → endorse-VP event (#169)**, is folded into
+> [§10.4.7](#1047--169-new-biden2021--the-elderly-president-drops-out-of-reelection--endorse-vp-mid-campaign-replacement-event-designed-not-built);
+> the Biden 2021-2025 content band into [§28.13](#2813-era-of-terror-content-2000-2005-fired-in-the-late-game);
+> the #168 authoring-quality pass + the `dbomit`→#120 dataset fold also in §30.11.
 
 ### 30.1 Rulings folded into existing topical sections
 
@@ -10631,6 +10727,151 @@ and `game-context.md` **DH-29 (★ movement)**.
 
 *(All of the above fold into the **#120 dataset-accuracy family** — same `CURATED_ROWS`/scenario-config
 work surface as `smallbugs`/`ted1772` DH-65 ([§4.1.z](#41z--dh-65-new-ted1772--founding-era-dataset-bugs-wrong-century-collisions--cosmopolitanprovincial)) and `hd1` DH-64 ([§23.1](#231-58-secession--southern-unionist--secessionist-trait-gating-the-antebellum-payoff)). The ~10 sign bugs fold into **DH-53**. NOT a new gap.)*
+
+### 30.11 The `planb` build-finishing PROCESS + authoring-pipeline rulings + the AMPU-2 quarantine (batch 20 — meta)
+
+> **★ Batch 20 is a META/process batch.** Four small DISCUSSION/DESIGN threads — **`planb`**
+> (`094cc3a2`, "Operation Plan B" build-finishing plan), **`dbomit`** (`4be5a005`, missing-pol
+> requests → #120), **`biden2021`** (`24061ad6`, modern content → #169 + [§28.13](#2813-era-of-terror-content-2000-2005-fired-in-the-late-game)),
+> **`ampu2wish`** (`888ba777`, OUT-OF-SCOPE AMPU-2 wishlist). The runtime mechanics this batch
+> lands are modest (one new event, #169, already folded into [§10.4.7](#1047--169-new-biden2021--the-elderly-president-drops-out-of-reelection--endorse-vp-mid-campaign-replacement-event-designed-not-built)).
+> The durable extracts here are **authoring/pipeline PROCESS rulings** (NOT runtime features) +
+> the **AMPU-2 quarantine**. **Authority: vcczar (creator/approver) > MrPotatoTed (non-coding
+> lead) > community.** Cite `planb#POST n` / `dbomit#POST n` / `ampu2wish#POST n`.
+
+#### 30.11.1 ★ vcczar/Ted authoring-PIPELINE rulings (authoritative process constraints)
+
+These are **authoritative process/governance statements** — they constrain HOW the build is
+finished and fed to the programmer, not how the game runs. The roadmap-planner and tech-lead
+should treat them as binding workflow constraints.
+
+| # | Pipeline ruling | Detail | Source |
+|---|---|---|---|
+| **★ All changes go through vcczar** | The non-coding work is **cleanup, NOT redesign** | *"The non-coding part of Plan B isn't designed to recreate the game. It's to only make changes already agreed upon with me… all changes have to be approved by me. In most cases, if a change has strong support, I'll approve it unless I feel it too greatly dilutes historical realism."* — treat all non-coding outputs as patches vcczar signs off, never independent redesign. | `planb#POST 37` |
+| **★ Work in CHRONOLOGICAL order** | A real import-pipeline constraint | **Anthony (the programmer) imports pols/events in CHRONOLOGICAL order** (was on 1772-1774); so the team edits everything from **after 1772 forward**, in date order, to feed the importer. This is why content work is sequenced by era/year, not by system. | `planb#POST 72` |
+| **★ The Plan-B team structure** | Roles for the build-finishing push | **Ted (@MrPotatoTed) = non-coding lead** (project-manages all non-coders); **OrangeP47 → @Arkansas Progressive (mid-thread reorg, POST 46/50) = coding lead**; **vcczar = creator + final approver**; **Anthony = the programmer coding the app**. The non-coding work exists *"to make the programmer's lives easier."* | `planb#POST 1, 37, 46, 50` |
+| **No rookie starts with Command** | Cross-thread reinforce (#136/#153) | *"No one should be starting with Command"* — eliminated from rookies so minor pols can't be fast-tracked to President (Corey Stapleton / Musk cases). Confirms #136. | `planb#POST 99-101`; `dbomit#POST 63` |
+| **Trait/stat FRUGALITY on obscure pols** | Authoring discipline (→ #120 / draft-class playbook) | Only **blatantly obvious** traits on minor pols; "Efficient" reserved for the greatest cabinet/legislative officers; strip Admin from pols with no record; **don't apply traits a pol hasn't demonstrated** (Musk/Vivek/Hegseth case studies — pre-emptive buffs rejected as "insanely preemptive"). | `planb#POST 114-127` |
+
+#### 30.11.2 ★ #168 (NEW, `planb`) — the Plan-B pre-build authoring-QUALITY pass (AUTHORING work, NOT a runtime feature)
+
+> **★ #168 (NEW, `planb`). AUTHORING / pipeline quality work — NOT a runtime mechanic.** The
+> "Operation Plan B" non-coding slate (`planb#POST 1`, MrPotatoTed) is a **pre-coding quality
+> pass** the build inherits as a consistency bar. It is **distinct from #120** (dataset-row
+> accuracy) and **DH-53** (the build's effect-sign bugs in shipped data): #168 is the
+> **authoring-consistency + design-cleanup** pass + the Plan-B process framing. The build's job
+> is to *honor the contract it produces* (bake terminology into the schema/UI strings; consume a
+> verified branch-path/meter/% dataset), not to "implement #168." Cite `planb#POST n`.
+
+Three sub-projects (the high-signal slice of the 7-project slate):
+
+1. **Terminology STANDARDIZATION (a canonical contract across all DBs + the rules).** First a
+   style guide, then applied everywhere (`planb#POST 46, 54, 68`; `dbomit#POST 45-47, 72-99`):
+   - **Ideology short forms = `LW Pop, Prog, Lib, Mod, Cons, Trad, RW Pop`** (POST 54) — the
+     canonical contract behind the long 7-point names ([§3.2](#32-ideology-7-point-scale)); fixes
+     "LW Pop" vs "Left Wing Populist"-style drift across DBs+rules.
+   - **Vocabulary buckets (POST 46):** **Skills** = Command/Legis/Gov/Admin/Military/Judicial,
+     points in them = **"levels"**; **Experience** = Business/Agriculture/Environment/…;
+     **Interests** = Civil Rights / RW Activists / …. (Names the [§3.1](#31-the-four-character-axes)
+     axes consistently.)
+   - **Rename the military EXPERIENCE to "Army"** (the *skill* is "Military"); the rename is
+     **INCOMPLETE across docs** — corroborated by `dbomit` "Army-is-not-an-expertise" (POST 45-47),
+     where "Army" is still mislabeled as a *starting expertise* → folds into #120 + this pass.
+   - **`human-rights` → "criminal reform"** rename (it was designed to counter "Law & Order";
+     too close to "civil rights" for new players; verify every laws/events reference first).
+   - A **trait-overwrite** rule (does gaining "Two-Faced" permanently erase "Flip-Flopper"?).
+   - **Demographic-category standardization:** add **Middle-Eastern** ethnicity; scrub "Tribal"
+     wording; **drop no-op "Protestant" + "White"** defaults (no in-game effect → "no point to
+     traits that don't do anything") — see §30.11.3. (`dbomit#POST 72-99`.)
+   - Sheet conventions: `n/a` (not blank) for empty fields; `0` for meters a bill doesn't change;
+     fix "Rev War" abbreviations + random capitalization; add missing wiki links + effective dates.
+2. **BRANCH-PATH / METER-DIRECTION / PERCENTAGE-MULTIPLIER sanity-audit** (`planb#POST 1, 42-45,
+   74-84`): audit which events/laws lead into which (Ark's **"AMPU Branch Paths"** analysis); do
+   era **start/end** boundaries make sense; verify the **+/− budget/revenue meter moves the right
+   way** (**+ when it makes money, − when it spends** — some events/laws reversed it → **corroborates
+   DH-53**); audit **percentages/multipliers** (Ted's **Afghanistan-War-Phase-I multiplier**
+   deep-dive found the multiplier needs changing); fix **alt-state event enter/exit columns SWAPPED**
+   (POST 43); **legislation repealability** audit (POST 82-84, e.g. "Create Minister to Great
+   Britain" shouldn't be repealable); the **Split-Electoral-Votes gov action is half-broken**
+   (currently just a 10%-chance-1-EV-to-loser stub, runs no real per-district elections, POST 74-80).
+3. **TRAIT / INTEREST COMPILATION** (`planb#POST 15, 367`): document **how each trait/interest is
+   GAINED + what each one DOES** across every rules set — including the **conflicting-trait
+   auto-flag macro** Ark built (corroborates **DH-27**, `TRAIT_CONFLICTS` run only on trait-add
+   events, not at boot/import).
+
+**Build hand-off:** (a) bake the terminology contract (ideology short forms; Skills/levels /
+Experience / Interests; "Army" experience rename; human-rights→criminal-reform; demographic
+categories) into the data schema + UI strings; (b) consume the audited branch-path / meter-sign
+(+budget=makes-money) / percentage dataset (Afghanistan multiplier; alt-state enter/exit;
+repealability; fix the Split-EV gov action); (c) consume the trait/interest how-gained+what-does
+table. Pairs with #120 (dataset) + DH-53 (effect-sign) + DH-27 (trait-conflict) + #115
+(start-game guide). *(Cite `planb#POST 1, 37, 43, 46, 50, 54, 72, 74-84, 367`.)*
+
+#### 30.11.3 `dbomit` → #120 dataset fold + the standardization rulings
+
+> **`dbomit` (`4be5a005`) is PURE DATASET WORK → folds entirely into the #120 umbrella.** A
+> missing-politician REQUEST thread (~167 pols filled out, `dbomit#POST 75`); **NO per-pol gap
+> rows** — fixes go via `scripts/seedDataset.mjs` `CURATED_ROWS`/`ERA_FIGURES` (NOT by hand-editing
+> the JSON/CSV, per CLAUDE.md). The durable, reusable extracts:
+
+| Extract | Ruling | Source |
+|---|---|---|
+| **★ vcczar's inclusion BAR** | A pol qualifies if it got **within 0-9% of winning as US Rep/Sen/Gov**, OR is a **missing US Rep that should be in**; special allowances for a close primary-loser or a celebrity (case-by-case); **no obscure state-level pols**; vcczar **prefers the name GENERATOR** over adding youngest-state-legislators who go nowhere. Reinforces the draft-class authoring playbook. | `dbomit#POST 12, 50, 76, 83` |
+| **Playtester self-inserts** | Allowed with **sub-floor rookie stats**: birth-year, party, ideology, **1 skill (NOT Command)**, 1 expertise, 1 interest, **no traits**, state-at-25 (+ alt-state), demographics. | `dbomit#POST 50` |
+| **Add "Middle Eastern" ethnicity** | A cleaner catch-all (Egyptians/North-Africans aren't Black and can't be Asian). | `dbomit#POST 74` |
+| **Drop no-op Protestant/White defaults** | **Protestant is the default** (covers all non-Catholic Christian) and carries **no bonus/penalty** → ditch it as a no-op trait; same for "White" race. Only **Catholic / Mormon / Jew** have historical bonuses. Use **Theist/Spiritualist** for deists. (= the same standardization pass as #168.) | `dbomit#POST 72-99` |
+| **★ "Crazy" trait REJECTED** | vcczar refused a "Crazy" trait (lawsuit/threat fears); **Controversial + Scandal general events + Incoherent/Incompetent** collectively cover it. **Controversial = scandal-liable pols** (Mark Robinson); **polarizing figures = LW/RW Activists, NOT Controversial.** Trait-frugality, not a new mechanic. | `dbomit#POST 63-71` |
+| **Dataset chores → #120** | Death dates missing for pols who died since ~2022/2023 (audit before any 2024+ start); systemic wrong/missing **starting-expertise** (Media mislabeled, many should be Justice); **"Army"-as-expertise → Military** relabel (= #168); Bill-of-Rights/constitution-article era placement. | `dbomit#POST 44-47, 90-92, 105` |
+
+#### 30.11.4 Batch-20 corroborations (existing gaps strengthened, NOT new)
+
+| Existing entry | Batch-20 corroboration | Source |
+|---|---|---|
+| **#120 dataset umbrella** | `dbomit` ~167-pol catalog + standardization rulings (§30.11.3); `planb` 2024-modern-pol additions + trait-frugality (Musk/Vivek/Hegseth; no-rookie-Command; Efficient-reserved). All via `scripts/seedDataset.mjs`. | `dbomit` all; `planb#POST 95-127` |
+| **#115 scenario-boot** | The `planb` **post-1772 start-game guide** (project 5: populating the career track with recent draft classes; reviewing V's starting guide which named starting Reps for states **not in the game**) + the `dbomit` named-starting-Reps-not-in-game cross-ref. | `planb#POST 1` (proj 5); `dbomit#POST 15-26` |
+| **DH-53 effect-sign** | The `planb` meter-direction audit (+budget = makes-money, some reversed). | `planb#POST 46, 365` |
+| **DH-27 trait-conflict** | Ark's conflicting-trait auto-flag macro on the main character DB. | `planb#POST 15, 367` |
+| **#136/#153 no-rookie-Command** | Reaffirmed (no one starts with Command). | `planb#POST 99-101` |
+| **DH-37 pol-trading** | Player-to-player **politician trading** re-surfaced (a pol useless to you is valuable to another) = "the #1 AMPU-2 wishlist item" — corroborated from a 2nd thread. **AMPU-2, already logged; see §30.11.5.** | `ampu2wish#POST 60-61` |
+| **DH-34 dynamic biases** | Dynamic/policy-reactive state biases re-surfaced; **vcczar confirms biases are census-updated but PREDETERMINED by history — a deliberate history-sim DESIGN CHOICE, not a bug.** **AMPU-2, already logged; see §30.11.5.** | `ampu2wish#POST 51-55` |
+
+#### 30.11.5 ★★ The AMPU-2 quarantine (OUT OF SCOPE for AMPU 1 — NOT buildable mechanics)
+
+> **★★ QUARANTINE — do NOT roadmap anything below for AMPU 1.** `ampu2wish` (`888ba777`, "AMPU 2
+> Wishlist") is the forum's explicit **"for next time"** dumping ground for ideas **REJECTED for
+> AMPU 1** (OrangeP47, `ampu2wish#POST 2`: *"any new ideas are unlikely to make it into AMPU 1…
+> this is good, in the context it's a 'for next time'"*). It is recorded here **ONLY** so the
+> ingest is complete and these ideas are **not accidentally re-surfaced as buildable gaps**. This
+> extends the existing AMPU-2 quarantine convention (DH-34 [§19.1](#191-design-divergences-for-the-roadmap)
+> "static era biases → AMPU 2.0"; DH-37 pol-trading; the `planb` full-House deferral). Authority:
+> vcczar > community.
+
+**★ vcczar's authoritative AMPU-2 thesis (`ampu2wish#POST 10, 37`):**
+- **The MAIN AMPU-2 change = a DAY-BY-DAY, Paradox-style timeline rebuild** (the defining
+  architectural difference from AMPU 1's phase/turn loop): *"I plan to change the game from phase
+  by phase to day by day, similar to the Paradox games. So votes are scheduled. Events occur on
+  specific dates. Primaries occur on specific dates. Deaths could happen anytime. Court cases are
+  scheduled. Laws and actions might not take effect until a specific date."*
+- **★ AMPU 1 MUST be finished FIRST** — it is the **test + the bargaining tool** to attract (or
+  sell to) a Paradox-like dev for AMPU 2; AMPU 1 reveals "what people like or find tedious."
+- **Office expansion priority = a full US House** (corroborates `planb#POST 97-98`); the **federal
+  judiciary** is the preferred expansion; **state offices REJECTED** unless ~50% of holders move
+  on to Gov/federal (else ahistorical fast-tracking) — *"these offices already exist under the
+  career track."*
+- **The bar for AMPU-2 ideas is "light a lamp in my head"**; the feedback vcczar most wants is
+  **how to make play more DYNAMIC without just adding more politicians.**
+- The cut **scouting / hidden-stats** feature (removed from AMPU 1 for speed — goal: a full game
+  in <24h) **may return in AMPU 2** — explicitly an AMPU-2 candidate.
+
+**Quarantined wishlist buckets (recorded so they aren't re-surfaced — NONE are AMPU-1 items):**
+Federal-vs-State power meter; dynamic state biases / dynamic regions / dynamic eras / dynamic
+foreign world (the recurring "make it dynamic" theme — vcczar's firm position: static-but-census-
+updated biases are a deliberate history-sim choice); Lt-Gov / State-SoS / state-judiciary offices;
+larger federal judiciary + DAs; territorial delegates/governors; pre-convention nominating caucus;
+fundraising mechanic; **player-to-player pol trading (= DH-37, already logged)**; draft-time
+ideology shift; special Trump draft rule; "Disgraced" trait; fluid factions / party defection;
+more states + a custom-state map drawer; achievements; challenge mode. *(Cite `ampu2wish#POST
+3-61`. All OUT OF SCOPE — `ampu2wish§2`.)*
 
 ### 30.4 Authority hierarchy reminder
 
