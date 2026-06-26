@@ -147,6 +147,116 @@ Republicans backed it at *higher* rates than Democrats. ([Senate](https://www.se
   The game's internal band here is the **"Era of Neocons (1972–2000)"** renamed
   to **"Era of Terror (2000–2012)"** (chunk-080, chunk-143, chunk-078). **[consensus]**
 
+## The 2000-START early-War-on-Terror window (added for the `3843d2da` "Era of Terror (2000)" batch)
+
+> **Why this section exists.** This companion's range already *contains* a
+> 2000-start game, but its 1948→2004 arc only had a single 2001–04 one-liner.
+> The `3843d2da` batch is a **CPU-heavy 2000-start** run by **@MrPotatoTed (Ted,
+> the designer — so his rulings carry designer authority)** that *opens at Bush's
+> inauguration after Bush v. Gore* and plays in-game ~2000→~2010, leaning hard on
+> the **early-2000s** dated specifics that a 1948-start (which only *reaches* 2004)
+> or the 2012-start *era-of-populism* run never needed. These are the hard anchors
+> for that window. The era *issues* are real-2000s-grounded; the *cast and
+> outcomes* go wildly alt-history (see "Game treatment" note below). Modern
+> polarity (BLUE=Democrats, RED=Republicans, modern left/right) holds throughout —
+> no caveat. The batch opens exactly on it: *"Bush has just been elected in the
+> closest election in history… The Senate is perfectly split 50-50"* (chunk-001
+> post 1).
+
+### Hard anchors for a 2000 start [consensus]
+- **2000 election / *Bush v. Gore*.** Bush (R) **271 EV** vs. Gore (D) **266 EV**;
+  Gore **won the national popular vote**. Decided by Florida, where Bush led by
+  **537 votes** out of ~6 million. The U.S. Supreme Court's **5–4 per curiam**
+  ruling **December 12, 2000** halted the Florida recount on **Equal-Protection**
+  grounds (varying county standards for "voter intent"), effectively awarding
+  Bush Florida's **25 electoral votes** and the presidency. Inauguration **Jan
+  20, 2001**. ([Bush v. Gore — Justia](https://supreme.justia.com/cases/federal/us/531/98/), [Britannica](https://www.britannica.com/event/Bush-v-Gore))
+- **The 50-50 Senate and the Jeffords switch.** The 2000 election produced a
+  **50-50 Senate**; **VP Dick Cheney's tie-breaking vote gave Republicans
+  control** (so the GOP held the White House and both chambers in early 2001).
+  Then VT Sen. **Jim Jeffords left the GOP to become an independent** —
+  **announced May 24, 2001, effective ~June 5–6, 2001** — and caucused with the
+  Democrats, flipping the chamber to **50 D / 49 R / 1 I** and handing
+  **Democrats Senate control mid-session** (the first time a party switch ever
+  changed Senate control). ([PBS NewsHour](https://www.pbs.org/newshour/politics/politics-jan-june01-jeffords_05-24), [Washington Post](https://www.washingtonpost.com/news/the-fix/wp/2014/08/18/how-jim-jeffords-single-handedly-bent-the-arc-of-politics/)) **⚠️ Note:** Jeffords was a
+  **Republican** in 2000 — the playtest's setup initially listed him as a Democrat
+  and players corrected it (chunk-002), and the in-game Jeffords later party-flips
+  (chunk-035/038), a mirror of the real 2001 switch.
+- **9/11.** **September 11, 2001** — four hijacked airliners; two hit the World
+  Trade Center, one the Pentagon, one (United 93) downed by passengers in
+  Pennsylvania; ~3,000 killed. The defining event of the era; reorders both
+  domestic and foreign policy. **[consensus]** (The game fires this verbatim as an
+  event — "SEPTEMBER 11 ATTACKS… Four planes have been hijacked," chunk-006.)
+- **War on Terror / Afghanistan.** U.S.-led airstrikes on Taliban/al-Qaeda
+  Afghanistan began **October 7, 2001** ("Operation Enduring Freedom"), targeting
+  **Osama bin Laden's al-Qaeda** and the **Taliban** regime that sheltered it.
+  ([History.com](https://www.history.com/this-day-in-history/october-7/u-s-led-attack-on-afghanistan-begins))
+- **Iraq War.** Invasion began **March 20, 2003** (already an anchor in the
+  era-arc line above). **[consensus]**
+- **The War-on-Terror legislative cluster** (all real, all era-defining):
+  - **USA PATRIOT Act** — signed **October 26, 2001** (expanded surveillance/law-
+    enforcement powers). ([History.com](https://www.history.com/this-day-in-history/october-26/george-w-bush-signs-the-patriot-act))
+  - **No Child Left Behind Act** — signed **January 8, 2002** (House 381–41 Dec 13,
+    2001; Senate 87–10 Dec 18, 2001) — Bush's bipartisan education-accountability
+    law. ([History.com](https://www.history.com/this-day-in-history/january-8/george-bush-signs-no-child-left-behind-act-into-law))
+  - **Department of Homeland Security** — Homeland Security Act signed **November
+    25, 2002**; DHS **stood up January 24, 2003**, with **Tom Ridge** as first
+    Secretary. ([Homeland Security Act of 2002 — Wikipedia](https://en.wikipedia.org/wiki/Homeland_Security_Act_of_2002))
+  - **Director of National Intelligence** — created by the **Intelligence Reform
+    and Terrorism Prevention Act, signed December 17, 2004** (post-9/11-Commission
+    intelligence reorganization); first DNI **John Negroponte, Feb 17, 2005**.
+    ([Britannica — DNI](https://www.britannica.com/topic/director-of-national-intelligence))
+- **2004 re-election.** **November 2, 2004** — **Bush (R) 286 EV / 50.7%** def.
+  **Kerry (D) 251 EV / 48.3%** (already an anchor above; this is the *first*
+  election a 2000-start reaches, not the campaign's last). ([Britannica — 2004 election](https://www.britannica.com/event/United-States-presidential-election-of-2004))
+- **Hurricane Katrina.** Made Gulf-Coast landfall **August 29, 2005**; the
+  administration's slow response badly damaged Bush's standing. **[consensus]**
+  ([Political effects of Hurricane Katrina — Wikipedia](https://en.wikipedia.org/wiki/Political_effects_of_Hurricane_Katrina))
+- **2006 midterms.** Democrats netted **+6 Senate** and **+31 House**, retaking
+  **both chambers**; **Nancy Pelosi became the first female Speaker**. Drivers:
+  Katrina, the Iraq War, gas prices, and the failed Social-Security-privatization
+  push. ([2006 United States elections — Wikipedia](https://en.wikipedia.org/wiki/2006_United_States_elections))
+
+### Game treatment vs. real history — notes for this 2000-start batch
+- **Polarity: fully modern, no caveat.** BLUE = Democrats / RED = Republicans,
+  modern left/right — the realignment is complete by 2000 (the `3843d2da` draft
+  splits exactly this way: Blue = Kennedy/Kerry/Obama/Sanders/Clinton/Daschle,
+  Red = the Bush-era GOP; chunk-001). This is the **reverse** of the 1856/1868
+  polarity and the *end state* of this companion's ★ Southern-realignment framing.
+- **Designer-authoritative & meticulous era-tuning.** Ted explicitly "**nuked**
+  command levels to where they'd be in 2000" so that, e.g., **Obama isn't running
+  for President in 2000/2004** and **Bernie Sanders isn't yet a contender** —
+  abilities are walked *back* to first-term levels and earned forward through play
+  (chunk-001 posts 21/28/41/57). Treat his rulings here as designer ground truth.
+- **The game maps real 2000s events onto mechanics with high early fidelity, then
+  diverges hard.** It fires **9/11** verbatim (chunk-006), runs the **War on
+  Terror** and a phased **Afghanistan War** ("Invasion" → "Counter-Terrorism,"
+  chunk-011/020/032/038), holds **2004 conventions in "9/11-torn New York City"**
+  (chunk-021, mirroring the real 2004 RNC), and bundles a real 2001 event cluster
+  — **Enron bankruptcy, Putin takes power, Google's dominance, the rise of social
+  media, Toyota passing GM** (chunk-006). War-on-Terror *legislation* shows up as
+  in-game bills with clear real analogues: a **Director of National Intelligence**
+  office, **permanent airport/border security systems**, **deport immigrants
+  deemed dangerous to national security**, **war bonds / increased defense
+  spending** (chunk-010). **Energy/ANWR** (open ANWR/offshore drilling) is a
+  recurring axis (chunk-020).
+- **⚠️ One in-game anachronism to flag:** the batch fires a **"Paris Agreement"**
+  climate event in its ~2001 cluster (chunk-006) — the **real Paris Agreement was
+  2015**, not 2001 (the 2001-era climate touchstone was the **Kyoto Protocol**,
+  which the U.S. declined to ratify). Minor, but it's the game compressing a later
+  event into the start window.
+- **It is alt-history past ~2004.** A mostly-CPU 2000 run diverges fast from the
+  real Bush→Obama line: by the batch's later turns the cast/outcomes are openly
+  fictional — a **2004 Democratic nominee who is the first Black *and* first woman
+  major-party nominee** (chunk-021), then a late-game collapse into a dystopian
+  **"Rockefeather regime"** with a resistance led by **Kamala Harris, Jesse
+  Ventura, Tom Ridge** (cast as a deposed *president*), **Oprah Winfrey** as a war-
+  winning president, etc. (chunk-038/041/046). **Game-master framing: use the
+  real 2000s for era texture and the *menu* of plausible issues (terror, the wars,
+  the booming-then-cratering economy, homeland-security legislation); treat named
+  officeholders, election results, and the late-game storyline as the campaign's
+  own divergent timeline.**
+
 ## Hard anchors the game likely models
 
 ### The 12 presidential elections 1948–2004 (winner / loser EV; notable ones flagged) [consensus]

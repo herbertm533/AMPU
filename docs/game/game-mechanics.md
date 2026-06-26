@@ -320,7 +320,7 @@
 29. [The 1820 "Era of Democracy" start — scenario boot, the FULL 1820→1840 arc, GA rulings & forks (mostly designed/ruled)](#29-the-1820-era-of-democracy-start--scenario-boot-the-full-18201840-arc-ga-rulings--forks-mostly-designedruled)
     - [29.1 ★ The scenario-boot procedure as practiced (gap #115)](#291--the-scenario-boot-procedure-as-practiced-gap-115)
     - [29.2 ★ Unsettled fork A — player-controlled SCOTUS (gap #52)](#292--unsettled-fork-a--player-controlled-scotus-gap-52)
-    - [29.3 ★ Meter→enthusiasm→election — #51 RESOLVED, #18 state-scope still open (gap #18/#51)](#293--the-meterenthusiasmelection-model--51-resolved-drums-4-step-18-state-scope-still-open-gap-1851)
+    - [29.3 ★ Meter→enthusiasm→election — #51 RESOLVED + #18 RESOLVED (terror2000 → V's 2-layer model) (gap #18/#51)](#293--the-meterenthusiasmelection-model--51-resolved-drums-4-step--18-resolved-terror2000--vs-2-layer-model-gap-1851)
     - [29.4 GA appointment & eligibility rulings (Senate fill order, card distribution, replacement-gains)](#294-ga-appointment--eligibility-rulings-senate-fill-order-card-distribution-replacement-gains)
     - [29.5 The focus-Rep House abstraction (gap #55)](#295-the-focus-rep-house-abstraction-gap-55)
     - [29.6 Corroborations & the era slice (1820–23)](#296-corroborations--the-era-slice-182023)
@@ -334,6 +334,7 @@
     - [30.2 Designer-decision-gated open items (`tedchange`)](#302-designer-decision-gated-open-items-tedchange)
     - [30.3 Rulings folded from `smallbugs` (vcczar spot rulings)](#303-rulings-folded-from-smallbugs-vcczar-spot-rulings)
     - [30.5 Rulings folded from `oopscpu` (Ted-run all-CPU 1788 stress-test)](#305-rulings-folded-from-oopscpu-ted-run-all-cpu-1788-stress-test)
+    - [30.6 Rulings folded from `terror2000` (Ted-run 2000-start modern campaign)](#306-rulings-folded-from-terror2000-ted-run-2000-start-modern-campaign)
     - [30.4 Authority hierarchy reminder](#304-authority-hierarchy-reminder)
 31. [Gilded-Age era systems (designed, not built)](#31-gilded-age-era-systems-designed-not-built)
     - [31.1 (#147) Tariff-as-national-%-rate + the mutually-exclusive MonetaryRegime](#311-147-tariff-as-national-rate--the-mutually-exclusive-monetaryregime-designed)
@@ -590,6 +591,16 @@ places that aren't territories, except if it's ME (part of MA) or WV (part of VA
 | **Can-Party-Flip cross-party draft** | **REMOVED** — politicians always enter at their **historically accurate party** at age 25; party-flip happens **later** via 2.1.6 conversion only | `tedchange#POST 8, 10, 48` |
 | **Per-draft random-trait + random-alt-state grant** | **3 random traits + 3 random alt-states per draft** | `tedchange#POST 50` |
 | **`Overeager` + `Late Bloomer` traits** | **REMOVED** from the trait library (universal agreement; "block player moves, nobody uses") | `tedchange#POST 14, 20, 23` |
+| **★ #153 — 0-Command rookies + DOUBLED Command-gain (now OFFICIAL)** | **Nobody is born with Command; ALL rookies enter at 0 Command, and EVERY in-game Command-gain % is DOUBLED** to compensate — so Presidents emerge from in-game action, not real-world reputation. ebrk: *"both have been adapted into the official rules now."* (Reinforces the no-Command-on-random-skill rule above + #143 use-it-or-lose-it decay; aligns with the [§28.11](#2811-modern-draft-lobby-cards--dataset-the-era-locked-content-rotation) "earn it forward" framing — Ted nuked the 2000 cast's Command to first-term levels at boot.) | `terror2000#POST 91-93` |
+| **★ #153 — no re-roll on already-held expertise (now OFFICIAL)** | When rolling to GRANT an expertise (committee assignment / career-track exit), **rolling an already-held expertise = NO new expertise (do NOT re-roll)** — a *wasted* roll. Effect: pols **master a few expertises** instead of becoming renaissance men. | `terror2000#POST 91-93` |
+
+> **★ #153 build status (mixed SHIPPED / DESIGNED).** **(a) 0-Command rookies** is **partly
+> SHIPPED** — the draft already sets rookie `command: 0` (`phaseRunners.ts:216`). **(b) the ×2
+> Command-gain multiplier** is **DESIGNED, not built** (no global doubling on Command-gain rolls
+> exists). **(c) no-reroll-on-held-expertise** is **DESIGNED, not built** (expertise-grant rolls do
+> not currently waste a roll on a held tag). Reconcile with [§4.1.y `tedchange#POST 7,47`](#41y--ted-ruled-draft-rules-designer-authoritative-tedchange)
+> (#136: random-skill draws no Command) — **same direction**: Command is never granted at draft and
+> is hard to come by, so it must be **earned forward** and **doubled** to make Presidents reachable.
 
 *(SUPERSEDES the earlier "5/5 random traits + alt-states per draft" reading documented in
 [§24.8 Draft rookie grants re-ruled](#248-69-draft-rookie-grants-re-ruled--3-traits--3-alt-states)
@@ -1391,10 +1402,47 @@ faction-equity scoring dimensions.)*
 - Whether Big-4 / rest-of-cabinet / cabinet-level get distinct ideology-enthusiasm weights
   at all (POST 4).
 
-*(designed, RULED in concept — wire two independent channels (points-via-lobby + enthusiasm-via-
-ideology-composition). The lobby-channel REPLACES the current cabinet-enthusiasm-via-lobby
-path (gap #31); the new ideology-channel is additive. Pin specific percentages on the designer's
-next pass. Cite `tedchange#POST 1-4`.)*
+> **★★ SHARPENED (batch 15 `terror2000`): Ted RE-TUNED the enthusiasm channel LIVE to a 3-state
+> "upset / fine / happy" model — designer-authoritative.** During the 2000-start Ted found the old
+> "stacking happiness" enthusiasm rule **completely broken**: it gave **Moderates +18 (capped to
+> +3) off ONE cabinet** because **happiness could stack while unhappiness could not** ("that's
+> skewing results," `terror2000#POST 486-488`, ebrk concurring). Ted reworked it **live** (`POST
+> 489`, *"I'm thinking this is what we'll follow"*). This **moves the `tedchange` cabinet-enthusiasm
+> percentages from OPEN toward RESOLVED** (parked item in [§30.2 #8](#302-designer-decision-gated-open-items-tedchange)).
+
+**The 3-state cabinet→enthusiasm model (`terror2000#POST 489`)** — counts, **per faction**, how
+many of the **lobby cards it wants** are satisfied by the cabinet composition:
+
+| Faction's wants satisfied | State | Enthusiasm roll |
+|---|---|---|
+| **≥1** (got at least one) | **fine** | **no impact** (0) |
+| **>1** (got more than one) | **happy** | **20% / 10% chance of +1 enthusiasm** |
+| **0** (got none) | **upset** | **20% / 10% chance of −1 enthusiasm** |
+
+- **ONE roll per faction** — no per-card stacking within a faction (the bug fix).
+- **Multiple same-ideology factions DO stack their impact** on that ideology's enthusiasm box
+  (each faction rolls once; the resulting ±1s sum on the shared ideology box).
+- **HARD ±3 cap** on the aggregate shift (the cross-era swing cap, [§21.8](#218-named-ordinal-meter-model--3-swing-cap--war-score-meter)) — so unhappiness can now reach −3 too,
+  symmetric with happiness (the asymmetry that produced the Mod +18 bug is removed).
+
+This is the **enthusiasm channel** of the two-channel rework above (it supersedes the bare
+"≥50%/≤20% ideology-composition" sketch); the **points channel (lobby→points)** is unchanged. The
+20%/10% split is the per-state base/secondary-roll probability (matching the §6.3.y-style roll
+structure); whether 20% is the Big-4 weight and 10% the rest-of-cabinet weight is the only residue
+of the §30.2 #8/#9 open items.
+
+> **★ PAIR with the #151 cabinet appointment-FAIRNESS penalty** (NEW, Era-of-Terror-gated): on top
+> of the enthusiasm channel, an **unfair distribution of appointments across same-party factions
+> costs −500 points per slighted faction** — see [§9.3.9](#939--ted-ruled-era-of-terror-cabinet-fairness--diversity-penalties-151-designer-authoritative-terror2000). The two cabinet penalties (the #151 same-party
+> fairness penalty + the Era-of-Terror DIVERSITY penalty) operate **together natively in a
+> 2000-start**, alongside this enthusiasm channel.
+
+*(designed, RULED — wire two independent channels (points-via-lobby + enthusiasm-via-cabinet-wants).
+The lobby points-channel REPLACES the current cabinet-enthusiasm-via-lobby path (gap #31); the
+**enthusiasm channel is now the `terror2000` 3-state upset/fine/happy model**: per-faction count of
+satisfied wants → fine(0) / happy(+1 @20%/10%) / upset(−1 @20%/10%), one roll/faction, same-ideology
+factions stack, ±3 cap. Cite `tedchange#POST 1-4` + `terror2000#POST 486-489`. The only open numbers
+are the Big-4-vs-rest enthusiasm weighting (§30.2 #8/#9).)*
 
 #### 9.3.8 ★ Ted-RULED nomination filters (designer-authoritative; `tedchange`)
 
@@ -1413,6 +1461,52 @@ confirmation threshold pre-Constitution = 60% of the TOTAL states** (8 of 13 in 
 *(designed, RULED — add an Integrity → cannot-nominate-Controversial precondition to all
 nomination pickers; encode the 60%-of-states CC-era confirmation gate. Cite `tedchange#POST
 276-278`.)*
+
+#### 9.3.9 ★ Ted-RULED Era-of-Terror cabinet FAIRNESS + DIVERSITY penalties (#151) (designer-authoritative; `terror2000`)
+
+> **AUTHORITATIVE — Ted's NEW Era-of-Terror-gated cabinet rules (`terror2000#POST 1280, 428, 434,
+> 441`). RULED, designer-authoritative. DESIGNED, not built.** Two distinct point/enthusiasm
+> penalties that activate **from the Era of Terror onward** (a §27.1 era-BAND rule delta — proof
+> that bands carry rule changes, not just content) and **operate together natively in a 2000-start**,
+> on top of the §9.3.7 enthusiasm channel. Pairs with #124 (cabinet→enthusiasm) + #16/#25
+> (appointments). Corroborates the `nuke`-sourced [§28.7](#287-modern-cabinet--the-era-of-terror-cabinet-rework-231) Era-of-Terror cabinet rework (which first surfaced both as digest-hole sketches).
+
+**(a) ★ #151 — same-party appointment-FAIRNESS penalty (NEW; twice-fired LIVE).** Ted, verbatim:
+*"From the Era of Terror on through the future, the president must balance appointments for ALL
+same-party factions equally (including their own). Failing = −500 points per slighted same-party
+faction"* (`terror2000#POST 1280`).
+
+| Property | Value |
+|---|---|
+| **Penalty** | **−500 points** per **slighted same-party faction** |
+| **Scope** | ALL factions of the President's party, **including the President's own faction** |
+| **Era gate** | **Era of Terror onward** ("through the future") |
+| **Fired LIVE (twice)** | **Bush −2000** (over-appointed Zagnut, >3× any other Red faction); **Oprah −2000** (over-appointed *himself*, `POST 154` ch27) |
+
+- **Distinct from the cabinet-DIVERSITY penalty (b)** and from the enthusiasm channel (§9.3.7) —
+  this is a flat **point** (Score-economy) penalty, not an enthusiasm shift.
+- **−2000 = four slighted factions × −500** (the live Bush/Oprah cases both hit four same-party
+  factions), confirming the per-faction multiplication.
+
+**(b) ★ Era-of-Terror cabinet-DIVERSITY penalty — ACTIVE natively (corroborates #124).** Ted asked
+for **female / racial-minority flags** on the Executive tab: *"It's relevant for Era of Terror
+cabinet appointments, triggering penalties if certain levels aren't met"* (`terror2000#POST 428,
+434, 441`). Corroborates the [§28.7](#287-modern-cabinet--the-era-of-terror-cabinet-rework-231) `nuke` formulation: factions holding **Civil Rights /
+Reformist / LW-Activist** cards take **−2 faction enthusiasm** if **<25%** of cabinet +
+cabinet-level are women / racial minorities. (So BOTH Era-of-Terror cabinet penalties — diversity +
+same-party fairness — fire in a 2000-start, replacing the pre-Terror region-coverage election malus,
+[§9.3.3](#933-region-coverage-election-malus).)
+
+**Open (for the human, per the digest):** is #151 a **flat −500 from the Era of Terror through the
+future**, or should it be **scaled by the size of the imbalance** / era-tuned? Ted applied it flat.
+(Logged `game-context.md` #151 open question.)
+
+*(designed, RULED — add, gated to the Era of Terror onward: (a) a same-party appointment-distribution
+check that counts appointments per same-party faction (incl. the President's own) and applies −500
+per faction that received zero / disproportionately few; (b) the diversity check (<25% women/minority
+in cabinet + cabinet-level → −2 enthusiasm to Civil-Rights/Reformist/LW-Activist factions). Both
+replace the pre-Terror region-coverage malus (§9.3.3) — a §27.1 era-BAND rule delta. Cite
+`terror2000#POST 1280, 428-441, 154`.)*
 
 ---
 
@@ -4006,9 +4100,39 @@ econ, budget, party pref) and **grants/denies territory** (Canada/Quebec on a Wa
 > in the generic model above. (The 1772 scenario's Revolutionary War, [§17.4](#174-revolutionary-war),
 > is the only war the shipped boots seed — every other era-start currently boots at peace.)
 
+> **★★ #152 (NEW) — the war engine resolves in DEFEAT (a loss PACKAGE), and wars are MULTI-PHASE
+> (`terror2000`, batch 15). DESIGNED, not built.** Prior digests (`fed`/`hd`/`drums`, #56/#106)
+> documented the **victory** package and per-*battle* defeat; `terror2000` is the first to record a
+> whole **war LOST** with its terminal **loss package** — the inverse-and-mirror of the victory
+> bundle. The **War on Terror was formally LOST ~2005** (withdrawal speech, `terror2000#POST 639,
+> 656-662`, ch31), while the **War in Afghanistan ran to "Phase II"** (`POST 1027`):
+>
+> | Side | Package on resolution |
+> |---|---|
+> | **VICTORY** (existing, §23.3 / #56) | officers gain Mil + Military-Leader; **President gains PERMANENT +1 in ALL elections**; Party-Pref / meter gains; territory grant |
+> | **★ DEFEAT (NEW, #152)** | military **officers −1 Mil + −1 in ALL future elections**; the **PRESIDENT gets −1 in ALL future elections**; **Party-Preference CRATERS** (capped if already maxed); + the per-battle confirmation cascade (Incompetent / fired / court-martial-eligible) |
+>
+> - **A war MUST be able to END in loss** — not only win or stall. The shipped flat resolver
+>   (`phaseRunners.ts:3613-3620`) *does* end a war at `warScore ≤ −50` (logs "ends in our defeat")
+>   but applies **NO loss package** — that package is the new build surface.
+> - **Multi-phase wars:** wars carry **across half-terms** and step through **named phases**
+>   (naval → ground; *"Invasion"* → *"Counter-Terrorism"*; Afghanistan reached **Phase II**),
+>   carry-rolled when there are more losses than wins (corroborates the §23.3 carry-roll + the
+>   "war engine must RESOLVE" finding, #56/#106). The **success-chance formula was ALSO re-confirmed
+>   natively in the 2000s**: `Planning(CNO/CoS + SecDef) + Officer(Mil×10 + naval-invasion-bonus) +
+>   Meters(Prep 15) + Allies(UK/Ger/Japan 5) + Benchmarks + Difficulty(Easy 0 / Med −10 / Diff −15)
+>   → d100`, naval (Arabian Sea) gating the ground invasion (`terror2000#POST 816-817` ch11;
+>   `152-277` ch20; `599-1027` ch31).
+> - **The President-loss term couples to elections:** a President who LOSES a war carries the −1 into
+>   the §29.3 election scorer for **all future elections** (the symmetric inverse of the victory +1).
+
 *(designed, not built — generalize to a `War` model usable in any era: the additive
 success-chance formula, the warscore/momentum/×2 resolution, and the confirmation-cascade
-side effects. Fold the 1772 Rev-War loop into it as one configured instance. **DH-61: the
+side effects. Fold the 1772 Rev-War loop into it as one configured instance. **#152: add the war
+DEFEAT resolution package** (officer −1 Mil + −1 all-elections; President −1 all-future-elections;
+Party-Pref crater) as the inverse of the victory bundle, and ensure **multi-phase wars (Phase I/II,
+naval→ground, "Invasion"→"Counter-Terrorism") carry-roll across half-terms** — a war must be able to
+resolve in LOSS, not just stall or win (`terror2000#POST 639, 656-662, 816-817, 1027`). **DH-61: the
 scenario-boot must seed the start-year's historically-active wars** (e.g. 1788 → NW Indian War,
 20%-loss / WS −2) as already-running `War` instances, from an "active wars by start date" table.
 Cite `oopscpu#POST 338-344`.)*
@@ -4461,11 +4585,15 @@ vote then awards EV winner-take-all, with tie-breaks). The new work is the **Sco
 >    **uncapped**). This is the **election-engine** instance of the cross-era **±3 swing cap**
 >    ([§21.8](#218-named-ordinal-meter-model--3-swing-cap--war-score-meter)) — confirmed here from a
 >    3rd start. A **"State of the Meters" table** is published before the election (POST 618).
-> - **★ THE STATE-SCOPE SUB-QUESTION (#18) — which states does the enthusiasm box touch?** Three
->   live GA models (logged `game-context.md` #18, recorded in full in **[§29.3](#293--the-meterenthusiasmelection-model--51-resolved-drums-4-step-18-state-scope-still-open-gap-1851)**):
->   **(Ted)** **every state UNLESS that state penalizes the ideology**; **(V/vcczar)** **only states
->   that LEAN that ideology**; **(Matt)** enthusiasm matters **only in primaries** + ideology-leaning
->   states. The build must pick one **— but note this is now the ONLY open piece (see next).**
+> - **★ THE STATE-SCOPE SUB-QUESTION (#18) — RESOLVED by `terror2000` to V's 2-layer model.** Ted
+>   reversed his own batch-10 "every state unless penalized" reading and pinned **V/vcczar's 2022
+>   canonical 2-layer scorer** (`terror2000#POST 913-926`): **(a)** a **universal per-ideology METER
+>   modifier** applied to **BOTH parties' candidates of that ideology in EVERY state, primary AND
+>   general** (flat, no "unless penalized" caveat), **PLUS (b)** the **per-PARTY enthusiasm box** (moved
+>   by the #51 4-step reshuffle) layered on top per-state-bias. The two **compose additively** then run
+>   through the ±3 cap. Full statement + the concrete meter→ideology table in
+>   **[§29.3](#293--the-meterenthusiasmelection-model--51-resolved-drums-4-step--18-resolved-terror2000--vs-2-layer-model-gap-1851)**.
+>   This is **the canonical election scorer** — no longer an open fork.
 
 > **★★ #51 RESOLVED by `arkzag` (batch 11): the 4-step reshuffle ALGORITHM is settled.** The
 > `arkzag` final chunk publishes the 4-step faction-performance → enthusiasm rule **VERBATIM**
@@ -4476,11 +4604,13 @@ vote then awards EV winner-take-all, with tie-breaks). The new work is the **Sco
 > touches) remains a human call. Full settled rule + the **crisis-bill-failure −100/waiver scoring**
 > it pairs with: **[§29.10](#2910--the-canonical-4-step-enthusiasm-shift-rule--crisis-bill-failure-scoring-51-resolved)**.
 
-*(designed, not built — implement the 4-part reshuffle (now SETTLED to the §29.10 form) + a faction
+*(designed, not built — implement the 4-part reshuffle (#51, SETTLED to the §29.10 form) + a faction
 `Score` field + era-end awards + the lowest-faction team penalty; wire Score into the meter→election
 map; **implement the meters-move-enthusiasm-boxes step + the hard ±3 cap on ideology/party-pref
-bonuses (uncapped state-specific); the only remaining human call is the #18 state-scope model from
-§29.3.**)*
+bonuses (uncapped state-specific). The election SCORER itself is now SETTLED to V's 2-layer model
+(#18 RESOLVED, §29.3): layer (a) universal per-ideology meter modifier (both parties, every state,
+primary+general) + layer (b) per-party enthusiasm box, composed additively then capped — no open
+state-scope fork remains.**)*
 
 ### 22.3 Presidential primary subsystem (2.9.1)
 
@@ -5481,6 +5611,13 @@ The **1888** race went 3-way (Blaine R 197 / Shortridge D 196 / Saltonstall "Con
   within a 50/50 House."* The 1890 House at 152-152 (Senate stayed Dem → GOP got the tied House,
   `hd` POST 6229, 6257) is now the **canonical** Ted-RULED behavior. SUPERSEDES alternative
   proposals (random / Westminster-style former-Maj stays / Speakership-by-whole-House).
+- **★ Tied-SENATE control — the INVERSE rule (`terror2000#POST 265, 268, 1282`, Ted-RULED).** When
+  the SENATE splits **50-50**, control goes to **the VP's party** (the VP breaks the tie): the
+  2000-start opens with a **50-50 Senate, GOP majority via VP Cheney's tiebreak** — Ted: *"if both
+  parties have equal Senators, the VP's party is the majority."* This is the **mirror of the tied-
+  HOUSE rule** (the House has no VP, so it goes to the non-Senate-majority party; the Senate has a
+  VP, so it goes to the VP's party). Together they form the complete **tied-chamber control pair**
+  (corroborates DH-7 / the #135 family). (`terror2000#POST 265, 268, 1282`.)
 
 *(designed, RULED — a contingent-election path: when no candidate reaches the EC majority,
 run a **one-vote-per-state House election among the top N** (pick a stated N — top-2 house rule
@@ -6846,7 +6983,7 @@ into the bottom band**, GM Rodja announced verbatim:
 > |---|---|---|
 > | **Standard Coup** | DomStab ≤ 2 **AND** EconStab ≤ 2 | **10%** |
 > | **Economic Collapse** | EconStab = 1 | **20%** |
-> | **Autocratic Coup** | HonestGov = 1, scaled by an "Era of Democracy" meter | **0% until 1868** |
+> | **Autocratic Coup** | HonestGov = 1 (early-republic: scaled by an "Era of Democracy" meter → 0% until 1868; **modern: ~20%/phase, CONFIRMED FIRING — `terror2000`, see #88 RESOLVED below**) | **20%/phase (modern)** |
 > | **Enemy Takes Defenseless US** | MilPrep = 1 **AND** a foreign power < Neutral | (per-phase) |
 > | **(Civil War / secession)** | **DomStab = 1** | (the secession/CW trigger meter — §23.1 alt-CW; §23.2) |
 >
@@ -6859,6 +6996,32 @@ into the bottom band**, GM Rodja announced verbatim:
 >   prep so a coup is damned near impossible"* (MilPrep + foreign relations are trivially maxed
 >   with a decent cabinet) (`rep1800` §C POST 9593). The coup path is real but rarely reachable
 >   once the player has a competent Sec of War / Sec of State.
+
+> **★★ #88 RESOLVED — the meter-driven AUTOCRATIC COUP end-condition FIRED for the FIRST TIME in
+> ANY playtest (`terror2000`, batch 15).** The `rep1800` row above logged the coup as a *condition*
+> (HonestGov at floor, scaled by an era meter, *"0% until 1868"*); **`terror2000` is the first
+> record of it actually firing — and the first proven game-over/LOSS state in the entire KB.** In
+> the 2000-start, **Honest-Gov sat at its FLOOR almost continuously from late-Bush onward** (the
+> cabinet-fairness penalties + a corrupt cast quietly armed the clock), arming a **20%-per-event-
+> phase "Autocratic Coup Ends America" roll** that finally hit (`terror2000#POST 827, 829`):
+> | Property | Value |
+> |---|---|
+> | **Gate** | **Honest-Gov at its lowest level** (floor) |
+> | **Roll** | **20% per event-phase** (the `rep1800` per-phase shape, now confirmed live in the MODERN era — NOT "0% until 1868") |
+> | **Outcome** | **GAME OVER** — corporate magnate **Alphonso Rockefeather stages a coup**, arrests President Ridge days into his term, declares martial law; the dystopian "Rockefeather regime" |
+> | **Aftermath state** | the roster splits into a **resistance** (Harris [CA Gov], Ventura [MN Gov, declares sovereignty], Gen. Schoomaker, Durbin, Bonior) vs. **collaborators** (Woody Johnson "Minister of State Stability," Gingrich "Director of National Reorganization") |
+>
+> Ted: *"the first time we've actually had a game-ending event happen in an AMPU playtest."* The
+> final **cumulative-score winner** was then declared (`@matthewyoung123`, R4, `POST 839`) — i.e.
+> the **meter-driven coup is a genuine terminal state that resolves to the standard cumulative-score
+> ranking** (corroborates the cumulative-winner end condition, #102/#1). **This resolves the open
+> balance question in #88** (whether the coup path is worth implementing): it **DOES fire and DOES
+> end the game** — it is a **REAL end-condition**, not a dead branch. **The modern era is exactly
+> where it is reachable** (Honest-Gov is far easier to crater than late-game MilPrep, so the
+> "coups are dead once MilPrep is maxed" balance note above does NOT neutralize the *Honest-Gov*
+> coup). **Build implication:** the **Autocratic Coup belongs in the per-event-phase game-end roll
+> table as a SHIPPABLE terminal**, gated on Honest-Gov=floor at ~20%/phase, NOT event-only.
+> (`terror2000#POST 827, 829, 839`; #88 RESOLVED.)
 
 The Planet's Health instance is **the documented clock-trigger meter** for the modern era;
 **analogous bottom-tier endgame clocks may exist for other meters/eras** but are not yet
@@ -7874,6 +8037,14 @@ are roadmap items.)*
     factions**; **−500 pts per slighted faction**.
   (POST 11398–11427, 11724.)
 
+> **★ CORROBORATED + FORMALIZED by `terror2000` (batch 15, the first NATIVE 2000-start):** BOTH
+> Era-of-Terror cabinet penalties above fire **natively** in a 2000-start (not just in `nuke`'s
+> late-game). The **faction-balance check is now gap #151** with Ted's exact wording (*"−500 points
+> per slighted same-party faction"*, fired LIVE twice — Bush −2000, Oprah −2000) and the
+> **diversity check** was re-confirmed (female/minority Exec-tab flags). Full statement in
+> **[§9.3.9](#939--ted-ruled-era-of-terror-cabinet-fairness--diversity-penalties-151-designer-authoritative-terror2000)**. The cabinet→enthusiasm channel was ALSO re-tuned LIVE here to the 3-state
+> upset/fine/happy model (**[§9.3.7](#937--ted-ruled-cabinet--enthusiasm-rework-designer-authoritative-tedchange)**, #124 sharpened). (`terror2000#POST 1280, 428-441, 486-489, 154`.)
+
 *(designed, not built — most is §9 / §22.9; the modern ADDS the **±1-ideology appointment gate**,
 the **60→70% confirmation scaling**, the **lobby-posts enthusiasm model** (hole #15 — replaces the
 broken direct swing), and — the era-BAND delta — the **Era-of-Terror diversity + faction-balance
@@ -8082,6 +8253,21 @@ un-implementable Wyoming Rule — hole #5), and modern lobby cards. Event firing
 ~5% pre-Terror (USSR chain never starts) vs ~25% in the Era of Terror (first-ever hit of the
 15-event/era cap) — digest hole #6.)*
 
+> **★ CORROBORATED NATIVELY by `terror2000` (batch 15) — the first 2000-START record (`nuke` only
+> *reached* 2004).** Every element above fired in a genuine 2000-start (#113): **9/11 fires
+> VERBATIM** (`POST 484-520`) → Bush declares the **War on Terror + War in Afghanistan** via the
+> generic naval→ground engine; the **Patriot-Act docket** is proposed (surveillance systems at
+> airports/borders, military **drone program**, **Director of National Intelligence** office,
+> deport-dangerous-immigrants, war bonds, voter-ID, prescription-drug Medicare, ban-lynching, `POST
+> 602-650`); **era-gating CONFIRMED** (US Space Force / Sonny-Bono items locked until Era of
+> Populism, `POST 619/623`); **designer `vcczar` drafted as "Jonathan Hobratsch"** + forum users as
+> pols (`POST 60, 132`). **Two divergences from `nuke`:** (a) here the **War on Terror is LOST**
+> ~2005 (`POST 639` — confirms the war engine resolves in DEFEAT too, [§21.1 #152](#211-generic-cross-era-war-system), Afghanistan
+> →Phase II); (b) the **Iraq War NEVER fires** (timeline diverges — proof era CONTENT is a deck on
+> its own clock, [§27.1](#271--the-era-model--eras-are-content-bands-gated-by-game-state--territory-not-calendar-year)). The one anachronism: a **"Paris Agreement" climate event** (`POST 508`).
+> Conventions held in **NYC "milking the 9/11 angle"** (`POST 368`). (`terror2000#POST 484-520,
+> 602-650, 619/623, 639, 60/132, 508, 368`.)
+
 ---
 
 > **Cross-reference for the roadmap (§28).** The headline for the tech-lead is **NEGATIVE SCOPE**:
@@ -8249,18 +8435,29 @@ it there, so the gov-actions library and the SCOTUS docket are linked. SCOTUS ru
 **deactivate now-unconstitutional laws** ([§22.7](#227-scotus-subsystem-253--282)) and feed
 `partyPreference` — so the player's delay/dismiss choices ripple into legislation and elections.
 
-### 29.3 ★ The meter→enthusiasm→election model — #51 RESOLVED (drums 4-step), #18 state-scope still OPEN (gap #18/#51)
+### 29.3 ★ The meter→enthusiasm→election model — #51 RESOLVED (drums 4-step) + #18 RESOLVED (terror2000 → V's 2-layer model) (gap #18/#51)
 
-> **UPDATE (batch 11 `arkzag`): this is no longer an open three-way fork.** Batch 10 framed the
-> *whole* meter→enthusiasm→election pipeline as unsettled. Batch 11's **final chunk publishes the
-> canonical 4-step faction-performance → enthusiasm rule VERBATIM**, and it **matches the `drums`
-> model exactly** — so the **algorithm half (#51) is now SETTLED to the `drums` 4-step model** (full
-> rule in [§29.10](#2910--the-canonical-4-step-enthusiasm-shift-rule--crisis-bill-failure-scoring-51-resolved) and
-> [§22.2](#222-faction-enthusiasm--party-preference-election-engine--the-score-economy)). The **only
-> piece still open is the #18 sub-question: which STATES a settled enthusiasm box applies to.** None
-> of it is shipped beyond the bare `enthusiasm × 2` / `partyPreference × 5` terms in `calcStateVote`
-> ([§15.1](#151-calcstatevote--the-core-resolver-phaserunnersts3685)). (`dem1820#POST 569, 575, 618`;
-> `arkzag#POST 195–207`; #18/#51.)
+> **★★ UPDATE (batch 15 `terror2000`): #18 IS NOW RESOLVED.** Ted (the designer, running the
+> 2000-start) **initially moved enthusiasm by the meters, then REVERSED his own reading to V's
+> 2022 canonical intent** and pinned the **2-layer meter→election model** (`terror2000#POST
+> 913-926`, ch12). This **closes the long-open #18 state-scope sub-question** (the "every state
+> unless penalized" / "ideology-leaning only" / "primaries only" three-way fork below): the
+> answer is **two independent layers that compose** (full statement under "★ #18 RESOLVED"
+> below). The **#51 reshuffle ALGORITHM (the 4-step faction-performance shift) is unchanged** —
+> it still governs *how* the per-ideology enthusiasm boxes MOVE each Congress; V's 2-layer model
+> governs *where the enthusiasm + meter bonus APPLIES at election time*. The two are orthogonal:
+> **#51 = the box-movement algorithm; #18 = the election-application scorer.** This is the
+> **canonical election scorer**. None of it is shipped beyond the bare `enthusiasm × 2` /
+> `partyPreference × 5` / `baseLean × 5` per-candidate terms in `calcStateVote`
+> (`phaseRunners.ts:3709`, [§15.1](#151-calcstatevote--the-core-resolver-phaserunnersts3685)).
+> (`terror2000#POST 913-926`; `dem1820#POST 569, 575, 618`; `arkzag#POST 195–207`; #18/#51.)
+
+> **UPDATE (batch 11 `arkzag`): the ALGORITHM half (#51) is settled.** Batch 11's final chunk
+> published the canonical 4-step faction-performance → enthusiasm rule VERBATIM, matching the
+> `drums` model exactly — so the **reshuffle algorithm (#51) is SETTLED to the `drums` 4-step
+> model** (full rule in [§29.10](#2910--the-canonical-4-step-enthusiasm-shift-rule--crisis-bill-failure-scoring-51-resolved) and
+> [§22.2](#222-faction-enthusiasm--party-preference-election-engine--the-score-economy)).
+> (`arkzag#POST 195–207`.)
 
 **SETTLED (the algorithm, #51).** The per-Congress pipeline (now confirmed across `modern`, `drums`,
 and `arkzag`):
@@ -8286,20 +8483,44 @@ and `arkzag`):
 — and explicitly did **not** adopt batch 10's Ted "every state unless penalized" or Matt "primaries
 only" *variants of step 3*. Those variants survive only as the **#18 state-scope** question.
 
-**STILL OPEN (#18 — which states a settled box touches).** Step 3 above expresses shifts
-**per-ideology-card**; the remaining unresolved question is the **state-application step** of the
-meter→election map:
+**★ #18 RESOLVED (`terror2000` → V's 2-layer model).** Ted reversed his own batch-10 "every state
+unless penalized" reading and adopted **V/vcczar's 2022 canonical intent** as the official scorer
+(`terror2000#POST 913-926`). The settled answer is **TWO independent layers that BOTH feed the
+per-state vote and COMPOSE additively** (then run through the §29.10 ±3 cap):
 
-| Model | Proponent | "A settled +3 Blue LW-Pop box applies to…" |
-|---|---|---|
-| **Every state unless penalized** | `Ted` (GA, batch 10) | …**every** state's Blue LW-Pop candidate **UNLESS that state penalizes LW-Pop** (*"in reality that's when populists rise: Tea Party, Bernie, MAGA"*). |
-| **Ideology-leaning states only** | `V`/vcczar (designer) | …only states that **lean** LW-Pop. |
-| **Primaries only** | `Matt` (batch 10) | …only in **primaries** + ideology-leaning states. |
+| Layer | What it is | Scope (which states / candidates) | Source |
+|---|---|---|---|
+| **(a) Universal per-ideology METER modifier** | A **flat modifier per ideology**, derived from the **top meters**, applied to **BOTH parties' candidates of that ideology, in EVERY state, in PRIMARY AND GENERAL** | **Universal** — every state, both parties (the "unless penalized" caveat is GONE; it's flat-everywhere) | `terror2000#POST 913-926` |
+| **(b) Per-party ENTHUSIASM bonus** | The **per-ideology enthusiasm box** (moved by the §29.10 4-step reshuffle, #51) — a **separate per-PARTY, per-state-bias** bonus | **Per-party** (a +3 Blue LW-Pop box helps only Blue LW-Pop candidates), layered **on top** of layer (a) | `terror2000#POST 913-926`; #51 |
 
-**Why #18 is still load-bearing:** the three models produce very different maps (Ted's spreads
-enthusiasm broadly; V's concentrates it; Matt's confines it to the nomination). **The build must
-pick one state-scope rule** before the election engine is tuned — but the **scoring → reshuffle
-algorithm itself is no longer in dispute** (use the §29.10 4-step model).
+**The concrete meter→ideology table (layer a)** Ted published (`terror2000#POST 913-926`):
+
+| Top meter | Per-ideology modifier (applies to BOTH parties, every state) |
+|---|---|
+| **Revenue/Budget** (high) | **Lib +1 / Trad −1** |
+| **Honest-Gov** (high) | **Corrupt incumbent +1; Integrity-vs-Controversial challenger +1; LW-Pop −2 / RW-Pop −2 / Prog −1** |
+| **Quality of Life** (high) | **Cons +1 / Trad +1; LW-Pop −1 / Prog −1** |
+| **Planet's Health** (high) | **RW-Pop +1 / Prog −1** |
+
+**How they compose at the ballot:** for a given candidate in a given state, the per-candidate
+election term = **layer (a) [universal meter modifier for that ideology, both parties]** + **layer
+(b) [that party's enthusiasm box for that ideology, scaled by state bias]** + the shipped
+`baseLean × 5` + `partyPreference × 5` + `pv × 0.1` terms (`calcStateVote`, `phaseRunners.ts:3709`),
+then the **±3 cap** ([§29.10](#2910--the-canonical-4-step-enthusiasm-shift-rule--crisis-bill-failure-scoring-51-resolved)) on
+the ideology + party-pref bonuses (state-specific bonuses uncapped).
+
+**Why this resolves the fork:** layer (a) is the OLD "Ted: every state" idea — but **demoted from
+the enthusiasm box to a separate flat meter modifier, and stripped of the "unless penalized"
+caveat** (so it is genuinely universal). Layer (b) is V's "concentrate it per-party/per-leaning"
+idea — but **kept as a distinct enthusiasm channel** rather than collapsed into the meter modifier.
+Matt's "primaries only" reading is **rejected** (layer (a) explicitly applies in primary AND
+general). The three batch-10 variants are no longer live; **the build implements both layers.**
+
+> **The retired batch-10/11 fork (for provenance — now CLOSED by #18 RESOLVED above).** The three
+> earlier models were: **(Ted, batch 10)** "every state unless penalized"; **(V/vcczar)**
+> "ideology-leaning states only"; **(Matt, batch 10)** "primaries + leaning states only." Ted's
+> 2-layer model above supersedes all three. (`terror2000#POST 913-926` SUPERSEDES `dem1820`
+> POST 569/575/618 + `oopscpu` POST 205-214's recurrence of the open fork.)
 
 ### 29.4 GA appointment & eligibility rulings (Senate fill order, card distribution, replacement-gains)
 
@@ -8325,6 +8546,37 @@ practice* by making CT pols **pulled last within each party**, not barred); and 
 must be 30+** (a 27-yr-old was rejected, POST 882). Distinct from the **sudden-vacancy fill order
 (3.0.28, POST 837)** — death/retirement/appointment-out may leave a seat empty in *some* cases, but
 the **normal Senate appointment is separate** and may not.
+
+> **★★ #154 (NEW) — the canonical 4-step SUDDEN-VACANCY fill ladder (`terror2000#POST 470, 480`,
+> from the 3.0 doc). RULED. DESIGNED, not built.** The clean order for a **suddenly-vacated ELECTED
+> seat** (dead / resigned Governor, Senator, etc. — the "sudden-vacancy fill order" §29.4(a)'s
+> closing line gestures at), with a **from-the-state constraint**:
+>
+> 1. **same-party career-track ("CongressTier"/exec-track) pol from that state** →
+> 2. **same-party UNEMPLOYED pol** →
+> 3. **OTHER-party career-track pol** →
+> 4. **other-party unemployed pol.**
+>
+> **★ Reconciliation with the existing ladders — note the ORDERING DIFFERENCE:**
+> - The **§29.4(a) `dem1820` Senate ladder** puts your-party **NON-CT *before* your-party CT**
+>   (to preserve the strategic cost of career-tracking — CT pols pulled *last* within a party).
+>   The **#154 ladder puts same-party CT *first*** (the career-track pol is the natural fill).
+>   These are **two different conventions** for the same situation — the build must pick one.
+> - `terror2000` flags step 2↔3 as the contested swap: the listed order is **same-party-unemployed
+>   before other-party-CT**, but a common **house-rule VARIANT swaps them** ("blue-CT-over-red-
+>   unemployed", `POST 480`) — i.e. fill with *any* same-party body before reaching across the aisle,
+>   vs. prefer a competent other-party CT pol over an idle same-party one.
+> - Distinct from the **cabinet-fill Admin ladder** (#73 / [§25.5.4](#2554-replacement-chain-after-failure) / OC-5) and the **CPU
+>   governor menu** (DH-19) — those are appointment/cabinet fills, this is **elected-seat** vacancy.
+> - Relates to the `oopscpu` ladders in [§30.5](#305-rulings-folded-from-oopscpu-ted-run-all-cpu-1788-stress-test) (#144 nomination trio; appointment-replacement #146d) —
+>   #154 is the **elected-seat sudden-vacancy** case, NOT the routine Senate-appointment case (§29.4(a))
+>   nor the cabinet case. **Likely the unified canonical ladder for elected-seat vacancies** once the
+>   step-order convention (CT-first vs NON-CT-first; the 2↔3 swap) is settled by the designer.
+>
+> *(designed, not built — implement the 4-step elected-seat vacancy-fill ladder with the from-the-state
+> constraint; **decide the two open orderings** (same-party CT vs NON-CT first; same-party-unemployed
+> vs other-party-CT at step 2/3) against the §29.4(a) Senate ladder. Pairs with #25 / #61 succession /
+> DH-19. Cite `terror2000#POST 469-476, 480`.)*
 
 **(b) Card-distribution order-of-operations (the 3 dilemmas, POST 149-154 — refines #24).**
 
@@ -8813,6 +9065,14 @@ winning the presidency).
 > (folded into §24.1), the pre-12A nomination trio + same-state-EV rule (#144), and a procedural
 > rulings list (#145, #146 + the list). Indexed in **§30.5** below; the **CPU-handler sub-gaps it
 > surfaced (OC-1…OC-8)** are folded into the §25 handler sections (cross-referenced in §30.5).
+>
+> **Companion thread (`terror2000` = `3843da2d`, the first-native 2000-start modern campaign)** is
+> **Ted-run** ⇒ **designer-authoritative** (same hierarchy). It RESOLVED **#18** (the meter→election
+> scorer → V's 2-layer model), RE-TUNED **#124** LIVE (the 3-state cabinet→enthusiasm model), and
+> RULED four NEW rules — **#151** (cabinet appointment-fairness penalty), **#152** (war-defeat
+> resolution + multi-phase wars), **#153** (0-Command rookies + doubled gain + no-reroll expertise),
+> **#154** (sudden-vacancy fill ladder) — plus produced the **first proven game-over (#88, the
+> Autocratic Coup)**. Indexed in **§30.6** below.
 
 ### 30.1 Rulings folded into existing topical sections
 
@@ -8870,10 +9130,17 @@ This index is a fast-lookup table back to those folds.
    rename](#2513-faction-rename-rule--whig-auto-rename-to-conservative-party-deterministic).)
 7. **VP-must-be-same-party on resignation** — Vee01 proposed relaxation (POST 362). **No
    follow-up.** Currently same-party-only is enforced.
-8. **Cabinet enthusiasm percentages** — Ted's rework (#124) is **RULED in concept**; the
-   actual numbers (Big-4 33% / others 25% etc., POST 4) are **TBD**.
+8. **Cabinet enthusiasm percentages** — ~~Ted's rework (#124) is **RULED in concept**; the
+   actual numbers (Big-4 33% / others 25% etc., POST 4) are **TBD**.~~ **MOSTLY RESOLVED by
+   `terror2000` (batch 15):** Ted RE-TUNED the enthusiasm channel LIVE to the **3-state
+   upset/fine/happy model** — per-faction count of satisfied wants → fine(0) / happy(+1 @20%/10%) /
+   upset(−1 @20%/10%), one roll/faction, same-ideology factions stack, ±3 cap ([§9.3.7](#937--ted-ruled-cabinet--enthusiasm-rework-designer-authoritative-tedchange),
+   `terror2000#POST 486-489`). **The only residue** is whether the 20%/10% split maps to a Big-4-vs-
+   rest-of-cabinet weighting (item 9 below).
 9. **Cabinet ideology weighting — Big-4 vs rest vs cabinet-level** — Ted flagged but didn't
-   finalize whether the three tiers get distinct ideology-enthusiasm weights (POST 1-4).
+   finalize whether the three tiers get distinct ideology-enthusiasm weights (POST 1-4). (Now the
+   *only* open piece of #124 after the `terror2000` 3-state re-tune resolves the channel shape; the
+   20%/10% roll split in §9.3.7 may BE this weighting.)
 
 ### 30.3 Rulings folded from `smallbugs` (vcczar spot rulings)
 
@@ -8938,7 +9205,57 @@ catalog. Same authority class as `tedchange` (both are designer-authoritative). 
 **Decision-gated forks touched:** the all-CPU run **uses CPU SCOTUS by ideology-distance** —
 resolves **#52 for the all-CPU case** ([§29.2](#292--unsettled-fork-a--player-controlled-scotus-gap-52)),
 player-vs-CPU still user-gated for human games. The **convention CPU (#71)** is **untested** (1788
-predates conventions). The **#18 meter→election state-scope fork RECURS unresolved** (POST 205-214).
+predates conventions). The **#18 meter→election state-scope fork RECURS unresolved** (POST 205-214)
+— **now CLOSED by `terror2000` §30.6 below**.
+
+### 30.6 Rulings folded from `terror2000` (Ted-run 2000-start modern campaign)
+
+> **Ted-run ⇒ designer-authoritative** (same authority class as `tedchange` / `oopscpu`). The
+> `terror2000` (`3843da2d`) **first-native 2000-start** modern campaign RULED the rules below —
+> several **re-tuned LIVE** by Ted mid-thread — and produced the **first proven game-over** in any
+> playtest. Mirrors the §30.5 oopscpu index. Cite `terror2000#POST n`.
+
+**Marquee + new Ted rulings (RULED):**
+
+| # | Topic | Ruling | Folded into | `terror2000` POSTs |
+|---|---|---|---|---|
+| **★ #18** | **Meter→election scorer RESOLVED** | RULED — Ted reversed his own reading to **V's 2-layer model**: (a) universal per-ideology METER modifier (BOTH parties, EVERY state, primary+general) **+** (b) per-PARTY enthusiasm box, composed additively then ±3-capped. **CLOSES the long-open state-scope fork.** | [§29.3](#293--the-meterenthusiasmelection-model--51-resolved-drums-4-step--18-resolved-terror2000--vs-2-layer-model-gap-1851) + [§22.2](#222-faction-enthusiasm--party-preference-election-engine--the-score-economy) | 913-926 |
+| **★ #124** | **Cabinet→enthusiasm RE-TUNED LIVE** | RULED — replaced the broken "stacking happiness" (Mods +18) with a **3-state upset/fine/happy** model: per-faction satisfied-wants count → fine(0) / happy(+1 @20%/10%) / upset(−1 @20%/10%); **one roll/faction**, same-ideology factions stack, **±3 cap**. SHARPENS #124 (moves §30.2 #8 to mostly-resolved). | [§9.3.7](#937--ted-ruled-cabinet--enthusiasm-rework-designer-authoritative-tedchange) | 486-489 |
+| **★ #151** | **Cabinet appointment-FAIRNESS penalty (NEW)** | RULED — Era-of-Terror-on: balance appointments across ALL same-party factions (incl. the Pres's own); **−500 pts per slighted same-party faction**. Fired LIVE twice (Bush −2000, Oprah −2000). | [§9.3.9](#939--ted-ruled-era-of-terror-cabinet-fairness--diversity-penalties-151-designer-authoritative-terror2000) | 1280, 154 |
+| **★ #151b** | **Cabinet-DIVERSITY penalty active natively** | CORROBORATED — Era-of-Terror diversity penalty (−2 enthusiasm to Civil-Rights/Reformist/LW-Activist factions if <25% women/minority in cabinet+cabinet-level) operates in a 2000-start; female/minority flags requested on the Exec tab. | [§9.3.9](#939--ted-ruled-era-of-terror-cabinet-fairness--diversity-penalties-151-designer-authoritative-terror2000) + [§28.7](#287-modern-cabinet--the-era-of-terror-cabinet-rework-231) | 428, 434, 441 |
+| **★ #152** | **War engine resolves in DEFEAT + multi-phase wars (NEW)** | RULED/CONFIRMED — loss package (officers −1 Mil + −1 all-elections; **President −1 all-future-elections**; Party-Pref crater) as the inverse of the victory bundle; wars are multi-phase (naval→ground; "Invasion"→"Counter-Terrorism"; Afghanistan→Phase II). War on Terror LOST ~2005. | [§21.1](#211-generic-cross-era-war-system) (+ [§23.3](#233-56-civil-war--the-two-theater-combat-engine-multi-term-subsystem) / [§28](#28-modern--cold-war-era-1948-systems-designed-not-built)) | 639, 656-662, 816-817, 1027 |
+| **★ #153** | **0-Command rookies + DOUBLED Command-gain; no-reroll on held expertise (now OFFICIAL)** | RULED — (a) all rookies enter at 0 Command, every Command-gain % DOUBLED; (b) rolling an already-held expertise grants nothing (no re-roll). ebrk: adapted into official rules. | [§4.1.y](#41y--ted-ruled-draft-rules-designer-authoritative-tedchange) | 91-93 |
+| **★ #154** | **Sudden-vacancy fill ladder (4-step, NEW)** | RULED — elected-seat vacancy: same-party-CT → same-party-unemployed → other-party-CT → other-party-unemployed (from the state); a house-rule variant swaps steps 2↔3. | [§29.4(a)](#294-ga-appointment--eligibility-rulings-senate-fill-order-card-distribution-replacement-gains) | 470, 480 |
+| **★ #88** | **Autocratic-COUP end-condition FIRED (first ever)** | CONFIRMED — Honest-Gov at floor → **20%/event-phase "Autocratic Coup Ends America"** roll → GAME OVER (the "Rockefeather coup"). **First proven game-over/LOSS in the KB.** Resolves #88's "is it worth building" question (it fires + ends the game). | [§26.4](#264-apocalypse-planet-health-endgame--the-10-year-clock-new-endgame-model) | 827, 829, 839 |
+
+**Procedural / corroborating Ted rulings (RULED, fold into existing homes):**
+
+| Topic | Ruling | Folded into | `terror2000` POSTs |
+|---|---|---|---|
+| **50-50 Senate → VP's party = majority** | RULED — "if both parties have equal Senators, the VP's party is the majority" (the inverse of #135's 50/50-House rule). | [§24.2](#242-62-contingent-house-election--tied-chamber-inverse-control) | 265, 268, 1282 |
+| **5% death+retirement, 1-death-max, retirements FIRST** | RULED (corroborates #85/#130) — up to 5% of a faction/cycle; **1 death max + rest retirements**; **roll retirements before deaths**; Frail=2% under 55. | [§10.1.y](#101y--ted-ruled-death--retirement-schedule-designer-authoritative-tedchange) | 457, 462-466, 496 |
+| **Gov "Praise/Criticize President" uses SPECIAL rolls, not Gov** | RULED (corroborates DH-15/#20) — most criticize attempts have no measurable effect unless they hit the special roll. | [§11.3](#113-governors-actions-library-designed-not-built) | 557, 763 |
+| **Gov "Improve Industry" success scoring** | vcczar RULED — Gov **and Senators** each give their faction **+100 per industry level** on success (even off-card); ebrk flagged possibly over-tuned. | [§11.5](#115-industry-leadership-scoring-designed-not-built) | 573 |
+| **"Ambitious Judge" event = Justice-specific #143** | RULED — a Justice gains +1 Command but must run for President next cycle or lose it (the use-it-or-lose-it #143 rendered as an event). | [§14.1.z](#141z--ted-ruled-post-election-command-decay--shit-or-get-off-the-pot-designer-authoritative-oopscpu) | 430 |
+| **Ideology-shift does NOT lose an Activist's card** | vcczar RULED NO — no mechanism to lose interests on an ideology shift; keep the card. (*Open, unruled:* Euri/V floated LW/RW Activists should have 0% to shift past Lib/Cons, POST 263.) | [§6.3](#63-215-ideology-shifts) | 257, 263 |
+| **Leadership challenge gate** | RULED — incumbent can't be challenged unless prereq fails OR challenger's enthusiasm is below neutral (blocked McCain/DeMint/Helms). | [§8](#8-leadership-selection-22x) | 302-303 |
+| **Chairs (not ranking members) can't propose unless party ≥66%** | RULED — only chairs gated; vcczar OK'd ranking members proposing (POST 642). FL must match faction ideology. | [§8](#8-leadership-selection-22x) | 642, 651-656, 435 |
+| **Trait clarifications** | "Corruption" trait gone → treat as Controversial; **Illicit = opposite of Lawful**; Alex Jones's phantom 1-Military to be cleaned. | [§3](#3-politicians--stats) | 312, 321, 200 |
+| **Census/EV via events (sharpens #92)** | RULED — all IRL inter-census changes done via events (per OrangeP); census changes come only from era events + industry changes + random rolls at census. | [§28.9](#289-the-per-decade-census--statehoodterritory-the-level-b-census-mechanic) + [§10.4.3](#1043-243-era-events--runphase_2_4_3_era-phaserunnersts2796) | 513-516 |
+
+**Corroborations field-validated from the MODERN angle (no new rule — strengthen existing entries):**
+
+| Existing entry | `terror2000` corroboration | POSTs |
+|---|---|---|
+| **#113** Era-of-Terror content band | 9/11 fires VERBATIM → War on Terror + War in Afghanistan via the generic naval→ground engine; Patriot-Act docket (surveillance, drone, DNI, deport, war bonds, voter-ID); era-gating (Space Force/Sonny-Bono locked until Era of Populism); designer (`vcczar`="Jonathan Hobratsch") + forum users as pols; Iraq War never fires (timeline diverges); "Paris Agreement" = the one anachronism. | 484-520, 602-650, 619/623, 60/132, 508 |
+| **#56/#106** war engine native in 2000s | the success-chance formula + naval→ground gating + per-theater carry-roll re-confirmed natively (see #152). | 816-817, 152-277, 599-1027 |
+| **#90/#92** modern dataset exhausts | drafts can't fill all 7 tracks in the 2000s; "after 2024 we'll have to start generating politicians" — proc-gen is year-triggered (Era of Populism) AND dataset-exhaustion-driven (#43). | 510-548 |
+| **#1/#102/#135/#143/DH-25** | two CPU factions handed to humans mid-thread (faction handover, #1); cumulative-winner end condition (#102, the coup resolved to it); 50-50-Senate=VP-party (#135 inverse); Command use-it-or-lose-it (#143, the Ambitious-Judge event); 1-skill-bench bootstrap hole (DH-25, ebrk seeds ~2 pols/track/faction at boot). | 658-664, 839, 63-65 |
+
+> **No NEW CPU sub-gaps** surfaced beyond the OC-1…OC-8 / #143 set — this run **field-validates the
+> §25 CPU suite from the modern angle** (CPU draft + meta-passes, cabinet/leadership voting with
+> trait-driven swing-NAYs, static faction-keyed gov menus, candidate selection) rather than extending
+> it. Passive FLs make no conversion attempts (corroborates #76/#78, POST 1232).
 
 ### 30.4 Authority hierarchy reminder
 

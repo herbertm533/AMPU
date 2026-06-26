@@ -1461,7 +1461,7 @@ draft runner instantiates the year's class via `instantiateDraftees`
 
 | # | Issue | Location | Impact / fix |
 |---|---|---|---|
-| 1 | **Raw `Math.random` in election scoring** | `phaseRunners.ts:3711` (`calcStateVote`'s `(Math.random()-0.5)*8` jitter) | The flagship determinism leak — every state vote is unseeded. Blocks reproducible elections (and any future replay/multiplayer sync). Route through `rng.ts`. **This is also where the enthusiasm→election model binds.** The full score is `50 + baseLean*5 + partyPref*5 + enthusiasm*2 + pv*0.1 + factionBias + traitBonus + jitter` (`:3709-3711`, re-verified batch 11 — unchanged); enthusiasm is read RAW (`enthusiasm[ideology][party]`, `:3696`) and applied UNIFORMLY to every state, with **NO ±3 cap and NO per-state ideology penalty.** **★ Batch-11 update (#51 RESOLVED): the enthusiasm-shift ALGORITHM is now SETTLED** — `arkzag` published the 4-step faction-performance→enthusiasm rule verbatim and it MATCHES `drums` (§29.10), so batch 10's fork is closed. **What this means for this site:** (a) the **±3 cap is now ready-to-build** (it binds HERE, clamping the `enthusiasm*2` + `partyPref*5` terms — still XS, queued as E6/#80); (b) the **per-Congress 4-step reshuffle pass** is a NEW runner that writes the enthusiasm boxes BEFORE this read (lands in E23, the Score-economy epic); (c) the **#18 state-scope sub-question** ("which states does a card's enthusiasm apply to") is **still a human DECISION-GATE** — the cap can ship, the "which states" cannot. See §9 batch-11 #2. |
+| 1 | **Raw `Math.random` in election scoring** | `phaseRunners.ts:3711` (`calcStateVote`'s `(Math.random()-0.5)*8` jitter) | The flagship determinism leak — every state vote is unseeded. Blocks reproducible elections (and any future replay/multiplayer sync). Route through `rng.ts`. **This is also where the enthusiasm→election model binds.** The full score is `50 + baseLean*5 + partyPref*5 + enthusiasm*2 + pv*0.1 + factionBias + traitBonus + jitter` (`:3709-3711`, re-verified batch 11 — unchanged); enthusiasm is read RAW (`enthusiasm[ideology][party]`, `:3696`) and applied UNIFORMLY to every state, with **NO ±3 cap and NO per-state ideology penalty.** **★ Batch-11 update (#51 RESOLVED): the enthusiasm-shift ALGORITHM is now SETTLED** — `arkzag` published the 4-step faction-performance→enthusiasm rule verbatim and it MATCHES `drums` (§29.10), so batch 10's fork is closed. **What this means for this site:** (a) the **±3 cap is now ready-to-build** (it binds HERE, clamping the `enthusiasm*2` + `partyPref*5` terms — still XS, queued as E6/#80); (b) the **per-Congress 4-step reshuffle pass** is a NEW runner that writes the enthusiasm boxes BEFORE this read (lands in E23, the Score-economy epic); (c) the **#18 state-scope sub-question** ("which states does a card's enthusiasm apply to") is **still a human DECISION-GATE** — the cap can ship, the "which states" cannot. See §9 batch-11 #2. **★★ Batch-15 update (#18 RESOLVED): the state-scope fork is now CLOSED** — Ted (running the 2000-start) adopted V's 2-layer model (`terror2000#POST 913-926`): **(a) a universal per-ideology METER modifier** (flat, BOTH parties, EVERY state, primary+general) **+ (b) the per-PARTY enthusiasm box** (this `enthusiasm*2` term, now ±3-capped), composed additively. So THREE things bind HERE now: the ±3 cap (QW3/#80), the per-party enthusiasm box (layer b), and a NEW universal-meter→ideology modifier table read once per candidate (layer a). #18 LEAVES the Decision-gated bucket → **ready-to-build, S–M.** game-mechanics §29.3. |
 | 2 | **Raw `Math.random` elsewhere in the engine** | draft rookie fallback gen `phaseRunners.ts:188-198` (8 calls); generic-war enemy power `:3603`; `calcStateVote` jitter `:3711`; `revolutionaryWar.ts:89,97`; `continentalCongress.ts:271` | Same class of bug. **14 raw calls across the engine** (verified: 11 in `phaseRunners.ts` incl. #1; 2 in `revolutionaryWar.ts`; 1 in `continentalCongress.ts`). `eraGraph.ts` is already clean — its only `Math.random` mention is the "no Math.random" comment at `:8`. Migrate all to `rng.ts` wrappers as part of the seeding work. **Batch-10 note: the scenario *builders* also use raw `Math.random`** (`scenario1856.ts:83,99,113` Congress-seat tie-breaks; `politicians1856.ts` author-fill 12×) — these are in the **scenario-boot blast radius (#115)**, so K0 + the `scenarioBoot` pipeline (§9.1.9) should route boot rolls through `rng.ts` too. |
 | 3 | **`rng.ts` is not actually seeded** | `rng.ts:1-5` | The wrappers exist but wrap `Math.random`. Determinism is *aspirational* until a real PRNG (e.g. mulberry32/xoshiro) is dropped in and a seed is stored on `GameState`. Prerequisite for replay + multiplayer. |
 | 4 | **No `DB_VERSION` migration path** | `db.ts:60`; `repair()` `GameContext.tsx:91` | All migration is app-side `repair()`. Fine for additive fields; **a store-level change has no precedent** and would need a real `idb` upgrade. `repair()` also grows unbounded — each f4c7c2c4 delta adds another block. |
@@ -1476,7 +1476,7 @@ draft runner instantiates the year's class via `instantiateDraftees`
 | 13 | **Conversion-targeting divergence** | `phaseRunners.ts` `CONVERSION_ODDS` (`types.ts:268`) vs digest §6.4.x | Shipped engine uses a multiplicative willingness table keyed on fit/PV/Loyal/Opportunist; forum gates strictly on `Can Party Flip` (cross-party) and `Pliable + adjacent ideology` (same-party) with hard 5/10/15% base rates. Same caveat. |
 | 14 | **Era-event scheduling divergence (batch 2, #4)** | `coreSpine` graph (`eraEvents1772.ts:23`; `selectEraGraphNode` `eraGraph.ts:107`) vs mechanics §21.7 | The shipped `coreSpine` fires nodes regardless of any roll; the forum sorts by historical year and rolls each per half-term up to a per-era cap with spill. **Different sequences — a genuine fork, not additive.** Resolve *before* authoring federalism graphs (else authored twice). See §9.3 #4. |
 | 15 | **Per-state EC method divergence (batch 2, #5)** | `calcStateVote('presGeneral')` (`phaseRunners.ts:3752`) vs mechanics §21.2 | Shipped resolves *every* state by popular vote; federalism needs legislature-chosen states (CT/GA/MA/NJ/NY/RI/SC in 1796) awarding EV by seated-legislature majority. Needs `State.electionMethod`. Debt the moment a federalism/1800 scenario ships. See §9.3 #5. |
-| 16 | **Generic war resolver divergence (batch 2, #6)** | `runPhase_2_7_2_Military` flat `milPower×10 + d100` (`phaseRunners.ts:3593-3627`, incl. `Math.random` at `:3603`) vs mechanics §21.1 | Shipped non-Rev-War wars use a flat one-roll resolver; forum uses additive per-battle Chance-of-Success + warscore/momentum/×2 resolution + a confirmation cascade. The rich path exists *only* for the Rev War (`revolutionaryWar.ts`). Generalize one `War` model. See §9.3 #6. |
+| 16 | **Generic war resolver divergence (batch 2, #6) — ★ batch-15: no DEFEAT loss package** | `runPhase_2_7_2_Military` flat `milPower×10 + d100` (`phaseRunners.ts:3593-3627`, incl. `Math.random` at `:3603`) vs mechanics §21.1 | Shipped non-Rev-War wars use a flat one-roll resolver; forum uses additive per-battle Chance-of-Success + warscore/momentum/×2 resolution + a confirmation cascade. The rich path exists *only* for the Rev War (`revolutionaryWar.ts`). Generalize one `War` model. See §9.3 #6. **★★ Batch-15 (#152): the resolver DOES end a war at `warScore ≤ -50` (`:3618-3620`, logs "ends in our defeat") but applies NO LOSS PACKAGE** — it is a bare log line. `terror2000` recorded the FIRST whole-war DEFEAT (War on Terror LOST ~2005) with its terminal package: officers −1 Mil + −1 all-elections; **President −1 ALL future elections**; Party-Pref crater — the inverse of the victory bundle. Plus wars are MULTI-PHASE (naval→ground; "Invasion"→"Counter-Terrorism"; Afghanistan→Phase II) with carry-roll across half-terms. **A war must be able to RESOLVE in LOSS, not just stall/win (DH-47).** The loss package + named-phase carry attach to the generic `War` model the war engine (Phase-1 #3) already builds — M within E3, not a new epic. See §9.2 war row + #152. |
 | 17 | **Cabinet wipe-on-election (divergence #8) — CORRECTED: there IS a wipe** | unconditional clear at `phaseRunners.ts:3804-3812` in `runPhase_2_9_4_PresidentialGeneral`; re-fill at `:2166` next turn | **Batch-3 correction of a batch-2 error.** Earlier note claimed "no wipe exists" — wrong; it missed the election-phase loop. The cabinet is vacated and cleared after **every** presidential general (even on incumbent re-election), then re-staffed from scratch at 2.3.1 next turn. The fix is **replace the wipe with retention** (keep ≤5, CIA/FBI exempt) **gated by `firingPrecedentSet` + per-officer tenure + same-faction US-Bank guard** — **M, not S**. See §2.1.1 grounding note. |
 | 18 | **SCOTUS is a stub (divergence #7), not a system** | court ruling `phaseRunners.ts:3397-3414` (a `chance(0.5)` coin-flip whether the court acts at all, then 4 hardcoded titles + a conserv-vs-liberal majority → `partyPreference ±0.1`); retire/backfill `:3648-3671` (age≥75 + `chance(0.15)` retire, replace with highest-judicial same-party pol) | The shipped court has the *entity* (`supremeCourtIds`/`chiefJusticeId`, `types.ts:1584`) but no docket, per-case effects, compel-vote/retire, dynamic size, or ruling→law-deactivation. Modern #52 is a from-scratch SCOTUS module — there is no balance-tuned court to preserve, so framing it as a "replacement" overstates what ships. Gates BUG-2 (`Chisholm` needs amendments). M–L. **Batch-10 (#52, the player-SCOTUS fork — DECISION-GATED):** `dem1820` (POST 420-443) surfaced THREE live models — votes-by-ideology-chart + player delay/dismiss-only (the forum's working rule), trait-gated player-vote (`vcczar`), fully-player-controlled (two players) — **none settled.** Regardless of fork, the build needs a **docket data structure**: per-era case rows in `src/data/scotusCases<Era>.ts` (`templateId`, ideology-vote chart, ahistorical-flag, optional ruling→bill-class modifier) + a `GameState.scotusDocket` ledger; the fork only changes the *resolution* + the player-action surface (delay/dismiss = one ActionRegistry row; trait-gated player-vote = a different one). **Author the fork before building the docket epic (Phase-2 #25).** Pairs with DH-32 (state-can't-be-voided guard) + DH-41 (ruling→statute cascade, parking lot) + #94 (`Cohens` rule-modifier). |
 | 19 | **Dataset exhaustion (scaling wall a)** | runtime load `standardDraftClasses.ts:13`; finite ~18.5k JSON | The real-person dataset **runs out in the deep-modern era** → no draft pool for late-era play. Needs a **runtime, seeded procedural pol generator** (`src/engine/`, emitting `ImportedDraftee` rows, reusing `instantiateDraftees` `phaseRunners.ts:114`). Also fixes "sparse new states need filler officials" (#43) + BUG-3 stopgap. Connects to portraits (A1). **Needed for ANY late-era play.** M–L. |
@@ -1488,6 +1488,10 @@ draft runner instantiates the year's class via `instantiateDraftees`
 | 25 | **Iron Fist is one trait but does ≥6 distinct things by office (batch 5 / §25.9)** | `'Iron Fist'` as a single `Trait` union member (`types.ts:89`); 4 governance rows (`:1043-1047`) + 3 era-event multipliers (`phaseRunners.ts:2915`, `:2931`, `:2959`) | Designer-flagged to split into ≥6 office-keyed traits (`'Stifle Competition'` for primary block, `'Force Vote'` for chamber compulsion, `'Compel SCOTUS'` for court compulsion, `'Fire Officers'` for mid-war military replacement). **`repair()`-migrateable** — expand `'Iron Fist'` to all child traits in one block, then the spec'd readers move to the narrower traits. **M.** Independent of keystones (the trait system shipped in PR4–PR6, before any 1856-arc work). |
 | 26 | **Veto override / cloture / filibuster: NO code exists yet** (verify for batch 5 / divergence #11) | grep confirms zero engine sites for `veto`/`override`/`cloture`/`filibuster` (only doc comments at `phases.ts:164`, `types.ts:506`, and unrelated occurrences) | When veto-override is built, the threshold is **2/3 in BOTH chambers** (designer ruling, `drums` POSTS 2180-2187; the 60% was a reverted bug). **No fix needed today** — forward-only constant when the legislative micro-mechanics epic lands. |
 | 27 | **★ Senate pass-threshold (batch 9 open question) — RESOLVED IN CODE: simple majority** | floor vote `runPhase_2_6_3_Floor` (`phaseRunners.ts:3498`); the post-independence path passes iff `house.yea > house.nay && senate.yea > senate.nay` (`:3562`) | **The digest flagged a SOURCE conflict** (`nuke` §28.5/§28.12, POST 2746-2770/8155/8308): is the Senate a ~60% supermajority-to-PASS, or simple-majority-to-pass with ~60% being CLOTURE only? **The shipped CODE settles the engine side: it is SIMPLE MAJORITY in both chambers (`yea > nay`), with NO cloture/filibuster/supermajority step at all** (consistent with debt #26 — no cloture code exists). The only supermajority anywhere is a DIFFERENT mechanism: the independence-era Continental-Congress path (`voteCC`, `continentalCongress.ts:224`) uses **2/3 of states under the Articles of Confederation**, else simple majority — that is era-specific and not the bicameral floor. **So: code = simple majority; the DESIGN question (should the Senate require 60% / a cloture step?) stays OPEN for the human** — the forum may want a supermajority/cloture the engine does not model. When the filibuster/cloture epic lands (debt #26 area), the human decides pass-vs-cloture and the constant lands there. |
+| 28 | **★ NO meter-driven game-over path (batch 15 / #88) — the FIRST PROVEN loss state** | the ONLY game-over path is event-driven: `EraEvent.triggersGameEnd` (`types.ts:1476`) consumed at `phaseRunners.ts:2871` → sets `game.gameEnded` (`types.ts:1635`); `GameOverScreen` reads it (`App.tsx:341`) | There is NO per-event-phase game-end ROLL, no meter-watcher, no Honest-Gov→coup gate anywhere in the engine (grep-confirmed; the `pop` APOCALYPSE countdown clock — debt-adjacent §9.1.5 — is also unbuilt). `terror2000` is the **FIRST record of ANY game-over firing in the KB** (the 20%/event-phase "Autocratic Coup Ends America" roll, Honest-Gov at floor, `terror2000#POST 827, 829`). This resolves #88's "is it worth implementing?" — it FIRES and ENDS the game, resolving to the standard cumulative-score winner. **Build the per-event-phase game-end roll TABLE** (the `rep1800` enumerated set, game-mechanics §26.4): Standard Coup (DomStab≤2 & EconStab≤2, 10%), Economic Collapse (EconStab=1, 20%), **Autocratic Coup (HonestGov=1, ~20%/phase — CONFIRMED firing in modern)**, Enemy-Takes-Defenseless-US (MilPrep=1 & a power<Neutral), Civil-War/secession (DomStab=1). The terminal surface already exists; only the meter-driven trigger is new. **Reachable in the MODERN era** (Honest-Gov is far easier to crater than late-game MilPrep). **S.** Pairs with the APOCALYPSE clock (§9.1.5) + §22.1 meter bank. |
+| 29 | **★ War engine has no DEFEAT loss package + no multi-phase model (batch 15 / #152)** | `runPhase_2_7_2_Military` (`phaseRunners.ts:3593-3627`); end-war check `:3615-3620` | **Same site as debt #16** (split out for the planner). The resolver ends a war at `warScore ±50` but the defeat branch (`:3618-3620`) is a bare log line — NO loss package. The new build surface: officers −1 Mil + −1 all-elections; **President −1 ALL future elections** (the symmetric inverse of the victory "permanent President +1"); Party-Pref crater. Plus wars must carry across half-terms through named phases (naval→ground; Afghanistan→Phase II). **Folds into the generic war engine (Phase-1 #3 / #56/#106) — M, not a new epic.** This completes DH-47 ("wars never resolve"). game-mechanics §21.1. |
+| 30 | **★ Cabinet pick is a flat scored pick — no enthusiasm channel, no fairness/diversity penalty (batch 15 / #124+#151)** | `runPhase_2_3_1_Cabinet` (`phaseRunners.ts:2158-2223`) | **Same site as debt #24** (no Senate vote) — the cabinet→enthusiasm rework (#124, batch-12 E16 re-scope) is SHARPENED to Ted's LIVE-retuned **3-state upset/fine/happy** model (per-faction satisfied-wants → fine(0)/happy(+1)/upset(−1) @20%/10%; one roll/faction; same-ideology factions stack; ±3 cap — fixes the "Mods +18" stacking bug, `terror2000#POST 486-489`). PLUS two NEW **Era-of-Terror-gated** scored checks: **#151 same-party appointment-FAIRNESS penalty** (−500 pts per slighted same-party faction incl. the Pres's own; fired LIVE twice) + the **cabinet-DIVERSITY penalty** (−2 enth to Civil-Rights/Reformist/LW-Activist factions if <25% women/minority in cabinet+cabinet-level). All three are a §27.1 era-BAND RULE delta. **Re-scope E16 to bundle confirmation + 3-state enthusiasm + #151 fairness + diversity; M+S.** #124's designer-gated %s now mostly resolved by the live tuning. game-mechanics §9.3.7 + §9.3.9. |
+| 31 | **★ Command-gain not doubled + no centralized vacancy-fill ladder (batch 15 / #153/#154)** | `addCommandPoint` (`abilities.ts:33`, flat `amount`); `vacateOffice` (`phaseRunners.ts:2446`, nulls the seat); ad-hoc SCOTUS fill `:3661` | #153(a): rookie Command=0 ALREADY ships (`phaseRunners.ts:216`), but **every Command-gain % must DOUBLE** (Ted official, `terror2000#POST 91-93`) — `addCommandPoint` has no global ×2 knob (all callers pass `1`/a const). #153(b): "rolling a held expertise grants nothing (no re-roll)" is **already the helper behavior** — `addExpertise` (`expertise.ts:5`) dedupes and no caller does random-pick-then-reroll; it is a forward-only INVARIANT for any future RANDOM expertise grant. #154: a 4-step **vacancy-fill ladder** (same-party-CT → same-party-unemployed → other-party-CT → other-party-unemployed) is UNBUILT — there is no centralized filler. **Slot into the draft/Command + appointment-ladder consistency work (#115a/#115b). XS (#153 knob) + S (#154 ladder).** game-mechanics §4.1.y + §29.4(a). |
 
 ### 8.1 Confirmed shipped bugs + GM-confirmed design holes
 
@@ -1848,6 +1852,123 @@ continental congress era system) + #120 (dataset umbrella — one coordinated
 > `gilded` + `fed` + `1772s` + `modern` + `hd` + `drums` + `pop` + `rep1800` +
 > **`new1772` + `tea1772` + `dem1820` + `arkzag` + `tedchange` + `smallbugs` +
 > `oopscpu` + `gild1868`**.
+>
+> **★★ Batch-15 changes to the plan (`terror2000` / `3843d2da` — the FIRST NATIVE
+> 2000-start "Era of Terror" modern campaign; Ted-run [DESIGNER authority, same
+> class as `tedchange`/`oopscpu`], CPU-heavy, plays ~2000→~2010. NO new keystone;
+> but it produces THREE high-value engine deltas that PROMOTE existing items and
+> resolve two long-open gates):**
+>
+> > **★ Read this block if you only read one for batch 15. The headline: this run
+> > produced the FIRST PROVEN GAME-OVER / LOSS STATE in the entire KB (#88), the
+> > first whole-war DEFEAT with a loss package (#152), and it CLOSED the #18
+> > election-scorer state-scope fork (V's 2-layer model is now the SETTLED scorer).
+> > These are all MODERN-ENGINE items — mid-tier, not keystones — so the top of the
+> > queue does NOT move (QW0 → K0/K2 → K3/K4 + scenarioBoot → E1 still lead), but
+> > #18 + #88 are attractive mid-tier wins that de-risk the election + endgame
+> > surfaces and remove a 3-batch-old decision gate. This is the 4th Ted-run/CPU-
+> > heavy source — it FIELD-VALIDATES the E9 CPU suite + #1 faction-handover from a
+> > MODERN angle (two CPU factions handed to humans mid-thread, `POST 658-664`) and
+> > is the 2nd modern-era native run (after the `pop` 2012 boot).**
+> >
+> > **Verified shipped-state of every batch-15 item (grep/Read-confirmed):**
+> > **(1) #88 autocratic-coup end-condition — UNBUILT as a meter-driven path.**
+> > `EraEvent.triggersGameEnd` (`types.ts:1476`) is the ONLY game-over path; it is
+> > consumed at `phaseRunners.ts:2871` (`runPhase_2_4_3` → sets `game.gameEnded`,
+> > `types.ts:1635`) and is **event-only** — there is NO per-event-phase game-end
+> > ROLL, no meter-watcher, no Honest-Gov→coup gate anywhere in the engine. The
+> > `GameOverScreen` (`App.tsx:341` → `components/GameOverScreen.tsx`) already reads
+> > `game.gameEnded`, so the TERMINAL surface exists; only the meter-driven TRIGGER
+> > is missing. **`terror2000` is the first record of ANY game-over firing** (the
+> > 20%/event-phase "Autocratic Coup Ends America" roll, Honest-Gov at floor,
+> > `POST 827, 829`), so it converts #88 from "is it worth building?" to a SHIPPABLE
+> > terminal. **Size: S** (a per-phase roll-table in the Lingering/event phase +
+> > one `gameEnded` write + a HUD warning). game-mechanics §26.4 (the `rep1800`
+> > enumerated game-end set is the home — Autocratic-Coup is one row, now CONFIRMED).
+> > **(2) #152 war-DEFEAT loss package + multi-phase wars — UNBUILT.** The generic
+> > resolver `runPhase_2_7_2_Military` (`phaseRunners.ts:3593-3627`) DOES end a war
+> > at `warScore ≤ -50` (`:3618-3620`, logs "ends in our defeat") but applies **NO
+> > loss package** — it is a bare log line; there is no officer/President election
+> > penalty, no Party-Pref crater, and the flat `milPower×10 + d100` model has no
+> > named phases/carry-roll. (Note the row also carries the pre-existing raw
+> > `Math.random()` at `:3603` — debt #2/#16.) The loss package (officers −1 Mil +
+> > −1 all-elections; **President −1 ALL future elections**; Party-Pref crater) is
+> > the INVERSE of the victory bundle and attaches to the generic `War` model that
+> > the war engine (Phase-1 #3 / #56/#106) already must build. **Size: M within E3
+> > (war engine)** — it does NOT open a new epic; it is a required completion of the
+> > "war must RESOLVE" finding (DH-47). game-mechanics §21.1.
+> > **(3) #18 election scorer — now SETTLED (no open fork), but the 2-layer model is
+> > UNBUILT.** `calcStateVote` (`phaseRunners.ts:3685`) today is
+> > `50 + baseLean*5 + partyPref*5 + enthusiasm*2 + pv*0.1 + factionBias + traitBonus
+> > + (Math.random()-0.5)*8` (`:3709-3711`) — the enthusiasm box is read RAW
+> > (`enthusiasm[ideology][party]`, `:3696`) and applied uniformly with NO ±3 cap
+> > and NO universal-meter layer. Ted (running the 2000-start) REVERSED his own
+> > batch-10 "every state unless penalized" reading to V/vcczar's 2022 canonical
+> > intent (`POST 913-926`): **(a) a universal per-ideology METER modifier** (flat,
+> > BOTH parties, EVERY state, primary AND general — the "unless penalized" caveat is
+> > GONE) **+ (b) the per-PARTY enthusiasm box** (moved by the #51 4-step reshuffle),
+> > composed additively then ±3-capped. **This CLOSES the long-open #18 state-scope
+> > sub-question** (the three batch-10/11 variants are retired) — so #18 LEAVES the
+> > Decision-gated bucket and is **PROMOTED to ready-to-build** on `calcStateVote`,
+> > composing with the already-settled #51 reshuffle algorithm (§29.10) + the QW3 ±3
+> > cap (#80). **Size: S–M** (layer (b) + the ±3 cap are the QW3/E23 work already
+> > queued; layer (a) is a new per-ideology meter→modifier table read once per
+> > candidate). game-mechanics §29.3.
+> > **(4) Cabinet cluster #124 + #151 — RE-SCOPE of E16; UNBUILT.** The pick
+> > `runPhase_2_3_1_Cabinet` (`phaseRunners.ts:2158-2223`) is still a flat scored
+> > pick (no Senate vote, no enthusiasm channel, no penalty). Batch 12's #124 already
+> > re-scoped E16 to bundle the confirmation + the cabinet→enthusiasm rework; batch
+> > 15 SHARPENS #124's enthusiasm channel to Ted's LIVE-retuned **3-state
+> > upset/fine/happy** model (per-faction satisfied-wants count → fine(0) / happy(+1
+> > @20%/10%) / upset(−1 @20%/10%); ONE roll/faction; same-ideology factions stack;
+> > ±3 cap — fixing the "Mods +18" stacking bug, `POST 486-489`) and ADDS the NEW
+> > **#151 same-party appointment-FAIRNESS penalty** (−500 points per slighted
+> > same-party faction incl. the Pres's own; fired LIVE twice — Bush −2000, Oprah
+> > −2000) + the **Era-of-Terror cabinet-DIVERSITY penalty active natively** (−2
+> > enthusiasm to Civil-Rights/Reformist/LW-Activist factions if <25% women/minority
+> > in cabinet+cabinet-level). All three are **Era-of-Terror-gated** (a §27.1 era-BAND
+> > RULE delta, not just content). **Re-scope E16 once more** to bundle the 3-state
+> > enthusiasm channel + the #151 fairness penalty + the diversity check; #124's
+> > designer-gated percentages are now LARGELY resolved by the live 3-state tuning, so
+> > that designer-gated item CLOSES/NARROWS. **Size: M (the E16 rework) + S (the two
+> > Era-of-Terror penalties as additive scored checks).** game-mechanics §9.3.7 +
+> > §9.3.9.
+> > **(5) #153 / #154 — small, draft/appointment consistency; mostly UNBUILT, one
+> > already-shipped.** #153(a) "all rookies enter at 0 Command + every Command-gain %
+> > DOUBLED" — rookie Command=0 ALREADY ships (`phaseRunners.ts:216`,
+> > `command: 0`), but the ×2 gain is UNBUILT: `addCommandPoint` (`abilities.ts:33`)
+> > takes a flat `amount` and every call site passes `1`/a const; there is no global
+> > doubling knob. #153(b) "rolling an already-held expertise grants nothing (no
+> > re-roll)" is **effectively already the helper behavior** — `addExpertise`
+> > (`expertise.ts:5`) dedupes (returns false on a held tag) and no caller does
+> > random-pick-then-reroll (all callers pass a deterministic `OFFICE_EXPERTISE`/
+> > lobby tag), so this is a forward-only INVARIANT: any future *random* expertise
+> > grant must not re-roll. #154 4-step vacancy-fill ladder (same-party-CT →
+> > same-party-unemployed → other-party-CT → other-party-unemployed) is UNBUILT —
+> > there is no centralized vacancy filler; `vacateOffice` (`phaseRunners.ts:2446`)
+> > just nulls the seat, and the only ad-hoc fill is the SCOTUS same-party-only pick
+> > at `:3661`. Both slot into the draft/Command + appointment-ladder consistency
+> > work (#115a/#115b family). **Size: XS (#153 ×2 knob) + S (#154 ladder helper).**
+> > game-mechanics §4.1.y + §29.4(a).
+> >
+> > **Decision-gated RECOUNT (batch 15 nets −2 to the gated bucket):** **#18 resolves
+> > OUT** (was the last live piece of the #51 fork — user/state-scope-gated since
+> > batch 10; now SETTLED → promote to ready). **#124's designer-gated percentages
+> > resolve OUT** (the live 3-state tuning supersedes the §30.2 #8 "cabinet enthusiasm
+> > %s" parked numeric; only the Big-4-vs-rest weighting #9 may residually remain).
+> > See the Decision-gated bucket update at the §9 tail (`#18 ENTHUSIASM STATE-SCOPE`
+> > → RESOLVED).
+> >
+> > **CORROBORATION only (no keystone moves):** #113 Era-of-Terror content band
+> > (9/11 verbatim, Patriot-Act docket, era-gating of Space-Force/Sonny-Bono content),
+> > #56/#106 war engine native in 2000s (the success-chance formula + naval→ground
+> > gating re-confirmed), #51 reshuffle algorithm, #85/#130 5%/half-term death+retire
+> > (1-death-max, retirements-first), #90/#43 modern dataset exhaustion (proc-gen
+> > needed post-2024), #92 census-via-events, #102/#1 cumulative-winner end + faction
+> > handover, #135 50-50-Senate=VP-party (the inverse of #135's House rule), #143
+> > Command use-it-or-lose-it (the Ambitious-Judge event), DH-25 career-track
+> > bootstrap (ebrk seeds ~2 pols/track/faction at boot), DH-24/DH-27 poor modern
+> > boot-data quality. **No NEW CPU sub-gaps** beyond the OC-1…OC-8/#143 set.
 >
 > **★ Batch-14 changes to the plan (`gild1868` / `bf590684` — the first dedicated
 > NATIVE-1868 Gilded-Age campaign, 6318 posts, the LARGEST thread in the KB; runs
@@ -3256,6 +3377,26 @@ instance — therefore Phase 2 with the rest of modern. But:
 **Determinism note:** the band-monitor is deterministic (no rolls); it
 needs no K0 dependency. The model can ship before K0 lands.
 
+> **★★ Batch-15 (`terror2000`) — build the SECOND meter-driven endgame shape (the
+> per-event-phase game-end ROLL, #88) in THIS SAME module — and it is now the FIRST
+> PROVEN game-over in the KB.** Distinct from the APOCALYPSE fixed 10-year countdown:
+> when worst-band meters sit at their floor, the game can END on a per-event-phase ROLL
+> (~20%) — the `rep1800` enumerated set (game-mechanics §26.4): Standard Coup
+> (DomStab≤2 & EconStab≤2, 10%), Economic Collapse (EconStab=1, 20%), **Autocratic Coup
+> (HonestGov=1, ~20%/phase)**, Enemy-Takes-Defenseless-US (MilPrep=1 & a power<Neutral),
+> Civil-War/secession (DomStab=1). **`terror2000` FIRED the Autocratic Coup live**
+> (Honest-Gov at floor → 20%/event-phase "Autocratic Coup Ends America", `POST 827,
+> 829`) — the first game-over to actually fire, resolving #88's "is it worth building?"
+> and proving the modern era is exactly where it is reachable (Honest-Gov craters far
+> more easily than late-game MilPrep). **Recipe delta:** add `era.gameEndRollRules?:
+> { id; condition: (snap) => boolean; pct: number }[]` and, in the same Lingering/event
+> phase pass (step 3 above, BUT this branch needs a seeded `chance()` roll → it DOES
+> depend on K0 for reproducibility, unlike the deterministic countdown), roll each row
+> whose condition holds; on a hit set `game.gameEnded = { year, reason, templateId:
+> 'gameEndRoll:<id>' }`. The existing `GameOverScreen` flow takes over (it already reads
+> `game.gameEnded`, `App.tsx:341`). **One end-condition module, two shapes** (countdown
+> clock + per-phase roll). S on top of the APOCALYPSE clock. See §9.1.11(A) + debt #28.
+
 #### 9.1.5 ★ The era-model reframe (batch 7, MULTI-SAVE PROVEN in batch 8, TWO-LEVEL in batch 9) — exactly how K3/K4 change
 
 > **The single most important call in batch 7, and the biggest architectural
@@ -3717,6 +3858,96 @@ graph) + #57 (E3b Reconstruction).**
    the automation-reduces-upkeep argument (DH-36 family) — the spreadsheet
    legislative phase is the hardest to run by hand (DJBillyShakes, POST 868). **Cite
    it, do not queue it** — no new mechanic.
+
+#### 9.1.11 ★★ The modern end-condition + war-defeat + cabinet cluster (batch 15, `terror2000`)
+
+> **For the roadmap-planner: lift this section directly.** `terror2000` is the
+> first NATIVE 2000-start. It does NOT add a keystone, but it PROMOTES two long-open
+> items to ready-to-build, opens the first proven LOSS state, and re-scopes E16 once
+> more. None of it moves the top of the queue (QW0 → K0/K2 → K3/K4 + scenarioBoot →
+> E1 still lead); these are mid-tier modern-engine items. Dependency-ordered:
+
+**(A) #88 AUTOCRATIC-COUP terminal — the FIRST PROVEN LOSS STATE. Build it as a
+small end-condition item; HIGH priority for giving the game a real end-condition.**
+Verified: the only game-over path is event-driven (`triggersGameEnd`,
+`phaseRunners.ts:2871`); there is NO meter-driven per-phase game-end roll. The
+terminal surface (`game.gameEnded` → `GameOverScreen`, `App.tsx:341`) already
+exists; only the trigger is missing. **`terror2000` is the FIRST record of any
+game-over firing** (`POST 827, 829`) — Honest-Gov at floor → 20%/event-phase
+"Autocratic Coup Ends America" → GAME OVER → resolves to the standard cumulative
+winner. **Where it sits:** a small **end-condition epic** that builds the
+per-event-phase game-end roll TABLE (game-mechanics §26.4's `rep1800` enumerated
+set: Standard Coup / Economic Collapse / **Autocratic Coup (HonestGov=1, ~20%/phase,
+CONFIRMED modern)** / Enemy-Takes-Defenseless-US / Civil-War-secession). It is the
+**third shape of meter-driven endgame** alongside the APOCALYPSE 10-year countdown
+clock (`pop` §9.1.5) — build them as ONE end-condition module (a meter-watcher in the
+Lingering phase that arms countdown clocks AND rolls the per-phase game-end table).
+**Meter-driven (Honest-Gov), reachable in the modern era** (Honest-Gov is far easier
+to crater than late-game MilPrep — the "coups are dead once MilPrep is maxed" balance
+note does NOT neutralize the Honest-Gov coup). **Size: S** (the roll table + one
+`gameEnded` write + a HUD warning); pairs with §22.1 meter bank + the APOCALYPSE clock.
+**It EXTENDS the existing endgame surface (debt #28), it does not need a new keystone.**
+
+**(B) #152 WAR-DEFEAT resolution — extends the war-engine epic (Phase-1 #3 /
+#56/#106).** Verified: the resolver ends a war at `warScore ±50` but the defeat
+branch (`phaseRunners.ts:3618-3620`) applies NO loss package. The loss package
+(officers −1 Mil + −1 all-elections; **President −1 ALL future elections**;
+Party-Pref crater) is the symmetric inverse of the victory bundle; multi-phase wars
+(naval→ground; "Invasion"→"Counter-Terrorism"; Afghanistan→Phase II) carry across
+half-terms. **Epic home: the generic `War` model (Phase-1 #3)** — this is a REQUIRED
+completion of the "war must RESOLVE" finding (DH-47: wars never end today), not a new
+epic. The President-loss term COUPLES to the #18 election scorer (the −1 rides into
+`calcStateVote` for all future elections, the inverse of the victory +1) — so build it
+AFTER the war engine has a real resolution path, and wire its President/officer terms
+into the election-math epic. **Size: M within E3.**
+
+**(C) #18 CANONICAL election scorer — now fully SETTLED (V's 2-layer model); PROMOTE
+to ready-to-build.** Verified: `calcStateVote` (`phaseRunners.ts:3685`) applies the
+enthusiasm box raw with no ±3 cap and no universal-meter layer. Ted reversed his own
+batch-10 reading to V's 2022 canonical intent (`POST 913-926`): **(a) a universal
+per-ideology METER modifier** (flat, BOTH parties, EVERY state, primary+general —
+"unless penalized" caveat GONE) **+ (b) the per-PARTY enthusiasm box** (moved by the
+#51 reshuffle), composed additively then ±3-capped. **This removes a 3-batch-old
+decision gate** — #18 was user/state-scope-gated since batch 10; it now LEAVES the
+Decision-gated category. It **composes with** the already-settled #51 4-step reshuffle
+algorithm (§29.10, E23) + the QW3 ±3 cap (#80) — those govern *how the boxes move* and
+*the cap*; layer (a) is the only genuinely new piece (a per-ideology meter→modifier
+table, read once per candidate at the ballot). **Where it lands:** the ±3 cap + layer
+(b) are the QW3/E23 work already queued; ADD layer (a) at the same site. **Size: S–M.**
+game-mechanics §29.3.
+
+**(D) Cabinet cluster #124 + #151 — RE-SCOPE E16 (third time).** Verified:
+`runPhase_2_3_1_Cabinet` (`phaseRunners.ts:2158`) is a flat scored pick. Batch 12's
+#124 already re-scoped E16 to bundle confirmation + the cabinet→enthusiasm rework;
+batch 15 SHARPENS the enthusiasm channel to Ted's LIVE 3-state upset/fine/happy model
+(`POST 486-489`) and ADDS two Era-of-Terror-gated checks: **#151 same-party
+appointment-FAIRNESS penalty** (−500/slighted same-party faction incl. the Pres's own;
+fired LIVE twice) + the **cabinet-DIVERSITY penalty** (Era-of-Terror-active natively).
+Re-scope E16 to bundle: confirmation (DH-23) + lobby→POINTS + the 3-state
+enthusiasm channel + #151 fairness + diversity check — all gated to the Era of Terror
+onward (a §27.1 era-BAND RULE delta, so K3/K4's era-band model must carry RULE deltas,
+not just content). **#124's designer-gated percentages NARROW/CLOSE** — the live
+3-state tuning supersedes the §30.2 #8 "cabinet enthusiasm %s" parked numeric (only the
+Big-4-vs-rest weighting #9 may residually remain). **Size: M (the E16 rework) + S (the
+two penalties as additive scored checks). LANDS AFTER K2 + K5** (cabinet picks are CPU
+actions). game-mechanics §9.3.7 + §9.3.9.
+
+**(E) #153 / #154 — small consistency, slot into draft/Command + appointment-ladder
+work.** #153(a) DOUBLE every Command-gain % (rookie Command=0 already ships at
+`phaseRunners.ts:216`; add a ×2 knob to `addCommandPoint`'s callers / a config
+multiplier) — XS. #153(b) no-re-roll-on-held-expertise is ALREADY the `addExpertise`
+behavior (`expertise.ts:5` dedupes) — a forward-only invariant, no work unless a random
+expertise grant is added. #154 the 4-step vacancy-fill ladder (same-party-CT →
+same-party-unemployed → other-party-CT → other-party-unemployed) is a new helper that
+replaces the ad-hoc SCOTUS fill (`:3661`) and the bare `vacateOffice` null
+(`:2446`) — S. **Slot both into the #115a/#115b boot/appointment-ladder consistency
+family.** game-mechanics §4.1.y + §29.4(a).
+
+**Net for the planner:** #18 + #124-%s leave the Decision-gated bucket (−2); the war
+engine (E3) gains a required completion (#152); E16 is re-scoped a third time
+(#124+#151); a NEW small end-condition module appears (#88, pairing with the
+APOCALYPSE clock); #153/#154 are XS/S add-ons. **Top of queue UNCHANGED**; #18 + #88
+are the attractive mid-tier wins this batch surfaces.
 
 ### 9.2 Major subsystems (do these after the keystones)
 
@@ -4198,6 +4429,43 @@ planning. Specifically:
 > argument (now 2-thread)** behind #115, #55, and the CPU handler suite — cite, don't
 > queue. **CORROBORATION only:** #92 era-bands (3rd start year, 1820), #1, #76/#108,
 > #24, #9, #20, #25b, #101, #61, #44 — no keystone moves.
+> **★★ Batch-15 change (`terror2000`, the first NATIVE 2000-start; Ted-run,
+> CPU-heavy — TWO promotions + one re-scope + the first proven LOSS state; NO new
+> keystone, NO re-sequence of the top of queue):** **★ #18 election scorer RESOLVED
+> → PROMOTE to ready-to-build** (V's 2-layer model: universal per-ideology meter
+> modifier on BOTH parties/every state + per-party enthusiasm box, composed then
+> ±3-capped; `terror2000#POST 913-926`) — binds at `calcStateVote`
+> (`phaseRunners.ts:3709-3711`), composes with the #51 reshuffle (§29.10/E23) + the
+> QW3 ±3 cap; **#18 LEAVES the Decision-gated bucket** (was state-scope-gated since
+> batch 10); S–M. **★ #88 AUTOCRATIC-COUP terminal — the FIRST PROVEN game-over/LOSS
+> in the KB, FIRED live** (Honest-Gov floor → 20%/event-phase, `POST 827`) →
+> **NEW small end-condition module: the per-event-phase game-end roll table**
+> (§26.4's `rep1800` set), built TOGETHER with the APOCALYPSE 10-year countdown clock
+> (§9.1.5) as ONE meter-driven endgame module over the existing `triggersGameEnd`
+> terminal surface (`phaseRunners.ts:2871` is event-only today); S; reachable in the
+> modern era. **★ #152 WAR-DEFEAT loss package** (officers −1 Mil + −1 all-elections;
+> **President −1 all-future-elections**; Party-Pref crater) + multi-phase wars
+> (naval→ground, Phase II) → **EXTENDS the generic war engine (Phase-1 #3)** — the
+> shipped resolver ends a war at `warScore≤−50` (`:3618-3620`) but applies NO
+> package; completes DH-47 ("wars must RESOLVE"); the President-loss term couples into
+> the #18 scorer; M within E3. **★ Cabinet cluster #124+#151 → RE-SCOPE E16 (third
+> time)**: bundle confirmation + lobby→POINTS + Ted's LIVE 3-state upset/fine/happy
+> enthusiasm channel (fixes the "Mods +18" stacking bug, `POST 486-489`) + the NEW
+> Era-of-Terror **#151 same-party appointment-FAIRNESS penalty** (−500/slighted
+> same-party faction, fired LIVE twice) + the **cabinet-DIVERSITY penalty** (active
+> natively in a 2000-start) — all Era-of-Terror-gated (a §27.1 era-BAND RULE delta);
+> **#124's designer-gated %s NARROW/CLOSE** (live 3-state tuning supersedes the §30.2
+> #8 parked numeric); M+S, lands after K2+K5. **★ #153/#154 (XS+S)**: DOUBLE every
+> Command-gain % (`addCommandPoint` callers; rookie Command=0 already ships); no-re-roll-
+> on-held-expertise is already `addExpertise`'s dedupe behavior (forward-only
+> invariant); the 4-step vacancy-fill ladder (same-party-CT → same-party-unemployed →
+> other-party-CT → other-party-unemployed) → slot into the #115a/#115b appointment-
+> ladder family. **★ Decision-gated RECOUNT: −2** (#18 state-scope resolves OUT;
+> #124-percentages resolves OUT). **4th Ted-run/CPU-heavy source** — field-validates
+> the E9 CPU suite + #1 faction-handover from the MODERN angle (2nd modern native run
+> after `pop` 2012). **CORROBORATION only:** #113/#56/#106/#51/#85/#90/#92/#102/#1/
+> #135/#143/DH-25/DH-24 — no keystone moves; **top of queue UNCHANGED** (QW0 → K0/K2 →
+> K3/K4 + scenarioBoot → E1).
 
 **Cheap fixes first (do immediately — XS each, high value):**
 **★ BUG-0/QW0 (relocation cap `5`→`4`, `types.ts:247`, divergence #9 — ★ batch-12
@@ -4271,6 +4539,12 @@ exclusion at `phaseRunners.ts:187-197`); #137 no cross-party draft (gate
 `partyId` to IRL party at draft time + exclude cross-party drafting in
 `pickBestForFaction` at `phaseRunners.ts:33-53`); #138 3 random traits + 3
 random alt-states per draft (re-rule into era-config; SUPERSEDES 5/5)**;
+**★ batch-15 (#153, XS): DOUBLE every Command-gain %** — rookie Command=0 ALREADY
+ships (`phaseRunners.ts:216`), but `addCommandPoint` (`abilities.ts:33`) has no global
+×2 knob (callers pass `1`/a const); add a config multiplier (Ted official,
+`terror2000#POST 91-93`). The no-re-roll-on-held-expertise half (#153b) is ALREADY
+`addExpertise`'s dedupe behavior (`expertise.ts:5`) — a forward-only invariant, no work
+unless a RANDOM expertise grant is added;
 **★ batch-13: TWO HARD PREREQUISITES land WITH the 1788 boot — DH-61 (boot-seed
 the start-year's active wars: 1788 → NW Indian War, 20%-loss / WS −2; a
 `BootSheet.activeWars` field + a `scenarioBoot` hook over the generic `War` model
@@ -4287,7 +4561,13 @@ needs BUG-3; **design it multi-theater + tiered, with the multi-confirmed formul
 auto-win, war-end `WS×2 = %`, post-war defeat `\|WS\|×2×10`, naval-N-then-ground
 per-war, Treaty A-D + 3-roll chain — multi-era confirmed by `drums` + `nuke`**;
 **★ batch-9 DH-47: BUILD A REAL RESOLUTION/PEACE PATH — wars never end today (Korea
-ran ~2 decades) — and ideally army/navy/air BRANCHES**) →
+ran ~2 decades) — and ideally army/navy/air BRANCHES**; **★★ batch-15 #152: the
+DEFEAT branch must apply a LOSS PACKAGE** — the shipped resolver ends a war at
+`warScore≤−50` (`phaseRunners.ts:3618-3620`) but logs only; add officers −1 Mil + −1
+all-elections, **President −1 ALL future elections** (inverse of the victory +1,
+couples into `calcStateVote`/#18), Party-Pref crater, + multi-phase carry (naval→ground;
+"Invasion"→"Counter-Terrorism"; Afghanistan→Phase II) across half-terms; `terror2000`
+recorded the FIRST whole-war DEFEAT, War on Terror LOST ~2005, `POST 639/656-662`) →
 **3b) Civil-War / Reconstruction epic [1856-arc — COMPLETES the shipped 1856
 scenario]** (the Major-tier instance of #3; secession #58 + sectional crisis #59
 first — note `State.isSlaveState` ALREADY EXISTS (`types.ts:1329`); then the
@@ -4489,7 +4769,24 @@ clamp — ≥50% cabinet of an ideology = +enth that ideology, ≤20% = −enth;
 others 25%, etc.) — ship a const table that can be re-tuned post-design.
 LANDS AFTER K2 + K5 (cabinet picks are CPU actions; consumes the conditional-
 vote-rules primitive). + ★ batch-12 (#131, XS): INTEGRITY-CAN'T-NOMINATE-
-CONTROVERSIAL — one filter helper used by the cabinet picker.** →
+CONTROVERSIAL — one filter helper used by the cabinet picker. **★★ batch-15
+(#124 SHARPENED + #151 NEW, `terror2000#POST 486-489, 1280, 428-441`,
+game-mechanics §9.3.7 + §9.3.9): RE-SCOPE E16 a THIRD time. (i) The enthusiasm
+channel is now Ted's LIVE-retuned 3-STATE upset/fine/happy model** — per-faction
+count of satisfied lobby-wants → fine(0) / happy(+1 @20%/10%) / upset(−1 @20%/10%);
+**ONE roll per faction**, same-ideology factions STACK, ±3 cap (this FIXES the "Mods
++18 off one cabinet" stacking bug — happiness could stack but unhappiness couldn't;
+now symmetric). This supersedes the bare "≥50%/≤20% ideology-composition" sketch and
+**moves #124's designer-gated %s from OPEN to mostly-RESOLVED** (only the Big-4-vs-rest
+weighting #9 may residually remain). **(ii) NEW #151 same-party appointment-FAIRNESS
+penalty** (Era-of-Terror onward): −500 points per slighted same-party faction (incl.
+the Pres's OWN faction); fired LIVE twice (Bush −2000, Oprah −2000 = 4 factions ×
+−500). **(iii) NEW cabinet-DIVERSITY penalty** active natively in a 2000-start: −2
+enthusiasm to Civil-Rights/Reformist/LW-Activist factions if <25% women/minority in
+cabinet+cabinet-level. All three are **Era-of-Terror-gated** — a §27.1 era-BAND RULE
+delta (proof that bands carry RULE changes, not just content), so K3/K4's content-band
+model must carry rule deltas. M (the rework) + S (the two penalties as additive scored
+checks).** →
 17) **Iron Fist trait split (§25.9 / debt #25) — M; designer-flagged. Split
 into ≥6 office-keyed traits; `repair()` migrates `'Iron Fist'` → all child
 traits; touches the 4 governance rows + 3 era-event readers + 6 grant-callers.
@@ -4517,7 +4814,12 @@ restrictions on events 5/17/23/24/25/39/66/117/118/119 to Rep/Sen/Gov/Cabinet
 only; Assassination = 50% Pres / 25% Rep-Sen / 25% FL (alternatively co-locate
 with E9 handler 9g A/B/C event vote)**, **★ batch-12 (#139, XS): PRES
 SIGNATURE STEP IN 2.6 — phase-sequence reorder in `src/phases.ts` so military
-bills affect Mil-Prep BEFORE 2.7 Military Action**) →
+bills affect Mil-Prep BEFORE 2.7 Military Action**, **★ batch-15 (#154, S): the
+4-STEP SUDDEN-VACANCY FILL LADDER — a centralized helper (same-party-CT →
+same-party-unemployed → other-party-CT → other-party-unemployed, from the state) that
+replaces the ad-hoc SCOTUS same-party-only pick (`phaseRunners.ts:3661`) and the bare
+`vacateOffice` null (`:2446`); pairs with the #115b boot/appointment-ladder rules,
+`terror2000#POST 470, 480`**) →
 20) Bill scoring leaderboard (divergence #1; **batch-8: also lands the
 presidential-vote modifier stack + the era-stamped Popular/Unpopular issue list
 #103 — small additive election-math/bill-scoring inputs**; **★ batch-12 (#128,
@@ -4682,17 +4984,21 @@ M2) Async / backend (separate L–XL epic).**
   E24's primary delegate apportionment build it.** Does NOT block the rest of E10 (the
   ballot loop / momentum / VP-rubric / 8-stage general are confirmed-ready). The
   convention-host analog of the #52/#18 forks.
-- **★ #18 ENTHUSIASM STATE-SCOPE (batch 11 — the ONLY remaining piece of the #51 fork;
-  a human DECISION-GATE).** Batch 11 RESOLVED the enthusiasm-shift *algorithm* (the
-  §29.10 4-step reshuffle, matches `drums`) — so the reshuffle pass + the −100/waiver
-  rule + the ±3 cap are all ready-to-build (E23 + E6). **The one open question is
-  #18: which states does a card's enthusiasm apply to** — every-state-unless-penalized
-  (Ted) vs ideology-leaning-states-only (V). The §29.10 model expresses shifts
-  per-ideology-card and leaves the state-application step open. **Human picks the
-  state-scope → THEN the per-state penalty binds in `calcStateVote`
-  (`phaseRunners.ts:3709-3711`).** The cap + reshuffle ship regardless; only the
-  state-scope waits. (Reconciliation: batch-10 framed the WHOLE #18/#51 as gated;
-  batch-11 un-gates everything EXCEPT this sub-question.)
+- **~~★ #18 ENTHUSIASM STATE-SCOPE~~ → ★★ RESOLVED OUT (batch 15, `terror2000`) — no
+  longer a decision-gate; PROMOTED to ready-to-build.** Batch 11 RESOLVED the
+  enthusiasm-shift *algorithm* (the §29.10 4-step reshuffle, matches `drums`) and left
+  ONE open question — which states a card's enthusiasm applies to (every-state-unless-
+  penalized [Ted] vs ideology-leaning-only [V]). **Batch 15 CLOSES it:** Ted (running
+  the 2000-start) reversed his own batch-10 reading to V/vcczar's 2022 canonical 2-layer
+  model (`terror2000#POST 913-926`): **(a) a universal per-ideology METER modifier**
+  (flat, BOTH parties, EVERY state, primary+general — "unless penalized" GONE) **+ (b)
+  the per-PARTY enthusiasm box** (the #51 reshuffle output), composed additively then
+  ±3-capped. The three batch-10/11 variants are retired. **So #18 is now ready-to-build,
+  S–M, binding in `calcStateVote` (`phaseRunners.ts:3709-3711`)** alongside the ±3 cap +
+  the reshuffle pass; layer (a) is the only new piece (a per-ideology meter→modifier
+  table). This DECISION-GATE is CLOSED — recount the Decision-gated bucket (#18 OUT;
+  with #124-percentages also resolving OUT via batch-15's live 3-state tuning, the
+  bucket nets −2). See §9.1.11(C) + game-mechanics §29.3.
 
 **The most important calls for the planner (batch-7 leads; batch-8 HARDENS #0;
 batch-9 ADDS the two-level era refinement + the NEGATIVE-SCOPE Cold-War finding +
