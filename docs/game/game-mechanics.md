@@ -264,6 +264,7 @@
     - [23.5 Canada conquest → era-gated statehood + Canadian draft](#235-60-canada-conquest--era-gated-territorystatehood--canadian-draft)
 24. [Other 1856-arc systems revealed by `house-divided` (designed, not built)](#24-other-1856-arc-systems-revealed-by-house-divided-designed-not-built)
     - [24.1 Succession / eligibility / the acting-president state](#241-61-succession--eligibility--the-acting-president-state)
+    - [24.1.1 ★ Impeachment subsystem — broken/VOIDED (DH-66 → corroborates DH-33, 3-thread; `ideo1928`)](#2411--impeachment-subsystem--broken-as-is-voided-mid-run-dh-66--corroborates-dh-33-now-3-thread-ideo1928)
     - [24.2 Contingent House election + tied-chamber inverse control](#242-62-contingent-house-election--tied-chamber-inverse-control)
     - [24.3 Primary Era — state-opt-in primaries → Groups 1–5](#243-63-primary-era--state-opt-in-primaries--presidential-primary-groups-15)
     - [24.4 Amendment ratification by 3/4 of Governors — era-keyed, tunable](#244-64-amendment-ratification-by-34-of-state-governors--era-keyed-then-tunable)
@@ -326,6 +327,7 @@
     - [29.5 The focus-Rep House abstraction (gap #55)](#295-the-focus-rep-house-abstraction-gap-55)
     - [29.6 Corroborations & the era slice (1820–23)](#296-corroborations--the-era-slice-182023)
     - [29.7 ★ NEW — the Bank-War → Independent-Treasury economic engine (gap #116)](#297--new--the-bank-war--independent-treasury-long-run-economic-engine-gap-116)
+    - [29.7.1 ★★ NEW — the Great-Depression META-event + EconStab cascade + crisis-gated New-Deal bills (gap #160; `ideo1928`)](#2971--new--the-great-depression-meta-event--econstab-cascade--crisis-gated-new-deal-bills-the-interwar-economic-engine-gap-160-ideo1928)
     - [29.8 ★ NEW — the constitutional-amendment lifecycle (gap #119)](#298--new--the-constitutional-amendment-lifecycle-propose--committee--floor--governor-ratify--activeblocking-gap-119)
     - [29.9 ★ EXTENDED — death/assassination → VP succession → acting-president (gap #61)](#299--extended--deathassassination--vp-succession--acting-president-end-to-end-gap-61)
     - [29.10 ★★ The canonical 4-step enthusiasm-shift rule + crisis-bill-failure scoring (#51 RESOLVED)](#2910--the-canonical-4-step-enthusiasm-shift-rule--crisis-bill-failure-scoring-51-resolved)
@@ -338,6 +340,7 @@
     - [30.6 Rulings folded from `terror2000` (Ted-run 2000-start modern campaign)](#306-rulings-folded-from-terror2000-ted-run-2000-start-modern-campaign)
     - [30.7 Reconstruction rulings folded from `hd1` (vcczar — AUTHORITATIVE)](#307-reconstruction-rulings-folded-from-hd1-vcczar--authoritative)
     - [30.8 Rulings folded from `ted1772` (Ted-run mostly-CPU 1772 founding campaign)](#308-rulings-folded-from-ted1772-ted-run-mostly-cpu-1772-founding-campaign)
+    - [30.9 Rulings folded from `ideo1928` (GA-run interwar 1928 campaign — one Ted designer ruling)](#309-rulings-folded-from-ideo1928-ga-run-interwar-1928-campaign--one-ted-designer-ruling)
     - [30.4 Authority hierarchy reminder](#304-authority-hierarchy-reminder)
 31. [Gilded-Age era systems (designed, not built)](#31-gilded-age-era-systems-designed-not-built)
     - [31.1 (#147) Tariff-as-national-%-rate + the mutually-exclusive MonetaryRegime](#311-147-tariff-as-national-rate--the-mutually-exclusive-monetaryregime-designed)
@@ -1326,6 +1329,25 @@ counter on `Faction.leaderId` / party leadership.
   - **Expertise**: per `OFFICE_EXPERTISE` (`types.ts:1137`) — State→Foreign Affairs,
     Treasury→Economics, War→Military, Navy→Naval, AG→Justice, Interior→Agriculture,
     PMG→Transportation.
+
+> **★ Ted-RULED — cabinet confirmation AUTO-PASSES except for a short exception list
+> (designer-authoritative; `ideo1928`#post 213-214).** The shipped engine confirms every eligible
+> pick silently (no confirmation vote). Ted's canonical rule (RULED in the `ideo1928` thread, where
+> Ted is the rules-authority — designer-authoritative even though Jimmy is the GA): **all nominees
+> AUTO-CONFIRM EXCEPT** —
+> - **Secretary of State, Treasury, AG, or Defense** (the four "controversial-by-office" seats), **OR**
+> - the nominee is **Controversial** (trait), **OR**
+> - the nominee has **< 3 relevant skill** (the seat's primary expertise) — **UNLESS they have Integrity** (Integrity waives the low-skill trigger).
+>
+> Only nominees hitting one of those triggers go to a **Senate confirmation vote**. Additionally, a
+> **Senate-Majority-Leader with Iron-Fist can FORCE a confirmation vote on ANY nominee** (the
+> Iron-Fist force-vote override — corroborates the [§25.5.2](#2552-iron-fist-maj-leader--pliable-pres-feedback-loop-posts-4896-4900)
+> feedback loop + the §28.5 modern Iron-Fist-force-vote rule). This is the **canonical confirmation
+> gate** the build should encode (it directly addresses the §25.5 "36% of 88 nominees passed" CPU
+> confirmation pathology: most picks should never reach a vote). Indexed in [§30](#30-designer-ruling-index-tedchange--authoritative);
+> pairs with the [§9.3.8](#938--ted-ruled-nomination-filters-designer-authoritative-tedchange)
+> Integrity-cannot-nominate-Controversial precondition. (`ideo1928`#post 213-214; `game-context.md`
+> §30 confirmation-auto-pass.)
 
 ### 9.2 (2.3.2) Military — `runPhase_2_3_2_Military` (`phaseRunners.ts:2246`)
 
@@ -2461,16 +2483,36 @@ Each nation in `game.diplomacy`: `0.20` chance to drift `±0.5` (50/50 sign), cl
 
 #### 13.3.1 Per-power relations meters — an era-dependent power roster
 
-> **Confirmed era-dependent across federalism + gilded.** This is now a confident rule:
-> the **roster of tracked powers changes per era**.
+> **Confirmed era-dependent across federalism + gilded + interwar + modern.** This is now a
+> confident rule: the **roster of tracked powers changes per era** (grows over time).
 >
 > | Era | Powers (count) | Source |
 > |---|---|---|
 > | **Federalism (1788)** | UK, France, Spain, Prussia, Russia — **5, no China** | fed posts 32, 75, 88, 296, 479, 711 |
 > | **Gilded (1868)** | UK, France, Spain, Prussia, Russia, **China — 6** | gilded post 132 |
+> | **Era of Ideologies (1928)** | UK, France, Spain, **Germany**, **Russia/Soviet Union**, China, **Japan** — **7, NO Israel yet** | `ideo1928` digest#post 403-404 |
+> | **Modern (1948+)** | UK, France, Spain, Germany, Russia, China, Japan, **Israel** — **8** | [§22.1](#221-the-named-meter-bank--numeric-debt--crisiscascade), [§28.3](#283-the-diplomacy-system--the-real-working-cold-war-subsystem-271--261) |
 >
 > Renames track real history: **Prussia → Germany** post-1871; **China → ROC** post-1911.
-> ("Germany" appears once as a slip for Prussia in fed post 75.)
+> ("Germany" appears once as a slip for Prussia in fed post 75.) **The 1928 roster confirms the
+> grow-by-era pattern end-to-end** (5 → 6 → 7 → 8): **Japan joins by 1928** (already present in the
+> interwar roster), **Israel is absent in 1928** and only activates at the modern boundary (cf.
+> §24.7: present-but-INACTIVE in a 1900-native run, active by 1948). `ideo1928`'s ambassadors are
+> **cabinet-level** (Admin 2+ & Business/Foreign/Trade), one per nation, with actions Increase
+> Relations / Increase Trade Relations / Extend Credit / **Take a Loan** (per-nation meters move ±1,
+> digest#post 403-404) — the §13.3.2 / §28.3 action set, era-native.
+>
+> **★ #56 NEGATIVE RESULT — the "Republicanism vs Fascism vs Communism" framing + looming WWII are
+> EVENT-FLAVOR, NOT a war-engine trigger (`ideo1928`).** Despite the era being explicitly framed as
+> an international ideological contest with a "possibly… World War seems likely" opening (digest#post
+> 1), the **war engine ([§21.1](#211-generic-cross-era-war-system) / #56) was NOT exercised** in the
+> captured 1928→1936 span. There is **no fascism/communism *system*** — the ideological contest
+> lives entirely in the **scripted era-event narration** (Hitler, Stalin, Spain-Republic) + the
+> **per-nation relation meters**. The US stays **isolationist** (Hoover refuses to purchase Iceland,
+> digest#post 265; embargoes Japan over Manchuria but **no war is fought**). So batch 18 **strongly
+> corroborates the diplomacy subsystem (#107)** but **does NOT exercise the war engine** — confirming
+> the §28.2 finding that ideology/Cold-War/WWII framing is *flavor relabeled onto* the generic
+> diplomacy + (unfired) war engines, not a dedicated subsystem. (`game-context.md` #162, #56.)
 
 Forum tracks **separate relation meters** per major foreign power. Each runs on the same
 `[−5,+5]` band with descriptors (`Friendly`, `Neutral`, `Hostile`, `Maxed`); 1772 confirms
@@ -4785,6 +4827,15 @@ additively into the Party-Pref calc and per-ideology enthusiasm:
 > plus DomStab/QoL knock-ons flipped the map: **Cochran (R) 563 / Cuomo 143** (post 248). The
 > meter bank *is* the election engine's memory of a presidency.
 
+> **★ INTERWAR corroboration — the EconStab cascade + crash bundle fired NATIVELY in a 1928 start
+> (`ideo1928`, batch 18).** The Great-Depression META-event drops **EconStab −4** (→ Recession),
+> triggering the **2-random-industries-−1-in-every-state cascade** → state lead-industry flips →
+> **EV reflow** (CO +1 / OK −1); EconStab-in-Recession **gates other meters' gains** (digest#post
+> 866-868, 723). The **−3-incumbent EconStab election penalty** + Party-Pref maxed Blue + region
+> snubs then **buried Hoover in the 1932 Hoover-v-Roosevelt general** — the §22.1 meter-bank-as-
+> election-memory model at the interwar scale. **Full interwar economic engine:
+> [§29.7.1](#2971--new--the-great-depression-meta-event--econstab-cascade--crisis-gated-new-deal-bills-the-interwar-economic-engine-gap-160-ideo1928).** (`game-context.md` #160, #18/#51.)
+
 *(designed, not built — replace the 7 numeric meters with banded-text ladders; add the
 numeric debt integer; add crisis entry/exit by tier + cascade rules + top-of-ladder effects;
 add `metersToElectionBonus(meters)` from the canonical table. Couples to
@@ -6145,6 +6196,47 @@ re-election eligibility — SCOPED to incapacity / ineligible-substitute / inert
 NOT the clean death case**; an era-keyed VP-vacancy fill rule (off pre-amendment, on after); and a
 **stat-floor → forced-resignation** trigger (Command 0 + most skills lost → resign → succession).)*
 
+#### 24.1.1 ★ Impeachment subsystem — "broken as is," VOIDED mid-run (DH-66 → corroborates DH-33, now 3-THREAD; `ideo1928`)
+
+> **CORROBORATED — a 3RD independent thread confirms the impeachment subsystem is under-specified and
+> non-functional. DESIGNED, not built** (no impeachment logic in shipped code beyond the cabinet /
+> leadership it already tracks — cf. §24.1 succession). This is the **succession-cluster's sibling
+> gap**: the constitutional removal path. (`game-context.md` DH-66, DH-33, DH-54.)
+
+**DH-66 (`ideo1928`) — the episode.** An **"Improper SC Justice" general event** triggered an
+**impeachment trial**, but the rules under-specify the whole flow, so the GA + Ted **VOIDED the whole
+episode** and Ted drafted a rewrite (digest#post 816, 825, 840, **861**). The under-specified parts:
+
+| Gap | Detail | Cite |
+|---|---|---|
+| **Article generation** | The rules don't specify **how impeachment articles are generated** (what the charge is, how many). | digest#post 816, 825 |
+| **Trial trigger** | **When** the trial fires is unclear (on the event? on a vote? immediately?). | digest#post 840 |
+| **Controversial-vs-<3-judicial inconsistency** | The same Controversial / <3-relevant-skill inconsistency that plagues the confirmation/nomination rules ([§9.3.8](#938--ted-ruled-nomination-filters-designer-authoritative-tedchange)) recurs here (e.g. an **Integrity** justice accused of bribery is nonsensical). | digest#post 861 |
+| **Resolution** | The GA could not run it to a clean conclusion → **VOIDED**; Ted drafted a rewrite (still pending — GA-level void, designer rewrite forthcoming). | digest#post 861 |
+
+**★ Cross-thread corroboration (the strengthening).** This is now the **3rd independent thread** to
+flag the impeachment subsystem as broken/under-specified:
+
+| Thread | Finding | Cite |
+|---|---|---|
+| **DH-33** (`rep1800`, batch 7) | Impeachment rules **"outdated, don't work"** — the mini-flow runs but the canonical rules are non-functional and improvised (an Integrity justice accused of bribery; only resignation avoids the DomStab/Honest-Gov drop). | [§19.1 design-holes block](#191-design-divergences-for-the-roadmap); `rep1800` §A POST 465-474, §B 3594, 3620 |
+| **DH-54** (`nuke`, batch 9) | **Impeachment / VP-vacancy never appear in the rules doc at all** (the modern institutional layer #112 had to improvise removal). | `game-context.md` DH-54 |
+| **DH-66** (`ideo1928`, batch 18) | The "Improper SC Justice" event's impeachment trial was **VOIDED mid-run**; article-generation / trial-trigger / Controversial-vs-<3-judicial all under-specified; **Ted drafting a rewrite**. | digest#post 816-861 |
+
+⇒ The impeachment subsystem is **structurally under-specified, not a one-thread fluke** — confirmed
+from the early-republic (1800), modern (1948), and interwar (1928) eras. **Build requirement:** a
+first-class impeachment subsystem (article generation → trial trigger → trial vote → removal/acquit
+→ DomStab/Honest-Gov effects), with the Controversial / <3-relevant-skill gating made consistent
+with the confirmation rules. **Authority note:** the *void* is a GA call; **Ted's rewrite is the
+authoritative spec — pending** (not yet captured).
+
+*(designed, not built — a `game.impeachment` flow: an article-generation step (charge derived from
+the triggering event / pol traits), an explicit trial-trigger gate, a chamber trial vote at a stated
+threshold, and removal/acquittal outcomes with DomStab/Honest-Gov meter effects; resolve the
+Integrity-pol-accused-of-bribery nonsense by gating article generation on trait plausibility.
+Couples to §24.1 succession, §9.3.8 nomination filters, §22.7 SCOTUS, §10.2 anytime events. Await
+Ted's rewrite for the authoritative ruleset.)*
+
 ### 24.2 (#62) Contingent House election + tied-chamber inverse control
 
 > **★ TED-RULED: the inverse-tied-House-control rule is AUTHORITATIVE** (`tedchange#POST 65`,
@@ -7402,6 +7494,37 @@ covers 1788, 1856, 2012, and any future era boot, with the **"no leaders / no ca
 > Integrity AND Controversial simultaneously — `TRAIT_CONFLICTS` is run only on trait-add
 > events, not at dataset/boot import time). Validators run **at scenario-boot time**.
 
+> **★ BATCH-18 (`ideo1928`) — two boot-shape sharpenings (both GA-level, NOT designer-authoritative).**
+>
+> **#164 — the mid-government START-STATE model is UNSETTLED (pick one).** For the 1928 boot, the GA
+> let the **historical Hoover cabinet stay as first-term holdovers** (no new traits/meters) rather
+> than re-appoint (digest#post 184) — and flagged it as an open question, with **Ted himself
+> unsettled**: *"I don't know that we've ever landed on a solid answer here"* re: **election-start vs
+> president-in-place-with-cabinet vs president-with-historical-cabinet** (digest#post 185). **Players
+> favor president-in-place** (digest#post 187-188). This is the §26.1 "Sitting government keyed to the
+> start year" boot-component made into an explicit **three-way design fork** — the build must pick
+> one. (`game-context.md` #164. Authority: GA + Ted-acknowledged-open, NOT yet ruled.)
+>
+> **#163 — career-track PRE-PLACEMENT house rule (a concrete proposal for the DH-25 open issue
+> above).** To fix the long-standing **"generational pols stuck at low stats because they never
+> joined a track at the right age"** problem (digest#post 40, Ted: *the Buttigieg problem*), the GA +
+> matthewyoung **pre-placed randomized statesmen onto career tracks at game start** — keyed by
+> **draft-year cohort + ability** (digest#post 32, 41). **Not in the rules** — proposed as an
+> improvement, and a **GA-level house rule, NOT designer-authoritative**. It is the same gap as the
+> Zagnut "anyone drafted in 1996+ goes onto one track each" houserule (item 3 above / DH-25): the
+> build needs a **canonical boot-seed rule that puts marquee/generational pols onto career tracks at
+> start** so they aren't stuck at floor stats. (`game-context.md` #163. Bears on §5 career tracks +
+> the §29.7.1 #166 industry/meter bookkeeping the build must own.)
+>
+> **Corroborations (boot-data fidelity):** the 1928 boot re-exhibited **DH-27 trait conflicts**
+> (Claude Pepper had Integrity ⊕ Controversial — also seen in 1948; Carroll Reece same; digest#post
+> 533-536, 551), **column-shift corruption** (a faction showed "20 members listed as openly LGBT"
+> from a shifted "Woman" column, digest#post 21-23), **historical-accuracy slips** (wrong Pittman
+> brother; AZ 4-yr-vs-2-yr gov terms; TN senator-class mislabels; 0-legislative reps allowed to run,
+> digest#post 499, 500, 492-498, 665-667), and **★ per-era meter-version drift** (the live sheet used
+> an out-of-date meters template — Mil-Prep + Rev/Budget era-restrictions differed from the master,
+> digest#post 783-792 → the build must **version meter tables per era**, see [§29.7.1(h)](#2971--new--the-great-depression-meta-event--econstab-cascade--crisis-gated-new-deal-bills-the-interwar-economic-engine-gap-160-ideo1928) / #166).
+
 *(designed, not built — a `BootSheet` schema instantiated per era; a `scenarioBoot(era,
 year)` pipeline producing a `FullGameSnapshot`; a Senate-class verifier; a `TRAIT_CONFLICTS`
 validator running at boot/import; explicit "no faction leader" and "empty career-track"
@@ -7798,6 +7921,49 @@ amendments toggle CAPABILITIES, not just rule-flags; pairs with §21.3 ratificat
 > draft pool, lobby cards / "Faction Personalities", and era-activated industries. This is the
 > per-decade `AMPU Census` doc (§28.9 / row #88), distinct from the per-era bias-table swap of
 > §27.2 step 6. (`nuke` mid-B B / mid-C S2; POST 6374–6377, 8361–8364, 8410, 8547, 10008–10010.)
+>
+> **★★ BATCH-18 — the era-band model is now 6-START-CONFIRMED (a SIXTH start year, 1928 — the "Era
+> of Ideologies"; `ideo1928`, #161/#41).** The interwar 1928-start campaign emits the level-(a)
+> band model **a sixth time**, independently. The era-band model now holds across **SIX independent
+> start years**: **1772 / 1800 / 1820 / 1856 / 1948 / 2000 + 1928** (note 1928 sits chronologically
+> *before* 1948 but was played *later*, so it is a distinct sixth confirming save, not a sub-span of
+> an existing one). The **"Era of Ideologies" is the game's name for the 1896→1932 hinge band** when
+> entered at 1928 (framed as Republicanism vs. Fascism vs. Communism amid collapsing monarchies +
+> a globally-interconnected economy). The 1928 band carries its **own four era-content components**
+> (the §27.1 registry shape), all era-keyed:
+> - **Faction roster** — 5 ideological factions per party (LW / Left / Cent / Right / RW), each a
+>   named faction: BLUE = Share-Our-Wealth, Labor→**New-Deal Democrats** (player-renamed when FDR
+>   becomes party leader, digest#post 694), Schoolbook-Liberals, States-Rights, Justice Democrats;
+>   RED = Liberal / Wall-Street / Business / Moderate / Tariff-Irreconcilable Republicans.
+> - **Draft-ideology profile** — era-keyed in GovStates (digest#post 430: *"in… the Era of
+>   Ideologies, Arizona's preferred ideos are Mod, Lib"*) — a per-era preferred-ideology table (a
+>   #92 era-keyed-content instance; one era-keyed bug: AZ had Mod as BOTH most- AND least-preferred,
+>   cancelling out, digest#post 429-430).
+> - **Era-event spine** (scripted, 2.4.3) — tracks real ~1927-1940 history (Lindbergh, Stalin,
+>   Spain-Republic, Hitler-takes-power, Reichstag, Einstein-flees, penicillin, Mickey Mouse, King
+>   Kong, Hindenburg, Gone-With-the-Wind) **+ player-decision (multi-decider) events**: Purchase
+>   Iceland (budget/relations tradeoff, digest#post 261/267), Lausanne Conference (forgive German
+>   war debt?), Japan invades Manchuria (retaliatory embargo?), Dust Bowl (agricultural relief?),
+>   **and the Great-Depression META-event itself** (§29.7.1). Many carry per-state/per-pol election
+>   bonuses + meter shifts.
+> - **Bill catalog** — the New-Deal/crisis economic engine (§29.7.1) **plus** non-economic era
+>   bills: Move-Inauguration-Day Amendment (20th), Legalization-of-Alcohol Amendment (21st),
+>   peacetime draft, Create US Air Force, ban-teaching-evolution, literacy tests, close-borders /
+>   immigration restriction, Filipino-immigration ban, "Sell Alaska/Philippines to pay debt,"
+>   National Health Insurance, One-Term-Limit Amendment, civil-service merit reform (Pendleton).
+>
+> **★ Hinge polarity (PRE-realignment) for the 1928 band — do NOT carry modern polarity backward:**
+> **RED = Republicans** (Hoover; dominant, pro-business, isolationist), **BLUE = Democrats** (Al
+> Smith — urban/immigrant + the agrarian Solid South). The modern BLUE-economic-left polarity does
+> **not** exist at game start — it is **created in play by the New Deal (1932+)** (a player renames
+> his faction the "New Deal Democrats" when FDR becomes leader, digest#post 694; the LW/Lib pole
+> consolidates BLUE late-game by enthusiasm, digest#post 591-593). Treat the cast/timing as
+> alt-history; the *issues* (crash, Depression, ideological contest, isolationism, looming WWII) as
+> real-grounded. (Historian: `historical-context.md` §5 terminology + the hinge-polarity row.)
+> **Engine:** would run on **`modern`/`progressive` tuning — UNBUILT** (`Era` is still the 4-value
+> enum `independence/federalism/nationalism/modern`, `types.ts:1337`; no `progressive` enum or 1928
+> scenario in shipped code, codebase-verified). (`ideo1928` digest §"Era-content band"; `game-context.md`
+> #161, #41/#92.)
 >
 > **★ CORRECTION of an earlier-extractor error (logged so it is NOT re-introduced).
 > "Neocons" / "Corporate Republicans" is a FACTION REBRAND (~1980–82), NOT an era band.** After
@@ -9031,6 +9197,12 @@ it there, so the gov-actions library and the SCOTUS docket are linked. SCOTUS ru
 > `partyPreference × 5` / `baseLean × 5` per-candidate terms in `calcStateVote`
 > (`phaseRunners.ts:3709`, [§15.1](#151-calcstatevote--the-core-resolver-phaserunnersts3685)).
 > (`terror2000#POST 913-926`; `dem1820#POST 569, 575, 618`; `arkzag#POST 195–207`; #18/#51.)
+> **★ LIVE-corroborated at the PRESIDENTIAL level (`ideo1928`, batch 18):** the **1932 Hoover-v-
+> Roosevelt general** ran the 2-layer scorer end-to-end — the Depression's **−1 econ-crisis penalty +
+> Party-Pref maxed Blue + region-snub penalties** all stacked against Hoover → **FDR wins**; the #51
+> reshuffle (legislation points → industry-impact points → 4-step enthusiasm shift) ran each Congress
+> (`ideo1928#post 1044, 1224, 446`). Full interwar economic engine feeding this:
+> [§29.7.1](#2971--new--the-great-depression-meta-event--econstab-cascade--crisis-gated-new-deal-bills-the-interwar-economic-engine-gap-160-ideo1928).
 
 > **UPDATE (batch 11 `arkzag`): the ALGORITHM half (#51) is settled.** Batch 11's final chunk
 > published the canonical 4-step faction-performance → enthusiasm rule VERBATIM, matching the
@@ -9362,6 +9534,109 @@ institution (§27.6); a **per-bill-class change cooldown** (`Bill.lockedUntilYea
 tariff cadence; sectional ±100 (Agriculture/Finance) meter effects on resolution. Couples to §12.7
 crisis bills, §12.6 filibuster, §27.6 Bank office, §21.6 budget/era gating.)*
 
+#### 29.7.1 ★★ NEW — the Great-Depression META-EVENT + EconStab cascade + crisis-gated New-Deal bills (the interwar economic engine; gap #160, `ideo1928`)
+
+> **★★ THE HEADLINE OF BATCH 18. NEW this batch (`ideo1928`, the 1928-start "Era of Ideologies"
+> interwar campaign; GA = @10centjimmy, a **GA, NOT the designer** — flagged below where Jimmy
+> improvises vs. defers to Ted/V). DESIGNED, not built.** This is the **interwar extension of the
+> §29.7 / #116 economic engine** and the §22.1 EconStab-crisis/cascade machinery: the **Great
+> Depression as a SCRIPTED ERA META-EVENT with VARIABLE timing**, carrying a **multi-meter shock
+> bundle + an EconStab cascade + crisis-gated New-Deal legislation**, climbed back out of via
+> ordinary bills + gov actions. The shipped engine has **none of it** — `Era` is the 4-value enum
+> (`types.ts:1337`), the only economy token is the **generic 7-step `economic` meter** whose bottom
+> descriptor is literally `'Depression'` (`Meter.tsx:15`, `'Depression'…'Roaring'` band); there is
+> **no `economicStability` field, no Great-Depression event, no cascade, no crisis-gated bill state**
+> in `src/` (codebase-verified). Cross-ref `game-context.md` #160 / DH-67; the meter-bank +
+> cascade home at [§22.1](#221-the-named-meter-bank--numeric-debt--crisiscascade); the long-run
+> Bank→Treasury engine at [§29.7](#297--new--the-bank-war--independent-treasury-long-run-economic-engine-gap-116);
+> crisis bills at [§12.7](#127-forum-design-layer-crisis-bill-tag-designed-not-built). Historian:
+> `historical-context.md` §5–§6.
+
+**Authority caveat:** Jimmy is a **GA**, so the **EconStab-cascade interpretation** below (the
+"2 industries −1 in every state" reading) is a **GA-level ruling, NOT designer-authoritative** —
+confirm with V/Ted before building. The **balance verdict** (ch18 POST 8) is the GA's own
+post-mortem. (`game-context.md` GA-vs-designer caveat.)
+
+**(a) The Great Depression = a scripted era META-event with VARIABLE timing (NOT auto-fired on the real Oct-1929 clock).**
+
+| Property | Behavior | Cite |
+|---|---|---|
+| **Timing** | **Did NOT auto-fire** on the real Oct-1929 schedule. The in-game economy was still "great" in **Jan 1930** (KDKA broadcast: "the economy is great… there's an ocean between us so we'll be fine!"); players debated keeping prior-era party modifiers **"until the great depression event hits, if it ever does"**. It finally fired in the **1930-1932 turn** — i.e. **late, after the 1930 midterms**. | digest#post 567, 545, 862 |
+| **Trigger** | A scripted **era-event spine** entry (2.4.3, [§10.3](#103-243-era-events--runphase_2_4_3_era-phaserunnersts2796)) — fires on the era-event scheduler's own clock, **decoupled from the real date** (the §27.1 "era CONTENT fires on its own scripted schedule" rule). | digest#post 862 |
+| **Global-interconnection flavor** | Event text bakes in the interconnected-global-economy idea: *"The London Stock Exchange crash has led to our own crash on Wall Street… a run on banks… a shrinking money supply… the worst depression in our history!"* (London crash → US crash). | digest#post 862 |
+| **Presidential binary decision** | The meta-event carries a **multi-decider presidential choice** ([§10.4.1](#1041-multi-decider-events)): **(a) let markets resolve on their own** / **(b) congressional welfare bailout**. Hoover (via Sec-Treasury Mellon) chose **(a) "markets resolve on their own"** — cementing his historical fate. | digest#post 862-864 |
+
+**(b) The meta-event's meter-shock BUNDLE (a single event nudging MANY meters at once).** The crash is a *bundle* event, the inverse of a war-victory package:
+
+| Meter | Shock | Resulting state |
+|---|---|---|
+| **Econ Stab** | **−4** | → Recession & Crisis (the dominant hit) |
+| **Rev/Budget** | **−2** | → overspending / Crisis |
+| **Quality of Life** | **−1** | — |
+| **Mil Prep** | **−1** | — |
+| **Party Preference** | **−3** | (toward the era's BLUE bias) |
+
+(digest#post 862.) This corroborates the §22.1 "one event nudges several banded meters ±N" model and the §21.8 ±3-swing-cap (note EconStab's **−4** here **exceeds** the ±3 cap — a meta-event override, or a cap-violation to flag).
+
+**(c) ★ The EconStab CASCADE (GA ruling, POST 866) — the load-bearing new mechanic.** When EconStab falls into **Recession**, an automatic cascade fires:
+
+1. **2 random industries each drop −1 NATIONWIDE — i.e. in *every* state, automatically** (not a roll-per-state; the GA ruled it applied uniformly across all states). digest#post 866-868, 882-887.
+2. The industry drops can **flip a state's lead-industry leadership** → triggers an **EV reflow / EV-reallocation roll** (observed: **CO +1, OK −1** here). This couples the economic cascade directly to the **Electoral-College map** via [§11.5 industry-leadership scoring](#115-industry-leadership-scoring-designed-not-built) + [§28.9 census/EV](#289-the-per-decade-census--statehoodterritory-the-level-b-census-mechanic).
+3. A **Dom-Stab-drop chance** rolls alongside.
+4. **EconStab in Recession GATES other meters' gains**: meters that "would increase, but cannot as economy is in Recession" are **held** (digest#post 723) — corroborates the §22.1 "Rev/Bud caps EconStab gains / one meter's tier caps another" cascade-cap rule, now confirmed from the EconStab→QoL/DomStab direction.
+
+**(d) Crisis-GATED New-Deal legislation (the bill catalog only legal once the crash has fired).** The economic bill catalog is the New-Deal/crisis engine (#116 from a 1928 angle), and key bills are **gated on the economy being in panic/crisis** — they are **ineligible until the Great-Depression event fires**:
+
+| Bill | Crisis gate / note | Cite |
+|---|---|---|
+| **"Allow the Federal Reserve to generate currency during economic crises"** | ★ **CRISIS-GATED** — requires the economy in panic/crisis to be eligible; **becomes legal only AFTER the crash fires** (proposed pre-crash → invalid; legal post-crash). | digest#post 337, 1040 |
+| **"Bailout for Low/Middle-income Workers during Economic Crisis"** | Crisis-gated worker bailout (the (b)-branch of the meta-event decision rendered as a bill). | digest#post 862 |
+| **Tennessee Valley Authority (TVA)** | New-Deal public-works bill. | digest#post 862+ |
+| **"Create Council of Economic Advisors"** | New-Deal institutional bill (cf. offices-by-law, [§24.6](#246-66-the-progressive-era-institutional-layer-offices-created-in-game-by-law)). | digest |
+| **"Set Income Tax brackets 25%-63% (Hoover Taxes)"** | Tax-bracket bill. | digest |
+| **Federal Farm Board / surplus-crop purchasing / Dust-Bowl agricultural relief** | Agricultural-crisis bills (Dust Bowl is also a decider era-event). | digest#post 862 |
+| **"Set Average Tariff Rate to 40%"** / **"Grant President the power to set tariffs"** | Tariff-rate-as-national-% bills (corroborates [§31.1](#311-147-tariff-as-national-rate--the-mutually-exclusive-monetaryregime-designed) tariff-rate + the [§28.3](#283-the-diplomacy-system--the-real-working-cold-war-subsystem-271--261) pres-tariff-power gate); Hoover **vetoed** the 40% tariff inside a 2-bill package (no line-item veto → had to veto the whole package, digest#post 406-411). | digest#post 406 |
+
+**(e) Climbed OUT of the Depression via ordinary legislation + gov actions (the severity was too weak).** The New-Deal bills + governor "lower taxes" / "fill state offices" actions **each grant EconStab +1**; by **mid-1936** the GA prints **"we are no longer in Econ stab crisis"** (digest#post 1601). Players joke about "shrugging off the Great Depression in just 2-4 years" (digest#post 1046-1047). **Open Q for the build:** keep the crash a one-shot meter shock (current paper behavior, trivially recovered), or apply a **persistent drag** ordinary bills can't quickly undo? (`game-context.md` #160 open Q.)
+
+**(f) ★★ DH-67 — the crash-modifier COUPLING BUG (the central build requirement).** The era's **party-preference / realignment modifiers are STATICALLY baked into the era band, DECOUPLED from the crash event**:
+
+- The era's **BLUE-favorable bias fired regardless of whether the crash had fired** → the **GOP cratered in the 1930 midterms WITH A HEALTHY ECONOMY** (the crash had **still not fired**; the Red losses came from **legislation penalties** — manufacturing-state hits from the child-labor + vetoed-tariff bills — see [§11.5](#115-industry-leadership-scoring-designed-not-built) / #166, **NOT** from a depression). This is the concrete face of the static-decoupling.
+- **GA balance verdict (ch18 POST 8, the headline delta):** *"These era bonuses are SUPER STRONG. Like, wow. Maybe too large… the 'Depression' wasn't nearly as bad this time around. That's what caused a LOT of the reaction against Hoover historically."* Historically the GOP cratered **because of** the Depression; here the bias is decoupled from it, so the GOP craters anyway and the crash itself under-delivers.
+- **Player-proposed fix** (Umbrella, digest#post 545): use **prior-era modifiers "until the great depression event hits"** — i.e. **EVENT-GATE the era's BLUE-favorable party-modifier bias to the Great-Depression event firing**, rather than baking it statically into the era band.
+- **★ Build requirement:** the era's party-preference bias must be **gated on the crash event having fired**, not a static era-band constant. (This is gap **DH-67** and the central design takeaway of #160.)
+
+**(g) #165 — EconStab / general-event effect-sign + auto-vs-roll ambiguities (corroborates DH-53 from an EVENT angle).** EconStab/general events were ambiguous on **(i)** whether an event **auto-applies** its effect or **rolls** for it, and **(ii)** the **sign direction** of the effect:
+
+- The **"Major Earthquake" aid** option read **"+Rev/Budget"** but should **cost** money (Ted: *"happens a lot… half a dozen laws in the revolutionary era where it gains money when it should lose money"*) — digest#post 814-815. This **corroborates the per-bill effect-sign bug DH-53** ([§19.1](#191-design-divergences-for-the-roadmap)) from an **event** angle (not just bills).
+- General events nudging relations (authoritarian-meeting / nationalist-march / Russian-trade-tension) were inconsistent on auto-apply-vs-roll (digest#post 243, 809). **Build requirement:** event effect tables need an explicit **`auto | roll`** flag and **audited signs** (same fix as the §19.1 / DH-53 bill effect tables).
+
+**(h) #166 — the per-faction industry-impact AUTO-TALLY (load-bearing for scoring; meter-version drift).** Legislation scoring + the EconStab cascade both need a **per-faction "how many of my gov/sen/rep are in each lead-industry" tally**:
+
+- **Industry-impact scoring** (#51, [§11.5](#115-industry-leadership-scoring-designed-not-built)): every gov/sen/rep from a state whose **lead industry is hit** (by a bill OR by the EconStab cascade) **loses points** (digest#post 446). This drove the 1930 "Red bloodbath" (manufacturing-state hits) **before** the crash.
+- A player built an **"Industry test sheet" auto-calc tool** (Umbrella, digest#post 450-457) that was **copied across playtests** — a strong signal the **build must OWN this bookkeeping** (the manual version is GM-burnout fuel, DH-36).
+- **★ Meter-version drift hazard:** the live sheet used an **out-of-date meters template** (Mil-Prep militia-act requirement + Rev/Budget era-restrictions differed from the master, digest#post 783-792). **The build must VERSION the meter tables per era** (a recurring fidelity hazard — pairs with #92 era-keyed content).
+
+**System interactions (the interwar economic engine as a system):**
+
+- **Meta-event → EconStab → cascade → EV map → election:** the Great-Depression event drops EconStab −4 → Recession → the **2-industries-−1-nationwide cascade** flips state lead-industries → **EV reflow** → the new map + the **−3-incumbent EconStab election penalty** ([§22.1](#221-the-named-meter-bank--numeric-debt--crisiscascade)) feed `calcStateVote`. The crash is thus wired end-to-end from a single scripted event into the Electoral-College map and the election scorer.
+- **The 1932 Hoover-v-Roosevelt general is the payoff** — the Depression's **−1 econ-crisis penalty + Party-Pref maxed Blue + region-snub penalties** all stack against Hoover → **FDR wins** (full detail at [§29.3](#293--the-meterenthusiasmelection-model--51-resolved-drums-4-step--18-resolved-terror2000--vs-2-layer-model-gap-1851), the #18 2-layer scorer live at the presidential level). This is the §22.1 "meter bank IS the election engine's memory of a presidency" lesson at the interwar scale.
+- **DH-67 decouples the trigger from the consequence:** *if* the party-modifier bias were event-gated (the fix), the crash event would be the **single switch** that turns on the BLUE realignment bias — making the meta-event genuinely load-bearing instead of cosmetic-on-top-of-a-static-band.
+
+*(designed, not built — extend the `game.economy` state machine (§29.7) for the interwar band: a
+**Great-Depression META-event** (a single era-event entry, [§10.3](#103-243-era-events--runphase_2_4_3_era-phaserunnersts2796))
+carrying a **multi-meter shock bundle** (`{economic:−4, revenue:−2, quality:−1, military:−1,
+partyPref:−3}`) + the **(a)/(b) presidential decider** ([§10.4.1](#1041-multi-decider-events)); an
+**EconStab→Recession CASCADE** that drops **2 random industries −1 in EVERY state** → triggers an
+**EV-reflow** ([§11.5](#115-industry-leadership-scoring-designed-not-built), [§28.9](#289-the-per-decade-census--statehoodterritory-the-level-b-census-mechanic))
++ a DomStab-drop chance + **gates other meters' gains while in Recession**; **crisis-GATED bills**
+(`Bill.requiresCrisis: 'economic'`) so Fed-currency-in-crisis / worker-bailout are invalid until the
+crash fires; **★ DH-67: EVENT-GATE the era's BLUE party-modifier bias to the crash having fired**
+(not a static era-band constant); a **per-faction industry-impact auto-tally** the engine owns (#166)
++ **per-era meter-table versioning**; and **audited event effect-signs + an `auto|roll` flag** (#165,
+corroborates DH-53). Couples to §22.1 meter bank/cascade, §29.7 economic engine, §11.5 industry
+scoring, §12.7 crisis bills, §29.3 meter→election, §27.1 era-band content.)*
+
 ### 29.8 ★ NEW — the constitutional-amendment lifecycle (propose → committee → floor → governor-ratify → active/blocking) (gap #119)
 
 > **NEW this batch (`arkzag`). DESIGNED, not built.** Amendments are **first-class era content with a
@@ -9687,6 +9962,7 @@ This index is a fast-lookup table back to those folds.
 | **#129** | Kingmaker → Protégé trait allowlist/blocklist | RULED | [§6.5.y](#65y--ted-ruled-kingmaker-scope--trait-inheritance-allowlist-designer-authoritative-tedchange) | 201-208, 279-283 |
 | **★ #130** | **Retirement + death schedule** | RULED — Hale=½, Frail-first, ex-Pres death-only, 5% rate, era-scaled | [§10.1.y](#101y--ted-ruled-death--retirement-schedule-designer-authoritative-tedchange) | 89-100, 137-148, 195-197, 396 |
 | **#131** | Integrity pol cannot nominate Controversial | RULED | [§9.3.8](#938--ted-ruled-nomination-filters-designer-authoritative-tedchange) | 276-278 |
+| **★ Confirmation auto-pass** | **Cabinet confirmations AUTO-PASS except State/Treasury/AG/Defense, OR Controversial, OR <3 relevant skill (Integrity waives)** | RULED (Ted, in `ideo1928` — designer-authoritative). Iron-Fist Maj-Leader can force a vote on any. **Indexed in [§30.9](#309-rulings-folded-from-ideo1928-ga-run-interwar-1928-campaign--one-ted-designer-ruling).** | [§9.1](#91-231-cabinet--runphase_2_3_1_cabinet-phaserunnersts2158) + [§9.3.8](#938--ted-ruled-nomination-filters-designer-authoritative-tedchange) | `ideo1928` 213-214 |
 | **#132** | Challenge-Legislation cannot target REPEAL | RULED | [§11.3.y](#113y--ted-ruled-gov-action-challenge-legislation-restrictions-designer-authoritative-tedchange--smallbugs) | 246-248 |
 | **★ #133** | **1st / 2nd CC composition** | RULED — Big states (PA/MA/VA/MD) 4 / Medium 3 / Small (GA/RI/DE/NH) 2; appointment rule transitions on DoI | [§17.1.y](#171y--ted-ruled-1st--2nd-cc-composition--appointment-designer-authoritative-tedchange) | 211, 217-236, 277, 352-355 |
 | **★ #134** | **Lingering 7-step strict ordering + decay carry-forward** | RULED — steps 1→7 in order, never re-done; volatility = this-phase-only; tax/tariff decay propagates to next phase's step 3 | [§11.1.y](#111y--ted-ruled-lingering-7-step-strict-ordering-designer-authoritative-tedchange) | 397-408 |
@@ -9928,6 +10204,53 @@ and `game-context.md` **DH-29 (★ movement)**.
 > **No NEW CPU sub-gaps beyond #158** — this run **field-validates the §25 CPU suite from the founding
 > angle** rather than extending it. The one genuinely-new CPU finding (#158, the peace/game-over lean) is
 > indexed above and folded into §13.2 / §25.7 / §21.1.
+
+### 30.9 Rulings folded from `ideo1928` (GA-run interwar 1928 campaign — ONE Ted designer ruling)
+
+> **★ AUTHORITY SPLIT — read carefully.** `ideo1928` (`e45a756c`, the "Era of Ideologies" 1928-start
+> interwar campaign, batch 18) is **GA-run by @10centjimmy, a GA — NOT the designer.** So **Jimmy's
+> rulings are GA-level (useful, NOT designer-authoritative)** — they sit at hierarchy tier 4
+> ([§30.4](#304-authority-hierarchy-reminder)), like `tea1772`/`hd`/`rep1800`/`arkzag`. **The ONE
+> exception** is where **Ted weighed in directly** — the **confirmation auto-pass rule**, which is
+> **designer-authoritative** (tier 1). This index separates the two. Cite `ideo1928#post n`.
+
+**★ Designer-authoritative (Ted weighed in — tier 1):**
+
+| # | Topic | Ruling | Folded into | `ideo1928` POSTs |
+|---|---|---|---|---|
+| **★ Confirmation AUTO-PASS** | **Cabinet confirmation auto-passes EXCEPT a short exception list** | RULED (Ted, designer-authoritative) — all nominees **auto-confirm EXCEPT** State / Treasury / AG / Defense, **OR** Controversial, **OR** < 3 relevant skill (unless **Integrity** waives the low-skill trigger). A **Senate-Maj-Leader with Iron-Fist can force a vote on ANY** nominee. Directly addresses the §25.5 "36% of 88 nominees passed" CPU confirmation pathology (most picks should never reach a vote). | [§9.1](#91-231-cabinet--runphase_2_3_1_cabinet-phaserunnersts2158) + [§9.3.8](#938--ted-ruled-nomination-filters-designer-authoritative-tedchange) + [§25.5](#255-cabinet-confirmation--designer-acknowledged-bug-36-of-88-nominees-passed) | 213-214 |
+
+**GA-level rulings (Jimmy — tier 4, confirm with V/Ted before building):**
+
+| Topic | Ruling | Folded into | `ideo1928` POSTs |
+|---|---|---|---|
+| **★ Impeachment VOIDED mid-run (DH-66)** | "Improper SC Justice" event's impeachment trial **voided** (article-generation / trial-trigger / Controversial-vs-<3-judicial all under-specified); **Ted drafting a rewrite**. **Corroborates DH-33 / DH-54 — now 3-thread.** | [§24.1.1](#2411--impeachment-subsystem--broken-as-is-voided-mid-run-dh-66--corroborates-dh-33-now-3-thread-ideo1928) | 816, 825, 840, 861 |
+| **★ EconStab cascade interpretation** | when EconStab → Recession, **2 random industries −1 in EVERY state automatically** → state-lead-industry flips trigger **EV rolls**; EconStab-in-Recession gates other meters' gains. **GA reading, NOT designer-ruled.** | [§29.7.1(c)](#2971--new--the-great-depression-meta-event--econstab-cascade--crisis-gated-new-deal-bills-the-interwar-economic-engine-gap-160-ideo1928) + [§22.1](#221-the-named-meter-bank--numeric-debt--crisiscascade) | 866-874 |
+| **Career-track pre-placement (#163)** | pre-place randomized statesmen onto career tracks at game start (by draft-year cohort + ability) to fix the floor-stat generational-pol problem (the Buttigieg problem). Proposed improvement; a concrete take on the DH-25 open issue. | [§26.1 batch-18 block](#261-the-mid-government-boot-shape-general) + [§5](#5-career-tracks--the-expertise-pipeline-212) | 32, 40, 41 |
+| **Inaugural cabinet = retained holdovers / start-state UNSETTLED (#164)** | the historical Hoover cabinet kept as first-term holdovers; **Ted-acknowledged-OPEN** three-way fork (election-start vs president-in-place vs president-with-historical-cabinet); players favor president-in-place. | [§26.1 batch-18 block](#261-the-mid-government-boot-shape-general) | 184, 185, 187-188 |
+| **30% off-ideology draft, skip-on-fail** | drafting outside your faction's ideologies ≈ 30% success; failure = skipped pick. | [§4 Draft](#4-draft-211) | 19, 196 |
+| **Other reconciliations** | "incumbent party = party of the President" (lingering/EconStab meter, 555-556); president-as-leader appends his ideology card (643-648); SCOTUS-block rule = can't block a non-controversial nominee unless 2 ideologies from your faction leader (475); filibuster-only-after-full-House-passage (1006). | [§11.1](#111-251-lingering-meters--runphase_2_5_1_lingering-phaserunnersts3260) / [§7.4](#74-forum-design-layer-the-card-distribution-algorithm-designed-not-built) / [§22.7](#227-scotus-subsystem-253--282) / [§12.6](#126-forum-design-layer-filibuster-designed-not-built) | 475, 555-556, 643-648, 1006 |
+
+**NEW gaps + corroboration upgrades (folded into topical homes):**
+
+| # | Topic | Status | Folded into | `ideo1928` POSTs |
+|---|---|---|---|---|
+| **★ #160** | **Great-Depression META-event + EconStab cascade + crisis-gated New-Deal bills** (scripted era event, variable timing, multi-meter shock bundle, 2-industries-−1 cascade → EV reflow) | **DESIGNED** (interwar extension of #116) | [§29.7.1](#2971--new--the-great-depression-meta-event--econstab-cascade--crisis-gated-new-deal-bills-the-interwar-economic-engine-gap-160-ideo1928) + [§22.1](#221-the-named-meter-bank--numeric-debt--crisiscascade) | 545, 567, 862-887, 1040, 1601 |
+| **★ DH-67** | **Crash-modifier COUPLING bug** — the era's BLUE party-modifier bias is **static, decoupled from the crash** → GOP craters with a healthy economy. **Build: event-gate the bias to the crash firing.** | **DESIGNED build requirement** | [§29.7.1(f)](#2971--new--the-great-depression-meta-event--econstab-cascade--crisis-gated-new-deal-bills-the-interwar-economic-engine-gap-160-ideo1928) | 545, ch18-8, 446 |
+| **★ #161** | **1928 = the 6th era-band start-year ("Era of Ideologies")** | **DESIGNED** (6-start confirmation of #92/#41) | [§27.1 batch-18 block](#271--the-era-model--eras-are-content-bands-gated-by-game-state--territory-not-calendar-year) | 1, 430, 591-593, 694, 1582 |
+| **#162** | **Interwar diplomacy roster** (7 nations, no Israel) + **#56 NEGATIVE result** (ideology/WWII framing ≠ war trigger) | **DESIGNED** (corroborates #107; negative #56) | [§13.3.1](#1331-per-power-relations-meters--an-era-dependent-power-roster) | 1, 265, 403-404 |
+| **#165** | **EconStab/general-event effect-sign + auto-vs-roll ambiguities** — corroborates **DH-53** from an event angle | **DESIGNED build requirement** | [§29.7.1(g)](#2971--new--the-great-depression-meta-event--econstab-cascade--crisis-gated-new-deal-bills-the-interwar-economic-engine-gap-160-ideo1928) | 814-815, 243, 809 |
+| **#166** | **Per-faction industry-impact AUTO-TALLY** (load-bearing for scoring + the EconStab cascade) + **per-era meter-version drift** | **DESIGNED build requirement** | [§29.7.1(h)](#2971--new--the-great-depression-meta-event--econstab-cascade--crisis-gated-new-deal-bills-the-interwar-economic-engine-gap-160-ideo1928) + [§11.5](#115-industry-leadership-scoring-designed-not-built) | 446, 450-457, 783-792 |
+
+**Corroborations field-validated from the interwar angle (no new rule — strengthen existing entries):**
+
+| Existing entry | `ideo1928` corroboration | POSTs |
+|---|---|---|
+| **#116** economic engine | the EconStab meter + crisis-bill economic content engine re-derived from a native 1928 angle (London-crash → US-crash → Recession → New-Deal bills → climb-out). | 862, 1040, 1601 |
+| **#92/#41** era band | 6th independent start-year emits the band model (own faction roster / draft-ideology profile / era-event spine / bill catalog); runs on `modern`/`progressive` tuning, UNBUILT. | 1, 430, 1582 |
+| **#18/#51** meter→election scorer | the 2-layer scorer exercised LIVE in the **1932 Hoover-v-FDR presidential general** (econ-crisis + maxed-Blue enthusiasm + region snubs stacked → FDR wins); legislation scoring + industry-impact + 4-step enthusiasm reshuffle re-confirmed. | 446, 1044, 1224 |
+| **#107** diplomacy | 7-nation interwar roster + ambassador action set (Increase Relations / Trade / Credit / Take a Loan) native. | 403-404 |
+| **DH-53** bill-effect sign bug | the "Major Earthquake" aid +budget-when-should-cost bug (#165) corroborates the per-bill effect-sign bug from an event angle. | 814-815 |
 
 ### 30.4 Authority hierarchy reminder
 

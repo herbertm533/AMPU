@@ -45,7 +45,7 @@ will hold their 2008 convention," chunk-001 post 14):
 | **1828–1856 Jacksonian / 2nd Party System** | **Democrats (Jackson; the modern Democratic Party is born here)** | **National Republicans → Whigs (Clay; anti-Jackson)** | **Split / cross-cutting** (Jacksonians = the *popular/common-man* pole; Whigs = the *commercial/improvement* pole) | The real parties realign. **The game keeps the OLD 1788 labels far too long** — Daniel Webster is "leader of the **Federalists**" as late as 1840 in-game (chunk-074 post 6204) — so its BLUE=Dem-Rep / RED=Federalist tokens persist where real history had already become **Democrat vs. Whig** by ~1834. The game's internal era names for this span are "**Era of Manifest Destiny (1840-1856)**" (chunk-074 post 6203) preceded by the late Era of Republicanism. |
 | 1856 Antebellum | **Democratic Party** | **Republican Party** | **RED (Republicans)** | **POLARITY FLIP**: here the antislavery/progressive pole is RED, the conservative/pro-slavery pole is BLUE (`scenario1856.ts:18-31` enthusiasm table) — confirmed in play, "Blue = Democrats, Red = Republicans… 1856-era Republicans are the antislavery party" (*house-divided* partial-03). The game calls this the "**Era of Nationalism**" (6aa7309a chunk-117: "the final turn of the Era of Nationalism"). |
 | 1868 Gilded Age | Democrats ("Solid South") | National Republicans | RED (Republicans) | Continues the 1856 polarity (Republicans = the Union/Reconstruction party); the *house-divided* Part-2 thread plays straight from 1856 into 1868 with this polarity intact; *gilded* digest post 298 |
-| 1896–1932 Progressive/1920s | Democrats (Bryan→Wilson; Solid South + agrarian) | Republicans (dominant, pro-business; also TR/insurgent progressives) | **Split / in flux** | **The hinge.** Progressivism lived in *both* parties; the modern left/right party mapping does **not** apply cleanly yet. See §5 terminology. |
+| 1896–1932 Progressive/1920s | Democrats (Bryan→Wilson; Solid South + agrarian) | Republicans (dominant, pro-business; also TR/insurgent progressives) | **Split / in flux** | **The hinge (PRE-realignment).** Progressivism lived in *both* parties; the modern left/right mapping does **not** apply yet. At a **1928 start** (the `e45a756c` campaign): **RED = Republicans, dominant/pro-business/isolationist (Hoover); BLUE = Democrats (Al Smith — urban/immigrant + the agrarian Solid South).** The **New Deal (1932+) begins flipping this** toward the modern alignment (§6). See §5 terminology. |
 | 1932–1965 New Deal/postwar | **Democrats (New Deal coalition)** | Republicans | **BLUE (Democrats)** — *for economics* | **THE REALIGNMENT BEGINS.** "Liberal" acquires its modern Democratic, pro-government meaning here (1932). **But race is cross-cutting:** the Solid South is still *Democratic*, so the party's left/right identity is not yet uniform. |
 | 1965–1980 Civil Rights/Vietnam | Democrats (losing the white South) | Republicans (gaining it; "Southern Strategy") | BLUE (Democrats), nationally | **THE SOUTHERN REALIGNMENT (gradual).** Begins 1948 (Dixiecrats), accelerates 1964 (Goldwater)/1968 (Nixon) at the *presidential* level — **but not an instant flip**; see §7. |
 | 1980–1992 Reagan | Democrats (left/liberal) | **Republicans (conservative coalition)** | BLUE (Democrats) | "Conservative" acquires its modern Republican-movement meaning; "Reagan Democrats" defect. Modern polarity now essentially in place at the *national* level. |
@@ -1320,7 +1320,10 @@ section already documents.)*
 - **1917-18** — US enters WWI; Espionage/Sedition Acts. **[consensus]**
 - **1919-20** — 18th (Prohibition) & 19th (suffrage) Amendments; Red Scare. **[consensus]**
 - **1920-29** — Republican "return to normalcy"; 1920s prosperity. **[consensus]**
-- **1929** — Stock market crash → Great Depression. **[consensus]**
+- **1928** — Hoover (R) def. Al Smith (D), **444–87 EV / 58.2%–40.8%**; Smith (first Roman Catholic major-party nominee, "wet"/anti-Prohibition) carries only 8 states but **cracks the Solid South** via anti-Catholic backlash. **[consensus]** ([Britannica 1928](https://www.britannica.com/event/United-States-presidential-election-of-1928), [Britannica — Al Smith](https://www.britannica.com/biography/Al-Smith))
+- **1929** — Wall Street Crash: **Black Thursday Oct 24, Black Tuesday Oct 29**; Dow −25% in four sessions → onset of the Great Depression. **[consensus]** ([Federal Reserve History](https://www.federalreservehistory.org/essays/stock-market-crash-of-1929))
+- **1930** — **Smoot-Hawley Tariff** signed June 17 over 1,000+ economists' objections; retaliatory tariffs deepen the global trade collapse. **[consensus]** ([Senate](https://www.senate.gov/artandhistory/history/minute/Senate_Passes_Smoot_Hawley_Tariff.htm))
+- **1932** — **Bonus Army** veterans evicted from DC by the Army (MacArthur), a PR disaster; **FDR def. Hoover 472–59 EV / ~57%**, the critical realignment that opens the New Deal era. **[consensus]** ([Britannica — Hoover](https://www.britannica.com/biography/Herbert-Hoover), [Britannica 1932](https://www.britannica.com/event/United-States-presidential-election-of-1932))
 
 ### Era-appropriate factions / ideologies / interests
 **Republicans** (the dominant national party): Northern business, finance, the
@@ -1377,6 +1380,24 @@ farmers (Grange/Populist heirs), Prohibitionists, suffragists, nativists
   scenario-ized, the BLUE/RED → Democrat/Republican mapping should be treated as
   **in flux**, with progressivism deliberately spanning both parties — the
   opposite of the clean modern split.
+- **The "Era of Ideologies" 1928 campaign actually plays this hinge** (`e45a756c`,
+  "Era of Ideologies — Playtest from 1928"). It opens at the Roaring-Twenties peak
+  with **Hoover + Republicans (RED) dominating Al Smith's Democrats (BLUE)**
+  (chunk-001 post 1) and runs **1928→1936** (FDR's faction wins the presidency by
+  the 1936 conventions; chunk-021 post 1582). Two notes for the GM: (1) **"Era of
+  Ideologies" is the game's name for this era** — framed as Republicanism vs.
+  Fascism vs. Communism amid collapsing monarchies and a globally-interconnected
+  economy, with the crash + Depression as the looming turn. (2) **The Great
+  Depression is a *scripted era event*, not auto-fired on the real Oct-1929
+  schedule** — players explicitly debate keeping prior-era modifiers "until the
+  great depression event hits, if it ever does" deep into the 1930–1932 turn
+  (chunk-008 posts 545, 554), and the in-game economy is still "great" in Jan 1930
+  (chunk-008 post 567). **Treat the era's *issues* (the crash, Depression, the
+  ideological contest, isolationism) as real-grounded, but the *timing/severity*
+  and the cast (Hoover's fate, whether FDR rises) as alt-history.** The thread's
+  scripted events otherwise track real 1937–40 history (Nanjing, Japan–China war,
+  Austria/Sudetenland annexations, London Naval Treaty, Soviet recognition;
+  chunk-020 post 1553).
 
 ---
 
@@ -1395,7 +1416,12 @@ Great Society; Civil Rights & Voting Rights Acts open the next phase). The
 *1948-continued* campaign's **starting point (1948)** sits inside this era, and
 its accumulated legislative record (Cold War statutes, the FDA, NASA subsidies,
 "use of military force in SE Asia to defend against the spread of Communism" —
-all visible being *repealed* in chunk-032) was built up across this era. Engine:
+all visible being *repealed* in chunk-032) was built up across this era. The
+**`e45a756c` "Era of Ideologies" 1928 campaign crosses into this era** — it reaches
+the **1932 FDR realignment and the 1936 re-election** in play (FDR's faction holds
+the presidency by the 1936 conventions), so §6's 1932–1937 anchors (the Hundred
+Days, the 1936 landslide, the 1937 court-packing fight) are the live backdrop for
+that thread's later turns. Engine:
 `modern` tuning (no dedicated scenario).
 
 ### Binding facts (ground truth)
