@@ -1,5 +1,103 @@
 # AMPU — Roadmap
 
+> **★★★★★ Batch-21 version — FOUR PLAYTESTS, ONE ★★ ESCALATION (FIELD-FALSIFIED), TWO
+> ERA-KEYED GAPS (ONE PARTLY SHIPPED), ONE DH BUG; NO new keystone, NO re-sequence, NO
+> keystone moves, NO new author-before-build or Decision-gated items; top-of-queue UNCHANGED.
+> FOUR playtests: `nixon1972` (`4853cf4d`, 1972-start modern MP, GA-run, one half-term then
+> GM-burnout stall), `cpufull` (`1f72600c`, all-CPU 1772 founding traversal, GA-run, ENDED on
+> a scripted CPU game-over), `trump2024` (`51dfaef1`, **Ted-run designer-authoritative**,
+> 2024/Jan-2025-start modern MP, SETUP-ONLY), `solo1916` (`5027f0f3`, 1916-start solo
+> Progressive-Era/WWI, GA-run, one half-term then stall). The value:**
+> **(1) ★★ #158 CPU ANTI-GAME-OVER — RE-PRIORITIZE HIGHER, FIELD-FALSIFIED (the load-bearing
+> move this batch).** `cpufull` is the **2nd live CPU game-over in the KB** and **field-
+> falsifies the flat-75%-oppose patch**: the patch was applied and the game ENDED anyway — the
+> all-CPU Continental Congress accepted the Carlisle Peace Commission, **4/10 factions rolled
+> ≤25** (two rolled 1/100, two 9/100) meeting the defect threshold, and after CC-President John
+> Adams's REJECT was overridden a **4-5-4 PLURALITY** carried the game-over (`cpufull#POST
+> 62-68, 73`). With 10 independent 75% rolls ~2.5 factions are EXPECTED to defect every time,
+> so the flat per-faction roll does NOT reliably hold; `ted1772`'s near-misses survived only on
+> the **2/3 Articles peace-vote threshold** (RevWar floor #2) — here the **plurality-override
+> path bypasses the 2/3 floor entirely.** **★ The fix is RE-SCOPED (designer-gated which-way):**
+> (a) a **HARD VETO** — in a solo/CPU-majority game, any response that sets `triggersGameEnd`/
+> surrender is REMOVED from the CPU vote menu (unselectable), OR (b) a **points-based anti-peace
+> ideology bias** tuned so a CPU plurality cannot form (Ted: *"give points to most ideologies to
+> be opposed to peace… 90% of the time that's the way the CPU will swing"*); **PLUS, either way,
+> a NON-PLURALITY-OVERRIDABLE game-ending-peace** — a separate guard on the CC/Congress override
+> path so the Pres's reject can't be beaten by a mere plurality. **Verified UNBUILT:**
+> `phaseRunners.ts:2871` just sets `game.gameEnded` (no veto/bias/plurality guard);
+> `pickAIResponse` (`eraGraph.ts:88-103`) has NO anti-game-over term. **★ This is a SOLO-PLAY
+> BLOCKER — the "DH-29 of the CPU/war track"** (a CPU-majority game can end itself prematurely
+> against the human's survival wish) — and it makes the **#155 RevWar floor #3 LEAKY** (debt
+> #34a). **Build it WITH the #155 war-balance pass (E3) + the #75 CPU event-vote handler (E9),
+> AHEAD of the rest of the CPU/war track; bears on #114 (solo-app).** Size S–M. debt #32
+> (ESCALATED) + #34a; game-mechanics §13.2 (strengthened) + §21.1 + §25.7.
+> **(2) ★ #170 ERA-KEYED OFFICES/DEPARTMENTS → EXTENDS the boot/offices work (E16), S–M;
+> PARTLY SHIPPED.** The **founding-seat half is ALREADY LIVE** — `cabinetSeatsForYear(year)`
+> (`types.ts:1196`) era-gates Navy ≥1798 / Postmaster ≥1829 / Interior ≥1849. The unbuilt half:
+> the modern departments are absent from the `OfficeType` union (`types.ts:1111-1134` — no
+> Energy/DHS/DNI/CIA-Director/Commerce/Labor/HHS/HUD/Transportation), there is no
+> `foundedYear`/`createdByBill`/`supersedes` schema, and no office-supersession. **★ Ted-ruled
+> canonical exemplar (`trump2024#POST 40-41`):** *"DNI replaces CIA Director in game when it's
+> created"* — an office-supersession (DNI⇒CIA-Director on creation in 2004), corroborated from
+> BOTH ends (`nixon1972`: DOE/DNI don't exist in 1972; `terror2000`: DNI created mid-game 2004).
+> **Add the modern departments to `OfficeType` + a per-office existence table** (`foundedYear`,
+> optional `createdByBill`, optional `supersedes`) + the **DNI⇒CIA-Director supersession**, on
+> the **planned boot-seed `GameState.cabinetSeats: SeatSpec[]` refactor (§3 item 2 / E16)** —
+> NOT a new epic; it is the era-keyed-EXISTENCE + supersession layer on the mutable-cabinet-seat
+> refactor already scoped. Pairs with the era-content / scenario-boot work. **Open Q:** real
+> distinct DNI/DHS seats vs the supersession stopgap (designer call). debt #47; game-mechanics
+> §9.3.1.1.
+> **(3) ★ #171 ERA-KEYED DRAFT-IDEOLOGY TOGGLE → folds into the #4/#108 draft-profile work, S;
+> OFF in the modern present.** Ted-authoritative (`trump2024#POST 9, 14, 15-16`): *"There are no
+> draft ideology restrictions for the future/present timelines… You get to make your own
+> faction"* — the first playtest authored with NO draft-ideology restrictions. The restriction
+> is itself era-keyed: ON in early/realigning eras (the #4 per-(faction,era) profile + the
+> off-profile 30/50% rolls + adjacency-on-exhaustion are the engine's tools for *forcing* the
+> §28.4/#108 historical realignment), **OFF in the modern present** because the partisan sort is
+> already complete. Three batch-21 start years bracket the flip: **1916 ON** (`solo1916`) ·
+> **1972 ON** (`nixon1972`: off-ideology attempts roll >50; Yellen 95/70; pool-exhaustion →
+> adjacent "without penalty") · **2024 OFF** (`trump2024`). #171 layers on top of #4 as an
+> **era-keyed boolean** (`eraDraftIdeologyRestrictions`, or derived from realignment-completion
+> state) gating the #4 profile; faction-leader eligibility (#110) still applies regardless.
+> **No standalone epic.** **Open Q:** the exact ON→OFF boundary (keyed to realignment
+> completion, ~1990s/modern). debt #48; game-mechanics §4.1.w.
+> **(4) ★ DH-68 — PROGRESSIVE-ERA SUCCESSOR-STATE EVENTS LACK A WWI-END PREREQUISITE → folds
+> into the DH-60 era-event-precondition work (now multi-era), S.** In a 1916-start first
+> half-term (`solo1916#POST 31, 34`) "Czechoslovakia Gains Independence from Austria" + "Hungary
+> Gains Independence from Austria" fired **before WWI had ended** (community: *"These two should
+> not trigger until after WWI is over"*). **Codebase-verified — exactly DH-60's gap, and the two
+> builders diverge:** the **1772 graph HAS the machinery** (every node carries optional
+> `precondition: Predicate` `types.ts:1487`; `evalPredicate` `eraGraph.ts:12` interprets
+> `eventCompleted`/`warActive`/`warOutcome`/`eventChose`) but the **1856 builder is
+> CALENDAR-ONLY** (`buildEraEventsForYear` `eraEvents1856.ts:4` emits by `year >= X && year <= Y`
+> with NO `precondition` on any row) and a **Progressive builder does not exist** (1916 runs on
+> `modern`/`progressive` tuning, UNBUILT). **The fix:** add a WWI-end predicate to the
+> Czechoslovakia/Hungary nodes (and other post-war beats) + **port the 1772-graph `precondition`
+> layer into the calendar-only 1856 builder + a new Progressive builder** — the SAME selective-
+> precondition ask as DH-60 (`dem1820`/`arkzag`/`smallbugs`), now multi-era confirmed. SAME
+> surface as BUG-1 + K3's `territoryOwned`. debt #49; game-mechanics §10.4.8.
+> **(5) CORROBORATIONS (no keystone moves):** **★ CPU suite #70–#79** re-validated end-to-end by
+> `cpufull` (CC-president/leadership/committees #70/#72; bill propose+committee-vote+packaging;
+> vote-by-cross-party-damage #74; event-vote + Congress override #75; enthusiasm drift #108;
+> conversion gating #127/#76; RevWar engine #45) — **confidence ↑** on the whole cluster.
+> **★ Modern band 2021-2025** (#92/#41/#169 ← `trump2024`: Biden-as-retired-Pres, the Jan-2025
+> incumbent board, the 2020-census EV/bias repoint, the 2.10-first mid-government boot #164) +
+> **start-year/era-band confirmations** at 1916/1972/2024 (← `solo1916`/`nixon1972`/`trump2024`).
+> **★ Crisis/war/Watergate** (#11/#45/#106 ← `nixon1972`: DomStab crisis = meter-threshold named
+> state; Vietnam = relabeled war as an ongoing meter; Watergate = a Controversial-gated ~75%
+> EVENT, no impeachment trigger — pins the gate). **★ Hinge polarity §5 + #108** (← `solo1916`:
+> Debs-Socialists + Tillman-Traditionalist-Democrats inside BLUE; Borah/La-Follette "Populists"
+> + TR "Imperialists" in RED — the #108 Dixiecrat-inside-Blue pattern). Plus: repeatable gov
+> actions should be COUNTS not booleans (`trump2024#POST 53, 56` → #20); no-candidate-withdraw
+> quirk (`solo1916#POST 26` → a #110 friction). **★ `nixon1972` is ANOTHER GM-burnout stall**
+> (the Nth such death — the upkeep-automation argument behind E9/#55/#115 keeps growing; cite,
+> don't queue). **DECISION-GATED / PARKING-LOT COUNTS UNCHANGED (batch 21 nets 0):** the #158
+> which-way (hard-veto vs points-bias), the #170 real-DNI-seat question, and the #171 ON→OFF
+> boundary are designer-gated TUNING within their epics, not new bucket entries. **NO new
+> keystone, NO re-sequence; top of queue UNCHANGED (QW0 → K0/K2 → K3/K4 + scenarioBoot → E1) —
+> BUT #158's escalation makes the CPU anti-game-over fix a higher-priority item WITHIN the
+> CPU/war track (a solo-play blocker, built AHEAD of the rest of it).**
+>
 > **★★★★★ Batch-20 version — FOUR META/DESIGN THREADS, ONE NEW RUNTIME MECHANIC, ONE
 > AUTHORING-PROCESS GATE, THE REST DATASET / QUARANTINE (NOT a re-sequence, NO new keystone,
 > NO keystone moves, NO new author-before-build or Decision-gated items; top-of-queue
@@ -1133,6 +1231,37 @@ Reverse-chronological. The expertise/abilities/traits/cabinet/lobby epic (PR1–
 is complete; the knowledge-base infra and eight ingestion batches are knowledge
 milestones (no code, but they are what every item below is traced to).
 
+- **Batch-21 ingestion (knowledge milestone).** Absorbed **FOUR playtests**: **`nixon1972`**
+  (`4853cf4d`, **417 posts / 4 chunks**, 1972-start modern MULTIPLAYER, GA-run, one half-term
+  1972-1974 then GM-burnout stall before Watergate fired); **`cpufull`** (`1f72600c`, **74 posts
+  / 1 chunk**, an **all-CPU 1772** founding traversal, GA-run, ENDED on a **scripted CPU
+  game-over** — the Carlisle Peace Commission, the 2nd-ever KB game-ending); **`trump2024`**
+  (`51dfaef1`, **87 posts / 2 chunks**, **Ted-run designer-authoritative**, 2024/Jan-2025-start
+  modern MULTIPLAYER, **★ SETUP-ONLY**, abandoned before turn 1); **`solo1916`** (`5027f0f3`,
+  **38 posts / 1 chunk**, a **1916-start SOLO** Progressive-Era/WWI run, GA-run, ~one half-term
+  1916→~1918 then stall). **★★ ONE escalation, FIELD-FALSIFIED: #158 CPU anti-game-over** —
+  `cpufull` is the **2nd live CPU game-over** and falsifies the flat-75%-oppose patch (applied,
+  yet a game-ending peace passed at a **4-5-4 plurality** after the CC-President's reject was
+  overridden) → **re-prioritize HIGHER within the CPU/war track**; the fix is re-scoped to a
+  **HARD VETO / points-based anti-peace bias + a NON-plurality-overridable game-ending-peace**;
+  it is a **SOLO-PLAY BLOCKER** and makes **#155 RevWar floor #3 LEAKY** (debt #32 escalated +
+  #34a). **★ TWO era-keyed gaps (one PARTLY SHIPPED): #170** era-keyed offices (founding-seat
+  half LIVE in `cabinetSeatsForYear` `types.ts:1196`; add modern departments + the **DNI⇒CIA-
+  Director supersession**) → **extends boot/offices (E16), S–M** (debt #47); **#171** the
+  era-keyed draft-ideology TOGGLE (OFF in the modern present, Ted-authoritative) → **folds into
+  the #4/#108 draft-profile work, S** (debt #48). **★ ONE DH bug: DH-68** — Progressive-era
+  successor-state events (Czechoslovakia/Hungary) fired before WWI ended → **folds into the
+  DH-60 era-event-precondition work (now multi-era), S** (debt #49). **Corroborations:**
+  `cpufull` re-validates the CPU suite #70–#79 end-to-end (confidence ↑); `trump2024`/`nixon1972`/
+  `solo1916` confirm the modern band 2021-2025 + era bands at 1916/1972/2024 (#92/#41/#169);
+  `nixon1972` corroborates crisis/war/Watergate (#11/#45/#106) + is ANOTHER GM-burnout stall;
+  `solo1916` confirms the §5 hinge polarity + #108. Gap log gained **#170/#171 (NEW) + DH-68
+  (NEW)**; corroboration tags appended to **#158/#155 (E3) + #70–#79 (E9) + #4/#108 + #170(E16)
+  + DH-60/DH-68 (E15) + #92/#169 + #11/#45/#106**. game-mechanics §13.2+§21.1 (#158 escalation),
+  §9.3.1.1 (#170), §4.1.w (#171), §10.4.8 (DH-68) + technical-guide §9 batch-21 lead + §9.6
+  appended. **Decision-gated / parking-lot counts UNCHANGED (batch 21 nets 0); top-of-queue
+  UNCHANGED (QW0 → K0/K2 → K3/K4 + scenarioBoot → E1) — but #158's escalation elevates the CPU
+  anti-game-over fix WITHIN the CPU/war track.** _Complete._
 - **Batch-20 ingestion (knowledge milestone).** Absorbed **FOUR meta/design threads** (a
   LIGHT batch — almost no new code): **`planb`** (`094cc3a2`, **146 posts / 3 chunks**, the
   build-FINISHING PROCESS plan, NOT a playtest); **`dbomit`** (`4be5a005`, **106 posts / 2
@@ -2095,6 +2224,65 @@ RARE principle). **Corroborations** (tags, not rows): **#88/OC-3, #61, #56-#60, 
 #92/#72, #115, #38, #160/DH-67/#108, DH-27** + **DH-36** (the `smallbugs` thread's genesis is
 here, POST 637-640). **Decision-gated / parking-lot counts UNCHANGED (batch 19 nets 0). No
 re-sequence; top-of-queue UNCHANGED.**
+**★★ Batch-21 fold-ins (FOUR playtests — ONE ★★ ESCALATION that re-prioritizes a debt item
+HIGHER within an epic, TWO era-keyed gaps [one PARTLY SHIPPED], ONE DH bug — NO new rows, NO
+re-order, NO new keystone, NO keystone moves):** **★★ #158 CPU ANTI-GAME-OVER → ESCALATED
+WITHIN E3 (and coupled to E9 handler 9g / #75 + #114 + the #155 floor).** `cpufull` is the
+**2nd live CPU game-over** and **FIELD-FALSIFIES the flat-75%-oppose patch** the E3 row carries
+as RevWar floor (3): the patch was applied, yet a game-ending peace passed at a **4-5-4
+PLURALITY** after the CC-President's reject was overridden (`cpufull#POST 62-68, 73`; ~2.5 of 10
+factions are EXPECTED to defect on independent 75% rolls). **★ RE-SCOPE the fix in E3:** the
+floor-(3) anti-game-over is **no longer** a flat 75% roll — build (a) a **HARD VETO** (in a
+solo/CPU-majority game, any `triggersGameEnd`/surrender response is REMOVED from the CPU vote
+menu) **OR** (b) a **points-based anti-peace ideology bias** tuned so a CPU plurality cannot
+form, **PLUS a NON-PLURALITY-OVERRIDABLE game-ending-peace** — a separate guard on the
+CC/Congress override path (`continentalCongress.ts` `voteCC` + the `decider:'cc-president'`/
+`congress` resolution) so the Pres's reject can't be beaten by a plurality. **Binds at**
+`phaseRunners.ts:2871` (bare today) + `pickAIResponse` (`eraGraph.ts:88-103`, no anti-game-over
+term) for the veto/bias and the override path for the plurality guard. **★ It is a SOLO-PLAY
+BLOCKER — the "DH-29 of the CPU/war track"** — so it RAISES debt #32's priority and **makes the
+#155 RevWar floor #3 LEAKY** (debt #34a): the floor is no longer met by the flat roll alone.
+**Build it WITH the #155 war-balance pass (E3) + the #75 CPU event-vote handler (E9), AHEAD of
+the rest of the CPU/war track; bears on #114 (solo-app is the target mode).** Size S–M (the
+veto/bias is S; the non-overridable-plurality guard adds the override-path work). debt #32
+(escalated) + #34a; game-mechanics §13.2 (strengthened) + §21.1 + §25.7.
+**★ #170 era-keyed offices/departments → EXTENDS E16 (the boot-seed cabinet-seat refactor),
+PARTLY SHIPPED:** the founding-seat half is LIVE (`cabinetSeatsForYear` `types.ts:1196` era-gates
+Navy/Postmaster/Interior); add the modern departments to `OfficeType` (`types.ts:1111-1134`, none
+today) + a per-office `foundedYear`/`createdByBill`/`supersedes` table + the **DNI⇒CIA-Director
+supersession** (Ted-authoritative `trump2024#POST 40-41`) on the planned boot-seed
+`GameState.cabinetSeats: SeatSpec[]` refactor (§3 item 2 / E16) — seed only offices whose
+founded-year ≤ the board's start year (or that a bill creates), applying supersession at the
+creating event. The SAME mutable-cabinet-seat refactor E16 already plans (`cabinetSeatsForYear`
+is the wrong long-term model at BOTH ends — §24.6 founding-offices-by-law + §26.5 modern-create-
+by-bill); #170 is the era-keyed-EXISTENCE + supersession layer on top. S–M, pairs with the
+scenario-boot/era-content work. debt #47; game-mechanics §9.3.1.1.
+**★ #171 era-keyed draft-ideology TOGGLE → FOLDS INTO the #4/#108 draft-profile work** (E1
+draft profile + E20/E23 realignment levers): an **era-keyed boolean** (`eraDraftIdeologyRestrictions`,
+or derived from realignment-completion state) gating the #4 per-(faction,era) profile + the
+off-profile 30/50% rolls + adjacency-on-exhaustion — **ON in early/realigning eras, OFF in the
+modern present** (Ted-authoritative `trump2024`; bracketed by 1916 ON / 1972 ON / 2024 OFF).
+Faction-leader eligibility (#110) still applies regardless. No standalone epic; S. **Open Q:**
+the exact ON→OFF boundary (keyed to §28.4/#108 realignment completion). debt #48; game-mechanics
+§4.1.w.
+**★ DH-68 era-event WWI-end prerequisite → FOLDS INTO the DH-60 era-event-precondition work
+(E15 + BUG-1), now MULTI-ERA:** add a WWI-end predicate to the Czechoslovakia/Hungary nodes (and
+other post-war beats) + **port the 1772-graph `precondition: Predicate` layer** (`types.ts:1487`,
+`evalPredicate` `eraGraph.ts:12`) **into the calendar-only 1856 builder** (`eraEvents1856.ts:4`,
+no `precondition` on any row today) **+ a new Progressive builder** (does not exist; 1916 runs on
+`modern`/`progressive` tuning, UNBUILT). The SAME selective-precondition ask as DH-60
+(`dem1820`/`arkzag`/`smallbugs`), now corroborated from the Progressive band → DH-60 multi-era
+confirmed. S, SAME surface as BUG-1 + K3's `territoryOwned`. debt #49; game-mechanics §10.4.8.
+**Corroborations (tags, not rows):** **CPU suite #70–#79** → E9 (← `cpufull`, clean 4th-or-5th
+founding angle, confidence ↑); **modern band 2021-2025 + start-years** #92/#41/#169/#164 → K3/K4
++ E30/E15 (← `trump2024`/`nixon1972`/`solo1916`, eras now exercised at 1916/1972/2024);
+**crisis/war/Watergate** #11/#45/#106 → E14/E3 (← `nixon1972`); **hinge polarity §5 + #108** →
+E1/E20 (← `solo1916`); **gov-actions-as-COUNTS** → #20, **no-candidate-withdraw** → #110.
+**`nixon1972` is ANOTHER GM-burnout stall** — the upkeep-automation argument behind E9/#55/#115
+keeps growing (cite, NOT a row). **Decision-gated RECOUNT: 0** (the #158 which-way, #170 real-DNI
+seat, #171 ON→OFF boundary are designer-gated TUNING within their epics). **No re-sequence;
+top-of-queue UNCHANGED — but #158's escalation elevates the CPU anti-game-over fix WITHIN the
+CPU/war track (a solo-play blocker, built AHEAD of the rest of it).**
 
 | # | Item | Scope | Depends on | Size | Source | Status |
 |---|---|---|---|---|---|---|
@@ -2600,7 +2788,18 @@ undo (binds inside E4c); (b) the mid-government start-state model — president-
 election-start vs historical-cabinet (#164, binds inside K4's `BootSheet`). Both flagged at
 game-mechanics §30.9. **#160/DH-67/#162/#165/#166 are buildable (no model fork); the
 confirmation auto-pass is designer-authoritative; #163/#164 fold into the existing DH-25 +
-K4 boot work.**
+K4 boot work.** **★ Batches 19/20/21 net 0 — counts UNCHANGED (User-gated 2, Designer-gated
+10/9):** no item enters or leaves either sub-bucket across these three batches. Batch 19
+(`fixes2022`): #167 is a designer-authoritative procedure (ready-to-build, PPT-interim-first),
+the enthusiasm freeze is a RISK ANNOTATION not a gate. Batch 20 (meta/design threads): #169 is a
+designer-authoritative procedure with tuning guards, #168 is an authoring gate, `ampu2wish` is
+quarantine-only. **★★ Batch 21 (`nixon1972`/`cpufull`/`trump2024`/`solo1916`):** the three
+designer questions stay **human-gated TUNING within their epics, NOT new bucket entries** — (a)
+**#158** which-way (HARD VETO vs points-based anti-peace bias — both meet the floor; binds inside
+E3); (b) **#170** real-distinct-DNI/DHS-seat vs the DNI⇒CIA-Director supersession stopgap (binds
+inside E16); (c) **#171** the exact ON→OFF boundary (keyed to §28.4/#108 realignment completion;
+binds inside the #4/#108 work). #158's escalation is a PRIORITY change WITHIN the CPU/war track,
+not a model fork. game-mechanics §13.2/§9.3.1.1/§4.1.w.
 
 #### (A) User-gated (the HUMAN must pick first)
 
@@ -2961,11 +3160,83 @@ interest compilation) recorded as a process gate paired with #120, NOT a schedul
 constraint orders the per-era CONTENT authoring (founding → antebellum → modern) but NOT the
 engine track; and `ampu2wish` is OUT OF SCOPE — quarantine only, ZERO AMPU-1 scope. NO
 re-sequence, NO new keystone, NO new author-before-build or Decision-gated items (batch 20 nets
-0).** The batch-20 lead comes first (below), then batch-19, then batch-18, then batch-17, then batch-16, then
+0).** **Batch 21 (FOUR playtests — `nixon1972`/`cpufull`/`trump2024`/`solo1916`) is ONE ★★
+ESCALATION + TWO era-keyed gaps [one PARTLY SHIPPED] + ONE DH bug: **★★ #158 CPU anti-game-over
+is RE-PRIORITIZED HIGHER WITHIN the CPU/war track** — `cpufull` is the 2nd live CPU game-over and
+FIELD-FALSIFIES the flat-75% patch (a game-ending peace passed at a 4-5-4 PLURALITY after the
+CC-President's reject was overridden), so the floor-(3) fix in E3 is re-scoped to a HARD VETO /
+points-based anti-peace bias + a NON-plurality-overridable game-ending-peace; it is a SOLO-PLAY
+BLOCKER (the "DH-29 of the CPU/war track"), makes #155 RevWar floor #3 LEAKY, builds WITH #155
+(E3) + #75 (E9) AHEAD of the rest of the CPU/war track, and bears on #114 (debt #32 escalated +
+#34a). **#170 era-keyed offices** → EXTENDS E16 (founding-seat half LIVE in `cabinetSeatsForYear`;
+add modern departments to `OfficeType` + a `foundedYear`/`createdByBill`/`supersedes` table + the
+DNI⇒CIA-Director supersession on the planned boot-seed cabinet-seat refactor), S–M (debt #47).
+**#171 era-keyed draft-ideology TOGGLE** (OFF in the modern present, Ted-authoritative; 1916 ON /
+1972 ON / 2024 OFF) → FOLDS INTO the #4/#108 draft-profile work as an era-keyed boolean, S (debt
+#48). **DH-68** (Czechoslovakia/Hungary fired before WWI ended) → FOLDS INTO the DH-60 era-event-
+precondition work (now multi-era) — port the 1772-graph `precondition` layer into the
+calendar-only 1856 builder + a new Progressive builder, S (debt #49). CORROBORATIONS (no moves):
+CPU suite #70–#79 ← `cpufull` (confidence ↑); modern band 2021-2025 + start-years #92/#41/#169 ←
+`trump2024`/`nixon1972`/`solo1916`; crisis/war/Watergate #11/#45/#106 ← `nixon1972`; hinge
+polarity §5 + #108 ← `solo1916`; `nixon1972` is ANOTHER GM-burnout stall (upkeep-automation
+argument grows, cite not row). NO re-sequence, NO new keystone, NO new author-before-build or
+Decision-gated items (batch 21 nets 0) — but #158's escalation elevates the CPU anti-game-over
+fix WITHIN the CPU/war track.** The batch-21 lead comes first (below), then batch-20, then
+batch-19, then batch-18, then batch-17, then batch-16, then
 batch-15, then batch-14, then batch-13, then batch-12, then batch-11, then batch-10, then
 batch-9, then batch-8, then batch-7, then the carried batch-5 leads.
 **The order itself is UNCHANGED — the TOP OF THE QUEUE is QW0 → K0/K2 → K3/K4 +
 `scenarioBoot`/`BootSheet` → `scenario1788` (E1).**
+
+**★★★★★ Batch-21 lead — FOUR playtests (`nixon1972` 1972-modern-MP / `cpufull` all-CPU-1772
+[reached a scripted CPU game-over] / `trump2024` Ted-run 2024-modern SETUP-ONLY / `solo1916`
+1916-solo). ONE ★★ escalation (field-falsified) that re-prioritizes a debt item HIGHER WITHIN
+its epic, TWO era-keyed gaps (one PARTLY SHIPPED), ONE DH bug. It does NOT move the top-of-queue.
+Reflect it by ESCALATING #158 within E3 (the re-scoped hard-veto / points-bias + non-overridable
+plurality guard, built AHEAD of the rest of the CPU/war track), ADDING #170 to E16, FOLDING #171
+into the #4/#108 draft-profile work, FOLDING DH-68 into the DH-60 era-event-precondition work,
+and appending corroboration tags — NOT by re-sequencing** (tech-lead §9 batch-21 lead + §9.6 —
+BINDING):
+> "1) ★★ #158 CPU anti-game-over — RE-PRIORITIZE HIGHER (the load-bearing move this batch).
+> FIELD-FALSIFIED by `cpufull` (2nd live CPU game-over: flat-75% applied yet the game ENDED at a
+> 4-5-4 plurality after the CC-President's reject was overridden). Build a HARD VETO (CPUs can't
+> select a `triggersGameEnd`/surrender option in a solo/CPU-majority game) OR a points-based
+> anti-peace bias, PLUS a non-plurality-overridable game-ending-peace (guard the CC/Congress
+> override path). It is a SOLO-PLAY BLOCKER — the 'DH-29 of the CPU/war track' — and makes #155
+> RevWar floor #3 LEAKY; bears on #114 (solo-app). Build it WITH the #155 war pass (E3) + the #75
+> event-vote handler (E9), AHEAD of the rest of the CPU/war track. Size S–M. Verified UNBUILT
+> (`phaseRunners.ts:2871` just sets `game.gameEnded`; `pickAIResponse` `eraGraph.ts:88-103` has
+> no anti-game-over term). debt #32 (escalated) + #34a.
+> 2) #170 era-keyed offices → extends boot/offices (E16), S–M. Founding-seat half SHIPS
+> (`cabinetSeatsForYear` `types.ts:1196` era-gates Navy ≥1798 / Interior ≥1849 / Postmaster
+> ≥1829). Add modern departments to `OfficeType` + a `foundedYear`/`createdByBill`/`supersedes`
+> table + the DNI⇒CIA-Director supersession, on the planned boot-seed `cabinetSeats` refactor.
+> Pairs with era-content/scenario-boot. debt #47.
+> 3) #171 era-keyed draft toggle → folds into the #4/#108 draft-ideology-profile work, S. An
+> era-keyed boolean gating the #4 profile, keyed to realignment completion (1916 ON · 1972 ON ·
+> 2024 OFF). Open Q: the exact ON→OFF boundary. debt #48.
+> 4) DH-68 → folds into the DH-60 era-event-precondition work (now multi-era), S. Port the
+> 1772-graph `precondition`/`warOutcome` layer into the calendar-only 1856 builder + a new
+> Progressive builder; gate Czechoslovakia/Hungary on a WWI-end event. Same surface as BUG-1 +
+> E15. debt #49.
+> 5) Corroborations: CPU suite (#70–#79 ← `cpufull`, confidence ↑); modern band 2021-2025 +
+> start-year confirmations (#92/#169 ← `trump2024`/`nixon1972`/`solo1916`); crisis/war/Watergate
+> (← `nixon1972`, which was ALSO a GM-burnout stall — the upkeep-automation argument grows).
+> 6) Top-of-queue UNCHANGED (QW0 → K0/K2 → K3/K4 + scenarioBoot → E1) — BUT #158's escalation
+> elevates the CPU anti-game-over fix to a higher-priority item WITHIN the CPU/war track.
+> Decision-gated recount: 0."
+
+So **#158 is ESCALATED within E3** (re-scoped to a hard-veto / points-based anti-peace bias +
+a non-plurality-overridable game-ending-peace, field-falsified by `cpufull`, a solo-play blocker
+built AHEAD of the rest of the CPU/war track + coupled to E9 handler 9g/#75 + #114; #155 RevWar
+floor #3 now LEAKY); **#170 is ADDED to E16** (era-keyed offices, founding half shipped, add
+modern departments + the DNI⇒CIA-Director supersession on the boot-seed cabinet-seat refactor,
+S–M); **#171 folds into the #4/#108 draft-profile work** (era-keyed toggle OFF in modern, S);
+**DH-68 folds into the DH-60 era-event-precondition work** (multi-era, S); and the
+corroborations append tags — all additive, no re-order, batch 21 nets 0 (no new author-before-
+build, no Decision-gated change). **The top of the queue is UNCHANGED — QW0 → K0/K2 → K3/K4 +
+`scenarioBoot`/`BootSheet` → E1 — but #158's escalation makes the CPU anti-game-over fix a
+higher-priority item WITHIN the CPU/war track (a solo-play blocker).**
 
 **★★★★★ Batch-20 lead — FOUR meta/design threads (`planb` build-finishing PROCESS plan /
 `dbomit` missing-pol requests / `biden2021` modern era-content / `ampu2wish` OUT-OF-SCOPE

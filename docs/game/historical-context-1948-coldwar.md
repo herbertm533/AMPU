@@ -15,6 +15,16 @@
 > AK/HI statehood, the era's constitutional amendments, the modern primary
 > system). Confidence tags inline: **[consensus]**, **[contested]**,
 > **[inference]**. *Research, not design.*
+>
+> **This companion now also carries the forward edge of the modern era** — two
+> later windows that the main doc's §10 stops short of and that newer 2000- and
+> 2024-start batches actually open on: the **2000-START early-War-on-Terror
+> window** (added for `3843d2da`) and the **2020–2025 window** (added for the
+> `51dfaef1` "2024 — The Second Coming" batch). The main doc's §10 timeline ends
+> at **"2020 — COVID-19; a high-turnout, highly polarized election"**
+> (`historical-context.md` line 1912); the 2020–2025 section below **picks up
+> exactly there** (the 2020 *outcome* → Jan 6 → the Biden term → the 2024
+> election → Trump's second term) so the parent doc never needs rewriting.
 
 ## ★ The load-bearing framing: the Civil Rights / Southern realignment (c. 1948–1994)
 
@@ -257,6 +267,157 @@ Republicans backed it at *higher* rates than Democrats. ([Senate](https://www.se
   officeholders, election results, and the late-game storyline as the campaign's
   own divergent timeline.**
 
+## The 2020–2025 window (added for the `51dfaef1` "2024 — The Second Coming" batch)
+
+> **Why this section exists.** The main doc's §10 ("Modern polarized era,
+> 2000–present") runs its real-world timeline only out to **"2020 — COVID-19; a
+> high-turnout, highly polarized election"** (`historical-context.md` line 1912)
+> and is otherwise anchored on a **2012-start** (Obama-reelection) game. The
+> `51dfaef1` batch is a **2024 / January-2025-start** run by **@MrPotatoTed (Ted,
+> the designer — his rulings carry designer authority)** — his *next* campaign
+> after the `3843d2da` 2000 game "officially end[ed] with America dissolving in
+> 2009" (chunk-001 post 1). It opens **at Trump's second inauguration** and leans
+> on the **2020→2025** dated specifics no earlier start needed. This section
+> grounds a 2024-start: the 2020 *outcome*, the Jan-6→indictments→2024-comeback
+> arc, the 2024 election, and the second-term opening. **Modern polarity holds
+> with no caveat: BLUE = Democrats / left, RED = Republicans / right.** Note this
+> batch is **early/setup-phase only** in the captured chunks (87 posts, almost
+> entirely roster/sheet-prep and incumbent data-entry for a Jan-2025 board — the
+> game had not yet started "playing" by the end of the capture).
+
+### Hard anchors for a 2024 / Jan-2025 start [consensus]
+- **The 2020 outcome (the arc's starting point).** Trump **lost** the 2020
+  election to **Joe Biden** (Biden 306 EV – Trump 232; Biden won the popular vote
+  by ~7 million / 51.3%–46.8%). Trump disputed the result; his efforts to
+  overturn it culminated in the **January 6, 2021 attack on the U.S. Capitol** as
+  Congress met to count electoral votes. This is the "**2020 defeat**" the batch's
+  intro names. **[consensus]**
+- **The four criminal indictments (2023).** Trump became the first former
+  president criminally indicted — **four times in 2023**: (1) **New York** state
+  (Manhattan DA), **34 felony counts** of falsifying business records re: the
+  2016 Stormy Daniels hush-money payments — indicted **Mar 30, 2023**; (2)
+  **federal classified-documents** case (S.D. Fla.), **June 2023**; (3) **federal
+  Jan-6 / election-interference** case (D.D.C.), **August 2023**; (4) **Georgia**
+  state election-interference (RICO), **August 2023**. This is the batch's
+  "**arrest**." ([CNN indictment tracker](https://www.cnn.com/interactive/2023/07/politics/trump-indictments-criminal-cases/), [Ballotpedia](https://ballotpedia.org/Donald_Trump_indictments,_2023-2025)) **[consensus]**
+- **The hush-money conviction.** The NY trial ran **Apr 15 – May 30, 2024**; on
+  **May 30, 2024** a Manhattan jury found Trump **guilty on all 34 counts** — the
+  first felony conviction of a former U.S. president. After he won the 2024
+  election, Judge Juan Merchan sentenced him to an **"unconditional discharge"
+  (no penalty/fine/prison) on January 10, 2025**, ten days before inauguration;
+  the conviction stands on his record. The other three cases did **not** reach a
+  jury (the two federal cases were dismissed/wound down after his win; Georgia
+  stalled). ([CNBC — guilty verdict](https://www.cnbc.com/2024/05/30/trump-trial-verdict-hush-money.html), [NPR — Jan 10 2025 sentencing](https://www.npr.org/2025/01/10/nx-s1-5253927/trump-sentencing-new-york)) **[consensus]**
+- **The two 2024 assassination attempts** (the batch's intro names both):
+  - **July 13, 2024 — Butler, Pennsylvania.** A 20-year-old gunman (Thomas
+    Crooks) fired from a nearby rooftop at a Trump rally, wounding Trump in the
+    upper right ear; **one attendee was killed** and two critically wounded; the
+    shooter was killed by Secret Service. ([Attempted assassination — Wikipedia](https://en.wikipedia.org/wiki/Attempted_assassination_of_Donald_Trump_in_Pennsylvania)) **[consensus]**
+  - **September 15, 2024 — West Palm Beach, Florida.** A second attempt at
+    Trump's golf course was thwarted before any shots were fired at him; a suspect
+    (Ryan Routh) was arrested. ([Al Jazeera timeline](https://www.aljazeera.com/news/2026/4/26/timeline-trump-assassination-attempts-and-security-incidents)) **[consensus]**
+- **Biden withdraws; Harris becomes nominee.** After a widely panned **June 27,
+  2024** debate intensified age/health concerns, **Biden suspended his campaign
+  on July 21, 2024** — the first incumbent to withdraw since LBJ in 1968 — and
+  endorsed **VP Kamala Harris**, who became the Democratic nominee. Harris
+  debated Trump **September 10, 2024**. (This is the same arc as batch-20's Biden
+  content — see "consolidation" note below.) **[consensus]**
+- **The 2024 election (Trump's comeback).** **November 5, 2024** — **Trump (R)
+  312 EV / 49.8% popular** def. **Harris (D) 226 EV / 48.3%** (margin ~1.5
+  points). Trump flipped **all seven swing states** (AZ, GA, MI, NV, PA, WI — plus
+  he won the national popular vote, which he had not done in 2016 or 2020).
+  Becoming the **second president (after Grover Cleveland) elected to
+  non-consecutive terms**, Trump is both the **45th and 47th** president. JD Vance
+  (R-OH) is VP. ([2024 election — Wikipedia](https://en.wikipedia.org/wiki/2024_United_States_presidential_election), [CFR — 2024 by the numbers](https://www.cfr.org/articles/2024-election-numbers)) **[consensus]**
+- **Republican trifecta in 2025.** The 2024 election gave Republicans the **White
+  House + Senate (flipped, ~53–47) + House (held narrowly)**. **John Thune**
+  succeeded Mitch McConnell as **Senate Majority Leader** (the batch names Thune
+  as Senate Majority Leader, chunk-001 post 44). **[consensus]**
+- **Trump's second inauguration & opening.** Sworn in as the **47th president on
+  January 20, 2025** (moved indoors to the Capitol rotunda for extreme cold).
+  Marco Rubio confirmed **Secretary of State 99–0** the same day; Pete Hegseth
+  confirmed **Secretary of Defense 51–50** (VP Vance breaking the tie). A
+  first-day burst of **executive orders** (immigration/border emergency, ending
+  CBP One, federal-workforce and DEI actions, etc.) — the most EOs of any modern
+  president's opening. ([Second inauguration — Wikipedia](https://en.wikipedia.org/wiki/Second_inauguration_of_Donald_Trump), [Brookings — first-100-days confirmations](https://www.brookings.edu/articles/the-first-100-days-of-confirmations-in-the-second-trump-administration/)) **[consensus]**
+- **Second-Trump-cabinet names the batch encodes (real Nov-2024 nominees).** The
+  setup loads Trump's announced picks as of mid-Nov 2024: e.g. **Tulsi Gabbard →
+  Director of National Intelligence** (the batch notes the game has no DNI office
+  and maps it onto the **CIA-Director slot**, chunk-001 posts 40–41), plus the
+  broader slate (Rubio State, Hegseth Defense, etc.). **Kristi Noem** left the SD
+  governorship for DC (Lt. Gov. **Larry Rhoden** elevated, chunk-001 post 39).
+  **[consensus]** ([Second cabinet — Wikipedia](https://en.wikipedia.org/wiki/Second_cabinet_of_Donald_Trump))
+
+### The Biden term (2021–2025) — capstone, consolidating batch-20's content [consensus]
+*(Batch 20 first touched the Biden presidency; this consolidates the load-bearing
+dates so the 2024-start board's "outgoing administration" is grounded in one
+place.)*
+- **Term:** Jan 20, 2021 – Jan 20, 2025. Inaugurated the **oldest president in
+  U.S. history**; **Kamala Harris** the first woman / first Black / first
+  South-Asian VP.
+- **Afghanistan withdrawal — Aug 2021.** The chaotic final evacuation (a
+  Trump-era-negotiated drawdown executed under Biden); a Kabul-airport suicide
+  bombing killed 13 U.S. service members. A defining early blow to Biden's
+  standing. **[consensus]**
+- **Major legislation:** **American Rescue Plan** (Mar 2021, COVID relief);
+  **Bipartisan Infrastructure Law** (Nov 2021); **CHIPS and Science Act** &
+  **Inflation Reduction Act** (the big climate/health/tax law) (2022);
+  **Bipartisan Safer Communities Act** (2022, first major federal gun law in ~30
+  years). **[consensus]**
+- **Inflation** spiked to a **9.1% YoY peak (June 2022)** — the era's dominant
+  pocketbook issue — then receded; the **economy added jobs every month** of the
+  term. A **student-debt-relief** push was partly struck down by the courts.
+  **[consensus]**
+- **Foreign:** **Russia's full-scale invasion of Ukraine (Feb 24, 2022)** and
+  sustained U.S./NATO aid to Ukraine; the **Oct 7, 2023 Hamas attack on Israel**
+  and the ensuing Gaza war reshaped Middle East policy. Both are named in the
+  batch's Jan-2025 "state of the world" intro (Ukraine "continues to face
+  aggression from Russia"; Israel/Middle East "remains tense," chunk-001 post 1).
+  **[consensus]** ([Presidency of Joe Biden — Wikipedia](https://en.wikipedia.org/wiki/Presidency_of_Joe_Biden))
+
+### Game treatment vs. real history — notes for this 2024-start batch
+- **Polarity: fully modern, no caveat.** BLUE = Democrats / left, RED =
+  Republicans / right — identical to the 2000-start window and the *end state* of
+  this companion's ★ Southern-realignment framing; the reverse of 1856/1868.
+- **★ Designer-authoritative AND a deliberate rules milestone.** This is **Ted's**
+  game (designer authority). It is also the **first playtest with NO draft
+  ideology restrictions** — "There are no draft ideology restrictions for the
+  future/present timelines… You get to make your own faction" (chunk-001 posts
+  9/14). That is era-faithful: by 2024 the modern sort is *complete*, so the
+  engine no longer needs to *force* the historical realignment (contrast the
+  1948-start, which engineers it; see this file's main "Game treatment" notes).
+  Players build bespoke factions of any ideology rather than receiving
+  era-gated ones.
+- **It encodes the real Jan-2025 board with high fidelity at setup.** The prep
+  loads the **real 119th-Congress leadership** (Thune as Senate Majority Leader),
+  **real Trump cabinet nominees** as of mid-Nov 2024, **real governors and
+  governors-elect**, current **state abortion-law status** and political biases
+  updated to the **2020-census** EV apportionment (chunk-001 posts 39/44/50/53).
+  The plan is to run a **"2.10" end-of-Biden-term retirement/aging pass** and
+  then start at "2.1" with whatever Trump has actually done (cabinet picks,
+  leadership) locked in (chunk-001 posts 44/69–70). Use these as a sanity check
+  on a 2024-start's *opening* state.
+- **⚠️ Engine gaps the batch surfaces (not history errors — game limits):**
+  - **No DNI office in-game** — Tulsi Gabbard's real role (Director of National
+    Intelligence) is mapped onto the legacy **CIA-Director slot** (chunk-001 posts
+    40–41). (The 2000-start window above hit the same gap from the other side, when
+    the DNI was *created* in 2004.)
+  - **Surname-collision data bug:** while bulk-importing, same-last-name pols got
+    their stats/ages/ideologies swapped (LWP "Don Bacon," Andre Carson carrying
+    Ben Carson's RW-Pop profile, a 77-year-old Josh Green, Bernie Sanders listed
+    age 42, etc.; chunk-001 posts 61–74). These are **data-entry artifacts**, not
+    historical claims — disregard them as ground truth.
+- **It will be alt-history once it actually plays.** The captured chunks are
+  almost entirely **setup**; the game had not begun advancing turns. As with
+  every AMPU campaign, once it runs, expect named officeholders, election
+  outcomes, and the statute book to diverge from real 2025+ events. **Game-master
+  framing: use the real 2020–2025 record for the *opening board* and era texture
+  (the comeback arc, the trifecta, the culture-war/populist-left-and-right
+  framing, Ukraine/Israel/inflation as live issues); treat anything past the
+  Jan-2025 start as the campaign's own timeline.** Note Ted's prior 2000 game
+  "ended with America dissolving in 2009" (chunk-001 post 1) — a reminder these
+  runs go fully divergent.
+
 ## Hard anchors the game likely models
 
 ### The 12 presidential elections 1948–2004 (winner / loser EV; notable ones flagged) [consensus]
@@ -281,11 +442,19 @@ counts the in-game **turns/terms played** rather than calendar elections. The EV
 totals are consensus across National Archives, 270toWin, and Britannica snippets;
 verify the exact split before baking any single one into a fixed mechanic.)*
 
+### The modern elections past 2004 (for the 2024-start window) [consensus]
+- **2008** — **Obama (D) 365**, McCain (R) 173.
+- **2012** — **Obama (D) 332**, Romney (R) 206 *(the `era-of-populism` start; main doc §10)*.
+- **2016** ★ — **Trump (R) 304**, Clinton (D) 227 — Trump wins the EV while **losing** the popular vote; populist realignment.
+- **2020** ★ — **Biden (D) 306**, Trump (R) 232 — Biden wins popular vote by ~7M; **Jan 6, 2021** follows.
+- **2024** ★ — **Trump (R) 312**, Harris (D) 226 — Trump's non-consecutive-term comeback; **wins the popular vote**; the `51dfaef1` start. ([2024 election — Wikipedia](https://en.wikipedia.org/wiki/2024_United_States_presidential_election))
+
 ### Statehood — the last two states [consensus]
 - **Alaska** — **49th state, Jan 3, 1959.**
 - **Hawaii** — **50th state, Aug 21, 1959.**
 - These are the **final** states admitted; the 50-state map (and 50-star flag)
-  dates from 1959 and is unchanged through 2004. Statehood was partly a partisan
+  dates from 1959 and is unchanged through 2004 — **and through 2025** (no state
+  added since; relevant to the 2024-start map too). Statehood was partly a partisan
   balance question (Democrats favored Alaska, Republicans Hawaii; admitted
   together for balance). ([Constitution Center](https://constitutioncenter.org/blog/the-last-time-congress-created-a-new-state-hawaii), [Alaska Statehood Act](https://en.wikipedia.org/wiki/Alaska_Statehood_Act))
 
@@ -296,6 +465,8 @@ verify the exact split before baking any single one into a fixed mechanic.)*
 - **25th (1967)** — presidential **disability & succession** procedures.
 - **26th (1971)** — **voting age lowered to 18**.
 - **27th (1992)** — congressional **pay-raise** timing (proposed 1789, ratified 1992).
+- *(No amendment has been ratified since the 27th in 1992 — so a 2024-start board
+  has the **same 27-amendment Constitution** as a late-1990s board.)*
 ([National Archives — Amendments 11–27](https://www.archives.gov/founding-docs/amendments-11-27))
 
 > **Anachronism watch for this batch:** the 1948-continued sibling thread shows
@@ -334,7 +505,8 @@ verify the exact split before baking any single one into a fixed mechanic.)*
   with traditionalists and conservatives, while the Blue Party will stop getting
   them, so the historical shift occurs. Ted Cruz will be drafted Red regardless"
   (chunk-001 post 31). So the game **engineers** the modern sort to emerge over a
-  1948-start run — exactly the §6→§10 trajectory.
+  1948-start run — exactly the §6→§10 trajectory. **By the 2024-start (above), that
+  sort is *complete*, so that batch drops ideology restrictions entirely.**
 - **Game era-band names for this span (use for flavor, not as real periods):**
   the spreadsheet's content-gating tags read **"Era of the Nuclear Age"**
   (chunk-026), **"Era of Neocons (1972–2000)"** (chunk-080), **"Era of Terror
@@ -371,8 +543,9 @@ verify the exact split before baking any single one into a fixed mechanic.)*
 - [Britannica — Dixiecrat](https://www.britannica.com/topic/Dixiecrat) and [Senate — Strom Thurmond bio](https://www.senate.gov/senators/FeaturedBios/Featured_Bio_Thurmond.htm) — 1948 revolt; most bolters returned; Thurmond switches Sept 1964.
 - Election EV totals (1948–2004): [Wikipedia — 1948 election](https://en.wikipedia.org/wiki/1948_United_States_presidential_election), [1960](https://en.wikipedia.org/wiki/1960_United_States_presidential_election), [1964](https://en.wikipedia.org/wiki/1964_United_States_presidential_election), [1968](https://en.wikipedia.org/wiki/1968_United_States_presidential_election), [1972](https://en.wikipedia.org/wiki/1972_United_States_presidential_election), [1984](https://en.wikipedia.org/wiki/1984_United_States_presidential_election), [2000](https://en.wikipedia.org/wiki/2000_United_States_presidential_election); cross-checked against [270toWin historical elections](https://www.270towin.com/historical-presidential-elections/) and [National Archives — Electoral College results](https://www.archives.gov/electoral-college/results).
 - [Constitution Center — last new state (Hawaii)](https://constitutioncenter.org/blog/the-last-time-congress-created-a-new-state-hawaii) and [Alaska Statehood Act](https://en.wikipedia.org/wiki/Alaska_Statehood_Act) — AK 49th (Jan 3, 1959), HI 50th (Aug 21, 1959).
-- [National Archives — Amendments 11–27](https://www.archives.gov/founding-docs/amendments-11-27) — 22nd (1951) through 27th (1992).
+- [National Archives — Amendments 11–27](https://www.archives.gov/founding-docs/amendments-11-27) — 22nd (1951) through 27th (1992); none since.
 - [McGovern–Fraser Commission](https://en.wikipedia.org/wiki/McGovern%E2%80%93Fraser_Commission) and [Teaching American History — Mandate for Reform](https://teachingamericanhistory.org/document/mcgovern-fraser-commission-report/) — post-1968 binding-primary system.
 - Cold War turning points: [State Dept — Cuban Missile Crisis](https://history.state.gov/milestones/1961-1968/cuban-missile-crisis), [NASA — Sputnik](https://www.nasa.gov/history/65-years-ago-sputnik-ushers-in-the-space-age/), [State Dept — Korean War](https://history.state.gov/milestones/1945-1952/korean-war-2), [State Dept — Gulf War 1991](https://history.state.gov/milestones/1989-1992/gulf-war), [History.com — Iraq War begins (Mar 19/20, 2003)](https://www.history.com/this-day-in-history/march-19/war-in-iraq-begins).
 - The race-vs-economic-development scholarly debate: [Cambridge — Transformation of Southern Politics Revisited](https://www.cambridge.org/core/journals/british-journal-of-political-science/article/abs/transformation-of-southern-politics-revisited-the-house-of-representatives-as-a-window/B0D710855EC663879079F1CD5B7B952B), [Harvard UP — The End of Southern Exceptionalism (Shafer & Johnston)](https://www.hup.harvard.edu/books/9780674032491).
-- **Batch source:** `docs/game/sources/be4e0f70-ampu-1948-playtest-the-nuclear-age-19482004/` — chunk-001 (1948 start; Cold War/Nuclear Age framing; the 10-faction board incl. Blue 5 Russell/Byrd/Thurmond "Dixiecrats" and post-31 design-intent statement on engineered realignment); era markers 1948→2004 (chunks 001, 019, 048, 072, 100, 143, 153); chunk-026 ("Era of the Nuclear Age"); chunk-080 ("Era of Neocons (1972-2000)"); chunk-078/143 ("Era of Terror"); chunk-042 (player turns the Dixiecrats into Moderates); chunk-048/055/075 (era-gated one-directional party-flip mechanic); chunk-145 (Civil Rights/Reformist/LW Activist cards; cabinet-diversity penalty).
+- **2020–2025 window:** [2024 election — Wikipedia](https://en.wikipedia.org/wiki/2024_United_States_presidential_election) and [CFR — The 2024 Election by the Numbers](https://www.cfr.org/articles/2024-election-numbers) (Trump 312 / Harris 226; popular vote; seven swing states; non-consecutive terms); [Pew — Behind Trump's 2024 Victory](https://www.pewresearch.org/politics/2025/06/26/behind-trumps-2024-victory-a-more-racially-and-ethnically-diverse-voter-coalition/) (Biden withdrawal Jul 21, 2024; Harris nominee); [CNN — Trump indictment tracker](https://www.cnn.com/interactive/2023/07/politics/trump-indictments-criminal-cases/) and [Ballotpedia — Trump indictments 2023–2025](https://ballotpedia.org/Donald_Trump_indictments,_2023-2025) (the four 2023 indictments + case dispositions); [CNBC — guilty verdict May 30, 2024](https://www.cnbc.com/2024/05/30/trump-trial-verdict-hush-money.html) and [NPR — unconditional discharge Jan 10, 2025](https://www.npr.org/2025/01/10/nx-s1-5253927/trump-sentencing-new-york); [Attempted assassination (Butler, Jul 13, 2024) — Wikipedia](https://en.wikipedia.org/wiki/Attempted_assassination_of_Donald_Trump_in_Pennsylvania) and [Al Jazeera — assassination-attempts timeline](https://www.aljazeera.com/news/2026/4/26/timeline-trump-assassination-attempts-and-security-incidents) (Butler Jul 13 + West Palm Beach Sep 15); [Second inauguration of Donald Trump — Wikipedia](https://en.wikipedia.org/wiki/Second_inauguration_of_Donald_Trump) and [Brookings — first-100-days confirmations](https://www.brookings.edu/articles/the-first-100-days-of-confirmations-in-the-second-trump-administration/) (Jan 20, 2025 inauguration; Rubio 99–0, Hegseth 51–50; EO burst); [Second cabinet of Donald Trump — Wikipedia](https://en.wikipedia.org/wiki/Second_cabinet_of_Donald_Trump) (Gabbard DNI, Thune Senate Majority Leader, Vance VP); [Presidency of Joe Biden — Wikipedia](https://en.wikipedia.org/wiki/Presidency_of_Joe_Biden) (2021–2025 capstone: Afghanistan Aug 2021, ARP/IIJA/CHIPS/IRA, 9.1% inflation peak Jun 2022, Ukraine Feb 24 2022, Oct 7 2023).
+- **Batch sources:** `docs/game/sources/be4e0f70-ampu-1948-playtest-the-nuclear-age-19482004/` — chunk-001 (1948 start; Cold War/Nuclear Age framing; the 10-faction board incl. Blue 5 Russell/Byrd/Thurmond "Dixiecrats" and post-31 design-intent statement on engineered realignment); era markers 1948→2004 (chunks 001, 019, 048, 072, 100, 143, 153); chunk-026 ("Era of the Nuclear Age"); chunk-080 ("Era of Neocons (1972-2000)"); chunk-078/143 ("Era of Terror"); chunk-042 (player turns the Dixiecrats into Moderates); chunk-048/055/075 (era-gated one-directional party-flip mechanic); chunk-145 (Civil Rights/Reformist/LW Activist cards; cabinet-diversity penalty). `docs/game/sources/3843da2da-…/` (2000-start "Era of Terror") — chunk-001/006/010/011/020/021/032/038/041/046. **`docs/game/sources/51dfaef1-2024-the-second-coming/`** (2024 / Jan-2025-start, Ted-run) — chunk-001 post 1 (Jan-2025 intro: 2020 defeat / arrest / two assassination attempts / Trump 2nd term; Ukraine + Israel state-of-the-world), posts 9/14 (no draft ideology restrictions for present/future timelines), posts 39/40–41/44/50/53/69–70 (real Jan-2025 board setup: Trump cabinet nominees incl. Gabbard→DNI mapped to CIA slot, Thune as Senate Majority Leader, governors/governors-elect, 2020-census EV update, end-of-Biden-term 2.10 retirement pass), posts 61–74 (surname-collision data bug — disregard as ground truth). **Nearly all setup/roster-prep; the game had not begun advancing turns by the end of the capture.**

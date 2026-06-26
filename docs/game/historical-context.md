@@ -1268,7 +1268,15 @@ section also frames that thread's closing years, as an alt-history.)* *(The
 era, ending mid-1924 under President Hearst with the League of Nations debate,
 Kellogg-Briand pact, London Naval Treaty, and Nazi-Party emergence in chunk-117;
 all era-accurate 1920s events, no new real-history detail beyond what this
-section already documents.)*
+section already documents.)* *(The `51dfaef1`-batch **1916-start solo playtest**
+exercises this era's 1910s directly — Wilson installed as Democratic leader,
+faction nicknames "Socialists" (Debs) / "Internationalists" (Wilson) — and
+flagged an **era-evo ordering bug**: Czechoslovakia/Hungary-independence events
+fired *before* WWI ended (they should gate on WWI's end). **Polarity here is the
+pre-realignment hinge** — progressivism spans BOTH parties (this board has
+progressive/LW-pop cards on both B1 "Socialists" and R1 La-Follette/Borah
+"Populists", with TR in Red 2 as an "Imperialist"); do not read 1916 BLUE/RED as
+modern left/right.)*
 
 ### Binding facts (ground truth)
 - **1896 was a critical realignment that locked in Republican national dominance
@@ -1317,7 +1325,8 @@ section already documents.)*
 - **1901** — McKinley assassinated; TR becomes president. **[consensus]**
 - **1912** — Four-way race; Wilson wins on a split GOP; Bull Moose Progressives. **[consensus]**
 - **1913** — 16th & 17th Amendments; Federal Reserve. **[consensus]**
-- **1917-18** — US enters WWI; Espionage/Sedition Acts. **[consensus]**
+- **1916** — **Wilson (D) def. Hughes (R), 277–254 EV**; decided by **California** (Wilson by ~3,800 votes of ~1M; 13 EV) — one of the closest elections ever. Wilson ran on **"He Kept Us Out of War."** Also **March 9: Pancho Villa raids Columbus, NM** → the **Pershing Punitive Expedition** (Mar 1916–Feb 1917). **[consensus]** ([LOC 1916 guide](https://guides.loc.gov/presidential-election-1916), [History.com — Villa raid](https://www.history.com/this-day-in-history/march-9/pancho-villa-attacks-columbus-new-mexico))
+- **1917** — **Feb 1: Germany resumes unrestricted submarine warfare**; the **Zimmermann Telegram** (intercepted Jan, published Mar 1); **Wilson asks Congress for war Apr 2; US declares war Apr 6**. Espionage Act (1917) / Sedition Act (1918). **[consensus]** ([State Dept — US entry into WWI](https://history.state.gov/milestones/1914-1920/wwi))
 - **1919-20** — 18th (Prohibition) & 19th (suffrage) Amendments; Red Scare. **[consensus]**
 - **1920-29** — Republican "return to normalcy"; 1920s prosperity. **[consensus]**
 - **1928** — Hoover (R) def. Al Smith (D), **444–87 EV / 58.2%–40.8%**; Smith (first Roman Catholic major-party nominee, "wet"/anti-Prohibition) carries only 8 states but **cracks the Solid South** via anti-Catholic backlash. **[consensus]** ([Britannica 1928](https://www.britannica.com/event/United-States-presidential-election-of-1928), [Britannica — Al Smith](https://www.britannica.com/biography/Al-Smith))
