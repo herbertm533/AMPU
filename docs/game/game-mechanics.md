@@ -265,6 +265,7 @@
 24. [Other 1856-arc systems revealed by `house-divided` (designed, not built)](#24-other-1856-arc-systems-revealed-by-house-divided-designed-not-built)
     - [24.1 Succession / eligibility / the acting-president state](#241-61-succession--eligibility--the-acting-president-state)
     - [24.1.1 ★ Impeachment subsystem — broken/VOIDED (DH-66 → corroborates DH-33, 3-thread; `ideo1928`)](#2411--impeachment-subsystem--broken-as-is-voided-mid-run-dh-66--corroborates-dh-33-now-3-thread-ideo1928)
+    - [24.1.2 ★ #167 — no-eligible-successor presidential constitutional-crisis subsystem (`fixes2022`)](#2412--167-new-fixes2022--the-no-eligible-successor-presidential-constitutional-crisis-subsystem-designed-not-built)
     - [24.2 Contingent House election + tied-chamber inverse control](#242-62-contingent-house-election--tied-chamber-inverse-control)
     - [24.3 Primary Era — state-opt-in primaries → Groups 1–5](#243-63-primary-era--state-opt-in-primaries--presidential-primary-groups-15)
     - [24.4 Amendment ratification by 3/4 of Governors — era-keyed, tunable](#244-64-amendment-ratification-by-34-of-state-governors--era-keyed-then-tunable)
@@ -341,6 +342,7 @@
     - [30.7 Reconstruction rulings folded from `hd1` (vcczar — AUTHORITATIVE)](#307-reconstruction-rulings-folded-from-hd1-vcczar--authoritative)
     - [30.8 Rulings folded from `ted1772` (Ted-run mostly-CPU 1772 founding campaign)](#308-rulings-folded-from-ted1772-ted-run-mostly-cpu-1772-founding-campaign)
     - [30.9 Rulings folded from `ideo1928` (GA-run interwar 1928 campaign — one Ted designer ruling)](#309-rulings-folded-from-ideo1928-ga-run-interwar-1928-campaign--one-ted-designer-ruling)
+    - [30.10 Rulings folded from `fixes2022` (the EARLIEST designer source — Fall 2022 pre-early-release build window)](#3010-rulings-folded-from-fixes2022-the-earliest-designer-source--fall-2022-pre-early-release-build-window)
     - [30.4 Authority hierarchy reminder](#304-authority-hierarchy-reminder)
 31. [Gilded-Age era systems (designed, not built)](#31-gilded-age-era-systems-designed-not-built)
     - [31.1 (#147) Tariff-as-national-%-rate + the mutually-exclusive MonetaryRegime](#311-147-tariff-as-national-rate--the-mutually-exclusive-monetaryregime-designed)
@@ -598,7 +600,7 @@ places that aren't territories, except if it's ME (part of MA) or WV (part of VA
 | **Per-draft random-trait + random-alt-state grant** | **3 random traits + 3 random alt-states per draft** | `tedchange#POST 50` |
 | **`Overeager` + `Late Bloomer` traits** | **REMOVED** from the trait library (universal agreement; "block player moves, nobody uses") | `tedchange#POST 14, 20, 23` |
 | **★ #153 — 0-Command rookies + DOUBLED Command-gain (now OFFICIAL; ★ 3-SOURCE CANONICAL)** | **Nobody is born with Command; ALL rookies enter at 0 Command, and EVERY in-game Command-gain % is DOUBLED** to compensate — so Presidents emerge from in-game action, not real-world reputation. ebrk: *"both have been adapted into the official rules now."* (Reinforces the no-Command-on-random-skill rule above + #143 use-it-or-lose-it decay; aligns with the [§28.11](#2811-modern-draft-lobby-cards--dataset-the-era-locked-content-rotation) "earn it forward" framing — Ted nuked the 2000 cast's Command to first-term levels at boot.) | `terror2000#POST 91-93` · `tedchange#POST 5-8,47` · `ted1772#POST 1, 25, 752, 1671` |
-| **★ #153 — no re-roll on already-held expertise (now OFFICIAL; ★ 3-SOURCE CANONICAL)** | When rolling to GRANT an expertise (committee assignment / career-track exit), **rolling an already-held expertise = NO new expertise (do NOT re-roll)** — a *wasted* roll. Effect: pols **master a few expertises** instead of becoming renaissance men. | `terror2000#POST 91-93` · `ted1772#POST 378, 109, 562, 739, 1322` |
+| **★ #153 — no re-roll on already-held expertise (now OFFICIAL; ★ 3-SOURCE CANONICAL; ★ EARLIEST SOURCE = `fixes2022`)** | When rolling to GRANT an expertise (committee assignment / career-track exit), **rolling an already-held expertise = NO new expertise (do NOT re-roll)** — a *wasted* roll. Effect: pols **master a few expertises** instead of becoming renaissance men. | **★ `fixes2022#POST 581-583, 645-650` (CANONICAL/EARLIEST, Mar 2023)** · `terror2000#POST 91-93` · `ted1772#POST 378, 109, 562, 739, 1322` |
 
 > **★ #153 — TRIPLE-CONFIRMED + the emergent-President demo (`ted1772`, batch 17 = the 3rd independent
 > source).** `ted1772` is a **Ted-run 1772 fresh start** where all three rules were **stated up front
@@ -628,6 +630,15 @@ places that aren't territories, except if it's ME (part of MA) or WV (part of VA
 > is hard to come by, so it must be **earned forward** and **doubled** to make Presidents reachable.
 > **Now 3-source confirmed** (terror2000 / tedchange / ted1772 + a live emergent-President audit) —
 > implement with confidence.
+
+> **★ PROVENANCE — `fixes2022` is the CANONICAL/EARLIEST source for the no-reroll-on-held-expertise
+> rule (gap #153).** vcczar **adopted Ted's house rule LIVE in Fall 2022 → Mar 2023**: *"when you
+> roll a new expertise you already have, you do NOT re-roll — you get nothing"* (was: re-roll until a
+> new one), `fixes2022#POST 581-583, 645-650`. **This predates `terror2000` and `ted1772`** (the
+> threads previously credited above) — so the no-reroll rule was **designer intent from the start of
+> the pre-early-release build window**, not a later-thread invention. The ×2-Command / 0-Command-
+> rookie halves of #153 were ruled later (terror2000); only the no-reroll half traces to this
+> earliest source. (`fixes2022#POST 645-650`.)
 
 *(SUPERSEDES the earlier "5/5 random traits + alt-states per draft" reading documented in
 [§24.8 Draft rookie grants re-ruled](#248-69-draft-rookie-grants-re-ruled--3-traits--3-alt-states)
@@ -1530,12 +1541,23 @@ of the §30.2 #8/#9 open items.
 > fairness penalty + the Era-of-Terror DIVERSITY penalty) operate **together natively in a
 > 2000-start**, alongside this enthusiasm channel.
 
+> **★ PROVENANCE — `fixes2022` is the EARLIEST corroboration of the cabinet/legislative
+> enthusiasm-swing CAP + the lobby-stacking asymmetry (gap #124 / #31 / #80).** Predating `tedchange`,
+> Cal documented the exact pathology this whole section fixes: a single **cabinet appointment swung
+> enthusiasm by +14** (gameable via a shared no-ideology lobby like **Big Agriculture**), and a
+> **legislative tie at net-0 produced a swing of 4-8** — Ted was *"open to both caps"* (a **±2/±3 cap**
+> on cabinet-appointment AND legislative enthusiasm swings). **OPEN at thread's end** but the direct
+> ancestor of (a) the ±3 swing cap (#80) baked in above and (b) the `terror2000` "happiness stacks but
+> unhappiness can't" bug fix — i.e. the **lobby-stacking asymmetry was flagged here first** (Fall
+> 2022), then resolved live in `terror2000`. (`fixes2022#POST 659-670`.)
+
 *(designed, RULED — wire two independent channels (points-via-lobby + enthusiasm-via-cabinet-wants).
 The lobby points-channel REPLACES the current cabinet-enthusiasm-via-lobby path (gap #31); the
 **enthusiasm channel is now the `terror2000` 3-state upset/fine/happy model**: per-faction count of
 satisfied wants → fine(0) / happy(+1 @20%/10%) / upset(−1 @20%/10%), one roll/faction, same-ideology
-factions stack, ±3 cap. Cite `tedchange#POST 1-4` + `terror2000#POST 486-489`. The only open numbers
-are the Big-4-vs-rest enthusiasm weighting (§30.2 #8/#9).)*
+factions stack, ±3 cap. Cite `tedchange#POST 1-4` + `terror2000#POST 486-489`; **earliest corroboration
+of the swing cap + lobby asymmetry = `fixes2022#POST 659-670`.** The only open numbers are the
+Big-4-vs-rest enthusiasm weighting (§30.2 #8/#9).)*
 
 #### 9.3.8 ★ Ted-RULED nomination filters (designer-authoritative; `tedchange`)
 
@@ -1554,6 +1576,59 @@ confirmation threshold pre-Constitution = 60% of the TOTAL states** (8 of 13 in 
 *(designed, RULED — add an Integrity → cannot-nominate-Controversial precondition to all
 nomination pickers; encode the 60%-of-states CC-era confirmation gate. Cite `tedchange#POST
 276-278`.)*
+
+> **★ #124 / confirmation-inflation FIX + CPU cabinet-nominee 3-step rework (`fixes2022`, EARLIEST
+> SOURCE; Ted + vcczar). DESIGNED, AGREED-not-implemented.** `fixes2022` is the **earliest source**
+> for two confirmation-side rulings that later threads (`tedchange`/`ideo1928`) build on. Cite
+> `fixes2022#POST 883-895, 904-907`.
+>
+> **(1) The Integrity/Controversial confirmation-INFLATION fix (Ted, POST 883-895).** Root cause Ted
+> diagnosed: **Controversial had become a de-facto cabinet ban** because **Integrity is gained 100%
+> by EVERY Senator who votes a nominee down** → trait-inflation snowballed (≈42% of the 1948 Senate
+> held Integrity/Controversial; a 79/104 iron-fist majority still couldn't confirm a 3-admin Sec-of-
+> State, because Integrity-Senators auto-Nay Controversial nominees). **FIX:** change the Integrity/
+> Controversial **gain from 100%-for-all-Nay-voters to 10-20% per individual Senator** — so the trait
+> stays rare and Controversial stops being an automatic ban. **★ AGREED but NOT YET implemented at
+> thread's end** (`fixes2022#POST 906`). Pairs with the Iron-Fisted+Harmonious trait-conflict clean-up
+> (§3.x / DH-27) and with jnewt's "Iron Fist too common from Senate elections" trait-inflation
+> complaint (same family). This is the **earliest articulation of the trait-inflation → confirmation
+> pathology** that §25.5 (the "36% of 88 nominees passed" CPU bug) and the §30.9 confirmation-auto-pass
+> rule later attack from other angles.
+>
+> **(2) The CPU cabinet-nominee 3-step rework (Ted, POST 894-895).** CPUs over-failed opposite-party
+> nominees (they picked 2-admin lobby-fitting pols and ignored Controversial). New CPU nomination
+> ladder:
+>
+> | CPU situation | Nominate |
+> |---|---|
+> | **Crisis-relevant slot** | the **most-qualified** pol (crisis trumps party) |
+> | **Own party holds the Senate majority** | the **max-enthusiasm** pick |
+> | **Opposition holds the Senate majority** | the **best non-Controversial, highest-admin, ≥1 related expertise** pol (confirmable-first) |
+>
+> Corroborates the `oopscpu` #145 CPU-nominee holes + the §25.5 cabinet-confirmation pathology.
+> Folds the CPU side of #124 into the §25.5 replacement/selection logic.
+>
+> **Also from this thread (folds here):** the 1-admin-nominee = **0%-confirmation-is-INTENDED** ruling
+> (vcczar: *"I actually do want it to be 0%"*), with the **CPU nomination floor raised to 2 admin** so
+> CPUs stop wasting picks on un-confirmable 1-admin pols (`fixes2022#POST 166-170`); **Incompetent pols
+> cannot be nominated** to cabinet/cabinet-level/ambassador/military posts (POST 838); **only the Top-4
+> (State/Defense/Treasury/AG) need confirmation VOTES**, the rest auto-confirm unless Controversial /
+> low-admin (POST 605-621 — the **earliest source** for the §30.9 confirmation-auto-pass rule); and a
+> typo fix — the cabinet-confirmation block restriction references the **Majority Leader, NOT the
+> faction leader**, and **"blocking" ≠ "voting"** (a player always controls their own confirmation
+> votes even when they can't formally "block," POST 605-621).
+
+> **★ Confirmed/retained appointees gain a field-relevant EXPERTISE (`fixes2022#POST 851, 863`,
+> vcczar; the EARLIEST source).** A confirmed or retained cabinet member **gains a random expertise
+> relevant to the post** — the fix for the "10-yr Sec-of-State with no Foreign-Affairs expertise"
+> problem (and Geostrategist was **moved off Ambassadors onto Sec-of-Defense/War**). This is the
+> origin of the cabinet→expertise feedback that §9.3.5 (Cabinet Admin bonus) and the PR7 lobby→
+> expertise→industry pipeline (§18) build on; office-conditional bonuses (Number Cruncher /
+> Geostrategist) **disappear when you leave the office** (POST 863). Pairs with the broken-appointment-
+> promise penalty (**Pres's faction −1 enthusiasm per broken promise**, reduced from 2, POST 838) and
+> the **"Compel cabinet member to resign" exec action** rework (expiration era removed; Pres
+> requirement changed to "does NOT have Passive," POST 84-85 — fixes the lifetime-cabinet lock; cross-
+> ref §21.4 firing-precedent).
 
 #### 9.3.9 ★ Ted-RULED Era-of-Terror cabinet FAIRNESS + DIVERSITY penalties (#151) (designer-authoritative; `terror2000`)
 
@@ -1827,6 +1902,68 @@ Scandalous-Non-Office-Holder **era-event-text-refresh** items flagged to vcczar 
 *(designed, not built — author task: **define "office"** for the forced-out event family (career
 track yes/no; faction/party leadership yes/no) and **rewrite the "Scandalous Non Office Holder"
 event text** to match. OPEN — needs a vcczar author call. Cite `oopscpu#POST 334, 336`.)*
+
+#### 10.4.6 ★ `fixes2022` scripted-event BUILD-OUT — corroborates the shipped `EraEvent` model (+ the late-start boot-filter & firing-rate-cap open pieces)
+
+> **★ CORROBORATION, not a new gap.** `fixes2022` (Fall 2022, the EARLIEST discussion thread) is
+> **vcczar building out the scripted-event catalog** (~30+ new events across ~9 buckets, completed
+> POST 654). **Every item maps onto the shipped model** — `EraEvent` (`types.ts:1466`) with
+> data-driven `responses[]` / `EraEventResponseEffect`, a serializable `Predicate` precondition tree
+> (`types.ts:1487`), `triggersGameEnd`, `unlocks`, and `postEffects` incl. **`addPolitician`** (an
+> event can introduce a pol). The build already supports the Shaw/John-Brown **demographic-removal
+> pattern** (an event REMOVES a pol from the game) and the **state-policy toggle** pattern (§10.4.4).
+> So this **strengthens the era-event system; it does NOT add a gap.** Two open design pieces (below)
+> are the only build-relevant residue. Cite `fixes2022#POST n`.
+
+**The ~30 additions, by pattern (all map to the shipped `EraEvent`):**
+
+| Bucket | Scripted event(s) | Mechanic exercised (all shipped) | Post |
+|---|---|---|---|
+| **Historical/ahistorical fork + pol REMOVAL** | **Robert Gould Shaw** — "Sacrifice of the 54th Massachusetts" (killed → **removed from game**) / "54th Takes Pivotal Fort" (lives → gains **Celebrity**) / neither fires → enters w/o celebrity | Fork (`responses[]`) + an event that **removes a pol** (a pol who died before his draftable era enters ONLY via this) + `addPolitician`/trait grant | 2 |
+| **Demographic-removal + pardon branch** | **John Brown** (killed OR pardoned → **removed from game**; else survives full life) | Same removal pattern; pairs with the **pardon** branch (pardon otherwise unspecified — #122) | 3 |
+| **Per-state abolition (ideology-gated)** | **New England / PA / NY / OH / NJ "state legislature abolishes slavery"** (fires if slavery not yet abolished + Gov is **not** RW-Activist; awards Civil-Rights pts but an **election bonus to RW-Activists**) | `Predicate` (state-flag + Gov-trait) → `postEffect` state-policy toggle (§10.4.4) | 92-97 |
+| **Popular-vote wave** | State Legislature flips **KY + NC early**, then a wave flips **all states except DE + SC** in the Era of Democracy | **★ The same "all states except DE+SC" event corroborated in `dem1820`/#44** | 99 |
+| **Gov-config policy** | **"___ States Pass 4-year Governor Terms"** + **"___ Pass Two-Term Limits"** (many) | Gov-config gov-action → scripted event (§11.4) | 100-101 |
+| **Prohibition** | **States Ban Alcohol** (many) | State-policy toggle (§10.4.4) | 106 |
+| **Jim-Crow apparatus** | **States enact/repeal Segregation Laws**; renamed Poll-Tax/Jim-Crow gov-actions + a **General Jim Crow law** event | State-policy toggle + the time-bounded scoring multiplier (§10.4.4 "triple points for 30 years") | 108, 110 |
+| **Suffrage** | **States Grant Women the Right to Vote** | State-policy toggle | 109 |
+| **★ Demographic-gated draft-ENTRY (new capability flag)** | **Women + Black politicians enter the draft** (after the 19th Amendment) | A `Predicate`-gated **draft-entry** flag — the inverse of the removal pattern; pol pool **opens** on an amendment/era condition | 289 |
+| **Relations stressors** | **Trade-issue general events with select nations** (JQ-Adams / British example; "relations too easy to keep up") | New relations-stressor events — corroborates **DH-59** (relations under-floor) | 424 |
+
+**Designer rulings ON the era-event SYSTEM (authoritative; the two OPEN build pieces):**
+
+1. **★ Late-start scripted-event BOOT-FILTER (vcczar-authoritative, INTENDED; `fixes2022#POST
+   413-423`).** Events are **prerequisite-based, NOT firm-era-based** by design (so an alt-history can
+   replay Civil-War events in a WWI-era no-slavery timeline) — **BUT a game that BEGINS in a later era
+   starts with all pre-start-era events removed, including their ahistorical outcomes**, assuming
+   history was accurate up to the start year. Ted's proposed implementation aids: a yes/no **"can occur
+   in any era?" column** (POST 419), or move evergreen game-over/war events to **GENERAL events**
+   (POST 418). **This is the authoritative late-start event-filter rule** — it corroborates the §10.x
+   era-gating family and the `smallbugs` "expired/anachronistic event" bugs. **DESIGNED build piece:**
+   a boot-time pass that strips pre-start-era events (keeping any flagged evergreen) on a later-era
+   start. (`fixes2022#POST 413-423`.)
+2. **Era-event firing-RATE / per-era cap (UNSETTLED; `fixes2022#POST 114-123`).** vcczar removed the
+   old **"2-min / 8-max events per half-term"** cap (via an "Era Exit" column, then removed that too),
+   intending a cap **">8"**; OrangeP47 flagged an **1840 event log-jam** (only ~25% of events fired by
+   era-end) and wants a **dynamic limit** so ~70% fire per era. **The firing-rate model is OPEN** — a
+   roadmap design hole (a dynamic per-era firing budget, not a fixed cap). (`fixes2022#POST 114-123`.)
+
+**Event prereq/timing FIXES (vcczar, corroborate DH-60 / #101 — events firing referencing nonexistent
+offices/assets):**
+- **"Rev War Ends Due to War Weariness"** had a **100%-fire at 1780** (the war ended 1783) → re-prereq'd
+  to *"Rev War active + Independence declared + Era of Federalism next half-term"* (`fixes2022#POST
+  675-677`).
+- The Rev-War peace-treaty event referenced a **President + Ambassador-to-UK that don't exist
+  pre-victory** → changed to the **CC Foreign-Affairs-Chair + Amb-to-France + a new CC Special-Envoy
+  office created by a bill** (`fixes2022#POST 678-679` — corroborates #101 office-by-bill).
+- Current **Generals/Admirals refuse a CC appointment** (fixes the Washington-self-appoints-general-
+  empties-the-foreign-chair problem, `fixes2022#POST 256-257, 672`).
+
+*(designed/SHIPPED-model — the era-event ENGINE is shipped and these ~30 additions are content that
+fits it; the two build pieces are the **late-start boot-filter** (DESIGNED, intended — strip
+pre-start-era events on a later start, honor an evergreen flag) and the **dynamic per-era firing-rate
+budget** (DESIGNED, OPEN — target ~70% of an era's events fire). Plus the prereq/office-existence
+fixes (DH-60). Cite `fixes2022#POST 2-3, 92-110, 289, 413-423, 114-123, 675-679`.)*
 
 ---
 
@@ -2468,7 +2605,18 @@ Each nation in `game.diplomacy`: `0.20` chance to drift `±0.5` (50/50 sign), cl
 > patched it LIVE with a flat rule: **"CPU factions oppose automatic game-over decisions 75% of
 > the time, independent of all other considerations"** (`ted1772#POST 638`), after explicitly
 > flagging *"most players will be single player, and if the CPU constantly leans towards peace,
-> there is going to be a lot of frustration"* (`POST 459-460`). His proposed alternative was a
+> there is going to be a lot of frustration"* (`POST 459-460`).
+>
+> **★ PROVENANCE — `fixes2022` is the EARLIEST source of the 75%-nay game-over CPU rule (#88 / OC-3 /
+> #158); it predates `ted1772`'s #158 by ~a year.** The rule was first ruled in Fall 2022 over the
+> **Carlisle Peace Commission** game-over event: the "rejoin England" response auto-ends the game, and
+> the CPU rules made all CPUs (incl. a CPU CC-President) vote FOR it — only the Nationalist faction got
+> points to fight on — so CPU-heavy / solo games very likely triggered it against the human's survival
+> wish (`fixes2022#POST 622, 663`). vcczar's canonical 3.0 CPU rule: *"If a decision will result in
+> the game automatically ending… the CPU will vote nay 75% of the time regardless of any other
+> considerations"* (`fixes2022#POST 663`). So **`ted1772`'s #158 (POST 638) is the LATER re-ruling of
+> the SAME rule** — same Carlisle-Treaty motivation, same 75% number; the earliest articulation is
+> here. (`fixes2022#POST 622, 663`.) His proposed alternative was a
 > **points fix** — *"give points to most ideologies to be opposed to peace and 90% of the time
 > that's the way the CPU will swing."* **This couples tightly to [§21.1](#211-generic-cross-era-war-system)
 > (the #155 RevWar-winnability floor — it is one of the three safety floors there) and to the
@@ -4847,6 +4995,11 @@ add `metersToElectionBonus(meters)` from the canonical table. Couples to
 > `partyPreference` exist (`calcStateVote` reads them, [§15.1](#151-calcstatevote--the-core-resolver-phaserunnersts3685)),
 > but the **driving algorithm is not in code**. `modern` supplies it. Cross-ref
 > `game-context.md` #51.
+>
+> **★ PROVENANCE (`fixes2022`):** this enthusiasm engine is **THE perennial fork** — the system the
+> programmer got STUCK on and even the designer re-implements differently each playthrough
+> (`fixes2022#POST 713-716`). The full provenance note + why the #51/#18 resolutions must be treated
+> as a frozen spec is in [§29.3](#293--the-meterenthusiasmelection-model--51-resolved-drums-4-step--18-resolved-terror2000--vs-2-layer-model-gap-1851).
 
 **The 4-part enthusiasm reallocation** runs **after legislation scoring** each session
 (modern#post 96, 722, 945, 2039). Using the **dominant party** (the one that just gained
@@ -5542,6 +5695,16 @@ The antebellum pressure pays off as a **scripted Era-Event chain**, not a passiv
 >   dataset-build time** (cross-ref the draft-class authoring playbook). Without the audit, correct
 >   secession would wrongly deactivate loyal Southern (and Black) pols.
 
+> **★ PROVENANCE — `fixes2022` is the EARLIEST corroboration of the Secessionist-trait gap (#121 /
+> DH-64); it predates `smallbugs` and `hd1`.** In Fall 2022, **Umbrella** flagged it directly:
+> *"it'd be useful to have a secessionist trait, similar to union loyalist… there's no way to tell who
+> [seceded]"* — proposed workaround a **1/0 column (1 = loyalist, 0 = seceded, blank = non-Southern)** —
+> with the telling exchange *"Union Loyalist isn't used anymore" / "Actually, it is. Or it will be
+> again"* (`fixes2022#POST 641-644`). This is the **earliest evidence** that (a) the Secessionist trait
+> was a known missing dataset field from the start of the build window and (b) `Southern Unionist` /
+> `Union Loyalist` labeling was already understood to be the gate. Confirms #121/DH-64 are
+> **designer-acknowledged build needs**, not playtest-only noise. (`fixes2022#POST 641-644`.)
+
 *(designed, not built — a `Politician.allegiance: 'union' | 'secessionist'` state + a
 "Secessionists" inactive bucket; a secession era-event chain gated on a blundered presidential
 decision (**Judicial-skill roll for the President; a Pres blunder alone fires it**); the per-pol
@@ -5940,6 +6103,21 @@ not back in the Union (`hd` POST 1987–1988, 2320):
 > [§30.7](#307-reconstruction-rulings-folded-from-hd1-vcczar--authoritative)). **vcczar rules
 > live** here (POST 1320, 2692), so these carry **designer authority** (same class as `tedchange`).
 
+> **★ PROVENANCE — `fixes2022` is the EARLIEST source of the Reconstruction "Secessionist Politicians"
+> appointment rule (#121 / #56-#60 / DH-64); it predates `hd1` by ~2 years.** vcczar first ruled the
+> appointment-control mechanic in Fall 2022: after a Union Civil-War victory, the next legislative
+> session **appoints the legislature in the seceded states** — Reconstructed-state **Governors are
+> appointed by the President** (who must be of the Congressional-majority party); **US Senators are
+> selected by the faction controlling the Senate President Pro Tempore**; **US Reps by the faction
+> controlling the Speaker**; and **appointees CANNOT have seceded with their state**. vcczar chose this
+> appointment-control design **over OrangeP47's "mandatory-vote" alternative** (*"needlessly adding a
+> new mechanism"*), confident the appointment control alone makes the 13th/14th/15th Amendments pass
+> (`fixes2022#POST 364-365`; cf 248-250, 287, 354-363). So the **`hd1` onset cascade below (POST 1320)
+> is the LATER live-played refinement of this SAME rule** — same "Pres appoints Govs → Govs appoint
+> Reps/Senators" structure, same "appointees can't have seceded" constraint. The amendment bar
+> (**2/3 of both chambers**) was also reaffirmed here against a playtest that erroneously used 50%+1
+> (`fixes2022#POST 357-360`, corroborates #39/#119). (`fixes2022#POST 364-365`.)
+
 **(a) Onset ruling — the end-of-war default** (vcczar, `hd1` POST 1320–1322 — sharpens the §23.4
 "Military Reconstruction" opening with the appointment cascade):
 
@@ -6237,6 +6415,107 @@ Integrity-pol-accused-of-bribery nonsense by gating article generation on trait 
 Couples to §24.1 succession, §9.3.8 nomination filters, §22.7 SCOTUS, §10.2 anytime events. Await
 Ted's rewrite for the authoritative ruleset.)*
 
+#### 24.1.2 ★ #167 (NEW, `fixes2022`) — the no-eligible-successor presidential constitutional-crisis subsystem (DESIGNED, not built)
+
+> **★ NEW MECHANICAL GAP #167 — the only genuinely-new mechanical capability the `fixes2022`
+> thread specifies. DESIGNED, not built.** vcczar + Ted hammered out a **full procedure** for the
+> case the rest of §24.1 does NOT cover: a President dies/resigns with **no eligible successor at
+> all** (empty VP **and** no third-in-line installed by a succession bill, **or** every line member
+> ineligible). This is the **fallback when the WHOLE line is empty** — distinct from #61 (the normal
+> VP-succession line, §24.1) and from #62 (the contingent ELECTION when no candidate reaches an EC
+> majority, §24.2). Designer-authoritative (tier 1). (`fixes2022` POST 841-882, the procedure
+> hammered out over chunks 12-13; the simpler interim default accepted POST 849-850.)
+>
+> **★ PROVENANCE: `fixes2022` (Fall 2022) is the EARLIEST source for this subsystem.** It predates
+> `terror2000`/`ted1772`/`oopscpu`; the succession rulings those threads folded into §24.1 (the
+> VP-inherits-on-death = full-Presidency rule) were designer intent from this build window.
+
+**When it fires.** A President leaves office (death/resignation/removal) and **no valid successor
+exists** — the VP seat is empty AND no third-in-line is installed (pre-25A, pre-any-succession-bill),
+or every successor in the line is **ineligible** (foreign-born / below the office's command floor /
+already vacated). The normal §24.1 chain (VP → installed third-in-line) has nothing to fall back on.
+
+**Step 1 — emergency Congress votes a succession law (the un-vetoable fix).**
+
+| Detail | Rule |
+|---|---|
+| **Body** | An **emergency Congress** forms immediately. |
+| **Agenda lock** | The ONLY selectable proposals are **succession laws** (who becomes third-in-line / acting President) — no other legislation. |
+| **Proposer** | A **random faction leader** proposes one. |
+| **Loop** | Voting continues, proposing again each round, **until one passes** (no deadlock allowed). |
+| **CPU** | CPUs **auto-support** the succession law (so a CPU-heavy / solo game always resolves — pairs with the #88/OC-3/#158 anti-game-over CPU bias, §13.2). |
+| **Signature** | The passed bill is **auto-signed and un-vetoable** (there is no sitting President to sign or veto). |
+
+**Step 2 — who becomes acting President (the House 1-vote-per-state election).** Once a successor
+*office* is defined, the *person* is chosen as follows:
+
+1. The **dead President's party** picks a **new party leader** (its candidate).
+2. The **other party's** party leader is its candidate.
+3. The **US House votes, 1 vote per state**, between the **two party leaders** — the §24.2-style
+   delegation-majority procedure, here selecting an **acting President** rather than resolving an
+   election.
+4. **Ineligibility cascade:** if a party's leader is ineligible (foreign-born / under the command
+   floor), substitute the **highest-PV eligible faction leader** of that party; if a party can't
+   field any eligible candidate, **cascade** (the seat goes to the party that can).
+5. **CPU House votes:** **party-line by default**, EXCEPT **Integrity** pols vote for the
+   **incumbent (dead President's) party**, and **Can-Be-Independent** pols vote **closest-ideology**.
+6. **Tie handling:** a **tied state delegation abstains**; if the *state count* ties, escalate to
+   **SCOTUS** (or, unresolved, **game-over** — see Step 4).
+
+**Step 3 — scaled Domestic-Stability penalty (the cost of how far from continuity you land).** The
+DomStab hit scales by **how legitimate the outcome is** (closer to the incumbent line = smaller hit):
+
+| Acting-President outcome | DomStab penalty |
+|---|---|
+| **Incumbent-party party-leader** wins | **0** |
+| **Incumbent-party faction leader** (PL was ineligible) | **−1** |
+| **Challenging-party party-leader** wins | **−2** |
+| **Challenging-party faction leader** (their PL was ineligible) | **−3** |
+
+**Step 4 — the coup branch (if unresolved / a Controversial demagogue is positioned).** A **coup
+chance** triggers when a player holds **Controversial + (LW-Populist OR RW-Populist)** OR is a
+**Military Leader** — routing into the **3.0.2 coup rules** (the same end-condition family as #88,
+the Autocratic Coup, §26.4). The state-count-tie-with-no-SCOTUS-resolution path can also dead-end in
+**game-over**. This is the subsystem's **terminal off-ramp**: an empty line + a positioned strongman
+can end the Republic.
+
+**The accepted interim default (the simpler shippable version, POST 849-850):** rather than the full
+House election, the **interim Senate President Pro Tempore becomes acting President** (the PPT-as-
+acting-President default). When a PPT/Speaker becomes acting President they **resign from Congress**
+(branch-separation; the Senate then elects a new PPT — already noted in §24.1's office-scope rules).
+So a build can ship the PPT default first and layer the full House-election procedure later.
+
+**System couplings (why #167 is a system, not a lone rule):**
+- **→ #61 (succession line, §24.1):** #167 is the fallback that fires when #61's line is exhausted;
+  it shares the office-fill-order (President → VP → governors → …, POST 850) and the PPT/Speaker-
+  resigns-from-Congress branch-separation rule.
+- **→ #88 / OC-3 / #158 (anti-game-over CPU bias, §13.2):** the CPU auto-support in Step 1 and the
+  party-line CPU House vote in Step 2 lean the crisis toward **resolution** (the inverse situation
+  to the 75%-nay-on-game-over rule — here the CPU must *help* close a constitutional vacuum rather
+  than block a surrender), so a solo/CPU-heavy game doesn't soft-lock with an empty Presidency.
+- **→ DH-54 / DH-33 / DH-66 (impeachment gap, §24.1.1):** #167 completes the **constitutional-crisis
+  cluster** — §24.1 = normal succession; §24.1.1 = removal (impeachment, broken); §24.1.2 = the
+  empty-line fallback. All three are under-built; the build should treat them as one subsystem family.
+- **→ #62 (contingent House election, §24.2):** the Step-2 "House votes 1-per-state" mechanic is the
+  SAME delegation-majority machinery as the no-EC-majority contingent election — implement once,
+  reuse for both (election-with-no-majority **and** acting-President-with-no-successor).
+
+**Open edges (`fixes2022` §7, POST 857-882):** what if the chosen acting-PPT / party leader is
+itself ineligible (foreign-born / too young); whether the **new** PPT or the **old** keeps the
+Presidency after a PPT-3rd-in-line succession bill passes; and the **special-election vs House-choice
+vs game-over** default — vcczar leaned *"must go to the US House"* but left these edges open.
+
+*(designed, not built — a `game.successionCrisis` flow triggered when the succession line is empty:
+(1) an **emergency-Congress agenda-locked-to-succession-laws** vote loop (random-FL proposer,
+CPU auto-support, **auto-signed/un-vetoable**, loops until pass); (2) a **House 1-vote-per-state
+acting-President election** between the two party leaders (ineligibility→highest-PV-eligible-FL
+cascade; CPU party-line except Integrity→incumbent-party, Can-Be-Independent→closest-ideology; tied
+state abstains; state-count tie → SCOTUS/game-over); (3) a **DomStab penalty scaled 0/−1/−2/−3** by
+outcome legitimacy; (4) a **coup branch** (Controversial+LW/RW-Pop OR Military Leader → 3.0.2 coup
+rules → possible game-over). **Reuse the §24.2 delegation-vote machinery for Step 2.** Ship the
+**PPT-as-acting-President interim default** (POST 849-850) first; layer the full procedure later.
+Cite `fixes2022` POST 841-882.)*
+
 ### 24.2 (#62) Contingent House election + tied-chamber inverse control
 
 > **★ TED-RULED: the inverse-tied-House-control rule is AUTHORITATIVE** (`tedchange#POST 65`,
@@ -6259,13 +6538,19 @@ The **1888** race went 3-way (Blaine R 197 / Shortridge D 196 / Saltonstall "Con
   within a 50/50 House."* The 1890 House at 152-152 (Senate stayed Dem → GOP got the tied House,
   `hd` POST 6229, 6257) is now the **canonical** Ted-RULED behavior. SUPERSEDES alternative
   proposals (random / Westminster-style former-Maj stays / Speakership-by-whole-House).
-- **★ Tied-SENATE control — the INVERSE rule (`terror2000#POST 265, 268, 1282`, Ted-RULED).** When
-  the SENATE splits **50-50**, control goes to **the VP's party** (the VP breaks the tie): the
-  2000-start opens with a **50-50 Senate, GOP majority via VP Cheney's tiebreak** — Ted: *"if both
-  parties have equal Senators, the VP's party is the majority."* This is the **mirror of the tied-
-  HOUSE rule** (the House has no VP, so it goes to the non-Senate-majority party; the Senate has a
-  VP, so it goes to the VP's party). Together they form the complete **tied-chamber control pair**
-  (corroborates DH-7 / the #135 family). (`terror2000#POST 265, 268, 1282`.)
+- **★ Tied-SENATE control — the INVERSE rule (`terror2000#POST 265, 268, 1282`, Ted-RULED; ★ EARLIEST
+  SOURCE = `fixes2022#POST 803`).** When the SENATE splits **50-50**, control goes to **the VP's party**
+  (the VP breaks the tie): the 2000-start opens with a **50-50 Senate, GOP majority via VP Cheney's
+  tiebreak** — Ted: *"if both parties have equal Senators, the VP's party is the majority."* This is
+  the **mirror of the tied-HOUSE rule** (the House has no VP, so it goes to the non-Senate-majority
+  party; the Senate has a VP, so it goes to the VP's party). Together they form the complete
+  **tied-chamber control pair** (corroborates DH-7 / the #135 family). **★ PROVENANCE:** the rule was
+  **first ruled in `fixes2022`** — vcczar set it *"by popular demand"* (`fixes2022#POST 803`),
+  **superseding Ted's earlier "random" placeholder** (POST 796); `terror2000` (above) is the later
+  re-confirmation, not the origin. So **50-50-Senate → VP's-party was designer intent from Fall 2022**.
+  Edge case (no VP): a 50-50 Senate with no VP makes the **PPT a Can-Be-Independent** holder
+  (ShortKing's David-Davis-1881 precedent, `fixes2022#POST 805`). (`fixes2022#POST 796-805` ·
+  `terror2000#POST 265, 268, 1282`.)
 
 *(designed, RULED — a contingent-election path: when no candidate reaches the EC majority,
 run a **one-vote-per-state House election among the top N** (pick a stated N — top-2 house rule
@@ -9183,6 +9468,21 @@ it there, so the gov-actions library and the SCOTUS docket are linked. SCOTUS ru
 
 ### 29.3 ★ The meter→enthusiasm→election model — #51 RESOLVED (drums 4-step) + #18 RESOLVED (terror2000 → V's 2-layer model) (gap #18/#51)
 
+> **★★★ PROVENANCE — THE STRONGEST CORPUS EVIDENCE THAT ENTHUSIASM IS THE PERENNIAL FORK
+> (`fixes2022`, batch 19, the EARLIEST source).** The ideology-enthusiasm system (#18 / #51 / #124)
+> is the **one system the programmer (Anthony) got STUCK on** and **even the designer (vcczar) cannot
+> pin down.** In the pre-early-release build window (Fall 2022 → 2023), Anthony coded the rules-doc
+> **in order** and **stalled ~halfway into phase 2.1 on ideology enthusiasm**; vcczar *"sent him like
+> four emails explaining it… the emails didn't bring [Ted] any closer to being confident"*
+> (`fixes2022#POST 715-716`), and **vcczar himself "implement[s] it a new way accidentally" each
+> playthrough** (`fixes2022#POST 713`). By thread's end Anthony had coded only ~2.1 (POST 696-700).
+> **This is the load-bearing fact for the roadmap:** enthusiasm is not merely under-specified, it is
+> the system whose mechanics the designer **re-derives differently every time** — so the resolutions
+> recorded below (#51 = `drums` 4-step; #18 = `terror2000` 2-layer model) are **the canonical pins
+> that ended a multi-year fork**, and any enthusiasm implementation MUST treat them as the frozen
+> spec rather than re-deriving from scratch. The fork is the single likeliest place for the build to
+> drift. (`fixes2022#POST 701, 713-716`.)
+
 > **★★ UPDATE (batch 15 `terror2000`): #18 IS NOW RESOLVED.** Ted (the designer, running the
 > 2000-start) **initially moved enthusiasm by the meters, then REVERSED his own reading to V's
 > 2022 canonical intent** and pinned the **2-layer meter→election model** (`terror2000#POST
@@ -10109,7 +10409,7 @@ predates conventions). The **#18 meter→election state-scope fork RECURS unreso
 
 | Topic | Ruling | Folded into | `terror2000` POSTs |
 |---|---|---|---|
-| **50-50 Senate → VP's party = majority** | RULED — "if both parties have equal Senators, the VP's party is the majority" (the inverse of #135's 50/50-House rule). | [§24.2](#242-62-contingent-house-election--tied-chamber-inverse-control) | 265, 268, 1282 |
+| **50-50 Senate → VP's party = majority** | RULED — "if both parties have equal Senators, the VP's party is the majority" (the inverse of #135's 50/50-House rule). **★ EARLIEST source = `fixes2022#POST 803`** (vcczar, "by popular demand," superseding Ted's "random" placeholder); `terror2000` is the re-confirmation. | [§24.2](#242-62-contingent-house-election--tied-chamber-inverse-control) | `fixes2022` 796-805 · `terror2000` 265, 268, 1282 |
 | **5% death+retirement, 1-death-max, retirements FIRST** | RULED (corroborates #85/#130) — up to 5% of a faction/cycle; **1 death max + rest retirements**; **roll retirements before deaths**; Frail=2% under 55. | [§10.1.y](#101y--ted-ruled-death--retirement-schedule-designer-authoritative-tedchange) | 457, 462-466, 496 |
 | **Gov "Praise/Criticize President" uses SPECIAL rolls, not Gov** | RULED (corroborates DH-15/#20) — most criticize attempts have no measurable effect unless they hit the special roll. | [§11.3](#113-governors-actions-library-designed-not-built) | 557, 763 |
 | **Gov "Improve Industry" success scoring** | vcczar RULED — Gov **and Senators** each give their faction **+100 per industry level** on success (even off-card); ebrk flagged possibly over-tuned. | [§11.5](#115-industry-leadership-scoring-designed-not-built) | 573 |
@@ -10252,12 +10552,97 @@ and `game-context.md` **DH-29 (★ movement)**.
 | **#107** diplomacy | 7-nation interwar roster + ambassador action set (Increase Relations / Trade / Credit / Take a Loan) native. | 403-404 |
 | **DH-53** bill-effect sign bug | the "Major Earthquake" aid +budget-when-should-cost bug (#165) corroborates the per-bill effect-sign bug from an event angle. | 814-815 |
 
+### 30.10 Rulings folded from `fixes2022` (the EARLIEST designer source — Fall 2022 pre-early-release build window)
+
+> **★★ THE EARLIEST DESIGNER SOURCE IN THE CORPUS.** `fixes2022` (`2d3ffb3e`, "Suggested fixes —
+> Fall 2022," Oct 2022 → Sept 2023) is the **pre-early-release content-build + to-do-clear window**:
+> **@vcczar** describing his OWN additions and **@vcczar + @MrPotatoTed** issuing rulings into the 3.0
+> doc, interleaved with community suggestions (tier-4). It **PREDATES + SPAWNS `smallbugs`** (vcczar
+> tells a player to start that thread, POST 637-640) and **predates `tedchange`** (its chunks 13-15 are
+> the same systematic 2.2-2.4 rules-doc cleanup Ted later formalizes). **★ Authority note:** vcczar/Ted
+> rulings here are **tier-1 designer-authoritative AND the EARLIEST source** — so **many rulings the KB
+> first logged from LATER threads actually ORIGINATE here.** Where a rule appears in both, the topical
+> section now carries an "★ EARLIEST SOURCE = `fixes2022`" provenance tag. Community suggestions are
+> tier-4. Cite `fixes2022#POST n`.
+
+**★ EARLIEST-SOURCE provenance (rulings the KB previously credited to later threads — now traced here):**
+
+| Rule | Later thread that re-ruled it | EARLIEST `fixes2022` source | Folded into |
+|---|---|---|---|
+| **#153 — no-reroll on already-held expertise** | `terror2000` (91-93) · `ted1772` (378) | **`fixes2022#POST 581-583, 645-650`** (vcczar adopts Ted's house rule, Mar 2023) | [§4.1.y](#41y--ted-ruled-draft-rules-designer-authoritative-tedchange) |
+| **#135 — 50-50 Senate → VP's-party majority** | `terror2000` (265, 268, 1282) | **`fixes2022#POST 803`** ("by popular demand," supersedes Ted's "random" placeholder POST 796) | [§24.2](#242-62-contingent-house-election--tied-chamber-inverse-control) |
+| **#124 — confirmation-inflation fix (Integrity/Controversial 100% → 10-20%)** | `tedchange`/`ideo1928` confirmation rework | **`fixes2022#POST 883-895, 904-907`** (Ted; AGREED-not-implemented) | [§9.3.8](#938--ted-ruled-nomination-filters-designer-authoritative-tedchange) |
+| **#124 — CPU cabinet-nominee 3-step rework** | (corroborates `oopscpu` #145) | **`fixes2022#POST 894-895`** (Ted) | [§9.3.8](#938--ted-ruled-nomination-filters-designer-authoritative-tedchange) + [§25.5](#255-cabinet-confirmation--designer-acknowledged-bug-36-of-88-nominees-passed) |
+| **#121 / DH-64 — Secessionist-trait + Reconstruction "Secessionist Politicians" appointment rule** | `hd1` (#156) · `smallbugs` | **`fixes2022#POST 364-365`** (appointment rule) · **`641-644`** (Secessionist-trait gap) | [§23.4.1](#2341--hd1--reconstruction-played-by-humans-on-both-sides--vcczars-authoritative-rewrite-156-the-canonical-reconstruction-design) + [§23.1 DH-64](#231-58-secession--southern-unionist--secessionist-trait-gating-the-antebellum-payoff) |
+| **#88 / OC-3 / #158 — CPU 75%-nay on game-over** | `ted1772` #158 (638) | **`fixes2022#POST 622, 663`** (the Carlisle Peace Treaty; predates #158 by ~a year) | [§13.2](#132-272-military-action--runphase_2_7_2_military-phaserunnersts3593) + [§25.7](#257-scripted-abc-event-cabinet-voting) + [§21.1](#211-generic-cross-era-war-system) |
+| **#124 / #31 / #80 — cabinet/legislative enthusiasm-swing cap + lobby-stacking asymmetry** | `terror2000` (happiness-stacking fix) | **`fixes2022#POST 659-670`** (Cal: +14 swing, net-0 swing-of-4-8; Ted "open to both caps") | [§9.3.7](#937--ted-ruled-cabinet--enthusiasm-rework-designer-authoritative-tedchange) |
+
+**★ NEW gap (the only genuinely-new mechanical capability):**
+
+| # | Topic | Status | Folded into | `fixes2022` POSTs |
+|---|---|---|---|---|
+| **★ #167** | **No-eligible-successor presidential constitutional-crisis subsystem** (emergency-Congress agenda-locked succession-law vote → House 1-vote-per-state acting-President election → scaled DomStab penalty → coup branch) | **DESIGNED, not built** | [§24.1.2](#2412--167-new-fixes2022--the-no-eligible-successor-presidential-constitutional-crisis-subsystem-designed-not-built) | 841-882 |
+
+**★ The load-bearing PROVENANCE fact (the perennial fork):**
+
+| Topic | Provenance | Folded into | `fixes2022` POSTs |
+|---|---|---|---|
+| **#18 / #51 / #124 — ideology enthusiasm is the system the programmer got STUCK on and the designer cannot pin** | **STRONGEST corpus evidence** the enthusiasm model is the perennial fork: Anthony stalled ~½ into 2.1; V's four emails didn't help; V re-implements it differently each playthrough | [§29.3 provenance note](#293--the-meterenthusiasmelection-model--51-resolved-drums-4-step--18-resolved-terror2000--vs-2-layer-model-gap-1851) + [§22.2](#222-faction-enthusiasm--party-preference-election-engine--the-score-economy) | 701, 713-716 |
+
+**Other vcczar/Ted rulings folded into topical homes (designer-authoritative; EARLIEST source unless noted):**
+
+| Topic | Ruling | Folded into | `fixes2022` POSTs |
+|---|---|---|---|
+| **Fed-Chair / Pres-of-Bank / FBI-Director gate** | **Never held elected office + admin ≥ 3** (unless none eligible); CIA/Nat'l-Intel exempt (Dan Coats precedent); FBI gets a %-auto-decline if held office. Fixes Tom-Udall-as-Fed-Chair realism. Pairs with #101 office-eligibility. | [§9.1](#91-231-cabinet--runphase_2_3_1_cabinet-phaserunnersts2158) + [§9.3.1](#931-expanded-cabinet-roster) | 162-164, 184 |
+| **Gov→President difficulty fix** | Govs structurally can't lose Obscure / gain Leadership → Senators dominate the Presidency. Fix: gov **~10% to gain Command on a successful gov action** (POST 504); a gov **elected/reelected = 10% lose Obscure + 10% gain Leadership** (POST 522), **scaled by state size** (Big 20% / Med 10% / Small 5%). | [§11.2](#112-252-governor-actions--runphase_2_5_2_governors-phaserunnersts3382) + [§8](#8-leadership-selection-22x) | 504-505, 522-524 |
+| **Below-minimum-skill ≠ resign** | A pol who drops below an office's minimum skill does **NOT** resign (*"they'll just suck"*); the minimum gates **running/being-appointed, not remaining** ("the Wilson event" precedent). Only blocks re-appointment/re-election. | [§9.1](#91-231-cabinet--runphase_2_3_1_cabinet-phaserunnersts2158) + [§3](#3-politicians--stats) | 624-636, 649 |
+| **Presidential Ailment = random −1 to −3 Command** (was flat −3) | Eases the always-forced-to-resign problem (~50% fire / 28 yrs ≈ historically accurate). | [§10.2](#102-242-anytime-events--runphase_2_4_2_anytime-phaserunnersts2782) + [§24.1](#241-61-succession--eligibility--the-acting-president-state) | 626-633, 649 |
+| **Iron-Fisted + Harmonious are NOT conflicting** | Harmonious = bipartisan, Iron-Fisted = party-control; Harmonious's conflict is **Disharmonious** (exemplar: Thomas Brackett Reed). Corroborates DH-27. | [§3](#3-politicians--stats) (trait-conflict) | 566-568 |
+| **Late-start scripted-event boot-filter** | Events are prereq-based, not era-based; a later-era START strips all pre-start-era events (incl. ahistorical outcomes), honoring an evergreen flag. **Authoritative late-start filter rule.** | [§10.4.6](#1046--fixes2022-scripted-event-build-out--corroborates-the-shipped-eraevent-model--the-late-start-boot-filter--firing-rate-cap-open-pieces) | 413-423 |
+| **Era-event firing-rate / per-era cap** | Old "2-min/8-max per half-term" cap removed; intends ">8"; community wants a dynamic limit (~70% fire per era). **OPEN.** | [§10.4.6](#1046--fixes2022-scripted-event-build-out--corroborates-the-shipped-eraevent-model--the-late-start-boot-filter--firing-rate-cap-open-pieces) | 114-123 |
+| **Kingmaker scope** | Kingmaker-protégé bond **cannot be voluntarily broken** (anti-cheese); **Kingmakers can't move states**; a protégé has **only ONE** Kingmaker; **1 active Kingmaker per state**. (Master-vs-regular Kingmaker = `tedchange` #128/#316.) | [§6.5](#65-217-kingmakers--protégés) | 262-265, 562, 818-826, 910 |
+| **Major-candidate gate reaffirmed** | A major presidential candidate must be an **eligible faction leader OR a Celebrity, with ≥1 command**; cascade if none qualify; pre-12A no-party-leader → a random faction leader names the candidate. | [§22.3](#223-presidential-primary-subsystem-291) + [§27.3](#273-the-12th-amendment-beforeafter-state-machine-era-specific-election-mode-toggle) | 807-812 |
+| **Make SCOTUS an elected position** (legisprop) | Election in the **election phase**, **national but simple** (like Sen/Gov, not presidential); flesh out later. | [§22.7](#227-scotus-subsystem-253--282) | 555-558 |
+| **Naval vs Army** | **No separate naval skill** (Army/Naval Expertise + once-a-General/Admiral-can't-become-the-other); battle order = **naval first** (50% of another), then ground. | [§13.2](#132-272-military-action--runphase_2_7_2_military-phaserunnersts3593) + [§17.4](#174-revolutionary-war) | 259-260, 902 |
+| **Era-of-Independence military disband is INTENTIONAL** | After the Rev War all but ~1 general disband (small NW-Indian-War force); Militia Act unavailable until Era of Federalism — urgency for a federal government + early military laws. | [§17.4](#174-revolutionary-war) | 832-834 |
+| **Ranking members get the same trait bonuses/points as Chairs** (Ted 2.2-2.4 cleanup) | Plus: can't hold two congressional-leadership posts at once (796); PPT earns points regardless of Maj-Leader (796); mid-phase majority change from deaths → no gains until next legislative phase (837); Key Advisor auto-created with the Presidency (838); SCOTUS Justices refuse military appointments unless a Major War (840). | [§8](#8-leadership-selection-22x) + [§10.4.6](#1046--fixes2022-scripted-event-build-out--corroborates-the-shipped-eraevent-model--the-late-start-boot-filter--firing-rate-cap-open-pieces) | 796-840 |
+| **Lee's Resolution = prop, not foundational** | "Foundational" = bills urgent at Era-of-Federalism start; Lee's is treatable-as-foundational + gets point-giving cards because **CPU won't propose it otherwise** (CPU-proposal-bias). | [§12.1](#121-261-proposals--runphase_2_6_1_proposals-phaserunnersts3431) | 338-352, 899-900 |
+| **CPU candidate-selection fork RESOLVED (soft)** | The **25%/25%/25%/25% + kingmaker** Gov/Senator candidate set is canonical (over the "state-ideology-bias, random-if-tied" alternative). Corroborates the §25.1 75/25 cluster + the `oopscpu` CPU-candidate holes. | [§25.1](#251-candidate-selection-open-seats-primaries-conventions--the-7525-rule) | 740-759, 787-793 |
+| **No panic/depression-relief legis pre-Great-Depression is INTENTIONAL** | Major intervention wasn't normalized until the New Deal (TR/JP-Morgan-1907); Reconstruction-lift relief already modeled. | [§29.7.1](#2971--new--the-great-depression-meta-event--econstab-cascade--crisis-gated-new-deal-bills-the-interwar-economic-engine-gap-160-ideo1928) | 944-945 |
+
+**#120 dataset umbrella — `fixes2022` input list (folds into the dataset-accuracy family):**
+
+> **3rd-thread input to the generated-dataset-accuracy work** (fixes go via `scripts/seedDataset.mjs`
+> `CURATED_ROWS` — do NOT hand-edit the JSON/CSV, per CLAUDE.md). **~20 named dataset/scenario-config
+> items + ~10 bill/event/SCOTUS effect-sign bugs**, PLUS **vcczar's own audit of ~1800 legisprops**
+> (*"audited 300 props… ~1 issue per 100, mostly prereqs in wrong order,"* POST 367-369). **Cross-thread
+> dup:** Bob Scott (NC Gov, 1-Leg → should be 1-Gov) = the **same fix as `smallbugs` §2b** (POST 554,
+> 637). Same Catholic/foreign-born/alt-state/duplicate/sign-bug patterns recur. Exemplars:
+
+| Item | Fix / bug | `fixes2022` POSTs |
+|---|---|---|
+| **John Brown** (added) | Charisma + **1 admin, NO military** (deliberate "armed charismatic," a stat-assignment principle) | 3 |
+| Bob Scott / John Bartram (age) / two Jared Ingersolls / Henry Coffeen (alt-state) / James Withycombe (foreign-born) / John Chafee (army/navy mislabel) | Disambiguation + age + alt-state + foreign-born fixes (corroborate `smallbugs` patterns) | 290-294, 396-398, 554, 835, 923 |
+| Nuclear-age Dixiecrats lack a filibuster-capable pol | Give Russell/Eastland/Stennis **Puritan** (filibuster gate) | 188 |
+| Per-era party-pol-count imbalance (1948 Dems ~20 more/faction) + thin state benches (DE; AL Reps post-Ivey) | "Add more failed statewide candidates" (the **sub-floor failed-candidate rule**) + gov/legis candidates | 50, 168, 233-234, 245 |
+| **Leadership trait is deliberately VERY RARE** (vcczar stat principle) | Only epoch-defining party-builders (Jefferson/Jackson) are born with it; Boehner-tier Speakers gain it in-game. **Explains why many real leaders lack Leadership (intentional, not a bug)** → informs #120 + the draft-class playbook. | 397-402, 456 |
+| Alt-state policy | Add an alt-state **only if the pol actually runs for a position there** (methodology ruling) | 150-151 |
+| **★ Bill/event/SCOTUS effect-SIGN bugs (corroborate DH-53)** | `Ban Bailout for "Too Big to Fail"` (+/− swapped); Dunmore "denounce slavery" (wrong opposite); Independence-budget props (rev/budget sign-flipped, vcczar **fixed**); §2.8 veto-override (Speaker/Maj-Ldr 250 pts "if voted against" → "for"); `San Antonio ISD v. Rodriguez` (Yea/Nay reversed + scores Education not Civil-Rights); Constitution Art-1 unicameral options (small-vs-large-state Gov opposition reversed); "Advocate Isolationism" gov action (gives the Isolationist-card faction nothing) | 231, 366-367, 435-436, 623, 636, 639, 654, 946, 948 |
+
+*(All of the above fold into the **#120 dataset-accuracy family** — same `CURATED_ROWS`/scenario-config
+work surface as `smallbugs`/`ted1772` DH-65 ([§4.1.z](#41z--dh-65-new-ted1772--founding-era-dataset-bugs-wrong-century-collisions--cosmopolitanprovincial)) and `hd1` DH-64 ([§23.1](#231-58-secession--southern-unionist--secessionist-trait-gating-the-antebellum-payoff)). The ~10 sign bugs fold into **DH-53**. NOT a new gap.)*
+
 ### 30.4 Authority hierarchy reminder
 
 When rule sources disagree:
 
 1. **Ted's `tedchange` rulings** (highest authority — the official rules-doc rewrite channel).
-2. **vcczar's `smallbugs` rulings** (designer spot rulings; same authority class as `tedchange`).
+2. **vcczar's `smallbugs` + `fixes2022` rulings + the Ted-run threads** (designer spot rulings /
+   designer-described additions; same authority class as `tedchange`). **`fixes2022` (Fall 2022) is
+   the EARLIEST designer source** — where a rule appears in both `fixes2022` and a later thread, the
+   later thread is the **re-ruling** and `fixes2022` is the **origin** (provenance tagged in §30.10).
+   On a same-rule conflict, the **later/more-specific** designer statement wins (rules evolved), but
+   the earliest source establishes that the rule was **designer intent from the start**.
 3. **The user's review-gate decisions** (the absolute top; e.g. batch 9's "60% cloture +
    majority" Senate ruling — `tedchange` did not touch it; it stands UNCONFLICTED).
 4. **Playtest GA case-by-case rulings** (e.g. `tea1772`, `hd`, `rep1800`, `arkzag`).
