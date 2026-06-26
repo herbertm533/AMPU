@@ -337,6 +337,7 @@
     - [30.5 Rulings folded from `oopscpu` (Ted-run all-CPU 1788 stress-test)](#305-rulings-folded-from-oopscpu-ted-run-all-cpu-1788-stress-test)
     - [30.6 Rulings folded from `terror2000` (Ted-run 2000-start modern campaign)](#306-rulings-folded-from-terror2000-ted-run-2000-start-modern-campaign)
     - [30.7 Reconstruction rulings folded from `hd1` (vcczar — AUTHORITATIVE)](#307-reconstruction-rulings-folded-from-hd1-vcczar--authoritative)
+    - [30.8 Rulings folded from `ted1772` (Ted-run mostly-CPU 1772 founding campaign)](#308-rulings-folded-from-ted1772-ted-run-mostly-cpu-1772-founding-campaign)
     - [30.4 Authority hierarchy reminder](#304-authority-hierarchy-reminder)
 31. [Gilded-Age era systems (designed, not built)](#31-gilded-age-era-systems-designed-not-built)
     - [31.1 (#147) Tariff-as-national-%-rate + the mutually-exclusive MonetaryRegime](#311-147-tariff-as-national-rate--the-mutually-exclusive-monetaryregime-designed)
@@ -593,8 +594,27 @@ places that aren't territories, except if it's ME (part of MA) or WV (part of VA
 | **Can-Party-Flip cross-party draft** | **REMOVED** — politicians always enter at their **historically accurate party** at age 25; party-flip happens **later** via 2.1.6 conversion only | `tedchange#POST 8, 10, 48` |
 | **Per-draft random-trait + random-alt-state grant** | **3 random traits + 3 random alt-states per draft** | `tedchange#POST 50` |
 | **`Overeager` + `Late Bloomer` traits** | **REMOVED** from the trait library (universal agreement; "block player moves, nobody uses") | `tedchange#POST 14, 20, 23` |
-| **★ #153 — 0-Command rookies + DOUBLED Command-gain (now OFFICIAL)** | **Nobody is born with Command; ALL rookies enter at 0 Command, and EVERY in-game Command-gain % is DOUBLED** to compensate — so Presidents emerge from in-game action, not real-world reputation. ebrk: *"both have been adapted into the official rules now."* (Reinforces the no-Command-on-random-skill rule above + #143 use-it-or-lose-it decay; aligns with the [§28.11](#2811-modern-draft-lobby-cards--dataset-the-era-locked-content-rotation) "earn it forward" framing — Ted nuked the 2000 cast's Command to first-term levels at boot.) | `terror2000#POST 91-93` |
-| **★ #153 — no re-roll on already-held expertise (now OFFICIAL)** | When rolling to GRANT an expertise (committee assignment / career-track exit), **rolling an already-held expertise = NO new expertise (do NOT re-roll)** — a *wasted* roll. Effect: pols **master a few expertises** instead of becoming renaissance men. | `terror2000#POST 91-93` |
+| **★ #153 — 0-Command rookies + DOUBLED Command-gain (now OFFICIAL; ★ 3-SOURCE CANONICAL)** | **Nobody is born with Command; ALL rookies enter at 0 Command, and EVERY in-game Command-gain % is DOUBLED** to compensate — so Presidents emerge from in-game action, not real-world reputation. ebrk: *"both have been adapted into the official rules now."* (Reinforces the no-Command-on-random-skill rule above + #143 use-it-or-lose-it decay; aligns with the [§28.11](#2811-modern-draft-lobby-cards--dataset-the-era-locked-content-rotation) "earn it forward" framing — Ted nuked the 2000 cast's Command to first-term levels at boot.) | `terror2000#POST 91-93` · `tedchange#POST 5-8,47` · `ted1772#POST 1, 25, 752, 1671` |
+| **★ #153 — no re-roll on already-held expertise (now OFFICIAL; ★ 3-SOURCE CANONICAL)** | When rolling to GRANT an expertise (committee assignment / career-track exit), **rolling an already-held expertise = NO new expertise (do NOT re-roll)** — a *wasted* roll. Effect: pols **master a few expertises** instead of becoming renaissance men. | `terror2000#POST 91-93` · `ted1772#POST 378, 109, 562, 739, 1322` |
+
+> **★ #153 — TRIPLE-CONFIRMED + the emergent-President demo (`ted1772`, batch 17 = the 3rd independent
+> source).** `ted1772` is a **Ted-run 1772 fresh start** where all three rules were **stated up front
+> (POST 1) and applied + LIVE-AUDITED front-to-back**: doubled Command-gain confirmed (Hancock/Wythe/
+> Franklin/Washington each +1 Command on leader picks — *"I forgot odds to gain command are doubled,"*
+> POST 25, 29, 33, 37); no-reroll-on-held-expertise confirmed verbatim (Stoddert *"already has it and per
+> our house rule we don't roll again,"* POST 378, recurs 109/562/739/1322); random-draft-skill grants no
+> Command (*"Nope, just legislative,"* POST 331). **★ THE PAYOFF — the cleanest live command-bootstrap
+> demonstration in the KB: an EMERGENT President from a 0-Command CPU pol.** The 1st President, **Arthur
+> St. Clair** (a `HenryLaurensCPU` pol), entered the game **obscure, 0-Command, no celebrity** and rose
+> **purely through play** — drafted onto a track → pulled to fill a General vacancy → won the Battle of
+> Long Island → gained **Military Leadership + Celebrity** (the "Washington Rule" qualifications) → became
+> faction leader → made eligible by the ahistorical foreign-born-grandfather plank ([§17.3.y](#173y--159-new-ted1772--the-full-constitutional-convention-subsystem-the-deepest-founding-cc-capture-in-the-kb-designed--partly-shipped))
+> → won his 50/50 first-President roll → **elected unanimously, 79 EV; VP Thomas Paine** (also 0→Command-
+> via-events, also foreign-born). Sam Adams independently went **0→3 Command in one turn** via Charisma +
+> Celebrity events → 5 by 1786 (*"not bad for starting with zero!"*). Largo833: *"someone who started with
+> none of the requirements for the Washington Rule end up triggering it… no deliberate effort to elevate
+> the character."* This is the **definitive validation** that #153/#136 + the #104 first-President
+> Celebrity+Military-Leader rule work as designed. `ted1772#POST 1, 25, 331, 378, 626-628, 752, 1254, 1671-1677, 1719`.
 
 > **★ #153 build status (mixed SHIPPED / DESIGNED).** **(a) 0-Command rookies** is **partly
 > SHIPPED** — the draft already sets rookie `command: 0` (`phaseRunners.ts:216`). **(b) the ×2
@@ -603,11 +623,41 @@ places that aren't territories, except if it's ME (part of MA) or WV (part of VA
 > not currently waste a roll on a held tag). Reconcile with [§4.1.y `tedchange#POST 7,47`](#41y--ted-ruled-draft-rules-designer-authoritative-tedchange)
 > (#136: random-skill draws no Command) — **same direction**: Command is never granted at draft and
 > is hard to come by, so it must be **earned forward** and **doubled** to make Presidents reachable.
+> **Now 3-source confirmed** (terror2000 / tedchange / ted1772 + a live emergent-President audit) —
+> implement with confidence.
 
 *(SUPERSEDES the earlier "5/5 random traits + alt-states per draft" reading documented in
 [§24.8 Draft rookie grants re-ruled](#248-69-draft-rookie-grants-re-ruled--3-traits--3-alt-states)
 — Ted RULED this at 3/3 in `tedchange`. The §24.8 number was the 1856-native re-rule already;
 Ted now confirms 3/3 is the canonical going-forward value.)*
+
+### 4.1.z ★ DH-65 (NEW, `ted1772`) — founding-era dataset bugs: wrong-century collisions + Cosmopolitan⊕Provincial
+
+> **The founding-era (1768-1776) draft pool is riddled with same-name-WRONG-CENTURY entries, and pols
+> hold mutually-exclusive Cosmopolitan + Provincial.** `ted1772` surfaced these live; joins the dataset-
+> accuracy family with DH-64 (the `Southern Unionist` mislabel, [§23.3](#233-56-civil-war--the-two-theater-combat-engine-multi-term-subsystem)).
+> The bundled draft classes are **runtime-loaded** `public/standard-draft-classes.json`, generated by the
+> `scripts/` pipeline (do NOT hand-edit — fix the scripts; see `docs/draft-class-authoring.md`).
+
+**(a) Time-traveller / wrong-person collisions** (`ted1772#POST 190-208, 343-356, 543-552`): multiple
+1772 draftees were the **wrong same-named person from a LATER century** — *William N Greene* of NE
+(should be RI Gov **William Greene**), *Summer Lee* (should be **Charles Lee**), *Robert F Stockton*
+(should be **Richard**), *"Samuel I Hopkins,"* *Richard/Abraham Yates,* *Phil Scott* (should be **Charles
+Scott**), **two Luther Martins (one a woman named "Keith")**, two Daniel of St. Thomas Jenifers, two
+Edmund Pendletons, John Henry mis-keyed as *"Robert Williams."* The **MASTER statesman sheet itself had
+≥1 cross-wired bio** (two pols swapped, POST 206). Forced repeated mid-game retro-fixes + a **faction
+reassignment** when the corrected person was the wrong party.
+
+**(b) Cosmopolitan ⊕ Provincial both held** (`ted1772#POST 49, 276, 914`): pols repeatedly held **BOTH**
+`Cosmopolitan` AND `Provincial`, which are **mutually exclusive**; Ted removed Provincial each time (*"you
+can only have one. I removed his provincial,"* POST 49/914), and the **shipped election tab mis-renders it**
+(POST 276 *"the election tab is saying people with Cosmopolitan have the Provincial trait"*).
+
+**Build TODO:** (1) **audit the founding-era (1768-1776) draft classes for same-name-wrong-century
+collisions** and **validate at dataset-build time** (same disambiguation class as the `smallbugs`/
+`tedchange` dataset-accuracy passes), via `scripts/seedDataset.mjs` `CURATED_ROWS`; (2) **enforce
+`Cosmopolitan` ⊕ `Provincial` mutual exclusion in the engine AND the dataset** (a pol may hold at most
+one). Pairs with the draft-class authoring playbook + #136. *(dataset/engine bug — DESIGNED fix.)*
 
 ### 4.2 Picking — `pickBestForFaction` (`phaseRunners.ts:33`)
 
@@ -878,9 +928,15 @@ trait-gated targeting+success table.)*
 **Sharpens the gap log:** corroborates #76 (CPU conversion) + #99 (ideology circle) — the
 adjacency relaxation now applies to **both cross-party AND same-party** conversion.
 
+> **★ Conversion-target cap = once per half-term (NEW Ted ruling, `ted1772#POST 770/1015`).** A given
+> politician can be **targeted for conversion only ONCE per half-term** — Clinton's attempt to target
+> the same pol 3× was rejected. Sharpens #76's restriction list (cross-ref [§6.4.x](#64x-forum-design-layer-trait-gated-conversion-targeting-designed-not-built)
+> + [§25.8.3](#2583-restrictions--immunities)). *(designed — add a per-target per-half-term conversion-
+> attempt counter; reject repeat targeting within the half-term.)*
+
 *(designed, RULED — pin cross-party-flip base at **33%**; relax same-party flip targeting to
-**same OR adjacent ideology**; remove the special-Moderates carve-out. Cite `tedchange#POST
-34-39, 38, 52, 53`.)*
+**same OR adjacent ideology**; remove the special-Moderates carve-out; **add the once-per-half-term
+target cap**. Cite `tedchange#POST 34-39, 38, 52, 53` + `ted1772#POST 770, 1015`.)*
 
 ### 6.5 (2.1.7) Kingmakers & protégés
 
@@ -910,6 +966,11 @@ adjacency relaxation now applies to **both cross-party AND same-party** conversi
   point in that skill (e.g. "Daniel Manning gains Justice, Likable, +1 Legis (his 1st)").
   *(design divergence — shipped engine grants on **graduation** at 20-year tenure, not at
   pairing.)*
+- **★ ONE protégé per turn (NEW Ted ruling, `ted1772#POST 12-13).** A faction/Kingmaker may
+  acquire at most **one new protégé per turn**: *"I usually only let people get one protege per
+  turn"* — Ted forced Huntington to drop a 2nd Trumbull. Distinct from the per-Kingmaker *active*
+  slot cap above (that bounds simultaneous pairings; this bounds **acquisitions per turn**).
+  *(designed — cap protégé acquisitions at 1 per faction per turn in the 2.1.7 pass.)*
 
 #### 6.5.y ★ Ted-RULED Kingmaker scope + trait-inheritance allowlist (designer-authoritative; `tedchange`)
 
@@ -1125,6 +1186,14 @@ Steps: expire `Failed Bid` (`failedBidExpiresYear`); seed `Ambitious` at `0.05`.
   (+0.05 if Ambitious), 0, fireCap 0.20)`. If it fires, success
   `= clamp(0.5 + edge − incumbencyAdvantage/100, 0.05, 0.95)` where `edge = pvGap`. Loser
   gets `Failed Bid` for `year + 6` (`failedBidDecayTurns 3 × 2`).
+
+> **★ FL-on-DEATH = IMMEDIATE replacement (`ted1772` fork RESOLVED).** A faction leader who **dies**
+> must be **replaced immediately** — the vacant-seat election above should run **at the moment of death
+> (2.4.1)**, not wait for the next 2.2.3 sweep (Ted reversed his own ruling LIVE, `ted1772#POST 426→624`).
+> ⚠ Shipped code currently leaves the seat vacant until the next 2.2.3 phase. Full reconciliation +
+> `file:line` at [§10.1](#101-241-deaths-retirements--decay--runphase_2_4_1_deaths-phaserunnersts2341).
+> Also note: an **Incompetent pol cannot be a faction leader** (`ted1772#POST 620`, enforced live), and
+> the **one-protégé-per-turn cap** ([§6.5](#65-217-kingmakers--protégés)) bounds protégé acquisitions.
 
 ### 8.4 (2.2.4) Party leaders — `runPhase_2_2_4_PartyLeaders` (`phaseRunners.ts:2130`)
 
@@ -1532,6 +1601,18 @@ Constants `MORTALITY_RULES` (`types.ts:485`), `ABILITY_LOSS_RULES.oldAge` (`:519
   General) (`types.ts:634`).
 
 Death/retire vacate office and clean up leadership/protégé chains.
+
+> **★ FL-on-death → IMMEDIATE replacement (`ted1772` FORK RESOLVED; designer-authoritative).** When a
+> **faction leader dies**, the seat does **NOT** sit empty until the next 2.2.3 phase — it is **filled
+> immediately**. Ted initially ruled empty-until-next-phase (*"That's always been the way I've done it…
+> it's not specified… something we'll need to fix,"* `ted1772#POST 426`) then **reversed LIVE**: *"New
+> rules dictate that dead faction leaders are immediately replaced"* (`ted1772#POST 624`; the 1840-GA
+> already did it immediately, POST 429). **This RESOLVES the prior "replacement waits until the next FL-
+> selection phase" reading to IMMEDIATE replacement. ⚠ SHIPPED BEHAVIOR IS THE OLD READING:** the shipped
+> death cleanup (`cleanupLeadershipAndProtegeChains`, `phaseRunners.ts:2304-2312`) sets `f.leaderId = null`
+> and **leaves the seat vacant until the next 2.2.3 `runPhase_2_2_3_FactionLeaders` sweep** elects a
+> successor — i.e. the doc's old "empty until next phase" behavior. **Build TODO:** on FL death, run the
+> 2.2.3 vacant-seat election immediately (not deferred to the next leadership phase). Cross-ref [§8.3](#83-223-faction-leaders--runphase_2_2_3_factionleaders-phaserunnersts1940).
 
 #### 10.1.y ★ Ted-RULED death + retirement schedule (designer-authoritative; `tedchange`)
 
@@ -1967,6 +2048,25 @@ A per-half-term scoreboard ranks each state's `industries` and awards points to 
 Couples to the scoring leaderboard (`Faction` totals). *(designed, not built — add
 end-of-half-term industry-leadership tally tied to `State.industries`.)*
 
+> **★ Governor industry-boost now REQUIRES matching EXPERTISE (NEW Ted house rule ADOPTED, `ted1772#POST
+> 252`).** A governor's "improve industry" Gov action can only boost industries his **expertise maps to**
+> — a governor without the relevant expertise cannot pick up that industry. The working reference table
+> (POST 252, reposted 844/1030/1224/1612):
+>
+> | Expertise | Industries it can boost |
+> |---|---|
+> | **Finance** | Justice (+ finance-adjacent) |
+> | **Maritime** | Naval / Foreign / Economics |
+> | **Business** | **Any** industry |
+> | *(others)* | map to their thematic industry only |
+>
+> This couples to the **PR7 lobby→expertise→industry→faction-ideology chain** ([§18](#18-system-interactions))
+> and to the loyalist-fill industry-action gate already noted at [§11.4](#114-state-level-policy-flags-designed-not-built).
+> **★ REJECTED alternative (do NOT re-propose):** a **career-track "3 underlings" rehaul** was floated
+> alongside this and **players REJECTED it** as too complex / trait-variety-stripping (`ted1772#POST
+> 245-251`); only the expertise→industry table was kept (*"less restrictive than I imagined,"* POST 261).
+> *(designed — gate the Gov improve-industry action behind a governor-expertise→industry lookup.)*
+
 ### 11.6 (2.5.3) Supreme Court — `runPhase_2_5_3_Court` (`phaseRunners.ts:3397`)
 
 **Skipped until the Constitution.** `0.50` chance per turn the court "rules": count
@@ -2336,6 +2436,26 @@ Each nation in `game.diplomacy`: `0.20` chance to drift `±0.5` (50/50 sign), cl
 - **Generic wars (1856+)**: per active war, `milPower = meters.military +
   GiC.military`, `enemyPower = 1 + rand×4`; win iff `milPower×10 + d100 > enemyPower×10 +
   50`. War score `±10/−5`; war ends at `±50` (`phaseRunners.ts:3615`).
+
+> **★ #158 (NEW, `ted1772`) — CPU bias AGAINST game-over / peace decisions. DESIGNED, not built.**
+> The shipped engine has **no CPU vote on war-surrender or game-ending peace** — terminal
+> peace/dominion off-ramps live only in the 1772 era-event graph ([§17.5](#175-era-event-graph-1772-eragraphts-data-eraevents1772ts), `triggersGameEnd`),
+> and a CPU faction asked to vote on one would do so by ordinary point-math (§25.6/§25.7),
+> which **leans FOR peace** (it rarely nets the CPU points to keep fighting). In a mostly-CPU
+> 1772 game this **ends the solo game prematurely** — the marquee finding of `ted1772`. Ted
+> patched it LIVE with a flat rule: **"CPU factions oppose automatic game-over decisions 75% of
+> the time, independent of all other considerations"** (`ted1772#POST 638`), after explicitly
+> flagging *"most players will be single player, and if the CPU constantly leans towards peace,
+> there is going to be a lot of frustration"* (`POST 459-460`). His proposed alternative was a
+> **points fix** — *"give points to most ideologies to be opposed to peace and 90% of the time
+> that's the way the CPU will swing."* **This couples tightly to [§21.1](#211-generic-cross-era-war-system)
+> (the #155 RevWar-winnability floor — it is one of the three safety floors there) and to the
+> [§25.7](#257-scripted-abc-event-cabinet-voting) CPU event-vote handler.** Same theme-blind
+> point-math root as #74/DH-21/OC-3 (Red CPU voted NAY on the Declaration *"bc it damages the
+> other party more if it fails,"* `POST 143, 167`). *(designed — implement EITHER the flat
+> 75%-oppose roll on any decision flagged `triggersGameEnd`/surrender, OR the points-based
+> anti-peace ideology bias; human picks which. Gate solo-game peace/game-over paths so a CPU
+> majority can't pass them. Bears directly on #155 + #114 solo-first.)*
 
 ### 13.3 Forum design layer (designed, not built)
 
@@ -2964,6 +3084,16 @@ state", the **lowest-score faction** makes the appointment; if still tied, rando
 **60% threshold for CC-era Controversial nominee confirmation:** **60% of the TOTAL states**
 (8 of 13 in the 1772/1788 CC; Ted RULED in `tedchange#POST 277`).
 
+> **★ Manipulative governor who self-appoints to the CC: STAYS Governor but FORFEITS the Gov action
+> (NEW Ted ruling, `ted1772#POST 316/319`, designer-flagged for V).** A **Manipulative** governor may
+> appoint **himself** as a CC delegate; when he does, he **remains the Governor** but **cannot take a
+> Governor action** that turn (the self-appointment costs him the Gov-action slot). Jefferson did it
+> twice (POST 760). **⚠ Reconcile with shipped behavior:** the shipped `appointDelegates`
+> (`continentalCongress.ts`) makes a Manipulative governor self-appoint **35%** of the time **and VACATE
+> the governorship** (§17.1) — Ted's ruling instead **keeps** the governor in office and **docks the Gov
+> action**, not the seat. **Build TODO:** change the self-appoint outcome from "vacate the governorship"
+> to "keep the governorship, forfeit this turn's Gov action."
+
 *(designed, RULED — confirm per-state delegate slots match the size table; encode the appointment-
 rule transition keyed on `coloniesIndependent` / `declarationOfIndependence` state flag; route
 PMG appointment via the Domestic Committee chair in CC era; encode the lowest-score-tie-break
@@ -3008,6 +3138,60 @@ auto-fill unselected votes by party bias (`autoFillCPUVotes`, `:81`). On `applyC
   transition to **federalism**, disband the CC, clear the Articles, convert colonies to
   states with electoral votes.
 
+#### 17.3.y ★ #159 (NEW, `ted1772`) — the full Constitutional-Convention subsystem (the deepest founding-CC capture in the KB; designed + partly shipped)
+
+> **`ted1772` produced the cleanest end-to-end Constitutional-Convention trace in the KB**
+> (corroborates/extends #100 threshold-amendable + the §17.7 multiplayer-1772 ConCon, deeper).
+> It couples to the founding boot + the [§17.1.y #133](#171y--ted-ruled-1st--2nd-cc-composition--appointment-designer-authoritative-tedchange)
+> Continental/Confederation Congress machine. The shipped `constitutionalConvention.ts` (§17.3
+> above) is a **reasonable superset** (7 binding articles + CPU auto-fill + 9-state ratify), but
+> `ted1772` documents the **per-article voting machine + the ahistorical-Constitution consequences**
+> the engine does not yet model. Cite `ted1772#POST n`.
+
+**The ConCon flow (the per-article machine), in order (`ted1772` §5):**
+
+| Step | Mechanic | Source |
+|---|---|---|
+| **0. Trigger** | **Annapolis Convention → Option A → Congress confirms** kicks off the ConCon. | POST 1393-1402 |
+| **1. Delegates** | Each **governor sends 3 delegates** — **2 own-party + 1 opposition**, all with **≥1 Legislative**. | POST 1403 |
+| **2. Drafter** | The Constitution is **drafted by a RANDOM egghead delegate** (the "egghead drafter" — same family as the Declaration-author rule: VA/PA/MA + in the CC + egghead/orator/debater/celebrity). | POST 1421/1427 |
+| **3. CC President** | A CC President is **elected (≥half wins).** | POST 1437 |
+| **4. Per-article vote** | **Each article: propose → debate-sway → vote needing 2/3 OF STATES.** On a failed vote, the **lowest-scoring option is ELIMINATED, then re-vote** (the eliminate-and-revote loop) until one option clears 2/3. | POST 1458-1561, 1571-1579 |
+| **5. Debate-sway** | **Only specific TRAITED delegates can "attempt shenanigans"** (Debater/Orator sway N same-party reps, per article independently). | POST 1518-1520 |
+| **6. Ratification** | The whole package goes to the **governors to ratify — needs 9/13 = 66%.** | POST 1571-1579 |
+| **7. CC scope** | The CC has **NO legislative power**, and the **Continental Congress PERSISTS until the 1st President is sworn in** (V's ruling). | POST 1585-1589 |
+
+**★ The Constitution is decision/roll/sway-driven → AHISTORICAL outcomes are normal (and have
+mechanical consequences).** `ted1772`'s ratified Constitution diverged from history (POST 1562, 1581):
+
+| Plank | `ted1772` outcome | Mechanical consequence |
+|---|---|---|
+| **Slave compromise** | **slaves DON'T count for EV** (NOT 3/5) | **A per-state seceded-South EV penalty while slavery is present: GA −5, SC −5, NC −3, VA −3 (floor 3)** — an emergent *"South incentivized to abolish slavery"* lever (POST 1581, 1601). **This plank MUST drive a per-state EV modifier.** |
+| **Amendment process** | **amendments need only 50%+1** (ahistorical) | The chosen amendment-threshold plank is the **threshold-amendable** value of #100. |
+| **Presidential eligibility** | **foreign-born-already-here grandfathered as "natural-born"** (saved by Lambert's debate-sway) | Makes **Hamilton / St. Clair / Gates** eligible — directly enabled the foreign-born 1st President (§6 below). |
+| **Suffrage / slavery** | no women/non-white vote; slavery NOT banned | (ahistorical baseline carried forward) |
+| **Structure** | House + Senate; President 4-yr terms; Supreme Court exists | standard skeleton |
+
+**Then the Era of Federalism stands up the whole federal apparatus by in-game law** — the founding
+mirror of the offices-by-law pattern (#101/#43): first Speaker + PPT; the **Federalist Party formally
+forms** (the strong-central RED bloc, POST 831); **Hamilton = Treasury**; the **Judiciary Act sets the
+SCOTUS count** (V: *"You have to create the # of justices in Congress,"* POST 1569 — the Constitution
+only *permits* the court) → **first SCOTUS** (CJ Gabriel Duvall); Bank of the US, Bill of Rights, 11th
+Amendment, National Road, statehood (VT/KY/TN), Right-to-Bear-Arms / Judicial-Review amendments — all via
+the legislative loop. (Cross-ref [§17.7](#177-forum-design-layer--the-multiplayer-1772-confirmation-designed-not-built)
+multiplayer-1772, which records the same convention machinery from the 10-human angle.)
+
+*(SHIPPED: `constitutionalConvention.ts` (§17.3) models 7 binding articles, CPU auto-fill, a
+"Father of the Constitution" + 3 Federalist authors, and 9-state ratification — a superset of the
+required articles. **DESIGNED, not built:** (a) the **per-article propose → debate-sway → 2/3-of-states
+vote → eliminate-lowest-and-revote** loop (shipped does a single CPU auto-fill, not the elimination
+loop); (b) **gov-sends-3-delegates (2 own + 1 opposition, ≥1 Legis)** as the delegate-seating rule;
+(c) the **random-egghead drafter** selection; (d) **debate-sway by traited delegates** per article;
+(e) **the slave-compromise plank driving a per-state EV modifier** (slaves-don't-count → seceded-South
+EV penalty, floor 3); (f) **threshold-amendable** amendment plank per #100; (g) **Judiciary-Act-sets-
+SCOTUS-count**; (h) the CC having no legislative power + the Continental Congress persisting until the
+1st President is sworn in. Cite `ted1772#POST 1393-1402, 1403, 1421, 1437, 1458-1561, 1569, 1571-1589, 1581`.)*
+
 ### 17.4 Revolutionary War (`revolutionaryWar.ts`)
 
 State `RevolutionaryWar` (`types.ts:1371`). Defaults (`ensureWar`, `:12`):
@@ -3032,6 +3216,19 @@ French alliance), senior general/admiral + benches, `frenchAlliance = false`.
   no French alliance**. `applyFrenchAlliance` (`:268`) sets France diplomacy to 4, `+1`
   general military, and removes the loss condition. `applyTreatyOfParis` (`:279`) ends the
   war, disbands commanders, sets Britain diplomacy `−3`.
+
+> **★ Forum trace + the three winnability floors (`ted1772`, batch 17).** `ted1772` is the **cleanest
+> fresh-start RevWar trace in the KB**: from a fresh 1772 boot the war was **genuinely losable** — War
+> Score sat at **−2/−1** with **~20% loss-rolls per phase**, the **Navy won ZERO battles**, and the
+> **concurrent Invasion of Canada was lost outright at 80%** (loss package: Ward/Barry −1 Mil +
+> Incompetent + fired + permanent −1 elections). It stayed winnable **only because of THREE safety
+> floors: (1) the French-alliance unloseable flag** [the shipped `applyFrenchAlliance` void-the-loss-cap
+> path above; V pinned France at ally until war-end]; **(2) the 2/3 Articles-of-Confederation peace-vote
+> threshold** [the Carlisle peace vote got a 5-4 = **55.5% majority FOR peace and still FAILED** < 66%];
+> **(3) Ted's new "CPU opposes game-over 75%" rule (#158).** **These three floors are a HARD constraint
+> on the #155 war-balance hardening pass** — fully documented in
+> [§21.1's #155 HARD CONSTRAINT block](#211-generic-cross-era-war-system) (and §23.3). `ted1772#POST 461,
+> 523-531, 630-638, 888, 893`.
 
 ### 17.5 Era-event graph (1772) (`eraGraph.ts`, data `eraEvents1772.ts`)
 
@@ -3098,7 +3295,11 @@ and flags: `coreSpine` (inevitable openers), `realEvent` (false = counterfactual
   branching system**, NOT scripted to the historical text — the choices **feed forward into election
   math** (the Slave-State choice decided the 1788 VP, §21.2). The shipped engine
   (`constitutionalConvention.ts`, §17.3) models **seven** binding articles and a CPU auto-fill, a
-  reasonable superset of the five required items + add-ons.
+  reasonable superset of the five required items + add-ons. **★ `ted1772` (batch 17) extends this with
+  the per-article voting machine in full** — gov-sends-3-delegates (2 own + 1 opposition), a random-
+  egghead drafter, **per-article 2/3-of-states vote with eliminate-lowest-and-revote**, 9/13-gov
+  ratification, and the **ahistorical-Constitution consequences** (slaves-don't-count → seceded-South EV
+  penalty); see [§17.3.y #159](#173y--159-new-ted1772--the-full-constitutional-convention-subsystem-the-deepest-founding-cc-capture-in-the-kb-designed--partly-shipped).
 - **Washington "first-President" rule (verbatim, POST 727–749).** *"If it is the first presidential
   election under the US Constitution, and one of the nominees has 'Celebrity' and 'Military Leader,'
   then he becomes president **unopposed if the player rolls a 4-6**"* (50% on a d6). "Unopposed" = no
@@ -3106,7 +3307,14 @@ and flags: `coreSpine` (inevitable openers), `realEvent` (false = counterfactual
   computer version the first two nominees of each party are selected simultaneously, then the roll
   resolves). In this timeline Benedict Arnold qualified (Celebrity + Military Leader), **rolled and
   FAILED** → the full 1788 election proceeded (POST 1756, 1949, 2015–2016) — confirming it as a real
-  conditional, not a guaranteed Washington coronation. (Not in shipped code.)
+  conditional, not a guaranteed Washington coronation. (Not in shipped code.) **★ `ted1772` (batch 17)
+  is the SUCCESS case + the cleanest command-bootstrap demo:** the rule fired for **Arthur St. Clair**
+  — a CPU pol who **started with 0 Command + obscure + no celebrity** — who rose purely through play
+  (RevWar general → Battle of Long Island win → Military-Leader + Celebrity → faction leader → made
+  eligible by the foreign-born-grandfather plank), **succeeded on his 50/50 Military-Leader-with-Celebrity
+  roll, and was elected 1st President unanimously (79 EV); VP Thomas Paine** (also 0-Command-via-events,
+  also foreign-born). The definitive proof the command-bootstrap (#153/#136) produces an emergent
+  President — see [§4.1.y #153](#41y--ted-ruled-draft-rules-designer-authoritative-tedchange). `ted1772#POST 1671-1677, 1719`.
 - **Independence won by COMBAT ALONE — the explicit France event is not required.** The Revolutionary
   War was won after ~4 turns (1774–1782) **by combat rolls alone; the French-alliance event NEVER
   fired** (players: "Did i miss it or did we get the French alliance?", "shouldn't there be a flag…
@@ -3116,7 +3324,12 @@ and flags: `coreSpine` (inevitable openers), `realEvent` (false = counterfactual
   achievable on combat luck with no France required**. The era is "railroaded" toward independence
   via point-dominant choices — multiple game-ending loyalist off-ramps exist (Conciliatory Resolution
   Option B; Carlisle Commission Option B) but are effectively never chosen; **CPU auto-votes AGAINST
-  any game-ending option ~75% of the time** even at a point cost (POST 637).
+  any game-ending option ~75% of the time** even at a point cost (POST 637). **★ `ted1772` (batch 17)
+  confirms this is the canonical #158 rule** ("CPU factions oppose automatic game-over decisions 75% of
+  the time, independent of all other considerations," `ted1772#POST 638`) — and shows the floor MATTERS:
+  in `ted1772` the Carlisle peace vote got a **5-4 majority FOR peace (55.5%) and still failed** only
+  because of the 2/3 threshold. Full coverage at [§13.2 #158](#132-272-military-action--runphase_2_7_2_military-phaserunnersts3593)
+  + [§21.1 the three floors](#211-generic-cross-era-war-system).
 
 *(designed, not built — model the **Inaugural+Rookie two-draft** founding open; the Convention's
 **five-required-items + trait-gated add-ons + 9-states-per-item + ≥9-Gov ratification + Convention-
@@ -4133,6 +4346,48 @@ econ, budget, party pref) and **grants/denies territory** (Canada/Quebec on a Wa
 >   `152-277` ch20; `599-1027` ch31).
 > - **The President-loss term couples to elections:** a President who LOSES a war carries the −1 into
 >   the §29.3 election scorer for **all future elections** (the symmetric inverse of the victory +1).
+
+> **★★ #155 HARD CONSTRAINT (NEW, `ted1772`) — the 1772 Revolutionary War is GENUINELY LOSABLE, and
+> only stays winnable because of THREE safety floors. Any war-balance hardening MUST preserve all
+> three, or a 1772 game ends before federalism.** `ted1772` is the **cleanest fresh-start RevWar
+> trace in the KB** and is the concrete data the §23.3 #155 counter-constraint (Euri, *"the 1772 start
+> fights a war that causes a game-over on a loss"*) asked for. The war was **not comfortably won** — it
+> hovered at the edge of a game-over the entire time:
+>
+> **The 1772-RevWar trace (the alarming part for #155, `ted1772` §3 / POST 265, 461, 523-531, 888, 893):**
+> - **Battle formula re-confirmed** (corroborates [§17.4](#174-revolutionary-war) / the additive card above):
+>   `Planning(SrGen/SrAdm Mil×2) + Battlefield/Sea Command(Mil×10, −1 if a replacement/Decisive adj) +
+>   MilPrep(+10/+15) + EraBenchmarks(+5→+15) + Difficulty(−10 to −25) → d100`.
+> - **The Navy won ZERO battles at sea** across the whole war (~6+ naval battles, all lost; success%
+>   ~19–41%). The colonies **started with NO Navy at all** (*"Whoops, we don't have a Navy,"* POST 265).
+> - The Army won **~half its land battles** (Brandywine 51%, White Plains 63%, Long Island 48%, Valley
+>   Forge 50% won; Germantown 31%, Fort Washington 43%, Yorktown 42% lost).
+> - **War Score sat at −2/−1 the whole war**; each phase rolled only **~20–30% to win** AND **~20% to
+>   LOSE outright** at a −2 score. The war was finally **won on a ~30% roll, pre-1782** (*"got lucky on
+>   the roll,"* POST 888, 893).
+> - **The concurrent Invasion of Canada was a TOTAL LOSS** — every battle (1 naval + 3 land) failed,
+>   hit **80% → war lost outright** (*"I don't think a single battle has been won in Canada,"* POST 526);
+>   confirms **concurrent multi-war** (#45) ran in the same half-terms. Loss package applied (corroborates
+>   #152): Ward + Barry got **−1 Mil + Incompetent + auto-fired + permanent −1 in ALL elections** (POST
+>   523, 531). Officer churn was brutal (~6 Senior Admirals cycled; KIAs mid-battle; Benedict Arnold
+>   turned coat → **removed from the game**, POST 828).
+>
+> **★ The three RevWar-winnability safety floors (the #155 floor in practice) — ALL THREE must survive any hardening:**
+>
+> | # | Floor | Mechanic | Source |
+> |---|---|---|---|
+> | **1** | **French-alliance "unloseable" flag** | Ambassador-to-France → Treaty of Amity & Commerce → *"It is no longer possible for us to lose the Revolutionary War!"* V ruled the **France meter is PINNED at ally until the war ends** (a relations-drop event can't undo it). This is the shipped `frenchAlliance` void-the-loss-cap path ([§17.4](#174-revolutionary-war)). | `ted1772#POST 630-632` |
+> | **2** | **2/3 (Articles of Confederation) peace-vote threshold** | A game-over peace event needs **2/3 of states**, not a majority. The **Carlisle Peace Commission** (Aye = game-over, colonies rejoin Britain) got **5 Aye / 4 Nay = 55.5% < 66.6%** → peace FAILED, war continued **despite a MAJORITY for peace**. (A 2nd, the Conciliatory Resolution, was likewise rejected.) **55.5% is NOT enough.** | `ted1772#POST 461, 637` |
+> | **3** | **Ted's "CPU opposes game-over 75%" rule (#158)** | Added precisely because CPUs lean toward peace and could end a mostly-CPU game. See [§13.2](#132-272-military-action--runphase_2_7_2_military-phaserunnersts3593) + [§25.7](#257-scripted-abc-event-cabinet-voting). | `ted1772#POST 638` |
+>
+> **★ Takeaway for #155 (the build constraint):** the §23.3/#155 hardening pass — the **enemy-strength
+> term**, **battle-size weighting**, and the **Officer-Mil cap** (from `hd1`, batch 16) — **MUST be
+> bounded so the 1772 RevWar stays winnable WITH these three floors intact.** Concretely: (a) the
+> French-alliance flag must still **void the loss condition**; (b) terminal peace/game-over events must
+> still require **2/3 of states** (a bare majority must not end the game); (c) the **75% CPU-anti-game-over**
+> override (or the points equivalent) must still fire. A war engine tuned hard enough that a 1772 game
+> with all three floors still loses before 1788 is **over-tuned**. This is the cross-run reconciliation
+> the tech-lead must respect alongside the four `hd1` reconciliations above.
 
 *(designed, not built — generalize to a `War` model usable in any era: the additive
 success-chance formula, the warscore/momentum/×2 resolution, and the confirmation-cascade
@@ -5473,6 +5728,14 @@ window — flagged **verify** (open question, `game-context.md` `hd`/#56).
 > the main focus of the game."* → The tech-lead must add enemy-strength + battle-size + a
 > Officer-Mil cap **while keeping the 1772 RevWar floor playable** — a genuine design tension, not a
 > one-way "make it harder."
+>
+> **★★ The CONCRETE counter-constraint data (`ted1772`, batch 17) — the 1772 RevWar is genuinely
+> LOSABLE and held up by THREE floors.** The full fresh-start trace + the three safety floors
+> (French-alliance unloseable flag · 2/3 peace-vote threshold that defeated a 55.5% MAJORITY-for-peace ·
+> Ted's 75% CPU-anti-game-over rule #158) are documented in
+> [§21.1's #155 HARD CONSTRAINT block](#211-generic-cross-era-war-system). **The #155 hardening
+> pass (enemy-strength + battle-size + Officer-Mil cap) MUST preserve all three floors** or a 1772
+> game ends before federalism. This is the data this counter-constraint asked for.
 
 **Tiered war framework (generalizes #45 / divergence #6).** The same engine runs **Major /
 Minor / Operation** tiers with different end-war multipliers and reward packages:
@@ -6693,6 +6956,21 @@ cabinet (POSTS 7406, 7524).
 I'm going to pick Sec of Interior"* — the scripted-event→cabinet-role mapping is unspecified;
 GM defaults to a reasonable choice.
 
+> **★ #158 (NEW, `ted1772`) — the event-vote handler LEANS FOR game-over/peace → a SOLO-game-ender;
+> Ted's "CPU opposes game-over 75%" patch.** The clean point-math A/B/C selector above has a
+> **dangerous failure mode on any event whose option ENDS THE GAME** (a war-surrender / rejoin-the-enemy
+> peace, a dominion off-ramp). Because the selector is purely points-maximizing, a CPU faction
+> **votes FOR the game-ending option** whenever peace nets it points — it has no "keep the game alive"
+> term. In a **mostly-CPU 1772 RevWar** this nearly ended the game twice (the Carlisle / Conciliatory
+> peace votes, §21.1). Ted added a flat override: **"CPU factions oppose automatic game-over decisions
+> 75% of the time, independent of all other considerations"** (`ted1772#POST 638`), with a points-based
+> alternative floated (*"give points to most ideologies to be opposed to peace,"* `POST 459-460`).
+> **This is the event-vote-handler home of #158** (cross-ref the war copy in [§13.2](#132-272-military-action--runphase_2_7_2_military-phaserunnersts3593)
+> + the #155 floor in [§21.1](#211-generic-cross-era-war-system)). *(designed — add a game-over-vote
+> override: any event option flagged `triggersGameEnd`/surrender gets a 75% CPU-oppose roll BEFORE the
+> normal A/B/C point scoring, OR an anti-peace ideology-points layer. Same theme-blind root as the
+> §25.6 NAY/AYE/NAY heuristic.)*
+
 > **Critical missing logic: NO meter-guarding on scripted-event options** (POST 6280, §C.1.11).
 > Under Roosevelt, both Quality-of-Life and Economic Stability **crashed to crisis
 > simultaneously**: *"Internationalist + Pro-Federal-Government + Advocate New Freedoms
@@ -7687,6 +7965,15 @@ keyed to B#/R# slots (batch 8). Bank-points persist to end-game; everything else
     both take that state's EVs** (the original-12A home-state restriction, here as a per-state EV
     tally rule). The EV resolver must enforce this when both a faction's Pres pick and its
     alternate hail from one state.
+  - **★ Pre-12A VP = the most-EV RUNNER-UP (NEW Ted ruling, `ted1772#POST 1714-1716`, via lurker
+    DJBillyShakes + V — SHARPENS DH-62).** **Only the PRESIDENT needs >50% of EV**; the **VP is
+    simply the most-EV runner-up** — there is **NO Senate contingent election for the VP unless 2nd
+    place is a TIE.** Ted had initially mis-ruled it would go to the Senate (POST 1683) and was
+    corrected. Also: pre-12A play *"ideally"* runs **3 candidates per faction — Pres, VP, and a
+    1-state spoiler** so the VP doesn't pass the Pres in EV (POST 1349); a CPU pol nominated by a
+    human **always accepts** (POST 1661-1664). **Build TODO:** in the pre-12A resolver, do **not**
+    route the VP to a Senate contingent unless the runner-up is exactly tied; the >50% requirement
+    is President-only.
 - **Legislature-chosen presidential electors** in many states: for those states the EV winner is
   decided by **who holds Gov / Senate / Rep** (the **majority party** in the state's legislature;
   the **Gov's party breaks ties**) — **NOT** by `calcStateVote`'s PV + dice. This is **directly
@@ -9373,6 +9660,17 @@ winning the presidency).
 > "plan-adopted-by-Congress-OR-President" prerequisite — the **canonical Reconstruction design and
 > the fix for DH-29**), the **Reconstruction onset ruling**, and the **CSA-victory branch**.
 > Indexed in **§30.7** below.
+>
+> **Companion thread (`ted1772` = `13c1b720`, "I Think Something's The Matter With Ted," the 4th
+> captured 1772 thread, batch 17)** is **Ted-run** ⇒ **designer-authoritative** (same hierarchy). A
+> mostly-CPU 1772→early-federalism campaign whose value is **corroborative** but which also RULED
+> several marquee items mid-thread: the **FL-on-death → immediate-replacement** fork resolution, the
+> **one-protégé-per-turn cap**, **manipulative-gov-self-appoint forfeits the Gov action**, the
+> **CPU-opposes-game-over-75% rule (#158)**, **governor-industry-boost-needs-expertise**, the
+> **conversion-target-once-per-half-term cap**, and the **pre-12A VP = most-EV-runner-up** correction.
+> It also delivered the **3rd-source canonical confirmation of #153** (+ the emergent-President demo),
+> the **#155 RevWar-winnability floor data** (the three safety floors), the **#159 Constitutional-
+> Convention subsystem**, and **DH-65** (founding dataset bugs). Indexed in **§30.8** below.
 
 ### 30.1 Rulings folded into existing topical sections
 
@@ -9400,6 +9698,9 @@ This index is a fast-lookup table back to those folds.
 | **#140** | AnytimeEvo target pool tightening | RULED — events 5/17/23/24/25/39/66/117/118/119 restricted to Rep/Sen/Gov/Cabinet; Assassination 50/25/25 | [§10.2.y](#102y--ted-ruled-anytimeevo-target-pool-tightening-designer-authoritative-tedchange) | 249-275 |
 | **#141** | First-time FL: 5% positive trait / 3% negative trait gain | RULED | (referenced inline in §8.5.x; per-cycle for positives, first-time-as-FL only for negatives) | 79 |
 | **★ #142** | **CPU Chief Justice selection ladder** | RULED — Judicial → own faction → Pres-ideology match → lowest-scoring faction → matching-appointer-ideology → random | [§22.7.y](#227y--ted-ruled-cpu-chief-justice-selection-ladder-designer-authoritative-tedchange) | 387-390 |
+| **★ #158** | **CPU opposes game-over 75%** (`ted1772`) | RULED — CPU factions oppose automatic game-over/peace decisions 75% of the time, independent of all else; a RevWar safety floor (#155). | [§13.2](#132-272-military-action--runphase_2_7_2_military-phaserunnersts3593) + [§25.7](#257-scripted-abc-event-cabinet-voting) + [§30.8](#308-rulings-folded-from-ted1772-ted-run-mostly-cpu-1772-founding-campaign) | `ted1772` 638 |
+| **★ #159** | **Constitutional-Convention subsystem** (`ted1772`) | DESIGNED — per-article 2/3 vote + eliminate-revote + 9/13 ratify; ahistorical Constitution → per-state EV penalty. | [§17.3.y](#173y--159-new-ted1772--the-full-constitutional-convention-subsystem-the-deepest-founding-cc-capture-in-the-kb-designed--partly-shipped) + [§30.8](#308-rulings-folded-from-ted1772-ted-run-mostly-cpu-1772-founding-campaign) | `ted1772` 1393-1589 |
+| **★ FL-on-death** | **Immediate replacement (fork RESOLVED)** (`ted1772`) | RULED — dead faction leaders are replaced immediately (was: empty until next phase). | [§10.1](#101-241-deaths-retirements--decay--runphase_2_4_1_deaths-phaserunnersts2341) + [§30.8](#308-rulings-folded-from-ted1772-ted-run-mostly-cpu-1772-founding-campaign) | `ted1772` 624 |
 
 ### 30.2 Designer-decision-gated open items (`tedchange`)
 
@@ -9584,6 +9885,49 @@ a **STRUCTURAL** deadlock (the readmission-plan vote fails with **CPU and humans
 2678) — **now FIXED in design** by #156's "plan adopted by Congress OR President" prerequisite (the
 President can adopt unilaterally). See [§23.4.1d](#2341--hd1--reconstruction-played-by-humans-on-both-sides--vcczars-authoritative-rewrite-156-the-canonical-reconstruction-design)
 and `game-context.md` **DH-29 (★ movement)**.
+
+### 30.8 Rulings folded from `ted1772` (Ted-run mostly-CPU 1772 founding campaign)
+
+> **Ted-run ⇒ designer-authoritative** (same authority class as `tedchange` / `oopscpu` / `terror2000`).
+> The `ted1772` (`13c1b720`) **4th captured 1772 thread** is deliberately corroborative but RULED several
+> marquee items LIVE and resolved two forks. Mirrors the §30.5/§30.6 indices. Cite `ted1772#POST n`.
+
+**Marquee Ted rulings (RULED — several resolve forks):**
+
+| Topic | Ruling | Folded into | `ted1772` POSTs |
+|---|---|---|---|
+| **★ FL-on-death → IMMEDIATE replacement (FORK RESOLVED)** | RULED — Ted reversed his own initial "empty until the next FL-selection phase" ruling LIVE: *"New rules dictate that dead faction leaders are immediately replaced."* **Resolves the fork → immediate. ⚠ Shipped code still does the OLD empty-until-next-phase behavior** (`cleanupLeadershipAndProtegeChains` nulls `leaderId`; next 2.2.3 elects). | [§10.1](#101-241-deaths-retirements--decay--runphase_2_4_1_deaths-phaserunnersts2341) + [§8.3](#83-223-faction-leaders--runphase_2_2_3_factionleaders-phaserunnersts1940) | 426, 429, 624 |
+| **★ #158 — CPU opposes game-over 75%** | RULED (NEW) — *"CPU factions oppose automatic game-over decisions 75% of the time, independent of all other considerations,"* added because CPUs lean toward peace and could end a mostly-CPU game. One of the **3 RevWar safety floors** (#155). | [§13.2](#132-272-military-action--runphase_2_7_2_military-phaserunnersts3593) + [§25.7](#257-scripted-abc-event-cabinet-voting) + [§21.1](#211-generic-cross-era-war-system) | 459-461, 638 |
+| **★ One-protégé-per-turn cap** | RULED (NEW) — *"I usually only let people get one protege per turn"* (forced Huntington to drop a 2nd protégé). | [§6.5.x](#65x-forum-design-layer-protégé-slot-cap--gains-designed-not-built) | 12-13 |
+| **★ Manipulative-gov self-appoint → STAYS Gov, FORFEITS the Gov action** | RULED (NEW, flagged for V) — a Manipulative governor may self-appoint to the CC; he keeps the governorship but loses that turn's Gov action. **⚠ Shipped code instead VACATES the governorship (35%).** | [§17.1.y](#171y--ted-ruled-1st--2nd-cc-composition--appointment-designer-authoritative-tedchange) | 316, 319, 760 |
+| **★ Governor industry-boost REQUIRES matching expertise** | RULED (NEW house rule ADOPTED) — full expertise→industry table (Finance→Justice; Maritime→Naval/Foreign/Economics; Business→Any). The **career-track "3-underlings" rehaul was REJECTED** by players. | [§11.5](#115-industry-leadership-scoring-designed-not-built) | 245-252, 261 |
+| **★ Conversion-target cap = once per half-term** | RULED (NEW) — a pol can be a conversion target only once per half-term (Clinton's 3× rejected). Sharpens #76. | [§6.4.y](#64y--ted-ruled-conversion-rate-schedule-designer-authoritative-tedchange) | 770, 1015 |
+| **★ Pre-12A VP = most-EV runner-up (FORK CORRECTED)** | RULED — only the President needs >50% EV; the **VP is the most-EV runner-up**, NO Senate contingent unless 2nd place TIES. Ted's earlier "goes to the Senate" reading corrected (via DJBillyShakes + V). Sharpens DH-62. | [§27.3 DH-62 block](#273-the-12th-amendment-beforeafter-state-machine-era-specific-election-mode-toggle) | 1683, 1714-1716 |
+| **Incompetent pol cannot be a faction leader** | ENFORCED LIVE (corroborates the leadership filters). | [§8.3](#83-223-faction-leaders--runphase_2_2_3_factionleaders-phaserunnersts1940) | 620 |
+| **Negative points allowed this run** | HOUSE-RULED for continuity (Jefferson ran negative); V's official rule is a **0 floor** — build should likely pick the 0 floor. | [§30.2 open items](#302-designer-decision-gated-open-items-tedchange) (boot/scoring edge-case) | 851-855 |
+| **Senior-General auto-accept** | RULED — any General auto-accepts Senior General w/o confirmation. | [§17.4](#174-revolutionary-war) | 819 |
+
+**NEW gaps + the corroboration upgrades (folded into topical homes):**
+
+| # | Topic | Status | Folded into | `ted1772` POSTs |
+|---|---|---|---|---|
+| **★ #159** | **Constitutional-Convention subsystem** (gov-sends-3-delegates → random-egghead drafter → per-article 2/3 vote + eliminate-revote → 9/13 ratify; ahistorical-Constitution → per-state EV penalty) | **DESIGNED** (shipped `constitutionalConvention.ts` is a partial superset) | [§17.3.y](#173y--159-new-ted1772--the-full-constitutional-convention-subsystem-the-deepest-founding-cc-capture-in-the-kb-designed--partly-shipped) | 1393-1402, 1403, 1421, 1437, 1458-1561, 1569, 1571-1589, 1581 |
+| **★ #155** | **RevWar-winnability floor data** — the 1772 RevWar is genuinely losable; held up by 3 floors (French-alliance flag · 2/3 peace threshold · 75% CPU-anti-game-over). **Any war hardening MUST preserve all three.** | **DESIGNED constraint** | [§21.1 #155 HARD CONSTRAINT](#211-generic-cross-era-war-system) (+ §23.3 + §17.4) | 461, 523-531, 630-638, 888, 893 |
+| **★ #153** | **3-SOURCE CANONICAL** (0-Command rookies + ×2 Command-gain + no-reroll expertise) + the **emergent-President demo** (St. Clair, a 0-Command CPU pol, elected 1st President). | partly SHIPPED / DESIGNED | [§4.1.y](#41y--ted-ruled-draft-rules-designer-authoritative-tedchange) | 1, 25, 331, 378, 626-628, 1671-1677 |
+| **★ DH-65** | Founding-era (1768-76) same-name-wrong-century dataset collisions + Cosmopolitan⊕Provincial both-held. | **dataset/engine bug** | [§4.1.z](#41z--dh-65-new-ted1772--founding-era-dataset-bugs-wrong-century-collisions--cosmopolitanprovincial) | 49, 190-208, 276, 343-356, 543-552, 914 |
+| **DH-61** | NW-Indian-War "3 chances" origin + the alt "War of 1812 in 1782" branch (offered & declined). **Direct corroboration.** | DESIGNED (boot active-war seeding) | [§21.1 DH-61 block](#211-generic-cross-era-war-system) | 1010-1024 |
+
+**Corroborations field-validated from the 4th-1772 angle (no new rule — strengthen existing entries):**
+
+| Existing entry | `ted1772` corroboration | POSTs |
+|---|---|---|
+| **#133** 1st/2nd CC composition | the 4/3/2 size table + faction-picks-pre-DoI / Gov-picks-post-Articles + no-consecutive-terms + 2/3-pass + Foreign-Chair-appoints exercised verbatim from a 1772 boot. | 58, 85, 233, 444, 462, 566 |
+| **#70/#72/#73/#74/#76** CPU suite | re-validated from a mostly-CPU 1772 angle; **#74 got Ted's cleanest 4-step NAY/AYE articulation** (crisis→faction→team→opponent, else coin-flip). | 138, 221-225, 439, 514, 595, 753-755, 1276, 1661-1664 |
+| **#86/#136** founding boot + random-skill-no-Command | the 1772 fresh boot, phase-skip, meta-pass order, and career-track eligibility bar re-confirmed from a 4th 1772 start. | 4, 19, 42-51, 331, 817, 1282 |
+
+> **No NEW CPU sub-gaps beyond #158** — this run **field-validates the §25 CPU suite from the founding
+> angle** rather than extending it. The one genuinely-new CPU finding (#158, the peace/game-over lean) is
+> indexed above and folded into §13.2 / §25.7 / §21.1.
 
 ### 30.4 Authority hierarchy reminder
 

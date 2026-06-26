@@ -934,6 +934,23 @@ the `GameState`. The two builders are the template for any new scenario.
 > shape. See §9.1.1 for why the mid-government boot precedes a general
 > `advanceEra()`. New files: `scenario1788.ts`, `factions1788.ts`,
 > `states1788.ts`, `eraEventsFederalism.ts`, `scotusFederalism.ts`.
+>
+> **★ Batch-17 (`ted1772`) — the founding→federalism BOOT surface is also where the
+> #159 Constitutional-Convention extension lands.** The shipped
+> `constitutionalConvention.ts` (the `1772`-scenario era system that transitions
+> `→ federalism` at `:198`) is a superset SKELETON; `ted1772` documents the full
+> per-article voting machine the engine does not yet model — the **per-article
+> 2/3-vote + eliminate-lowest-and-revote loop**, **gov-sends-3-delegates (2 own + 1
+> opp, ≥1 Legis)**, the **random-egghead drafter**, **debate-sway by traited
+> delegates**, and **the slave-compromise plank → a per-state EV penalty**
+> (slaves-don't-count → seceded-South GA −5/SC −5/NC −3/VA −3, floor 3; shipped sets
+> EV flat at `:208-211` with no plank branch). It is **founding-era content that
+> EXTENDS this existing file** (M–L; debt #33 / §9 batch-17 (2)), downstream of the
+> keystones — sequence it after the boot pipeline, not before. The same boot also
+> carries the **#153 ×2-Command-gain knob** (build-with-confidence, 3-source
+> canonical; debt #31) and the **#158 CPU-anti-game-over** floor (debt #32, build
+> with the #155 war pass) — both demonstrated LIVE in the founding run that produced
+> an emergent 1st President from a 0-Command CPU pol.
 
 **For era-content registries** (federalism/gilded era event graphs, era-keyed
 card pools, era-keyed draft-ideology profiles), the cleanest pattern is **one file
@@ -1491,7 +1508,12 @@ draft runner instantiates the year's class via `instantiateDraftees`
 | 28 | **★ NO meter-driven game-over path (batch 15 / #88) — the FIRST PROVEN loss state** | the ONLY game-over path is event-driven: `EraEvent.triggersGameEnd` (`types.ts:1476`) consumed at `phaseRunners.ts:2871` → sets `game.gameEnded` (`types.ts:1635`); `GameOverScreen` reads it (`App.tsx:341`) | There is NO per-event-phase game-end ROLL, no meter-watcher, no Honest-Gov→coup gate anywhere in the engine (grep-confirmed; the `pop` APOCALYPSE countdown clock — debt-adjacent §9.1.5 — is also unbuilt). `terror2000` is the **FIRST record of ANY game-over firing in the KB** (the 20%/event-phase "Autocratic Coup Ends America" roll, Honest-Gov at floor, `terror2000#POST 827, 829`). This resolves #88's "is it worth implementing?" — it FIRES and ENDS the game, resolving to the standard cumulative-score winner. **Build the per-event-phase game-end roll TABLE** (the `rep1800` enumerated set, game-mechanics §26.4): Standard Coup (DomStab≤2 & EconStab≤2, 10%), Economic Collapse (EconStab=1, 20%), **Autocratic Coup (HonestGov=1, ~20%/phase — CONFIRMED firing in modern)**, Enemy-Takes-Defenseless-US (MilPrep=1 & a power<Neutral), Civil-War/secession (DomStab=1). The terminal surface already exists; only the meter-driven trigger is new. **Reachable in the MODERN era** (Honest-Gov is far easier to crater than late-game MilPrep). **S.** Pairs with the APOCALYPSE clock (§9.1.5) + §22.1 meter bank. |
 | 29 | **★ War engine has no DEFEAT loss package + no multi-phase model (batch 15 / #152)** | `runPhase_2_7_2_Military` (`phaseRunners.ts:3593-3627`); end-war check `:3615-3620` | **Same site as debt #16** (split out for the planner). The resolver ends a war at `warScore ±50` but the defeat branch (`:3618-3620`) is a bare log line — NO loss package. The new build surface: officers −1 Mil + −1 all-elections; **President −1 ALL future elections** (the symmetric inverse of the victory "permanent President +1"); Party-Pref crater. Plus wars must carry across half-terms through named phases (naval→ground; Afghanistan→Phase II). **Folds into the generic war engine (Phase-1 #3 / #56/#106) — M, not a new epic.** This completes DH-47 ("wars never resolve"). game-mechanics §21.1. |
 | 30 | **★ Cabinet pick is a flat scored pick — no enthusiasm channel, no fairness/diversity penalty (batch 15 / #124+#151)** | `runPhase_2_3_1_Cabinet` (`phaseRunners.ts:2158-2223`) | **Same site as debt #24** (no Senate vote) — the cabinet→enthusiasm rework (#124, batch-12 E16 re-scope) is SHARPENED to Ted's LIVE-retuned **3-state upset/fine/happy** model (per-faction satisfied-wants → fine(0)/happy(+1)/upset(−1) @20%/10%; one roll/faction; same-ideology factions stack; ±3 cap — fixes the "Mods +18" stacking bug, `terror2000#POST 486-489`). PLUS two NEW **Era-of-Terror-gated** scored checks: **#151 same-party appointment-FAIRNESS penalty** (−500 pts per slighted same-party faction incl. the Pres's own; fired LIVE twice) + the **cabinet-DIVERSITY penalty** (−2 enth to Civil-Rights/Reformist/LW-Activist factions if <25% women/minority in cabinet+cabinet-level). All three are a §27.1 era-BAND RULE delta. **Re-scope E16 to bundle confirmation + 3-state enthusiasm + #151 fairness + diversity; M+S.** #124's designer-gated %s now mostly resolved by the live tuning. game-mechanics §9.3.7 + §9.3.9. |
-| 31 | **★ Command-gain not doubled + no centralized vacancy-fill ladder (batch 15 / #153/#154)** | `addCommandPoint` (`abilities.ts:33`, flat `amount`); `vacateOffice` (`phaseRunners.ts:2446`, nulls the seat); ad-hoc SCOTUS fill `:3661` | #153(a): rookie Command=0 ALREADY ships (`phaseRunners.ts:216`), but **every Command-gain % must DOUBLE** (Ted official, `terror2000#POST 91-93`) — `addCommandPoint` has no global ×2 knob (all callers pass `1`/a const). #153(b): "rolling a held expertise grants nothing (no re-roll)" is **already the helper behavior** — `addExpertise` (`expertise.ts:5`) dedupes and no caller does random-pick-then-reroll; it is a forward-only INVARIANT for any future RANDOM expertise grant. #154: a 4-step **vacancy-fill ladder** (same-party-CT → same-party-unemployed → other-party-CT → other-party-unemployed) is UNBUILT — there is no centralized filler. **Slot into the draft/Command + appointment-ladder consistency work (#115a/#115b). XS (#153 knob) + S (#154 ladder).** game-mechanics §4.1.y + §29.4(a). |
+| 31 | **★ Command-gain not doubled + no centralized vacancy-fill ladder (batch 15 / #153/#154)** | `addCommandPoint` (`abilities.ts:33`, flat `amount`); `vacateOffice` (`phaseRunners.ts:2446`, nulls the seat); ad-hoc SCOTUS fill `:3661` | #153(a): rookie Command=0 ALREADY ships (`phaseRunners.ts:216`), but **every Command-gain % must DOUBLE** (Ted official, `terror2000#POST 91-93`) — `addCommandPoint` has no global ×2 knob (all callers pass `1`/a const). #153(b): "rolling a held expertise grants nothing (no re-roll)" is **already the helper behavior** — `addExpertise` (`expertise.ts:5`) dedupes and no caller does random-pick-then-reroll; it is a forward-only INVARIANT for any future RANDOM expertise grant. #154: a 4-step **vacancy-fill ladder** (same-party-CT → same-party-unemployed → other-party-CT → other-party-unemployed) is UNBUILT — there is no centralized filler. **Slot into the draft/Command + appointment-ladder consistency work (#115a/#115b). XS (#153 knob) + S (#154 ladder).** ★ **Batch-17 PROMOTES the #153 knob to build-with-confidence** — it is now 3-source canonical (terror2000 / tedchange / ted1772) and was demonstrated LIVE producing an emergent President (St. Clair, 0-Command CPU pol). The ×2-knob is no longer a "maybe" — it is the load-bearing lever that makes Presidents reachable; build it. The Command-gain SITES the ×2 must wrap include `constitutionalConvention.ts:158,168` (Father/Federalist `command+1`) + the RevWar Military-Leadership grants. game-mechanics §4.1.y + §29.4(a). |
+| 32 | **★ CPU has NO anti-game-over / anti-peace bias — a SOLO-game-ender (batch 17 / #158)** | terminal off-ramps are `EraEvent.triggersGameEnd` (`types.ts:1476`, consumed `phaseRunners.ts:2871`); AI resolves them via `pickAIResponse` (`eraGraph.ts:88-103`) | `pickAIResponse` is a plain `aiBias`-map lookup keyed by faction personality with **NO anti-game-over term whatsoever** — so a CPU-controlled terminal peace node (the 1772 `lost_war`/`dominion_autonomy`/`confederation_remains` nodes, `eraEvents1772.ts:300,309,430`) resolves by ordinary point-math, which leans FOR peace. In a mostly-CPU 1772 game this **ends the solo game prematurely** — the marquee `ted1772` finding. Ted patched it LIVE: **"CPU factions oppose automatic game-over decisions 75% of the time, independent of all other considerations"** (`ted1772#POST 638`). **The fix:** an anti-game-over layer in `pickAIResponse` (or a wrapper at the `triggersGameEnd` decision) — EITHER a flat **75%-oppose roll** on any response that sets `triggersGameEnd`/surrender, OR a points-based anti-peace ideology bias (human picks which). **S.** **This is ONE OF THE THREE RevWar floors (debt #34a below) — build it WITH the #155 war-balance pass (E3)** + the #75 CPU event-vote handler (E9). game-mechanics §13.2 + §25.7. |
+| 33 | **★ Constitutional-Convention is a superset SKELETON — the per-article voting machine + ahistorical-consequences are unbuilt (batch 17 / #159)** | `constitutionalConvention.ts` — `makeConvention` (`:6-77`, 7 articles), `autoFillCPUVotes` (`:81-100`, single CPU-consensus pass), `applyConvention` (`:127-213`, ratify at `approve>=9` `:192`, era→federalism `:198`) | The shipped ConCon is a **reasonable superset skeleton** (7 binding articles + CPU auto-fill + 9-state ratify + Father/3-Federalist-authors + era transition). **UNBUILT (the new build surface):** (i) the **per-article propose → debate-sway → 2/3-of-states vote → eliminate-lowest-and-revote** loop (shipped does ONE auto-fill, not the elimination loop); (ii) **gov-sends-3-delegates (2 own + 1 opposition, ≥1 Legis)** seating; (iii) the **random-egghead drafter** (shipped picks highest-PV delegate as "Father" at `:154`, not a random egghead); (iv) **debate-sway by traited delegates** per article; (v) **the slave-compromise plank → a per-state EV modifier** (slaves-don't-count → seceded-South GA −5/SC −5/NC −3/VA −3, floor 3) — shipped stores `slaveCompromise` as a string with NO EV consequence and sets EV flat at `:208-211`; (vi) **threshold-amendable** amendment plank (#100); (vii) **Judiciary-Act-sets-SCOTUS-count**. The EV-penalty plank + the elimination loop are the two highest-value extensions. **M–L — largest new build surface this batch; EXTENDS the shipped file (founding-era content, not a new scenario). Folds into the founding-boot / E1 surface.** game-mechanics §17.3.y. |
+| 34 | **★ FL-on-death replacement DEFERS (ruled IMMEDIATE) (batch 17 / FL-on-death fork RESOLVED)** | `cleanupLeadershipAndProtegeChains` (`phaseRunners.ts:2304-2312`) nulls `f.leaderId`+`leadershipStartYear`; the vacant-seat election is the 2.2.3 "invalid → Step 2 Election" path (`runPhase_2_2_3_FactionLeaders`, `phaseRunners.ts:1975-2009`) | On a faction-leader's death, the cleanup nulls the seat and the successor is NOT elected until the next 2.2.3 sweep — the seat sits empty for a turn. Ted reversed his own initial "empty-until-next-phase" ruling LIVE: **"New rules dictate that dead faction leaders are immediately replaced"** (`ted1772#POST 624`; the 1840-GA already did it immediately, POST 429). **The fix:** factor the 2.2.3 vacant-seat election body into a reusable `electFactionLeader(snap, f)` helper and call it immediately from the death cleanup, instead of deferring. **S** (small refactor — lift the election body and invoke it at death time). Distinct from the #61 Presidential-succession chain (debt-adjacent §9.2 row) — this is the FACTION-leader seat. game-mechanics §10.1 + §8.3. |
+| 34a | **★ The three RevWar winnability floors — a HARD CONSTRAINT on the #155 war-balance pass (batch 17 / #155)** | `revolutionaryWar.ts` — floor (1) SHIPPED: `applyFrenchAlliance` (`:268-270`) + the void-loss-cap `currentGroundLosses >= groundLossesRemaining && !war.frenchAlliance` (`:259`); floors (2)+(3) NOT built | `ted1772` is the cleanest fresh-start RevWar trace: the war was GENUINELY losable (War Score −2, ~20% loss-rolls, the Navy won ZERO battles, the Canada side-war lost outright at 80%) and stayed winnable ONLY via **three floors: (1) the French-alliance unloseable flag** [SHIPPED, preserve exactly]; **(2) the 2/3 Articles-of-Confederation peace-vote threshold** [NOT built — terminal peace lives only as `triggersGameEnd` events with NO vote gate; a 5-4 = 55.5% MAJORITY for peace FAILED, so 55.5% must NOT pass]; **(3) Ted's 75% CPU-anti-game-over rule** [#158 / debt #32, NOT built]. **The constraint:** when the #155 pass adds the enemy-strength term + battle-size weighting + the Officer-Mil-share cap + per-theater scoring (from `hd1`, batch 16, debt #16/§9.1.12), it MUST be bounded so a 1772 game with all three floors intact still stays winnable. A war engine tuned hard enough that a 1772 game loses before 1788 WITH the floors is over-tuned. **No size of its own — it BOUNDS the #155/#152 work on the generic `War` model (E3).** game-mechanics §21.1 (the #155 HARD CONSTRAINT block) + §17.4 + §23.3. |
+| 35 | **★ Founding-era dataset wrong-century collisions; no build-time validation (batch 17 / DH-65)** | merge/disambiguation in `legislatorsToDataset.mjs:276-302` (`ERA_SAME_PERSON_WINDOW = 25`); `TRAIT_CONFLICTS` (`types.ts:675-676`) | **DH-65(b) — the ENGINE exclusivity is already SHIPPED:** `TRAIT_CONFLICTS` maps Cosmopolitan ⊕ Provincial mutually-exclusive and `addTrait`/`tryGrantTrait` (`engine/traits.ts`) enforce it; the current generated `public/standard-draft-classes.json` has **0** both-held pairs (verified: 18,561 pols, none hold both) — the live forum both-held was a spreadsheet artifact, NOT a code bug. **DH-65(a) — the real TODO:** the merge disambiguates same-name people by a ±25-yr birth-window heuristic but does NOT validate the founding-era (1768-1776) pool for wrong-century entries, and there is no build-time assertion gate. **The fix:** a `scripts/seedDataset.mjs` CURATED_ROWS audit over the founding window + a dataset-build validation pass that flags same-name-wrong-century collisions, then regenerate. **XS — joins the #120 dataset-umbrella pass (same class as DH-64's `Southern Unionist` fix, debt-adjacent §9 batch-16 (5)).** game-mechanics §4.1.z. |
 
 ### 8.1 Confirmed shipped bugs + GM-confirmed design holes
 
@@ -1857,6 +1879,156 @@ continental congress era system) + #120 (dataset umbrella — one coordinated
 > **`new1772` + `tea1772` + `dem1820` + `arkzag` + `tedchange` + `smallbugs` +
 > `oopscpu` + `gild1868`**.
 >
+> **★ Batch-17 changes to the plan (`ted1772` / `13c1b720` — the 4th captured
+> 1772 thread, the KB's MOST-COVERED era; Ted-run [DESIGNER authority, same class
+> as `tedchange`/`oopscpu`/`terror2000`], MOSTLY-CPU [6 CPU / 4 human], fresh
+> 1772→~1792 founding→federalism. Deliberately CORROBORATIVE — few NEW gaps, as
+> briefed. NO new keystone, NO re-sequence of the top-of-queue.):**
+>
+> > **★ Read this block if you only read one for batch 17. The headline is
+> > CONFIDENCE, not new scope. This is the 4th independent 1772 source AND the 3rd
+> > CPU-heavy source, so it does three things: (a) it TRIPLE-CONFIRMS the
+> > command-bootstrap (#153) — and uniquely shows the payoff LIVE: an emergent 1st
+> > President (Arthur St. Clair, a CPU pol who booted at 0-Command / obscure / no
+> > celebrity) who rose entirely through play → BUILD #153 WITH CONFIDENCE; (b) it
+> > adds TWO genuinely-new items — the #159 Constitutional-Convention subsystem
+> > (founding-era content, downstream of the keystones) and #158 CPU-anti-game-over
+> > (one of the three RevWar floors); (c) it PINS the three RevWar winnability
+> > floors as a HARD CONSTRAINT on the #155 war-balance pass; and (d) it RESOLVES
+> > the FL-on-death fork → immediate replacement (shipped code still defers). The
+> > top of the queue does NOT move: QW0 → K0/K2 → K3/K4 + scenarioBoot → E1
+> > (`scenario1788`) still lead. #159 folds into the founding-boot/E1 surface; #158
+> > builds WITH #155 (E3); FL-on-death is a small standalone fix; DH-65 is an XS
+> > dataset audit. This is the most-corroborated era in the KB now (4 threads:
+> > `new1772` MP, `tea1772` solo-all-CPU, `85f8e6b4` solo-aesthetic, `ted1772`
+> > mostly-CPU) + `oopscpu` (all-CPU 1788) — founding-boot + CPU suite + the
+> > command-bootstrap are as well-corroborated as anything in the corpus.**
+> >
+> > **Verified shipped-state of every batch-17 item (grep/Read-confirmed):**
+> > **(1) #153 command-bootstrap — TRIPLE-CONFIRMED → build-with-confidence; mixed
+> > SHIPPED / DESIGNED.** The draft already sets rookie `command: 0`
+> > (`phaseRunners.ts:216`), so part (a-i) is SHIPPED. **DESIGNED, not built:**
+> > (a-ii) the GLOBAL ×2 Command-gain multiplier (no doubling exists anywhere on
+> > Command-gain rolls) and (b) no-reroll-on-held-expertise (expertise-grant rolls
+> > do not currently waste a roll on a held tag). The Command-gain SITES that the
+> > ×2 multiplier must wrap are the leader-pick / charisma-event / military-victory
+> > grants (e.g. the Father-of-the-Constitution `command + 1` at
+> > `constitutionalConvention.ts:158, 168`, and the RevWar `+1 military` /
+> > Military-Leadership grants in `revolutionaryWar.ts`). **Size: S** — a single
+> > `gainCommand(p, basePct)` helper applying the ×2, plus a held-tag guard in the
+> > expertise-grant path; it is now 3-source canonical (terror2000 / tedchange /
+> > ted1772 + a live emergent-President audit). game-mechanics §4.1.y. Sits on the
+> > draft/command path (no keystone dependency) — **ready-to-build now.**
+> > **(2) #159 Constitutional-Convention subsystem — PARTLY SHIPPED (a superset
+> > skeleton); the per-article voting MACHINE + ahistorical-consequences are
+> > DESIGNED.** `constitutionalConvention.ts` EXISTS and is a reasonable superset:
+> > `makeConvention` defines **7 binding articles** (`:6-77`), `autoFillCPUVotes`
+> > does a single CPU-consensus pass per article (`:81-100`, party/ideology
+> > heuristic, NOT the eliminate-revote loop), `applyConvention` builds the
+> > `ConstitutionalArticles`, names a Father-of-the-Constitution + 3 Federalist
+> > authors (`:147-182`), counts governor approvals and **ratifies at `approve >= 9`**
+> > (`:185-192`), then transitions `currentEra = 'federalism'` and dissolves the
+> > Continental Congress (`:196-212`). **DESIGNED, not built (the new build
+> > surface):** (i) the **per-article propose → debate-sway → 2/3-of-states vote →
+> > eliminate-lowest-and-revote** loop (shipped does ONE auto-fill, not the
+> > elimination loop); (ii) **gov-sends-3-delegates (2 own + 1 opposition, ≥1 Legis)**
+> > as the delegate-seating rule (shipped reads the existing CC delegates); (iii)
+> > the **random-egghead drafter** selection (shipped picks the highest-PV delegate
+> > as "Father," not a random egghead); (iv) **debate-sway by traited delegates** per
+> > article; (v) **the slave-compromise plank driving a per-state EV modifier**
+> > (slaves-don't-count → seceded-South EV penalty GA −5/SC −5/NC −3/VA −3, floor 3)
+> > — shipped stores `slaveCompromise` as a string with **no EV consequence**;
+> > `applyConvention` sets `s.electoralVotes = max(3, ccDelegateSlots+1)` flat at
+> > `:208-211`, with no slave-plank branch; (vi) **threshold-amendable** amendment
+> > plank per #100; (vii) **Judiciary-Act-sets-SCOTUS-count** (the Constitution only
+> > permits the court; Congress creates the # of justices). The EV-penalty plank +
+> > the elimination loop are the two highest-value extensions. **Size: M–L** — the
+> > largest new build surface this batch, but it is **founding-era-specific content
+> > that EXTENDS the shipped `constitutionalConvention.ts`** (like the 1856 CW engine
+> > extends `scenario1856`, not a new scenario). game-mechanics §17.3.y.
+> > **(3) #158 CPU-anti-game-over — UNBUILT.** The ONLY game-over path is
+> > `EraEvent.triggersGameEnd` (`types.ts:1476`), consumed at `phaseRunners.ts:2871`
+> > (sets `game.gameEnded`); the three terminal 1772 off-ramps (`lost_war`,
+> > `dominion_autonomy`, `confederation_remains`) carry it (`eraEvents1772.ts:300,
+> > 309, 430`). When the AI controls such a node it resolves via **`pickAIResponse`**
+> > (`eraGraph.ts:88-103`) — a plain `aiBias`-map lookup keyed by faction
+> > personality with **NO anti-game-over / anti-peace term whatsoever**. So a
+> > CPU-controlled terminal peace node resolves by ordinary point-math, which leans
+> > FOR peace — the marquee `ted1772` solo-game-ender. **Where it binds:** an
+> > anti-game-over layer in `pickAIResponse` (or a wrapper at the `triggersGameEnd`
+> > decision) — EITHER the flat **75%-oppose roll on any response that sets
+> > `triggersGameEnd`/surrender**, OR the points-based anti-peace ideology bias
+> > (human picks which). **Size: S.** This is **one of the three RevWar floors — build
+> > it WITH the #155 war-balance pass (E3)** and the #75 CPU event-vote handler (E9).
+> > game-mechanics §13.2 + §25.7.
+> > **(4) #155 three RevWar floors — a HARD CONSTRAINT on E3; floor (1) SHIPPED,
+> > floors (2)+(3) NOT.** `revolutionaryWar.ts` is the cleanest fresh-start RevWar
+> > trace's engine. **Floor (1) — the French-alliance unloseable flag IS SHIPPED:**
+> > `applyFrenchAlliance` (`:268-270`) sets `war.frenchAlliance = true`, and the loss
+> > condition `currentGroundLosses >= groundLossesRemaining && !war.frenchAlliance`
+> > (`:259`) VOIDS once allied — preserve this exactly. **Floor (2) — the 2/3
+> > peace-vote threshold is NOT built:** terminal peace lives only as
+> > `triggersGameEnd` era events (above) with **no vote gate at all** — there is no
+> > 2/3-of-states requirement anywhere; in `ted1772` a 5-4 = 55.5% MAJORITY for peace
+> > FAILED only because of this threshold, so 55.5% must NOT pass. **Floor (3) — #158
+> > (above), NOT built.** **The constraint on #155:** when the war-balance pass adds
+> > the enemy-strength term + battle-size weighting + the Officer-Mil-share cap +
+> > per-theater scoring (from `hd1`, batch 16), it MUST be bounded so a 1772 game with
+> > all three floors intact still stays winnable — a war engine tuned hard enough that
+> > a 1772 game loses before 1788 WITH the floors is over-tuned. game-mechanics §21.1
+> > (the #155 HARD CONSTRAINT block) + §17.4 + §23.3.
+> > **(5) FL-on-death → IMMEDIATE replacement (fork RESOLVED) — shipped code still
+> > DEFERS.** On a faction-leader's death, `cleanupLeadershipAndProtegeChains`
+> > (`phaseRunners.ts:2304-2312`, invoked from the 2.4.1 deaths runner) nulls
+> > `f.leaderId` + `leadershipStartYear` and waits — the seat sits empty until the
+> > next **2.2.3** sweep elects a successor (the vacant-seat election is the
+> > "invalid → Step 2 Election" path at `runPhase_2_2_3_FactionLeaders`,
+> > `phaseRunners.ts:1975-2009`). Ted reversed his own initial ruling LIVE: *"New
+> > rules dictate that dead faction leaders are immediately replaced."* **The fix:**
+> > run the 2.2.3 vacant-seat election (or factor its body into a
+> > `electFactionLeader(snap, f)` helper) immediately from the death cleanup, instead
+> > of deferring. **Size: S** (a small refactor — lift the election body and call it at
+> > death time). game-mechanics §10.1 + §8.3.
+> > **(6) DH-65 founding dataset bugs — dataset/build-validation fix; the ENGINE
+> > exclusivity is already SHIPPED.** (b) Cosmopolitan ⊕ Provincial: `TRAIT_CONFLICTS`
+> > (`types.ts:675-676`) already maps the pair mutually-exclusive, and `addTrait` /
+> > `tryGrantTrait` (`engine/traits.ts`) enforce it — and the current generated
+> > `public/standard-draft-classes.json` has **0** both-held pairs (verified: 18,561
+> > pols, none hold both). So the live forum both-held was a spreadsheet artifact; the
+> > engine is clean. (a) The wrong-century / same-name collisions are the real build
+> > TODO: the merge in `legislatorsToDataset.mjs:276-302` disambiguates same-name
+> > people by a ±25-yr birth-window heuristic (`ERA_SAME_PERSON_WINDOW`) but does NOT
+> > validate the founding-era pool for wrong-century entries, and there is no
+> > build-time assertion gate. **The fix:** a `scripts/seedDataset.mjs` CURATED_ROWS
+> > audit over the 1768-1776 founding window + a dataset-build validation pass that
+> > flags same-name-wrong-century collisions, then regenerate. **Size: XS** — joins
+> > the #120 dataset-umbrella pass (same class as DH-64's `Southern Unionist` fix).
+> > game-mechanics §4.1.z.
+> >
+> > **Decision-gated RECOUNT (batch 17 nets 0 — but TWO forks RESOLVE OUT):** no item
+> > enters the user/designer Decision-gated bucket. TWO forks LEAVE it: **FL-on-death
+> > → immediate** (was an open fork; now ruled) and **#153 expertise/Command rules →
+> > 3-source canonical** (was 1-source; now build-with-confidence). Three OPEN
+> > QUESTIONS the digest raises stay human-gated (tuning, not blockers): (a) #158 —
+> > flat 75%-oppose vs points-based anti-peace bias (pick one); (b) negative-points
+> > floor — V's 0-floor vs Ted's run-continuity negatives (likely the 0 floor); (c)
+> > St. Clair home-state PA-vs-OH when an alt-state isn't owned yet (pairs with #92's
+> > territory gate). All bind inside E1/E3/E9 and are flagged at §30.x.
+> >
+> > **CORROBORATION only (no keystone moves):** #133 1st/2nd CC composition (4/3/2
+> > delegate size table + faction-picks-pre-DoI / Gov-picks-post-Articles +
+> > no-consecutive-terms + 2/3-pass + Foreign-Chair-appoints, verbatim from a 1772
+> > boot); the #70–#79 CPU suite re-validated from a mostly-CPU 1772 angle (#74 got
+> > Ted's cleanest 4-step crisis→faction→team→opponent articulation); #86/#136
+> > founding boot + random-skill-grants-no-Command; DH-61 (NW-Indian-War "3 chances"
+> > origin + the alt "War of 1812 in 1782" branch, offered & declined — direct
+> > corroboration of the boot-active-war seeding item). Plus several designer-RULED
+> > items folded into topical homes (one-protégé-per-turn cap; conversion-target
+> > once-per-half-term; manipulative-gov-self-appoint forfeits the Gov action;
+> > governor-industry-boost-needs-matching-expertise; pre-12A VP = most-EV
+> > runner-up, sharpening DH-62). **No NEW keystone, NO re-sequence; top of queue
+> > UNCHANGED.**
+> >
 > **★★ Batch-15 changes to the plan (`terror2000` / `3843d2da` — the FIRST NATIVE
 > 2000-start "Era of Terror" modern campaign; Ted-run [DESIGNER authority, same
 > class as `tedchange`/`oopscpu`], CPU-heavy, plays ~2000→~2010. NO new keystone;
@@ -4825,6 +4997,49 @@ planning. Specifically:
 > corroboration** on war/Reconstruction/secession. **CORROBORATION only:** #56 (the
 > deepest two-theater spec yet) / #57 onset / #58 / #59 / #92/#109 — no keystone
 > moves; **top of queue UNCHANGED** (QW0 → K0/K2 → K3/K4 + scenarioBoot → E1).
+> **★ Batch-17 change (`ted1772` / "I Think Something's The Matter With Ted" — the
+> 4th captured 1772 thread, Ted-run mostly-CPU; deliberately CORROBORATIVE; NO new
+> keystone, NO re-sequence, TOP-OF-QUEUE UNCHANGED):** **★★ #153 command-bootstrap
+> → PROMOTE the ×2-Command-gain knob to build-with-confidence** (now 3-source
+> canonical — terror2000 / tedchange / ted1772 — and DEMONSTRATED LIVE producing an
+> emergent President from a 0-Command CPU pol; sits on the draft/command path, debt
+> #31, ready now; the SITES the ×2 wraps include `constitutionalConvention.ts:158,168`
+> + the RevWar grants). **★ #159 CONSTITUTIONAL-CONVENTION subsystem → folds into the
+> founding-boot / E1 (`scenario1788`) surface** — the shipped
+> `constitutionalConvention.ts` is a superset SKELETON (7 articles + single CPU
+> auto-fill + 9-state ratify + era transition); the NEW build is the **per-article
+> 2/3-vote + eliminate-lowest-and-revote loop**, **gov-sends-3-delegates (2 own + 1
+> opp, ≥1 Legis)**, the **random-egghead drafter**, **debate-sway by traited
+> delegates**, and **the slave-compromise plank driving a per-state EV penalty**
+> (slaves-don't-count → seceded-South GA −5/SC −5/NC −3/VA −3, floor 3 — shipped sets
+> EV flat at `:208-211` with no plank branch) + threshold-amendable + Judiciary-Act-
+> sets-SCOTUS-count; **M–L, largest new build surface this batch, but downstream
+> era-content that EXTENDS the file** (debt #33). **★ #158 CPU-ANTI-GAME-OVER → build
+> WITH the #155 war-balance pass (E3)** + the #75 event-vote handler (E9): an
+> anti-game-over layer in `pickAIResponse` (`eraGraph.ts:88-103`, which has NONE
+> today) — flat 75%-oppose OR points-based anti-peace bias (human picks); S; it is
+> **ONE OF THE THREE RevWar floors** (debt #32/#34a). **★★ THE THREE REVWAR FLOORS =
+> a HARD CONSTRAINT on #155** (debt #34a): when #155 adds the enemy-strength term /
+> battle-size / Officer-Mil cap / per-theater scoring, it MUST preserve **(1) the
+> French-alliance void-loss flag** [SHIPPED, `revolutionaryWar.ts:259,268-270`],
+> **(2) the 2/3 peace-vote threshold** [NOT built — 55.5% must NOT pass], **(3) the
+> 75% CPU-anti-game-over override** [#158, NOT built] — a 1772 game with all three
+> intact must stay winnable or the engine is over-tuned. **★ FL-on-death → IMMEDIATE
+> replacement (fork RESOLVED) → small standalone fix** (debt #34): shipped DEFERS
+> (`cleanupLeadershipAndProtegeChains` `phaseRunners.ts:2304-2312` nulls `leaderId`,
+> the 2.2.3 election `:1975-2009` waits a turn); factor the vacant-seat election into
+> `electFactionLeader(snap, f)` and call it at death time; S. **★ DH-65 founding
+> dataset audit → joins the #120 dataset umbrella** (debt #35): the wrong-century /
+> same-name founding-pool collisions need a CURATED_ROWS audit + a dataset-build
+> validation gate over the 1768-1776 window (the Cosmopolitan⊕Provincial half is
+> ALREADY engine-enforced via `TRAIT_CONFLICTS` `types.ts:675-676` and 0-both-held in
+> the current JSON); XS. **★ Decision-gated RECOUNT: 0 enter; TWO forks LEAVE**
+> (FL-on-death → ruled-immediate; #153 expertise/Command → 3-source canonical). **4th
+> 1772 source + 3rd CPU-heavy source — HIGH confidence on founding-boot + the CPU
+> suite + the command-bootstrap.** **CORROBORATION only:** #133 CC composition / the
+> #70–#79 CPU suite (#74's cleanest 4-step articulation) / #86/#136 founding boot /
+> DH-61 (the alt "War of 1812 in 1782" branch) — **top of queue UNCHANGED** (QW0 →
+> K0/K2 → K3/K4 + scenarioBoot → E1).
 
 **Cheap fixes first (do immediately — XS each, high value):**
 **★ BUG-0/QW0 (relocation cap `5`→`4`, `types.ts:247`, divergence #9 — ★ batch-12
