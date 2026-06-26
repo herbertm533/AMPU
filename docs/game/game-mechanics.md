@@ -335,6 +335,13 @@
     - [30.3 Rulings folded from `smallbugs` (vcczar spot rulings)](#303-rulings-folded-from-smallbugs-vcczar-spot-rulings)
     - [30.5 Rulings folded from `oopscpu` (Ted-run all-CPU 1788 stress-test)](#305-rulings-folded-from-oopscpu-ted-run-all-cpu-1788-stress-test)
     - [30.4 Authority hierarchy reminder](#304-authority-hierarchy-reminder)
+31. [Gilded-Age era systems (designed, not built)](#31-gilded-age-era-systems-designed-not-built)
+    - [31.1 (#147) Tariff-as-national-%-rate + the mutually-exclusive MonetaryRegime](#311-147-tariff-as-national-rate--the-mutually-exclusive-monetaryregime-designed)
+    - [31.2 (#148) 20-year auto-expiring Reconstruction regime + appointment-by-leadership + Solid-South bias sunset](#312-148-20-year-auto-expiring-reconstruction-regime--appointment-by-leadership--solid-south-bias-sunset-designed)
+    - [31.3 (#149) Civil-service merit-vs-spoils axis (+ era-gated reform content)](#313-149-civil-service-merit-vs-spoils-axis--era-gated-reform-content-designed)
+    - [31.4 (#150) "1872 Rule" — disorganized-loser runs opposite-party independents](#314-150-1872-rule--disorganized-loser-runs-opposite-party-independents-meter-gated-special-election-designed)
+    - [31.5 (DH-63) Currency-regime exclusivity bug](#315-dh-63-currency-regime-exclusivity-bug-the-missing-relationship-constraint)
+    - [31.6 Gilded content cluster + meta (corroborations, b14)](#316-gilded-content-cluster--meta-corroborations-b14)
 
 ---
 
@@ -8948,3 +8955,222 @@ When rule sources disagree:
 rewritten to match Ted's call, with a one-line supersession marker citing the `tedchange`
 POST#.** Where `tea1772` GA rulings conflict with Ted (e.g. amendments-NOT-SCOTUS), both
 sides are preserved with the conflict flagged.
+
+## 31. Gilded-Age era systems (designed, not built)
+
+> **Source: batch 14 — `bf590684` / `gild1868`** (the **first dedicated native-1868 Gilded-Age
+> multiplayer campaign**, 6318 posts, the largest thread in the KB; runs 1868 → ~1886 and **ends
+> in GM burnout** — the 3rd GM-burnout death after `new1772`/`dem1820`). Prior Gilded coverage
+> (`gilded`/`house-divided`/`drums`/`tea1772`) *reached* 1868 as a continuation of an earlier
+> start; this one **boots there**, so it is the richest record of the Gilded issue engine actually
+> played. **The Gilded Age is UNBUILT** — there is no `gilded`/1868 scenario file (only
+> `scenario1772.ts` + `scenario1856.ts`) and no Gilded era-enum value; the era runs on **`modern`
+> tuning** with hand-built data (gap #41). Everything in §31 is **designed, not built**.
+>
+> **★ POLARITY (load-bearing, flipped from the founding era): RED = Republicans** (Grant, bloody
+> shirt, Reconstruction, tariff/business, Stalwart/Half-Breed/Mugwump) **and BLUE = Democrats**
+> (Solid South, Tweed/Tammany, soft-money/Free-Silver). The chunk-001 faction sheet is explicit
+> (`gild1868` POST 6). This is the OPPOSITE of the founding-era BLUE = Dem-Rep frame.
+>
+> **Shipped-vs-designed today:** the tariff is only a **±0.5 flavor bill** (`phaseRunners.ts:3421`
+> "Tariff Increase" `meters: { revenue: 1, economic: -0.5 }`) — there is no national rate state, no
+> `MonetaryRegime`, no Reconstruction timer, no civil-service axis, no special-election branch. §31
+> is the **Gilded era-content spec** the tech-lead / roadmap-planner should treat as the unit of
+> work for a `gilded` era.
+
+### 31.1 (#147) Tariff-as-national-%-rate + the mutually-exclusive MonetaryRegime (designed)
+
+> **Sharpens #3 and extends [§20.4](#204-the-hamiltonian-financial-program-as-bills-fed-38-250)
+> (the federalism tariff-integer) with the strongest evidence yet that the tariff is a literal
+> national integer the parties fight over.** Pairs with [§21.6](#216-bill-typing--budget-gated-spending-cap)
+> (spending cap / bill typing) and [§12.9](#129-forum-design-layer-executive-branch-interference--bill-relationship-graph-modern-designed-not-built) (the bill-relationship graph).
+
+**Tariff = a single national integer set by a literal rate-bill** (`gild1868` POST 6240, 846;
+ch67/76/77 roll-calls). The Gilded floor runs **competing rate-bills** the parties fight over:
+
+| Bill | Position |
+|---|---|
+| **"Set average tariff rate to 36%"** | protectionist (RED / Republican business) |
+| **"Set average tariff rate to 25% and standardize and reform the tariff system"** | reform / lower (the reformist counter-bill) |
+
+- The **single national rate is a meaningful party position** — not a meter nudge. Couples to the
+  federalism **change-cadence** rule (§20.4: set once, then locked until a "first new tariff year"
+  before it can change again).
+
+**Currency = a parallel `MonetaryRegime` enum, MUTUALLY EXCLUSIVE** (`gild1868` POST 836, 884,
+6245). One regime is active at a time; **passing one deactivates the others**:
+
+| Regime | Effect (as a bill) |
+|---|---|
+| **Gold-Standard Act** | removes greenbacks; deflationary ("US dollar … gold standard — free of paper money and silver to cause deflation") |
+| **Bimetallism / Free-Silver** | gold + silver bullion; inflationary, to ease debt repayment (the **same bill as the federalism bimetallism axis**, §20.4 — corroborated across 2 eras) |
+| **National Banking System** | paper currency + war bonds |
+
+*(designed, not built — add `game.tariffRate: number`, set/changed by a **"Set Average Tariff Rate
+to N%"** bill type (+ a "standardize and reform" lower-rate variant), subject to the §20.4
+change-cadence; add a `MonetaryRegime = 'gold' | 'bimetallic' | 'freeSilver' | 'nationalBank'` enum
+where the regime bills are **mutually exclusive** — passing one clears the others. The missing
+exclusivity constraint is DH-63, §31.5. Couples to the economic-content engine (#116) + the
+bill-relationship graph (§12.9 / #42).)*
+
+### 31.2 (#148) 20-year auto-expiring Reconstruction regime + appointment-by-leadership + Solid-South bias sunset (designed)
+
+> **Extends — does NOT duplicate — [§23.4](#234-57-reconstruction-readmission-subsystem-end-nationalism--gilded)
+> (#57, the readmission / war-victory spec).** `gild1868` (native 1868) models Reconstruction as a
+> **time-boxed regime**, adding three things §23.4 lacked: a **20-year timer**, **appointment of
+> seceded-state seats by congressional leadership**, and a **bias sunset to a Blue Solid South**.
+
+- **Auto-expiring timer.** Reconstruction begins **1864** and **auto-ends 20 years later = 1884**,
+  explicitly **"to prevent a one-party state"** (`gild1868` POST 73, 76). This is a regime clock,
+  not just a per-state readmission flag.
+- **Seceded-state seats are APPOINTED, not elected, while the regime is active** (rules
+  **3.0.32 / 3.0.35**, `gild1868` POST 70, 143, 330):
+  - **Military Governors** — President-appointed, **but must be the majority-Congress party**.
+  - **Senators** — chosen by the **faction controlling the President Pro Tempore**.
+  - **Representatives** — chosen by the **faction controlling the Speaker**.
+  - **Appointees cannot have seceded** (the Unionist/secessionist data tag, §23.1 / #58).
+- **+2 GOP (RED) bias** on those appointments/elections while the regime is active.
+- **Bias SUNSET at expiry → Blue Solid South.** When the timer expires the **+2 RED bias sunsets**
+  and southern states flip to a **Blue-heavy Solid South**: FL/GA/LA **Blue+3 → Blue+5**, VA
+  **Blue+2 → Blue+5** (`gild1868` POST 5145). Models the *abandonment* of the freedmen by both
+  parties (the era brief: African-Americans "forgotten by the GOP and ignored by the Democrats").
+- **Per-state early end by repeal-bill** still works (a "Repeal Virginia Reconstruction" bill;
+  **FAILED 4-12** here, POST 558) — the §23.4 readmission-by-(repeal-)bill path.
+
+*(designed, not built — layer a **Reconstruction-regime timer** (`game.reconstruction = { startYear,
+endsYear }`, auto-expire ~20 yrs) on §23.4; while active, **appoint seceded-state seats by
+Speaker/PPT-faction** (majority-party military Govs, non-seceded appointees per the §23.1 tag);
+a **+2 bias-while-active → sunset-to-Solid-South** at expiry (a time-boxed per-state bias modifier
+keyed to the timer); per-state early end by repeal-bill. Pairs with §23.4 / §11.4 (#21) /
+§10.4.3 census EV.)*
+
+### 31.3 (#149) Civil-service merit-vs-spoils axis (+ era-gated reform content) (designed)
+
+> **A real designed system, not flavor.** The Gilded brief (`gild1868` POST 1): "establish
+> government jobs by merit and not party loyalty … **this has not happened yet**." Distinct from
+> #3's bare "civil-service tree" line — this is the **merit/spoils axis** + its **era gating**.
+
+- **The in-game Pendleton Act** — a **"Require most federal positions awarded on merit not party
+  loyalty"** bill **PASSES the 41st Congress** (`gild1868` POST 842). It shifts how appointments
+  work (merit vs the spoils economy).
+- **The spoils lever** — **"Increase / Decrease State Gov Jobs"** governor actions feed
+  **Domestic-Stability** and the spoils economy (`gild1868` POST 770, 803). NB the gov-action
+  meter-move is **rare** (pass-roll, then a *separate* ~5% roll to actually move the meter, §11.2 /
+  #20) — players spam "Increase State Gov Jobs" against a DomStab crisis largely fruitlessly
+  (POST 805). Couples to the **Honest-Gov't / corruption** meter.
+- **Reform content is ERA-GATED** to later (Progressive) eras:
+  - **"Advocate Social Mobility"** governor action — **Progressive-era-only** (`gild1868` POST 811,
+    2936; see [§11.3](#113-governors-actions-library-designed-not-built)).
+  - The **income-tax bill** is **blocked until an income-tax amendment** ("Progressive Age at
+    least"; §31.4 / §21.6).
+
+*(designed, not built — add a **civil-service / spoils axis**: a merit-reform bill that changes how
+appointments are filled, the **State-Gov-Jobs** spoils lever feeding DomStab + the spoils economy,
+and the Honest-Gov't / corruption interplay; **gate reform content** (Social Mobility, income tax)
+to the Progressive era via the era-content registry. Sharpens #3.)*
+
+### 31.4 (#150) "1872 Rule" — disorganized-loser runs opposite-party independents (meter-gated special election) (designed)
+
+> **Rule 3.0.17 "Special Election Conditions — the 1872 Rule"** (Tyler, `gild1868` POST 49). A
+> narrow, era-specific **election-content** rule with no analogue in the build; pairs with §23.4 /
+> §31.2 (Reconstruction) + [§22.4](#224-third-party-challenge-trigger-293) (the third-party
+> trigger). Folds into the election/special-election surface ([§15](#15-elections-29x-and-calcstatevote)).
+
+The post-Civil-War **disorganized losing party** (the South, immediately after the war) does **not
+nominate normally** — instead the GM **runs independents of the OPPOSITE party** as its Pres/VP
+nominee. It is **meter-gated**: at the **first election after Reconstruction begins**, if
+**party-pref is Red+2 / Red+3 AND a d6 lands 1-2**, an **independent-GOP (RED) ticket** is fielded
+as the (nominally Democratic / BLUE) candidate, and the **lowest-scoring Blue faction "runs" it**
+(`gild1868` POST 56, 294, 774-775).
+
+*(designed, not built — a **meter-gated "disorganized party" special-election branch** for the era
+immediately after a civil war: opposite-party-independent nominee, gated by a **party-pref band +
+d6**, run by the weakest faction of the loser. Niche; pairs with §23.4 / §31.2 + #48.)*
+
+### 31.5 (DH-63) Currency-regime exclusivity bug (the missing relationship constraint)
+
+> **DH-63 — a design hole.** `gild1868` had **Bimetallism AND the Gold-Standard Act both active
+> simultaneously despite being mutually exclusive** (`gild1868` POST 6245, 6246) — the engine let
+> two contradictory currency regimes hold at once because **there is no relationship/exclusivity
+> rule between the currency bills**. The build's `MonetaryRegime` (§31.1 / #147) **must enforce
+> mutual exclusion** (passing one regime deactivates the others). Pairs with the
+> **bill-relationship graph** ([§12.9](#129-forum-design-layer-executive-branch-interference--bill-relationship-graph-modern-designed-not-built) / #42).
+>
+> **Adjacent open question** (same post cluster): the **filibuster carry-over rule is unclear** —
+> a bill "held for a half-term": does it come back automatically, or must it be re-proposed? Rules
+> are contradictory (`gild1868` POST 939) — matches the `drums` / `hd` open question on the
+> filibuster ([§12.6](#126-forum-design-layer-filibuster-designed-not-built) / #10).
+
+*(designed, not built — make currency-regime bills a **mutually-exclusive set** in the
+bill-relationship graph: activating one **auto-deactivates** the contradictory regimes; resolve the
+filibuster carry-over ambiguity. Logged as DH-63 in `game-context.md`.)*
+
+### 31.6 Gilded content cluster + meta (corroborations, b14)
+
+Native-1868 corroborations of the existing Gilded cluster (`gild1868 (b14)`):
+
+- **#3 (tariff/currency/civil-service/imperialism)** — now the **strongest** evidence: the issue
+  engine (tariff %, currency regimes, civil-service merit, trusts, ICC, imperialism) is exercised
+  end-to-end (§31.1–§31.3; `gild1868` POST 1, 887 ICC PASSES, 697 Philippines-from-Spain era event,
+  Purchase-Canada exec action). "Protect Monopolies, Mergers, Cartels from Regulations Amendment"
+  is on the floor late (POST 6245).
+- **#5 (per-era card library + Gilded faction nicknames)** — era-accurate Gilded nickname table
+  (Stalwart / Half-Breed / Mugwump / Bourbon / Readjuster …), POST 6, ~324.
+- **#6 (social-movement groups)** — feminists / socialists / communists / prohibitionists /
+  eugenicists / labor activists "rumbling," and the engine already **gates this content** by era
+  (women's suffrage **heavily penalized pre-Progressive**, players decline it for balance —
+  `gild1868` POST 1, 697, 730, 3055).
+- **#21 (state-policy flags) is EXTENSIBLE and gov-action-toggled** — see §11.4 below for the
+  added-mid-game-flag detail (Poll Tax / Jim Crow / Prohibition / women's-suffrage all live as
+  state switches; "lynching made illegal in Michigan" **added a new flag category mid-game**,
+  POST 795, 2933).
+- **#41 (era unbuilt / `modern` tuning)** — confirmed: no scenario file, runs on `modern`.
+- **#92 (Gilded never reached a "future" era)** — negative result holds (the thread ends still in
+  the Gilded Age at POST 6318).
+
+> **★ META — 3rd GM-burnout death (no new mechanic).** This first-time-GM campaign **ended in GM
+> burnout** (a 1884-86 GM/player conflict over a Lifetime-President amendment, POST 6273-6318) —
+> the **3rd GM-burnout thread death in the KB** after `new1772` and `dem1820` (the DH-36 meta hole,
+> §27 cross-ref / §26.4 endgame note). It reinforces the standing **automation-reduces-upkeep**
+> argument: the spreadsheet legislative phase is the hardest to run by hand (DJBillyShakes, POST
+> 868: "the phase I'm most looking forward to having a video-game UI for"). No new mechanic — a
+> signal that the **single-player build's value is upkeep elimination**.
+
+---
+
+> **Cross-reference for the roadmap (§31 — the `gilded`-era content spec).** §31 is the unit of
+> work for a **`gilded` era**: it needs (1) a **`gilded` scenario boot** like 1856 (§26.1 mid-government
+> boot; one-party GOP: Senate 56-9 / House 141-70 RED, `gild1868` POST 71) + a Gilded era-enum value
+> in the era-content registry (K3/K4); (2) the **tariff-rate state + mutually-exclusive
+> `MonetaryRegime`** (§31.1, with the DH-63 exclusivity constraint, §31.5); (3) the **Reconstruction
+> timer + appointment-by-leadership + bias-sunset** (§31.2, layered on §23.4); (4) the
+> **civil-service / spoils axis** with era-gated reform content (§31.3); (5) the niche **1872-Rule
+> special-election branch** (§31.4). All ride the **eras-are-content-bands** architecture (§27.1) and
+> the §26 BootSheet. New design hole **DH-63** + corroborations of #3/#5/#6/#21/#41/#57 are logged in
+> `game-context.md`.
+
+---
+
+> **Cross-reference for the roadmap (§27).** §27 is dominated by **one architecture decision** —
+> **eras-are-content-bands** (§27.1) — which the tech-lead should treat as a top-level item: the
+> era must become an explicit **game-state/territory content-band gate**, with `year % 4` / `year
+> % 2` demoted to phase *cadence* only. The rest are era-content subsystems that slot under the
+> **eras-are-content-bands** (§27.1) — which the tech-lead should treat as a top-level item: the
+> era must become an explicit **game-state/territory content-band gate**, with `year % 4` / `year
+> % 2` demoted to phase *cadence* only. The rest are era-content subsystems that slot under the
+> **era-content registry** (K3/K4): the **12A election-mode toggle** (§27.3, mirrors
+> `senatePre17`), **slavery-flag + Cohens state-supremacy** (§27.4, the sectional substrate),
+> **organize→admit statehood gating** (§27.5), the **Second Bank recharter clock** (§27.6), the
+> **circular ideology metric** (§27.7, a cross-cutting math change touching §6/§25.8/§26.6), and
+> **amendments-mutate-core-params** (§27.8). All pair with §2.5 (boundary point-banking) and §26
+> (the BootSheet). New design holes DH-29..DH-35 are logged in `game-context.md` (§19 below).
+>
+> **★ Batch 8 update.** The eras-are-content-bands finding (§27.1) is now **MULTI-SAVE CONFIRMED**
+> — `ad0f2875` (1772-start) + `rep1800` (1800-start) emit identical band labels at identical
+> in-game dates from **two different start years**, making this the most-corroborated architectural
+> finding in the KB. §27.2 gains the **dual era-scoring** model (per-era winner + cumulative leader,
+> keyed to B#/R# slots). **★ NEGATIVE RESULT:** despite its "to future" title `ad0f2875` **stalls at
+> 1874 (mid-Gilded)** and completes no era beyond Gilded — **"Era of the Future" remains
+> undocumented across all ingested threads**; the documented timeline end-state is unchanged. New
+> design holes **DH-36..DH-44** (incl. the **DH-36 meta hole** — manual-upkeep GM burnout killed a
+> 12-turn game) are logged in `game-context.md`.

@@ -1824,6 +1824,11 @@ continental congress era system) + #120 (dataset umbrella — one coordinated
 | **★ #143 (`oopscpu`)** — post-election Command-decay pass UNBUILT (RULED) | **VERIFIED:** `loseCommand` (`abilities.ts:15`) is called ONLY at `phaseRunners.ts:2410` (old-age/Anytime loss) + `:2709` (event effect); the defeat penalty at `revolutionaryWar.ts:137` uses `loseSkill`, not `loseCommand`. **NO post-election Command-decay pass.** Ted-RULED (`oopscpu#POST 1, 224`): every living pol NOT on a Pres/VP ticket that cycle has a **40% chance of −1 Command** ("shit or get off the pot"). | **Add one pass** at `runPhase_2_10_End` (`phaseRunners.ts:4171`), gated on `isPresidentialYear` (`year % 4 === 0`), AFTER the 2.9.4 ticket roster is known; roll 40% per eligible pol; apply −1 via `loseCommand`. NEW, RULED, standalone — no design gate. Pairs with the #85/#130 death-schedule discipline (same `runPhase_2_10_End` site). | **XS quick-win; ship with the other XS consistency PRs (Phase-1 #19) or near QW0.** |
 | **★ DH-61 (`oopscpu`)** — scenario-boot does NOT seed era-active wars | **VERIFIED:** only the 1772 Rev War is boot-seeded (`revolutionaryWar.ts`); every other start boots at peace. Ted-noted (`oopscpu#POST 338-344`): 1788 should start with the **Northwest Indian War** running (20%-loss / WS −2) — the GMs forgot it. | **Add `BootSheet.activeWars` + a boot hook** in `scenarioBoot` that reads a start-year "active wars by start date" table and instantiates each as a running `War` via the generic `War` model (Phase-1 #3). | **S; folds into the `scenarioBoot` pipeline (K4, §9.1.9). A HARD prerequisite for `scenario1788` — land WITH E1.** |
 | **★ DH-62 (`oopscpu`)** — pre-12A two-votes-per-state / no-ticket EC mode UNBUILT | **VERIFIED:** `calcStateVote('presGeneral')` (`phaseRunners.ts:3752`) resolves every state by PV+dice with a Pres+VP ticket; no two-vote/no-ticket mode exists. `oopscpu#POST 192-199` exercised the pre-12A mode (top EV = Pres, runner-up = VP, no separate VP ballot) + same-state-EV exclusion (`#POST 197`) across 1788/1792/1796. | **Add an era-keyed election-mode variant** (a new resolution branch alongside `electorsByLegislature`): two undifferentiated votes per state, top-2 take Pres/VP, same-state EV exclusion, anti-tie via the §25.1 pre-12A nomination trio (handler #1). | **M; folds into the per-state-EC + 12A-toggle epic (#93/#5, Phase-1 #4). A HARD prerequisite for `scenario1788` — land WITH E1.** |
+| **★ #147 (`gild1868`)** — tariff-as-national-%-rate + mutually-exclusive `MonetaryRegime` UNBUILT (DESIGNED) | **VERIFIED:** tariff is a ±0.5 meter-nudge flavor bill — `BILL_TEMPLATES` "Tariff Increase" `meters:{ revenue:1, economic:-0.5 }` / "Tariff Reduction" `{ revenue:-0.5, economic:0.5 }` (`phaseRunners.ts:3421-3422`); **NO `game.tariffRate` integer, NO `MonetaryRegime` enum**; `Legislation` (`types.ts:1506`) has no `type`/`replaces`. `gild1868` floors competing literal rate-bills ("Set average tariff rate to 36%" vs "to 25% and reform," POST 6240) + gold/bimetal/national-bank regime bills (POST 836, 884). | **Add `game.tariffRate:number`** set by a `"Set Average Tariff Rate to N%"` bill type (+ reform variant), subject to the §20.4 change-cadence; **add `MonetaryRegime = 'gold'|'bimetallic'|'freeSilver'|'nationalBank'`** where regime bills are **mutually exclusive** (passing one clears the others — the DH-63 constraint). Replaces the flavor bill. | **M; gilded-content epic (§9.1.10). Depends on the economic engine (#116/E4c) + the bill-relationship graph (#42). NOT a near-term quick win.** |
+| **★ #148 (`gild1868`)** — 20-year auto-expiring Reconstruction timer + appoint-by-leadership + Solid-South sunset UNBUILT (DESIGNED) | **VERIFIED:** **NO Reconstruction subsystem** in code (#57 is the readmission/war-victory SPEC; death just nulls the office at `vacateOffice` `phaseRunners.ts:2446`) — no timer, no appoint-by-Speaker/PPT, no bias-sunset. `gild1868` models it as a time-boxed regime: begins 1864, auto-ends 1884 ("to prevent a one-party state," POST 73/76); seceded-state seats APPOINTED — military Govs majority-party Pres-appointed, Senators by PPT-faction, Reps by Speaker-faction, non-seceded appointees (rules 3.0.32/3.0.35, POST 70/143/330); +2 RED bias → Solid-South sunset (FL/GA/LA Blue+3→+5, VA Blue+2→+5, POST 5145). | **EXTENDS the #57/E3b Reconstruction epic (do NOT open a new epic):** a `game.reconstruction = { startYear, endsYear }` regime clock + appoint-seceded-seats-by-Speaker/PPT-faction + a +2-bias-while-active → sunset-to-Solid-South time-boxed per-state modifier + per-state early end by repeal-bill. | **S–M within E3b. Inherits the DH-29 solo-blocker (Strict/Ironclad never passes with CPU) — resolve before any antebellum/CW/Reconstruction scenario ships solo.** |
+| **★ #149 (`gild1868`)** — civil-service merit-vs-spoils axis (+ era-gated reform content) UNBUILT (DESIGNED) | **VERIFIED:** **NO civil-service / spoils / merit mechanic** in code. The Gilded brief's "merit not party loyalty … has not happened yet" (POST 1) is a real designed system: the in-game Pendleton Act bill PASSES the 41st Congress (POST 842); "Increase/Decrease State Gov Jobs" gov actions feed DomStab + the spoils economy (POST 770, 803); reform content era-gated (Social Mobility gov action + income-tax bill are Progressive-era-only, POST 811, 2936). | **Add a civil-service/spoils axis:** a merit-reform bill that shifts how appointments are filled + the State-Gov-Jobs spoils lever feeding DomStab + the Honest-Gov't/corruption interplay; **gate reform content** (Social Mobility, income tax) to later eras via the era-content registry. Sharpens #3. | **S–M; gilded-content epic (§9.1.10). Depends on K3/K4 (era-gating).** |
+| **★ #150 (`gild1868`)** — "1872 Rule" disorganized-loser-runs-opposite-party-independents special election UNBUILT (DESIGNED) | **VERIFIED:** **NO special-election-condition path** (every state resolves via `calcStateVote` `phaseRunners.ts:3752`). Rule 3.0.17 (Tyler, POST 49): the post-CW disorganized losing party does not nominate normally — at the first election after Reconstruction begins, if party-pref is Red+2/+3 AND a d6 lands 1-2, an opposite-party-independent ticket is fielded, run by the loser's weakest faction (POST 774-775). | **Add a meter-gated "disorganized party" special-election branch** for the era after a civil war: opposite-party-independent nominee, gated by a party-pref band + d6, run by the weakest faction of the loser. | **S; gilded-content epic (§9.1.10). Niche; pairs with #57/#148 + the #48 third-party trigger.** |
+| **★ DH-63 (`gild1868`)** — mutually-exclusive currency regimes can both be active (no exclusivity constraint) | **VERIFIED:** `Legislation` (`types.ts:1506`) has no `type`/`replaces` field → currency bills are independent. `gild1868` design-hole: **Bimetallism AND the Gold-Standard Act both active at once despite being mutually exclusive** (POST 6245-6246). Also flags the filibuster carry-over ambiguity (POST 939 — matches the `drums`/`hd` open Q on #10). | **Make currency-regime bills a mutually-exclusive set in the bill-relationship graph:** activating one auto-deactivates the contradictory regimes; resolve the filibuster carry-over ambiguity. | **XS–S; FOLDS INTO #42 (bill-relationship graph) + #147's `MonetaryRegime`. Not a standalone epic — it is the exclusivity constraint those two already build.** |
 
 ---
 
@@ -1835,13 +1840,125 @@ continental congress era system) + #120 (dataset umbrella — one coordinated
 > cluster #70–#85 + the **batch-6 scenario-boot / endgame cluster #86–#91** + the
 > **batch-7 early-republic cluster #92–#99** + the **batch-8 founding/era cluster
 > #100–#105** + the **batch-12 designer-rulings cluster #120–#142** + the
-> **batch-13 `oopscpu` CPU-validation cluster #143–#146 + OC-1…OC-8 + DH-61/DH-62**),
+> **batch-13 `oopscpu` CPU-validation cluster #143–#146 + OC-1…OC-8 + DH-61/DH-62**
+> + the **batch-14 `gild1868` gilded-era content cluster #147–#150 + DH-63**),
 > the design divergences (mechanics §19.1, now **#1–#21**), the confirmed bugs
 > (incl. BUG-0), and the GM design holes (DH-1/DH-2 + DH-3..DH-11 + DH-12..DH-23 +
-> DH-24..DH-28 + DH-29..DH-35 + **DH-36..DH-44 + DH-61/DH-62**). Source: codebase +
+> DH-24..DH-28 + DH-29..DH-35 + **DH-36..DH-44 + DH-61/DH-62 + DH-63**). Source: codebase +
 > `gilded` + `fed` + `1772s` + `modern` + `hd` + `drums` + `pop` + `rep1800` +
 > **`new1772` + `tea1772` + `dem1820` + `arkzag` + `tedchange` + `smallbugs` +
-> `oopscpu`**.
+> `oopscpu` + `gild1868`**.
+>
+> **★ Batch-14 changes to the plan (`gild1868` / `bf590684` — the first dedicated
+> NATIVE-1868 Gilded-Age campaign, 6318 posts, the LARGEST thread in the KB; runs
+> 1868 → ~1886 and dies in GM burnout. NO new keystone, NO re-sequence of the
+> top-of-queue — this batch is DOWNSTREAM era-content that lands AFTER the era
+> model + economic engine.):**
+>
+> > **★ Read this block if you only read one for batch 14. The big picture:
+> > `gild1868` is the richest single record of the Gilded-Age issue engine actually
+> > being played (tariff %, currency, civil-service, trusts, the 20-yr
+> > Reconstruction regime, AfAm enfranchisement, imperialism). But the Gilded Age is
+> > UNBUILT — the `Era` enum is `independence | federalism | nationalism | modern`
+> > (`types.ts:1337`, NO `gilded`), only `scenario1772.ts` / `scenario1856.ts`
+> > exist, and the era is hand-run on `modern` tuning (gap #41). The thread is
+> > almost entirely the unbuilt design. It surfaces FIVE new deltas — #147–#150 +
+> > DH-63 — that are ONE "gilded-era content" epic (§9.1.10 below), and it
+> > corroborates the standing Gilded cluster (#3/#5/#6/#21/#41/#57 + the convention/
+> > amendment/SCOTUS/spending-cap/gov-action machinery) from a native start. **It
+> > does NOT move the top of the queue: QW0 → K0/K2 → K3/K4 + scenarioBoot → E1
+> > (`scenario1788`) still lead.** Gilded content rides on top of K3/K4 (the
+> > era-content-band model), the economic engine (#116 / E4c), the bill-relationship
+> > graph (#42), and the Reconstruction epic (#57 / E3b — which inherits the DH-29
+> > solo-blocker). DH-63 folds into #42 + #147's MonetaryRegime; #148 EXTENDS #57,
+> > it does not open a new epic. **3rd GM-burnout death** (`gild1868`, after
+> > `new1772`/`dem1820`) — cite for the automation-reduces-upkeep argument; do not
+> > queue.**
+> >
+> > **★ POLARITY FLIP (load-bearing for any `gilded` scenario data):** by 1868 the
+> > parties have INVERTED from the founding era — **RED = Republicans** (Grant,
+> > bloody shirt, Reconstruction, tariff/business, Stalwart/Half-Breed/Mugwump) and
+> > **BLUE = Democrats** (Solid South, Tweed/Tammany, soft-money/Free-Silver),
+> > `gild1868` POST 6. This is the OPPOSITE of the founding-era BLUE = Dem-Rep
+> > frame, so a `scenario1868` `BootSheet` faction roster + nickname table is
+> > red/blue-flipped vs `scenario1772`. The era-content-band model (K3/K4) must
+> > carry party-label-by-era, not assume a fixed RED/BLUE↔party mapping.
+> >
+> > **Verified shipped-state (every item below is DESIGNED, not built):**
+> > **(1)** `Era = 'independence' | 'federalism' | 'nationalism' | 'modern'`
+> > (`types.ts:1337`) — **NO `gilded` value**; only `scenario1772.ts` /
+> > `scenario1856.ts` exist (no Gilded/1868 scenario). **(2)** the tariff is a
+> > **±0.5 meter-nudging flavor bill** — `BILL_TEMPLATES` "Tariff Increase"
+> > `meters: { revenue: 1, economic: -0.5 }` / "Tariff Reduction"
+> > `{ revenue: -0.5, economic: 0.5 }` (`phaseRunners.ts:3421-3422`) — there is **NO
+> > `game.tariffRate` national integer and NO `MonetaryRegime` enum**. **(3)** there
+> > is **NO Reconstruction subsystem** in code (#57 is the readmission/war-victory
+> > SPEC; the KILL exists but `vacateOffice` just nulls the office,
+> > `phaseRunners.ts:2446`) — no auto-expiry timer, no appoint-by-Speaker/PPT,
+> > no Solid-South bias-sunset. **(4)** there is **NO civil-service / merit-vs-spoils
+> > axis** (no merit-reform bill, no State-Gov-Jobs spoils lever). **(5)** there is
+> > **NO special-election branch** (every state resolves via `calcStateVote`,
+> > `phaseRunners.ts:3752`). **(6)** currency/regime bills have **NO exclusivity
+> > guard** — `Legislation` (`types.ts:1506`) has no `type`/`replaces` field, so two
+> > contradictory currency regimes can hold at once (DH-63).
+> >
+> > **The load-bearing build items this batch sizes (one epic; each binds in code as
+> > noted) — see §9.1.10 for the dependency table:**
+> > 1. **The dedicated `gilded` era + `scenario1868` is the UMBRELLA (#41).**
+> >    `gild1868` is the **full native spec** for it: faction roster (red/blue-
+> >    flipped, 10 factions / 2 parties, `gild1868` POST 6), the Gilded nickname
+> >    table (Stalwart / Half-Breed / Mugwump / Bourbon / Readjuster …), the
+> >    era-event spine (Philippines-from-Spain, women's-suffrage A/B, census EV
+> >    deltas, Labor Unions / RJ Reynolds / Vaudeville / Twain / Nast / steamships),
+> >    the bill catalog (tariff-rate / currency-regime / civil-service / ICC /
+> >    statehood), the SCOTUS docket (Elk v Wilkins, Allgeyer v Louisiana), and the
+> >    20-yr Reconstruction timer. **`scenario1868` is "another scenario-as-data-row"
+> >    once the BootSheet pipeline + content-band era model land — AFTER
+> >    `scenario1788` + a mature `advanceEra`.** Binds: `Era` enum (`types.ts:1337`),
+> >    the era-content registry (K3/K4), the `BootSheet`/`scenarioBoot` pipeline
+> >    (§9.1.9). **L** (a whole era's content + a scenario boot).
+> > 2. **#147 tariff-as-%-rate + the mutually-exclusive `MonetaryRegime`.** Add
+> >    `game.tariffRate: number` set/changed by a `"Set Average Tariff Rate to N%"`
+> >    bill type (+ a "standardize and reform" lower-rate variant), subject to the
+> >    federalism §20.4 change-cadence; add a
+> >    `MonetaryRegime = 'gold' | 'bimetallic' | 'freeSilver' | 'nationalBank'` enum
+> >    where the regime bills are **mutually exclusive** (passing one clears the
+> >    others). Replaces the flavor bill at `phaseRunners.ts:3421`. Depends on the
+> >    economic-content engine (#116 / E4c) + the bill-relationship graph (#42).
+> >    **M.**
+> > 3. **#148 20-year Reconstruction timer + appoint-by-leadership + Solid-South
+> >    sunset.** EXTENDS the #57 / E3b Reconstruction epic (does NOT open a new
+> >    epic): a `game.reconstruction = { startYear, endsYear }` regime clock
+> >    (begins 1864, auto-ends ~1884), appoint seceded-state Gov/Sen/Rep seats by
+> >    Speaker-faction / PPT-faction (majority-party military Govs, non-seceded
+> >    appointees per the §23.1 Unionist tag), a +2-RED bias-while-active that
+> >    SUNSETS to a Blue Solid South at expiry (FL/GA/LA Blue+3→+5, VA Blue+2→+5,
+> >    `gild1868` POST 5145), per-state early end by repeal-bill. **Inherits the
+> >    DH-29 solo-blocker** (Strict/Ironclad never passes with CPU factions) — that
+> >    must be resolved before any antebellum/CW/Reconstruction scenario ships solo.
+> >    **S–M within E3b.**
+> > 4. **#149 civil-service merit-vs-spoils axis (+ era-gated reform content).** A
+> >    merit-reform bill (the in-game Pendleton Act) that shifts how appointments are
+> >    filled + the State-Gov-Jobs spoils lever feeding DomStab + the Honest-Gov't /
+> >    corruption interplay; **gate reform content** (Social Mobility gov action,
+> >    income-tax bill) to the Progressive era via the era-content registry. Sharpens
+> >    #3. Depends on K3/K4 (era-gating). **S–M.**
+> > 5. **#150 "1872 Rule" special-election branch.** A meter-gated "disorganized
+> >    party" special-election: at the first election after Reconstruction begins, if
+> >    party-pref is Red+2/+3 AND a d6 lands 1-2, field an opposite-party-independent
+> >    nominee run by the loser's weakest faction. Niche election-content; pairs with
+> >    #57/#148 + #48 third-party trigger. **S.**
+> > 6. **DH-63 currency-regime exclusivity bug → folds into #42 + #147.** Make
+> >    currency-regime bills a **mutually-exclusive set** in the bill-relationship
+> >    graph: activating one auto-deactivates the contradictory regimes. (Also flags
+> >    the filibuster carry-over ambiguity, `gild1868` POST 939 — matches the
+> >    `drums`/`hd` open Q on #10.) **XS–S** (it is the exclusivity constraint
+> >    #147's MonetaryRegime + #42 already build).
+> >
+> > **No re-sequence: the top-of-queue is UNCHANGED.** QW0 → K0/K2 → K3/K4 +
+> > scenarioBoot → E1 (`scenario1788`) lead. The gilded-content epic is downstream
+> > (it consumes K3/K4 + #116 + #42 + #57). The 3rd GM-burnout death reinforces, but
+> > does not add to, the automation-reduces-upkeep argument (cite, don't queue).
 >
 > **★★★ Batch-13 changes to the plan (`oopscpu` — Ted-run all-CPU 1788 stress-test;
 > the K5/E9 VALIDATION source; designer-authoritative, same class as `tedchange`.
@@ -3264,6 +3381,27 @@ cascade) — promote a sub-band to an enum value only if its rule tables
 from `nationalism`. The shipped 4-value enum stays; `gilded`/`progressive` are
 still the two values K4 adds (those *do* have divergent rule tables).
 
+**★ Batch 14 — the `gilded` value now has a FULL NATIVE SPEC (#41, `gild1868`).**
+The dedicated `gilded` era is no longer a hypothetical enum slot: `gild1868` (the
+first native-1868 campaign) gives K4 the entire content band for it — see §9.1.10
+for the dependency table. The band's `{bills, eraEvents, draftees, biasTable,
+advanceWhen}` record is concretely: a **red/blue-FLIPPED faction roster** (RED =
+Republicans / BLUE = Democrats — the OPPOSITE of the founding-era frame, so the
+content-band registry must carry **party-label-by-era**, not a fixed RED/BLUE↔party
+mapping; `gild1868` POST 6), the **Gilded nickname table** (Stalwart / Half-Breed /
+Mugwump / Bourbon / Readjuster…), the **era-event spine** (Philippines-from-Spain
+A/B, women's-suffrage A/B, census EV deltas, Labor Unions / RJ Reynolds / Twain /
+Nast / steamships), the **bill catalog** (tariff-rate #147 / currency-regime #147 /
+civil-service #149 / ICC / statehood), the **SCOTUS docket** (Elk v Wilkins,
+Allgeyer v Louisiana), and the **20-yr Reconstruction timer** (#148). The era boots
+**mid-government** like 1856 (one-party GOP: Senate 56-9 / House 141-70 RED,
+`gild1868` POST 71) via the K4 `BootSheet`. **`scenario1868` is "another
+scenario-as-data-row" once the BootSheet pipeline + content-band era model land —
+AFTER `scenario1788` + a mature `advanceEra` (Phase-1 #22 / §9.1.10).** Build it as
+K4 content, NOT a bespoke Gilded code path. **★ Batch-8 NEGATIVE RESULT still holds
+— do NOT add a post-Gilded "future" era** (`gild1868` ends still in the Gilded Age
+at POST 6318; #92).
+
 #### 9.1.6 ★★ The Reconstruction solo-blocker — a BUILD REQUIREMENT on E3b
 
 > **The second-most-important call in batch 7, and a hard gate on the 1856-arc
@@ -3524,6 +3662,61 @@ boot pipeline is also where the XS validators (DH-24 Senate-class, DH-27 trait-
 conflict), the appointment-ladder, and **the active-war seed (DH-61)** live. **The two
 §29 forks (boot-Command, CT-eligibility) are decision-gated** — author the policies
 before wiring them, but the *pipeline itself* is unblocked and should be built first.
+
+#### 9.1.10 ★ The gilded-era content epic (batch 14, `gild1868`) — ONE downstream era unit, not five quick wins
+
+`gild1868` (the first native-1868 campaign, the largest thread in the KB) surfaced
+five deltas — **#147, #148, #149, #150, DH-63**. They are **not five independent
+backlog rows**; they are **ONE "gilded-era content" epic** that rides on top of the
+era model + the economic engine + the bill-relationship graph + the Reconstruction
+epic. **The Gilded Age is UNBUILT** (`Era = 'independence'|'federalism'|
+'nationalism'|'modern'` at `types.ts:1337`, no `gilded`; only
+`scenario1772.ts`/`scenario1856.ts`; the era is hand-run on `modern` tuning, gap
+#41). **It does not move the top of the queue** — it is downstream content. The
+planner should treat #41 as the umbrella and slot this epic **after `scenario1788`
+(E1) + a mature `advanceEra` + #116 (E4c economic engine) + #42 (bill-relationship
+graph) + #57 (E3b Reconstruction).**
+
+**Dependency table (the unit of work; lift directly):**
+
+| Item | Depends on | Binds in code | Size |
+|---|---|---|---|
+| **#41 dedicated `gilded` era + `scenario1868`** (UMBRELLA — `gild1868` is its full native spec) | K3/K4 (era-content-band registry + `advanceEra`), the `BootSheet`/`scenarioBoot` pipeline (§9.1.9), AFTER `scenario1788` (E1) | `Era` enum `types.ts:1337`; the era-content registry (K4, §9.1.5); a new `scenario1868` data row + boot sheet | **L** (a whole era's content + boot) |
+| **#147 tariff-`tariffRate` + mutually-exclusive `MonetaryRegime`** | #116 (E4c economic engine) + #42 (bill-relationship graph) + the §20.4 tariff change-cadence | replaces the flavor bill at `phaseRunners.ts:3421-3422`; new `game.tariffRate:number` + `MonetaryRegime` enum on `GameState`; `Legislation.type`/`replaces` (`types.ts:1506`) | **M** |
+| **#148 20-yr Reconstruction timer + appoint-by-leadership + Solid-South sunset** | #57 / E3b (EXTENDS it — no new epic); inherits the **DH-29 solo-blocker** (§9.1.6); the §23.1 Unionist tag; the leadership runner | `game.reconstruction={startYear,endsYear}`; the Speaker/PPT-faction appointment path; a time-boxed per-state bias modifier; `vacateOffice`/appointment sites | **S–M within E3b** |
+| **#149 civil-service merit-vs-spoils axis (+ era-gated reform content)** | K3/K4 (era-gating registry); the gov-action library (§11.3); the Honest-Gov't meter | a merit-reform bill type; the State-Gov-Jobs spoils lever → DomStab; an `eraBand` gate on reform content (Social Mobility, income tax) | **S–M** |
+| **#150 "1872 Rule" special-election branch** | #57/#148 (Reconstruction-begins gate) + the #48 third-party trigger + the §25.1 nomination handler | a meter-gated branch around `calcStateVote('presGeneral')` (`phaseRunners.ts:3752`) | **S** (niche) |
+| **DH-63 currency-regime exclusivity** | **FOLDS INTO #42 + #147** — not standalone | the mutual-exclusion constraint in the bill-relationship graph; auto-deactivate contradictory regimes | **XS–S** |
+
+**The sequencing call (the planner can lift this verbatim):**
+
+1. **Top-of-queue is UNCHANGED by this batch.** QW0 → K0/K2 → K3/K4 + scenarioBoot
+   → E1 (`scenario1788`) still lead. Gilded is downstream era-content.
+2. **#41 is the umbrella; `gild1868` is its full native spec** — the faction roster
+   (red/blue-FLIPPED vs the founding era: RED = Republicans, BLUE = Democrats,
+   `gild1868` POST 6), the Gilded nickname table (Stalwart/Half-Breed/Mugwump/
+   Bourbon/Readjuster…), the era-event spine (Philippines-from-Spain, women's-
+   suffrage A/B, census EV deltas, Labor Unions/RJ Reynolds/Twain/Nast/steamships),
+   the bill catalog (tariff-rate/currency-regime/civil-service/ICC/statehood), the
+   SCOTUS docket (Elk v Wilkins, Allgeyer v Louisiana), and the 20-yr Reconstruction
+   timer. **`scenario1868` is "another scenario-as-data-row" once the BootSheet
+   pipeline + content-band era model land — AFTER `scenario1788` + a mature
+   `advanceEra`.** Do NOT build a bespoke Gilded code path; it is K4 content.
+3. **#147–#150 + DH-63 are ONE epic gated on K3/K4 + the era model + #116/E4c + #42.**
+   Not a near-term quick win — the tariff/currency systems need the economic-content
+   state machine and the bill-relationship graph to exist first.
+4. **DH-63 folds into #42 + #147's MonetaryRegime** (the mutual-exclusion
+   constraint) — XS-S, no standalone work.
+5. **#148 EXTENDS the existing #57/E3b Reconstruction epic** (timer + appointment-
+   by-Speaker/PPT-faction + Solid-South sunset). It does NOT open a new epic, and it
+   **inherits the DH-29 solo-blocker** (§9.1.6) — the Strict/Ironclad plan never
+   passes with CPU factions, so solo Reconstruction must be resolved before any
+   antebellum/CW/Reconstruction scenario (incl. a Gilded boot that turns the timer
+   on) ships solo.
+6. **The 3rd GM-burnout death** (`gild1868`, after `new1772`/`dem1820`) reinforces
+   the automation-reduces-upkeep argument (DH-36 family) — the spreadsheet
+   legislative phase is the hardest to run by hand (DJBillyShakes, POST 868). **Cite
+   it, do not queue it** — no new mechanic.
 
 ### 9.2 Major subsystems (do these after the keystones)
 
@@ -3901,6 +4094,27 @@ planning. Specifically:
 > cabinet ideology weighting) — NOT ready-to-build until Ted/vcczar closes
 > them. The authority hierarchy is now Ted/vcczar > GA > inference; the
 > roadmap's parking lot splits Decision-gated into "user-gated" + "designer-gated."
+> **★ Batch-14 change (`gild1868`, the first native-1868 Gilded campaign — NO new
+> keystone, NO re-sequence, TOP-OF-QUEUE UNCHANGED; this batch is DOWNSTREAM
+> era-content):** the five deltas #147/#148/#149/#150 + DH-63 are **ONE gilded-era
+> content epic** (Phase-1 #22 / §9.1.10) that lands **after** `scenario1788` (E1) +
+> a mature `advanceEra` + the era-content-band registry (K3/K4) + #116/E4c
+> (economic engine) + #42 (bill-relationship graph) + #57/E3b (Reconstruction).
+> **#41 is the umbrella** — the dedicated `gilded` era + `scenario1868` is "another
+> scenario-as-data-row" on the K4 `BootSheet` (red/blue-FLIPPED roster RED=GOP /
+> BLUE=Dem, POST 6; Gilded nickname table; era-event spine; bill catalog; SCOTUS
+> docket; the 20-yr Reconstruction timer) — NOT a bespoke code path. **#147**
+> (`game.tariffRate` integer + mutually-exclusive `MonetaryRegime` enum) replaces
+> the ±0.5 flavor bill at `phaseRunners.ts:3421-3422` — M, depends on #116 + #42.
+> **#148** (20-yr Reconstruction timer + appoint-by-Speaker/PPT-faction +
+> Solid-South sunset, POST 73/76/5145) **EXTENDS #57/E3b** (no new epic) and
+> **inherits the DH-29 solo-blocker** (§9.1.6) — S–M within E3b. **#149**
+> (civil-service merit-vs-spoils axis + era-gated reform content) — S–M. **#150**
+> ("1872 Rule" special election) — niche, S. **DH-63** (currency-regime
+> exclusivity bug) **FOLDS INTO #42 + #147's MonetaryRegime** — XS–S, no standalone
+> work. **The 3rd GM-burnout death** (`gild1868`, after `new1772`/`dem1820`)
+> reinforces the automation-reduces-upkeep argument (DH-36 family) — cite, do not
+> queue. **No keystone moves; QW0 → K0/K2 → K3/K4 + scenarioBoot → E1 still lead.**
 > **★★★ Batch-13 change (`oopscpu`, Ted-run all-CPU 1788 stress-test — the K5/E9
 > VALIDATION source; designer-authoritative; NO new keystone, NO re-sequence — it
 > DE-RISKS E9 + adds two 1788-boot prerequisites + one XS standalone):**
@@ -4315,8 +4529,24 @@ in EVERY state for a Master Kingmaker in the candidate's faction. SUPERSEDES
 Matt's "state OR national, pick one" reading**) →
 21) Conversion-targeting refactor (divergence #3, if pursued; **add Kingmaker-
 pairing-dissolution-on-flip — DH-5**) →
-22) gilded scenario (once `advanceEra` + action libraries + the CPU handler
-suite are mature).**
+22) **GILDED-ERA CONTENT EPIC (batch 14, `gild1868`; §9.1.10) — ONE downstream
+era unit, NOT five quick wins; the TOP-OF-QUEUE is UNCHANGED.** Build once
+`advanceEra` + the era-content-band registry (K3/K4) + the action libraries + the
+CPU handler suite are mature AND after `scenario1788` (E1) + #116 (E4c economic
+engine) + #42 (bill-relationship graph) + #57/E3b (Reconstruction). The five
+deltas: (a) **#41 dedicated `gilded` era + `scenario1868`** — UMBRELLA; `gild1868`
+is its full native spec (red/blue-FLIPPED faction roster RED=GOP/BLUE=Dem POST 6,
+Gilded nickname table, era-event spine, bill catalog, SCOTUS docket, 20-yr
+Reconstruction timer); another scenario-as-data-row on the K4 `BootSheet`, NOT a
+bespoke code path — L; (b) **#147 `game.tariffRate` integer + mutually-exclusive
+`MonetaryRegime` enum** — replaces the ±0.5 flavor bill at
+`phaseRunners.ts:3421-3422`; depends on #116/E4c + #42 — M; (c) **#148 20-yr
+Reconstruction timer + appoint-by-Speaker/PPT-faction + Solid-South sunset** —
+EXTENDS #57/E3b (no new epic), inherits the DH-29 solo-blocker (§9.1.6) — S–M
+within E3b; (d) **#149 civil-service merit-vs-spoils axis + era-gated reform
+content** (Social Mobility, income tax) — S–M; (e) **#150 "1872 Rule"
+special-election branch** — niche, S; (f) **DH-63 currency-regime exclusivity
+FOLDS INTO #42 + #147's MonetaryRegime** — XS–S, no standalone work.**
 
 **ENGINE TRACK — Phase 2 (FAR-END modern epic — builds LAST, after gilded):**
 **23) Enthusiasm/Party-Pref engine + Score economy (over #6's meter bank;

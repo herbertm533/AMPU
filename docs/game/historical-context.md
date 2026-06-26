@@ -1105,11 +1105,27 @@ i.e. it hands off to the Gilded Age this section documents.)*
   presidency in the era (1884, 1892); low-tariff, gold-standard. **[consensus]**
 - **William Jennings Bryan** (forward arc) — Free Silver/Populist Democrat, 1896
   "Cross of Gold"; the realignment that *ends* this era. **[consensus]**
+- **George H. Pendleton** — Ohio Democratic Senator, soft-money/greenback
+  "Gentleman George"; namesake of the **1883 Pendleton Civil Service Act**.
+  **[consensus]** ([Pendleton Act, NPS](https://www.nps.gov/articles/000/the-federal-civil-service-and-the-death-of-president-james-a-garfield.htm))
+- **Richard P. Bland ("Silver Dick")** — Missouri Free Silver leader; co-author of
+  the **Bland–Allison Act of 1878** (silver purchase; passed over Hayes's veto
+  Feb 28 1878). **[consensus]** ([Richard P. Bland](https://en.wikipedia.org/wiki/Richard_P._Bland), [Bland–Allison Act](https://en.wikipedia.org/wiki/Bland%E2%80%93Allison_Act))
+- **James A. Garfield** — GOP president 1881; assassinated by Stalwart
+  office-seeker **Charles Guiteau** (shot July 2 1881, died Sept 19 1881) — the
+  event that catalyzed the Pendleton Act. **[consensus]** ([Garfield assassination, Wikipedia](https://en.wikipedia.org/wiki/Assassination_of_James_A._Garfield))
 
 ### Timeline of relevant events
 - **1868** — Grant elected; 14th Amendment ratified. **[consensus]**
+- **1871** — U.S. Expedition to Korea (Shinmiyangyo; USS Monocacy among the
+  squadron) — an early imperial-reach naval action. **[consensus]** ([U.S. expedition to Korea](https://en.wikipedia.org/wiki/United_States_expedition_to_Korea))
 - **1873** — Coinage Act ("Crime of '73," demonetizing silver); Panic of 1873. **[consensus]**
 - **1877** — Compromise of 1877 ends Reconstruction; "Solid South" sets in. **[consensus]**
+- **1878** — Bland–Allison Act (mandated silver purchase; over Hayes's veto). **[consensus]**
+- **1879** — White River War / Meeker Incident (Ute uprising → Ute removal from
+  Colorado) — the era's ongoing Indian Wars. **[consensus]** ([Meeker Incident, Colorado Encyclopedia](https://coloradoencyclopedia.org/article/meeker-incident))
+- **1881** — Garfield shot (July 2) and dies (Sept 19); Arthur succeeds;
+  Star Route postal-fraud prosecutions. **[consensus]**
 - **1883** — Pendleton Civil Service Act (merit system). **[consensus]**
 - **1887/1890** — Interstate Commerce Act; Sherman Antitrust Act; McKinley Tariff. **[consensus]**
 - **1892** — Populist (People's) Party peaks; Cleveland re-elected. **[consensus]**
@@ -1177,6 +1193,17 @@ movements (feminists, prohibitionists, Populists) that "influence the next era."
   state flags (gap-log #21) — and they *are* the real Gilded-Age/Progressive
   state-level battleground. Just note Jim Crow/disenfranchisement intensifies
   *after* 1877 (Reconstruction's end), so gating matters. **[consensus]**
+- **The dedicated 1868 "Gilded Age" multiplayer campaign (`bf590684`/`gild1868`,
+  6318 posts) runs 1868→~1886 and diverges from the real presidential line:**
+  Washburn (not Grant's 2nd term / Hayes) holds the office mid-campaign, and a
+  **Garfield who survives 1881** is plausible in-game. Its 1880 convention,
+  however, tracks real era *content* tightly: a Democratic **Pendleton/Bland**
+  soft-money/Free-Silver ticket vs. a GOP **Garfield** (Blaine endorsing) — the
+  real currency and civil-service axes, with real figures. The campaign also
+  invokes real federal actions (1871 Korea expedition, 1879 Ute/White River War)
+  and era-flavor events (Coca-Cola, Pulitzer's *New York World*). Reconstruction
+  is modeled as a **20-year auto-expiring regime** (player note, chunk-001), a
+  game-balance abstraction of the real 1865–1877 window. **[consensus]**
 
 ---
 
