@@ -137,6 +137,52 @@
 > in the gap log (rows #70-#78) is the explicit spec; DH-8 is marked **RESOLVED**
 > for the heuristics it covers and **REMAINING** for the architectural gaps
 > (no vote-trading, no meter-guarding on event picks, static gov menu).
+>
+> **★ Batch 12a (`smallbugs`) is the FIRST DISCUSSION-THREAD ingest** — not a
+> playtest, but the community's running 3-yr+ catalog of small dataset bugs +
+> mechanical typos + rule-clarification rulings ("A Thread for small low
+> priority changes and errors," 804 posts, started Apr 2023, still updating).
+> Sources are now split: **playtest threads** (continuous game narratives) vs.
+> **discussion threads** (community-curated fix-catalogs). New gap rows: **#120**
+> (umbrella ~100-fix dataset-maintenance pass via `CURATED_ROWS`), **#121**
+> (Secessionist trait missing from dataset), **#122** (Pardon mechanics
+> unspecified), **#123** (late-modern content-fixes bundle). Strongly
+> **corroborates DH-27/DH-51/DH-53/DH-60 from a 3rd-or-4th independent thread**
+> each. **Crucial finding**: this thread is **the channel through which the
+> relocation-cap-4 change went into the rules doc** (POST 734-735, "Approved by
+> vczar 12-30-25") — confirming the #38 stale-build constant fix.
+>
+> **★ Batch 12b (`tedchange`) is the SECOND DISCUSSION-THREAD ingest** — the
+> companion to `smallbugs`, but qualitatively different: this is
+> @MrPotatoTed's **designer-led, section-by-section rules-doc cleanup pass**
+> running phase 2.1 → 2.6 chronologically between Sept 2024 and Mar 2025
+> ("Discussion: Ted's Change Log of Doom," 408 posts), then resumes Oct 2025
+> on Lingering script details. **The thread is the AUTHORITATIVE channel for
+> current rule wording** — Ted explicitly says it's the channel through which
+> the official rules doc gets updated. **It RESOLVES many open questions:**
+> the CANONICAL Pres implementation 2-step Admin-then-Command rule (POST 163
+> — pins cf82a7d3 §5a #3 wording), the 25% LW↔RW Pop cross-circle shift rate
+> + Two-Faced penalty (POST 51), the same-party adjacent-ideology
+> conversion rule (POST 53), the 33% can-party-flip conversion rate (POST 52),
+> the 5%/3% positive/negative FL trait gain rates (POST 79), the 3+3
+> alt-states+random-traits draft count (POST 50), the Hale=1/2-death +
+> ex-Pres-only-rolls-death rule (POST 143/396), the canonical Kingmaker vs
+> Master Kingmaker bonus scope (POST 316), the Integrity-can't-nominate-
+> Controversial rule (POST 277), the Challenge-Legislation-can't-target-
+> Repeal rule (POST 248), and many others. **NEW gap rows: #124** (cabinet→
+> enthusiasm rework), **#125** (Universal Election Modifier — OPEN), **#126**
+> (canonical Pres 2-step Admin-then-Command), **#127** (canonical
+> ideology shift/conversion schedule), **#128** (canonical
+> Kingmaker/Master-Kingmaker scope), **#129** (canonical trait-inheritance
+> allow/block list), **#130** (canonical retirement+death schedule), **#131**
+> (Integrity-pol-nomination block), **#132** (Challenge-Legislation repeal
+> block), **#133** (1st/2nd CC composition rewrite), **#134** (Lingering
+> 7-step ordering + decay carry-forward), **#135** (50/50 House split rule),
+> **#136-142** (specific rule pins). **Crucially, this thread DID NOT touch
+> the relocation-cap=4 / amendments-not-SCOTUS / Civil-Rights-Act-not-
+> repealable items** — those were 12a's domain. The two discussion threads
+> have complementary scope (12b = section-by-section systematic rewrite;
+> 12a = ad-hoc playtest bug catalog).
 
 ## What this game is
 
@@ -407,7 +453,12 @@ D-R presidents Benton→Cheves→Enoch-Lincoln→Dudley, a party system that nev
 the source for the **late-game** systems batch 10 never reached: multi-cycle
 presidential elections, the Bank-War→Independent-Treasury economic arc, Force-Bill/
 tariff fights, amendment machinery, presidential assassination+succession; cites
-`POST n`). A row marked
+`POST n`); **`smallbugs`** = the cf82a7d3 "A Thread for small low priority changes
+and errors" **discussion** digest (3-yr+ community catalog of dataset/mechanical
+bugs + designer rulings; cites `POST n`); **`tedchange`** = the a0f0bf04
+"Discussion: Ted's Change Log of Doom" **discussion** digest (the AUTHORITATIVE
+designer-led rules-doc cleanup pass, phase-by-phase Sept 2024 → Oct 2025; cites
+`POST n`; the most current statement of rule wording). A row marked
 **(corroborated across N eras)** has been independently observed in multiple
 threads — the strongest signal that it is a real, load-bearing rule rather than
 a one-off ruling.
@@ -565,7 +616,7 @@ has none of this — the war these campaigns play is host-improvised content.
 | 68 | **Per-era faction-point banking + ~12-step new-era boot pipeline (with the explicit boundary formula)** | No era-to-era carryover; flat phase loop in one scenario | At each era boundary (1868, 1892) a **heavyweight ~12-step boot pipeline** runs: end-of-era awards + **faction-point reset to per-era banks** + faction trades + a full 2.1.x→2.3.1 re-run + new card/draft/SCOTUS pool. **`rep1800` captures the boundary FORMULA verbatim** (the "End of Historical Era" phase): **faction-trade window (CPU auto-accepts)** → **point-banking** (most +5; most-of-OTHER-party +3; 2nd-if-same-party +3; ALL top-party factions +3; −1 if an allied faction finishes last/next-last) → **non-banked points reset to 0** → new-era issue brief → **draft order = just-completed-era points only** → wholesale per-era state-bias table. **Resolves the prior open question: points DO bank per era** | Add an era-boundary boot pipeline implementing the explicit `rep1800` formula: faction-trade window + the 5-clause point-banking + reset + draft-order-by-last-era-points + per-era bias table + full pre-turn-phase re-run + content-pool swap. (**2-era confirmed**; confirms/extends #2) | ingested (hd I-12-adjacent; confirms #2; POST 6679-6816; **rep1800 §B 6187, 6201, 6203, 6421**) |
 | 102 | **DUAL era scoring — per-era winner + cumulative "winner of the game so far" (keyed to B#/R# slots)** — NEW | No era-to-era scoring; no cumulative leaderboard; `HalfTermSummary` is per-turn only (types.ts:1762) | At **each** era boundary the engine declares **TWO** results, tracked independently: (1) a **per-era winning faction** ("winner of this era / round"), and (2) a running **cumulative "winner of the game so far"** spanning all bands. `tea1772` shows the two diverging: **POST 153** declares per-era winner = R2 but cumulative leader = B4 (also POST 91: round B5 / cumulative B4; POST 130: era B4 / cumulative B4). Scores are **keyed to the fixed faction slots B1–B5 / R1–R5**. This pairs with #68's per-era point-banking (the bank feeds the cumulative score) and suggests the **cumulative bank → end-of-game total is the cross-era win condition** (open #68/long-arc Q). The exact point formula is not visible in `tea1772` (only the boundary announcements) — `rep1800` POST 6201 is the closest known formula | Track **two** running scores at each era boundary: a per-era winner (resets each band) + a cumulative leader (banks across bands, keyed to faction slots) — surface both as a scoreboard; wire the cumulative bank to #68's point-banking + the candidate end-of-game win condition. (**2-save confirmed** — same dual-scoring shape in `tea1772` 1772-start + `rep1800` 1800-start; extends #68) | ingested (**tea1772 §2 / POST 21, 62, 91, 130, 153; extends #68; cf. rep1800 POST 6201**) |
 | 69 | **"3 traits + 3 alt-states" draft re-rule** | Draft grants rookies random traits/alt-states (count not surveyed) | At the 1868 draft ("Ted's revisions") rookies now get **3 random traits + 3 random/alt-states** (down from 5/5 in earlier threads). **Open: is 3/3 canonical going forward?** Pick-position skill bonuses + **reverse-total-PV order** confirmed | Decide + apply the rookie trait/alt-state count (3/3 per the latest playtest); confirms reverse-PV draft order + pick-position bonuses (#38-adjacent / drafter-ordering open Q) | ingested (hd POST 3, 2155) |
-| 99 | **Ideology scale is a CIRCLE (LWPop↔RWPop adjacency) — TWO-THREAD CONFIRMED** | `Ideology` is a linear 7-point type `LW Populist … RW Populist` (types.ts:5); shifts/conversions assume a line | A **mid-era rule change wraps the 7-point ideology scale into a RING**: **LW Populist ↔ RW Populist shifts are allowed at 25% base** (the two ends become adjacent), and **conversions extend to adjacent ideologies** (same-party other-faction pols of same OR adjacent ideology — was same-only earlier). This directly contradicts a linear enum: the design treats Prog↔Lib↔Mod↔Cons↔Trad↔RWPop↔LWPop↔Prog as a closed loop for both **ideology shifts** (the 2.1.5 shift pass) and **conversions** (#76 conversion adjacency). **★ INDEPENDENTLY CORROBORATED (batch 9):** the `nuke` thread reports the SAME rule from a separate campaign — "the ideology chart became a CIRCLE, not a line; LW-Pop can shift directly to RW-Pop at 25% base" (POST 9842). Two unrelated threads now agree the scale is a ring. (The Second Bank recharter clock + Bank War + Call-for-Convention + CW-variants + meter-game-over content lives in rows #95–#98 below) | Treat the ideology scale as **circular** (LWPop adjacent to RWPop) wherever adjacency is used: ideology-shift steps, conversion target eligibility, faction-card adjacency (#24), VP/platform "adjacent ideology" checks. (Refines the 7-point ideology model + #76 conversion adjacency. **2-thread confirmed** — `rep1800` + `nuke`) | ingested (**rep1800 §B 5717, 5730; nuke §6 / POST 9842**) + codebase (types.ts:5) |
+| 99 | **Ideology scale is a CIRCLE (LWPop↔RWPop adjacency) — THREE-THREAD CONFIRMED + Ted-RULED** | `Ideology` is a linear 7-point type `LW Populist … RW Populist` (types.ts:5); shifts/conversions assume a line | A **mid-era rule change wraps the 7-point ideology scale into a RING**: **LW Populist ↔ RW Populist shifts are allowed at 25% base** (the two ends become adjacent), and **conversions extend to adjacent ideologies** (same-party other-faction pols of same OR adjacent ideology — was same-only earlier). This directly contradicts a linear enum: the design treats Prog↔Lib↔Mod↔Cons↔Trad↔RWPop↔LWPop↔Prog as a closed loop for both **ideology shifts** (the 2.1.5 shift pass) and **conversions** (#76 conversion adjacency). **★ INDEPENDENTLY CORROBORATED (batch 9):** the `nuke` thread reports the SAME rule (POST 9842). **★ TED-RULED (batch 12b, `tedchange`):** vcczar declared the rule directly — *"all ideologies are now a CIRCLE, rather than a line"* (POST 24); shift rate set at **25% base** with **auto-Two-Faced on cross-circle success** (POST 28-29, 51). Three independent threads + Ted's official ruling — the rule is locked. | Treat the ideology scale as **circular** (LWPop adjacent to RWPop) wherever adjacency is used: ideology-shift steps, conversion target eligibility, faction-card adjacency (#24), VP/platform "adjacent ideology" checks. (Refines the 7-point ideology model + #76 conversion adjacency. **3-thread confirmed + Ted-RULED**) | ingested (**rep1800 §B 5717, 5730; nuke §6 / POST 9842; tedchange POST 18-31, 51 — Ted's CANONICAL declaration + 25%-rate + Two-Faced penalty**) + codebase (types.ts:5) |
 
 ### CPU AI specifications (NEW — mostly `drums`-only; resolves DH-8 heuristics)
 
@@ -664,6 +715,29 @@ this is a deliberate visual language in the shipped UI (functional pages only).
 | 41 | **`modern` era is dormant** | Rule tables carry `modern` rows (mortality 507, leadership 460, anytime-events 1076, trait bands) | Implied late-timeline play; **`modern` is the fully-tuned end-state** the 1948 campaign plays (2004→2020) — the richest era — *and* the Gilded-Age era likely wants its own value | Activate `modern` with a modern scenario; likely split the long timeline into `gilded` + `progressive` + `modern`. The `modern` rows are no longer hypothetical — there's a 2276-post spec | codebase + ingested (gilded 1; modern 1, 769, 1106) |
 | 46 | **Foreign-volunteer / generated pols routed by score+ideology** | `ImportedDraftee` exists (types.ts:1780); no "event introduces a future-draftable figure" flow | Foreign volunteers (Lafayette, von Steuben) are **scheduled into a future draft class** (Lafayette draftable 1784) and assigned to the **lowest-scoring faction allowed to draft that ideology** | Event → future-draftable figure routed by score + ideology | ingested (1772s 37, 56) |
 | 55 | **53-state alt roster + modern apportionment + two-home-state pols** | `states1772.ts` (13) / `states1856.ts` (31); `state.electoralVotes` static; a pol has one home state | The modern timeline runs **53 states** incl. **DC, Cuba (CU), Puerto Rico (PR)** as full states; **House ~572-601 (Wyoming Rule), Senate 106**; per-state **Bias** + EV recomputed at census. `modern` also shows **politicians with two home states** (an alt-state add at draft, e.g. "AOC (NY) adds CO") affecting relocation/Carpetbagger + kingmaker chaining | A modern state roster (53, incl. annexed states); modern apportionment (Wyoming-Rule House size + 106 Senate); politician **multi-home-state** support. **`dem1820` adds the early-era House ABSTRACTION + focus-Rep incumbency rule** (vcczar-ruled, POST 676-696): only "focus Reps" exist, each controlling a share of a state's hidden seats; **Rep count = (EV − 2) / 5 rounded up**; the **+2 incumbency bonus applies only in your own seat EXCEPT in census/redistricting years** (1822/1832/1842…) when you may run any seat and keep it; census changes House seats the following half-term + the first election of the new decade. (Confirms A9 House-slate persistence as a scaling wall — the 1822 midterm took ~10 forum pages / 8 real days) | ingested (modern 426, 438, 462, 495, 1785, 2240; **dem1820 POST 643, 665-696, 704**) |
+| 120 | **★ Dataset accuracy: ~100 catalogued fixes in `smallbugs` — dataset-maintenance pass (S, scriptable)** — NEW | Dataset is generated via `scripts/seedDataset.mjs` (CLAUDE.md); `CURATED_ROWS` is the override surface; `politicians-dataset.csv` is human-review-readable; `public/standard-draft-classes.json` is the runtime artifact (NOT hand-editable) | The `smallbugs` thread is a 3-yr+ rolling catalog of community-reported defects in the bundled dataset: **~50 named-politician fixes** (religion mislabels, wrong skills/traits, wrong birth year, swapped/duplicate bios, party/alt-state flags missing, sub-floor stat audit, alt-state misses, missing-from-dataset entries), **~30 small mechanical fixes** (swapped bill effects + missing event prereqs + era-flag typos + region-table off-by-ones + statehood-routing inconsistency), and **~20 dataset additions** (Sequoyah/Yazoo/de Valera/Otis Glenn/Richard Bland Lee I, etc.). **Most-common patterns**: Catholic-as-Protestant religion mislabels (≥8 named cases); modern-pol recency bias (≥6 cases — Elon Musk OP, Gavin Newsom Prog, etc., **corroborating DH-51 from a 3rd thread**); trait-conflict slips (Pliable+Puritan in ≥5 named cases, **corroborating DH-27 from a 3rd thread**); per-bill sign bugs (≥8 named cases, **corroborating DH-53 from a 4th thread**); duplicate/collision names (≥6 cases, often solved by `Name (state)` suffix per `ebrk` ruling, POST 46). The dem1820 + arkzag DH-60 era-event-territory-prereq pattern is independently flagged here too (Stubborn Cherokee / Force Open Trade w/ Japan, POST 676-677) | **One scheduled dataset-maintenance pass via `scripts/seedDataset.mjs` `CURATED_ROWS` overrides** (NOT by hand-editing the JSON/CSV). The catalog is the input list. Sub-tasks: (a) the ~50 named-pol fixes; (b) the ~30 mechanical fixes (bills + events); (c) the ~20 missing-dataset entries; (d) automated audits — religion-sweep, modern-pol balance audit, trait-conflict-validator, bill-effect-sign-checker. Pairs with DH-27 / DH-51 / DH-53 / DH-60. See digest §2-3 for the per-fix POST# anchors | ingested (**smallbugs (cf82a7d3) §2-§3 / 50+ named-pol fixes, 30+ mechanical fixes, 20+ additions; see digest tables for POSTs**) |
+| 121 | **★ NEW gap — `Secessionist` trait absent from politicians dataset (separate from `Union Loyalist`)** — NEW | `Union Loyalist` exists (formerly `Southern Unionist`, gilded-glossary); CSA secession mechanics (`hd`/`rep1800`) rely on the *opposite* tag — but no `Secessionist` trait column exists in the master pol doc | The 1856/1868 secession arc (CSA defection, secession-Senator pool, post-CSA reset) needs to identify **who would actively secede**, not just who's unionist. Per @Imperator Taco Cat (`smallbugs` POST 3): *"we don't have a secessionist trait in the original politician database. It won't apply for most games, but it is very important for 1868, if that's a start date in the game"* — he had to hand-mark every secessionist pol in his playtest for it to work. Stephen Mallory (CSA Sec of Navy) is the canonical exemplar (POST 2). Pairs with the `Southern Unionist`/`Union Loyalist` trait family + the secession-pool / Class-N senators / readmission machinery (#56-#60) | Add a `Secessionist` trait to the politician schema + populate it for the historical CSA roster + integrate with the secession trigger (gating who joins the CSA pool when secession fires). Pairs with #56-#60 (Civil-War subsystems) + the `Union Loyalist` trait (gilded/hd glossary). Distinct from `Union Loyalist` — both must exist as opposing flags | ingested (**smallbugs (cf82a7d3) §4a / POST 2, 3, 121, 122**) |
+| 122 | **★ NEW gap — Pardon mechanics entirely unspecified** — NEW | No pardon mechanic in the rules; no rule for what happens when an exec pardons a pol with `Controversial` or with a scandal | Per @Bushwa777 (`smallbugs` POST 113): *"Pardon rules not spelled out. What happens if pres pardons someone? Do they lose traits they got like controversial? If not pardoned do they get retired from game?"* — no follow-up in the thread. Pardons interact with the Controversial-trait apparatus, the impeachment machinery (#112), the resignation-penalty pipeline (resignation-while-impeached = permanent −3 future elections / barred from appointment / loses Integrity), and the cabinet-resignation-and-Scandalous-Office-Holder loop (POST 618 — a fired pol can be re-appointed next phase). **Author-time decision; no ruling yet.** | Specify pardon mechanics: who can be pardoned (any non-impeached citizen?), what gets undone (Controversial trait? scandal trait? election malus? impeachment-disqualification?), the political-cost side (pardoning a Controversial pol = pardoner gains Controversial? Honest-Gov drop?). Pairs with #112 (impeachment) + the post-`Scandalous Office Holder` re-appointment loop | ingested (**smallbugs (cf82a7d3) §4b / POST 113**) |
+| 123 | **★ "Era-of-Terror name" / Wyoming Rule / Real House Act etc. era-content fixes — small additions for late-modern content** — NEW | Era-content bands are designed via `arkzag`/`nuke` (#92, #113); `Wyoming Rule` is gap-flagged un-implementable (DH-49); `Real House Act` is a renamed proposal | Several small late-modern content additions flagged by Ark + Ted on this thread: (a) **Wyoming Rule → Real House Act 585-cap at Era of Populism** (Ark POST 475); (b) **Wyoming Rule as 1.31× current EVs at 2000 Census** (Ark POST 451) — alternative formulation; (c) **runoff-election rules for the runoff amendment** in Era of Progressivism (Ark POST 395-401); (d) **Two-Term Limit + `Senate Abolish` amendments** referenced as existing; (e) **Pardon mechanics** (separate gap, see #122). All deferred to "when Anthony codes that era" | One small-additions pass for late-modern era-content polish: pick a Wyoming-Rule formulation (Real House Act 585-cap OR 1.31×-formula), wire the runoff-amendment to a runoff-elections handler, expose a `bill.classOnlyRequiresSenate` flag for filibuster/cloture etc. Pairs with #113 (Era-of-Terror content) + #34 (apportionment) + DH-49 (Wyoming Rule un-implementable) | ingested (**smallbugs (cf82a7d3) §3 / POST 451, 475, 395-401, 642-651**) |
+| 124 | **★ Cabinet → enthusiasm REWORK: IDEOLOGY-COMPOSITION drives enthusiasm; LOBBIES give bonus POINTS** — NEW | Cabinet has its own enthusiasm-via-lobby model (gap #31 "cabinet enthusiasm-via-lobbies overwhelms presidential signal," partially patched by #80 ±3 cap); ideology-composition not modeled | **★ Ted's stated rework (`tedchange` POST 1, 4):** (1) Lobby satisfaction now gives **bonus POINTS** to the President + factions w/ matching lobby cards (was enthusiasm). (2) **Ideology composition** drives enthusiasm — ≥50% of cabinet of an ideology = +enth that ideology; ≤20% representation = −enth. Big-4 / rest-of-cabinet / cabinet-level potentially weighted differently. **3 shifts/half-term cap retained.** | Rewrite the cabinet→enthusiasm system to separate the POINTS path (lobby-driven) from the ENTHUSIASM path (ideology-composition-driven). Pairs with #31. **RULED IN CONCEPT** (Ted POST 1); specific percentages OPEN. The build's cabinet-enthusiasm logic likely needs a rewrite. | ingested (**tedchange POST 1-4**) |
+| 125 | **★ Universal Election Modifier (UEM) — proposed common framework across ALL elections (OPEN)** — NEW | Each election context has its own modifier set; no unified framework | A single +1/-1 modifier table applied to ALL elections (primary + general, all offices, all eras), with **~17 +1 traits** (Puritan-in-primary / highest skill / most expertise / Celebrity / Charisma / Debate / Efficient / Leadership / Likable / Manipulative / Military Leader / Orator / Propagandist / Teflon / Everyman / Crisis Management) and **~16 -1 modifiers** (under-40 / over-75 / Easily Overwhelmed / Pliable / Puritan-in-general / Controversial / Uncharismatic / Unlikable / Egghead / Incoherent / Incompetent / Obscure / Flip-Flopper/Two-Faced / Passive / lowest skill-primaries / fewest expertise-primaries / racial minority / woman / openly LGBT — until first-of-each-elected at each level) | **OPEN — Ted PROPOSED but NOT FINALIZED.** Community pushed back on stacking + age modifiers (Matt POST 225: "this is way too powerful as-is"). Major design proposal that the build should NOT pre-implement; wait for the user. | ingested (**tedchange POST 222-241**) |
+| 126 | **★ Pres implementation 2-step Admin-then-Command rule — CANONICAL WORDING** — NEW | Pres implementation rolls not modeled as the canonical 5-tier Command-gated model; cf82a7d3 §5a #3 captured this in concept ("HYBRID ADOPTED") but with fuzzy wording | **★ Ted POST 163 publishes the CANONICAL 2-step rule:** **Step 1 — Pres rolls Admin for implementation, same as cabinet.** **Step 2 (Blunder check) — Pres COMMAND scales the blunder roll:** Cmd 5 + relevant expertise = avoid blunder; Cmd 4 + expertise = 50% avoid; Cmd 3 + expertise = +1 to blunder; Cmd 2 + expertise = 50% chance +1; Cmd 1 + expertise = normal; no Cmd / no expertise = −2 to blunder (unless Efficient on impl team); **Incompetent = −3**; **Easily Overwhelmed skips step 2 entirely.** | **Implement the 2-step rule as the canonical Pres implementation flow.** Pairs with cf82a7d3 §5a #3 (this thread's POST 163 is the AUTHORITATIVE WORDING; it SUPERSEDES the cf82a7d3 placeholder). | ingested (**tedchange POST 159-164; supersedes cf82a7d3 §5a #3**) |
+| 127 | **★ Ideology shift / conversion rate schedule — CANONICAL** — NEW | Various ideology-shift rates scattered; LW↔RW Pop cross-circle blocked; same-party conversion same-ideology-only | Schedule (Ted RULED): **LW↔RW Pop cross-circle shift = 25% base** (vs 50% for normal adjacent shifts); **Two-Faced auto-applied on cross-circle success**; **same-party conversions can target same OR ADJACENT ideology** (was same-only); **conversion rate 33%** for can-party-flip pols (down from 75%); no special-Moderates rule. **Refines #76 + #99.** | **Codify the schedule of shift/conversion rates** + the adjacency relaxation + auto-Two-Faced. Pairs with #76 + #99. (Ted RULED this in POST 24-31, 51-53.) | ingested (**tedchange POST 18-39, 51-53; refines #76, #99**) |
+| 128 | **★ Kingmaker vs Master Kingmaker bonus scope — CANONICAL** — NEW | Bonus mechanic exists; scope ambiguous across playtest digests (Matt's reading "either state OR national, pick one"; Eric's reading "state + national stack") | **★ Ted POST 316 RULED:** **basic Kingmaker** = +1 in own state only (incl. state's Pres primary + state's general); **Master Kingmaker** = +1 in EVERY state (all Pres primaries + all generals, incl. own state). Master DOES NOT replace state-bonus with national; it gives +1 in every state including own. Bonus exists only while protégé bond is active. | **Pin the +1 scope per tier** as a config; supersedes Matt's "either-or" reading and other digest assumptions. | ingested (**tedchange POST 302-320; SUPERSEDES Matt's "either-or" reading**) |
+| 129 | **★ Trait-inheritance allow/block list for Kingmaker→Protégé** — NEW | Trait inheritance allowed/blocked is partial in code | **Block list** (Ted POST 280): Master/National Kingmaker, Frail, Flip-Flopper, Two-Faced. **Allow list:** Celebrity (passable — Oprah→Dr Phil reasoning), basic Kingmaker (passable, not Master), Hale (passable — "mentor healthy lifestyle, not cancer"), and all positive traits the Kingmaker has. | **Implement the explicit allowlist + blocklist** for Kingmaker→Protégé trait transfer. | ingested (**tedchange POST 201-208, 279-283**) |
+| 130 | **★ Retirement + death model: Hale=1/2-death + Frail-rolled-first + ex-Pres-no-retirement** — CANONICAL | `MORTALITY_RULES` exists (types.ts:507) but the specific schedule isn't codified end-to-end | Schedule (Ted RULED): **Hale = 1/2 chance of death** (restored original rule); death rolls run **Frail-first, then oldest-to-youngest**; retirement rolls run **oldest-to-youngest** (no Frail priority); **retired ex-Presidents ONLY roll for death, NEVER retirement** (closes the John-Adams-immortal loop); cabinet members retire at **END of half-term** (not on appointment); **auto-retire at 100**; 5%-of-faction-max retirement rate; era-scaled retirement %s (60-65 near-0% in modern, scaling up toward 80). | **Implement the full retirement+death schedule** as the canonical model. Corroborates + supersedes cf82a7d3 #4 checklist (Orange 5% formula) with detailed wording. | ingested (**tedchange POST 90-100, 143-148, 195-197, 396; SUPERSEDES cf82a7d3 #4 with full schedule**) |
+| 131 | **★ Integrity-pol cannot nominate Controversial-pol — NEW RULE** | No gate; rules had a contradiction (Integrity nominator would vote against own pick) | **Ted POST 277 RULED:** Integrity-trait pol cannot nominate Controversial-trait pol to any office (CPU + human). | **Add the gate to the nomination logic.** | ingested (**tedchange POST 276-278**) |
+| 132 | **★ Challenge-Legislation Gov Action cannot target a REPEAL bill — NEW RULE** | Gov Challenge-Legislation can target any recent legis | **Ted POST 248 RULED:** Repeal bills are NOT eligible Gov Challenge-Legislation targets ("we just don't allow it. There isn't a direct real world example we can cite"). | **Add the filter to Gov Challenge-Legislation eligibility.** | ingested (**tedchange POST 246-248**) |
+| 133 | **★ 1st / 2nd Continental Congress composition rules — REWRITTEN** — NEW | 1772 scenario has CC logic but the size-by-state-type + appointment-rule-transition not formalized | **Ted POST 220, 222, 236 RULED:** **Big states** (PA/MA/VA/MD) = 4 delegates; **medium** = 3; **small** (GA/RI/DE/NH) = 2. **Pre-DoI ("1st CC"): faction with most pols in state picks delegates** (faction-with-most-pols-in-state rule). **Post-DoI ("2nd CC"): Gov picks delegates.** Articles of Confederation fires → prohibits consecutive election + 2/3-of-states to pass + unanimous for amendments. **Rules were LOST from doc; Ted re-authored.** | **Bake the size table + appointment-rule transition into the 1st/2nd CC logic.** Pairs with #43 + #92 (era-band transitions); corroborates cf82a7d3 §4f. | ingested (**tedchange POST 211-220, 222-236**) |
+| 134 | **★ Lingering 7-step strict ordering + tax/tariff decay propagates forward** — NEW | Lingering steps run; the explicit step-order + carry-forward semantics not pinned | **Ted POST 404-408 RULED:** Steps run 1→7 in order, **NEVER re-do** a prior step. **Volatility roll at step 7 = THIS-phase-only** (not added to running totals). **Tax/Tariff Decay propagates forward** to NEXT phase's step 3 (decay continues across half-terms). | Pin the step order + decay carry-forward semantics. Refines #67 (Lingering bank). | ingested (**tedchange POST 397-408; refines #67**) |
+| 135 | **★ 50/50 House split = leadership goes to party NOT controlling Senate — NEW RULE** | Tied chamber handling unclear in code | **Ted POST 65 RULED:** Inverse-control rule — in a 50/50 House, leadership (Speaker + committee chairs) goes to the party that does NOT control the Senate. "Best represents the kind of compromises that would need to be made within a 50/50 House." | **Implement the inverse-control rule.** Pairs with #62 (contingent election + tied-chamber rules). | ingested (**tedchange POST 56-65**) |
+| 136 | **Random skill on draft — NO Command chance — CANONICAL** | Old rule had a 1/6 Command chance on the random-skill draft gain | **Ted POST 7, 47 RULED:** Random skill gain only — NEVER Command from this source. "Presidents should come from somewhere." | Remove Command from the random-skill-draft-gain pool. | ingested (**tedchange POST 5-8, 47**) |
+| 137 | **Can-Party-Flip draftees enter at IRL party (no cross-party draft) — CANONICAL** | Older rule had both parties 50% chance to draft | **Ted POST 48 RULED:** Pols always enter at historically accurate party at draft; can flip later via 2.1.6 conversion. | Pin the draft-party rule. | ingested (**tedchange POST 8-12, 48**) |
+| 138 | **3 random traits + 3 random alt-states per draft — CANONICAL count** | Previous count was 5/5 in some digests' assumptions | **Ted POST 50 RULED:** Compromise at 3 + 3 (down from 5/5 but not all the way down to 1). | Pin the count. SUPERSEDES the 5/5 reading. | ingested (**tedchange POST 15, 22, 50; SUPERSEDES 5/5 digest assumptions**) |
+| 139 | **Pres signature step in phase 2.6 (NOT 2.10)** — CANONICAL | Build may have signature elsewhere | **Ted POST 126 RULED:** Pres signature lives in 2.6 so military bills affect Mil-Prep before 2.7. | Move/keep Pres signature in 2.6. | ingested (**tedchange POST 124-126**) |
+| 140 | **AnytimeEvo target-pool tightening + assassination 50/25/25** | Some AnytimeEvos may give +1 Command to "any random pol"; assassination targets any pol | **Ted POST 255, 267, 271 RULED:** Updated AnytimeEvo events (5, 17, 23, 24, 25, 39, 66, 117, 118, 119) restrict targets to Rep/Sen/Gov/Cabinet. Assassination = 50% Pres / 25% random Rep-Sen / 25% random faction leader. | Restrict target-pool per the new event spec. | ingested (**tedchange POST 249-272**) |
+| 141 | **Faction-leader trait gain — 5% positive / 3% negative; negatives first-time-as-FL only — CANONICAL** | FL trait-gain rates not explicit | **Ted POST 79 RULED:** 5% positive trait gain per cycle (every time as FL); 3% negative trait gain (first-time-as-FL only). Refines cf82a7d3 §5a #4 (which was "MOSTLY ADOPTED" without specific rates). | Pin the rates. | ingested (**tedchange POST 73-79; refines cf82a7d3 §5a #4**) |
+| 142 | **CPU Chief Justice selection ladder** | CJ CPU selection ladder not specified | **Ted (via Ark) POST 388 RULED:** Highest Judicial ability from their party → multi-faction tie: own faction → Pres-ideology match → lowest-scoring faction; multi-candidate tie: matching-appointer-ideology → random. | Implement the ladder. Sharpens #52 (SCOTUS subsystem). | ingested (**tedchange POST 387-390; sharpens #52**) |
 
 ## Confirmed shipped bugs
 
@@ -1020,6 +1094,14 @@ trait, trait-conflict in boot data, meter-tag completeness). _Resolved/clarified
 
 ## Sources
 
+Sources are now split into **playtest threads** (continuous narrative threads
+of an actual game-in-progress — the primary source for mechanics in play) and
+**discussion threads** (community-curated fix-catalogs / rule-clarification
+threads — secondary, but the primary source for **dataset accuracy**, small
+mechanical bugs, and designer rulings on rules ambiguity).
+
+### Playtest threads (ingested digests)
+
 - **Ingested digests:**
   - [`f4c7c2c4-ampu-1800-playtest-continued-1868`](playtest-digests/f4c7c2c4-ampu-1800-playtest-continued-1868.md)
     (`gilded`) — 343 posts / 5 chunks. Gilded-Age (1868–1872) **multiplayer**
@@ -1294,5 +1376,72 @@ trait, trait-conflict in boot data, meter-tag completeness). _Resolved/clarified
     #40/#85/#101/#1/DH-25/DH-36. **No GA-burnout collapse** this time — heavy GA
     scripting (death/retirement + delegate automation) absorbed the upkeep. Read
     alongside `historical-context-1820-democracy.md` §§9–16 (the played arc).
+
+### Discussion threads (community-curated catalogs; the dataset-accuracy source)
+
+A *separate* class of source from the playtest threads. Discussion threads are
+**not** game-in-progress narratives — they are running community-curated lists
+of small fixes (dataset bugs, mechanical typos, designer-ruling clarifications)
+that the build inherits as fix-it tickets, not as gameplay-validation. **Do not
+confuse with playtest threads** — there are no GA rulings on a running game
+here; there are designer rulings on policy/dataset Qs.
+
+- [`cf82a7d3-a-thread-for-small-low-priority-changes-and-errors`](playtest-digests/cf82a7d3-a-thread-for-small-low-priority-changes-and-errors.md)
+  (`smallbugs`) — **804 posts / 10 chunks** (single-pass reduce — a 3-year+
+  community catalog of polish-tier fixes). Started Apr 2023 by @Imperator Taco
+  Cat with the explicit charter "not… major changes to game rules or systems
+  but fixing small errors"; ongoing through May 2026. The **primary source for
+  dataset accuracy and small mechanical bugs.** Each entry is a one-line
+  hand-off to the build, typically acknowledged within 1-2 reply posts by
+  @MrPotatoTed, @vcczar, or @Arkansas Progressive and either "fixed inline" in
+  the master sheet or deferred to "when Anthony codes that rule." **Headline
+  contributions:** ~50 named-pol fixes, ~30 mechanical fixes, ~20 dataset
+  additions (gap-log row **#120** umbrella) — all going via
+  `scripts/seedDataset.mjs` `CURATED_ROWS` overrides; one NEW dataset gap
+  (**#121 — Secessionist trait missing**); one NEW rules gap (**#122 — Pardon
+  mechanics unspecified**); one late-modern content-fixes bundle (**#123**).
+  **Designer-ruling distillate (§5 of digest):** Sept-2024 Ted batch of 8
+  proposed rule changes (Pres-uses-Command-for-blunder hybrid adopted; Iron-Fist
+  PL no-block / Disharmonious-or-Independent only-challenger gate adopted; etc.);
+  **POST 734-735 is the channel through which the #38 relocation-cap-4 change
+  was sent to Anthony for the build** (12-30-25, "Approved by vczar"). Strongly
+  **corroborates DH-27 (trait-conflict slips in boot data, 3rd thread), DH-51
+  (modern-pol overpowered recency bias, 3rd thread), DH-53 (bill→meter
+  effect-table sign bugs, 4th thread), DH-60 (era-events fire without
+  territory/asset prereqs, 2nd thread)**. Use as the **input catalog for one
+  dataset-maintenance pass**.
+
+- [`a0f0bf04-discussion-teds-change-log-of-doom`](playtest-digests/a0f0bf04-discussion-teds-change-log-of-doom.md)
+  (`tedchange`) — **408 posts / 7 chunks** (single-pass reduce — a
+  designer-led decision-log). **★ The AUTHORITATIVE channel for current rule
+  wording in the entire forum corpus.** Started Sept 18 2024 by @MrPotatoTed
+  as the FEEDBACK channel for his parallel "Change Log of Doom" thread, which
+  enumerated the rule changes Ted was considering. The thread runs a
+  **section-by-section systematic rules-doc cleanup pass from phase 2.1 →
+  2.6** between Sept 2024 and Mar 2025, then **resumes Oct 2025** on a
+  Lingering script clarification. Each section gets a Ted draft + 5-15
+  pushback/refinement posts + a Ted final ruling + write to rules doc.
+  **Critical context — Anthony coded ALONGSIDE this thread**, meaning rulings
+  here are the LATEST shipped-design-intent the programmer was targeting.
+  **Headline contributions:** ~25 NEW gap rows (#124-#142) and ~10 RESOLUTIONS
+  of OPEN questions / SUPERSESSIONS of prior digest interpretations. **The
+  canonical 2-step Pres implementation Admin-then-Command rule (POST 163)** is
+  the authoritative wording of cf82a7d3 §5a #3. **★ Key NOT-touched items:**
+  the relocation-cap-4 ruling, the amendments-not-SCOTUS-challengeable rule,
+  the Civil-Rights-Act-not-repealable decision — those are 12a's (cf82a7d3)
+  domain. The two discussion threads have **complementary scope**: 12a =
+  playtest-bug catalog; 12b = section-by-section systematic rewrite.
+  **SUPERSESSIONS** (Ted's rulings override prior GA reads): Kingmaker vs
+  Master Kingmaker bonus scope (was "either-or" per Matt's reading; now
+  Kingmaker = state-only / Master = every-state-incl-own, POST 316); 3+3
+  random-traits + random-alt-states draft count (was 5/5 in earlier reads,
+  now 3/3, POST 50); the Hale=1/2-death + ex-Pres-only-rolls-death rules
+  close the John-Adams-immortality loop (POST 143, 396). **Open items at
+  thread end:** Mil-Prep meter level 4 fix (independently re-discovered but
+  NOT closed), Universal Election Modifier proposal, Crisis-trait
+  consolidation, faithless-elector wording rework, term-limit Gov-action
+  era-gating. **NO conflict with batch-9 review-gate Senate cloture ruling**
+  (60% not discussed in this thread).
+
 - The shipped-build description ("What this game is / Eras / Core entities /
   Glossary") was generated from the AMPU codebase + `CLAUDE.md`.

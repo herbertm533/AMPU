@@ -329,6 +329,11 @@
     - [29.9 ★ EXTENDED — death/assassination → VP succession → acting-president (gap #61)](#299--extended--deathassassination--vp-succession--acting-president-end-to-end-gap-61)
     - [29.10 ★★ The canonical 4-step enthusiasm-shift rule + crisis-bill-failure scoring (#51 RESOLVED)](#2910--the-canonical-4-step-enthusiasm-shift-rule--crisis-bill-failure-scoring-51-resolved)
     - [29.11 Batch-11 corroborations (the full arc), bugs & the roadmap hand-off](#2911-batch-11-corroborations-the-full-arc-bugs--the-roadmap-hand-off)
+30. [Designer ruling index (`tedchange` — AUTHORITATIVE)](#30-designer-ruling-index-tedchange--authoritative)
+    - [30.1 Rulings folded into existing topical sections](#301-rulings-folded-into-existing-topical-sections)
+    - [30.2 Designer-decision-gated open items (`tedchange`)](#302-designer-decision-gated-open-items-tedchange)
+    - [30.3 Rulings folded from `smallbugs` (vcczar spot rulings)](#303-rulings-folded-from-smallbugs-vcczar-spot-rulings)
+    - [30.4 Authority hierarchy reminder](#304-authority-hierarchy-reminder)
 
 ---
 
@@ -561,7 +566,27 @@ draft pool for a human pick (`engine.ts:27`).
    (`phaseRunners.ts:185–223`).
 
 Draftees whose home state isn't yet in the Union are **held back** with a log line
-(`phaseRunners.ts:160`).
+(`phaseRunners.ts:160`). *(Corroborated by `tedchange#POST 266` — vcczar: *"No drafting from
+places that aren't territories, except if it's ME (part of MA) or WV (part of VA)"* — and
+`smallbugs#POST 259-267`. RULED — no drafting from unorganized territories.)*
+
+### 4.1.y ★ Ted-RULED draft rules (designer-authoritative; `tedchange`)
+
+> **AUTHORITATIVE — Ted's `tedchange` POSTs 7, 47, 8-10, 48, 50, 14, 23.** These pin the
+> draft mechanic in its current canonical form; **SUPERSEDES** earlier 5/5 random-grant
+> values (see §24.8) and earlier 1/6-Command-on-random-skill readings.
+
+| Rule | Ted's RULED setting | Cite |
+|---|---|---|
+| **Random-skill grant on draft** | random skill from the 6, **NO Command** can be drawn from this source | `tedchange#POST 7, 47` |
+| **Can-Party-Flip cross-party draft** | **REMOVED** — politicians always enter at their **historically accurate party** at age 25; party-flip happens **later** via 2.1.6 conversion only | `tedchange#POST 8, 10, 48` |
+| **Per-draft random-trait + random-alt-state grant** | **3 random traits + 3 random alt-states per draft** | `tedchange#POST 50` |
+| **`Overeager` + `Late Bloomer` traits** | **REMOVED** from the trait library (universal agreement; "block player moves, nobody uses") | `tedchange#POST 14, 20, 23` |
+
+*(SUPERSEDES the earlier "5/5 random traits + alt-states per draft" reading documented in
+[§24.8 Draft rookie grants re-ruled](#248-69-draft-rookie-grants-re-ruled--3-traits--3-alt-states)
+— Ted RULED this at 3/3 in `tedchange`. The §24.8 number was the 1856-native re-rule already;
+Ted now confirms 3/3 is the canonical going-forward value.)*
 
 ### 4.2 Picking — `pickBestForFaction` (`phaseRunners.ts:33`)
 
@@ -666,12 +691,19 @@ bleeds off over a few turns.
 The shipped engine ticks one CPU pass per faction; the forum runs an explicit player budget
 on top.
 
-- **Per-faction relocation budget**: 4 attempted moves per half-term; **alt-state moves don't
-  count** against the cap (digest D / post 27). Forum framing: GM names current "overpopulated"
-  and "underpopulated" state lists (post 27: `IA, IL, KS, MA, MI, NY, OH, PA, WI` overpop;
-  `AR, CU, ET, MS, NT, SC, ST, WT` underpop) — a non-mechanical reminder, but it implies a
-  **`State.population` axis** and overpop/underpop computed from member counts.
-  *(designed, not built — relate to existing `RelocationBand` `types.ts:1671`)*
+- **★ Per-faction relocation cap: 4 attempted moves per half-term** (SETTLED, vcczar approved
+  12-30-25; `smallbugs#POST 734-735`). Verbatim ruling: *"A faction is limited to FOUR total
+  attempted moves per half-term. A politician that moves to an ALT-STATE does NOT count against
+  the FOUR total moves. (Approved by vczar 12-30-25)."* **SUPERSEDES** the long-debated open
+  question and the contradictory `rep1800` "unlimited" ruling. **The shipped build is still at
+  `RELOCATION_ATTEMPTS_PER_TURN = 5` (`types.ts:247`)** — direction is **lower to 4**, and this
+  ruling closes the QW0/BUG-0 question (see [§19.1 #9](#191-design-divergences-for-the-roadmap)).
+  Forum framing also names current "overpopulated" and "underpopulated" state lists (post 27:
+  `IA, IL, KS, MA, MI, NY, OH, PA, WI` overpop; `AR, CU, ET, MS, NT, SC, ST, WT` underpop) — a
+  non-mechanical reminder, but it implies a **`State.population` axis** and overpop/underpop
+  computed from member counts. *(designed, RULED — set `RELOCATION_ATTEMPTS_PER_TURN = 4`,
+  exclude alt-state moves from the cap. Relate to existing `RelocationBand` `types.ts:1671`.
+  Cite `smallbugs#POST 734-735`.)*
 - **Auto-Carpetbagger on alt-state moves** (post 36: `Ira Sherwin Hazeltine WI->MO (ALT-STATE)
   Done gains Carpetbagger`). The shipped roll is probabilistic; the forum awards Carpetbagger
   **deterministically** to anyone moving to their seeded `altState`. *(design divergence —
@@ -702,7 +734,9 @@ on top.
 Forum runs ideology shifts as a **per-half-term budget**, not per-politician rolls
 (post 27 / digest D).
 
-- **Base budget**: 3 shifts per faction.
+- **Base budget**: 3 shifts per faction. **3 shifts / half-term cap holds across the
+  cabinet-enthusiasm rework** (Ted's POST 4 in the change-log + the cabinet rework #124,
+  §9.3.7 below).
 - **Leader-trait bonuses** stack additively, cap **9 total**:
   - Iron Fist leader: **+2**
   - Propagandist leader: **+1**
@@ -712,6 +746,28 @@ Forum runs ideology shifts as a **per-half-term budget**, not per-politician rol
   per-attempt success but the **count of attempts is forum-budgeted**, not engine-budgeted.
   *(design divergence — shipped engine rolls per-pol with no faction cap; forum has a hard
   per-faction cap of 3-9.)*
+
+#### 6.3.y ★ Ted-RULED ideology shift schedule (designer-authoritative; `tedchange`)
+
+> **AUTHORITATIVE — Ted's official rule patches, sequenced across `tedchange` POSTs 18-31, 51.**
+> Cross-references the [§27.7 ideology-as-CIRCLE finding](#277-the-ideology-chart-becomes-a-circle-mid-era-rule-change)
+> (now a **3rd-thread corroboration**: `rep1800` + `nuke` + Ted's explicit declaration here).
+
+**Ted POST 24 verbatim:** *"all ideologies are now a CIRCLE, rather than a line."*
+
+| Shift type | Base success | Notes |
+|---|---|---|
+| **Self / drift one step** | 50% (existing) | normal mult'd by traits |
+| **★ Cross-circle LW Populist ↔ RW Populist** | **25%** | half the normal rate; **on success, the target also gains the `Two-Faced` trait** as a penalty (`tedchange` POST 28-29) |
+| **Adjacent shift not crossing the LW↔RW seam** | 50% (existing) | standard |
+
+**Integrity blocks at 10%; Puritan blocks at 0%** (`tedchange` POST 31; the "outlier protection"
+against, e.g., Bernie → Trump trivially flipping). Two-Faced penalty applies **only on the
+LW↔RW cross-circle flip**, not on every cross-ideology shift.
+
+*(designed, RULED — wire `distance = min(|a−b|, 7−|a−b|)` (circular metric per §27.7); at
+distance-1-via-seam, use the 25% base instead of the 50% base; auto-add `Two-Faced` on the
+successful cross-seam flip. Cite `tedchange#POST 18-31, 51`.)*
 
 ### 6.4 (2.1.6) Faction conversions
 
@@ -754,6 +810,23 @@ posts 37, 311, 316):
 *(design divergence — engine uses uniform willingness multipliers; forum runs a stricter
 trait-gated targeting+success table.)*
 
+#### 6.4.y ★ Ted-RULED conversion-rate schedule (designer-authoritative; `tedchange`)
+
+> **AUTHORITATIVE — Ted's official patches, `tedchange` POSTs 34-39, 38, 52, 53.** SUPERSEDES
+> the earlier "same-only" same-party flip rule and the 25%/75% flat rates surfaced in playtests.
+
+| Conversion | Ted's RULED rate | Notes |
+|---|---|---|
+| **Can-Party-Flip cross-party flip** | **33% base** | down from 75% (modern eras too lenient); up from a proposed 25% (only ~30% of pols qualify in cross-eligibility). **Removed the special-Moderates rule** that earlier gave Moderates an extra cushion. (POST 34-39, 52.) |
+| **★ Same-party flip eligibility** | targets may be **same OR adjacent ideology** | was same-only (too restrictive — "the same few pols always get targeted"). Universal community support; Ted RULED POST 38, 53. Pairs with the ideology-as-circle change (#127, §6.3.y): the "adjacent" set wraps the seam under the circular metric. |
+
+**Sharpens the gap log:** corroborates #76 (CPU conversion) + #99 (ideology circle) — the
+adjacency relaxation now applies to **both cross-party AND same-party** conversion.
+
+*(designed, RULED — pin cross-party-flip base at **33%**; relax same-party flip targeting to
+**same OR adjacent ideology**; remove the special-Moderates carve-out. Cite `tedchange#POST
+34-39, 38, 52, 53`.)*
+
 ### 6.5 (2.1.7) Kingmakers & protégés
 
 `runPhase_2_1_7_Kingmakers` (`phaseRunners.ts:1372`). Constants `KINGMAKER_RULES`
@@ -782,6 +855,53 @@ trait-gated targeting+success table.)*
   point in that skill (e.g. "Daniel Manning gains Justice, Likable, +1 Legis (his 1st)").
   *(design divergence — shipped engine grants on **graduation** at 20-year tenure, not at
   pairing.)*
+
+#### 6.5.y ★ Ted-RULED Kingmaker scope + trait-inheritance allowlist (designer-authoritative; `tedchange`)
+
+> **AUTHORITATIVE — Ted's official patches, `tedchange` POSTs 201-208, 279-283, 316.**
+> **SUPERSEDES** the prior "either-or" reading (Matt's playtest reading: Kingmaker = +1 state
+> only OR Master = +1 national only, not both) that the `nuke`/`pop` playtests operated under.
+
+**Kingmaker / Master Kingmaker bonus scope** (`tedchange#POST 316`, RULED):
+
+| Tier | +1 scope (state-bias bonus to candidate selection / elections) |
+|---|---|
+| **Kingmaker (basic)** | **+1 in the Kingmaker's own state ONLY**, applying to **that state's presidential primary** + **that state's presidential general** |
+| **★ Master Kingmaker** | **+1 in EVERY state** — all presidential primaries + all general-election state contests, the **basic +1 is REPLACED with the national +1 (which also includes the home state)** |
+
+*(SUPERSEDES Matt's "+1 state only OR +1 national only" reading observed in `nuke` / `pop`
+playtests, `tedchange#POST 302-320`.)*
+
+**Kingmaker → Protégé trait allowlist / blocklist** (`tedchange#POST 201-208, 279-283`, RULED):
+
+| Trait | Inheritable? | Notes |
+|---|---|---|
+| **Master Kingmaker / National Kingmaker** | **BLOCKED** | "OP enough that it can't be passed" (POST 281) |
+| **Kingmaker (basic)** | **ALLOWED** | basic-tier inheritance OK (POST 283) |
+| **Frail** | **BLOCKED** | "represents cancer you can't teach" (POST 281) |
+| **Hale** | **ALLOWED** | "represents lifestyle teaching" (POST 281) |
+| **Flip-Flopper** | **BLOCKED** | always-blocked |
+| **Two-Faced** | **BLOCKED** | always-blocked |
+| **Celebrity** | **ALLOWED** | passable (POST 207) |
+| **All other positive traits the Kingmaker has** | **ALLOWED** | general allowlist default |
+
+*(designed, RULED — pin the bonus scope per-tier with **Master = +1 in every state**; encode
+the trait allowlist/blocklist explicitly in the Kingmaker→Protégé transfer pass. Cite
+`tedchange#POST 201-208, 279-283, 316`.)*
+
+#### 6.5.z ★ Ted-RULED Kingmaker draft-CPU fix (`tedchange`)
+
+> **`tedchange#POST 40-41, 54` RULED.** Sharpens the [§4 Draft](#4-draft-211) +
+> [§25.11 Kingmaker endorsement preference rules](#2511-kingmaker--endorsement-preference-rules).
+
+When the CPU drafts a Kingmaker but **no matching-ideology protégé pool exists** in the
+faction, the CPU has a **100% chance to attempt a 1-step ideology shift of the Kingmaker**
+toward a potential-protégé's ideology — *if a 1-step shift is feasible* (i.e., the Kingmaker
+isn't already maximally far from the available protégés). (Umbrella POST 40.)
+
+*(designed, RULED — engine `runPhase_2_1_1_Draft` post-pass: if the new Kingmaker has no
+ideology-matched protégé candidates among faction members, attempt the 1-step shift; otherwise
+leave the Kingmaker as-is. Cite `tedchange#POST 40-41, 54`.)*
 
 ---
 
@@ -1033,6 +1153,27 @@ elect all nine roles with point/trait grants; add committee-service tracking.)*
 *(designed, not built — encode the 6-criterion reverse-priority cascade on faction-leader
 eligibility; add the anointing flow.)*
 
+#### 8.5.2.y ★ Ted-RULED Faction Leader trait-gain rates + Passive block (designer-authoritative; `tedchange`)
+
+> **AUTHORITATIVE — Ted's `tedchange` POSTs 62, 67-79.** RULED. Refines `smallbugs#POST 357`'s
+> "MOSTLY ADOPTED" placeholder by pinning the per-cycle percentages.
+
+| Rule | Ted's RULED setting | Cite |
+|---|---|---|
+| **Positive trait gain rate per FL cycle** | **5%** (every time as FL) | `tedchange#POST 79` |
+| **Negative trait gain rate** | **3%**, **first-time-as-FL only** (not every cycle) | `tedchange#POST 79` |
+| **Passive auto-disqualifies** from FL | **100% blocks** (was 25%) — **EXCEPTION**: an elected President always becomes FL regardless of Passive | `tedchange#POST 62` |
+
+**Implications:**
+- Positive traits compound over a long FL tenure.
+- Negative traits are a one-time risk gate at promotion.
+- The Passive 100% rule eliminates the previous lottery and codifies the "elected Pres always
+  takes the FL slot regardless" rule (the "President Oprah exception", `tedchange#POST 62`).
+
+*(designed, RULED — pin the trait-gain rates at 5% positive (per cycle) / 3% negative (first-
+time only); change Passive FL gate from 25% block → 100% block, with the elected-Pres exception.
+Cite `tedchange#POST 62, 79`.)*
+
 #### 8.5.3 Party leader incumbency fatigue (designed, not built)
 
 A politician who has been **party leader for 5+ terms in a row** triggers `party
@@ -1184,6 +1325,53 @@ shipped rule.
 failed-confirmation ban + SML-5-names auto-confirm recovery; the diversity-floor and
 faction-equity scoring dimensions.)*
 
+#### 9.3.7 ★ Ted-RULED cabinet → enthusiasm REWORK (designer-authoritative; `tedchange`)
+
+> **AUTHORITATIVE — Ted's official rework, `tedchange` POSTs 1-4. RULED IN CONCEPT; specific
+> percentages OPEN (parked in [§30.x designer-thread-open items](#30-designer-ruling-index-tedchange-authoritative)).**
+> SUPERSEDES the current lobby-driven cabinet-enthusiasm path that gap #31 (digest D / `gilded`
+> POSTs 33, 87, 125) characterized as "lobby satisfaction → cabinet enthusiasm overwhelms
+> presidential signal" and that batch-3's ±3 swing cap (gap #80) partially patched.
+
+**The rework — two independent channels:**
+
+| Channel | Driver | What it now affects |
+|---|---|---|
+| **★ Points (lobby satisfaction → cabinet)** | **Lobby-card matching** between cabinet members + Pres + factions | **Bonus POINTS** to the President + factions that hold the matching lobby cards (the lobby-side path) — **NOT enthusiasm** |
+| **★ Enthusiasm (ideology composition)** | **Ideology composition of the cabinet** | **≥50%** of cabinet of an ideology → **+enthusiasm** for that ideology; **≤20%** representation → **−enthusiasm** for under-represented ideology |
+
+**Stays in place:**
+- **3 shifts / half-term cap** (Matt POST 4) — the [§6.3.x ideology-shift budget](#63x-forum-design-layer-per-faction-shift-budget-designed-not-built) cap holds.
+
+**Open (designer-decision-gated):**
+- The precise percentages — Big-4 / rest-of-cabinet / cabinet-level may be weighted
+  differently (Matt POST 4 proposed Big-4 33%, others 25%). Ted parked the numbers for later.
+- Whether Big-4 / rest-of-cabinet / cabinet-level get distinct ideology-enthusiasm weights
+  at all (POST 4).
+
+*(designed, RULED in concept — wire two independent channels (points-via-lobby + enthusiasm-via-
+ideology-composition). The lobby-channel REPLACES the current cabinet-enthusiasm-via-lobby
+path (gap #31); the new ideology-channel is additive. Pin specific percentages on the designer's
+next pass. Cite `tedchange#POST 1-4`.)*
+
+#### 9.3.8 ★ Ted-RULED nomination filters (designer-authoritative; `tedchange`)
+
+> **AUTHORITATIVE — Ted's `tedchange#POST 277`, RULED.** A NEW rule resolving a previously
+> contradictory rules-doc state where Integrity chairs nominated Controversial pols and then
+> voted Nay on their own nomination.
+
+**Integrity-trait pol CANNOT nominate a Controversial-trait pol** to any office (CPU + human
+players). Applies to all nominator roles (President, party leader, faction leader, committee
+chair, governor).
+
+**Cabinet confirmation thresholds (CC-era + sharpening):** the **Controversial-nominee
+confirmation threshold pre-Constitution = 60% of the TOTAL states** (8 of 13 in the
+1772/1788 CC; Umbrella raised the ambiguity, Ted RULED in `tedchange#POST 276-277`).
+
+*(designed, RULED — add an Integrity → cannot-nominate-Controversial precondition to all
+nomination pickers; encode the 60%-of-states CC-era confirmation gate. Cite `tedchange#POST
+276-278`.)*
+
 ---
 
 ## 10. Events (2.4.x)
@@ -1207,6 +1395,62 @@ Constants `MORTALITY_RULES` (`types.ts:485`), `ABILITY_LOSS_RULES.oldAge` (`:519
 
 Death/retire vacate office and clean up leadership/protégé chains.
 
+#### 10.1.y ★ Ted-RULED death + retirement schedule (designer-authoritative; `tedchange`)
+
+> **AUTHORITATIVE — Ted's `tedchange` POSTs 89-100, 137-148, 150-151, 178-184, 195-197, 396.**
+> RULED. **SUPERSEDES** prior playtest-by-playtest GM improvisations on Hale immortality + ex-Pres
+> retirement (Bushwa's John Adams "undead" loop). Corroborates **Orange's 5%-of-faction-max
+> formula** independently surfaced in `smallbugs#POST 195-197` and `drums#POST 5437`.
+
+**Rate model:**
+- **★ 5%-of-faction-max retirement rate per half-term** (Orange's POST 195 formula, accepted POST 196).
+- **Era-scaled retirement percentages**:
+  - **Modern era**: retirements at **60-65** at **near-0%**; scale toward **80** (60-year-olds
+    very rarely retire; octogenarians frequently do).
+  - **Independence/Federalism/Nationalism**: shipped engine's higher base era multipliers
+    (independence 0.5 → modern 1.5 on retire) hold; modern era is the carefully-tuned regime.
+
+**Roll order** (the **designer-authoritative** processing order, POST 148):
+1. **Death rolls FIRST**, processed **Frail-trait first**, then **oldest to youngest** for the rest
+   (Matt's "fill up the Frail % first" method, POST 151).
+2. **Retirement rolls SECOND**, processed **oldest to youngest** *regardless of trait* (no Frail
+   priority on retire).
+3. **Ability decay / trait decay** then run as today.
+
+**Hale trait — death modifier** (POST 143, RESTORED original rule):
+- **Hale = ½ chance of death** (not 0% — the buggy 0% reading produced John-Adams-immortal in playtests).
+
+**Frail trait — death modifier**: already in shipped `MORTALITY_RULES`: Frail × 1.5 death; remains.
+
+**★ Retired ex-Presidents ONLY roll for DEATH, not for retirement** (POST 396, RULED):
+- Closes the "John Adams immortal" loop where Hale + retired-already meant neither roll ever fired.
+- **SUPERSEDES** the various playtest-by-playtest GM improvisations (some GMs ran retirement-rolls
+  on ex-Pres; some treated Hale as immortal — both wrong by Ted's call).
+
+**President / VP retirement-eligibility** (POST 105-108, 169-172, RULED):
+- **Pres + VP age ≥60** are eligible to hit retirement rolls, but this means **"announce won't run
+  for re-election"** — they finish their current elected term first, **not instant departure**.
+
+**Auto-retire at 100** (POST 178-184, confirmed-preexisting):
+- Already in the rules at 2.10 — pols auto-retire at the **beginning of an election cycle** at
+  age **100**. Confirmed unchanged.
+
+**Cabinet ex-Pres timing** (POST 396):
+- A cabinet member who is an ex-Pres retires at the **END of their cabinet half-term**, NOT
+  immediately on appointment.
+
+> **Corroboration cluster:** the **5%-of-faction-max rate** is now multi-thread confirmed
+> (Orange in `smallbugs#POST 195-197`; designer patches in `drums#POST 5437` to the same rate;
+> Ted accepts in `tedchange#POST 196`; `arkzag#POST 313/319` itemizes it as **3% retirement +
+> 2% death** per faction-half-term, which sums to the same 5%). Treat the **3%/2% split** as the
+> canonical decomposition.
+
+*(designed, RULED — implement: (a) 5%/half-term rate decomposed as 3% retire + 2% death; (b) era-
+scaled retirement %s tuned with modern 60-65 near-0%; (c) Frail-first death-roll order; (d) Hale
+= ½ death modifier (restore original); (e) ex-Pres → death-rolls only (no retirement re-rolls);
+(f) Pres+VP age-60 retirement = "won't run for re-election" (term completed first); (g) cabinet
+ex-Pres retires at end of half-term not on appointment. Cite `tedchange#POST 137-148, 195-197, 396`.)*
+
 ### 10.2 (2.4.2) Anytime events — `runPhase_2_4_2_Anytime` (`phaseRunners.ts:2782`)
 
 Constants `ANYTIME_EVENTS_RULES` (`types.ts:1073`). Two pools:
@@ -1217,6 +1461,28 @@ Constants `ANYTIME_EVENTS_RULES` (`types.ts:1073`). Two pools:
   (era 0.8/0.9/1.0/1.1), filtered by era + the politician's region. Can grant traits, bump
   skills/command (cap 5), kill, or force retire. Scandal-scaled events escalate by
   `scandalMagnitudeMult` (era 0.5/0.7/1.0/1.3): `≥1.0` tries `Corrupt`; `≥1.2` adds flip-flop.
+
+#### 10.2.y ★ Ted-RULED AnytimeEvo target-pool tightening (designer-authoritative; `tedchange`)
+
+> **AUTHORITATIVE — Ted's `tedchange` POSTs 249-275, 255, 267, 271.** RULED. **SUPERSEDES** the
+> earlier "random politician" scoping on the affected events. **AnytimeEvo events 5, 17, 23, 24,
+> 25, 39, 66, 117, 118, 119** were specifically modified.
+
+| Class of event | Old target pool | Ted's RULED new target pool |
+|---|---|---|
+| **Random-pol +1 Command-on-Manipulative/Leadership/Charisma** | any random politician | **only random Rep / Senator / Governor / Cabinet member** |
+| **★ Assassination attempt** | any random politician | **50% Pres / 25% random Rep or Senator / 25% random faction leader** (POST 267) |
+
+**Natural-disaster state lists** (POST 255-275, RULED):
+- **Drought list updated** (CA was missing — added).
+- **Hurricane list** restricted to historical hurricane-prone states; **GA added**; **MA / RI
+  rejected** as hurricane-eligible.
+- **Earthquakes**: unchanged.
+- **Major floods**: any state allowed (incl. AZ + NV per real-world data).
+
+*(designed, RULED — restrict the AnytimeEvo target pools per the table; update the natural-
+disaster state-eligibility lists; reweight the assassination-target roll to 50/25/25. Cite
+`tedchange#POST 249-275`.)*
 
 ### 10.3 (2.4.3) Era events — `runPhase_2_4_3_Era` (`phaseRunners.ts:2796`)
 
@@ -1321,6 +1587,38 @@ honest, quality, planet`; `types.ts:1399`). Layers:
    honest / −SMALL domestic`. Bands `SMALL 2 / MEDIUM 4 / LARGE 8`.
 5. **Debt tick** (`:3376`): `nationalDebt = max(0, debt − revenue × 1,500,000)`.
 
+#### 11.1.y ★ Ted-RULED Lingering 7-step strict ordering (designer-authoritative; `tedchange`)
+
+> **AUTHORITATIVE — Ted's `tedchange` POSTs 397-408 (Oct 2025 resumption).** RULED. Sharpens
+> [§24.7 Lingering — the ~16-meter homeostasis engine](#247-67-lingering--the-16-meter-homeostasis-engine-era-gated-foreign-meters)
+> with the **strict step-order + decay carry-forward** rule. Resolves the "volatility and
+> tax decay are after lingering effects two steps before — ass-backwards" clarification Ark
+> raised (POST 397).
+
+**Step order — runs 1→7 IN ORDER, NEVER RE-DONE within a single 2.5.1 pass:**
+
+| Step | Operation | Notes |
+|---|---|---|
+| 1 | **Top/bottom-2 econ effects** | (per §24.7) |
+| 2 | **Maxed-meter caps** | Mil-Prep + Planet-Health hard-capped at 8 |
+| 3 | **★ Lingering bill/action effects (incl. tax/tariff DECAY)** | the **carry-forward step**; tax/tariff decay adjustments from previous half-terms land here |
+| 4 | **Middle-of-meter revision-to-mean drift** | `−1` toward 0 from the middle bands |
+| 5 | **Administrative modifications** | each cabinet officer rolls `±` based on department's meter |
+| 6 | **Ongoing wars + corruption** | (per §24.7) |
+| 7 | **★ Volatility rolls (tax/tariff)** | THIS-PHASE-ONLY — **NOT added to running totals**; the volatility roll determines the swing for the current Lingering pass, then is discarded |
+
+**★ Decay carry-forward rule** (POST 404-405, RULED):
+- Tax/Tariff Decay adjustments are not applied to the CURRENT 2.5.1 pass at step 7 — they
+  **propagate forward** into the **NEXT half-term's step 3**.
+- Bills expire 10 years after passage (tax bills); tariff rate is **locked for 8 years**
+  after a change.
+- The decay never re-cycles within the same Lingering pass — Ted's rule: *"follow the steps
+  in order — never re-do"* (POST 404).
+
+*(designed, RULED — implement the 7 steps in strict order with no re-do within a pass; carry
+tax/tariff decay forward to next phase's step 3 (NOT applied in current step 7); treat step 7
+volatility rolls as one-shot (not added to running totals). Cite `tedchange#POST 397-408`.)*
+
 ### 11.2 (2.5.2) Governor actions — `runPhase_2_5_2_Governors` (`phaseRunners.ts:3382`)
 
 Each governor, `0.30` chance, nudges home-state `bias` by `(governing−1)×0.05`; **BLUE
@@ -1372,6 +1670,42 @@ prereqs, and per-action effect schema.)*
 > actions" reword is retroactive (`hd` POST 2936–2945, 3134, 3338–3354, 4179–4195, 5477–5505,
 > 6119–6153, 6997). Govs are **designer-acknowledged underpowered** (DH-13-adjacent;
 > `game-context.md`).
+
+#### 11.3.y ★ Ted-RULED Gov-action Challenge-Legislation restrictions (designer-authoritative; `tedchange` + `smallbugs`)
+
+> **AUTHORITATIVE — Ted's `tedchange` POSTs 246-248** (Challenge-Legislation cannot target a
+> repeal) + **`smallbugs` POSTs 236-269** (Amendments cannot be SCOTUS-challenged).
+
+**The Challenge-Legislation Gov action — RULED restrictions:**
+
+| Restriction | Rule | Cite |
+|---|---|---|
+| **Cannot target a REPEAL bill** | If a Gov tries to use Challenge-Legislation against a repeal bill, the action is rejected. "No real-world precedent for SCOTUS overturning a repeal." | `tedchange#POST 246-248` |
+| **★ Cannot target a ratified AMENDMENT** | A Gov cannot challenge a ratified Constitutional Amendment through the Challenge-Legislation action. *"I'm going to make it so Govs can't challenge amendments"* (vcczar POST 250); *"the Constitution is by definition constitutional"* (OrangeP47 POST 251). **Rule doc updated POST 269.** | `smallbugs#POST 250-269` |
+| **Cannot target a STATEHOOD bill** | (separate, already in effect, OP47 POST 240 — "statehood bills can't be SCOTUS-challenged anymore.") | `smallbugs#POST 240` |
+
+> **★ CONFLICT FLAG — amendments-NOT-SCOTUS vs `tea1772`'s #100.** The
+> `tea1772` playtest digest's gap #100 records a GA-ruled case where SCOTUS **CAN overturn a
+> ratified amendment via Gov-requested judicial review** (the `ad0f2875`/§21.3 captured this:
+> "the 13th was overturned 4-3, reverting it to a mere governor-action"). **This conflicts with
+> Ted's official `tedchange`/`smallbugs` ruling that amendments are NOT challengeable.** Both
+> sides are visible:
+> - **`tea1772` #100 (playtest GA ruling):** SCOTUS CAN overturn a ratified amendment via Gov-
+>   requested judicial review. Recorded in [§21.3 (Amendments as durable, separately-ratified
+>   state)](#213-amendments-as-durable-separately-ratified-state) as the
+>   "Judicial review of an Amendment → repeal/demotion" path.
+> - **Ted's `smallbugs#POST 250-269` (DESIGNER, OFFICIAL):** *"I'm going to make it so Govs can't
+>   challenge amendments"* + rules doc UPDATED.
+>
+> **Authority hierarchy:** Ted (`tedchange` / `smallbugs` rules-doc patches) > playtest GA rulings.
+> The build target should follow Ted's ruling — amendments are NOT challengeable via the Gov-
+> action SCOTUS path. The `tea1772` playtest path is **recorded as historical context** in §21.3
+> but is **not the canonical build behavior**.
+
+*(designed, RULED — gate the Challenge-Legislation Gov action: target bill must not be a
+repeal-bill AND must not be an amendment-bill AND must not be a statehood-bill. The Gov-
+requested judicial-review path from §21.3 is SUPERSEDED for amendments specifically. Cite
+`tedchange#POST 246-248` + `smallbugs#POST 250-269`.)*
 
 ### 11.4 State-level policy flags (designed, not built)
 
@@ -1497,6 +1831,32 @@ a `War` and push it onto `game.wars`.
 > = 2/3 in BOTH chambers** (designer ruling — 60% was a bug, reverted, POSTS 2180-2187);
 > **amendments can't be packaged with bills** (POST 1835); **±3 cap on per-phase ideology
 > swings** (POST 4574 — Mods swung +7 raw, capped at +3, designer ruling).
+
+#### 12.3.y ★ Ted-RULED Pres signature step location + CPU sign/veto rule (designer-authoritative; `tedchange` + `smallbugs`)
+
+> **AUTHORITATIVE — Ted's `tedchange#POST 124-126` (signature step location) + vcczar's
+> `smallbugs#POST 417-423` (CPU sign/veto rule).** RULED.
+
+**★ Pres signature step lives in 2.6 (not 2.10)** — RULED in `tedchange#POST 124-126`. Ark's
+reasoning (POST 124): if Pres signature lives in 2.10, military bills don't affect Mil-Prep
+until AFTER 2.7 Military Action — wrong ordering. Ted: *"Definitely agree."* So:
+- A bill that passes both chambers (2.6.3 Floor) → routes to the Pres for sign/veto **in 2.6**,
+  BEFORE 2.7 Foreign Affairs / Military Action.
+- (Pre-existing 2.10 location is SUPERSEDED.)
+
+**Tentative companion**: **date advance moves to BEFORE 2.9.1** (RULED tentatively in `tedchange#POST
+120-128`) — so eligible-30-year-olds show their correct age at primaries. Ted approved in concept,
+flagged the need to verify no downstream breakage.
+
+**★ CPU President sign/veto rule** (`smallbugs#POST 417-423`, vcczar RULED): the CPU President
+**SIGNS** a bill if **any factions in his party score** from it, as long as the **party's total
+score from the bill is not negative**. Resolves the ambiguous "party gets net 0 but other party
+gets +1000" case: the CPU still signs (his own party scored nothing-or-positive).
+
+*(designed, RULED — move the Pres signature step into 2.6 (it currently lives in shipped 2.6.3
+post-passage processing — confirm); CPU President sign/veto decision: SIGN if any same-party
+faction scored AND same-party total is not negative; otherwise VETO. Cite `tedchange#POST 124-126`
++ `smallbugs#POST 417-423`.)*
 
 ### 12.4 Forum design layer: committee block-and-replace (designed, not built)
 
@@ -1842,6 +2202,44 @@ hooks that tick it.)*
   same-party candidate with `judicial ≥ 2`.
 
 ### 14.1 Forum design layer: Executive Actions library (designed, not built)
+
+#### 14.1.y ★ Ted-RULED Pres implementation = 2-step Admin-then-Command blunder rule (designer-authoritative; `tedchange`)
+
+> **★★ AUTHORITATIVE — Ted's `tedchange#POST 163`, the canonical 5-tier 2-step rule.** RULED.
+> SUPERSEDES the earlier `smallbugs#POSTs 350-388 §5a #3` "HYBRID ADOPTED" placeholder (which had
+> the concept but fuzzy wording). This is the **AUTHORITATIVE wording**. Pairs with batch-4's
+> DH-10 (blundered implementations) and applies to Pres-decided era events, exec actions, and
+> any phase requiring a Pres implementation roll.
+
+**Step 1 — Pres rolls ADMIN for implementation** (same as cabinet members).
+- If the roll succeeds: implementation succeeds; no blunder check needed.
+- If the roll fails: implementation may blunder — proceed to Step 2.
+
+**Step 2 — Blunder check, gated by Pres COMMAND** (the 5-tier table):
+
+| Pres Command | Blunder outcome |
+|---|---|
+| **Cmd 5** | **Avoid the blunder** entirely (no negative consequence) |
+| **Cmd 4** | **50% chance** to avoid the blunder |
+| **Cmd 3** | **+1 to the blunder roll** (severity bump) |
+| **Cmd 2** | **50% chance to apply +1** to the blunder |
+| **Cmd 1** | Blunder normal (no Command modifier) |
+| **no Command / no expertise** | **−2 to the blunder** (worse) **UNLESS** an `Efficient` cabinet member is on the implementation team |
+
+**Trait overrides:**
+- **`Easily Overwhelmed` Pres** → **skips Step 2 entirely** (no Command-modified blunder check; the
+  default blunder applies as-is). The Pres is too overwhelmed to use Command to mitigate.
+- **`Incompetent` Pres** → **−3 to the blunder roll** (worse than the no-Command case).
+
+**Worked example:** Pres has Admin 2, Cmd 3. The implementation roll fails (Step 1). Step 2 applies
+Cmd 3 → +1 to the blunder roll: the consequence is **one tier worse** than a Cmd-1 Pres would get.
+
+*(designed, RULED — implement Step 1 (Pres Admin roll) then Step 2 (Command-gated blunder
+modifier per the 5-tier table); honor Easily-Overwhelmed → skip-Step-2 and Incompetent → −3.
+Applies to era-event implementation rolls (§10.3 + §10.4.1), exec actions (§14.1), and any
+phase requiring presidential implementation. Cite `tedchange#POST 163, 159-164`.)*
+
+#### 14.1.1 Action library + persistence
 
 Forum 2.8.1 runs as a **player-driven library** with persistence:
 
@@ -2196,6 +2594,13 @@ candidate or to opponents. *(designed, not built — extend
 `runPhase_2_9_4_PresidentialGeneral`'s EV allocation with a small per-state faithless-elector
 roll.)*
 
+> **★ designer-decision-gated OPEN in `tedchange`** (`tedchange#POST 371-376`): Vee01 complained
+> the rule "doesn't track" ("electors are chosen by state party not state at large"); Matt
+> supplied a canonical 2-condition trigger; Eric proposed *"if state won by candidate that has
+> the LEAST PREFERRED ideology of the state"* + Ark "+3 for the other party". **Ted did NOT
+> post a final ruling.** Community agrees current wording is "wonky." Faithless-elector rule
+> remains as-is until designer decision. See [§30.2 item 5](#302-designer-decision-gated-open-items-tedchange).
+
 #### 15.3.10 Scoring & nominee aftermath
 
 - **Convention scoring** (per faction, post 228, 253): the nominating party leader scores
@@ -2285,6 +2690,50 @@ The independence-era stand-in for Congress. `CC_TERM_YEARS = 4`
   delegates vote (same-faction `0.92` / same-party `0.60` / cross `0.20`, card-biased);
   passage = **simple majority of states pre-Articles, 2/3 under the Articles**.
 
+#### 17.1.y ★ Ted-RULED 1st / 2nd CC composition + appointment (designer-authoritative; `tedchange`)
+
+> **AUTHORITATIVE — Ted's `tedchange` POSTs 211, 217-236, 222, 235, 352-355.** RULED.
+> Ted re-authored these rules (they had been LOST from the rules doc) for the 1st CC composition
+> (pre-DoI) and the 2nd CC composition (post-DoI). Cross-ref [§17.2 First Continental Congress
+> builder](#172-first-continental-congress-builder-firstcontinentalcongressts).
+
+**Per-state delegate slot count by state size** (POST 222, RULED):
+
+| State size class | States | Delegate slots |
+|---|---|---|
+| **Big states** | PA, MA, VA, MD | **4 delegates** |
+| **Medium states** | (the remaining colonies — NY, NJ, CT, NC, SC) | **3 delegates** |
+| **Small states** | GA, RI, DE, NH | **2 delegates** |
+
+> **Shipped engine note:** `state.ccDelegateSlots` (range 2–4 in `states1772.ts`) already
+> encodes this table. **CONFIRM** the per-state values match the table above.
+
+**Appointment-rule TRANSITION:**
+
+| Era window | Who appoints CC delegates per state |
+|---|---|
+| **1st CC (pre-Declaration of Independence)** | The **faction with the most politicians in that state** picks delegates from in-state candidates (POST 222). |
+| **2nd CC (post-Declaration of Independence)** | The **state Governor** picks delegates. |
+
+**Tied delegate appointments** (`smallbugs#POST 59-60`, Ted RULED): on a tie for "most pols in
+state", the **lowest-score faction** makes the appointment; if still tied, random.
+
+**Post-DoI cabinet-equivalent appointments under the Articles of Confederation:**
+- **Postmaster General (CC era)** — appointed by the **Domestic Committee chair** (`tedchange#POST
+  353-355`, Ted RULED, "same as 2.3").
+- Articles of Confederation properties (RULED in `tedchange#POST 220, 222`):
+  - **Prohibits consecutive election** of the same delegate (already in shipped code).
+  - **Requires 2/3 of states** for a bill to pass (already in shipped code).
+  - **Requires unanimity for amendments** to the Articles.
+
+**60% threshold for CC-era Controversial nominee confirmation:** **60% of the TOTAL states**
+(8 of 13 in the 1772/1788 CC; Ted RULED in `tedchange#POST 277`).
+
+*(designed, RULED — confirm per-state delegate slots match the size table; encode the appointment-
+rule transition keyed on `coloniesIndependent` / `declarationOfIndependence` state flag; route
+PMG appointment via the Domestic Committee chair in CC era; encode the lowest-score-tie-break
++ random secondary. Cite `tedchange#POST 211, 217-236, 222, 277, 352-355`.)*
+
 ### 17.2 First Continental Congress builder (`firstContinentalCongress.ts`)
 
 The interactive 1774 seating that 2.9.6 hosts in 1772. Colonies processed **alphabetically
@@ -2300,6 +2749,11 @@ then PV), with a `0.12` wild-card chance, **skipping anyone with `careerTrackYea
 Player colonies return a pick UI; each committed delegate (`commitDelegate`, `:239`) **resets
 their career track** and is recorded with its tier. Player vs AI flow is mediated by
 `ccBuilderCursor` (`types.ts:1611`) and the `ccBuilder` / `ccAIConfirm` input modes.
+
+> **★ Pairs with Ted's RULED CC composition** ([§17.1.y](#171y--ted-ruled-1st--2nd-cc-composition--appointment-designer-authoritative-tedchange)):
+> the shipped builder's per-state delegate slot counts must match Ted's 4/3/2 size table;
+> the "selecting faction" rule (largest in-state) matches Ted's "faction with most pols" pre-DoI
+> rule.
 
 ### 17.3 Constitutional Convention (`constitutionalConvention.ts`)
 
@@ -2960,16 +3414,18 @@ Rules where the **forum and the shipped engine genuinely disagree** (not just
 
 *New in batch 4 (`house-divided`, 1856-native):*
 
-9. **★ Relocation cap: shipped `5` vs design's `4` — the clearest "forum DRIVES the build"
-   evidence.** Mid-thread the engine **designer (`vcczar`) asked whether relocation was too easy**;
-   the GM proposed a **cap of 4** non-alt-state relocations and **it went LIVE in the running
-   playtest** ("You can ATTEMPT to move a TOTAL of FOUR pols. Alt-state moves don't count," `hd`
-   POST 7062–7066, 7555). **The shipped build is still at `RELOCATION_ATTEMPTS_PER_TURN = 5`
-   (`types.ts:247`)** — the browser engine has **not** caught up to a design change the forum
-   already plays. This is a **concrete, dated shipped-vs-design divergence** and the single
-   strongest proof that the canonical spec is the latest playtest, not a frozen rulebook
-   ([§6.2.x](#62x-forum-design-layer-designed-not-built); `game-context.md` ★ note + #38). The
-   shipped value also exceeds `RELOCATIONS_CAP`-adjacent intent; **direction = lower to 4.**
+9. **★ Relocation cap: shipped `5` vs design's `4` — SETTLED 12-30-25** (vcczar approved in
+   `smallbugs#POST 734-735`). Mid-thread the engine **designer (`vcczar`) asked whether relocation
+   was too easy**; the GM proposed a **cap of 4** non-alt-state relocations and **it went LIVE in
+   the running playtest** ("You can ATTEMPT to move a TOTAL of FOUR pols. Alt-state moves don't
+   count," `hd` POST 7062–7066, 7555); the formal **vcczar approval landed 12-30-25** in the
+   `smallbugs` bug thread (POST 734-735). **The shipped build is still at
+   `RELOCATION_ATTEMPTS_PER_TURN = 5` (`types.ts:247`)** — the browser engine has **not** caught
+   up to a design change the forum already plays AND has formally approved. This is a **concrete,
+   dated shipped-vs-design divergence** and the single strongest proof that the canonical spec is
+   the latest playtest, not a frozen rulebook ([§6.2.x](#62x-forum-design-layer-designed-not-built);
+   `game-context.md` ★ note + #38). The shipped value also exceeds `RELOCATIONS_CAP`-adjacent
+   intent; **direction = lower to 4. ★ RULED — this is no longer an open design question.**
    *(Two further batch-4 design replacements are documented in full in their own sections rather
    than re-listed here: the **Civil-War two-theater engine** replacing the flat resolver
    ([§23.3](#233-56-civil-war--the-two-theater-combat-engine-multi-term-subsystem), folded into #6
@@ -3474,17 +3930,30 @@ flags — this is the EC selection mode.)*
 **★ SCOTUS can OVERTURN a ratified Amendment, and the amendment threshold is itself amendable
 (batch 8, `ad0f2875`).** Two new operations on the amendment substrate, both used in play:
 
-- **Judicial review of an Amendment → repeal/demotion.** A **Governor-requested judicial review**
-  can put a ratified Amendment in front of SCOTUS, which may strike it. `ad0f2875`'s **13th
-  (this-timeline "National Suffrage for White Male Property Owners") was overturned 4–3**, reverting
-  it to a mere **governor-action** (Congress may re-pass) (POST 37, 48); the separate Taylor-McDowell
-  law was overturned the same way (POST 50). So an amendment is **durable but not permanent** — there
-  is a **review/repeal loop** on top of the ratify/repeal-by-later-amendment paths. (Extends #39.)
+- **Judicial review of an Amendment → repeal/demotion (★ CONFLICT — see flag below).** A
+  **Governor-requested judicial review** can put a ratified Amendment in front of SCOTUS, which
+  may strike it. `ad0f2875`'s **13th (this-timeline "National Suffrage for White Male Property
+  Owners") was overturned 4–3**, reverting it to a mere **governor-action** (Congress may re-pass)
+  (POST 37, 48); the separate Taylor-McDowell law was overturned the same way (POST 50). So an
+  amendment is **durable but not permanent** — there is a **review/repeal loop** on top of the
+  ratify/repeal-by-later-amendment paths. (Extends #39.) **★ However:** this conflicts with
+  Ted's later official ruling in `smallbugs#POST 250-269` (see CONFLICT FLAG below).
 - **The amendment threshold is mutable in play.** The Convention set the bar at **3/4 of states**;
   a later **"Morris 2/3 Ratification Amendment" (this timeline's 14th) lowered it 3/4 → 2/3** (POST
   57; ratified by the normal Gov/state vote, POST 675). This is the founding-era instance of the
   §24.4 *ratifier+threshold-is-a-tunable-field* and the §27.8 *amendments-mutate-core-rules* findings,
   reached from a 1772 start.
+
+> **★ CONFLICT FLAG — amendments-NOT-SCOTUS vs `tea1772` #100 (cross-reference [§11.3.y](#113y--ted-ruled-gov-action-challenge-legislation-restrictions-designer-authoritative-tedchange--smallbugs)).**
+> The playtest-GA path above (`ad0f2875` POST 37, 48, 50; `tea1772` #100 from earlier batches —
+> SCOTUS CAN overturn a ratified amendment via Gov-requested judicial review) is **CONTRADICTED
+> by Ted's later official rules-doc ruling** (`smallbugs#POST 250-269`): *"I'm going to make it
+> so Govs can't challenge amendments… the Constitution is by definition constitutional… rule doc
+> has been updated to reflect this."* **Authority hierarchy:** Ted (`smallbugs` rules-doc update)
+> > playtest GA rulings. **Build target:** ratified amendments are NOT challengeable by Gov-
+> requested judicial review. The playtest path above is **recorded as historical context** but
+> is **not the canonical build behavior**. (The amendment-threshold-itself-amendable path
+> remains valid and is not affected by this conflict.)
 
 > **★ UNBUILT design hole — the general SCOTUS-ruling → downstream-statute cascade.** Distinct from
 > the *built* abilities to **strike a single law** (`ad0f2875`'s Republic of Texas Act was passed
@@ -4127,6 +4596,26 @@ bills tied to a court-disabled policy **should** auto-deactivate but **don't** (
 > court** + **ahistorical-flag** mechanics are *corroborated* here (Worcester v. Georgia NAY 5-1
 > "historical"; Charles River Bridge 3-3 → split affirms lower court → randomly rolled AYE
 > "ahistorical"). (`dem1820#POST 420-443`.)
+
+#### 22.7.y ★ Ted-RULED CPU Chief-Justice selection ladder (designer-authoritative; `tedchange`)
+
+> **AUTHORITATIVE — Ted's `tedchange#POST 388`, RULED** (rule authored by Ark in POST 388;
+> Ted incorporated into the rules doc). Sharpens [§22.7](#227-scotus-subsystem-253--282).
+> Resolves the previously-unsettled CPU CJ selection question (Umbrella POST 387).
+
+**The CPU Chief-Justice selection ladder, applied when a CJ vacancy fires:**
+
+1. **Highest Judicial ability from the appointer's party** — primary picker rule.
+2. **Multi-faction tie**: prefer **the appointer's own faction**.
+3. Still tied: prefer the candidate whose **ideology matches the appointing President**.
+4. Still tied: prefer the candidate from the **lowest-scoring faction** (give the underdog
+   a boost — same anti-frontrunner principle as PL endorsements in §25.11).
+5. **Multi-candidate ties at the end**: prefer the candidate whose **ideology matches the
+   appointer's ideology** (if not already applied at step 3).
+6. **Final fallback**: random.
+
+*(designed, RULED — implement the ladder for CPU Chief-Justice selection on vacancy. Cite
+`tedchange#POST 387-390`.)*
 
 *(designed, not built — a SCOTUS module: a per-term case docket + ideology-vote model; the
 Iron-Fist/Manipulative compel-vote and compel-retire powers (with the 12-year minimum + the
@@ -4780,8 +5269,9 @@ re-election eligibility**; an era-keyed VP-vacancy fill rule (off pre-amendment,
 
 ### 24.2 (#62) Contingent House election + tied-chamber inverse control
 
-> **Documented house-rule deviation — fills the shipped gap.** The shipped general always
-> resolves to a winner; there is **no contingent path** when no candidate reaches an EC majority.
+> **★ TED-RULED: the inverse-tied-House-control rule is AUTHORITATIVE** (`tedchange#POST 65`,
+> RULED). The shipped general always resolves to a winner; there is **no contingent path** when
+> no candidate reaches an EC majority.
 
 The **1888** race went 3-way (Blaine R 197 / Shortridge D 196 / Saltonstall "Conservative" 23;
 **208 needed**) → no EC majority → **contingent election in the House** (`hd` POST 5713):
@@ -4793,14 +5283,18 @@ The **1888** race went 3-way (Blaine R 197 / Shortridge D 196 / Saltonstall "Con
   **Governor's party**); **29 of 56 needed**. **Shortridge won 35-21** (first elected Democratic
   President since 1856 in-timeline; first **LW-Populist**). The **Senate elects the VP** by party
   vote (→ Hancock) (POST 5713–5762).
-- **Tied-House control (edge case):** the 1890 House was **152-152**; control of a tied House
-  goes to **whoever does NOT control the Senate** (inverse tiebreaker). Senate stayed Dem → GOP
-  got the tied House (POST 6229, 6257).
+- **★ Tied-House control — TED-RULED (`tedchange#POST 65`):** when the House splits **50/50**,
+  leadership of the tied House goes to the **party NOT in control of the Senate** (inverse-control
+  rule). Ted's reasoning: *"Best represents the kind of compromises that would need to be made
+  within a 50/50 House."* The 1890 House at 152-152 (Senate stayed Dem → GOP got the tied House,
+  `hd` POST 6229, 6257) is now the **canonical** Ted-RULED behavior. SUPERSEDES alternative
+  proposals (random / Westminster-style former-Maj stays / Speakership-by-whole-House).
 
-*(designed, not built — a contingent-election path: when no candidate reaches the EC majority,
+*(designed, RULED — a contingent-election path: when no candidate reaches the EC majority,
 run a **one-vote-per-state House election among the top N** (pick a stated N — top-2 house rule
 vs top-3 12th-Amendment, DH-6), delegation-majority with Governor-party tiebreak; Senate elects
-the VP; and the **inverse tied-chamber control rule**.)*
+the VP; **and** the **inverse tied-chamber control rule** (50/50 House → non-Senate-majority party
+takes leadership). Cite `tedchange#POST 65`.)*
 
 ### 24.3 (#63) Primary Era — state-opt-in primaries → Presidential-Primary Groups 1–5
 
@@ -4991,15 +5485,16 @@ without Healthcare; Honest-Gov 8/9 effects).)*
 
 > **Sharpens [§4 (Draft)](#4-draft-211) / the modern two-home-state rule
 > ([§22.10](#2210-53-state-alt-roster--modern-apportionment)).** A **mid-campaign re-rule** of
-> what a drafted rookie receives. (`hd` POST 2155.)
+> what a drafted rookie receives. (`hd` POST 2155.) **★ Ted-RULED canonical** in `tedchange#POST 50`.
 
 At the **1868 draft** ("Ted's revisions") the per-rookie grant changed to **3 traits + 3 alt-state
 adds**, **down from an earlier 5 traits / 5 alt-states**. This is the 1856-native value for the
-two-home-state mechanic §22.10 already documents (one alt-state add → now up to **3**). **Whether
-3/3 is the canonical going-forward rule is an open question** (`game-context.md` `hd`/#69, DH-list).
+two-home-state mechanic §22.10 already documents (one alt-state add → now up to **3**). **★ 3/3 is
+now the canonical, Ted-RULED value** (`tedchange#POST 50`, RULED) — the earlier open question
+(`game-context.md` `hd`/#69) is **CLOSED**.
 
-*(designed, not built — make the draft rookie grant a tunable `{traits, altStates}` pair; the
-current best value is **3/3** (down from 5/5), pending a canonical decision.)*
+*(designed, RULED — make the draft rookie grant a tunable `{traits, altStates}` pair fixed at
+**3/3** (down from 5/5). Cite `tedchange#POST 50`. SUPERSEDES any prior 5/5 reading.)*
 
 ---
 
@@ -6519,7 +7014,16 @@ Couples to §24.6 / §26.5 (offices-by-law) and §14.1 (exec-action library).)*
 > versa) at 25% base"* (`nuke` mid-C H4; **POST 9842**). Two unrelated threads (`rep1800` 1800-start,
 > `nuke` 1948-start) now independently agree the scale is a **ring with the two populist ends
 > adjacent at the standard 25% one-step base** — promoting this from "designed in one playtest" to
-> a corroborated rule. The build spec below is unchanged; the confidence is higher.
+> a corroborated rule.
+>
+> **★★ TED-RULED AUTHORITATIVE (batch 12b).** Ted's `tedchange#POST 24` makes the rule official
+> in the rules doc: *"all ideologies are now a CIRCLE, rather than a line."* The 25% cross-circle
+> shift rate is pinned, and the **`Two-Faced` trait is automatically applied on a successful
+> cross-seam flip** (penalty for the unusual move; POST 28-29). **Integrity blocks at 10%; Puritan
+> blocks at 0%.** This promotes the circle rule from "two-thread corroborated, designed-not-built"
+> to **designer-authoritative**, with specific rates pinned. See
+> [§6.3.y Ted-RULED ideology shift schedule](#63y--ted-ruled-ideology-shift-schedule-designer-authoritative-tedchange)
+> for the integrated shift-rate table.
 
 At a **mid-era rule change**, the ideology axis stops being a line and becomes a **circle**:
 
@@ -7891,3 +8395,112 @@ winning the presidency).
 >    confirmed (§29.11a); **resolve the NEW delegate-class fork** (AI-allocator vs player-rigged, §29.11b).
 > 6. **Two NEW bug fixes:** **DH-59** (clamp relations/meters to floor) and **DH-60** (territory/asset
 >    prerequisite on era events). New gap context logged to `game-context.md` **#116/#119** (+ DH-59/60).
+
+---
+
+## 30. Designer ruling index (`tedchange` — AUTHORITATIVE)
+
+> **★★ Highest-authority rules channel in the corpus.** This section indexes the canonical
+> Ted-RULED rule patches from the **"Discussion: Ted's Change Log of Doom"** thread (forum slug
+> `a0f0bf04`, Sept 2024 → Oct 2025 — the designer's official rules-doc rewrite/cleanup pass).
+> Cross-references where each ruling was folded into the topical section above. **Authority
+> hierarchy:** Ted (`tedchange` + `smallbugs` rules-doc patches) > playtest GA rulings > inference.
+>
+> **Companion thread (`smallbugs` = `cf82a7d3`)** carries vcczar's spot rulings nested in the
+> bug catalog. **Same authority class.** Indexed here for cross-reference.
+
+### 30.1 Rulings folded into existing topical sections
+
+Each ruling has been folded into its topical home section (with `★ Ted-RULED` subheaders).
+This index is a fast-lookup table back to those folds.
+
+| # | Topic | Ruling | Folded into | `tedchange` POSTs |
+|---|---|---|---|---|
+| **#124** | **Cabinet → enthusiasm REWORK** | RULED in concept (lobby gives points, ideology composition drives enthusiasm). Percentages OPEN. | [§9.3.7](#937--ted-ruled-cabinet--enthusiasm-rework-designer-authoritative-tedchange) | 1-4 |
+| **#125** | Universal Election Modifier (UEM) | **OPEN — proposed but not finalized** | [§30.2 open items](#302-designer-decision-gated-open-items-tedchange) | 222-241 |
+| **★ #126** | **Pres 2-step Admin-then-Command blunder rule** | RULED — canonical 5-tier wording | [§14.1.y](#141y--ted-ruled-pres-implementation--2-step-admin-then-command-blunder-rule-designer-authoritative-tedchange) | 159-164 |
+| **#127** | Ideology shift / conversion rate schedule | RULED — 25% LW↔RW cross-circle + Two-Faced; 33% party-flip; same-party adjacency | [§6.3.y](#63y--ted-ruled-ideology-shift-schedule-designer-authoritative-tedchange) + [§6.4.y](#64y--ted-ruled-conversion-rate-schedule-designer-authoritative-tedchange) + [§27.7](#277-the-ideology-chart-becomes-a-circle-mid-era-rule-change) | 18-31, 34-39, 38, 51-53 |
+| **★ #128** | **Kingmaker / Master Kingmaker scope** | RULED — Master = +1 in EVERY state (NOT either-or). **SUPERSEDES** Matt's reading. | [§6.5.y](#65y--ted-ruled-kingmaker-scope--trait-inheritance-allowlist-designer-authoritative-tedchange) | 316 |
+| **#129** | Kingmaker → Protégé trait allowlist/blocklist | RULED | [§6.5.y](#65y--ted-ruled-kingmaker-scope--trait-inheritance-allowlist-designer-authoritative-tedchange) | 201-208, 279-283 |
+| **★ #130** | **Retirement + death schedule** | RULED — Hale=½, Frail-first, ex-Pres death-only, 5% rate, era-scaled | [§10.1.y](#101y--ted-ruled-death--retirement-schedule-designer-authoritative-tedchange) | 89-100, 137-148, 195-197, 396 |
+| **#131** | Integrity pol cannot nominate Controversial | RULED | [§9.3.8](#938--ted-ruled-nomination-filters-designer-authoritative-tedchange) | 276-278 |
+| **#132** | Challenge-Legislation cannot target REPEAL | RULED | [§11.3.y](#113y--ted-ruled-gov-action-challenge-legislation-restrictions-designer-authoritative-tedchange--smallbugs) | 246-248 |
+| **★ #133** | **1st / 2nd CC composition** | RULED — Big states (PA/MA/VA/MD) 4 / Medium 3 / Small (GA/RI/DE/NH) 2; appointment rule transitions on DoI | [§17.1.y](#171y--ted-ruled-1st--2nd-cc-composition--appointment-designer-authoritative-tedchange) | 211, 217-236, 277, 352-355 |
+| **★ #134** | **Lingering 7-step strict ordering + decay carry-forward** | RULED — steps 1→7 in order, never re-done; volatility = this-phase-only; tax/tariff decay propagates to next phase's step 3 | [§11.1.y](#111y--ted-ruled-lingering-7-step-strict-ordering-designer-authoritative-tedchange) | 397-408 |
+| **#135** | 50/50 House split → leadership to non-Senate-majority party | RULED — inverse-control rule | [§24.2](#242-62-contingent-house-election--tied-chamber-inverse-control) | 65 |
+| **#136** | Random skill on draft has NO Command chance | RULED | [§4.1.y](#41y--ted-ruled-draft-rules-designer-authoritative-tedchange) | 7, 47 |
+| **#137** | No cross-party draft (politicians always enter at IRL party) | RULED | [§4.1.y](#41y--ted-ruled-draft-rules-designer-authoritative-tedchange) | 8, 10, 48 |
+| **★ #138** | **3 random traits + 3 random alt-states per draft** (SUPERSEDES 5/5) | RULED | [§4.1.y](#41y--ted-ruled-draft-rules-designer-authoritative-tedchange) + [§24.8](#248-69-draft-rookie-grants-re-ruled--3-traits--3-alt-states) | 50 |
+| **#139** | Pres signature step lives in 2.6 (NOT 2.10) | RULED | [§12.3.y](#123y--ted-ruled-pres-signature-step-location--cpu-signveto-rule-designer-authoritative-tedchange--smallbugs) | 124-126 |
+| **#140** | AnytimeEvo target pool tightening | RULED — events 5/17/23/24/25/39/66/117/118/119 restricted to Rep/Sen/Gov/Cabinet; Assassination 50/25/25 | [§10.2.y](#102y--ted-ruled-anytimeevo-target-pool-tightening-designer-authoritative-tedchange) | 249-275 |
+| **#141** | First-time FL: 5% positive trait / 3% negative trait gain | RULED | (referenced inline in §8.5.x; per-cycle for positives, first-time-as-FL only for negatives) | 79 |
+| **★ #142** | **CPU Chief Justice selection ladder** | RULED — Judicial → own faction → Pres-ideology match → lowest-scoring faction → matching-appointer-ideology → random | [§22.7.y](#227y--ted-ruled-cpu-chief-justice-selection-ladder-designer-authoritative-tedchange) | 387-390 |
+
+### 30.2 Designer-decision-gated open items (`tedchange`)
+
+> **These items Ted floated but did not finalize in the `tedchange` thread.** Each is a
+> **LIVE design hole** — distinct from the user's review-gate-gated items. Listed for the
+> roadmap-planner. *Carried from `tedchange` digest §6.*
+
+1. **Mil-Prep meter level 4 fix** — Ted said "I'll check what I did" then "wasn't better"
+   (POST 290-301). Community has three proposals: **30/40/30** (Umbrella POST 322 +
+   `smallbugs#POST 579`); **30/60/10** (Eric POST 297); **40/50/10** (Nikk POST 300). **NOT
+   RESOLVED.** Both `tedchange` and `smallbugs` have the bug logged but neither closes it.
+2. **Universal Election Modifier (UEM)** — proposed by Ted (POST 222-241) as a common
+   `+1/-1` modifier table for ALL elections at all levels in all eras. **Community pushback
+   on stacking + age modifiers.** Ted didn't finalize. **Major design proposal — build should
+   NOT pre-implement until finalized.**
+3. **Crisis trait consolidation** — Ted proposed merging Crisis Manager / Crisis Admin /
+   Crisis Gov into a single Crisis Manager trait, or a 2-tier Manager + Master ladder
+   (POST 73, 77-87). vcczar "will consider"; **OPEN tending toward consolidation.**
+4. **Term-limit Gov actions in pre-Senate era** — Umbrella reported CPU running a term-limit
+   Gov action in 1818 → state ran out of candidates (POST 356-367). Two paths flagged:
+   (a) **void Senator requirement** (Eric: 2.5.2 already has the conditional language); or
+   (b) **move term-limit actions to Era of Federalism start** (Ark). Ted didn't rule.
+5. **Faithless-elector mechanic rewording** — community agrees the current rule is "wonky"
+   (POST 371-376). Ted didn't post a final wording. Faithless-elector rule remains as-is.
+6. **Party rename trigger — PL vs Era Evo** — Matt proposed Party Leaders rename parties
+   (like factions get nicknames, POST 391-395); Ark hashed in a separate thread; **Ted did
+   not adopt.** ERA EVOS continue as the rename trigger. (Cross-ref [§25.13 Whig→Conservative
+   rename](#2513-faction-rename-rule--whig-auto-rename-to-conservative-party-deterministic).)
+7. **VP-must-be-same-party on resignation** — Vee01 proposed relaxation (POST 362). **No
+   follow-up.** Currently same-party-only is enforced.
+8. **Cabinet enthusiasm percentages** — Ted's rework (#124) is **RULED in concept**; the
+   actual numbers (Big-4 33% / others 25% etc., POST 4) are **TBD**.
+9. **Cabinet ideology weighting — Big-4 vs rest vs cabinet-level** — Ted flagged but didn't
+   finalize whether the three tiers get distinct ideology-enthusiasm weights (POST 1-4).
+
+### 30.3 Rulings folded from `smallbugs` (vcczar spot rulings)
+
+The `smallbugs` thread (`cf82a7d3`) carries vcczar's case-by-case rulings in the bug
+catalog. Same authority class as `tedchange` (both are designer-authoritative). Folded:
+
+| Topic | Ruling | Folded into | `smallbugs` POSTs |
+|---|---|---|---|
+| **★ Relocation cap = 4** | **SETTLED 12-30-25**, vcczar approved | [§6.2.x](#62x-forum-design-layer-designed-not-built) + [§19.1 #9](#191-design-divergences-for-the-roadmap) | 734-735 |
+| **★ Amendments NOT SCOTUS-challengeable** | RULED — rules doc updated; **CONFLICTS with `tea1772` #100** | [§11.3.y](#113y--ted-ruled-gov-action-challenge-legislation-restrictions-designer-authoritative-tedchange--smallbugs) + [§21.3 conflict flag](#213-amendments-as-durable-separately-ratified-state) | 236-269 |
+| **No drafting from unorganized territories** | RULED — except ME (part of MA) + WV (part of VA) | [§4 Draft pool sourcing](#4-draft-211) | 259-267 |
+| **Forbidden industries (MD/NJ Mining, PR Maritime, Plantation N states)** | RULED INTENTIONAL — *"good reasons for game purposes"* — NOT a bug | [§11.4](#114-state-level-policy-flags-designed-not-built) | 412-417 |
+| **Regions map** | RULED INTENTIONAL — *"states need to stay in the regions I have them in"* — NOT a bug | [§22.10 / §11.4](#2210-53-state-alt-roster--modern-apportionment) | 117, 714-728 |
+| **CPU President sign/veto rule** | RULED — signs if any faction in his party scores AND party total isn't negative | [§12.3.y](#123y--ted-ruled-pres-signature-step-location--cpu-signveto-rule-designer-authoritative-tedchange--smallbugs) | 417-423 |
+| **House-cap to 100 Reps removal** | RULED — *"broken with 50 states; I'll have Anthony delete it"* | [§22.10](#2210-53-state-alt-roster--modern-apportionment) | 138-143 |
+| **Isolationist Lobby criteria** | RULED — must have LW Pop / Prog / Trad / RW Pop; cannot join Expansionists / Moderates / Globalists | [§7.4.1](#741-era-gated-multi-pool-card-library-designed-not-built) | 40-42, 310-325 |
+| **Statehood bills SCOTUS challenge** | RULED disallowed (per Orange POST 240) | [§11.3.y](#113y--ted-ruled-gov-action-challenge-legislation-restrictions-designer-authoritative-tedchange--smallbugs) | 240, 250-269 |
+| **Reconstruction subtype** | RULED — all such bills should carry subtype="Reconstruction" | [§23.4](#234-57-reconstruction-readmission-subsystem-end-nationalism--gilded) | 688-693 |
+| **Death/retirement rate** | Orange's 5%-of-faction-max formula → Ted accepted (corroborates §10.1.y) | [§10.1.y](#101y--ted-ruled-death--retirement-schedule-designer-authoritative-tedchange) | 195-197 |
+
+### 30.4 Authority hierarchy reminder
+
+When rule sources disagree:
+
+1. **Ted's `tedchange` rulings** (highest authority — the official rules-doc rewrite channel).
+2. **vcczar's `smallbugs` rulings** (designer spot rulings; same authority class as `tedchange`).
+3. **The user's review-gate decisions** (the absolute top; e.g. batch 9's "60% cloture +
+   majority" Senate ruling — `tedchange` did not touch it; it stands UNCONFLICTED).
+4. **Playtest GA case-by-case rulings** (e.g. `tea1772`, `hd`, `rep1800`, `arkzag`).
+5. **Inference** from system behavior.
+
+**Where Ted-RULED items SUPERSEDE prior text in this doc, the topical section has been
+rewritten to match Ted's call, with a one-line supersession marker citing the `tedchange`
+POST#.** Where `tea1772` GA rulings conflict with Ted (e.g. amendments-NOT-SCOTUS), both
+sides are preserved with the conflict flagged.

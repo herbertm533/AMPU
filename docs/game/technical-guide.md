@@ -608,6 +608,59 @@ of every row below: NONE of these fields exist in `types.ts` today** (grep-confi
 | **DH-59 — relations meter UNDER-FLOORS below its floor** (§29.11d) | the diplomacy clamp in `applyEffect` (`phaseRunners.ts:3223`) + the Lingering drift clamp (`:3295`) | no new field — fix the clamp floor | **BUG / clamp fix — folds into the diplomacy subsystem (#107 / roadmap E12).** Verified: both diplomacy writes clamp to **`-5..5`** (`applyEffect` `:3223`, Lingering `:3295`). The forum models per-power relations as a **9-point Hostile→Allies scale with a floor of 1** (#107); DH-59 ("Japan: 1→0, should be 1 minimum") is the missing floor enforcement. **There is no fix to ship TODAY** — the build's `diplomacy` is `-5..5`, not `1..9` — so DH-59 is a **build-the-floor-into-the-9-point-scale** requirement that lands WITH the diplomacy subsystem, not a standalone patch. XS once that scale exists. |
 | **DH-60 — era-events fire with NO territory/asset prerequisite** (§29.11d) | `EraEvent` content shape (`types.ts:1466`) + the firing path (`buildEraEventsForYear`, `eraEvents1856.ts:4`) | a `requiresTerritory?`/`requires?: Predicate` precondition on the era-event row + a filter step at firing time | **BUG / prerequisite gate — the concrete face of #92 territory-content gating + BUG-1.** Verified: `buildEraEventsForYear(year)` (`eraEvents1856.ts:4`) gates events ONLY by `year >= X && year <= Y`; the `EraEvent` type (`types.ts:1466`) carries NO precondition field at all (only the 2.4.3 graph nodes use `Predicate`, and even those have `stateAdmitted`/`diplomacyAtLeast`, not a generic territory/asset gate). So "Force Open Trade with Japan" fires with no Pacific port; "Stubborn Cherokee" fires without owning the territory. The fix is a per-event prerequisite predicate + a filter — **the SAME firing surface as BUG-1 (the era-lock filter at `phaseRunners.ts:2817`) and K3's `territoryOwned` predicate.** Build it WITH those. S. |
 
+**Batch 12 (`tedchange` + `smallbugs`, the DESIGNER discussion threads — the
+official rules-doc patches):** these are NOT playtest deltas — they are
+authoritative rule patches from the designer (Ted / vcczar) to the canonical
+ruleset, **SUPERSEDING prior GA calls where they conflict**. Most rulings are
+*behavioral* (where state already exists or barely-exists) rather than *new
+shapes* — the shape impact is small. **Verified SHIPPED-state of every row
+below.** Key takeaway: **#124 cabinet enthusiasm rework is the one M-sized
+re-architecture** (a teardown of the current lobby→enthusiasm coupling, which
+moves cabinet→enthusiasm to ideology-composition and cabinet→lobby to a
+points-ledger write); the other rulings bind at known sites.
+
+| Delta (forum / Ted/vcczar) | Lands on | Field (designed) | Widening? · Notes / migration · SHIPPED status |
+|---|---|---|---|
+| **★★ #124 — Cabinet → enthusiasm REWORK (lobby = POINTS; ideology composition = ENTHUSIASM)** (`tedchange#POST 1-4`; game-mechanics §9.3.7) | `runPhase_2_3_1_Cabinet` (`phaseRunners.ts:2158-2223`) + `GameState.enthusiasm` (`Enthusiasm`, `types.ts:1415`, EXISTS) + `Faction.score?` (NEW, same as the batch-1 leaderboard row) | (a) LOBBY satisfaction writes **POINTS** to the existing `Faction.score?` ledger + the Pres-faction's score, NOT enthusiasm; (b) IDEOLOGY-COMPOSITION drives enthusiasm — ≥50% cabinet of an ideology = +enth that ideology; ≤20% = −enth; (c) 3-shifts/half-term cap holds; (d) Big-4 / rest-of-cabinet / cabinet-level **percentages OPEN (designer-gated)** | **STRUCTURAL re-architecture of the lobby→enthusiasm path.** Verified: today's `runPhase_2_3_1_Cabinet` is a one-step scored pick with NO Senate confirmation, NO lobby-driven enthusiasm side-effect at all (the lobby/enthusiasm coupling is documented in `game-mechanics.md` §9.1 but does not yet bind in code — debt #17 + DH-23 cover the missing confirmation system). So #124 lands as a NEW write path: the cabinet picker writes (a) lobby-card → POINTS to matching factions, and (b) cabinet ideology composition → enthusiasm shifts via the standard ±3-cap clamp. **★ LANDS AFTER K2 + K5** (cabinet picks are CPU actions; the rework consumes the conditional-vote-rules primitive `pop` POST 1111). **Re-scope E16 / debt #17** to build the confirmation + #124 enthusiasm rework TOGETHER from day one (do not build the today-shape only to tear it apart). Size: M. Designer-gated percentages: ship a const table that can be re-tuned post-design. |
+| **★ #134 — Lingering 7-step strict ordering + tax/tariff decay carry-forward** (`tedchange#POST 397-408`; game-mechanics §11.1.y) | `runPhase_2_5_1_Lingering` (`phaseRunners.ts:3260-3377`) + (NEW) per-bill / per-meter carry-forward state | a (NEW) `game.taxTariffDecayQueue?: { decayDelta; appliesAtPhase: 3; lifeYears }[]` carry-forward queue + an explicit 7-step internal ordering on the runner | **RE-SPEC of the meter-decay/volatility surface.** Verified: today's Lingering runs cabinet-drift-driven meter writes + per-trait modulation + national-debt update, but has NO explicit 7-step ordering and NO tax/tariff volatility-vs-decay distinction (it just clamps ±5 per write). Ted's strict 1→7 ordering: never re-do a step; volatility roll at step 7 = THIS-phase-only (not added to running totals); tax/tariff decay propagates forward to NEXT phase's step 3 (decay continues across half-terms). **Folds into E6 / Phase-1 #6 (meter-model generalization + APOCALYPSE)** — same surface (Lingering is where meters get written) + the named-ordinal meter model needs the step-order discipline. Size: M. `repair()` backfills `[]`. |
+| **#126 — Pres implementation 2-step Admin-then-Command blunder rule** (`tedchange#POST 159-164`; game-mechanics §14.1.y) | the Pres-implements-bill code (NOT YET A DISCRETE SITE) + `applyEffect` (`phaseRunners.ts:3209`) post-roll | no new field — a roll-table helper + trait gates | **CANONICAL wording of cf82a7d3 §5a #3 — RULE-DEFINITION, not a shape.** Verified: today bill effects apply via `applyEffect` directly with NO Pres roll / NO blunder check. The 2-step rule (Pres Admin roll → if blundered, Pres Command modifies the blunder per 5-tier table; Easily Overwhelmed skips step 2; Incompetent = −3; no Cmd/no expertise = −2 unless Efficient on impl team) lands in **E29 / Phase-2 #29 (modern legislative depth)** where the Pres-implements-bill code lives. Size: S. The rule is now READY (was OPEN/fuzzy as cf82a7d3 §5a #3). |
+| **#130 — Death/retirement schedule** (`tedchange#POST 89-100, 137-148, 195-197, 396`; game-mechanics §10.1.y) | `MORTALITY_RULES` (`src/types.ts:485-516`, EXISTS but needs refinement) + `runPhase_2_4_1_Deaths` (`phaseRunners.ts:2341-2444`) + the `Trait` union (needs Hale add) | refine `MORTALITY_RULES.eraConfig` percentages; add `Hale` to `Trait` union + `haleDeathMult = 0.5` to `MORTALITY_RULES`; refactor the death-roll loop to **Frail-first**; gate retirement on **NOT (retired ex-Pres)**; mark cabinet retirement as **end-of-half-term, not on-appointment** | **REFINES existing rules-const + a Trait union widening.** Verified: `MORTALITY_RULES` has the rough shape (`deathBracket` / `retireBracket` / `eraConfig`) but with `frailDeathMult = 1.5` (vs Ted's "Frail rolled FIRST in death roll") — the multiplier is the wrong knob; needs an order-aware loop. `Hale` is NOT in the `Trait` union (`types.ts:36`) today. Auto-retire at 100 is already in 2.10. **Folds into Phase-1 #19 small consistency** (pairs with #85 5%/half-term retire-death). Size: S. |
+| **#127 — Ideology shift / conversion rate schedule** (`tedchange#POST 18-31, 34-39, 38, 51-53`; game-mechanics §6.3.y + §6.4.y) | `CONVERSION_ODDS` (`src/types.ts:268-291`, EXISTS — base rates roughly match) + the conversion-target eligibility filter (`phaseRunners.ts:993-1003`) + the (NEW) `ideologyDistance(a,b,circular)` helper + a Two-Faced auto-grant hook | refine `CONVERSION_ODDS.poach.matrix.cross` toward 0.33 effective rate; add **same-OR-adjacent ideology** to same-party conversion targeting; add **LW↔RW Pop 25% special-case shift** with auto-Two-Faced grant | **REFINES existing tables + binds to #99 ideology-circle helper.** Verified: cross-party rate already approximates 33% after willingness amplifiers stack; adjacency rule is a one-site filter change; LW↔RW Pop wrap rides the #99 helper. **Folds into Phase-1 #5b (ideology-circle helper).** Size: S total. |
+| **★ #128 — Kingmaker / Master Kingmaker scope** (`tedchange#POST 316`; game-mechanics §6.5.y) | `calcStateVote` (`phaseRunners.ts:3685-3722`) — the per-state score sum + (NEW) `kingmakerBonus(snap, candidate, stateId): number` helper | a +1-in-state (basic Kingmaker) / +1-everywhere (Master Kingmaker) score term added to `calcStateVote`'s score sum | **DESIGNED-not-shipped — pin the +1 binding site.** Verified: the Kingmaker bonus is NOT YET a state-vote bonus; `calcStateVote` does not consult Kingmaker state. **SUPERSEDES Matt's "state OR national, pick one" reading.** Lands in the election-math epic (Phase-1 #20). Size: S. |
+| **#129 — Kingmaker → Protégé trait allowlist/blocklist** (`tedchange#POST 201-208, 279-283`; game-mechanics §6.5.y) | the kingmaker-protégé inheritance path (`runDraftKingmakerTopUp` + protégé chaining in `phaseRunners.ts`; KINGMAKER_RULES `types.ts:295`) | a `KINGMAKER_PASSABLE_TRAITS` / `KINGMAKER_BLOCKED_TRAITS` config | **DATA / config refinement.** Pass list: Kingmaker (basic) / Celebrity / Hale / all positives. Block list: Master+National Kingmaker / Frail / Flip-Flopper / Two-Faced. **Folds into Phase-1 #21 (conversion-targeting refactor).** Size: XS as a list. |
+| **#133 — 1st / 2nd Continental Congress composition** (`tedchange#POST 211, 217-236, 277, 352-355`; game-mechanics §17.1.y) | `continentalCongress.ts` + `firstContinentalCongress.ts` (existing era system) | a state-size delegate quota table (Big PA/MA/VA/MD=4; Medium=3; Small GA/RI/DE/NH=2) + the 1st-CC (faction-with-most-pols picks) → 2nd-CC (Gov picks) transition on DoI + Articles-of-Confederation gating (no consecutive election; 2/3 of states for legislation; UNANIMOUS for amendments) + PMG via Domestic Committee | **REWRITES the CC composition rules.** Verified: today's firstCC builder uses faction-by-pol-count but NOT the size table; the 1st→2nd CC transition exists in scenario but is not formalized at this level. **Re-scope E17 / §17.1.** Size: S (data table + builder rewrite + AoC gating). |
+| **#142 — CPU Chief Justice selection ladder** (`tedchange#POST 387-390`; game-mechanics §22.7.y) | the CJ selection path (NOT YET A DISCRETE SITE) — `runPhase_2_5_3_Court` (`phaseRunners.ts:3397-3415`) is a coin-flip court; CJ replacement happens via the existing `chiefJusticeId` writer | a ladder helper that picks the next CJ: Highest Judicial → own faction → Pres-ideology match → lowest-scoring faction → matching-appointer-ideology → random | **NEW path — folds into the SCOTUS docket epic (Phase-2 #25 / E25).** Verified: no CJ selection logic at all today. Size: XS (ladder is fully spec'd). |
+| **#135 — 50/50 House split → leadership to non-Senate-majority party** (`tedchange#POST 65`; game-mechanics §24.2) | `runPhase_2_2_1_CongressLeadership` (`phaseRunners.ts:1864`) | replace `houseMajority = houseBlue >= houseRed ? 'BLUE' : 'RED'` with: `houseMajority = houseBlue === houseRed ? (senateMajority === 'BLUE' ? 'RED' : 'BLUE') : (houseBlue > houseRed ? 'BLUE' : 'RED')` | **XS one-line edit — a real shipped bug** (the silent default-to-BLUE on tie). Ship with QW0 + the small consistency PRs (Phase-1 #19). |
+| **#136 — Random skill on draft has NO Command chance** (`tedchange#POST 7, 47`; game-mechanics §4.1.y) | `runPhase_2_1_1_Draft` (`phaseRunners.ts:187-197`) random-skill generator path | restrict the skill pool to the 6 base skills (admin/legislative/judicial/military/governing/backroom) excluding Command from the boost | **XS verification + filter.** Verified: today's pick is over `['admin','legislative','judicial','military','governing','backroom']` at `:196` (Command is the separate `command` field, NOT in the boost pool) — so this may be a **no-op verification** in the current code path. Verify the dataset-import path too. |
+| **#137 — No cross-party draft (pols enter at IRL party)** (`tedchange#POST 8, 10, 48`; game-mechanics §4.1.y) | `runPhase_2_1_1_Draft` (`phaseRunners.ts:107-267`) + `instantiateDraftees` (`phaseRunners.ts:114`) + `pickBestForFaction` (`phaseRunners.ts:33-53`) | gate a rookie's `partyId` to the dataset's IRL party at draft time; exclude cross-party drafting in the picker; flip via 2.1.6 conversion only | **WIDENING (engine) — a draft-time party-assignment gate.** Verified: today's CPU pick is by faction-personality-fit, NOT by historical party. Size: XS. |
+| **#138 — 3 random traits + 3 random alt-states per draft (SUPERSEDES 5/5)** (`tedchange#POST 50`; game-mechanics §4.1.y + §24.8) | draft config + era-config table (§6.1 pattern) | a tunable era-keyed `{ traits, altStates }` rookie-grant pair | **WIDENING (config) — already partly captured by #69 (1856-native re-rule).** Ted's `tedchange` confirms 3/3 going forward. Size: XS. |
+| **#139 — Pres signature step lives in 2.6, NOT 2.10** (`tedchange#POST 124-126`; game-mechanics §12.3.y) | `PHASE_SEQUENCE` (`src/phases.ts`) — the sign step placement | move the Pres-sign step to live in 2.6 so military bills affect Mil-Prep BEFORE 2.7 Military Action | **XS phase-sequence reorder.** Folds into Phase-1 #2 (bill typing + spending cap) + Phase-1 #14 (legislative micro-mechanics). |
+| **#140 — AnytimeEvo target-pool tightening** (`tedchange#POST 249-275`; game-mechanics §10.2.y) | `anytimeEvents.ts` event templates + the picker filter (`phaseRunners.ts:2782`) | event-by-event target-pool restrictions: events 5/17/23/24/25/39/66/117/118/119 → Rep/Sen/Gov/Cabinet only; Assassination → 50% Pres / 25% Rep-Sen / 25% FL | **S — per-event filter wiring + AnytimeEvo template content edits.** Folds into Phase-1 #19 small consistency OR co-locate with E9 handler 9g (A/B/C event vote). |
+| **#131 — Integrity pol cannot nominate Controversial** (`tedchange#POST 277`; game-mechanics §9.3.8) | every nomination/appointment path (cabinet `phaseRunners.ts:2158`; CJ; ambassadors; CC delegates) | a trait-aware filter helper `canNominate(nominator, nominee): boolean` | **XS one filter helper, used by every nomination path.** |
+| **#132 — Challenge-Legislation cannot target REPEAL** (`tedchange#POST 246-248`; game-mechanics §11.3.y) | the gov-action library (Phase-1 #11 / E11), the Challenge-Legislation action target list | a filter on the action's target list excluding repeal bills | **XS — a build-target constraint on E11 / E25.** |
+| **#141 — FL trait gain rates: 5% positive / 3% negative** (`tedchange#POST 79`) | the faction-leader trait-gain step (per-cycle for positives; first-time-as-FL only for negatives) | refine existing FL trait-gain const + add "first-time-as-FL" gate for negatives | **XS — refines existing rules already partially captured by cf82a7d3 §5a #4.** |
+| **★ #120 — `smallbugs` dataset umbrella** (`smallbugs` §2/§3/§4) | `scripts/seedDataset.mjs` `CURATED_ROWS` overrides + `politicians-dataset.csv` + `public/standard-draft-classes.json` | ONE coordinated dataset-maintenance pass: ~50 named-pol fixes (religion/skills/traits/birth/bio/party/alt-state), ~30 small mechanical bug fixes (swapped bill ideology effects, missing event prereqs, era-flag typos, region off-by-ones), ~20 dataset additions (Sequoyah/Yazoo/de Valera/Perkins) | **DATASET — author-time `scripts/` work, NOT engine.** ONE coordinated pass; sub-items are XS-S each but workload is the volume. Also covers DH-43 (Vermont home-state mapping), DH-51 (modern recency-biased pols), DH-28 (trait-conflict validator at boot). Size: M as a coordinated pass. Place orthogonally to engine work. |
+| **★★ Relocation cap = 4 (closes QW0/BUG-0)** (`smallbugs#POST 734-735`, vcczar-12-30-25; game-mechanics §30.3) | `RELOCATION_ATTEMPTS_PER_TURN` (`src/types.ts:247`) + the relocation accumulator | one-line const edit: `5 → 4` + a guard so alt-state moves don't decrement the budget | **XS one-line edit, SETTLED — DO IT FIRST.** Folds into existing BUG-0 / divergence #9 row above. |
+| **★ Amendments NOT SCOTUS-challengeable (build-target SIMPLIFICATION)** (`smallbugs#POST 250-269`, vcczar; game-mechanics §30.3) | E5 (amendment lifecycle) + E25 (SCOTUS docket) — build-target constraint, not a code change today | drop the SCOTUS-overturns-amendment branch from E25's docket scope and from E5's amendment lifecycle | **BUILD-TARGET constraint — OVERRIDES `tea1772` #100.** E5 keeps the strike-a-statute path + the mutable-threshold field; E25 keeps the docket + Justice drift + court size + DH-32 state-guard. Sequencing simplification. |
+| **DH-43 (Vermont home-state) + DH-51 (modern pols recency-biased) + DH-28 (trait-conflict at boot)** (`smallbugs` corroborations of existing items) | `scripts/seedDataset.mjs` + the boot validator | fold into the #120 dataset umbrella | **No new shape; the umbrella row above subsumes these.** |
+
+**Designer-gated OPEN items (`tedchange` §30.2 — NOT ready-to-build):**
+
+These 9 items Ted floated in `tedchange` but did NOT close. They are
+**designer-gated** (distinct from user-gated) — the roadmap-planner should
+flag them as such in the parking-lot bucket and NOT schedule them until
+Ted/vcczar closes them in `tedchange`/`smallbugs`:
+
+1. **Mil-Prep meter level 4 fix** (3 proposals: 30/40/30, 30/60/10, 40/50/10).
+2. **#125 Universal Election Modifier (UEM)** — proposed but pushback on stacking + age modifiers.
+3. **Crisis trait consolidation** (Crisis Manager + Crisis Gov as a tier).
+4. **Term-limit Gov actions in pre-Senate era**.
+5. **Faithless-elector rewording**.
+6. **Party rename trigger** (PL vs Era Evo).
+7. **VP-must-be-same-party-on-resignation** relaxation.
+8. **Cabinet enthusiasm percentages** (the #124 numeric).
+9. **Cabinet ideology weighting** (Big-4 vs rest vs cabinet-level).
+
 **Architectural deltas** (not additive — type-system or store-level changes):
 
 - **`Era` union widening + decouple content-gating from literal years.** `Era`
@@ -1429,7 +1482,15 @@ design holes (`DH-*`: DH-1/2 from `modern`, DH-3..DH-11 from `hd`,
 DH-43/DH-44 from `new1772`, DH-41/DH-42 from `tea1772`**, **DH-45..DH-57 from the
 batch-9 `nuke` Cold-War/modern corpus**, **#115/#115a/#115b + the
 DH-24/DH-25/DH-27/DH-36/DH-53 re-corroborations from the batch-10 `dem1820`
-1820-start**). **`BUG-*` are fixes,
+1820-start**, **#116/#119/#61-extended + DH-59/DH-60 from the batch-11 `arkzag`
+1820→1840 full-arc**, **★ #120..#142 from batch 12 — the `tedchange` +
+`smallbugs` designer rulings (now AUTHORITATIVE — `tedchange` is the official
+rules-doc rewrite channel; the rulings SUPERSEDE prior GA calls where they
+conflict). Many batch-12 items CLOSE long-standing OPEN items: QW0 closes,
+#51's #18 sub-fork settles its algorithm half (state-scope still user-gated),
+Pres-blunder rule canonicalizes the cf82a7d3 §5a #3 fuzzy "hybrid," CC
+composition is rewritten, Hale/Frail/ex-Pres death schedule pins #85**.
+**`BUG-*` are fixes,
 not features** — small and high-value;
 **BUG-0 (the relocation-cap stale constant) is the cheapest win in the roadmap**
 and BUG-1 is a hard blocker the moment a federalism/1800 scenario ships
@@ -1567,9 +1628,87 @@ codebase where quick.
   **SAME bug as BUG-1** (LIVE-confirmed by the LA-Purchase-dropped-at-1800-start
   episode) — folded into BUG-1 + its DH-30 companion, not a separate row.
 
+**Classification of the batch-12 `tedchange` + `smallbugs` rulings (`#120..#142`):**
+The 19 Ted-rulings + the `smallbugs` umbrella + the open designer-gated items
+classify into the existing epics — **most are XS-S constant/handler changes**;
+the M-sized items are #124 (cabinet enthusiasm rework — teardown of E16's
+lobby-driven enthusiasm path) + #134 (Lingering 7-step ordering — re-spec of
+E6 / meter-decay surface) + #133 (CC composition rewrite — refines E17
+continental congress era system) + #120 (dataset umbrella — one coordinated
+`scripts/seedDataset.mjs` pass).
+
+- **Closes existing OPEN items (no new row):** **QW0/BUG-0 (relocation cap=4
+  — `smallbugs#POST 734-735`, vcczar-12-30-25)** now fully SETTLED; **#51
+  algorithm half** (`arkzag` already settled this in batch 11; `tedchange`
+  does not touch it — the batch-9 review-gate Senate 60% ruling STANDS
+  UNCONFLICTED per `tedchange` digest §9); **cf82a7d3 §5a #3 fuzzy "Pres
+  uses Command for blunder impact" → #126** (the canonical 5-tier wording is
+  now AUTHORITATIVE — supersedes the fuzzy hybrid placeholder).
+- **Quick-wins (XS):** **#135 50/50 House inverse-control** (a one-line
+  edit at `phaseRunners.ts:1864`); **#136 random-skill draft no-Command**
+  (verify the existing pool); **#137 no cross-party draft** (gate the
+  rookie's `partyId` at draft time); **#138 3 traits + 3 alt-states**
+  (re-rule into era-config); **#139 Pres signature in 2.6** (phase reorder);
+  **#142 CPU CJ ladder** (the spec is authored, slots straight into E25);
+  **#131 Integrity-can't-nominate-Controversial** (one filter helper);
+  **#132 Challenge-Legislation can't target REPEAL** (one filter helper).
+- **Per-subsystem owns it (small refinements within existing epics):**
+  **#127 conversion/ideology-shift schedule** → folds into #99 ideology-
+  circle helper (Phase-1 #5b) + the conversion adjacency filter;
+  **#128 Kingmaker / Master Kingmaker scope** → one helper + the
+  `calcStateVote` +1 binding (Phase-1 #20 / election math); **#129
+  Kingmaker→Protégé trait allowlist** → one filter list (Phase-1 #21
+  conversion-targeting refactor); **#130 Death/retirement schedule** →
+  `MORTALITY_RULES` refinement + Hale trait add + Frail-first order-aware
+  loop refactor (Phase-1 #19 small consistency, pairs with #85);
+  **#133 1st/2nd CC composition rewrite** → re-scope E17 / §17.1; **#134
+  Lingering 7-step strict ordering + tax/tariff carry-forward** → re-scope
+  E6 / Phase-1 #6 (meter-model + APOCALYPSE) to also carry Lingering
+  discipline; **#140 AnytimeEvo target-pool tightening** → AnytimeEvo
+  content + a per-event filter (Phase-1 #19 or E9 handler 9g); **#141
+  FL trait-gain 5% positive / 3% negative** → refines the existing
+  faction-leader trait-gain rules (already partially captured by cf82a7d3
+  §5a #4 in §8.1's existing carry).
+- **Major rework (M, the headline structural change):** **#124 cabinet
+  enthusiasm REWORK** — a teardown of E16's existing lobby→enthusiasm path.
+  **(a)** LOBBY satisfaction now writes POINTS (to Pres + matching-lobby
+  factions, via the `Faction.score?` ledger), NOT enthusiasm; **(b)**
+  IDEOLOGY COMPOSITION drives enthusiasm (≥50% cabinet of an ideology =
+  +enth; ≤20% = −enth); **(c)** the 3-shifts/half-term cap holds. Land
+  AFTER K2 + K5 (the rework requires the conditional-vote-rules primitive
+  + the new score path); **re-scope E16 from "build the confirmation
+  system in the right shape" to "build confirmation + #124 enthusiasm
+  rework TOGETHER in the right shape from day one."** The actual
+  percentages are DESIGNER-GATED OPEN.
+- **Pres-implementation rule (S):** **#126 2-step Admin-then-Command
+  blunder rule** → the canonical 5-tier table lands in E29 (modern
+  legislative depth) where the Pres-implements-bill code lives. The
+  rule is now READY (was OPEN as cf82a7d3 §5a #3 fuzzy wording).
+- **Dataset umbrella (M, ~100 items as one coordinated pass):** **#120
+  the `smallbugs` dataset umbrella** — religion fixes, skill/trait
+  swaps, missing pols, bio errors, duplicates, missing alt-states —
+  one coordinated `scripts/seedDataset.mjs` + `CURATED_ROWS` pass.
+  Also covers DH-43 (Vermont home-state mapping), DH-51 (recency-biased
+  modern pols), DH-28 (trait-conflict validator at boot).
+- **Build-target SIMPLIFICATION (no new item):** **amendments-NOT-SCOTUS-
+  challengeable** (`smallbugs#POST 250-269`, vcczar) **OVERRIDES**
+  `tea1772`'s #100 "SCOTUS can overturn an amendment." **E5 keeps the
+  strike-a-statute path + the mutable-threshold field but DROPS the
+  SCOTUS-overturns-amendment branch; E25 keeps the docket + Justice
+  drift + court size + DH-32 state-guard but DROPS Gov-requested
+  judicial-review-of-an-amendment.** This is a sequencing simplification.
+- **Designer-gated OPEN items (NEW Decision-gated SUB-BUCKET):** the 9
+  open `tedchange` items per game-mechanics §30.2 — Mil-Prep lvl 4 fix,
+  UEM (#125), Crisis trait consolidation, term-limit Gov pre-Senate,
+  faithless-elector rewording, party rename PL-vs-EraEvo, VP-must-be-
+  same-party-on-resignation, cabinet enthusiasm percentages, cabinet
+  ideology weighting. **NOT ready-to-build until Ted/vcczar closes
+  them in `tedchange`/`smallbugs`.** Add the "designer-gated" sub-bucket
+  to the existing PARKING LOT (alongside the user-gated bucket).
+
 | Bug | Location (verified) | Fix | Size / when |
 |---|---|---|---|
-| **BUG-0 (batch 4) — relocation cap is STALE: shipped `5`, design `4`** (divergence #9) | **VERIFIED:** `RELOCATION_ATTEMPTS_PER_TURN = 5` at **`src/types.ts:247`**. The designer (`vcczar`) changed the cap to **4** non-alt-state relocations mid-thread and it went **LIVE in the running playtest** (`hd` POST 7062–7066, 7555); the browser engine never caught up. **Settled value** — the digest says it went live, not mid-thread flux. | **One-line edit:** `RELOCATION_ATTEMPTS_PER_TURN = 4`. (The full feature — auto-Carpetbagger + 10-yr expiry + alt-state exemption — is divergence #2 / a separate consistency PR; this row is *only* the stale constant.) | **XS — the cheapest win in the whole roadmap. Do it FIRST.** No dependency, no migration (it's a tunable const, not a save field). |
+| **BUG-0 (batch 4) — relocation cap is STALE: shipped `5`, design `4`** (divergence #9) | **VERIFIED:** `RELOCATION_ATTEMPTS_PER_TURN = 5` at **`src/types.ts:247`**. The designer (`vcczar`) changed the cap to **4** non-alt-state relocations mid-thread and it went **LIVE in the running playtest** (`hd` POST 7062–7066, 7555); the browser engine never caught up. **★ BATCH-12 (`smallbugs#POST 734-735`, 12-30-25, vcczar-APPROVED — designer-AUTHORITATIVE):** *"A faction is limited to FOUR total attempted moves per half-term. A politician that moves to an ALT-STATE does NOT count against the FOUR total moves."* — the cap is now fully **SETTLED** by the designer rules-doc patch. No further design or human review required. | **One-line edit:** `RELOCATION_ATTEMPTS_PER_TURN = 4`. **+ a guard at the accumulator so alt-state moves don't decrement the budget** (verify the alt-state accounting in `runPhase_2_1_4_Relocations`). (The full feature — auto-Carpetbagger + 10-yr expiry — is divergence #2 / a separate consistency PR; this row covers the const + alt-state exemption.) | **XS — the cheapest win in the whole roadmap. Do it FIRST. ★ BATCH-12: now fully RULED (was "open-design + build" through batch 11; the alt-state exemption is the only addition).** No dependency, no migration. |
 | **BUG-1** — era events never deactivate by era for non-1772/1856 start years (an 1800-start wrongly loses the Louisiana Purchase; stale events also dilute the roll table) | `buildEraEventsForYear(snap.game.year)` is called with **no era-vs-start-year filter** at `phaseRunners.ts:2817`. Latent today (only 1772/1856 ship; the 1772 graph path at `:2801` is separate), but a blocker once a 3rd scenario lands | Add an "era-lock" filter: an event whose era is past the scenario's start era is treated as already-happened and excluded from the roll table (`fed` 524-535). **Resolve together with DH-2 and divergence #4 — same scheduling surface.** | **XS.** Land *before/with* the federalism scenario — it directly gates it. |
 | **BUG-2** — `Chisholm v. Georgia` needs an "11th Amendment not ratified" gate | **No SCOTUS case data contains it** (grep: 0 hits in `src`). This is a *forward requirement on SCOTUS-case content*, not a live crash | When the federalism SCOTUS case file is authored, gate `Chisholm` on `!amendmentPassed('11th')`. Bundles into the SCOTUS subsystem (divergence #7). | **XS.** Bundles into SCOTUS content; needs the amendments field (#39). |
 | **BUG-3** — no fallback when no viable PM-General candidate exists | `GeneralInChief` is a real seat (`types.ts:1121`, granted via `cabinetSeatsForYear` `:1145`) filled at `phaseRunners.ts:2255`; the **no-candidate path is uncovered** → potential crash | Define the empty-pool behavior (leave vacant + log, or auto-generate a stopgap officer — ties to procedural pol generation, scaling wall a). | **XS.** Defensive guard; do alongside the war/cabinet work. |
@@ -1642,14 +1781,327 @@ codebase where quick.
 
 > **This section is written for the roadmap-planner to lift directly.** It is my
 > engineering opinion on order, dependencies, and rough size/risk for the
-> game-pm gap log (~105 rows across 5+ eras + A1–A9 presentation + the CPU-AI
+> game-pm gap log (~142 rows across 5+ eras + A1–A9 presentation + the CPU-AI
 > cluster #70–#85 + the **batch-6 scenario-boot / endgame cluster #86–#91** + the
 > **batch-7 early-republic cluster #92–#99** + the **batch-8 founding/era cluster
-> #100–#105**), the design divergences (mechanics §19.1, now **#1–#21**), the
-> confirmed bugs (incl. BUG-0), and the GM design holes (DH-1/DH-2 + DH-3..DH-11 +
-> DH-12..DH-23 + DH-24..DH-28 + DH-29..DH-35 + **DH-36..DH-44**). Source: codebase
-> + `gilded` + `fed` + `1772s` + `modern` + `hd` + `drums` + `pop` + `rep1800` +
-> **`new1772` + `tea1772` + `dem1820` + `arkzag`**.
+> #100–#105** + the **batch-12 designer-rulings cluster #120–#142**), the design
+> divergences (mechanics §19.1, now **#1–#21**), the confirmed bugs (incl. BUG-0),
+> and the GM design holes (DH-1/DH-2 + DH-3..DH-11 + DH-12..DH-23 + DH-24..DH-28 +
+> DH-29..DH-35 + **DH-36..DH-44**). Source: codebase + `gilded` + `fed` + `1772s` +
+> `modern` + `hd` + `drums` + `pop` + `rep1800` + **`new1772` + `tea1772` +
+> `dem1820` + `arkzag` + `tedchange` + `smallbugs`**.
+>
+> **★★★★★ Batch-12 changes to the plan (`tedchange` + `smallbugs` — TWO DISCUSSION
+> THREADS, not playtests; the DESIGNER's official rulings channel. NO new keystone,
+> NO re-sequence of the keystones; ★ THE AUTHORITY HIERARCHY IS NOW EXPLICIT
+> (Ted > GA > inference), QW0 CLOSES, ONE major rework lands (cabinet→enthusiasm
+> #124), 19 sized Ted-rulings slot into existing epics + an ~100-item dataset pass.):**
+>
+> > **★ Read this block first if you only read one. The big picture: `tedchange` is
+> > the OFFICIAL designer rules-doc cleanup channel — its rulings SUPERSEDE prior GA
+> > calls where they conflict. Most rulings are XS–S code/constant changes that bind
+> > at known sites; the **cabinet enthusiasm rework #124 is the one M-sized re-architecture**
+> > (a teardown of the lobby→enthusiasm path); the **Lingering 7-step ordering #134**
+> > is M as a re-spec of the meter-decay/volatility carry-forward path. **QW0
+> > relocation-cap=4 is now SETTLED** (`smallbugs#POST 734-735`, vcczar 12-30-25
+> > approved) — promote it from "open-design / build" to "ready-to-build with
+> > const=4" and ship FIRST. **The amendments-NOT-SCOTUS-challengeable ruling**
+> > simplifies the E5↔E25 interaction (Govs can't challenge amendments → drop the
+> > §21.3 SCOTUS-overturns-amendment branch from E25's docket scope, keeping only
+> > the strike-a-statute / mutable-threshold faces). **The ~100-item `smallbugs`
+> > dataset umbrella (#120) is ONE coordinated `scripts/seedDataset.mjs` pass**,
+> > not 100 backlog rows. Add a **NEW Decision-gated sub-bucket "designer-gated"**
+> > (the 9 open `tedchange` items are gated on Ted/vcczar, not the user).**
+>
+> 1. **★★★ QW0 relocation-cap CLOSES — promote it to top-of-queue with const=4.**
+>    Verified shipped: `RELOCATION_ATTEMPTS_PER_TURN = 5` at `src/types.ts:247`.
+>    `smallbugs#POST 734-735` settled the cap on **12-30-25** ("Approved by vczar"):
+>    *"A faction is limited to FOUR total attempted moves per half-term. A politician
+>    that moves to an ALT-STATE does NOT count against the FOUR total moves."* This
+>    closes the long-running BUG-0 / QW0 / batch-10 top-of-queue item from
+>    "open-design + ready-to-build" to **fully settled and ready-to-ship**. The fix
+>    is **a one-line constant edit** + a guard at the relocation accumulator so
+>    alt-state moves don't decrement the budget (verify the alt-state accounting in
+>    `runPhase_2_1_4_Relocations`). **Recommendation: this is now the cheapest +
+>    safest win in the whole roadmap; do it FIRST.** No human review-gate; no
+>    designer-gate; the cap value is authoritative.
+> 2. **★★★ The cabinet → enthusiasm REWORK (#124) is the one M-sized teardown
+>    this batch — strategy call required.** Verified shipped: the cabinet
+>    confirmation step doesn't yet exist (`runPhase_2_3_1_Cabinet`,
+>    `phaseRunners.ts:2158-2223`, is a one-shot scored pick with no Senate vote
+>    and no enthusiasm side-effect at all). Ted's rework (`tedchange#POST 1-4`)
+>    **fundamentally re-architects the lobby→enthusiasm path** that was already
+>    on the roadmap as debt #17 / DH-23 / E16 cabinet-confirmation:
+>    - **(a) LOBBY satisfaction now gives bonus POINTS** to Pres + factions with
+>      matching lobby cards (NOT enthusiasm — moves the cabinet-lobby coupling
+>      from the `enthusiasm` table to the per-faction `score?` ledger).
+>    - **(b) IDEOLOGY COMPOSITION drives ENTHUSIASM** — ≥50% cabinet of an
+>      ideology = +enth that ideology; ≤20% representation = −enth.
+>    - **(c) 3-shifts-per-half-term cap holds.**
+>    - **(d) Big-4 / rest-of-cabinet / cabinet-level potentially weighted
+>      differently** — the actual percentages are **DESIGNER-GATED OPEN** (Ted
+>      RULED IN CONCEPT but the numbers are TBD).
+>
+>    Engineering call: **this is a CPU-action with significant state-write changes
+>    + a known designer-open numeric**. **Land it AFTER K2 (ActionRegistry) +
+>    AFTER K5 (CpuController)** — cabinet picks are CPU actions, and the rework
+>    requires the conditional-vote-rules primitive (`pop` POST 1111) +
+>    the lobby→score path that K2's action registry mediates. **It lands in E16
+>    (cabinet retention refactor + dynamic seat list)** as a sibling beat — the
+>    existing E16 row already plans the cabinet teardown; #124 changes WHAT the
+>    cabinet writes (POINTS to factions + IDEOLOGY-COMPOSITION-driven enthusiasm,
+>    not the current lobby-card-driven enthusiasm). **Re-scope E16 from "add
+>    confirmation system in the right shape" to "BUILD the confirmation +
+>    enthusiasm rework together in the right shape from day one"**, because
+>    building the today-shape confirmation only to tear it apart for #124 is
+>    waste. Size: M (was XS-S). **The numeric percentages stay designer-gated
+>    until Ted closes them** — ship a const table that can be re-tuned post-design.
+> 3. **★★ The Lingering 7-step strict ordering + tax/tariff carry-forward (#134)
+>    is a re-spec of the meter-decay path.** Verified shipped: `runPhase_2_5_1_Lingering`
+>    (`phaseRunners.ts:3260-3377`) runs cabinet-drift-driven meter writes
+>    plus per-trait modulation + national-debt update — but it does NOT have an
+>    explicit 7-step ordering and has NO tax/tariff volatility-vs-decay
+>    distinction. Ted's `tedchange#POST 397-408` rules **strict 1→7 ordering with
+>    NEVER re-doing a step + volatility = THIS-phase-only + tax/tariff decay
+>    propagates forward to NEXT phase's step 3 (carry-forward across half-terms).**
+>    Size: M as a re-spec of the meter-decay/volatility path (depends on the
+>    meter-bank work / E6 named-ordinal meter model). **Re-scope E6/Phase-1 #6
+>    (meter-model generalization + APOCALYPSE) to also carry the Lingering
+>    step-order + carry-forward semantics** — same surface (Lingering is where
+>    meters get written), and the step-order is the discipline the bank model
+>    needs.
+> 4. **★ Pres implementation 2-step Admin-then-Command blunder rule (#126) is now
+>    the CANONICAL 5-tier wording.** Verified shipped: no Pres-implementation
+>    path exists as a discrete code site — bill effects apply directly via
+>    `applyEffect` (`phaseRunners.ts:3209`) with no Pres roll, no Admin step, no
+>    blunder. Ted's `tedchange#POST 159-164` publishes the AUTHORITATIVE 5-tier
+>    Command-modifies-blunder table that **supersedes the cf82a7d3 §5a #3 fuzzy
+>    "hybrid" wording**:
+>    - **Step 1:** Pres rolls Admin for impl (same as cabinet).
+>    - **Step 2 (Blunder check):** Pres Command modifies the blunder — Cmd 5
+>      avoids; Cmd 4 = 50% avoid; Cmd 3 = +1 to blunder; Cmd 2 = 50% +1; Cmd 1 =
+>      normal; no Cmd / no expertise = −2 (unless Efficient on impl team);
+>      Incompetent = −3; Easily Overwhelmed **skips step 2 entirely**.
+>
+>    Where it binds: **the Pres-implements-bill code in the legislative-depth
+>    epic (Phase-2 #29 / `runPhase_2_6_*` extension)**, NOT in `applyEffect`
+>    itself (which stays the post-roll write). Size: S — a roll-table + a
+>    trait-gate; the trait readers exist. **Lands in E29 (modern legislative
+>    depth) but the rule is now READY** (was OPEN as cf82a7d3 §5a #3).
+> 5. **★ Death/retirement schedule (#130) — REPLACES the current era-mult
+>    schedule.** Verified shipped: `MORTALITY_RULES` (`src/types.ts:485-516`)
+>    has 4-bracket death + 3-bracket retire + 4-era-keyed `eraConfig` with
+>    `deathMult` + `retireMult` — close in spirit but NOT identical to Ted's
+>    schedule. Ted's `tedchange#POST 89-100, 137-148, 195-197, 396` rules:
+>    - **Hale = 1/2 death chance** (RESTORED). Verified: `Hale` is NOT in the
+>      `Trait` union today — needs adding (parking lot or PR-with-the-schedule).
+>    - **Frail rolled FIRST in death roll; retirement rolls oldest-to-youngest
+>      (no Frail priority).** Verified: today the death loop walks
+>      `snap.politicians` in array order (`phaseRunners.ts:2358`) — order-aware
+>      refactor needed.
+>    - **Retired ex-Presidents ONLY roll for DEATH, not retirement.** Closes
+>      the "John Adams immortal" loop.
+>    - **Cabinet members retire at END of half-term, not on appointment.**
+>    - **5%/half-term retire-death + era-scaled %s** (corroborates cf82a7d3 #4 /
+>      Orange's formula).
+>    - **Auto-retire at 100** (already in 2.10, confirmed pre-existing).
+>
+>    Where it binds: **`runPhase_2_4_1_Deaths` (`phaseRunners.ts:2341-2444`) +
+>    `MORTALITY_RULES`.** Size: S — rules-const refinement + order-aware loop
+>    refactor + Hale trait addition. **Lands as a coordinated PR with the #85
+>    5%/half-term retire/death rate** (already queued under Phase-1 #19). The
+>    Hale-half-rate + Frail-first ordering + ex-Pres-only-death are net-new
+>    discipline; the era-scaled percentages refine existing `eraConfig`.
+> 6. **★ Draft re-rules (#136 / #137 / #138) — small XS each, fold into the
+>    draft path.** Verified shipped: `runPhase_2_1_1_Draft` (`phaseRunners.ts:
+>    107-267`) uses raw `Math.random` for random-skill picking (`:187-197`)
+>    AND random-skill-boost (`:196`) — both can roll any of the 6 skills incl.
+>    Command. Ted's RULED draft rules (`tedchange#POST 7-10, 47-50`):
+>    - **Random skill from 6, NO Command** (#136). Restrict the skill pool at
+>      `:196` to exclude `'command'` from the boost. (Note: Command isn't in
+>      the 6 base skills today — it's a separate `command` field on
+>      `Politician`. Verify whether the boost was at one point Command-eligible
+>      via the dataset / a separate path; if not, this is a no-op verification.)
+>    - **No cross-party draft** (#137). Pols enter at IRL party at age 25; flip
+>      via 2.1.6 only. Today's CPU pick (`pickBestForFaction`, `:33-53`) picks
+>      by faction-personality-fit, not by historical party. Add a draft-time
+>      assignment gate that pins a rookie's `partyId` to the dataset's IRL
+>      party (and excludes cross-party drafting in the picker).
+>    - **3 random traits + 3 random alt-states per draft** (#138 — SUPERSEDES
+>      5/5). This is the rookie-grant pair that was already partly captured by
+>      #69 (1856-native re-rule). Goes in the era-config table (§6.1 pattern).
+>      Size: XS each.
+> 7. **★ Conversion / ideology-shift rules (#127) — refine existing tables.**
+>    Verified shipped: `CONVERSION_ODDS` (`src/types.ts:268-291`) has poach
+>    matrix `same: { notInOffice: 0.2, inOffice: 0.05 }` and `cross:
+>    { notInOffice: 0.1, inOffice: 0.02 }` — **the 33% party-flip Ted RULED
+>    (`tedchange#POST 34-39`) is NOT a single constant**; it's the *target
+>    success rate* after the willingness-multipliers stack. The shipped
+>    `cross` rate of 0.1-0.02 base * willingness amplifiers is *roughly*
+>    aligned, but the **same-party adjacency rule (`tedchange#POST 38, 53` —
+>    same-OR-adjacent ideology eligible for same-party conversion)** is the
+>    behavioral change that binds:
+>    - **Adjacency** binds at the conversion-target eligibility filter
+>      (`phaseRunners.ts:993-1003` distance check); migrate to the new
+>      `ideologyDistance(a,b,circular)` helper (#99/§9.1.7) so the wrap +
+>      adjacency unify.
+>    - **LW↔RW Pop 25% cross-circle shift + Two-Faced** (`tedchange#POST 24,
+>      28-29, 51`) is the IDEOLOGY-AS-CIRCLE rule (#99/§9.1.7) at 25% rather
+>      than 50% with auto-Two-Faced trait grant.
+>
+>    Size: S total — adjacency is a one-site filter change; the LW↔RW Pop rate
+>    + Two-Faced grant rides #99's circle helper + a special-case shift table.
+>    **Folds into the #99 ideology-circle helper PR (Phase-1 #5b).**
+> 8. **★ Kingmaker / Master Kingmaker scope (#128) — pin the +1 binding sites.**
+>    Verified shipped: the Kingmaker bonus is **NOT YET a state-vote bonus** —
+>    `calcStateVote` (`phaseRunners.ts:3685-3722`) does NOT consult Kingmaker
+>    state to add a per-state +1. The protégé chain exists (`KINGMAKER_RULES`
+>    `src/types.ts:295-307`), but the +1-in-state / +1-everywhere bonus is
+>    DESIGNED-not-shipped. Ted's `tedchange#POST 316`:
+>    - **Basic Kingmaker = +1 in own state ONLY** (incl. state's Pres primary
+>      + state's general).
+>    - **Master Kingmaker = +1 in EVERY state** (all Pres primaries + all
+>      generals).
+>    - **SUPERSEDES** Matt's "state OR national, pick one" reading.
+>
+>    Where it binds: **`calcStateVote` (`phaseRunners.ts:3711` adjust the
+>    scoring sum to include `kingmakerBonus(snap, c, stateId)`)** + a new helper
+>    `kingmakerBonus(snap, candidate, stateId): number` that returns +1 if any
+>    Kingmaker in the candidate's faction is from the same state (basic) or
+>    anywhere (Master). Size: S. **Pin the bonus binding site in the
+>    election-math epic (Phase-1 #20 bill-scoring leaderboard / Phase-1 #6
+>    meter-model where state-vote modifiers live).**
+> 9. **★ 50/50 House split (#135) — XS, inverse-control rule.** Verified shipped:
+>    `runPhase_2_2_1_CongressLeadership` (`phaseRunners.ts:1844-1889`) computes
+>    `senateMajority` and `houseMajority` as `BLUE if blue>=red else RED`
+>    (`:1863-1864`), which is **wrong for 50/50** — today the tie defaults to
+>    BLUE silently. Ted's `tedchange#POST 65`: **a 50/50 House → leadership
+>    goes to the party NOT in control of the Senate** (inverse-control rule).
+>    Where it binds: **`phaseRunners.ts:1864`** — replace `houseMajority`
+>    with: `houseMajority: PartyId = houseBlue === houseRed ? (senateMajority
+>    === 'BLUE' ? 'RED' : 'BLUE') : (houseBlue > houseRed ? 'BLUE' : 'RED')`.
+>    Size: XS one-line edit. **Ship with QW0 + the small consistency PRs**
+>    (Phase-1 #19).
+> 10. **★ CPU Chief Justice selection ladder (#142) — XS, replaces the coin-flip
+>     court today.** Verified shipped: `runPhase_2_5_3_Court` (`phaseRunners.ts:
+>     3397-3415`) is a `chance(0.5)` coin-flip on 4 hardcoded titles +
+>     conserv-vs-liberal ideology majority → ±0.1 `partyPreference`. **No CJ
+>     selection logic at all today.** Ted's `tedchange#POST 387-390` rules
+>     the explicit CPU CJ ladder: **highest Judicial ability from their party
+>     → multi-faction tie: own faction → Pres-ideology match → lowest-scoring
+>     faction → multi-candidate tie: matching-appointer-ideology → random.**
+>     Where it binds: **the SCOTUS docket epic (Phase-2 #25 / E25)** where the
+>     CJ selection lives. Size: XS as the ladder spec is fully authored.
+>     **Sharpens debt #18 (SCOTUS as a stub) + the #52 player-SCOTUS fork** —
+>     the CJ ladder is CPU-side regardless of which fork wins.
+> 11. **★ Amendments NOT SCOTUS-challengeable (`smallbugs` POST 250-269) —
+>     CONFLICTS with `tea1772` #100, RESOLVES it in the OPPOSITE direction.**
+>     Verified: there is no SCOTUS docket today (debt #18, debt #52), so this
+>     is a build-target constraint, not a code change. Ted/vcczar's
+>     `smallbugs#POST 250-269` ruling: **Govs CANNOT challenge amendments via
+>     SCOTUS** — the Constitution is by-definition constitutional. This
+>     **OVERRIDES** `tea1772`'s #100 ruling ("SCOTUS can overturn an
+>     amendment via Gov-requested review"). **The build target follows Ted**:
+>     drop the SCOTUS-overturns-amendment branch from E25's docket scope and
+>     from E5's amendment lifecycle. **E5 retains the strike-a-statute path +
+>     mutable threshold field; E25 retains the docket + Justice drift + court
+>     size + DH-32 state-guard.** This is a sequencing simplification, not a
+>     new item.
+> 12. **★ 1st / 2nd Continental Congress composition (#133) — rewrites the
+>     CC composition rules.** Verified shipped: `continentalCongress.ts`
+>     handles the CC entity + `firstContinentalCongress.ts` builds the 1st CC
+>     — but the **state-size delegate quota (Big=4, Medium=3, Small=2) is
+>     NOT in code today** (the firstCC builder uses faction-by-pol-count, not
+>     the size table). Ted's `tedchange#POST 211, 217-236`:
+>     - **Big states (PA/MA/VA/MD) = 4 delegates** each.
+>     - **Medium states = 3** each.
+>     - **Small states (GA/RI/DE/NH) = 2** each.
+>     - **1st CC (pre-DoI):** faction with most pols in a state picks delegates.
+>     - **2nd CC (post-DoI):** Gov picks delegates.
+>     - **Articles of Confederation:** prohibit consecutive election + require
+>       2/3 of states for legislation + UNANIMOUS for amendments.
+>     - **PMG appointment goes through Domestic Committee in CC era**
+>       (`tedchange#POST 352-355`).
+>
+>     Size: S (data table + builder rewrite + Articles-of-Confederation gating
+>     rule). **Lands in the existing Continental Congress era system
+>     (`continentalCongress.ts` / E17 / §17.1)** — re-scope to incorporate
+>     Ted's composition rules.
+> 13. **★ AnytimeEvo target-pool tightening (#140) — S, content edit + filter.**
+>     Verified shipped: `anytimeEvents.ts` exists (the kill `:232` lives there);
+>     several AnytimeEvos grant +1 Command to "any random pol." Ted's
+>     `tedchange#POST 255, 271` restricts events 5/17/23/24/25/39/66/117/118/119
+>     to **Rep/Sen/Gov/Cabinet only**, and changes **Assassination = 50%
+>     Pres / 25% random Rep-Sen / 25% random faction leader.** Size: S
+>     (per-event filter wiring + AnytimeEvo template content edits). **Lands
+>     in the AnytimeEvo data + the picker filter** (Phase-1 #19 small
+>     consistency or co-locate with E9 handler 9g A/B/C event vote).
+> 14. **★ Integrity-pol cannot nominate Controversial (#131) — XS, one-rule
+>     guard.** Verified shipped: nomination logic is in the cabinet picker
+>     (`runPhase_2_3_1_Cabinet`, `phaseRunners.ts:2158-2223`) + CPU paths
+>     elsewhere; **no Integrity/Controversial gate today.** Ted's
+>     `tedchange#POST 277` rules: **an Integrity-trait pol CANNOT nominate
+>     a Controversial-trait pol to any office.** Where it binds: at the
+>     candidate-filtering step in every nomination/appointment path (cabinet,
+>     CJ, ambassadors). Size: XS as a single guard helper. **Lands as a
+>     trait-aware filter helper used by E16 + E25 + diplomacy/ambassadors.**
+> 15. **★ Challenge-Legislation cannot target REPEAL (#132) — XS, one filter.**
+>     Verified: no Gov-Action Challenge-Legislation path today (#52 / E25 is
+>     unbuilt). Ted's `tedchange#POST 246-248`: **a Gov-Action Challenge-
+>     Legislation cannot target a repeal-bill** (no real-world precedent for
+>     SCOTUS overturning a repeal). Build-target constraint for E25 / the
+>     gov-actions library. Size: XS as a filter on the action's target list.
+> 16. **★★ The `smallbugs` dataset umbrella (#120) is ONE coordinated
+>     `scripts/seedDataset.mjs` pass.** Verified: the dataset overrides go
+>     via `CURATED_ROWS` in `scripts/seedDataset.mjs` (see §7 + CLAUDE.md).
+>     The ~100 items in `smallbugs` §2 (politicians) + §3 (bills/events) +
+>     §4 (gaps) compose ONE dataset-maintenance work-item, not 100 backlog
+>     rows. Size: M as a coordinated pass; sub-items are XS-S each but
+>     workload is the volume. **Place as a single sized epic next to the
+>     dataset regeneration pipeline** (orthogonal to the engine work, can
+>     parallelize). The dataset pass also covers DH-43 (Vermont home-state)
+>     + DH-51 (modern pols recency-biased) + DH-28 (trait conflict
+>     validator at boot, runs on dataset import).
+> 17. **★ Pres signature step lives in 2.6, NOT 2.10 (#139) — XS,
+>     phase-sequence reorder.** Verified shipped: `PHASE_SEQUENCE` in
+>     `src/phases.ts` includes a sign step but its placement vs 2.7
+>     Military Action needs verification (today bills via `applyEffect`
+>     at `phaseRunners.ts:3209` apply effects on floor pass, not via a
+>     discrete Pres-sign step). Ted's `tedchange#POST 124-126`: **Pres
+>     signature lives in 2.6** so military bills affect Mil-Prep BEFORE
+>     2.7 Military Action. Size: XS as a phase-sequence reorder. **Folds
+>     into Phase-1 #2 (bill typing + spending cap) + Phase-1 #14
+>     (legislative micro-mechanics).**
+> 18. **★ NEW Decision-gated SUB-BUCKET: designer-gated.** Batch 12 makes the
+>     authority hierarchy explicit — **Ted/vcczar > GA > inference** (§30.4
+>     of game-mechanics.md). The Decision-gated category in the roadmap
+>     parking lot now splits into TWO sub-buckets:
+>     - **User-gated** (the existing bucket — items waiting on the human's
+>       design-call): the Senate cloture %, the #18 state-scope, the player-
+>       SCOTUS fork (#52), the delegate-class fork, DH-1 filibustered-MUST-
+>       pass, DH-14 era-aware bill ideology, DH-15 small-state multiplier,
+>       §25.9 Iron-Fist split, divergence #10 / #84 contingent-election,
+>       DH-25 career-track bootstrap, DH-33 / DH-54 impeachment, DH-41 SCOTUS
+>       cascade, DH-49 population model, DH-34 era-bias policy-reactive.
+>     - **Designer-gated** (NEW — items waiting on Ted/vcczar to close): the
+>       9 open `tedchange` items per §30.2 of game-mechanics.md — **(1)
+>       Mil-Prep meter level 4 fix**; **(2) Universal Election Modifier
+>       (UEM)**; **(3) Crisis trait consolidation**; **(4) term-limit Gov
+>       actions in pre-Senate era**; **(5) faithless-elector rewording**;
+>       **(6) party rename trigger PL-vs-EraEvo**; **(7) VP-must-be-same-
+>       party-on-resignation relaxation**; **(8) Cabinet enthusiasm
+>       percentages**; **(9) Cabinet ideology weighting Big-4-vs-rest-vs-
+>       cabinet-level.** The roadmap-planner should NOT schedule these as
+>       ready-to-build until Ted/vcczar closes them in `tedchange`/`smallbugs`.
+> 19. **CORROBORATION (confidence only, no movement):** the death/retire +
+>     Hale + Frail-first family corroborates the existing #85 / DH-30 /
+>     Orange's 5% formula items already in §8.1; the Lingering 7-step
+>     ordering ties into the existing #134 placement under E6 / Lingering
+>     epic; the CC composition rewrite confirms `continentalCongress.ts` +
+>     `firstContinentalCongress.ts` as the binding sites; the Master
+>     Kingmaker scope sharpens E3b / convention / kingmaker-pair work; the
+>     amendments-NOT-SCOTUS folds the `tea1772` #100 conflict into a
+>     simplification of E5 + E25.
 >
 > **★★★★ Batch-11 changes to the plan (`arkzag`, the 1820→1840 FULL-ARC
 > continuation of `dem1820` — the FIRST capture of the late-game systems. NO new
@@ -3189,6 +3641,62 @@ planning. Specifically:
 > automation-reduces-upkeep argument behind E9/#55/#115. **CORROBORATION only:** #115
 > continuation-boot (re-confirmed, priority unchanged), #13/#111/#44/#52/#59/#11/#10/#1/
 > #9/#25/#54/#85/#40/#101 — no keystone moves.
+> **★★★★★ Batch-12 change (`tedchange` + `smallbugs` — the DESIGNER's official
+> rules-doc rewrite/cleanup channels; AUTHORITATIVE, supersedes prior GA calls
+> where they conflict; NO new keystone, NO re-sequence of the keystones):**
+> **★★ QW0 relocation-cap = 4 CLOSES — promote it from "open-design / build" to
+> ready-to-ship FIRST** (`smallbugs#POST 734-735`, vcczar-12-30-25; one-line edit
+> at `src/types.ts:247` + alt-state exemption guard at the relocation accumulator).
+> **★★ Cabinet enthusiasm REWORK (#124) is the M-sized teardown of E16's
+> lobby→enthusiasm path** — re-scope E16 to build confirmation + #124 enthusiasm
+> rework TOGETHER from day one (lobby=POINTS to `Faction.score?`; ideology
+> composition = ENTHUSIASM via the existing ±3-cap clamp; numeric percentages
+> stay designer-gated). LANDS AFTER K2 + K5 (cabinet picks are CPU actions;
+> consumes the conditional-vote-rules primitive). **★ Lingering 7-step strict
+> ordering + tax/tariff carry-forward (#134) — M, re-scope E6 / Phase-1 #6
+> (meter-model + APOCALYPSE)** to also carry Lingering step-discipline + the
+> `game.taxTariffDecayQueue?` carry-forward state. **★ Pres 2-step Admin-then-
+> Command blunder rule (#126) is the CANONICAL 5-tier wording** — supersedes
+> the fuzzy cf82a7d3 §5a #3 placeholder; READY (was OPEN); lands in E29 modern
+> legislative depth (where Pres-implements-bill code lives). **★ Death/retirement
+> schedule (#130)** — refine `MORTALITY_RULES`, add `Hale` trait + `haleDeathMult
+> = 0.5`, refactor death loop to **Frail-first**, gate retirement on **NOT
+> (retired ex-Pres)**, mark cabinet retirement as end-of-half-term; folds into
+> Phase-1 #19 small consistency (pairs with #85). **★ Kingmaker / Master
+> Kingmaker scope (#128)** — pin the +1-in-state (basic) / +1-everywhere
+> (Master) bonus in `calcStateVote` (`phaseRunners.ts:3711`); lands in
+> Phase-1 #20 election math. **★ 1st/2nd CC composition (#133)** — rewrite
+> `continentalCongress.ts` + `firstContinentalCongress.ts` to use the state-size
+> delegate quota (Big PA/MA/VA/MD=4; Medium=3; Small=2) + the 1st→2nd CC
+> transition on DoI + Articles-of-Confederation gating; re-scope E17. **★ CPU
+> Chief Justice ladder (#142)** — XS, the ladder spec is authored; lands in
+> E25 SCOTUS docket. **★ 50/50 House inverse-control (#135)** — XS one-line edit
+> at `phaseRunners.ts:1864`; ship with QW0 + Phase-1 #19. **★ Draft re-rules
+> (#136/#137/#138)** — XS each: no Command in random skill (verify), no
+> cross-party draft (gate `partyId` to IRL at draft time), 3 traits + 3 alt-states
+> (re-rule into era-config). **★ Conversion / ideology-shift schedule (#127)**
+> — folds into #99 ideology-circle helper (Phase-1 #5b) + the adjacency filter
+> + LW↔RW Pop 25% special case with auto-Two-Faced. **★ AnytimeEvo target-pool
+> tightening (#140)** — S, per-event filter + content edits; folds into Phase-1
+> #19 or E9 handler 9g. **★ Integrity-can't-nominate-Controversial (#131) +
+> Challenge-Legislation-can't-target-REPEAL (#132)** — XS each, one filter
+> helper per rule. **★ Pres signature step lives in 2.6 (#139)** — XS,
+> phase-sequence reorder. **★ FL trait gain 5%+/3%- (#141)** — XS, refines
+> existing FL trait-gain const. **★★ #120 `smallbugs` DATASET UMBRELLA — ONE
+> coordinated `scripts/seedDataset.mjs` `CURATED_ROWS` pass** (~100 items:
+> religion mislabels / wrong skills / missing pols / bio errors / swapped bill
+> effects / event prereqs / region typos); also covers DH-43/DH-51/DH-28; M-sized
+> as a single pass, place orthogonally to engine work. **★ Amendments-NOT-SCOTUS-
+> challengeable (vcczar)** OVERRIDES `tea1772` #100 → SIMPLIFICATION: drop the
+> SCOTUS-overturns-amendment branch from E25 docket scope and from E5 amendment
+> lifecycle (keep E5's strike-a-statute + mutable threshold; keep E25's docket +
+> drift + DH-32 state-guard). **★★ NEW Decision-gated SUB-BUCKET: designer-gated**
+> — the 9 open `tedchange` items (Mil-Prep lvl 4, UEM #125, Crisis trait
+> consolidation, term-limit Gov pre-Senate, faithless-elector rewording, party
+> rename PL-vs-EraEvo, VP-same-party-on-resignation, cabinet enthusiasm %s,
+> cabinet ideology weighting) — NOT ready-to-build until Ted/vcczar closes
+> them. The authority hierarchy is now Ted/vcczar > GA > inference; the
+> roadmap's parking lot splits Decision-gated into "user-gated" + "designer-gated."
 > **Batch-10 change (`dem1820`, first 1820-START — ONE promotion + two decision-gates +
 > sized fixes; NO new keystone, NO re-sequence of the keystones):**
 > **★★ #115 SCENARIO-BOOT pipeline PROMOTED to the front of the subsystem queue** —
@@ -3217,22 +3725,32 @@ planning. Specifically:
 > #24, #9, #20, #25b, #101, #61, #44 — no keystone moves.
 
 **Cheap fixes first (do immediately — XS each, high value):**
-**BUG-0 (relocation cap `5`→`4`, `types.ts:247`, divergence #9 — the cheapest win;
-do it FIRST) · BUG-1 (era-event filter, gates federalism — now ALSO subsumes the
-batch-7 era-events-predating-start-DROPPED hole, LIVE-confirmed by the LA-Purchase-
-dropped-at-1800-start episode; DH-30 event-scheduler-min-floor is its companion) ·
-the event-scheduler MIN-floor (DH-30: minimum = 20% of the era's max [round down],
-spill to the 5 generic anytime events if none fire — pairs with BUG-1, same
-scheduling surface) · BUG-3 (no-PM-General guard) · the ±3 meter-swing clamp
-(meter-model divergence, now confirmed live by `drums` #80 — also covers cabinet
-ideology swings) · auto-Carpetbagger (divergence #2).** (BUG-2 rides SCOTUS content;
-**#54 investigation committees is READY** — rules authored by `hd` #65; **#85
-5%/half-term retire/death** is a 1-line rules-const refinement; **DH-31
-procedure-bills-bypass-veto** is a small verify-and-fix in the bill-typing epic;
-**DH-32 SCOTUS-voids-a-STATE** is a one-rule guard in the SCOTUS ruling-effect path;
-**DH-43 (batch 8) Vermont home-state mapping** is a dataset/data fix;
-**DH-40 (batch 8) SCOTUS-justice-count-not-auto-packaged → game-stall** is an XS-S
-bug-fix in the bill-packaging / SCOTUS-establish path.)
+**★ BUG-0/QW0 (relocation cap `5`→`4`, `types.ts:247`, divergence #9 — ★ batch-12
+`smallbugs#POST 734-735` vcczar-12-30-25-APPROVED, now FULLY RULED with alt-state
+exemption; the cheapest win; do it FIRST) · BUG-1 (era-event filter, gates
+federalism — now ALSO subsumes the batch-7 era-events-predating-start-DROPPED
+hole, LIVE-confirmed by the LA-Purchase-dropped-at-1800-start episode; DH-30
+event-scheduler-min-floor is its companion) · the event-scheduler MIN-floor
+(DH-30: minimum = 20% of the era's max [round down], spill to the 5 generic
+anytime events if none fire — pairs with BUG-1, same scheduling surface) · BUG-3
+(no-PM-General guard) · the ±3 meter-swing clamp (meter-model divergence, now
+confirmed live by `drums` #80 — also covers cabinet ideology swings; **batch-11
+unconditionally ready, binds at `calcStateVote` `:3709-3711`**) · auto-Carpetbagger
+(divergence #2) · **★ batch-12 50/50 House inverse-control (#135)** (`tedchange#POST
+65`, one-line edit at `phaseRunners.ts:1864`) · **★ batch-12 draft re-rules
+(#136/#137/#138)** (no Command in random skill / no cross-party draft / 3 traits
++ 3 alt-states) · **★ batch-12 Integrity-can't-nominate-Controversial (#131)** +
+**Challenge-Legislation-can't-target-REPEAL (#132)** (one filter helper per
+rule) · **★ batch-12 Pres signature in 2.6 (#139)** (phase-sequence reorder) ·
+**★ batch-12 FL trait gain 5%+/3%- (#141)** (refines existing const) ·
+**★ batch-12 CPU CJ ladder (#142)** (the ladder spec is authored).**
+(BUG-2 rides SCOTUS content; **#54 investigation committees is READY** — rules
+authored by `hd` #65; **#85 5%/half-term retire/death** is a 1-line rules-const
+refinement; **DH-31 procedure-bills-bypass-veto** is a small verify-and-fix in
+the bill-typing epic; **DH-32 SCOTUS-voids-a-STATE** is a one-rule guard in the
+SCOTUS ruling-effect path; **DH-43 (batch 8) Vermont home-state mapping** is a
+dataset/data fix; **DH-40 (batch 8) SCOTUS-justice-count-not-auto-packaged →
+game-stall** is an XS-S bug-fix in the bill-packaging / SCOTUS-establish path.)
 
 **ENGINE TRACK — Phase 0 (keystones, parallelizable after K0):**
 **K0) Seed the RNG → K1) `State.policies` + `State.electionMethod` shapes →
@@ -3267,7 +3785,13 @@ dependency). See §6.6.1 + §9.1.3.**
 **ENGINE TRACK — Phase 1 (subsystems, roughly this order to minimize rework):**
 **1) Federalism era epic (`scenario1788` + content; pulls in #2-#5; needs BUG-1;
 *can ship with stubbed CPU handlers — K5 wires in later*; **rides the `BootSheet`
-schema from K4 — the 1788 boot is the first instantiation**) →
+schema from K4 — the 1788 boot is the first instantiation**; **★ batch-12: the
+DRAFT RE-RULES land WITH the federalism boot (because draft logic is at scenario-
+boot scope) — #136 random skill on draft has NO Command (verify the existing pool
+exclusion at `phaseRunners.ts:187-197`); #137 no cross-party draft (gate
+`partyId` to IRL party at draft time + exclude cross-party drafting in
+`pickBestForFaction` at `phaseRunners.ts:33-53`); #138 3 random traits + 3
+random alt-states per draft (re-rule into era-config; SUPERSEDES 5/5)**) →
 2) Bill typing + spending cap (+ national-surplus/debt integer; **batch-7: fix
 the procedure-subtype veto MIS-ROUTING — DH-31 / divergence #21 — procedure bills
 skip the President sign/veto step**) →
@@ -3329,21 +3853,50 @@ active-amendment → BLOCKS-a-whole-legislation-class effect checked AT PROPOSAL
 (excise-tax ban; suffrage class — the proactive face of the *Pollock* gate, which
 today is framed only as a per-bill repeal/until-ratified constraint), and the
 un-bundleable flag (amendments can't ride bill-packaging). Verified NO `amendments`
-field today**; gates BUG-2) →
+field today**; gates BUG-2; **★★ batch-12 (`smallbugs#POST 250-269`, vcczar,
+game-mechanics §30.3): AMENDMENTS NOT SCOTUS-CHALLENGEABLE — vcczar's ruling
+OVERRIDES `tea1772` #100. SIMPLIFICATION: DROP the Gov-requested judicial-review-
+of-an-amendment branch above (the SCOTUS-strikes-an-amendment path from #100);
+KEEP the strike-a-statute path + the mutable-threshold field. Govs cannot
+challenge amendments — the Constitution is by-definition constitutional. This
+is a build-target constraint that simplifies E5↔E25 interaction**) →
 5b) **[early-republic, batch 7] Ideology-as-CIRCLE foundation refactor
 (divergence #19 / #99) — add a central `ideologyDistance(a,b,circular)` helper +
 MIGRATE the 10+ open-coded `Math.abs(IDEOLOGY_ORDER.indexOf…)` sites to it
 (behavior-preserving while the flag is off); gate the wrap on
 `GameState.ideologyIsCircular?`; extend conversion targeting to same-OR-adjacent.
 DO THE HELPER + MIGRATION EARLY (cheap, additive; every later ideology consumer —
-conversion handler 9f, SCOTUS within-1-step §26.6 — calls it from day one). §9.1.7**
-→
+conversion handler 9f, SCOTUS within-1-step §26.6 — calls it from day one). §9.1.7.
+**★ batch-12 (#127, S — `tedchange#POST 18-31, 34-39, 38, 51-53`,
+game-mechanics §6.3.y + §6.4.y + §27.7): CONVERSION / IDEOLOGY-SHIFT RATE
+SCHEDULE — fold INTO this helper PR. The adjacency rule (same-OR-adjacent
+ideology eligible for same-party conversion, `tedchange#POST 38, 53`) is a
+one-site filter change at `phaseRunners.ts:993-1003`; the LW↔RW Pop 25%
+cross-circle shift (`tedchange#POST 24, 28-29, 51`) is a special-case shift
+table that rides the circle helper at the wrap; the 33% party-flip rate
+(`tedchange#POST 34-39`) is a refinement of `CONVERSION_ODDS.poach.matrix.cross`
+to match the target post-willingness-amplifier rate; auto-Two-Faced grant on
+successful LW↔RW Pop flip. + ★ batch-12 (#129, XS): KINGMAKER → PROTÉGÉ
+TRAIT ALLOWLIST/BLOCKLIST — a `KINGMAKER_PASSABLE_TRAITS` /
+`KINGMAKER_BLOCKED_TRAITS` config (pass: Kingmaker-basic / Celebrity / Hale /
+all positives; block: Master+National Kingmaker / Frail / Flip-Flopper /
+Two-Faced).** →
 6) Meter-model generalization + APOCALYPSE meter-driven endgame [NEAR-TERM,
 **batch 6 addition**] (±3-clamp + crisis/cascade over the existing `NationalMeters`;
 **add `GameState.endgameClocks` + per-meter band-monitor in
 `runPhase_2_5_1_Lingering` + termination path firing `game.gameEnded` when
 `remainingYears` hits 0 — divergence #14**; benefits every era; the Populism
-Planet Health 10-yr clock is one configured row) →
+Planet Health 10-yr clock is one configured row) +
+**★ batch-12 (#134, M — `tedchange#POST 397-408`, game-mechanics §11.1.y):
+LINGERING 7-STEP STRICT ORDERING + TAX/TARIFF DECAY CARRY-FORWARD. Re-scope
+this epic to also re-spec the meter-decay/volatility surface in
+`runPhase_2_5_1_Lingering`. Add `game.taxTariffDecayQueue?: { decayDelta;
+appliesAtPhase: 3; lifeYears }[]` (NEW carry-forward state) + an explicit
+7-step internal ordering on the runner (never re-do a step). Volatility roll
+at step 7 = THIS-phase-only (not added to running totals); tax/tariff decay
+propagates forward to NEXT phase's step 3 (decay continues across half-terms).
+SAME surface as the meter-model + APOCALYPSE work — same tick site
+(`runPhase_2_5_1_Lingering`); `repair()` backfills `[]`.** →
 7) Persist/auto-fill House slates & committees [NEAR-TERM — scaling wall b] →
 8) Procedural pol generation [NEAR-TERM — scaling wall a; **era-coded by
 rule 3.0.18 with a 2020 startYear for Populism (#90), plus a dataset-exhaustion
@@ -3410,7 +3963,19 @@ SeatSpec[]` + `Legislation.createsCabinetSeat?: SeatSpec`** + **★ batch-9: ADD
 ABOLISH PATH — `Legislation.abolishesCabinetSeat?: SeatSpec` (offices created AND
 abolished by law, founding→modern; §28.5; Postmaster-General abolished, HEW split)**
 + **cabinet-confirmation system (DH-23 — XS-S because system doesn't exist yet, lands
-here as a sibling of the seat-fill step)** + offices-created-by-law (#66) →
+here as a sibling of the seat-fill step)** + offices-created-by-law (#66) +
+**★★ batch-12 (#124, M — `tedchange#POST 1-4`, game-mechanics §9.3.7): CABINET
+→ ENTHUSIASM REWORK is a TEARDOWN of the existing lobby→enthusiasm path —
+re-scope this epic to build confirmation + #124 enthusiasm rework TOGETHER
+from day one. (a) LOBBY satisfaction writes POINTS to the `Faction.score?`
+ledger (NOT enthusiasm) — moves the cabinet-lobby coupling from `enthusiasm`
+to the score ledger; (b) IDEOLOGY COMPOSITION drives ENTHUSIASM via the ±3-cap
+clamp — ≥50% cabinet of an ideology = +enth that ideology, ≤20% = −enth;
+(c) 3-shifts/half-term cap holds. Designer-gated OPEN numerics (Big-4 33% /
+others 25%, etc.) — ship a const table that can be re-tuned post-design.
+LANDS AFTER K2 + K5 (cabinet picks are CPU actions; consumes the conditional-
+vote-rules primitive). + ★ batch-12 (#131, XS): INTEGRITY-CAN'T-NOMINATE-
+CONTROVERSIAL — one filter helper used by the cabinet picker.** →
 17) **Iron Fist trait split (§25.9 / debt #25) — M; designer-flagged. Split
 into ≥6 office-keyed traits; `repair()` migrates `'Iron Fist'` → all child
 traits; touches the 4 governance rows + 3 era-event readers + 6 grant-callers.
@@ -3419,10 +3984,35 @@ Independent of keystones — the trait system shipped in PR4-PR6.** →
 (rebalance inelastic lobby cards — DH-11; faction-rename triggers via handler 9o) →
 19) Small consistency PRs (old-age decay, auto-retire, industry leadership,
 tariff integer, **5%/half-term retire-death #85 — 1-line refinement of
-`MORTALITY_RULES`**, ±3 ideology swing cap #80 — already queued under meter-model) →
+`MORTALITY_RULES`**, ±3 ideology swing cap #80 — already queued under meter-model,
+**★ batch-12 (#130, S — `tedchange#POST 89-100, 137-148, 195-197, 396`,
+game-mechanics §10.1.y): DEATH/RETIREMENT SCHEDULE — refine
+`MORTALITY_RULES.eraConfig` percentages; ADD `Hale` to the `Trait` union
+(verify: NOT in `types.ts:36` today) + `haleDeathMult = 0.5` to
+`MORTALITY_RULES`; REFACTOR the death-roll loop to **Frail-first** (today
+`runPhase_2_4_1_Deaths` walks `snap.politicians` in array order); GATE
+retirement on NOT (retired ex-Pres); mark cabinet retirement as end-of-half-term
+not on-appointment. Auto-retire at 100 is already in 2.10**, **★ batch-12
+(#135, XS — `tedchange#POST 65`): 50/50 HOUSE INVERSE-CONTROL — replace the
+silent default-to-BLUE on tie at `phaseRunners.ts:1864` (one-line edit)**,
+**★ batch-12 (#141, XS): FL TRAIT GAIN 5% POSITIVE / 3% NEGATIVE — refines
+the existing FL trait-gain const; positives per cycle, negatives first-time-
+as-FL only**, **★ batch-12 (#140, S — `tedchange#POST 249-275`,
+game-mechanics §10.2.y): ANYTIMEEVO TARGET-POOL TIGHTENING — per-event
+restrictions on events 5/17/23/24/25/39/66/117/118/119 to Rep/Sen/Gov/Cabinet
+only; Assassination = 50% Pres / 25% Rep-Sen / 25% FL (alternatively co-locate
+with E9 handler 9g A/B/C event vote)**, **★ batch-12 (#139, XS): PRES
+SIGNATURE STEP IN 2.6 — phase-sequence reorder in `src/phases.ts` so military
+bills affect Mil-Prep BEFORE 2.7 Military Action**) →
 20) Bill scoring leaderboard (divergence #1; **batch-8: also lands the
 presidential-vote modifier stack + the era-stamped Popular/Unpopular issue list
-#103 — small additive election-math/bill-scoring inputs**) →
+#103 — small additive election-math/bill-scoring inputs**; **★ batch-12 (#128,
+S — `tedchange#POST 316`, game-mechanics §6.5.y): KINGMAKER / MASTER KINGMAKER
+BONUS SCOPE — pin the +1 binding at `calcStateVote` (`phaseRunners.ts:3711`) in
+the score sum. Add a `kingmakerBonus(snap, candidate, stateId): number` helper:
++1 if a basic Kingmaker in the candidate's faction is from the same state; +1
+in EVERY state for a Master Kingmaker in the candidate's faction. SUPERSEDES
+Matt's "state OR national, pick one" reading**) →
 21) Conversion-targeting refactor (divergence #3, if pursued; **add Kingmaker-
 pairing-dissolution-on-flip — DH-5**) →
 22) gilded scenario (once `advanceEra` + action libraries + the CPU handler
@@ -3445,7 +4035,17 @@ add the DH-32 guard — a STATE cannot be ruled unconstitutional (a territory ca
 be revoked; secession is the only un-making of a state); + the `Cohens`-style
 persistent ruling→bill-class rule-modifier #94 used by 4b above**; **★ batch-9:
 court size is LEGISLATED and variable with excess-justices-NOT-replaced semantics
-(§28.5) — add a `courtTargetSize` field**) →
+(§28.5) — add a `courtTargetSize` field**; **★ batch-12 (#142, XS —
+`tedchange#POST 387-390`, game-mechanics §22.7.y): CPU CHIEF JUSTICE
+SELECTION LADDER — highest Judicial ability from their party → multi-faction
+tie: own faction → Pres-ideology match → lowest-scoring faction → multi-
+candidate tie: matching-appointer-ideology → random. Sharpens debt #18 (SCOTUS
+as a stub) + the #52 player-SCOTUS fork — CPU CJ ladder is CPU-side regardless
+of which fork wins**; **★★ batch-12 (`smallbugs#POST 250-269`, vcczar): SCOPE
+SIMPLIFICATION — DROP the SCOTUS-overturns-amendment branch from this docket
+(amendments are NOT SCOTUS-challengeable per vcczar; OVERRIDES `tea1772`
+#100); KEEP the strike-a-statute path + DH-32 state-guard + DH-41
+ruling-cascade hook**) →
 26) Third-party challenge trigger (**rebalance apparent Dem bias — DH-11**;
 **batch-9: region-weighted 3rd-party PV + engine-is-2-party-hard-wired DH-55**) →
 27) Military-leadership appointment tier (pairs with #3 war) →
