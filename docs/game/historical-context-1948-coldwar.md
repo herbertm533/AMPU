@@ -16,15 +16,18 @@
 > system). Confidence tags inline: **[consensus]**, **[contested]**,
 > **[inference]**. *Research, not design.*
 >
-> **This companion now also carries the forward edge of the modern era** — two
-> later windows that the main doc's §10 stops short of and that newer 2000- and
-> 2024-start batches actually open on: the **2000-START early-War-on-Terror
-> window** (added for `3843d2da`) and the **2020–2025 window** (added for the
+> **This companion now also carries the forward edge of the modern era** — three
+> later windows that the main doc's §10 stops short of and that newer 2000-, 2016-
+> and 2024-start batches actually open on: the **2000-START early-War-on-Terror
+> window** (added for `3843d2da`), the **2016-START window** (added for the
+> `65f81fe8` "Modern Day Playtest"), and the **2020–2025 window** (added for the
 > `51dfaef1` "2024 — The Second Coming" batch). The main doc's §10 timeline ends
 > at **"2020 — COVID-19; a high-turnout, highly polarized election"**
-> (`historical-context.md` line 1912); the 2020–2025 section below **picks up
-> exactly there** (the 2020 *outcome* → Jan 6 → the Biden term → the 2024
-> election → Trump's second term) so the parent doc never needs rewriting.
+> (`historical-context.md` line 1912); §10's *narrative* is otherwise anchored on
+> a **2012-start** (Obama re-election), so the 2016 election cycle had **no dated
+> anchors** until the 2016-start window below. The 2020–2025 section then **picks
+> up exactly at §10's edge** (the 2020 *outcome* → Jan 6 → the Biden term → the
+> 2024 election → Trump's second term) so the parent doc never needs rewriting.
 
 ## ★ The load-bearing framing: the Civil Rights / Southern realignment (c. 1948–1994)
 
@@ -418,6 +421,73 @@ place.)*
   "ended with America dissolving in 2009" (chunk-001 post 1) — a reminder these
   runs go fully divergent.
 
+## The 2016-START window (added for the `65f81fe8` "Modern Day Playtest" batch)
+
+> **Why this section exists.** §10 of the main doc is anchored on a **2012-start**,
+> and this companion's other modern windows are **2000-** and **2020/2024-start** —
+> so the **2016 cycle** had no dated anchors. The `65f81fe8` "Modern Day Playtest"
+> is a **current-rules, 8-human-player** game (4 Blue / 4 Red) run by **Rodja**
+> with the "blessings of @vcczar and @MrPotatoTed" (chunk-001 post 1) — so its GA
+> rulings reflect the **latest rules**, though it is *not* a designer-run game like
+> the 2000/2024 batches. A poll chose the start: **"Election Phase for 2016"**
+> (chunk-001 post 12). It plays the in-game cycle **2016 → 2020 → 2022 → 2024 →
+> 2026-2028**, ending mid-"2026-2028" turn (chunk-032 post 2416). **Modern polarity
+> holds with no caveat: BLUE = Democrats / left, RED = Republicans / right** — the
+> *end state* of this file's ★ Southern-realignment framing; the reverse of
+> 1856/1868. The game's two point-banked era bands here are **"Era of Populism"**
+> (2016→2024; banking ritual fires at the 2024 boundary, chunk-026) → **"Era of
+> the Near Future 2024-2048"** (chunk-026 post 1909) — game content-gate labels,
+> not real periods.
+
+### Hard anchors for a 2016 start [consensus]
+- **2016 primaries.** **Republican:** a large field winnowed to **Donald Trump**,
+  who effectively clinched by **late May 2016** and chose **Mike Pence** as running
+  mate. **Democratic:** **Hillary Clinton def. Bernie Sanders** — Clinton ~**2,205
+  pledged delegates (54%)** to Sanders ~**1,847 (46%)**, +~3M popular votes; early
+  contests Clinton-IA (narrow), Sanders-NH (~60–38), Clinton-NV (~53–47) and
+  Clinton-SC (~76–24). ([2016 Democratic primaries — Wikipedia](https://en.wikipedia.org/wiki/2016_Democratic_Party_presidential_primaries), [Britannica — 2016 election](https://www.britannica.com/topic/United-States-presidential-election-of-2016))
+- **2016 general election.** **November 8, 2016** — **Trump (R) 304 EV** def.
+  **Clinton (D) 227 EV** (306/232 pledged; faithless electors account for the
+  difference). **Clinton WON the popular vote** by ~2.9M (~48.2%–46.1%). One of
+  the great upsets; the populist realignment that names the era. **[consensus]**
+  ([2016 election — Wikipedia](https://en.wikipedia.org/wiki/2016_United_States_presidential_election), [270toWin — 2016](https://www.270towin.com/2016-election/))
+- **Era backdrop a 2016-start leans on** (texture): a **115th Congress** opening
+  with a **Republican trifecta** (Jan 2017); dominant issues **immigration/the
+  border wall, trade/tariffs, ACA-repeal attempts, the 2017 Tax Cuts & Jobs Act**,
+  and the **populist-right vs. establishment-GOP** + **progressive vs.
+  establishment-Dem** intra-party fights. For anything past in-game 2016, use
+  **§10 + the 2020–2025 window** for texture and treat outcomes as alt-history.
+  **[consensus / inference]**
+
+### Game treatment vs. real history — notes for this 2016-start batch
+- **Polarity: fully modern, no caveat** (Blue = LW Pop/Prog/Lib/Mod + Civil
+  Rights/Unions/Wall Street; Red = RW Pop/Trad/Cons + Theocratic/Oil & Gas/Military
+  Complex; chunk-001 post 20).
+- **★ Alt-history from turn ONE — more divergent than the 2000/2024 batches.** The
+  in-game 2016 fields produced different frontrunners: the GOP primary was a
+  **Palin / Pence** contest with **Mark Sanford** over-performing, and **Donald
+  Trump ran only as a New York favorite son to lock up delegates for Sarah Palin —
+  never the nominee** (chunk-001 posts 40/53/81); the Democratic field was led by
+  **Mark Warner (Mod)** and **Bernie Sanders**, with **Hillary Clinton fading
+  early** (bad debate + an "emails" scandal, posts 81/88/89). By the end of the
+  Era of Populism (in-game ~2024) the divergence is total: the **Democratic Party
+  is a "flaming wreck"/"dead,"** Republicans hold power "they haven't had since
+  Reconstruction," **Nikki Haley is President** (chunk-026 posts 1871/1877), Mark
+  Warner had been a one-term retiring president (post 1870), **Ivanka Trump & Paul
+  Ryan** served as Red faction leaders (post 1877). **GM framing: use the real
+  2016 cycle for the opening board + era texture (the populist realignment, the
+  trade/immigration/ACA issue menu, the two intra-party fights); treat every named
+  officeholder/result and the late-game storyline as the campaign's own divergent
+  timeline.** Because the thread was *played in 2022–2023*, its in-game 2020/2024/
+  2026 turns predate the real outcomes — **not** a record of the real Biden/Trump
+  line; **§10 + the 2020–2025 window** carry the real post-2016 history.
+- **Era-band names (flavor, not real periods):** **"Era of Populism" (≈2016–2024)**
+  → **"Era of the Near Future" (2024–2048)** (chunk-026) — game-state content
+  gates, consistent with the two-level era model (Historical Eras vs.
+  decade/census content-rotation boundaries). The stray **"1972 Neocons"** mention
+  (chunk-038) is players discussing the era system in the abstract, not an era this
+  2016-start entered.
+
 ## Hard anchors the game likely models
 
 ### The 12 presidential elections 1948–2004 (winner / loser EV; notable ones flagged) [consensus]
@@ -548,4 +618,5 @@ verify the exact split before baking any single one into a fixed mechanic.)*
 - Cold War turning points: [State Dept — Cuban Missile Crisis](https://history.state.gov/milestones/1961-1968/cuban-missile-crisis), [NASA — Sputnik](https://www.nasa.gov/history/65-years-ago-sputnik-ushers-in-the-space-age/), [State Dept — Korean War](https://history.state.gov/milestones/1945-1952/korean-war-2), [State Dept — Gulf War 1991](https://history.state.gov/milestones/1989-1992/gulf-war), [History.com — Iraq War begins (Mar 19/20, 2003)](https://www.history.com/this-day-in-history/march-19/war-in-iraq-begins).
 - The race-vs-economic-development scholarly debate: [Cambridge — Transformation of Southern Politics Revisited](https://www.cambridge.org/core/journals/british-journal-of-political-science/article/abs/transformation-of-southern-politics-revisited-the-house-of-representatives-as-a-window/B0D710855EC663879079F1CD5B7B952B), [Harvard UP — The End of Southern Exceptionalism (Shafer & Johnston)](https://www.hup.harvard.edu/books/9780674032491).
 - **2020–2025 window:** [2024 election — Wikipedia](https://en.wikipedia.org/wiki/2024_United_States_presidential_election) and [CFR — The 2024 Election by the Numbers](https://www.cfr.org/articles/2024-election-numbers) (Trump 312 / Harris 226; popular vote; seven swing states; non-consecutive terms); [Pew — Behind Trump's 2024 Victory](https://www.pewresearch.org/politics/2025/06/26/behind-trumps-2024-victory-a-more-racially-and-ethnically-diverse-voter-coalition/) (Biden withdrawal Jul 21, 2024; Harris nominee); [CNN — Trump indictment tracker](https://www.cnn.com/interactive/2023/07/politics/trump-indictments-criminal-cases/) and [Ballotpedia — Trump indictments 2023–2025](https://ballotpedia.org/Donald_Trump_indictments,_2023-2025) (the four 2023 indictments + case dispositions); [CNBC — guilty verdict May 30, 2024](https://www.cnbc.com/2024/05/30/trump-trial-verdict-hush-money.html) and [NPR — unconditional discharge Jan 10, 2025](https://www.npr.org/2025/01/10/nx-s1-5253927/trump-sentencing-new-york); [Attempted assassination (Butler, Jul 13, 2024) — Wikipedia](https://en.wikipedia.org/wiki/Attempted_assassination_of_Donald_Trump_in_Pennsylvania) and [Al Jazeera — assassination-attempts timeline](https://www.aljazeera.com/news/2026/4/26/timeline-trump-assassination-attempts-and-security-incidents) (Butler Jul 13 + West Palm Beach Sep 15); [Second inauguration of Donald Trump — Wikipedia](https://en.wikipedia.org/wiki/Second_inauguration_of_Donald_Trump) and [Brookings — first-100-days confirmations](https://www.brookings.edu/articles/the-first-100-days-of-confirmations-in-the-second-trump-administration/) (Jan 20, 2025 inauguration; Rubio 99–0, Hegseth 51–50; EO burst); [Second cabinet of Donald Trump — Wikipedia](https://en.wikipedia.org/wiki/Second_cabinet_of_Donald_Trump) (Gabbard DNI, Thune Senate Majority Leader, Vance VP); [Presidency of Joe Biden — Wikipedia](https://en.wikipedia.org/wiki/Presidency_of_Joe_Biden) (2021–2025 capstone: Afghanistan Aug 2021, ARP/IIJA/CHIPS/IRA, 9.1% inflation peak Jun 2022, Ukraine Feb 24 2022, Oct 7 2023).
+- **2016-start window:** [2016 election — Wikipedia](https://en.wikipedia.org/wiki/2016_United_States_presidential_election) and [270toWin — 2016](https://www.270towin.com/2016-election/) (Trump 304 EV / Clinton 227 EV; Clinton +2.9M popular vote; Nov 8 2016); [2016 Democratic primaries — Wikipedia](https://en.wikipedia.org/wiki/2016_Democratic_Party_presidential_primaries) and [Britannica — 2016 election](https://www.britannica.com/topic/United-States-presidential-election-of-2016) (Clinton ~54% / Sanders ~46% pledged; IA/NH/NV/SC; Trump clinched late May). **Batch source:** `docs/game/sources/65f81fe8-ampu-modern-day-playtest/` — chunk-001 (poll picks "Election Phase for 2016," post 12; vcczar/Ted-blessed current-rules, post 1; modern Blue/Red faction menus, post 20; alt-2016 primaries with Trump as a Palin favorite son, posts 40/53/81/88/89), chunk-026 ("Era of Populism" end-of-era banking → "Era of the Near Future 2024-2048," posts 1870/1871/1877/1909; Pres Nikki Haley), chunk-032 ("Welcome to 2026-2028," post 2416). 39 chunks / 3014 posts; played 2022–2023.
 - **Batch sources:** `docs/game/sources/be4e0f70-ampu-1948-playtest-the-nuclear-age-19482004/` — chunk-001 (1948 start; Cold War/Nuclear Age framing; the 10-faction board incl. Blue 5 Russell/Byrd/Thurmond "Dixiecrats" and post-31 design-intent statement on engineered realignment); era markers 1948→2004 (chunks 001, 019, 048, 072, 100, 143, 153); chunk-026 ("Era of the Nuclear Age"); chunk-080 ("Era of Neocons (1972-2000)"); chunk-078/143 ("Era of Terror"); chunk-042 (player turns the Dixiecrats into Moderates); chunk-048/055/075 (era-gated one-directional party-flip mechanic); chunk-145 (Civil Rights/Reformist/LW Activist cards; cabinet-diversity penalty). `docs/game/sources/3843da2da-…/` (2000-start "Era of Terror") — chunk-001/006/010/011/020/021/032/038/041/046. **`docs/game/sources/51dfaef1-2024-the-second-coming/`** (2024 / Jan-2025-start, Ted-run) — chunk-001 post 1 (Jan-2025 intro: 2020 defeat / arrest / two assassination attempts / Trump 2nd term; Ukraine + Israel state-of-the-world), posts 9/14 (no draft ideology restrictions for present/future timelines), posts 39/40–41/44/50/53/69–70 (real Jan-2025 board setup: Trump cabinet nominees incl. Gabbard→DNI mapped to CIA slot, Thune as Senate Majority Leader, governors/governors-elect, 2020-census EV update, end-of-Biden-term 2.10 retirement pass), posts 61–74 (surname-collision data bug — disregard as ground truth). **Nearly all setup/roster-prep; the game had not begun advancing turns by the end of the capture.**

@@ -306,6 +306,7 @@
     - [27.6 Second Bank recharter clock + the Bank War exec action](#276-second-bank-recharter-clock--the-bank-war-exec-action)
     - [27.7 The ideology chart becomes a CIRCLE (mid-era rule change)](#277-the-ideology-chart-becomes-a-circle-mid-era-rule-change)
     - [27.8 Amendments mutate core rules mid-game (the "Sexenio" experiment)](#278-amendments-mutate-core-rules-mid-game-the-sexenio-experiment)
+    - [27.9 ★ #173 — era-boundary-aligned starts + the 14-band era→start map (`modernday`)](#279--173-new-modernday--scenario-starts-should-be-era-boundary-aligned--the-canonical-14-band-erastart-map-gm-verdict-designed)
 28. [Modern / Cold-War era (1948+) systems (designed, not built)](#28-modern--cold-war-era-1948-systems-designed-not-built)
     - [28.1 ★ The 1948 modern boot](#281--the-1948-modern-boot-a-distinct-boot-alongside-1772--1856--2012)
     - [28.2 ★ The Cold War is NOT a system — generic war engine relabeled (negative scope)](#282--the-cold-war-is-not-a-system--it-is-the-generic-war-engine-relabeled-negative-scope)
@@ -344,6 +345,8 @@
     - [30.9 Rulings folded from `ideo1928` (GA-run interwar 1928 campaign — one Ted designer ruling)](#309-rulings-folded-from-ideo1928-ga-run-interwar-1928-campaign--one-ted-designer-ruling)
     - [30.10 Rulings folded from `fixes2022` (the EARLIEST designer source — Fall 2022 pre-early-release build window)](#3010-rulings-folded-from-fixes2022-the-earliest-designer-source--fall-2022-pre-early-release-build-window)
     - [30.11 The `planb` build-finishing PROCESS + authoring-pipeline rulings + the AMPU-2 quarantine (batch 20 — meta)](#3011-the-planb-build-finishing-process--authoring-pipeline-rulings--the-ampu-2-quarantine-batch-20--meta)
+    - [30.12 Rulings folded from `trump2024` (Ted-run 2024/Jan-2025-start modern campaign — SETUP-ONLY)](#3012-rulings-folded-from-trump2024-ted-run-2024jan-2025-start-modern-campaign--setup-only)
+    - [30.13 Rulings folded from `modernday` (GA-run 2016-start modern multiplayer — Ted-blessed marquee rulings)](#3013-rulings-folded-from-modernday-ga-run-2016-start-modern-multiplayer--ted-blessed-marquee-rulings)
     - [30.4 Authority hierarchy reminder](#304-authority-hierarchy-reminder)
 31. [Gilded-Age era systems (designed, not built)](#31-gilded-age-era-systems-designed-not-built)
     - [31.1 (#147) Tariff-as-national-%-rate + the mutually-exclusive MonetaryRegime](#311-147-tariff-as-national-rate--the-mutually-exclusive-monetaryregime-designed)
@@ -500,6 +503,17 @@ each boundary a **~12-step new-era boot pipeline** fires (`hd` POST 6679–6816)
 > this is the canonical scoring and whether *any* of it is in the build are open (the shipped
 > build is pre-late-game-loop). Cross-ref `game-context.md` #2, #68.
 
+> **★ FIRST LIVE INSTANCE from a CURRENT-RULES game (`modernday`, batch 22).** The full ritual
+> above is no longer inferred — it was **run verbatim at a real 2024 boundary** in `modernday`
+> (a 2016-start, current-rules, 8-human game; the ONLY modern thread in the KB that crosses an
+> era boundary). At the close of the **"Era of Populism" (2016→2024)**, before opening **"Era of
+> the Near Future 2024-2048"**, the GM executed the **6-clause point-banking formula** clause-by-
+> clause (`modernday#POST 1871`) — the spec-anchor for the whole pipeline, matching `rep1800`'s
+> formula exactly. The detailed per-clause execution + the reset + the faction-trade window + the
+> content swap to all-procedural-gen are in **[§27.2.1](#2721--live-2024-boundary-instance-current-rules-modernday)**.
+> Two-thread agreement (`rep1800` ~1820/1840 boundaries + `modernday` 2024 boundary) makes the
+> +5/+3/+3/+3/−1 banking table a **deterministic, era-independent** pipeline, not a one-off.
+
 ---
 
 ## 3. Politicians & stats
@@ -558,6 +572,24 @@ The single scalar that ranks politicians. Steps:
 > command 1, traits `[Charismatic, Integrity]`, no leadership:
 > weighted skills = `4×2.5 + 2×1.0 = 12` → `×4 = 48`; `+command 10`; `+traits 8`;
 > `+Senator prestige 5` ⇒ **PV 71**.
+
+> **★ DH-70 (NEW, `modernday`, batch 22) — `Lackey` is OVER-WEIGHTED in the (forum) PV formula
+> (balance bug; the `src/pv.ts` analogue).** Players in `modernday` repeatedly flag that **`Lackey`
+> craters Political Value far more than any other negative trait** — a LW-Pop whose *only* bad trait
+> is Lackey (plus Obscure) sits at **PV −47**, and Chester-Arthur-tier stacks are dominated by it:
+> *"Lackey shouldn't be that much worse than any of the other bad traits. I think that is just a
+> formula issue"* / *"lackey is hit WAY too hard for no particular reason"* (`modernday#POST
+> 1939-1945`). This is a **per-trait weight bug** (a `Lackey`-specific penalty in the forum's PV
+> formula heavier than the generic negative-trait penalty), **not a dataset bug**. **★ Codebase note
+> (verified):** the shipped `computePV` does **NOT** reproduce this — every negative trait gets a flat
+> `−5` (`pv.ts:77`, via `NEGATIVE_TRAITS`), with `Kingmaker +6` the only per-trait special-case
+> (`pv.ts:79`); **`Lackey` is not even in the shipped trait set** (`types.ts` Trait union — only
+> `Obscure` from this pair exists; `grep Lackey src/` = no hits). So DH-70 is a **forum-formula
+> balance bug to AVOID when porting** — when the `Lackey` trait is added to `NEGATIVE_TRAITS`, it must
+> get the **same flat penalty as its peers** (no outsized special-case), or it will distort elections
+> (**PV drives elections**, [§15](#15-elections-29x-and-calcstatevote)). Sibling of #120 (dataset balance) + DH-51 (modern-pol
+> overpower) — a **formula/weight** bug, addressable in `pv.ts` (the per-trait weight table), not the
+> dataset. Cite `modernday#POST 1939-1945`.
 
 ---
 
@@ -677,6 +709,23 @@ Ted now confirms 3/3 is the canonical going-forward value.)*
 > B5/R5, **progressive cards on BOTH parties**, `solo1916#POST 4, 7`). So the **ON→OFF flip is keyed to
 > realignment completion**, not a single calendar year — three batch-21 start years (1916 ON · 1972 ON ·
 > 2024 OFF) bracket it.
+>
+> **★★ THE CLEANEST LIVE DEMO — the toggle FLIPS WITHIN ONE SAVE at the 2024 boundary (`modernday`,
+> batch 22).** `modernday` (2016-start, current-rules) is the ONLY thread that shows the toggle
+> **switching state mid-campaign**: restrictions are **ON in the "Era of Populism"** and **switched OFF
+> entering the "Era of the Near Future"** at the 2024 boundary — pinning the open part of this row (the
+> flip point is the **modern→FUTURE band boundary, ~2024, NOT mid-modern**).
+>
+> | Phase | State | Evidence (`modernday`) |
+> |---|---|---|
+> | **2016 draft** (Era of Populism) | **ON** | *"You can draft only politicians restricted by your draft ideologies specified on the Main tab"* (`POST 558`); WVProgressive (R1) *"can draft only RW Pops and Trads"* → got all remaining of those (`POST 691`); CE2 got *"those left with your draft ideology cards"* after lower-scoring factions drained his preferences (`POST 306`); off-profile picks still gain Flip-Flopper/Pliable on the conversion step (`POST 318`) |
+> | **2024 draft** (Era of the Near Future) | **OFF** | *"this rookie draft will be a bit different now that we are heading into the future. For one **there are no longer any draft restrictions. You can draft anyone from RW Pop to LW Pop** and everything in between. You can start to form your faction in whichever way you want to evolve it"* (`POST 1902`) |
+>
+> This **corroborates and sharpens** Ted's `trump2024` ruling from a current-rules game and (with the
+> 1916/1972 ON contrast) brackets the flip to realignment completion. The same 2024 boundary also
+> swaps draft *content* to all-procedural-gen (the dataset exhausts) — see [§27.2.1](#2721--live-2024-boundary-instance-current-rules-modernday). Draft *order*
+> at that boundary uses **just-completed-era points only** (lowest-scoring factions draft first +
+> compensatory rookie-stat bonus; `modernday#POST 306, 1910, 1930`) — the §27.2 draft-order rule.
 >
 > **Build status: DESIGNED, not built.** The shipped draft (`runPhase_2_1_1_Draft`, `phaseRunners.ts:107`)
 > has **no era-keyed ideology-restriction profile at all** (it picks by PV + ideology-bucket match in
@@ -1771,6 +1820,53 @@ in cabinet + cabinet-level → −2 enthusiasm to Civil-Rights/Reformist/LW-Acti
 replace the pre-Terror region-coverage malus (§9.3.3) — a §27.1 era-BAND rule delta. Cite
 `terror2000#POST 1280, 428-441, 154`.)*
 
+#### 9.3.10 ★ #172 (NEW, `modernday`) — era-keyed confirmation thresholds + the Nuclear-Option boot-state (Ted-blessed; DESIGNED, not built)
+
+> **★ Ted-adjudicated in a current-rules game (`modernday`, batch 22; Ted = `@MrPotatoTed`, the
+> designer — so this carries designer authority even though `modernday` is GA-run by Rodja/ebrk85).**
+> The **confirmation-vote threshold is era-keyed**, driven by a **Nuclear-Option game-state flag** that
+> a 2016 start seeds as already-fired. Ted, verbatim (`modernday#POST 422-423`): *"for a 2016 start,
+> Cabinet Members require only 50%+1 of the Senate's approval, unless you repeal the Nuclear Option
+> (which is otherwise permanently in place). Supreme Court nominees will continue to require 60%,
+> unless you enact the Nuclear Option for that as well."* This **closes the §12.6 open question** — "is
+> the 60-vote cloture modern-specific or a post-reform reduction?" — with **both**: the reduction is a
+> real-history Nuclear-Option reform that, for a modern start, is **pre-fired as boot state**.
+
+**The era-keyed confirmation table** (`modernday#POST 422-423`):
+
+| Track | Threshold for a **2016 start** | Why (the Nuclear-Option state) |
+|---|---|---|
+| **Cabinet** | **50% + 1** | Reid-2013 (lower courts + executive nominees → simple majority) already fired by a 2016 board → seeded ON; repeal-able by the SML to restore 60 |
+| **SCOTUS** | **60%** | McConnell-2017 (SCOTUS → simple majority) is era-edge; here SCOTUS still needs 60 unless the Pres/SML **enacts** the Nuclear Option for it too |
+| **Earlier-era start** | **60% / cloture-bound** | a start *before* 2013/2017 keeps 60-vote cloture in place until the cloture-reform bills pass in-game |
+
+**Exercised live** (current-rules):
+- 2016 **28-seat cabinet confirmed at 50%+1** (`modernday#POST 426`); confusion about whether the SML
+  must *invoke* the Nuclear Option was resolved by Ted's ruling (`modernday#POST 416-423`).
+- 2017 **SCOTUS noms needed 60** → KBJ / Nessel **failed at 51-49 / 50-50**, triggering a **10-vote
+  conversion window** + the **auto-confirm-a-Mod/opposing-party fallback** (Garland + Srinivasan
+  auto-confirmed as Dem Mods) (`modernday#POST 582-603`).
+
+**★ How this composes with the other confirmation rules (reconciliation — read carefully):**
+
+| Rule | What it governs | How #172 relates |
+|---|---|---|
+| **Batch-9 USER review-gate** ("Senate cloture = 60% **then** majority") | the **two-step cloture→pass** procedure for *legislation* | **#172 does NOT overturn it.** #172 era-**keys the threshold number** (what % is required) for *appointments*; the user's cloture model (cloture first, then a majority pass) stands UNCONFLICTED. The Nuclear-Option flag is exactly *the in-game lever that sets the cloture bar* the user's model uses — they compose: era-state decides the bar (60 vs 50%+1), the user's procedure decides how the vote runs. **No tension** — see §30.4 rank-3. |
+| **#124 confirmation auto-pass** (batch 18, [§9.3.8](#938--ted-ruled-nomination-filters-designer-authoritative-tedchange) + [§26.6](#266-modern-scotus-confirmation-rules--refinements)) | *who* needs a roll-call at all — most nominees **auto-confirm** except the **Big-4 / Controversial / <3-relevant-skill** | **Orthogonal.** #124 = the **auto-pass gate** (does this nominee even get a contested vote?); #172 = the **threshold** for the nominees that DO get one. A nominee that clears the auto-pass filter never reaches #172's count; a contested one is then judged at the era-keyed 50%+1 / 60% bar. |
+| **#52 SCOTUS confirm heuristic** (auto-AYE within 1 ideology step, [§26.6.1](#2661-auto-aye-within-1-ideology-step-declarative-confirmation-rule)) | *which factions vote aye* | **Orthogonal.** #52 computes the aye **count** (who votes yes); #172 is the **count the ayes must clear**. The 60-vote SCOTUS bar is what the §26.6.1 auto-AYE bloc has to *reach*. |
+
+> **Build status: DESIGNED, not built.** There is **no confirmation-vote logic in `src/`** at all —
+> no `confirmThreshold` / `nuclearOption` / `cloture` tokens (codebase-verified); cabinet/SCOTUS
+> appointment is unbuilt beyond the bare seat assignment. **Build ask:** model cabinet + SCOTUS
+> confirmation as a real Senate vote with **(1)** a per-track **era-keyed threshold** (cabinet 50%+1 /
+> SCOTUS 60% from 2017; both 60% / cloture-bound in earlier eras until the reform bills pass), **(2)** a
+> **`nuclearOption` boot flag** seeded per start year (ON for cabinet from 2013, ON for SCOTUS from
+> 2017), **(3)** the SML **enact/repeal Nuclear Option** action that toggles the flag mid-game, and
+> **(4)** the **60→fail→10-vote-conversion-window → auto-confirm-Mod/cross-party fallback**. Composes
+> with #124 (the auto-pass gate decides *whether* a vote happens) + #52 (decides *who* votes aye) + the
+> batch-9 user cloture model (decides *how* the vote runs). Indexed in
+> [§30.13](#3013-rulings-folded-from-modernday-ga-run-2016-start-modern-multiplayer--ted-blessed-marquee-rulings). Cite `modernday#POST 416-423, 426, 582-603`.
+
 ---
 
 ## 10. Events (2.4.x)
@@ -2599,8 +2695,14 @@ re-queue next session.)*
 > Omar filibustered Bill 2 (Stand Your Ground + Federal Prisons); **cloture needed 60 votes
 > in a 100-seat Senate**, got **58 — bill killed**. **The 60-vote cloture is the modern-era
 > threshold**, distinct from the 67% drums dump (which is the **pre-modern** rule).
-> Open: is 60 modern-era-specific or a post-reform reduction triggered by an amendment?
-> (Both readings consistent.) **Iron-Fist Sen Maj Leader passes everything else
+> ~~Open: is 60 modern-era-specific or a post-reform reduction triggered by an amendment?~~
+> **★ ANSWERED (`modernday` #172, batch 22):** **both** — the modern cloture bar is a real
+> **Nuclear-Option reform**, pre-fired as boot state for a modern start (Reid-2013 / McConnell-2017).
+> So the threshold is **era-keyed via a `nuclearOption` flag**, not a fixed constant — see
+> [§9.3.10](#9310--172-new-modernday--era-keyed-confirmation-thresholds--the-nuclear-option-boot-state-ted-blessed-designed-not-built).
+> (Note: #172 is stated for the **confirmation**-vote bar; the same Nuclear-Option flag is the lever
+> behind the legislative cloture bar the batch-9 user review-gate model uses.)
+> **Iron-Fist Sen Maj Leader passes everything else
 > unilaterally** at this scale: McConnell (5 legis + Iron Fist) is documented in `pop`
 > POST 523, 739 as effectively delivering ~54 automatic AYE votes on majority items — the
 > **modern instance** of the §25.9 Iron-Fist overload, surfaced as a specific cascade
@@ -8637,6 +8739,51 @@ auto-accept** (step 1), the explicit **+5/+3/+3/+3 + −1 banking table** (step 
 **wholesale per-era bias-table swap** (step 6), and the **dual per-era + cumulative scoring**
 keyed to B#/R# slots (batch 8). Bank-points persist to end-game; everything else resets.)*
 
+#### 27.2.1 ★ LIVE 2024-boundary instance (current-rules, `modernday`)
+
+> **★ The FIRST live capture of this pipeline from a CURRENT-RULES game** (`modernday`, batch 22 —
+> 2016-start, current-rules, 8 humans; the only modern thread in the KB that crosses an era
+> boundary). The boundary fired between **"Era of Populism" (2016→2024)** and **"Era of the Near
+> Future 2024-2048"** (`modernday#POST 1909`). The 6-clause banking formula was executed
+> clause-by-clause (`modernday#POST 1871`) and **matches the `rep1800` table above almost exactly**
+> — strong cross-thread, cross-era corroboration that §27.2 is a deterministic pipeline, not a
+> one-off. This is the **spec-anchor** for the era-boundary system.
+
+**The 6-clause formula AS EXECUTED at the 2024 boundary** (`modernday#POST 1871`; → maps onto the
+§27.2 step-2 table; "did NOT trigger" = the conditional clause was checked and skipped this run):
+
+| # | Clause | Recipient this run | Bank |
+|---|---|---|---|
+| 1 | Faction with **most points** in the Historical Era | jnewt | **+5** |
+| 2 | Faction with **most points from the OTHER party** | pman | **+3** |
+| 3 | **2nd-most-points** faction **if same party** as the winner | Hestia | **+3** |
+| 4 | **ALL** factions in the party that collectively earned the most points | all 4 Blue | **+3 each** |
+| 5 | **−1 to all party members** IF the top party has an allied faction finishing last / next-to-last | (did NOT trigger) | −1 |
+| 6 | **−1 to the top faction** IF it has an allied faction finishing last / next-to-last | (did NOT trigger) | −1 |
+
+→ **Banked totals (Era of Populism):** jnewt 8 · Hestia 6 · Vicx 3 · pman 3 · Murrman 3. Then
+**"Scores will be reset to zero for the next Era"** (`modernday#POST 1871`) — the non-banked reset
+(§27.2 step 3), confirming **only banked points persist** from a current-rules game.
+
+**The rest of the boundary pipeline, run live afterward** (the ~12-step boot, §2.5 / §27.2):
+- **Faction-trade / switch window** opens: *"The changing of eras provides the opportunity for
+  players to switch or trade factions"* (`modernday#POST 1874`); several humans rotate in; **CPU
+  factions auto-accept** the offered trades (`modernday#POST 1949`).
+- **Draft-restriction toggle FLIPS OFF** at this exact boundary — see [§4.1.w](#41w--171-new-trump2024--era-keyed-draft-ideology-restrictions-on-earlyrealigning-off-modern-present-designer-authoritative-designed-not-built).
+- **Draft content swaps** from historical-figure imports to **all procedurally-generated rookies**:
+  *"Generating 100+ new pols is much more tedious then importing a class of historical figures"*
+  (`modernday#POST 1874`); the new era's draft is *"basically all generated pols"* (`modernday#POST
+  1902, 1909`). **★ The MODERN→FUTURE boundary is where the real-person dataset exhausts into pure
+  procedural generation** — the #43 name/pol generator owns the future band (corroborates the
+  era-content rotation, §28.11; `terror2000` flagged the same exhaustion from the 2000-start side).
+- The full **2.1.x post-election sub-phase taxonomy** then runs verbatim (`modernday#POST 1902-1982`):
+  2.1.1 Draft → 2.1.3 Remove Flip-Flopper → 2.1.4 Relocate → 2.1.5 Ideology Shifts → 2.1.6
+  Conversions → 2.1.7 Kingmakers & Protégés → 2.2 Leaders Emerge (corroborates the [§2.2](#22-phase_sequence-in-order) loop).
+- **Worse-draft-position → compensatory rookie-stat bonus** confirmed at this boundary's new-era
+  draft (draft order = just-completed-era points only): *"for being in 8th place, BrunnellCPU 1st
+  pick gets +1 Judicial"* (`modernday#POST 1930`); 7th place → +1 Legislative (the §27.2 step-5
+  draft-order rule, with the order-by-last-era-points consequence made concrete).
+
 ### 27.3 The 12th-Amendment before/after state machine (era-specific election mode toggle)
 
 > **A genuine era-specific election-system MODE TOGGLE, absent from every later thread** (all
@@ -8895,6 +9042,58 @@ suffrage rule, tariff cadence, the ratification supermajority itself), keyed in
 tunable per §24.4) with **Puritan/Integrity forced-vote overrides**; **one-shot** ratification
 (re-propose on failure); a **25th-style succession rule** (VP past half-way can't run); and —
 the hole — an optional **grandfather clause** flag. Extends §21.3 / §24.4 / §26.7.)*
+
+---
+
+### 27.9 ★ #173 (NEW, `modernday`) — scenario starts should be ERA-BOUNDARY-ALIGNED + the canonical 14-band era→start map (GM verdict; DESIGNED)
+
+> **The GM's own closing meta-lesson after 3014 posts** (`modernday#POST 2964`). `modernday` chose a
+> **2016 start, which landed mid-"Era of Populism"** (the band runs 2012→2024) — and the GM's verdict
+> is that a **mid-era start was itself a friction source**: the seed government, faction decks, draft
+> pool, and bias table are only fully coherent at a band *opening*; a mid-band start means some content
+> is already consumed and the next boundary is closer than a full term. ebrk85: *"For any new test
+> start date, it must be the date a new era begins. One of the issues we ran into with this test was it
+> started in the middle of an era."* Couples to the era model (§27.1) + the scenario-boot procedure
+> ([§26.1](#261-the-mid-government-boot-shape-general) / [§29.1](#291--the-scenario-boot-procedure-as-practiced-gap-115)).
+
+**★ The canonical 14-band era→opening-year→first-president map** (`modernday#POST 2964`) — the GM
+enumerated this as **the set of valid start points** (each band keyed to its opening year + the
+president in place at boot):
+
+| # | Era band | Opening year | First president (boot) |
+|---|---|---|---|
+| 1 | Independence | **1774** | (Continental Congress) |
+| 2 | Federalism | **1788** | Washington |
+| 3 | Republicanism | **1800** | Jefferson |
+| 4 | Democracy | **1820** | Monroe |
+| 5 | Manifest Destiny | **1840** | Harrison |
+| 6 | Nationalism | **1856** | Buchanan |
+| 7 | Gilded Age | **1868** | Grant |
+| 8 | Progressivism | **1892** | Cleveland |
+| 9 | Normalcy | **1916** | Wilson |
+| 10 | Ideologies | **1928** | Hoover |
+| 11 | Nuclear Age | **1948** | Truman |
+| 12 | **Neocons** | **1972** | Nixon |
+| 13 | Terror | **2000** | Bush |
+| 14 | Populism | **2012** | Obama |
+
+> **★ Cross-corroboration.** This map matches the shipped scenarios (1772/1856 both START at era
+> openings already — the build is *incidentally* aligned) and the multi-save era-band evidence in
+> §27.1 (`tea1772`/`rep1800`/`dem1820`/`nuke` emit these same band labels at these same dates). It
+> also confirms each band is a **poll-able start point**, and that **"Neocons (1972)" appears here as
+> a startable band** — reconcilable with `nuke`'s "Neocons = faction rebrand" via the **two-level
+> model** (§27.1): a label can be both a startable point-banked Historical-Era opening AND a
+> within-era content-rotation/faction-rebrand tag. (`game-context.md` #92 confirms this list band-by-
+> band; #173 logs the start-alignment principle.)
+
+> **Build status: DESIGNED (a scenario-design principle).** The shipped build only ships **1772 +
+> 1856** scenarios, both already at era openings — so the build satisfies #173 by accident, but there
+> is **no stated principle and no New-Game start-year picker**. **Build ask:** make "New Game"
+> start-year presets the **era-band openings** above (where the boot state is coherent), not arbitrary
+> mid-band years; if mid-band starts are ever supported, the boot must model the **partially-elapsed
+> band** (content already consumed + a shortened time-to-boundary). Resolves "what years can a game
+> start" → the 14-opening set. Pairs with #92 (era bands) + #115 (scenario-boot, §26.1/§29.1) + #86
+> (boot data shape). Indexed in [§30.13](#3013-rulings-folded-from-modernday-ga-run-2016-start-modern-multiplayer--ted-blessed-marquee-rulings). Cite `modernday#POST 2964`.
 
 ---
 
@@ -9704,6 +9903,18 @@ un-implementable Wyoming Rule — hole #5), and modern lobby cards. Event firing
 > start year (1820)** and the **first explicit account of an inaugural live draft + career-track
 > seed**. (`dem1820#POST 1, 2, 14, 23-34, 62, 79, 82, 84, 92, 117, 532, 859`; gap #115.)
 
+> **★ DH-69 (NEW, `modernday`, batch 22) — the PLAYER-facing face of #115: no packaged rulebook →
+> players "wing it."** Where #115 above is the *GM*-facing gap (no how-to-CREATE-a-game guide), DH-69
+> is its *player*-facing twin: in `modernday`, multiple participants (jnewt, ebrk85, Willthescout7)
+> report they were **never given the rulebook or Discord access** and **"just been using my knowledge
+> from reading about the other playtests… to wing it"** (`modernday#POST 342-356`). The forum's rules
+> doc is for reference, not a guided onboarding, so **every per-phase action prompt had to re-explain
+> its own rule inline**. **The build's value is exactly an in-app, always-available rules/affordance
+> surface** — per-phase help text, tooltips, and **legal-move enumeration** (the engine already knows
+> the legal moves) — so a solo player never has to wing it. Pairs with #115 (boot procedure) + the
+> §25 CPU cluster (the CPU needs the same legal-move enumeration). Build TODO: surface per-phase legal
+> actions + rule text in-UI. Cite `modernday#POST 342-356`.
+
 The **1820 boot is a mid-government continuation boot** (same shape as 1856/1800/2012): sitting
 **President Monroe + VP + Cabinet + a 6-then-9-member SCOTUS + Speaker + Senate Pro-Tem + full
 Congress** pre-seated, **some seats VACANT** and appointment-filled in setup; **5 BLUE + 5 RED
@@ -9901,6 +10112,21 @@ general). The three batch-10 variants are no longer live; **the build implements
 > "ideology-leaning states only"; **(Matt, batch 10)** "primaries + leaning states only." Ted's
 > 2-layer model above supersedes all three. (`terror2000#POST 913-926` SUPERSEDES `dem1820`
 > POST 569/575/618 + `oopscpu` POST 205-214's recurrence of the open fork.)
+
+> **★ CORROBORATED VERBATIM from a CURRENT-RULES game (`modernday`, batch 22).** The resolved
+> 2-layer scorer was **published verbatim** as a "State of the Meters" post in the new era
+> (`modernday#POST 2380`), matching the `terror2000`/`dem1820`/`arkzag`-settled map — independent
+> confirmation that this is the *live* scorer, not just a designer ruling:
+> - **Layer (a) universal meter modifier:** Domestic-Stability bad → incumbent party −1;
+>   Honest-Gov → Controversial-incumbent +1, Integrity-vs-Controversial-challenger +1, **LW-Pop −2 /
+>   RW-Pop −2 enthus, Prog −1**; Quality-of-Life → **Lib +1**; Planet's-Health → **LW-Pop −2 / Prog −2
+>   / Lib −2 enthus**.
+> - **Layer (b) per-party Enthusiasm × Blue/Red:** **Progs Blue +3 · Libs Blue +3 · Mods Red +1 ·
+>   Cons/Trads/RW-Pop Red +2**.
+> - The **full 16-meter Lingering bank ticks each phase** (`modernday#POST 454`) — the §29.10 / §24.7
+>   homeostasis engine feeding layer (a). So the scorer is now confirmed across **`terror2000` (2000),
+>   `dem1820`/`arkzag` (1820-40), `ideo1928` (1932), and `modernday` (2016-2028)** — five independent
+>   start years agree. (`modernday#POST 2380, 454`.)
 
 ### 29.4 GA appointment & eligibility rulings (Senate fill order, card distribution, replacement-gains)
 
@@ -11141,6 +11367,53 @@ more states + a custom-state map drawer; achievements; challenge mode. *(Cite `a
 > should the modern era get a real distinct DNI (and DHS) cabinet-level office? (2) the exact era
 > boundary where the #171 draft-restriction toggle flips OFF ("future/present timelines" — likely keyed
 > to the §28.4/#108 realignment completing, ~1990s/modern).
+
+### 30.13 Rulings folded from `modernday` (GA-run 2016-start modern multiplayer — Ted-blessed marquee rulings)
+
+> **★ AUTHORITY: GA-run, but the marquee rulings are DESIGNER-BLESSED in-thread.** `modernday`
+> (`65f81fe8`, batch 22) is **player-run by Rodja** (then ebrk85) — so its *GA case rulings* sit at
+> §30.4 rank-4 (like `tea1772`/`hd`/`rep1800`). **BUT both Ted (`@MrPotatoTed`) and vcczar appear
+> in-thread and adjudicate several key rules**, so those specific rulings carry **designer authority**
+> (§30.4 rank-1/2). Each row below is tagged with **who** ruled it. The thread is also the **first
+> live current-rules instance of the era-boundary pipeline** (§27.2.1) and the **cleanest live #171
+> demo** (§4.1.w). Cite `modernday#POST n`.
+
+**Marquee rulings (★ = designer-blessed; tagged by adjudicator):**
+
+| # | Topic | Ruling | Adjudicator | Folded into | `modernday` POSTs |
+|---|---|---|---|---|---|
+| **★ #172** | **Era-keyed confirmation thresholds + Nuclear-Option boot-state** | RULED (NEW) — for a **2016 start, Cabinet = 50%+1** ("unless you repeal the Nuclear Option, which is otherwise permanently in place"), **SCOTUS = 60%** ("unless you enact the Nuclear Option for that as well"); the Nuclear-Option default is **era-keyed** (Reid-2013 + McConnell-2017 pre-fired by a 2016 board). Composes with #124 auto-pass + #52 aye-count + the batch-9 user cloture model (does NOT overturn it). | **Ted** (designer) | [§9.3.10](#9310--172-new-modernday--era-keyed-confirmation-thresholds--the-nuclear-option-boot-state-ted-blessed-designed-not-built) (+ [§12.6](#126-forum-design-layer-filibuster-designed-not-built)) | 416-423, 426, 582-603 |
+| **★ #173** | **Scenario starts should be ERA-BOUNDARY-ALIGNED + the 14-band era→start map** | RULED (NEW) — *"For any new test start date, it must be the date a new era begins. One of the issues we ran into with this test was it started in the middle of an era"*; the 14-band era→opening-year→first-president map is the canonical set of valid start points. | GM (ebrk85) verdict | [§27.9](#279--173-new-modernday--scenario-starts-should-be-era-boundary-aligned--the-canonical-14-band-erastart-map-gm-verdict-designed) (+ #2, [§2.5](#25-era-boundaries--per-era-point-banking--the-new-era-boot-pipeline-designed-not-built)) | 2964 |
+| — | **Cabinet member with 0 admin → "just give him 1 admin"** | RULED (dataset patch) — a Chairman-JCS Military-Leader had 0 admin; vcczar: log it as a fix and grant 1 admin (a `*Crisis Bill*`-style data correction). | **vcczar** (designer) | [§9.3.1](#931-expanded-cabinet-roster) / #120 | 412 |
+| — | **Incumbents can't be primaried by same party unless a DIFFERENT ideology** | RULED — a sitting president blocks same-party challengers except an opposite-pole ideology (Warner blocks all but a Bernie LW-Pop run). | **Ted** (designer) | [§22.3](#223-presidential-primary-subsystem-291) / [§25.12](#2512-cpu-primary-ai-designer-acknowledged-under-tuned) | 253-254, 841 |
+| — | **SCOTUS 60-vote fail → auto-confirm a Mod-Dem/opposing-party replacement** | RULED — a failed 60-vote SCOTUS nom falls back to auto-confirming a Moderate/cross-party justice; appointing an other-party justice → +1 party pref (rolled) and/or −enthusiasm for the opposing ideology. | GA (Rodja) | [§9.3.10](#9310--172-new-modernday--era-keyed-confirmation-thresholds--the-nuclear-option-boot-state-ted-blessed-designed-not-built) / [§26.6](#266-modern-scotus-confirmation-rules--refinements) | 591-603, 2378-2379 |
+
+**Bugs / friction (NEW this batch):**
+
+| # | Bug | Detail | Folded into | `modernday` POSTs |
+|---|---|---|---|---|
+| **★ DH-69** | **No packaged rulebook → players "wing it"** | jnewt/ebrk85/Willthescout7 never given the rulebook/Discord; the player-facing face of #115 (onboarding gap). | [§29.1](#291--the-scenario-boot-procedure-as-practiced-gap-115) | 342-356 |
+| **★ DH-70** | **`Lackey` over-weighted in the PV formula** | a Lackey-only LW-Pop at PV −47; a forum-formula weight bug (NOT in shipped `pv.ts` yet — avoid on port). | [§3.4](#34-political-value-pv--computepv-pvts67) | 1939-1945 |
+
+**Corroborations (no new rule — field-validated from a current-rules + era-CROSSING angle):**
+
+| Existing entry | `modernday` corroboration | POSTs |
+|---|---|---|
+| **★ #68 / #2** era-boundary banking | **FIRST LIVE current-rules instance** — the 6-clause formula run verbatim at the real 2024 boundary + reset + faction-trade + procedural-content swap (matches `rep1800`). | 1871, 1874, 1902, 1909, 1930, 1949 |
+| **★ #171** draft toggle | **CLEANEST live demo** — restrictions ON 2016 → OFF at the 2024 boundary, flipping WITHIN one save. | 558, 691, 306, 318, 1902 |
+| **★ #18 / #51** 2-layer scorer | "State of the Meters" published VERBATIM in the new era (matches the resolved 2-layer model); full 16-meter Lingering bank ticks each phase. | 2380, 454 |
+| **#92 / #41** era bands | two point-banked bands (Populism / Near-Future); the 14-band map printed (POST 2964); modern→future content = procedural-gen. | 1909, 2964, 1902 |
+| **#124 / #25 / #170** cabinet/offices | 28-seat cabinet (≥1 admin + ≥1 expertise + not-Incompetent; Easily-Overwhelmed rejects 50%, leaders/justices 75% except SoS 50%); CIA-Director = modern intel slot, NO DNI office; 2 eggheads → +100 points. | 396, 427 |
+| **#13/#47/#15/#16/#111** election machinery | 2016/2020/2024 conventions+primaries+general: VP-impact + obscure-VP d6, 5-plank platform (Exec-Decision plank), keynote d6, presidential-promise buyout, 3-debate+VP-debate+Oct-Surprise, candidate-strength scorecard. | 113-135, 196-204, 855-863 |
+| **#70-#79 / #1 / #114** CPU/MP | CPU fills vacant factions (`ButtigiegCPU`/`BrunnellCPU`/`HestiaCPU`), GM CPU-subs inactives, CPU auto-accepts the boundary faction-trade; 8-human MP with handovers. | 55, 160, 852, 1949 |
+| **#110** post-election taxonomy | the full 2.1.x→2.2 sub-phase sequence run verbatim. | 1902-1982 |
+| **#108** realignment | high/max-enthusiasm factions SHIELDED from conversion; gradual-sort levers in play. | 1966 |
+| **DH-54 / DH-66** impeachment | impeachment ran to COMPLETION (Warner = 3rd impeached pres, House 263-162, Senate acquits 52-48) but the GM **short-cut the special-committee step** (under-specified). | 491-505 |
+
+> **GM-burnout / onboarding cluster (meta, for the roadmap).** DH-69 (no rulebook) sits with the
+> recurring **manual-upkeep / GM-burden theme** (DH-36, the `planb` upkeep cluster): the build's
+> always-on in-app rules surface + legal-move enumeration is the direct fix. The thread closed for
+> **lack of momentum** (`modernday#POST 2964`) — the same upkeep-fatigue pattern.
 
 ### 30.4 Authority hierarchy reminder
 

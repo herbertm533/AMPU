@@ -1528,6 +1528,10 @@ draft runner instantiates the year's class via `instantiateDraftees`
 | 47 | **★ #170 era-keyed offices/departments — PARTLY SHIPPED (founding seats), DESIGNED (modern offices + DNI⇒CIA supersession) (batch 21 / `trump2024`+`nixon1972`)** | **SHIPPED half:** `cabinetSeatsForYear(year)` (`types.ts:1196`) era-gates the seat list — `[]` < 1789; +Navy `:1203` (≥1798); +Postmaster `:1206` (≥1829); +Interior `:1205` (≥1849). **UNBUILT half:** `OfficeType` (`types.ts:1111-1134`) has NO modern departments; **grep `DNI\|CIADirector\|DepartmentOfEnergy\|HomelandSecurity\|supersedes\|foundedYear\|createdByBill` in `src/` = ZERO hits** | The founding-seat era-gating #170 wants is **already live** (game-master-confirmed). What's missing: extend `OfficeType` with the modern departments (Energy 1977 / DHS 2002 / DNI 2004 / Commerce / Labor / HHS / HUD / Transportation) + add a per-office existence table (`foundedYear`, optional `createdByBill`, optional `supersedes`) + the **DNI⇒CIA-Director SUPERSESSION** (Ted-authoritative, `trump2024#POST 40-41`: *"DNI replaces CIA Director in game when it's created"*; corroborated by `nixon1972` DOE/DNI-don't-exist-in-1972 + `terror2000` DNI-created-2004). **The seed table seeds only offices whose founded-year ≤ the board's start year (or that a bill created).** **★ This is the SAME mutable-cabinet-seat refactor already planned** (`cabinetSeatsForYear` → boot-seed `GameState.cabinetSeats: SeatSpec[]`, §3 item 2; confirmed the WRONG long-term model at BOTH ends, §24.6 + §26.5) — #170 is the era-keyed-EXISTENCE + supersession layer ON TOP, NOT a new epic. **S–M; folds into E16 + the scenario-boot work.** Open Q: real distinct DNI/DHS seats vs the CIA-Director overload (designer call). game-mechanics §9.3.1.1. |
 | 48 | **★ #171 era-keyed draft-ideology TOGGLE (ON early/realigning, OFF modern present) — DESIGNED, not built; folds into the #4/#108 draft-profile work (batch 21 / `trump2024`)** | the shipped draft `runPhase_2_1_1_Draft` (`phaseRunners.ts:107`) picks via `pickBestForFaction` (`:33`) by PV + ideology-bucket match (`:46-49`) — **NO era-keyed ideology-restriction profile at all** (the #4 profile + off-profile 30/50% rolls are themselves designed-not-built) | Designer-authoritative (Ted, `trump2024#POST 9, 14, 15-16`): *"There are no draft ideology restrictions for the future/present timelines… You get to make your own faction"* — the FIRST playtest with no draft-ideology restrictions. The restriction is **era-keyed**: ON in early/realigning eras (the #4 profile + off-profile rolls + adjacency-on-exhaustion are the engine's tools for *forcing* the §28.4/#108 realignment), OFF in the modern present (the sort is already complete by 2024). **The fix:** when #4 is built, gate it behind an **era-keyed toggle** (`eraDraftIdeologyRestrictions: boolean`, or derived from realignment-completion state) so the modern present runs it OFF. Faction-leader eligibility (#110) still applies. **★ Keyed to REALIGNMENT COMPLETION, not a calendar year** — three batch-21 start years bracket it (1916 ON · 1972 ON [off-ideology >50, exhaustion→adjacent, `nixon1972#POST 109-120`] · 2024 OFF). **S; folds into the #4/#108 draft-ideology-profile work** (no standalone epic). Open Q: the exact ON→OFF boundary. game-mechanics §4.1.w. |
 | 49 | **★ DH-68 Progressive-era successor-state Era Evos lack a WWI-end prerequisite (a wrong-ORDERING bug; corroborates DH-60, now multi-era) — DESIGNED-content bug (batch 21 / `solo1916`)** | the 1772 graph HAS the precondition machinery (`Predicate` `types.ts:1487`; `evalPredicate` `eraGraph.ts:12` interprets `eventCompleted` `:18`, `warActive` `:31`, `warOutcome` `:32`); the **1856 builder `buildEraEventsForYear` (`eraEvents1856.ts:4`) is CALENDAR-ONLY** (`year >= X && year <= Y`, e.g. `:6`,`:30`) with **NO `precondition` field on any row**; **no Progressive builder exists** | In a 1916-start half-term the Czechoslovakia/Hungary independence Era Evos fired BEFORE WWI ended, in the same phase as the WWI-entry decision (`solo1916#POST 31, 34`: *"These two should not trigger until after WWI is over"*). **This is exactly DH-60's gap, codebase-confirmed: the two era-event builders DIVERGE** — 1772 gates correctly (the Carlisle game-over chain gates on a prior `chose`; the Treaty of Paris gates on `warOutcome`), the 1856 builder cannot gate on a prior event at all. **The fix:** add a WWI-end predicate (`worldWarOneEnded`/`eventCompleted:'wwi_end'`) to the successor-state nodes (+ League of Nations, post-war treaties) and **port the 1772-graph `precondition` layer into the 1856/Progressive builders.** Same selective-precondition ask as DH-60 (`dem1820`/`arkzag`/`smallbugs`) — now corroborated from the Progressive band, so **DH-60 is multi-era confirmed.** **S; SAME surface as BUG-1 + K3's `territoryOwned`; build with E15 + BUG-1.** Open Q: which other Progressive-band events need the gate. game-mechanics §10.4.8. |
+| 50 | **★ #172 era-keyed cabinet/SCOTUS confirmation thresholds + Nuclear-Option default-state — UNBUILT (no confirmation/cloture/nuclear-option code at all); folds into E16 + E14c (batch 22 / `modernday`, Ted-authoritative)** | **grep `cloture\|filibuster\|nuclearOption\|confirmationThreshold\|requiresConfirmation\|senateConfirm` in `src/` = ZERO hits.** The cabinet runner `runPhase_2_3_1_Cabinet` (`phaseRunners.ts:2158-2223`) is a flat scored pick → `cabinet[seat]=pick.id` (`:2191`) + `addLog("…confirmed as ${seat}")` (`:2197`), NO Senate vote/threshold/nuclear-option gate; SCOTUS backfill `:3648-3671` likewise has no vote | **Same site as debt #24 (no Senate vote) + #38 (no auto-pass gate) + #30 (no enthusiasm channel) + #26 (no cloture).** Ted-authoritative (`modernday#POST 422-423`): *"for a 2016 start, Cabinet Members require only 50%+1… unless you repeal the Nuclear Option (otherwise permanently in place). Supreme Court nominees will continue to require 60%, unless you enact the Nuclear Option for that as well."* The Nuclear-Option DEFAULT is **era-keyed** (Reid-2013 + McConnell-2017 already fired by a 2016 start). **The build surface:** a `GameState.nuclearOption: { cabinet:boolean; scotus:boolean }`-style flag **seeded at boot by start year** (same `scenarioBoot`/`BootSheet` surface as #170, §3 item 2 / E16) → a **per-track confirmation-threshold** read in the cabinet runner (`:2158`) + the SCOTUS-nom path (`:3648`) + the **SML enact/repeal** ActionRegistry row + the **60→fail→10-vote-conversion→auto-confirm-a-Mod fallback** (`modernday#POST 602-603`). **★ It COMPOSES with already-scoped pieces — do NOT re-build them:** #124's auto-pass GATE (debt #38 — whether a vote HAPPENS) fronts the threshold; #52/E9 handler 9d (WHO votes aye) resolves the contested vote; #171 is orthogonal; and the batch-9 USER cloture decision (debt #27, Senate=simple-majority-in-code / design-open 60%-then-majority) is the SAME E14c cloture surface — the Nuclear-Option flag is the era-keyed DEFAULT on top of it. **Size: S–M** (boot flag + per-track threshold S; SML enact/repeal + conversion-fallback M; both reuse E16 + E14c). Open Q: boot-flag-vs-derived-from-cloture-bills (designer-gated within the epic). game-mechanics §9.3.10. |
+| 51 | **★ #173 era-boundary-aligned starts — New-Game start-year PRESETS = the 14-band era openings; couples scenario-boot (#115); DESIGNED, not built (batch 22 / `modernday`, GM's own verdict)** | **NO start-year picker:** `NewGameScreen.tsx` hard-codes a two-entry `SCENARIOS` array (`:8-21`, `type ScenarioId = '1772' \| '1856'` `:6`); `startNewGame(factionId, scenarioId)` (`GameContext.tsx:264`, sig `scenarioId?: '1772' \| '1856'`) admits exactly those two boots — no era→start-year axis | GM's closing verdict (`modernday#POST 2964`): *"For any new test start date, it must be the date a new era begins. One of the issues we ran into with this test was it started in the middle of an era."* **The fix:** a New-Game **PRESETS table** keyed to the canonical 14-band era→start-year map (POST 2964: Independence 1774 / Federalism 1788 / Republicanism 1800 / Democracy 1820 / Manifest Destiny 1840 / Nationalism 1856 / Gilded 1868 / Progressivism 1892 / Normalcy 1916 / Ideologies 1928 / Nuclear Age 1948 / Neocons 1972 / Terror 2000 / Populism 2012). **★ This is a presets table ON TOP of the K4 `BootSheet`/`scenarioBoot` pipeline (#115, §9.1.9)** — each preset is "another scenario-as-data-row" (same pattern as `scenario1868`/`scenario1788`), GATED on `scenarioBoot` existing. UI delta is small (a presets grid on `NewGameScreen.tsx` instead of two hard-coded buttons); the WEIGHT is the boot sheets each preset points at (the existing era-content/scenario work). **Size: S** (the picker presets table; the boot sheets are existing scenario-boot work). game-mechanics §27.9. |
+| 52 | **★ DH-70 `Lackey` trait over-weighted in PV — actually a "when ported, no special-case" note: pv.ts already gives every negative trait a flat −5 (batch 22 / `modernday`)** | `pv.ts:77` applies a **flat `−5` to EVERY negative trait** (`else if (NEGATIVE.includes(t)) total -= 5;`); **grep `Lackey` in `src/` = ZERO** — it is NOT a shipped trait | The digest flags a LW-Pop with only `Lackey` (+Obscure) at PV −47 ("Lackey shouldn't be that much worse than any other bad trait… just a formula issue", `modernday#POST 1939-1945`). **The shipped formula already treats all bad traits equally** (flat −5), so the over-weight the forum saw was a SPREADSHEET artifact, not the engine. **The fix when `Lackey` is ported: add it to `NEGATIVE_TRAITS` (`types.ts`) so it takes the SAME flat −5 — NO special-case.** **XS; pairs with #120 dataset-balance + DH-51 (modern-pol balance).** game-mechanics §3.4. |
+| 53 | **★ DH-69 NO in-app rules / legal-move surface — players wing it (onboarding/UX gap; serves the CPU cluster too) (batch 22 / `modernday`)** | **grep `rulebook\|legalMove\|availableActions\|helpPage\|tutorial\|onboard` in `src/` = ZERO hits** — no rules page, no legal-move enumeration, no onboarding/help surface | Players (jnewt/ebrk85/Willthescout7) report never being given the rulebook/Discord and "winging it" (`modernday#POST 342-356`). **The fix is an in-app rules + legal-move surface** (a Rules page keyed by phase + an enumerator of the currently-legal actions). **★ It serves THREE constituencies:** onboarding (sharpens #115's boot-procedure gap), the **CPU cluster** (a legal-move enumerator is the same primitive a CPU action-picker needs — pairs with K5/E9), and the GM-burnout theme (DH-36 family — less "ask the GM what's legal"). **UX/onboarding item, no engine size of its own; cite under the #115/CPU-AI work.** game-mechanics §29.1. |
 
 ### 8.1 Confirmed shipped bugs + GM-confirmed design holes
 
@@ -1903,6 +1907,173 @@ continental congress era system) + #120 (dataset umbrella — one coordinated
 > `oopscpu` + `gild1868` + `hd1` + `terror2000` + `ted1772` + `ideo1928` +
 > `fixes2022`**.
 >
+> **★★ Batch-22 changes to the plan (`modernday` / `65f81fe8` — "AMPU Modern Day
+> Playtest", a 3014-post 2016-START current-rules 8-human modern multiplayer that is
+> THE ONLY modern thread to CROSS AN ERA BOUNDARY [the 2024 "Era of Populism"→"Era
+> of the Near Future" transition]. GA-run [Rodja→ebrk85] but the marquee rulings are
+> designer-blessed in-thread [Ted/vcczar adjudicate]. TWO concrete modern build items
+> that sit in EXISTING epics [#172, #173], a CURRENT-RULES live spec-anchor for the
+> #68/#2 era-boundary pipeline, the #171 toggle PROVEN flipping ON→OFF within ONE
+> save, and two small bugs [DH-69, DH-70]. NO new keystone, NO re-sequence, TOP-OF-
+> QUEUE UNCHANGED.):**
+>
+> > **★ Read this block if you only read one for batch 22.** This batch is
+> > **corroboration-heavy + two modern build items that already live in their epics**;
+> > nothing re-sequences the keystones. The load-bearing moves: **(a) ★ the #68/#2
+> > era-boundary pipeline now has a CURRENT-RULES LIVE INSTANCE** — the 6-clause
+> > end-of-era point-banking ritual fired at a REAL 2024 boundary, formula printed
+> > verbatim (`modernday` digest §3), matching `rep1800` from a current-rules game, so
+> > the spec is now well-anchored for when it's built (no priority change — it remains
+> > folded into K3/K4 point-banking, §9.1.5 / debt-adjacent). **(b) ★ #172** is a
+> > concrete NEW build item — a **`nuclearOption` per-start-year boot flag + per-track
+> > era-keyed CONFIRMATION thresholds** (Cabinet 50%+1, SCOTUS 60% for a 2016 start;
+> > Ted-authoritative `modernday` POST 422-423) + the SML-enact/repeal action + the
+> > 60→fail→10-vote-conversion→auto-confirm-Mod fallback — it **folds into the
+> > cabinet/confirmation epic (E16) + the cloture work (E14c)** and **composes with
+> > #124 (auto-pass — whether a vote happens), #52 (who votes aye), #171, and the
+> > batch-9 user cloture decision (60%-then-majority; do NOT re-litigate)**. Size S–M.
+> > **(c) ★ #173** New-Game **start-year PRESETS = the 14-band era openings** (the GM's
+> > own closing verdict: "any new test start date must be the date a new era begins",
+> > POST 2964) → a presets table on the scenario-boot picker; couples to scenario-boot
+> > (#115). Size S. **(d) ★ #171** the era-keyed draft-restriction toggle is PROVEN
+> > flipping **ON (2016-2024) → OFF (at the 2024 boundary)** inside one save (POST
+> > 1902) — sharpens debt #48, no scope change. **(e) DH-69** (no in-app rulebook /
+> > legal-move surface → players wing it) + **DH-70** (`Lackey` over-weighted in PV)
+> > are both small. The top of the queue does NOT move: QW0 → K0/K2 → K3/K4 +
+> > scenarioBoot → E1 still lead.
+> >
+> > **Verified shipped-state of every batch-22 item (grep/Read-confirmed):**
+> > **(1) ★ #172 era-keyed confirmation thresholds + Nuclear-Option — UNBUILT (no
+> > confirmation/cloture/nuclear-option code exists at all); FOLDS INTO E16 + E14c.**
+> > **★ CONFIRMED zero shipped surface:** grep `cloture|filibuster|nuclearOption|
+> > confirmationThreshold|requiresConfirmation|senateConfirm` in `src/` = **ZERO hits**
+> > (same null result the game-master found; consistent with debt #24/#26/#38). The
+> > shipped cabinet runner `runPhase_2_3_1_Cabinet` (`phaseRunners.ts:2158-2223`) is a
+> > flat scored pick → `cabinet[seat] = pick.id` (`:2191`) + `addLog("…confirmed as
+> > ${seat}")` (`:2197`) — **NO Senate vote, NO threshold, NO nuclear-option gate.**
+> > **★ The Ted-authoritative spec (designer-blessed in-thread, `modernday` POST
+> > 422-423):** *"for a 2016 start, Cabinet Members require only 50%+1 of the Senate's
+> > approval, unless you repeal the Nuclear Option (which is otherwise permanently in
+> > place). Supreme Court nominees will continue to require 60%, unless you enact the
+> > Nuclear Option for that as well."* The Nuclear-Option DEFAULT STATE is **era-keyed**
+> > (Reid-2013 + McConnell-2017 already fired by a 2016 start) → it is a **per-start-year
+> > boot flag** (or derived from whether the start predates the cloture-reform bills).
+> > **★ Where it binds:** a `GameState.nuclearOption: { cabinet: boolean; scotus:
+> > boolean }`-style flag SEEDED at boot by start year (the same `scenarioBoot`/
+> > `BootSheet` surface as #170's office-existence seed, §3 item 2 / E16), read by a
+> > **per-track confirmation-threshold** check in the cabinet runner
+> > (`phaseRunners.ts:2158`) and the SCOTUS-nomination path (`:3648-3671`); plus the
+> > **SML enact/repeal action** (one ActionRegistry row that toggles the flag) and the
+> > **60→fail→10-vote-conversion→auto-confirm-a-Mod fallback** (`modernday` POST 602-603:
+> > a 60-vote SCOTUS fail auto-confirms a Mod-Dem-or-Republican replacement). **★ It
+> > COMPOSES, doesn't conflict, with three already-scoped pieces — do NOT re-build them:
+> > #124's auto-pass GATE (debt #38, Ted-ruled — whether a vote even HAPPENS) fronts
+> > the threshold; #52's CPU-Senate-vote handler (E9 handler 9d — WHO votes aye)
+> > resolves the contested vote; #171 is orthogonal (draft, not confirmation); and the
+> > batch-9 USER cloture decision (Senate = 60%-then-majority vs simple-majority, debt
+> > #27 — RESOLVED in code as simple majority, design-open) is the SAME cloture surface
+> > E14c owns — the Nuclear-Option flag is the era-keyed DEFAULT on TOP of it.** **Size:
+> > S–M** (the boot flag + per-track threshold read is S; the SML enact/repeal action +
+> > the conversion-fallback is the M part — both reuse the E16 confirmation + E14c
+> > cloture surfaces already scoped). **Open Q (designer-gated within the epic):**
+> > boot-flag-vs-derived-from-cloture-bills (the digest's own open question). game-
+> > mechanics §9.3.10. debt #50.
+> > **(2) ★ #173 era-boundary-aligned starts → New-Game start-year PRESETS = the 14-band
+> > openings; couples scenario-boot (#115). DESIGNED, not built.** **★ CONFIRMED shipped-
+> > state:** there is **NO start-year picker** — `NewGameScreen.tsx` hard-codes a
+> > two-entry `SCENARIOS` array (`:8-21`, `type ScenarioId = '1772' | '1856'` `:6`) and
+> > `startNewGame(factionId, scenarioId)` (`GameContext.tsx:264`, signature `scenarioId?:
+> > '1772' | '1856'`) admits exactly those two boots. There is **no era→start-year axis
+> > at all.** **★ The fix (the GM's own closing verdict, `modernday` POST 2964):** *"For
+> > any new test start date, it must be the date a new era begins. One of the issues we
+> > ran into with this test was it started in the middle of an era"* — so the New-Game
+> > boot picker should expose a **PRESETS table keyed to the canonical 14-band era→start-
+> > year→first-president map** (printed verbatim POST 2964: Independence 1774 /
+> > Federalism 1788 / Republicanism 1800 / Democracy 1820 / Manifest Destiny 1840 /
+> > Nationalism 1856 / Gilded Age 1868 / Progressivism 1892 / Normalcy 1916 / Ideologies
+> > 1928 / Nuclear Age 1948 / Neocons 1972 / Terror 2000 / Populism 2012). **★ Where it
+> > binds:** this is a **presets table ON TOP of the K4 `BootSheet`/`scenarioBoot`
+> > pipeline (#115, §9.1.9)** — each preset is "another scenario-as-data-row" (the same
+> > pattern as `scenario1868`/`scenario1788`), so it is GATED on `scenarioBoot` existing.
+> > The UI delta is small (a presets dropdown/grid on `NewGameScreen.tsx` instead of two
+> > hard-coded buttons); the WEIGHT is the boot sheets each preset points at (the
+> > era-content/scenario work the roadmap already scopes). **Size: S** (the picker
+> > presets table itself; the boot sheets are the existing scenario-boot/era-content
+> > work). game-mechanics §27.9. debt #51.
+> > **(3) ★ #68/#2 era-boundary pipeline — SPEC-ANCHOR CONFIRMED (current-rules live
+> > instance); UNBUILT; no priority change.** **★ CONFIRMED zero shipped surface:** grep
+> > `bankPoints|eraBoundary|endOfEra|pointBank|resetScores|factionTrade|switchFaction`
+> > in `src/` = **ZERO hits** — there is no end-of-era banking pass, no score-reset, no
+> > faction-trade window, and the ONLY era transition is the hard-coded `currentEra =
+> > 'federalism'` (`constitutionalConvention.ts:198`; debt #5). The `triggersGameEnd`
+> > terminal sink (`phaseRunners.ts:2871`) is the only era-end-adjacent consumer and is
+> > unrelated. **★ Why this batch matters for it:** `modernday` is the **first live
+> > instance in the KB of the 6-clause point-banking ritual firing at a REAL boundary
+> > under CURRENT rules** (the 2024 transition, POST 1871 — verbatim formula: most-points
+> > +5 / other-party-most +3 / 2nd-most-same-party +3 / all-factions-in-top-party +3 each
+> > / two −1 allied-faction-finished-last guards), plus the **non-banked score reset**
+> > ("Scores will be reset to zero for the next Era", #51/#2), the **faction-trade/switch
+> > window** (POST 1874), and the **procedural-content swap** (historical imports →
+> > all-generated rookies, POST 1902/1909 — see (5) / #43). It **matches `rep1800`
+> > almost exactly**, so #68/#2 is now confirmed a deterministic pipeline from BOTH a
+> > 1800 and a current-rules angle. **No priority change — it stays folded into K3/K4
+> > point-banking** (§9.1.5, the two-level era model: point-banked Historical Eras +
+> > per-decade census), but the **spec is now solid** for when the era-model epic builds
+> > it. game-mechanics §27.2.1. (No new debt row — this strengthens K3/K4, debt #5.)
+> > **(4) ★ #171 era-keyed draft-ideology TOGGLE — PROVEN FLIPPING ON→OFF in one save
+> > (corroboration; sharpens debt #48, no scope change).** Already DESIGNED-not-built
+> > (debt #48); the shipped draft `runPhase_2_1_1_Draft` (`phaseRunners.ts:107`) still
+> > picks via `pickBestForFaction` (`:33`) with NO era-keyed ideology-restriction profile.
+> > `modernday` is the **single cleanest live demonstration in the KB**: restrictions
+> > **ON** 2016-2024 ("You can draft only politicians restricted by your draft
+> > ideologies", POST 558) then **OFF** at the 2024 boundary ("there are no longer any
+> > draft restrictions… You can draft anyone from RW Pop to LW Pop", POST 1902) — the
+> > toggle FLIPS at the Populism→Near-Future band boundary inside ONE campaign. This
+> > **corroborates and sharpens #171/debt #48** (the ON→OFF flip is keyed to the era-band
+> > boundary, i.e. realignment completion) — confidence ↑, **no scope change** (still an
+> > era-keyed boolean on the #4/#108 profile system). game-mechanics §27.9 + §4.1.w.
+> > **(5) CORROBORATIONS (no keystone moves):** **★ #43 procedural pol-generator owns the
+> > modern→future band** — by 2024 the dataset is exhausted and the draft is "basically
+> > all generated pols" (POST 1902/1909); now corroborated LIVE from `modernday` (+ the
+> > batch-15 `terror2000` 2000-start), pinning that the **modern→future content boundary
+> > is where the dataset exhausts into pure generation** (debt #19, scaling-wall (a)). **★
+> > Cabinet/offices #124/#25/#170** (28-seat roster + requirements + **CIA-Director as
+> > the modern intel slot, no DNI office** — re-confirms #170's DNI⇒CIA-Director
+> > supersession, debt #47; the cabinet→enthusiasm path + 2-eggheads→+100-points fire).
+> > **★ The 2-layer meter→election scorer #18/#51** published verbatim ("State of the
+> > Meters", POST 2380): a universal per-ideology meter modifier on BOTH parties/every
+> > state + a per-party enthusiasm box — MATCHES the `terror2000`/`dem1820`/`arkzag`-
+> > settled model (debt #1, the FROZEN SPEC; build-confidence ↑). **★ Legislation #8/#9/
+> > #10 + filibuster** (full 4-committee → chair-block → SML-block → vote → filibuster →
+> > conversion → VP-tiebreak → veto → 2/3 override-fail, POST 521-569 — re-confirms debt
+> > #26's 2/3-both-chambers override + the cloture surface E14c owns). **★ Impeachment**
+> > ran to completion (Warner = 3rd impeached pres, acquitted) but the GM short-cut the
+> > special-committee step — re-corroborates DH-54/DH-66 (under-specified, E10b family).
+> > **★ CPU suite #70-#79 / #1 / #114** (CPU backfills vacant factions, GM CPU-subs
+> > inactives, faction-trade auto-accept; 8-human MP w/ handovers — the app is a solo
+> > adaptation, humans are 1-of-10). **★ #110** full 2.1.x→2.9 sub-phase taxonomy run
+> > verbatim. **★ #108** high/max-enthusiasm factions shielded from conversion. **★ DH-70
+> > `Lackey` PV over-weight (XS, pv.ts note when ported):** the digest flags a LW-Pop
+> > with only Lackey at PV −47 ("Lackey shouldn't be that much worse than any other bad
+> > trait", POST 1939-1945). **★ CONFIRMED shipped-state:** `pv.ts:77` applies a **flat
+> > `−5` to EVERY negative trait** (`else if (NEGATIVE.includes(t)) total -= 5;`), and
+> > `Lackey` appears **NOWHERE in `src/`** (grep = ZERO) — so it is NOT yet a shipped
+> > trait. **When `Lackey` is ported, add it to `NEGATIVE_TRAITS` so it takes the SAME
+> > flat `−5`, with NO special-case** (the forum's "just a formula issue" — the shipped
+> > formula already treats all bad traits equally; the over-weight the forum saw was a
+> > spreadsheet artifact). **XS, pairs with #120 dataset-balance + DH-51.** **★ DH-69 no
+> > in-app rules / legal-move surface (UX/onboarding):** grep `rulebook|legalMove|
+> > availableActions|helpPage|tutorial|onboard` in `src/` = **ZERO hits** — there is no
+> > rules page, no legal-move enumeration, no onboarding. Players "winging it" without a
+> > rulebook (POST 342-356) is the friction an **in-app rules/legal-move surface** fixes;
+> > it sharpens #115's boot-procedure gap and **serves the CPU cluster too** (a legal-move
+> > enumerator is the same primitive a CPU action-picker needs) and the GM-burnout theme
+> > (DH-36 family). **UX/onboarding item, no engine size of its own; cite under the
+> > #115/CPU-AI work.** **Decision-gated RECOUNT: 0** (the #172 boot-flag-vs-derived
+> > question is designer-gated TUNING within E16/E14c, not a new bucket entry). **No NEW
+> > keystone, NO re-sequence; top of queue UNCHANGED** (QW0 → K0/K2 → K3/K4 + scenarioBoot
+> > → E1).
+> >
 > **★★ Batch-21 changes to the plan (FOUR playtests — `nixon1972` [`4853cf4d`,
 > 1972-start modern MULTIPLAYER, GA-run, one half-term then GM-burnout stall],
 > `cpufull` [`1f72600c`, all-CPU 1772 founding traversal, GA-run, ENDED on a
@@ -5795,6 +5966,44 @@ planning. Specifically:
 > re-sequence; top of queue UNCHANGED** (QW0 → K0/K2 → K3/K4 + scenarioBoot → E1) — **but
 > #158's escalation makes the CPU anti-game-over fix a higher-priority item within the CPU/war
 > track.**
+> **★★ Batch-22 change (`modernday` / `65f81fe8` — 2016-START current-rules 8-human modern MP,
+> THE ONLY modern thread to cross an era boundary [2024 Populism→Near-Future]; GA-run but the
+> marquee rulings are designer-blessed in-thread; TWO modern build items in EXISTING epics, a
+> CURRENT-RULES spec-anchor for #68/#2, #171 PROVEN flipping, two small bugs; NO new keystone,
+> NO re-sequence, TOP-OF-QUEUE UNCHANGED):** **★ #172 era-keyed confirmation thresholds +
+> Nuclear-Option → FOLDS INTO E16 (cabinet/confirmation) + E14c (cloture):** UNBUILT (grep
+> `cloture\|filibuster\|nuclearOption\|confirmationThreshold` in `src/` = ZERO; cabinet runner
+> `phaseRunners.ts:2158-2223` is a flat scored pick, no vote). Build a `GameState.nuclearOption:
+> {cabinet,scotus}` per-start-year BOOT FLAG (Cabinet 50%+1, SCOTUS 60% for a 2016 start;
+> Ted-authoritative `modernday#POST 422-423`) seeded by `scenarioBoot` + a per-track threshold
+> read + the SML enact/repeal action + the 60→fail→10-vote-conversion→auto-confirm-Mod fallback
+> (`#POST 602-603`). **COMPOSES with #124 (auto-pass GATE — whether a vote happens, debt #38),
+> #52/E9-9d (who votes aye), #171, and the batch-9 USER cloture decision (debt #27 — do NOT
+> re-litigate)** — the flag is the era-keyed DEFAULT on the E14c cloture surface. S–M. debt #50.
+> **★ #173 era-boundary-aligned starts → New-Game start-year PRESETS = the 14-band openings;
+> couples scenario-boot (#115):** no start-year picker today (`NewGameScreen.tsx:6-21` hard-codes
+> `'1772'\|'1856'`); add a presets table keyed to the canonical 14-band map (`#POST 2964`) ON TOP
+> of the K4 `BootSheet`/`scenarioBoot` pipeline (each preset = another scenario-as-data-row,
+> GATED on `scenarioBoot`). S. debt #51. **★ #68/#2 era-boundary pipeline → SPEC-ANCHOR
+> CONFIRMED (current-rules live instance), no priority change:** the 6-clause point-banking
+> ritual + score-reset + faction-trade + procedural-content swap fired at a REAL 2024 boundary
+> (`#POST 1871`), matching `rep1800` — still folded into K3/K4 point-banking (§9.1.5, debt #5),
+> but the spec is now solid. **★ #171 toggle PROVEN flipping ON(2016-24)→OFF(2024) in one save**
+> (`#POST 1902`) — corroboration, sharpens debt #48, no scope change. **★ DH-70 → pv.ts NOTE
+> (XS):** `pv.ts:77` already gives every negative trait a flat −5 and `Lackey` isn't shipped — so
+> when ported, add `Lackey` to `NEGATIVE_TRAITS` with NO special-case; debt #52. **★ DH-69 →
+> in-app rules / legal-move SURFACE (UX/onboarding):** no rules page / move-enumerator in `src/`;
+> serves onboarding (#115) + the CPU cluster (the move-enumerator a CPU picker needs) + the
+> GM-burnout theme; cite under #115/CPU-AI; debt #53. **CORROBORATION only:** #43 procedural
+> generator owns the modern→future band (dataset exhausts at the future boundary, now live from
+> `modernday` + `terror2000`, debt #19); cabinet/offices #124/#25/#170 (CIA-Director-as-intel-
+> slot re-confirms #170, debt #47); the 2-layer scorer #18/#51 (debt #1, FROZEN SPEC, confidence
+> ↑); legislation #8/#9/#10 + filibuster + 2/3-override (debt #26); impeachment under-spec
+> DH-54/DH-66; CPU suite #70-#79/#1/#114; sub-phase taxonomy #110; conversion-shield #108.
+> **Decision-gated RECOUNT: 0** (the #172 boot-flag-vs-derived question is designer-gated tuning
+> within E16/E14c). **No NEW keystone, NO re-sequence; top of queue UNCHANGED** (QW0 → K0/K2 →
+> K3/K4 + scenarioBoot → E1) — this batch is corroboration-heavy + two modern build items (#172,
+> #173) that sit in their existing epics.
 
 **Cheap fixes first (do immediately — XS each, high value):**
 **★ BUG-0/QW0 (relocation cap `5`→`4`, `types.ts:247`, divergence #9 — ★ batch-12
