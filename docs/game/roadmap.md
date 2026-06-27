@@ -1,5 +1,106 @@
 # AMPU — Roadmap
 
+> **★★★★ Batch-27 version — THE CORPUS'S FIRST COLD-WAR / CIVIL-RIGHTS SOURCE +
+> the FIRST MODERN-ERA scenario boot stress-tested AT SCALE (`8bc0231c` "The Big Red
+> Button: 1960 Playtest"): a ~10-human MP run that **started MID-CYCLE in the 1960
+> Elections Phase** (a turn before its authored 1960-62 governance boot), ran
+> 1960→1962-64, then **"Temporarily Paused" and never resumed solo** [the modern-angle
+> GM-workload death]. Alt-timeline: GOP nominated **John W. Bricker** [MacArthur
+> convention WALKOUT] who **WON 492-40 over JFK** off a platform/election BUG. ONE
+> designer-confirmed election NERF [#184] + its driving BUG [DH-72] + FOUR designed-not-
+> built modern gaps [#185/#183/#186/#187] + ONE premise-only loss [#188→#88]; NO new
+> keystone, NO re-sequence, top-of-queue UNCHANGED — but the #184/DH-72 fix yields a
+> genuine QUICK-WIN and the modern primary→convention cluster is now the KB's richest
+> forward-played election spec. `redbutton` (`8bc0231c`; the whole platform→meter→
+> election chain was driven BY HAND — it does not exist in code — and ran away to a
+> 492-40 landslide; both designers [@vcczar/@MrPotatoTed] played and blessed the nerf
+> in-thread). **The value:**
+> **(1) ★★ DH-72 ELECTION-TUNING SUB-FIXES → SPLIT into a SHIPPABLE QUICK-WIN; the
+> highest-leverage work in the batch. Bind at `calcStateVote` (`phaseRunners.ts:3709-
+> 3711`); XS–S.** The 492-40 came from a `+1`-rule read as `+3` board-wide (DH-72) on
+> top of a bogus `+3` platform bonus; recompute → 284-251 → ~281-129 near-tie (`#POST
+> 532, 587, 603-607`). Re-verified shipped-state UNCHANGED: `calcStateVote` (`:3709-
+> 3711`) = `50 + baseLean*5 + partyPref*5 + enthusiasm*2 + pv*0.1 + factionBias +
+> traitBonus + (Math.random()-0.5)*8` — NO ±3 cap, NO per-state ideology gate, **raw
+> `Math.random` (a continuous ±4 jitter, NOT a die)**, and **no "+1 most-enthusiastic-
+> base" term exists in code at all** (it is GM-hand-applied). The designer-blessed
+> sub-fixes bind HERE with no new system: **(a) narrow + SEED the jitter** (the d6→d3
+> intent — compress the luck band — routed through `src/rng.ts`, ALSO closing a
+> determinism leak vs. the rng rule + debt #1/#3); **(b) re-weight `baseLean*5` into the
+> +3/+5 historical-bias band behind a `game.biasMode?` toggle** (historical-plausible
+> vs "go-crazy"); **(c) HIDE the raw formulas in the UI** (anti-collusion — show only
+> which ideologies like a position + polls/maps). **★ JOIN these to the QUICK-WIN bucket
+> alongside the queued QW3 ±3 cap [debt #1] + the #18 2-layer scorer** — the cheapest
+> high-value election work in the corpus. debt #64 (DH-72); technical-guide §9 batch-27
+> lead (a) + §9.6; game-mechanics §15.3.5, §28.6.
+> **(2) ★★ #184 PLATFORM METER-CAP (+2/+1/−1) → a BUILD-INTO CONSTRAINT on the
+> convention/platform epic (Phase-1 #10 / #181), NOT a quick-win, NOT a standalone
+> patch.** Both designers agreed *"platform is way too powerful"* (`redbutton#POST 538-
+> 540`). But the cap clamps a term that DOESN'T EXIST yet — `grep platform|plank in
+> src/engine` = ZERO; the platform engine (5 planks × per-card faction scoring × 4-step
+> comparison) is the SAME unbuilt object as #181 (`summer2021`). So the cap is a
+> day-one constraint on the platform scorer: build the scorer with the +2/+1/−1 cap +
+> hide-the-math; never ship the uncapped forum scorer. debt #65; game-mechanics
+> §15.3.5, §28.6.
+> **(3) ★★ #185 MODERN PRIMARY→BROKERED-CONVENTION MACHINE → FOLDS INTO Phase-1 #10
+> convention machinery; L; the single biggest election subsystem.** The fullest
+> convention CAPTURE in the KB: 12 primary states (rest = convention delegates),
+> primaries-in-GROUPS (debate ±1 carry, Orator +2/group), the 5-tier Cat-1–5
+> delegate-weight HOST-RIGGING lever (Ted holds rigging is INTENDED), kingmakers-affect-
+> conventions-not-primaries (+1), 67%-first-ballot (mutable), two-leaders-force-a-
+> KINGMAKER-WEIGHTED-rule-change-vote, least-delegates-first interballot order, the
+> 100%-delegate rule + WALKOUT (persisted into 1964), the KINGMAKER-WEIGHTED VP VOTE.
+> CONFIRMED unbuilt (`runPhase_2_9_1_Primaries` `:3725-3750` = flat PV+command*5 SORT).
+> debt #66; game-mechanics §28.6.
+> **(4) ★ #183 ENDORSEMENT-MOMENTUM HOLE → FOLDS INTO #185/Phase-1 #10; S; DO NOT build
+> standalone.** Withdrawal/endorsement is inert unless the dropper holds delegates; add
+> a momentum value (+2 Minor/+3 Major OR a home-state/region transfer OR an
+> ideology-penalty waiver) INDEPENDENT of delegate count — but the d6 base leaves little
+> headroom (couples to the DH-72 d6→d3 squeeze) + pairs with the ballot-2 80/20
+> delegate-release hole (DH-57). CONFIRMED unbuilt (`grep withdraw|endorse|momentum in
+> src/engine` = ZERO). debt #67; game-mechanics §28.6.
+> **(5) ★★ #186 DETERMINISTIC LATE/MID-CYCLE BOOT → a FIFTH `BootSheet` shape; RIDES
+> K4's `BootSheet` + `scenarioBoot` (#115); no new keystone. M-L.** The FIRST modern-era
+> boot in the corpus + the cleanest late-start failure: a 1960 scenario authored for the
+> 1960-62 GOVERNANCE turn forced into an Elections-Phase start a turn early → cascading
+> manual patches (Senate 50-50 vs real 66-D, no Leadership-gated Party Leader, on-
+> election rolls skipped, party-fatigue dropped, gov terms-served unknowable, delegate
+> weights hand-assigned, DC EVs invalid pre-1961, NO Command runway → roster frozen).
+> Needs a `startMode: 'electionPhase'|'governance'` discriminant + an `asOfYear`
+> incumbent table + `seededLeaderTenure` (#187) + `delegateWeights`/`primaryCalendar`
+> (#185) + `careerTrackBackfill` (DH-25). CONFIRMED unbuilt (`grep scenarioBoot|BootSheet
+> in src/` = ZERO). debt #68; game-mechanics §28.1, §28.6.
+> **(6) ★ #187 PARTY-LEADER FATIGUE (6-yr decay → ~8-yr presidential rotation) → S;
+> pairs with #15; do the boot retro-apply WITH #186.** A `party preference −1` after 6yr
+> of one party leader, ENGINEERED to force a ~8-yr presidential rotation (Ted, `#POST
+> 645`); dropped here because the mid-cycle start skipped 1958 → its absence COMPOUNDED
+> the #184 landslide (let the House flip 58R-42D unchecked). CONFIRMED unbuilt (`Party`
+> `types.ts:1306-1311` has NO tenure field; the faction `leadershipStartYear` `:1302` is
+> written but NEVER read for a penalty). debt #69; game-mechanics §8.5.3, §28.1.
+> **(7) ★ #188 "BIG RED BUTTON" NUCLEAR LOSS → FOLDS INTO #88 (meter-floor game-end +
+> APOCALYPSE clock, Phase-1 #6); XS-S; NO new subsystem.** The campaign's whole PREMISE
+> was a nuclear game-over but it NEVER fired; Cold-War content that DID fire is event/
+> legislation FLAVOR on the generic engine. A nuclear loss is a configured end-condition
+> ROW on the #88 model, NOT a MAD/arms-race engine (corroborates the §28.2 negative-scope
+> directive #106). CONFIRMED unbuilt (`triggersGameEnd` consumed in EXACTLY ONE place,
+> `:2871`, event-only; `grep nuclear|MAD|bigRedButton in src/` = ZERO). debt #70;
+> game-mechanics §28.2, §30.17.
+> **(8) ★★ ESCALATIONS IN PLACE (confidence ↑, no new items, NO re-sequence):** **#88**
+> gains its first MODERN datum (corpus still shows exactly ONE proven game-over,
+> `terror2000`'s coup → confidence ↑ on the meter-floor model); **#86/#115/#173/E1** boot
+> cluster — the mid-cycle modern boot is now CONCRETE (the 5th `BootSheet` shape with
+> explicit holes), the strongest case yet for the `scenarioBoot` pipeline; **#14**
+> platform/election rules now have the designer's nerf DIRECTION set; **#114/DH-36**
+> re-confirmed as the GM-WORKLOAD DEATH from the MODERN angle (the 10-human run paused
+> and never resumed solo — the CPU-AI cluster E9/K5 carries this too). **Decision-gated /
+> parking-lot RECOUNT: 0** (the #184 platform-vs-meter open Q, the #183 momentum value,
+> the #185 delegate-floor, the #186 per-year incumbent tables, the #187 penalty-curve are
+> all designer/content-gated WITHIN their existing epics). **NO new keystone, NO
+> re-sequence; top of queue UNCHANGED (QW0 → K0/K2 → K3/K4 + scenarioBoot → E1) — but the
+> DH-72 tuning sub-fixes JOIN the quick-win bucket and the modern primary→convention
+> cluster (#185/#183 + the #184 platform cap) is now the KB's richest forward-played
+> election spec inside Phase-1 #10.**
+>
 > **★★★★★ Batch-26 version — THE CORPUS'S LARGEST SOURCE (`fe15db25` "Summer 2021 AMPU
 > Playtest") + the FIRST run to PLAY FEDERALISM FORWARD (1789→~1810, the whole president/cabinet/
 > diplomacy TURN LOOP run end-to-end, NOT just designed-and-walled); a 3-GM relay over ~14 months;
@@ -1651,6 +1752,67 @@ Reverse-chronological. The expertise/abilities/traits/cabinet/lobby epic (PR1–
 is complete; the knowledge-base infra and eight ingestion batches are knowledge
 milestones (no code, but they are what every item below is traced to).
 
+- **Batch-27 ingestion (knowledge milestone).** Absorbed **ONE playtest**: **`redbutton`**
+  (`8bc0231c`, "The Big Red Button: 1960 Playtest", **THE CORPUS'S FIRST Cold-War / Civil-Rights
+  source** and the **FIRST MODERN-ERA scenario boot stress-tested AT SCALE** — a ~10-human MP run that
+  **started MID-CYCLE in the 1960 Elections Phase** [a turn before its authored 1960-62 governance
+  boot], ran 1960→1962-64, then **"Temporarily Paused" and never resumed solo** [the modern-angle
+  GM-workload death]; alt-timeline GOP nominated **John W. Bricker** [MacArthur convention WALKOUT] who
+  **WON 492-40 over JFK** off a platform/election BUG, BLESSED by both designers in-thread). **ONE
+  designer-confirmed election NERF [#184]** + its driving **BUG [DH-72]** + **FOUR designed-not-built
+  modern gaps [#185/#183/#186/#187]** + **ONE premise-only loss [#188→#88]**. **★★ DH-72 ELECTION-TUNING
+  SUB-FIXES → SPLIT into a SHIPPABLE QUICK-WIN** (the highest-leverage work in the batch): the 492-40 came
+  from a `+1`-rule read as `+3` board-wide on a bogus `+3` platform bonus; recompute → ~281-129 near-tie.
+  `calcStateVote` (`phaseRunners.ts:3709-3711`) re-verified UNCHANGED = `50 + baseLean*5 + partyPref*5 +
+  enthusiasm*2 + pv*0.1 + factionBias + traitBonus + (Math.random()-0.5)*8` — NO ±3 cap, NO per-state
+  ideology gate, RAW `Math.random`, NO "+1 most-enthusiastic-base" term in code. **Three sub-fixes bind
+  HERE with no new system → QW19/QW20/QW21:** (a) narrow + SEED the jitter (d6→d3 intent via `src/rng.ts`,
+  closes a determinism leak + debt #1/#3), (b) re-weight `baseLean*5`→ the +3/+5 historical-bias band
+  behind a `game.biasMode?` toggle, (c) HIDE the raw formulas in the UI (anti-collusion). **Join the
+  QUICK-WIN bucket alongside QW3 ±3 cap [debt #1] + the #18 2-layer scorer.** debt #64; game-mechanics
+  §15.3.5, §28.6. **★ #184 PLATFORM METER-CAP (+2/+1/−1)** is NOT a quick-win — it clamps a term that
+  DOESN'T EXIST yet (`grep platform|plank in src/engine` = ZERO; same unbuilt object as #181) → a
+  **BUILD-INTO CONSTRAINT on the convention/platform epic (Phase-1 #10 / #181)**: build the scorer with
+  the cap + hide-the-math from day one, never ship the uncapped forum scorer. debt #65; game-mechanics
+  §15.3.5, §28.6. **★ #185 MODERN PRIMARY→BROKERED-CONVENTION MACHINE** (12 primary states, primaries-in-
+  GROUPS, 5-tier Cat-1–5 delegate-weight HOST-RIGGING lever, kingmaker +1, 67%-first-ballot, two-leaders-
+  force-a-kingmaker-weighted-rule-change-vote, least-delegates-first interballot order, 100%-delegate rule
+  + WALKOUT, kingmaker-weighted VP vote) → **FOLDS INTO Phase-1 #10 convention machinery**, L; the single
+  biggest election subsystem. CONFIRMED unbuilt (`runPhase_2_9_1_Primaries` `:3725-3750` = flat
+  PV+command*5 SORT). debt #66; game-mechanics §28.6. **★ #183 ENDORSEMENT-MOMENTUM HOLE** (withdrawal/
+  endorsement is inert unless the dropper holds delegates; add a momentum value +2 Minor/+3 Major OR a
+  home-state/region transfer OR an ideology-penalty waiver, INDEPENDENT of delegate count) → **FOLDS INTO
+  #185/Phase-1 #10**, S, DO NOT build standalone (couples to the DH-72 d6→d3 squeeze + DH-57). CONFIRMED
+  unbuilt (`grep withdraw|endorse|momentum in src/engine` = ZERO). debt #67; game-mechanics §28.6. **★
+  #186 DETERMINISTIC LATE/MID-CYCLE BOOT** = a FIFTH `BootSheet` shape (the FIRST modern-era boot + the
+  cleanest late-start failure — a 1960 governance boot forced into an Elections-Phase start a turn early →
+  cascading manual patches: Senate 50-50 vs real 66-D, no Leadership-gated Party Leader, on-election rolls
+  skipped, party-fatigue dropped, gov terms-served unknowable, delegate weights hand-assigned, DC EVs
+  invalid pre-1961, NO Command runway → roster frozen) → **RIDES K4's `BootSheet` + `scenarioBoot`
+  (#115)**, M-L; needs `startMode: 'electionPhase'|'governance'` + `asOfYear` incumbent table +
+  `seededLeaderTenure` (#187) + `delegateWeights`/`primaryCalendar` (#185) + `careerTrackBackfill`
+  (DH-25); no new keystone. CONFIRMED unbuilt (`grep scenarioBoot|BootSheet in src/` = ZERO). debt #68;
+  game-mechanics §28.1, §28.6. **★ #187 PARTY-LEADER FATIGUE** (`party preference −1` after 6yr of one
+  party leader → ~8-yr presidential rotation; its absence at the mid-cycle start COMPOUNDED the #184
+  landslide) → **S, pairs with #15; do the boot retro-apply WITH #186**. CONFIRMED unbuilt (`Party`
+  `types.ts:1306-1311` has NO tenure field; `leadershipStartYear` `:1302` written, NEVER read for a
+  penalty). debt #69; game-mechanics §8.5.3, §28.1. **★ #188 "BIG RED BUTTON" NUCLEAR LOSS** (the
+  campaign's whole PREMISE never fired; Cold-War content that DID fire is event/legislation FLAVOR on the
+  generic engine) → **FOLDS INTO #88 (meter-floor game-end + APOCALYPSE clock, Phase-1 #6)**, XS-S, NO new
+  subsystem (a configured end-condition ROW, NOT a MAD/arms-race engine — corroborates §28.2 negative
+  scope #106). CONFIRMED unbuilt (`triggersGameEnd` consumed in EXACTLY ONE place `:2871`, event-only).
+  debt #70; game-mechanics §28.2, §30.17. **★★ ESCALATED IN PLACE (confidence ↑, NO new scope, NO
+  re-sequence):** **#88** gains its first MODERN datum (still exactly ONE proven game-over, `terror2000`'s
+  coup → confidence ↑ on the meter-floor model); **#86/#115/#173/E1** boot cluster — the mid-cycle modern
+  boot is now CONCRETE (the 5th `BootSheet` shape), the strongest case yet for `scenarioBoot`; **#14**
+  platform/election rules now have the designer's nerf DIRECTION set; **#114/DH-36** re-confirmed as the
+  GM-WORKLOAD DEATH from the MODERN angle (the 10-human run paused, never resumed solo — E9/K5 carries
+  this too). **No new keystone, no re-sequence, batch 27 nets 0 (the DH-72 sub-fixes JOIN the quick-win
+  bucket; #184/#185/#183 ride Phase-1 #10/#181; #186 rides K4; #187 pairs #15/#186; #188 folds into #88;
+  all open Qs are designer-gated WITHIN their epics); top-of-queue UNCHANGED — but the modern primary→
+  convention cluster (#185/#183 + the #184 platform cap) is now the KB's richest forward-played election
+  spec inside Phase-1 #10.**
+
 - **Batch-26 ingestion (knowledge milestone).** Absorbed **ONE playtest**: **`summer2021`**
   (`fe15db25`, "Summer 2021 AMPU Playtest", **THE CORPUS'S LARGEST SOURCE** and the **FIRST run to
   PLAY FEDERALISM FORWARD** [1772→~1810, the whole president/cabinet/diplomacy TURN LOOP run end-to-end,
@@ -2600,6 +2762,9 @@ re-sequence — #153 was a 1-source XS quick-win, now it's 3-source canonical). 
 | **QW15** | **★ batch-12 #139 — Pres signature step lives in 2.6 (NOT 2.10) — phase-sequence reorder (`tedchange#POST 126`)** *(NEW, batch 12)* | **XS phase-sequence reorder in `src/phases.ts`** so military bills affect Mil-Prep BEFORE 2.7 Military Action. Ted's `tedchange#POST 124-126` rules: **Pres signature lives in 2.6** (not 2.10) so signed military bills affect Mil-Prep in time. Folds into Phase-1 #2 (bill typing + spending cap) + Phase-1 #14 (legislative micro-mechanics), but the reorder itself is XS and standalone. **RULED by Ted (`tedchange#POST 124-126`).** | — | XS | gap **#139 / `tedchange#POST 124-126`** — NEW | ready |
 | **QW16** | **★ batch-12 #141 — FL trait gain rates 5% positive (per cycle) / 3% negative (first-time-as-FL only)** *(NEW, batch 12)* | **XS — refines the existing FL trait-gain const.** Positives roll **5% per cycle as FL**; negatives roll **3% first-time-as-FL only**. Ted's `tedchange#POST 79` refines `cf82a7d3 §5a #4` (which was "MOSTLY ADOPTED" without rates). Pure const refinement. **RULED by Ted (`tedchange#POST 73-79`; refines `cf82a7d3 §5a #4`).** | — | XS | gap **#141 / `tedchange#POST 73-79`** — NEW | ready |
 | **QW17** | **★ batch-13 #143 — post-election Command decay ("shit or get off the pot") (NEW pass, `oopscpu#POST 224`)** *(NEW, batch 13 — RULED, tested live)* | **XS — one new pass at one known site.** After every presidential cycle closes, **every living politician who did NOT run for President or VP has a 40% chance of −1 Command.** Ted's marquee `oopscpu` proposal (floated POST 1), **RULED + TESTED LIVE** at POST 224 ("Politicians who don't run for President have a 40% chance of losing −1 Command after the Presidential election" — hit Gerry→0, Pinckney→2, Hancock→2). Purpose: stop Command piling up on pols who never contest the presidency, keeping the candidate pool meaningful (pairs with #72 candidate-selection + #136 "Presidents should come from somewhere"). **Binds at `runPhase_2_10_End` (`phaseRunners.ts:4171`), gated on `isPresidentialYear`, AFTER the 2.9.4 ticket roster is known** (so it can exclude Pres/VP candidates); applies via the existing `loseCommand` (`abilities.ts:15`). Pairs with #85/#130 death-schedule discipline (same `runPhase_2_10_End` site). Pin the 40% / −1 rate. No dependency; ship with the QW0 / XS-consistency cluster. **RULED by Ted (`oopscpu#POST 1, 224`).** | — | XS | gap **#143 / `oopscpu#POST 1, 224`** — NEW | ready |
+| **QW19** | **★★ batch-27 DH-72(a) — narrow + SEED the election jitter (d6→d3 via `src/rng.ts`) — ★ HIGHEST-LEVERAGE WIN IN THE BATCH** *(NEW, batch 27 — designer-blessed)* | **XS — replace the raw `Math.random` jitter at `calcStateVote` (`phaseRunners.ts:3709-3711`) with a SEEDED, NARROWER roll.** Shipped scorer re-verified UNCHANGED = `50 + baseLean*5 + partyPref*5 + enthusiasm*2 + pv*0.1 + factionBias + traitBonus + (Math.random()-0.5)*8` — the last term is a **continuous ±4 jitter via raw `Math.random`**, which is BOTH too wide (the d6→d3 "compress the luck band" intent) AND a **determinism leak vs. the `src/rng.ts` rule** (engine must be seeded). Swap it for a seeded d3-style roll routed through `rng.ts`. Designer-blessed (both played + agreed *"platform is way too powerful"*, `redbutton#POST 538-540`); this sub-fix narrows the luck that turned a near-tie into a 492-40 landslide. **★ Folds the debt #1/#3 determinism leak.** Ship in the QUICK-WIN bucket alongside QW3 (±3 cap) + the #18 2-layer scorer. Binds at `phaseRunners.ts:3709-3711`. | — (ships with QW3; the meter→election STATE SCOPE #18 stays the only human pick) | XS | bug **DH-72(a)** (`redbutton#POST 532, 538-540, 587, 603-607`; `phaseRunners.ts:3709-3711` + `src/rng.ts`) — NEW (debt #64) | ready |
+| **QW20** | **★★ batch-27 DH-72(b) — re-weight `baseLean*5` into the +3/+5 historical-bias band behind a `game.biasMode?` toggle** *(NEW, batch 27 — designer-blessed)* | **XS–S — re-weight the historical state-bias term at `calcStateVote` (`phaseRunners.ts:3709`/`:3697`).** Today `baseLean*5` is the dominant swing; re-band it into the **+3/+5 historical-bias range** behind a `game.biasMode?` toggle (historical-plausible vs the designer's "go-crazy" mode). One of the two terms (with the +3 platform bonus) that drove the 492-40 board-wide blowout; capping its weight returns the recompute to the ~281-129 near-tie. Designer-blessed (`redbutton#POST 538-540, 603-607`). Pin the toggle default + the two bands. Ship in the QUICK-WIN bucket alongside QW19 + QW3. Binds at `phaseRunners.ts:3697/3709-3711`. | — (ships with QW19/QW3) | XS–S | bug **DH-72(b)** (`redbutton#POST 538-540, 603-607`; `phaseRunners.ts:3697/3709-3711`) — NEW (debt #64) | ready |
+| **QW21** | **★★ batch-27 DH-72(c) — HIDE the raw election math in the UI (anti-collusion)** *(NEW, batch 27 — designer-blessed)* | **XS–S — UI surface change: stop exposing the raw `calcStateVote` formula / numeric percentages.** Show only **which ideologies like a position + polls/maps**, never the raw `50 + baseLean*5 + …` math. Anti-collusion (a multiplayer concern surfaced live: players reverse-engineered the scorer to over-optimize); the modern run's hand-driven platform exploit was visible only because the math was legible. Designer-blessed (`redbutton#POST 538-540`). The SAME hide-the-math principle the #184 platform meter-cap builds in from day one (sub-fix B → Phase-1 #10/#181) — here it lands on the SHIPPED election scorer as a presentation-track fix. Ship in the QUICK-WIN bucket alongside QW19/QW20. | — (presentation track; pairs with #184's day-one hide-the-math) | XS–S | bug **DH-72(c)** (`redbutton#POST 538-540`) — NEW (debt #64) | ready |
 | **QW18** | **★ batch-15 #153 — global ×2 Command-gain multiplier (the UNBUILT half of the rookie-Command rule, `terror2000#POST 91`) — ★★ batch-17: NOW 3-SOURCE CANONICAL + LIVE-DEMONSTRATED → build-with-confidence** *(NEW batch 15 — RULED; ★★ batch 17 PROMOTED to canonical)* | **XS–S — one global multiplier on the Command-gain roll path** (a `gainCommand(p, basePct)` helper applying ×2 + the committee/career-track expertise-grant sites). Ted (`terror2000#POST 91-93`) made TWO house-rules official: **(a)** nobody is born with Command — **all rookies enter at 0 Command** (verified SHIPPED via #136, `phaseRunners.ts:216`) **AND every in-game Command-gain % is DOUBLED** to compensate (so Presidents emerge from in-game action, not real-world reputation — the **×2 multiplier is the only UNBUILT piece**); **(b)** rolling an already-held expertise on a grant = **NO new expertise (do NOT re-roll)** — already an invariant in the grant path. Pin the ×2 on every Command-gain % (the success→+1-Command rolls in E11/E13/E18 + the draft-grant + e.g. the Father-of-the-Constitution `command + 1` at `constitutionalConvention.ts:158,168` + the RevWar grants in `revolutionaryWar.ts`), gated nowhere (all eras). **★★ Batch-17 (`ted1772`) PROMOTES this to build-with-confidence / CANONICAL:** a 3rd source applies the rule front-to-back from a 0-Command boot — **3-source canonical (`terror2000` · `tedchange` · `ted1772`)** — and DEMONSTRATES the payoff LIVE: an **emergent 1st President (Arthur St. Clair), a CPU pol who booted at 0-Command / obscure and rose purely through play.** The ×2-Command-gain knob is **load-bearing and keystone-free** (it sits on the draft/command path). Pairs with **QW17** (#143 Command decay) — same Command economy, opposite direction (decay pares the pool, the ×2 lets contenders climb). No dependency; ship with the QW0 / XS-consistency cluster. **RULED by Ted (`terror2000#POST 91-93`; ★★ 3-source canonical via `ted1772` + a live emergent-President audit).** | — | XS–S | gap **#153 / `terror2000#POST 91-93` + ★★ `ted1772` (3-source canonical + St. Clair live demo)** — NEW + PROMOTED (canonical) | **ready (build-with-confidence)** |
 
 ---
@@ -3019,6 +3184,102 @@ collusion → unicameral "Super House"; rookie: Senate-appointed-by-Governors + 
 gated WITHIN that work; the rest is corroboration/justification). **No re-sequence; top-of-queue
 UNCHANGED (QW0 → K0/K2 → K3/K4 + scenarioBoot → E1) — but the onboarding/solo-app/CPU-AI cluster
 (E9/K5 + DH-69) now carries the strongest justification in the corpus.**
+**★★ Batch-27 fold-ins (`redbutton` — THE CORPUS'S FIRST Cold-War / Civil-Rights source + the FIRST
+MODERN-ERA scenario boot stress-tested AT SCALE [a ~10-human MP run started MID-CYCLE in the 1960
+Elections Phase, ran 1960→1962-64, then paused and never resumed solo]; ONE designer-confirmed election
+NERF [#184] + its driving BUG [DH-72] + FOUR designed-not-built modern gaps [#185/#183/#186/#187] + ONE
+premise-only loss [#188→#88]; NO new keystone, NO re-order, NO keystone moves — but the DH-72 sub-fixes
+JOIN the quick-win bucket [QW19-QW21 above] + the modern primary→convention cluster is now the KB's
+richest forward-played election spec):**
+**★ DH-72 / #184 PLATFORM-OVERPOWER — SPLIT into a SHIPPABLE QUICK-WIN + a BUILD-INTO CONSTRAINT.** The
+hand-driven 1960 run produced a **Bricker (R) 492-40 landslide over JFK** off a `+1`-rule read as `+3`
+board-wide (DH-72) ON TOP of a bogus `+3` platform bonus; recompute → 284-251 → ~281-129 near-tie
+(`redbutton#POST 532, 587, 603-607`). Both designers played + agreed *"platform is way too powerful"*
+(`#POST 538-540`). **★ Shipped-state CONFIRMED:** `calcStateVote` (`phaseRunners.ts:3709-3711`) is the
+single election scorer = `50 + baseLean*5 + partyPref*5 + enthusiasm*2 + pv*0.1 + factionBias +
+traitBonus + (Math.random()-0.5)*8` — **NO ±3 cap, NO per-state ideology gate, RAW `Math.random` (a
+continuous ±4 jitter, NOT a die), and NO "+1 most-enthusiastic-base" term in code at all** (the +1 is
+GM-hand-applied). **(A) DH-72 = THREE TUNING SUB-FIXES, INDEPENDENTLY SHIPPABLE TODAY = the highest-
+leverage work in the batch → QW19/QW20/QW21 in the quick-win bucket above:** (a) narrow + SEED the
+jitter (d6→d3 intent via `src/rng.ts`, ALSO closing a determinism leak vs the rng rule + debt #1/#3),
+(b) re-weight `baseLean*5` into the +3/+5 historical-bias band behind a `game.biasMode?` toggle, (c)
+HIDE the raw formulas in the UI (anti-collusion — show only which ideologies like a position +
+polls/maps). They pair with the queued **QW3 ±3 cap (debt #1) + the #18 2-layer scorer** — the cheapest
+high-value election work in the corpus. **Binds at** `phaseRunners.ts:3697/3709-3711` + a `game.biasMode?`
+toggle + a UI hide-the-math surface. debt #64 (DH-72). **(B) #184 = the +2/+1/−1 PLATFORM meter-cap is
+NOT a quick-win** — it clamps a term that DOESN'T EXIST yet (`grep platform|plank in src/engine` = ZERO;
+the platform engine [5 planks × per-card faction scoring × 4-step comparison] is the SAME unbuilt object
+as #181, `summer2021`). So the cap is a **BUILD-INTO CONSTRAINT on the convention/platform epic (Phase-1
+#10 / #181)**: build the platform scorer with the +2/+1/−1 cap + hide-the-math from day one; never ship
+the uncapped forum scorer. **Binds at** the (unbuilt) #181 convention/platform object. debt #65;
+game-mechanics §15.3.5, §28.6.
+**★ #185 MODERN PRIMARY→BROKERED-CONVENTION MACHINE → FOLDS INTO Phase-1 #10 convention machinery
+(#19/#20/#13/#47/#111); L; the single biggest election subsystem.** The fullest convention CAPTURE in
+the KB: 12 primary states (rest = convention delegates), primaries-in-GROUPS (debate ±1 carry, Orator
++2/group), the **5-tier Cat-1–5 delegate-weight HOST-RIGGING lever** (a random gov per party assigns
+each state 1×–4×/bias-conditional EV; a player gerrymandered GOP weights to bury MacArthur — Ted holds
+rigging is INTENDED), kingmakers-affect-conventions-not-primaries (+1), 67%-first-ballot (mutable),
+**two-leaders force a KINGMAKER-WEIGHTED rule-change vote** (→50%+1/WTA/proportional), **least-delegates-
+first interballot order**, the **100%-delegate rule + WALKOUT** (persisted into 1964), the **KINGMAKER-
+WEIGHTED VP VOTE** (PL+nominee each name one; presidential Promise overrides; no shared home state;
+tie→PL picks lowest faction). **★ Shipped-state CONFIRMED unbuilt:** `runPhase_2_9_1_Primaries`
+(`phaseRunners.ts:3725-3750`) is a flat PV+command*5 SORT; "convention" in the engine is the founding
+Continental/Constitutional Convention only. Sharpens Phase-1 #10 (was `drums`/`nuke`-spec; now end-to-
+end) + the delegate-class fork (§29.11b). **Binds at** the (unbuilt) convention subsystem (#19/#20).
+debt #66; game-mechanics §28.6.
+**★ #183 ENDORSEMENT-MOMENTUM HOLE → FOLDS INTO #185/Phase-1 #10; S; DO NOT build standalone.**
+Withdrawal/endorsement is inert unless the dropper holds delegates; add a **momentum value (+2 Minor/+3
+Major OR a home-state/region transfer OR an ideology-penalty waiver) to the withdraw+endorse primary
+action, INDEPENDENT of delegate count** — but the **d6 base leaves little headroom** (couples to the
+DH-72 d6→d3 squeeze, QW19) + pairs with the ballot-2 80/20 delegate-release hole (DH-57). **★ Shipped-
+state CONFIRMED unbuilt** (`grep withdraw|endorse|momentum in src/engine` = ZERO). **Binds at** the
+(unbuilt) primary action loop inside #185. debt #67; game-mechanics §28.6.
+**★ #186 DETERMINISTIC LATE/MID-CYCLE BOOT → a FIFTH `BootSheet` shape; RIDES K4's `BootSheet` +
+`scenarioBoot` (#115); no new keystone; M-L.** The FIRST modern-era boot in the corpus + the cleanest
+late-start failure: a 1960 scenario authored for the 1960-62 GOVERNANCE turn (JFK president, offices for
+1961) forced into an Elections-Phase start a turn early → cascading manual patches (Senate 50-50 vs real
+66-D, no Leadership-gated Party Leader, on-election rolls skipped, party-fatigue dropped, gov terms-
+served unknowable, delegate weights hand-assigned, DC EVs invalid pre-1961, NO Command runway → roster
+frozen). Ted: eras are *"the stoniest"* thing → a **per-year boot TABLE is the only path** (`#POST 528`).
+**★ Shipped-state CONFIRMED unbuilt:** no generic boot (`GameContext.tsx:5-6,24` → hand-authored
+builders; `grep scenarioBoot|BootSheet in src/` = ZERO). The pipeline needs a **`startMode:
+'electionPhase'|'governance'` discriminant + an `asOfYear` incumbent table + `seededLeaderTenure` (#187)
++ `delegateWeights`/`primaryCalendar` (#185) + `careerTrackBackfill` (DH-25)**. The modern boot is the
+most-demanding instantiation of the SAME K4 `BootSheet` schema — it SHARPENS the bar, it does NOT add a
+keystone. **Binds at** the K4 `BootSheet` schema + `scenarioBoot` pipeline (#115). debt #68; game-
+mechanics §28.1, §28.6.
+**★ #187 PARTY-LEADER FATIGUE (6-yr decay → ~8-yr presidential rotation) → S; pairs with #15; do the
+boot retro-apply WITH #186.** A **`party preference −1` after 6yr of one party leader**, ENGINEERED to
+force a ~8-yr presidential rotation (Ted, `#POST 645`); dropped here because the mid-cycle start skipped
+1958 → its absence COMPOUNDED the #184 landslide (let the House flip 58R-42D unchecked). **★ Shipped-
+state CONFIRMED unbuilt:** `Party` (`types.ts:1306-1311`) has NO tenure field; the faction
+`leadershipStartYear` (`:1302`) is WRITTEN (`phaseRunners.ts:2010/2035/2076/2309`) but NEVER read for a
+penalty. Add a **party-level tenure substrate + a per-cycle decay consumer near the `partyPreference`
+update** + the #186 boot retro-apply. **Binds at** the `partyPreference` update path + the #186 boot
+substrate. debt #69; game-mechanics §8.5.3, §28.1.
+**★ #188 "BIG RED BUTTON" NUCLEAR LOSS → FOLDS INTO #88 (meter-floor game-end + APOCALYPSE clock,
+Phase-1 #6); XS-S; NO new subsystem.** The campaign's whole PREMISE was a nuclear game-over but it NEVER
+fired; Cold-War content that DID fire is event/legislation FLAVOR on the generic engine (Cuba-client-
+state bill, Bay of Pigs as a minority-flip lever, Test Ban Treaty as an A/B event). **★ Shipped-state
+CONFIRMED:** `triggersGameEnd` is consumed in EXACTLY ONE place (`phaseRunners.ts:2871`, event-only,
+UNCHANGED); `grep nuclear|MAD|bigRedButton in src/` = ZERO. If built, a nuclear loss is a **configured
+end-condition ROW on the #88 model, NOT a MAD/arms-race engine** — corroborates the §28.2 negative-scope
+directive (#106). **Binds at** the #88 meter-floor end-condition table (`:2871`-area). debt #70; game-
+mechanics §28.2, §30.17.
+**★★ #88/#86/#115/#173/E1/#14/#114/DH-36 ESCALATED IN PLACE (justification, NOT new scope, NOT a
+re-sequence):** **#88** gains its FIRST MODERN datum (the corpus still shows exactly ONE proven game-over
+— `terror2000`'s coup; the meter-floor model now has the modern nuclear premise pointing at it →
+confidence ↑); **#86/#115/#173/E1** boot cluster — the mid-cycle modern boot is now CONCRETE (a 5th
+`BootSheet` shape with EXPLICIT holes), the strongest case yet for the `scenarioBoot` pipeline; **#14**
+platform/election rules now have the designer's nerf DIRECTION set (DH-72 sub-fixes + the #184 cap);
+**#114/DH-36** re-confirmed as the GM-WORKLOAD DEATH from the MODERN angle (the 10-human run "Temporarily
+Paused" and never resumed solo — the CPU-AI cluster E9/K5 carries this too). **★ Raise priority/
+confidence; do NOT re-sequence, do NOT add scope.** **Decision-gated RECOUNT: 0** (the #184 platform-vs-
+meter open Q, the #183 momentum value, the #185 delegate-floor, the #186 per-year incumbent tables, the
+#187 penalty-curve are all designer/content-gated WITHIN their existing epics). **No re-sequence;
+top-of-queue UNCHANGED (QW0 → K0/K2 → K3/K4 + scenarioBoot → E1) — but the DH-72 tuning sub-fixes JOIN
+the QUICK-WIN bucket (QW19-QW21) and the modern primary→convention cluster (#185/#183 + the #184 platform
+cap) is now the KB's richest forward-played election spec inside Phase-1 #10.**
 **★★ Batch-26 fold-ins (`summer2021` — THE CORPUS'S LARGEST SOURCE + the FIRST run to PLAY FEDERALISM
 FORWARD [1772→~1810, the whole president/cabinet/diplomacy turn loop end-to-end], a 3-GM relay over ~14
 months; FOUR net-new ENGINE gaps [#179, #182, #181, #180] + ONE bug [DH-71]; #177/#178/#114 ESCALATED
@@ -4007,7 +4268,8 @@ row (often as an XS-S addition to an existing epic).
 
 ## Sequencing notes
 
-Why the order is what it is — the tech-lead's binding calls (§9 batch-24 lead +
+Why the order is what it is — the tech-lead's binding calls (§9 batch-27 lead +
+§9.6 batch-27 + §9 batch-26 lead + §9 batch-25 lead + §9 batch-24 lead +
 §9 batch-17 lead +
 §9 batch-16 lead +
 §9.1.12 hd1-E3/E3b-sequencing + §9 batch-15 lead +
@@ -4169,6 +4431,63 @@ then batch-20,
 then batch-19, then batch-18, then batch-17, then batch-16, then
 batch-15, then batch-14, then batch-13, then batch-12, then batch-11, then batch-10, then
 batch-9, then batch-8, then batch-7, then the carried batch-5 leads.
+**The order itself is UNCHANGED — the TOP OF THE QUEUE is QW0 → K0/K2 → K3/K4 +
+`scenarioBoot`/`BootSheet` → `scenario1788` (E1).**
+
+**★★★★ Batch-27 lead — `redbutton` (THE CORPUS'S FIRST Cold-War / Civil-Rights source + the FIRST
+MODERN-ERA scenario boot stress-tested AT SCALE: a ~10-human MP run that STARTED MID-CYCLE in the 1960
+Elections Phase, ran 1960→1962-64, then "Temporarily Paused" and never resumed solo; alt-timeline GOP
+nominee John W. Bricker [MacArthur convention WALKOUT] WON 492-40 over JFK off a platform/election BUG).
+ONE designer-confirmed election NERF [#184] + its driving BUG [DH-72] + FOUR designed-not-built modern
+gaps [#185/#183/#186/#187] + ONE premise-only loss [#188→#88]. It does NOT move the top-of-queue.
+Reflect it by: (1) ★★ SPLITTING the headline — the DH-72 ELECTION-TUNING SUB-FIXES go into the QUICK-WIN
+bucket (highest-leverage work in the batch, binding at `calcStateVote` `phaseRunners.ts:3709-3711`,
+XS–S) as THREE rows alongside the queued QW3 ±3 cap [debt #1] + the #18 2-layer scorer: QW19 = narrow +
+SEED the jitter (raw `Math.random` ±4 → a seeded d3-style roll via `src/rng.ts`, ALSO closing a
+determinism leak vs the rng rule + debt #1/#3); QW20 = re-weight `baseLean*5` into the +3/+5 historical-
+bias band behind a `game.biasMode?` toggle; QW21 = HIDE the raw math in the UI (anti-collusion). The
+492-40 came from a `+1`-read-as-`+3` board-wide misapplication on a bogus `+3` platform bonus; recompute
+→ ~281-129 near-tie; (2) ADDING #184 — the +2/+1/−1 PLATFORM meter-cap is NOT a quick-win and NOT a
+standalone patch (it clamps a term that DOESN'T EXIST yet — `grep platform|plank in src/engine` = ZERO,
+the SAME unbuilt object as #181) → a BUILD-INTO CONSTRAINT on the convention/platform epic (Phase-1 #10
+/ #181): build the scorer with the cap + hide-the-math from day one, never ship the uncapped forum
+scorer; (3) ADDING #185 — the modern PRIMARY→BROKERED-CONVENTION machine (12 primary states, primaries-
+in-GROUPS, the 5-tier Cat-1–5 delegate-weight HOST-RIGGING lever, kingmaker +1, 67%-first-ballot, two-
+leaders-force-a-kingmaker-weighted-rule-change-vote, least-delegates-first interballot order, 100%-
+delegate rule + WALKOUT, kingmaker-weighted VP vote) → FOLDS INTO Phase-1 #10 convention machinery, L,
+the single biggest election subsystem (CONFIRMED unbuilt: `runPhase_2_9_1_Primaries` `:3725-3750` = flat
+PV+command*5 SORT); (4) ADDING #183 — the ENDORSEMENT-MOMENTUM hole (withdrawal/endorsement is inert
+unless the dropper holds delegates; add a momentum value +2 Minor/+3 Major OR a home-state/region
+transfer OR an ideology-penalty waiver, INDEPENDENT of delegate count) → FOLDS INTO #185/Phase-1 #10, S,
+DO NOT build standalone (couples to the DH-72 d6→d3 squeeze + DH-57); (5) ADDING #186 — the
+DETERMINISTIC LATE/MID-CYCLE BOOT = a FIFTH `BootSheet` shape (a 1960 governance boot forced into an
+Elections-Phase start a turn early → cascading manual patches: Senate 50-50 vs real 66-D, no Leadership-
+gated Party Leader, on-election rolls skipped, party-fatigue dropped, gov terms-served unknowable,
+delegate weights hand-assigned, DC EVs invalid pre-1961, NO Command runway → roster frozen) → RIDES K4's
+`BootSheet` + `scenarioBoot` (#115), M-L, needs `startMode: 'electionPhase'|'governance'` + `asOfYear`
+incumbent table + `seededLeaderTenure` (#187) + `delegateWeights`/`primaryCalendar` (#185) +
+`careerTrackBackfill` (DH-25) — no new keystone, it SHARPENS the bar; (6) ADDING #187 — PARTY-LEADER
+FATIGUE (`party preference −1` after 6yr of one party leader → ~8-yr presidential rotation; its absence
+at the mid-cycle start COMPOUNDED the #184 landslide) → S, pairs with #15, do the boot retro-apply WITH
+#186 (CONFIRMED unbuilt: `Party` `types.ts:1306-1311` has NO tenure field; `leadershipStartYear` `:1302`
+written, NEVER read for a penalty); (7) ADDING #188 — the "BIG RED BUTTON" NUCLEAR LOSS (the campaign's
+whole PREMISE never fired; Cold-War content that DID fire is event/legislation FLAVOR on the generic
+engine) → FOLDS INTO #88 (meter-floor game-end + APOCALYPSE clock, Phase-1 #6), XS-S, a configured
+end-condition ROW not a MAD/arms-race engine (corroborates §28.2 negative-scope #106); (8) ★★ ESCALATING
+IN PLACE — NO new scope, NO re-sequence — #88 (first MODERN end-condition datum; the corpus still shows
+exactly ONE proven game-over, `terror2000`'s coup → confidence ↑ on the meter-floor model), #86/#115/
+#173/E1 (the mid-cycle modern boot is now CONCRETE — the 5th `BootSheet` shape with explicit holes), #14
+(the designer's platform/election nerf DIRECTION is now set), #114/DH-36 (re-confirmed as the GM-WORKLOAD
+DEATH from the MODERN angle — paused, never resumed solo; E9/K5 carries this too). NO new keystone, NO
+re-sequence, NO new author-before-build or Decision-gated items (batch 27 nets 0 — the DH-72 sub-fixes
+JOIN the quick-win bucket; #184/#185/#183 ride Phase-1 #10/#181; #186 rides K4; #187 pairs #15/#186;
+#188 folds into #88; the #184 platform-vs-meter open Q, the #183 momentum value, the #185 delegate-floor,
+the #186 per-year incumbent tables, the #187 penalty-curve are all designer/content-gated WITHIN their
+epics). The TOP OF THE QUEUE is UNCHANGED: QW0 → K0/K2 → K3/K4 + `scenarioBoot`/`BootSheet` →
+`scenario1788` (E1) — but the DH-72 tuning sub-fixes JOIN the QUICK-WIN bucket (QW19-QW21) and the modern
+primary→convention cluster (#185/#183 + the #184 platform cap) is now the KB's richest forward-played
+election spec inside Phase-1 #10. game-mechanics §15.3.5, §8.5.3, §28.1, §28.2, §28.6, §30.17 +
+technical-guide §9 batch-27 lead + §9.6. debt #64-#70.**
 **The order itself is UNCHANGED — the TOP OF THE QUEUE is QW0 → K0/K2 → K3/K4 +
 `scenarioBoot`/`BootSheet` → `scenario1788` (E1).**
 

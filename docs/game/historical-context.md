@@ -46,7 +46,7 @@ will hold their 2008 convention," chunk-001 post 14):
 | 1856 Antebellum | **Democratic Party** | **Republican Party** | **RED (Republicans)** | **POLARITY FLIP**: here the antislavery/progressive pole is RED, the conservative/pro-slavery pole is BLUE (`scenario1856.ts:18-31` enthusiasm table) — confirmed in play, "Blue = Democrats, Red = Republicans… 1856-era Republicans are the antislavery party" (*house-divided* partial-03). The game calls this the "**Era of Nationalism**" (6aa7309a chunk-117: "the final turn of the Era of Nationalism"). |
 | 1868 Gilded Age | Democrats ("Solid South") | National Republicans | RED (Republicans) | Continues the 1856 polarity (Republicans = the Union/Reconstruction party); the *house-divided* Part-2 thread plays straight from 1856 into 1868 with this polarity intact; *gilded* digest post 298 |
 | 1896–1932 Progressive/1920s | Democrats (Bryan→Wilson; Solid South + agrarian) | Republicans (dominant, pro-business; also TR/insurgent progressives) | **Split / in flux** | **The hinge (PRE-realignment).** Progressivism lived in *both* parties; the modern left/right mapping does **not** apply yet. At a **1928 start** (the `e45a756c` campaign): **RED = Republicans, dominant/pro-business/isolationist (Hoover); BLUE = Democrats (Al Smith — urban/immigrant + the agrarian Solid South).** The **New Deal (1932+) begins flipping this** toward the modern alignment (§6). See §5 terminology. |
-| 1932–1965 New Deal/postwar | **Democrats (New Deal coalition)** | Republicans | **BLUE (Democrats)** — *for economics* | **THE REALIGNMENT BEGINS.** "Liberal" acquires its modern Democratic, pro-government meaning here (1932). **But race is cross-cutting:** the Solid South is still *Democratic*, so the party's left/right identity is not yet uniform. |
+| 1932–1965 New Deal/postwar | **Democrats (New Deal coalition)** | Republicans | **BLUE (Democrats)** — *for economics* | **THE REALIGNMENT BEGINS.** "Liberal" acquires its modern Democratic, pro-government meaning here (1932). **But race is cross-cutting:** the Solid South is still *Democratic*, so the party's left/right identity is not yet uniform. **1960-START NOTE:** a 1960 scenario (the `8bc0231c` "Big Red Button" batch) begins mid-realignment — BLUE=Democrats is a big tent holding BOTH segregationist Southern Democrats (Thurmond, still BLUE) AND the civil-rights liberal wing, with LBJ/JFK brokering; RED=Republicans (Nixon/Rockefeller/Bricker). See `historical-context-1960-coldwar.md`. |
 | 1965–1980 Civil Rights/Vietnam | Democrats (losing the white South) | Republicans (gaining it; "Southern Strategy") | BLUE (Democrats), nationally | **THE SOUTHERN REALIGNMENT (gradual).** Begins 1948 (Dixiecrats), accelerates 1964 (Goldwater)/1968 (Nixon) at the *presidential* level — **but not an instant flip**; see §7. |
 | 1980–1992 Reagan | Democrats (left/liberal) | **Republicans (conservative coalition)** | BLUE (Democrats) | "Conservative" acquires its modern Republican-movement meaning; "Reagan Democrats" defect. Modern polarity now essentially in place at the *national* level. |
 | 1992–2000 post-Cold-War | Democrats (Clinton/New Democrat center-left) | Republicans (Gingrich; the South's down-ballot flip completes) | BLUE (Democrats) | **Down-ballot realignment completes** (1994 "Republican Revolution"). Modern alignment now holds top *and* bottom of the ballot. |
@@ -1461,6 +1461,8 @@ farmers (Grange/Populist heirs), Prohibitionists, suffragists, nativists
 
 ## 6. New Deal / WWII / postwar consensus (1932–1965) — the realignment that redefines "liberal"
 
+> For a **1960 scenario start** (the `8bc0231c` "Big Red Button" 1960→~1968 batch, incl. the **Bricker-wins-1960** divergence), see the companion `historical-context-1960-coldwar.md`.
+
 > **§6–§10 companion:** for reading a continuous **1948→2004** campaign (the
 > `be4e0f70` "Nuclear Age" batch), see
 > [`historical-context-1948-coldwar.md`](historical-context-1948-coldwar.md) —
@@ -1595,6 +1597,8 @@ organized labor (now huge), business, farmers, the emerging civil-rights movemen
 ---
 
 ## 7. Civil Rights / Vietnam / the Southern realignment (1965–1980)
+
+> The 1960-start treatment of the §6→§7 hinge lives in the companion `historical-context-1960-coldwar.md`.
 
 ### Era window
 **1965** (Voting Rights Act; Great Society in full) → **1980** (Reagan's

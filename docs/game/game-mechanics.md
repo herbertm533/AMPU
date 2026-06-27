@@ -1418,6 +1418,25 @@ A politician who has been **party leader for 5+ terms in a row** triggers `party
 preference −1` against their party (post 85). Shipped engine has no consecutive-term
 counter on `Faction.leaderId` / party leadership.
 
+> **★ #187 — party-fatigue is "6 years of one party leader → ~8-yr presidential rotation"; UNDOCUMENTED
+> + silently DROPPED by a mid-cycle start (`8bc0231c-the-big-red-button-1960-playtest`, batch 27,
+> Ted-authoritative).** Ted (designer-class, playing in this run) restated the rule with its **design
+> INTENT**: the penalty *"kicks in after 6 years of one party leader"* — i.e. a `party preference −1`
+> accrues once a party has held the same party leadership / governing dominance for ~6 years, **deliberately
+> engineered to force a roughly 8-year presidential rotation** (the in-game analog of the real two-term
+> swing). The "5+ terms" of post-85 and Ted's "6 years" are the same mechanic stated two ways (term-count
+> vs. year-count); **#187 supplies the rationale (forced ~8-yr rotation) the doc lacked.**
+>
+> **★ It was SILENTLY DROPPED here** — because the run **started mid-cycle in the 1960 Elections Phase**
+> (not at the 1958 boundary), *"by starting the game in the midst of the 1960 election, that penalty
+> wasn't incorporated… We probably should have incorporated it anyway"* (Ted, `8bc0231c#POST 645`). It
+> would have hit the long-incumbent RED party ~1958, but 1958 was never played → the penalty never
+> accrued. This is a concrete **mid-cycle-boot data-loss** instance (see §28.1 / #186): **retro-applying
+> party-fatigue is a required boot step** for any late-era start. Its absence here **compounded the #184
+> platform bug** — the missing −1 against the dominant party let the buggy 492-40 platform landslide flip
+> the House 58R-42D unchecked ("liberal bloodbath," §15.3.5 / §28.6). (New gap **#187**; boot-step
+> requirement folded into §28.1 / #186; ruling index [§30.17](#3017-rulings-folded-from-8bc0231c-the-big-red-button-1960-playtest-the-first-cold-warcivil-rights-source).)
+
 ---
 
 ## 9. Cabinet & military appointments (2.3.x)
@@ -3499,6 +3518,74 @@ party, max +4 pts that flow as party-pref):
    ideology that scores the highest moves +1 toward the owning party.)
 
 Resulting `+1 party preference` to the higher-platform-scoring party.
+
+> **★★ #184 / DH-72 — the platform engine is OVERPOWERED; designer-confirmed nerf (the headline
+> election-balance finding of the corpus; `8bc0231c-the-big-red-button-1960-playtest`, batch 27, the
+> FIRST Cold-War/Civil-Rights source). DESIGNER-AUTHORITATIVE (vcczar + MrPotatoTed both played).**
+> A 10-human 1960 run drove the full platform→meter→election chain by hand and produced a
+> **492-40 Bricker (R) landslide over JFK (D)** — a non-incumbent ex-senator crushing an incumbent
+> party's "flawless" campaign purely on a clever conservative platform. Players + BOTH designers
+> agreed unanimously: *"Agreed — platform is way too powerful"* (vcczar/Ted, `8bc0231c#POST 538-540`).
+> vcczar: *"Ok I'll decrease the power when I get to that part of the rules"* (`POST 540`).
+>
+> **The chain that produced it (worked example — read against §15.3.5 above + §28.6).**
+> 1. The winning ticket's nominee picks **4 planks** (Domestic / Finance-Economic / Foreign / Judicial)
+>    + an executive action; each plank moves the **ideology-enthusiasm meters ±1/±2** toward/away from a
+>    party (`POST 337-345`). (This is the 5-plank model of §15.3.5 / §28.6 — the 1960 trace observed
+>    *4 issue planks + 1 exec action* = the same 5-slot structure.)
+> 2. **Pliable nominee + Manipulative party leader ⇒ the party leader picks ALL planks** (`POST 337-345`,
+>    corroborates §28.6 / §15.3 "Iron-Fist/Manipulative writes the whole platform").
+> 3. The platform's only convention-stage effect is on **party preference + the ideology meters** — *"that's
+>    all that happens"*: **no roll at the VP reveal, no candidate-quality gate** (`POST 581`).
+> 4. → at the general, the meter readings convert to per-state bonuses (§15.3.8 / §22.2) and the result
+>    is rolled. Here the conversion ran away.
+>
+> **★ DH-72 — the exact bug behind 492-40.** The election misapplied the rule **"+1 to the candidate
+> with the most-enthusiastic personal base (unless his ideology is >2 steps from the state's preference)"**
+> as **+3 in EVERY state** (`POST 603`). A `+1`-cap was read as `+3`, applied board-wide, on top of a
+> separate bogus **+3 platform bonus**. Recompute ladder (provenance for the disputed margin):
+>
+> | Stage | Result | Cite |
+> |---|---|---|
+> | **Canonical / as-played** (both bugs live) | **Bricker 492 – Kennedy 40** | `POST 532` |
+> | Remove the bogus **+3 platform bonus** | Bricker 284 – Kennedy 251 | `POST 587, 596` |
+> | Correct the per-state **+3 → +1** (the DH-72 fix) | Bricker 281 – Kennedy 129 – **Tied 130** (CA & NY flip to ties) → near-tied, JFK-slight-favorite map | `POST 605-607` |
+>
+> *(NB the historian doc's "284-251" is the **first recompute**, not the original tally — canon original was 492-40.)*
+>
+> **★ GM kept 492-40 as canon for the alt-timeline** — *"Bricker and his team earned their landslide…
+> followed the rules that existed at the time… Just adjusting how it goes in the future"* (`POST 601`).
+> So the President-Bricker alt-timeline (historical-context-1960) stands on the **buggy** result; only
+> the rules change forward.
+>
+> **★ Designer-blessed nerf SPEC (direction set, NOT yet shipped):**
+> 1. **Cap platform meter-moves to +2 / +1 / −1** (highest-scoring ideology +2, second +1, lowest −1) —
+>    replaces the uncapped ±1/±2-per-plank stacking (`POST 598-600, 607`).
+> 2. **Change the end-of-election roll d6 → d3** (compress the luck band so outcomes lean on structure,
+>    not a single high roll) (`POST 598-600`).
+> 3. **Raise the historical state-bias from +1/+2 → +3/+5** (outcomes lean more on the historical lean,
+>    less on raw luck) (`POST 598-600, 607`).
+> 4. **HIDE the raw formulas/data in the app** (design philosophy, authoritative): show only *which
+>    ideologies like a position*, plus polls/maps — **never the math** — because visible formulas let
+>    multiplayer collude/min-max (*"the real game has multiplayer, so people will collude"*, `POST 568, 574,
+>    593, 613`). **Historical state-biases become a TOGGLE** (historical-plausible vs. "go-crazy" modes).
+> Alternatives debated but NOT adopted: remove platforms entirely; apply platform enthusiasm only *after*
+> a promise is delivered; each faction submits exactly one plank (anti-collusion); plank limited to the
+> faction's own ideology (`POST 564-582`).
+>
+> **★ Down-ballot coattails amplify the bug.** The platform-driven Bricker landslide flipped the
+> **House from D to 58R-42D** in one cycle (`POST 640`) — a "liberal bloodbath" players found
+> unrealistic, partly because the §8.5.3 / #187 party-fatigue penalty was also missing (it would have
+> dragged the long-incumbent RED party). So the buggy platform AND the dropped fatigue rule **compounded**.
+>
+> **Open Q (still unresolved):** does the +1/+2/+3 ideology-enthusiasm value translate into a per-state
+> election bonus, or only into the meter? A player asked repeatedly (`POST 604, 607`) and got no clear
+> answer — the corrected election apparently did NOT apply it to state results, only to the meter. This
+> is the same ambiguity §15.3.8 / §22.2 flag and the nerf-spec's d6→d3 + bias change is meant to tame.
+>
+> Build note: the nerf is **a tuning patch to the existing platform/election scorer (§15.3.5, §15.3.8,
+> §22.2)** — NOT a new subsystem. Cap = +2/+1/−1; roll = d3; bias = +3/+5; formulas hidden; bias-mode
+> toggle. (New gap **#184**; new bug **DH-72**; ruling index [§30.17](#3017-rulings-folded-from-8bc0231c-the-big-red-button-1960-playtest-the-first-cold-warcivil-rights-source).)
 
 #### 15.3.6 General election action library (designed, not built)
 
@@ -10007,6 +10094,51 @@ At boot:
 (§28.7), 8 ambassador nations with relation meters (§28.3), and a curated modern dataset slice. The
 ~6-yr era→year offset must be explicit data, not implicit.)*
 
+> **★ #186 — a 1960 MID-CYCLE boot was IMPROVISED; a late-era scenario boot MUST be deterministic
+> (`8bc0231c-the-big-red-button-1960-playtest`, batch 27 — the FIRST Cold-War/Civil-Rights source;
+> the single most build-relevant cluster in it).** This is the **fifth documented boot shape**
+> (1772 / 1856 / 1948 / 2012 / **1960-mid-cycle**) and the clearest demonstration that a **mid-cycle**
+> start (mid-presidential-term, not at an era boundary) needs MORE deterministic setup than a clean
+> boundary boot. Sharpens §26.1, §28.1, §29.1, and the §27.9 #173 era-boundary-aligned-starts ruling.
+>
+> **★ Intended-vs-actual:** vcczar states the 1960 scenario was authored as the **1960-1962 GOVERNANCE
+> turn — JFK already President, offices set for 1961** — *"The start date is for the 1960-1962 cycle
+> when JFK is already president… the playtesters unilaterally decided to start with the election"*
+> (`8bc0231c#POST 548-549`). The players **forced an Elections-Phase start one turn early**, so the
+> pre-loaded post-election (1961) offices were wrong for a pre-election (1960) board → cascading patches:
+>
+> | Boot gap | What broke | Cite |
+> |---|---|---|
+> | Offices/incumbents seeded for **post-election 1961** but game ran **pre-election 1960** | mass incumbent corruption; **Senate seeded 50-50 when real Jan-1960 was 66 D**; rep/sen/gov picks re-done mid-phase | `POST 543-560` |
+> | **No Blue Party Leader existed** (new rule: PL must have `Leadership`) | GM auto-picked the only eligible — **LBJ** (*"Lyndon B. Johnson is the only eligible candidate"*) | `POST 73` |
+> | **Party-leader on-election ROLLS skipped** for the seeded LBJ | the +Command / lose-Obscure / **+3-in-all-primaries** gains AND the **3-term party-pref penalty** never applied (*"I didn't roll for gains for anyone. Faction leaders, party leaders, etc."*) — see §8.4 for the roll schedule | `POST 931-938` |
+> | **Party-fatigue (#187) never applied** (6-yr leader decay → ~8-yr rotation) | would've hit RED ~1958, but 1958 wasn't played → compounded the #184 platform landslide | `POST 645` |
+> | **Governor terms-served unknowable** | blanket house rule: *assume every current Governor served 2 two-year terms (=1 four-year term); ex-governors assume 8 years* | `POST 64` |
+> | **Delegate weights had to be hand-assigned** | a randomly-chosen governor/party split all states into the 5 Cat tiers (§28.6 / #185) | `POST 73, 79-80` |
+> | **DC EVs invalid until 1961** | GM used 1961 numbers | `POST 84-87` |
+> | **★ Mid-cycle = NO Command-earning RUNWAY** | pols who never earned Command before the start can **never run for high office** (Command is no longer granted at draft, §28.11) → *"half the roster stuck in the mud"*; players proposed **back-dating the last 2-4 draft classes into the career track** | `POST 522, 528` |
+>
+> **★ Build requirement (the deterministic late-era boot pipeline).** A 1960 (or any late-era /
+> mid-cycle) scenario boot MUST, deterministically:
+> 1. set **year-correct incumbents/offices** for the chosen start year (NOT the next-cycle's
+>    post-election offices) — pick ONE of the §26.1 #164 election-start vs. president-in-place forks
+>    explicitly per scenario;
+> 2. **auto-elect a valid Party Leader** (Leadership-gated) and **APPLY the on-election rolls** (§8.4 —
+>    +Command / lose-Obscure / +3-primaries / the term-penalty), not skip them;
+> 3. **retro-apply party-fatigue (#187)** to whatever party has been dominant at the start year;
+> 4. **seed the delegate weights (Cat 1–5) + the primary calendar** (§28.6 / #185) so the first
+>    convention is reproducible, not hand-rigged at the table;
+> 5. **back-date the recent draft classes into the career tracks** so the modern roster has earned
+>    Command/expertise and is not frozen at floor stats (the same DH-25 / #163 career-track-seeding gap
+>    as §26.1, but here ACUTE because a mid-cycle start has zero runway).
+>
+> **All five were done MANUALLY by the GM in this run.** Corroborates #86 / #115 / §29.1 (scenario-boot
+> procedure) and #173 / §27.9 (starts should be era-boundary-aligned — this run is the cautionary
+> counterexample of a NON-boundary start). The **canonical 1960 start-state is still unknown** (offices,
+> Senate balance, Party Leader) because this run never used the intended governance-turn boot. (New gap
+> **#186**; the **#187** retro-fatigue step + the **#185** delegate-seed step are its components; ruling
+> index [§30.17](#3017-rulings-folded-from-8bc0231c-the-big-red-button-1960-playtest-the-first-cold-warcivil-rights-source).)
+
 ### 28.2 ★ The Cold War is NOT a system — it is the generic war engine RELABELED (NEGATIVE SCOPE)
 
 > **The single biggest structural finding of the corpus, re-confirmed across all 156 chunks, and
@@ -10081,6 +10213,34 @@ At boot:
 > design. The USSR-dissolution chain + Cold-War-end triggers need **real population/event tuning
 > + trigger fixes** (digest hole #1), and the war engine needs a **resolution path** (it never
 > ends) and ideally **military branches** (digest hole #3) — both are §21.1 holes, not new systems.
+
+> **★ #188 — the "BIG RED BUTTON" nuclear-war loss is PREMISE-ONLY: undocumented as a mechanic, NEVER
+> FIRED (`8bc0231c-the-big-red-button-1960-playtest`, batch 27 — the source whose very TITLE is the
+> nuclear-war loss). This is the strongest confirmation of #188 / #88 / #106 that there is NO bespoke
+> nuclear/MAD subsystem.** The GM framed the whole 1960 campaign around a **literal nuclear-war
+> game-over** — *"no one wins if that big red button gets hit"* (`8bc0231c#POST 1`) — alongside Vietnam,
+> the Space Race, and "intense domestic turmoil." But:
+> - **★ No nuclear-war / game-over event EVER fired.** The run paused at the 1962-64 scripted block
+>   (chunk-023 POST 1725), well before any Cuban-Missile-Crisis analog. The "big red button" is **title
+>   + premise FLAVOR**, NOT a mechanic observed in play.
+> - **Cold-War content that DID fire is event/legislation flavor on the GENERIC engine** (§28.2 above /
+>   §28.8 Civil-Rights pattern): *"Allow government to treat Cuba as a client state"* (an ordinary
+>   ideology/lobby-scored **bill**); **Bay of Pigs** (used as a **legislative / minority-vote-flip lever**,
+>   chunk-016 POST 1148); the **Nuclear Test Ban Treaty** (a scripted **A/B "sign / don't-sign" event**
+>   with relation + meter rolls, signed by President Bricker in the alt-timeline, POST 1677-1688). None of
+>   these is a "nuclear subsystem" — they are the same EraEvo + A/B-event + scored-bill content layer that
+>   carries every era's flavor.
+> - **★ Folds into the #88 meter-floor game-end model, NOT a new MAD subsystem.** There is no observed
+>   meter-floor or nuclear game-over here (the dramatic loss condition exists ONLY as undocumented intent),
+>   which directly corroborates **#88** (the only proven game-over in the corpus is `terror2000`'s
+>   meter-driven **Autocratic Coup**, §30.6) and **#106** (the Cold War is the relabeled engine). If a
+>   nuclear loss condition is ever built it should be a **meter-floor / scripted-escalation game-end on the
+>   #88 model** (a DomStab/MilPrep/diplomacy-floor trigger or a low-probability scripted Cuban-Missile-Crisis
+>   escalation event), **NOT** a purpose-built MAD/arms-race engine.
+>
+> **Open Q (entirely undocumented — never reached):** HOW would the nuclear-war end actually trigger —
+> a meter floor, a scripted event, or war-engine escalation? No source has ever fired it. (New gap
+> **#188**; corroborates #88 / #106; ruling index [§30.17](#3017-rulings-folded-from-8bc0231c-the-big-red-button-1960-playtest-the-first-cold-warcivil-rights-source).)
 
 ### 28.3 The diplomacy system — the real, working Cold-War subsystem (2.7.1 / 2.6.1)
 
@@ -10308,6 +10468,76 @@ BLOCK**, the **ballot-2 80/20 delegate-release hole + 10-ballot compromise call*
 recount subsystem — open Q 4), **region-weighted "Appendix B" 3rd-party PV**, and the **landslide
 margin-cap misfire** (hole #8). The 2-party hard-wire (hole #16) and split-EV-for-big-states (hole #13)
 are roadmap items.)*
+
+> **★ #185 — the TRANSITIONAL-ERA (1960) primary→brokered-convention machine, run HUMAN-DRIVEN AT
+> FULL SCALE for the first time (`8bc0231c-the-big-red-button-1960-playtest`, batch 27).** The 1948-era
+> trace above is mostly later-era (every-state primaries by 1964). The 1960 run captures the
+> **transitional regime** — *few* primary states, *most* delegates won at the convention — and ran it
+> end-to-end with 10 humans, surfacing the **exact procedure** and a NEW design hole (#183). This
+> SHARPENS §15.3 / §22.3 / §25.4 with the transitional-primary specifics; the convention machinery
+> itself is §15.3.
+>
+> **Primary structure (1960 transitional):**
+> - **12 primary states** (the rest = pure convention delegates). To run for President a statesman
+>   needs **≥1 Command** (`8bc0231c#POST 4`).
+> - Each faction may run **1 Major + 1 Minor**. **Auto-Majors:** incumbent President, faction leaders,
+>   `Celebrity`-trait holders. **Minor = favorite-son** (wins only his home state) but **promotes to
+>   Major if the convention deadlocks** (`POST 4`) — same Minor→Major promotion as §28.6.
+> - **Primaries run in GROUPS** (NH → WI/IL → NJ/MA → PA/DC/IN/OH → Group 5 cluster). Per group, in
+>   order: GM names the frontrunner (must be a Major) → **Primary Debate** (if the party has one) →
+>   **Scandal rolls** → **Major-candidate Primary Actions** → roll results (`POST 73`).
+> - **Per-group actions** (each candidate may take *several*): *Campaign Focus* on a state (±1 rally
+>   roll, can backfire), *Major/Policy Speech* (`Orator` → **+2 to all primaries in the group**),
+>   *Promise VP*, *withdraw/endorse*. **Debate winner +1 next group / loser −1** (`POST 108, 135, 175`).
+> - **★ Delegate weights = the masterstroke lever (the host-rigging exploit, DH-12-adjacent, played
+>   to the hilt):** one randomly-chosen governor per party assigns each state to **Cat 1–5** (1×/2×/3×/4×
+>   EV; **Cat 5 = bias-conditional**) — 5 weight tiers. A player **gerrymandered the GOP weights so
+>   RW-Populist MacArthur's strongholds got few delegates and liberal Percy's got many** — decisive to
+>   the nomination (`POST 79, 172, 352#3`). Confirms the §15.3 "convention-host advantage" / §29.11
+>   delegate-class fork; Ted holds player-rigging is **intended**.
+> - **★ Kingmakers do NOT affect PRIMARIES — only conventions** (`POST 117-118`). Kingmaker→Protégé
+>   chains give **+1**.
+>
+> **Convention / interballot (the largest convention CAPTURE in the KB — sharpens §15.3.2-§15.3.3, §25.4):**
+> - **67% needed on the FIRST ballot** (changeable). **Two faction leaders can force a rule-change vote;**
+>   every faction votes with its **Kingmakers** (straight majority to change). Possible changes: lower
+>   threshold to **50%+1**, **winner-take-all**, **proportional** (`POST 4`).
+> - **★ Interballot turn ORDER is load-bearing → GM imposed least-delegates-first** (so powerhouses
+>   move LAST) with a fixed schedule, because move-order is strategically decisive (`POST 329`). This is
+>   a NEW procedural detail vs. §15.3.3 (which didn't pin the order).
+> - **★ The 100%-delegate rule + WALKOUT (a real interballot rule-change in action):** the field voted
+>   in a **100%-delegate threshold** to block MacArthur → MacArthur **WALKED OUT**, collapsing the field
+>   and leaving **Bricker the only nominee** (`POST 352-353, 335`). The 100% rule **persisted as an active
+>   rule into 1964** (`POST 355`) — confirming §15.3 / §28.6 that threshold changes are **mutable AND
+>   persistent across conventions**, and adding **walkout** as a real consequence of an extreme rule.
+> - **★ VP nomination = a KINGMAKER-WEIGHTED VOTE:** decided by votes weighted by **Kingmaker count**;
+>   the party leader + the nominee each name a VP candidate; a **presidential Promise overrides the vote**;
+>   **VP can't share the nominee's home state**; **tie → party leader picks from the lowest-scoring
+>   faction** (`POST 335`). This concretizes the §15.3 "PL overrules nominee's VP" rule into an actual
+>   **weighted-vote procedure** with a tiebreak.
+> - **Ticket-composition meter effects** (extends §15.3.4 VP-impact + §28.6): **same-faction VP →
+>   that ideology's enthusiasm +2 / everyone else −1; cross-faction → pres+VP ideologies +1 / others −1**
+>   (`POST 371-372`). Bricker/Laxalt (both Conservative, same faction) and JFK/Reagan (both
+>   Controversial+charismatic) each produced documented enthusiasm swings (`POST 365`).
+>
+> **★ #183 — the ENDORSEMENT-MOMENTUM HOLE (NEW gap, designed-but-unbuilt; player-flagged).** In the
+> convention/primary as built, **withdrawal/endorsement has NO mechanical effect UNLESS the dropper
+> holds actual delegates** — only ideological-split / home-state delegate reallocation matters. A
+> real-world momentum endorsement (Buttigieg→Biden 2020) carries weight **regardless of delegate count**,
+> and the engine has no encoding for that. Player proposals (none ruled): **+2 to a Minor / +3 to a Major**
+> endorsement; OR the **endorsee inherits the endorser's home-state/region bonus**; OR the endorsee gets
+> an **ideology-penalty waiver**. Counter-argument: the **d6 base leaves little headroom** for a +2/+3
+> swing (`POST 240-249`). This is the §15.3.3 "drop out & endorse" action with a **missing momentum
+> value** — pairs with the §28.6 ballot-2 80/20 delegate-release hole (both are "endorsement/momentum
+> is under-modeled" gaps). (New gap **#183**; ruling index [§30.17](#3017-rulings-folded-from-8bc0231c-the-big-red-button-1960-playtest-the-first-cold-warcivil-rights-source).)
+>
+> *(designed, not built — the transitional-primary regime ADDS to §15.3/§22.3/§25.4: **12-primary-state**
+> (most-delegates-at-convention) calendar, **Group ordering with Orator +2/group + debate ±1 carry**,
+> the **5-tier Cat-1–5 delegate-weight host lever**, **kingmakers-affect-conventions-not-primaries**,
+> the **least-delegates-first interballot order**, the **two-leaders-force-a-kingmaker-weighted-rule-change**
+> incl. the **100%-threshold + walkout** path, and the **kingmaker-weighted VP vote** with the
+> presidential-promise override + lowest-faction tiebreak. **#183 (endorsement momentum)** is the one
+> NEW unbuilt design hole.)*
 
 ### 28.7 Modern cabinet & the Era-of-Terror cabinet rework (2.3.1)
 
@@ -11674,6 +11904,16 @@ winning the presidency).
 > **kingmaker ≤1-protégé-per-turn cap**, and saw **Ted REWRITE the CPU career-track heuristic mid-run**. It is
 > also the **strongest #114 (solo-app) validation in the KB** and a 3rd-source designer-flag on **#176** + a
 > 3rd emergent-President demo (#153, Whipple). Indexed in **§30.15** below.
+>
+> **Companion thread (`8bc0231c` = "The Big Red Button: 1960 Playtest," batch 27)** is a **10-human MP
+> modern-era stress test** — the **FIRST Cold-War / Civil-Rights source in the corpus** — with **vcczar
+> + MrPotatoTed playing in it**, so their in-thread rulings carry **designer authority** (Cal/AP GM
+> procedure = house-call). It is the buggy **492-40 Bricker alt-timeline**. RULED/flagged **#184 + DH-72**
+> (platform overpowered + the +1-vs-+3 election bug → the landslide; nerf spec: cap +2/+1/−1, roll d6→d3,
+> bias +3/+5, hide formulas), surfaced **#185** (the transitional-1960 primary→brokered-convention machine
+> at scale), **#183** (endorsement-momentum hole), **#186** (deterministic late-era/mid-cycle boot),
+> **#187** (party-fatigue = 6-yr decay → ~8-yr rotation, silently dropped), and **#188** (nuclear "big red
+> button" = premise-only, never fired; folds into #88). Indexed in **§30.17** below.
 
 ### 30.1 Rulings folded into existing topical sections
 
@@ -12429,6 +12669,68 @@ modern cluster):**
 | **#43/#101** statehood-by-bill / offices-by-law | Vermont/Tennessee/Indiana/Maine/Illinois/Alabama by bill; partisan statehood-gate (Red blocked a decade → states resent it); Arnold D.C. as a permanent flag | ch72 3744, ch73 225, ch88 25 |
 | **#18/#51** enthusiasm engine | authored live alongside the other federalism rules; party-pref swings on overrides/impeachments | ch43 519, ch73 672 |
 | **DH-36** GM-workload | 3-GM relay over 14 months, persistent burnout-adjacent delays, trails off (no clean burnout-quit) | thread-wide |
+
+### 30.17 Rulings folded from `8bc0231c-the-big-red-button-1960-playtest` (the FIRST Cold-War/Civil-Rights source)
+
+> **★ DESIGNER-AUTHORITATIVE in part.** `8bc0231c` ("The Big Red Button: 1960 Playtest," batch 27) is a
+> **10-human multiplayer modern-era stress test at scale** — the **FIRST Cold-War / Civil-Rights-era
+> source in the corpus** — that began in the **Elections Phase of 1960** (at the first televised debate),
+> ran one full presidential cycle (1960 election → 1960-62 governance) + the **1962-64 scripted-event
+> block**, then **paused** before reaching the 1964 cycle. GMed by **@Cal** (early phases) → **@Arkansas
+> Progressive** (general onward). **House-call procedure is GA-tier**, but **@vcczar (designer) and
+> @MrPotatoTed (Ted, designer-class) are ACTIVE PLAYERS** here and made in-thread rulings + design
+> decisions that **ARE authoritative** (cited as such below; Cal/AP procedure cited as house-call).
+> Polarity = **modern, PRE-realignment** (BLUE = Democrats incl. Southern segregationists AND civil-rights
+> liberals; RED = Republicans — see `historical-context-1960-coldwar.md`). It is the buggy 492-40 alt-timeline:
+> **GOP nominated Bricker (not Nixon)** and **Bricker WON 1960** on the #184 platform bug.
+> Cite `8bc0231c#POST n`.
+>
+> **Load-bearing NEW value: 4 new gaps + 1 new bug.**
+> - **#184 / DH-72** — platform engine overpowered (492-40 from one conservative platform) + the
+>   +1-vs-+3 misapplication bug that caused it; designer-confirmed nerf spec →
+>   [§15.3.5](#1535-platform-scoring--5-planks--4-step-comparison). **THE headline finding.**
+> - **#185** — the transitional-1960 primary→brokered-convention machine (12 primary states, 5-tier
+>   Cat-1–5 delegate weights, two-leaders-force-a-kingmaker-weighted rule-change incl. the 100%-threshold
+>   + walkout, kingmaker-weighted VP vote) → [§28.6](#286-the-modern-election-machine--1948-era-refinements).
+> - **#183** — endorsement/withdrawal has no primary effect unless the dropper holds delegates (missing
+>   momentum value) → [§28.6](#286-the-modern-election-machine--1948-era-refinements) (in the #185 block).
+> - **#186** — late-era / mid-cycle scenario boot must be deterministic (year-correct offices; auto-elect
+>   + roll Party Leader; retro party-fatigue; seed delegate weights + calendar; back-date draft classes
+>   into career tracks) → [§28.1](#281--the-1948-modern-boot-a-distinct-boot-alongside-1772--1856--2012).
+> - **#187** — party-fatigue (6-yr leader decay → ~8-yr presidential rotation) is undocumented + was
+>   silently dropped by the mid-cycle start → [§8.5.3](#853-party-leader-incumbency-fatigue-designed-not-built).
+> - **#188** — "big red button" nuclear-war loss is premise-only, undocumented, never fired (folds into
+>   the #88 meter-floor game-end model, not a MAD subsystem) →
+>   [§28.2](#282--the-cold-war-is-not-a-system--it-is-the-generic-war-engine-relabeled-negative-scope).
+
+**★ vcczar / Ted (designer-class, ACTIVE PLAYERS) live-rulings — designer authority:**
+
+| Topic | Ruling | Folded into | `8bc0231c` POSTs |
+|---|---|---|---|
+| **★★ Platform is too powerful (#184)** | vcczar + Ted both: *"Agreed — platform is way too powerful"*; vcczar: *"Ok I'll decrease the power when I get to that part of the rules"* | [§15.3.5 #184](#1535-platform-scoring--5-planks--4-step-comparison) | POST 538-540 |
+| **★ Platform nerf SPEC (#184)** | cap meter-moves **+2/+1/−1**; election roll **d6→d3**; historical bias **+1/+2→+3/+5**; **HIDE the raw formulas** (fog of war, anti-collusion); historical biases become a **toggle** | [§15.3.5 #184](#1535-platform-scoring--5-planks--4-step-comparison) | POST 568, 574, 593, 598-600, 607, 613 |
+| **★ Keep 492-40 as canon (#184)** | GM (AP): *"Bricker and his team earned their landslide… followed the rules that existed at the time… Just adjusting how it goes in the future"* — alt-timeline stands on the buggy result | [§15.3.5 #184](#1535-platform-scoring--5-planks--4-step-comparison) | POST 601 |
+| **★ DH-72 election misapplication** | "+1 to candidate w/ most-enthusiastic base" was applied as **+3 in every state**; corrected → Bricker 281-129-tied130 | [§15.3.5 DH-72](#1535-platform-scoring--5-planks--4-step-comparison) | POST 603, 605-607 |
+| **★ Party-fatigue = 6-yr leader decay → ~8-yr rotation (#187)** | Ted: penalty *"kicks in after 6 years of one party leader"*; engineered to force ~8-yr presidential rotation; *"by starting the game in the midst of the 1960 election, that penalty wasn't incorporated… We probably should have incorporated it anyway"* | [§8.5.3 #187](#853-party-leader-incumbency-fatigue-designed-not-built) | POST 645 |
+| **★ Intended 1960 boot = the 1960-62 GOVERNANCE turn, JFK already President (#186)** | vcczar: *"The start date is for the 1960-1962 cycle when JFK is already president… the playtesters unilaterally decided to start with the election"* | [§28.1 #186](#281--the-1948-modern-boot-a-distinct-boot-alongside-1772--1856--2012) | POST 548-549 |
+| **★ Hide the math (multiplayer-collusion fix)** | *"the real game has multiplayer, so people will collude"* → app shows only which ideologies like a position + polls/maps, never the formulas | [§15.3.5 #184](#1535-platform-scoring--5-planks--4-step-comparison) + [§28.12](#2812--design-intent-solo-first-the-open-question-and-the-timeline-seam) | POST 568, 574 |
+| **★ Delegate-weight gerrymander is INTENDED** | a player gerrymandered GOP Cat-1–5 weights to bury MacArthur's strongholds + favor Percy's — held as intended player-rigging (corroborates §15.3 host-advantage / §29.11 fork) | [§28.6 #185](#286-the-modern-election-machine--1948-era-refinements) | POST 79, 172, 352#3 |
+
+**Cal / AP (GM house-call) procedure folded:** least-delegates-first interballot order (`POST 329`);
+"assume Governors served 1 four-year term, ex-Governors 8 years" boot houserule (`POST 64`); skipped the
+seeded LBJ's party-leader on-election rolls (`POST 931-938`); used 1961 DC EVs (`POST 84-87`).
+
+**Corroborations field-validated (no new rule — strengthen existing entries):**
+
+| Existing entry | `8bc0231c` corroboration | POSTs |
+|---|---|---|
+| **#88 / #106** end-condition / Cold-War-is-relabeled-engine | the **TITLE** nuclear loss never fired; Cuba=bill, Bay-of-Pigs=legislative lever, Test-Ban=A/B event — no MAD subsystem, no meter-floor game-over reached | POST 1, 1148, 1677-1688, chunk-023 1725 |
+| **#19 / #20 / #181** convention / platform | largest convention capture in KB run human-driven at scale (12 primary states, interballot rule-change + walkout, kingmaker-weighted VP) | POST 4, 73, 117-118, 329, 335, 352-353 |
+| **#51 / #52** macro-meters / SCOTUS | full Lingering 8-macro-meter rolls + cabinet-impact net-adjust (chunk-022 1689-1692); SCOTUS ideology-drift + Mapp/Loving upheld 5-4 (chunk-022 1713-1722) | chunk-022 1689-1722 |
+| **#107 / #162 / #177** diplomacy events | Major Diplomatic Conference (send self/SecState, admin-graded → relations/credit), per-power relation events | chunk-016 1154 |
+| **#86 / #115 / E1** scenario boot | mid-cycle 1960 boot improvised live — the cautionary NON-boundary-start counterexample (→ #186) | POST 64, 73, 543-560, 645 |
+| **#114 / DH-36** MP GM workload | 10-human MP at full 50-state / 10-faction / ~25-subphase scale → enormous manual GM burden; the run **died of workload, not a game-end** (AP: *"this lingering phase is gonna suck"*; *"cabinet impacts on meters (kill me)"*; solo-resume stalled *"going thru 50 states for all 10 factions might take awhile"*) | POST 1688, 1691, 1726 |
+| **#173** era-boundary-aligned starts | this run is the cautionary counterexample — a NON-boundary mid-cycle start that needed mass live patching | POST 548-549 |
 
 ### 30.4 Authority hierarchy reminder
 
