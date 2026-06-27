@@ -12,6 +12,112 @@
 > unchanged: **QW0 → K0/K2 → K3/K4 + `scenarioBoot`/`BootSheet` → `scenario1788`
 > (E1)**).
 
+> **★★★★ Batch-33 version — FIVE DESIGN/DISCUSSION/BUILD threads, NO playtest (a RECONCILE/UNBLOCK batch that
+> DELIVERED the LONG-FLAGGED GATING THREADS): `groupthinkpv` (c6f6dcc7, "Groupthinking the Political Value" —
+> the trait-EFFECTS / office-PV / display-scale GATE; the sibling of `revampPV`, read as ONE PV spec — UNBLOCKS
+> #214/#215/#220 + re-scopes DH-77) + `legisexecgov` (518fb253, the #221 3-PRIMITIVE content-authoring source —
+> Legis-Prop / Pres-Action / Gov-Action) + `ampuelections` (92f0659b, the elections content doc, ~70 primitives
+> — ORIGIN of NEW #241 variable term-length + #242 amendable articles) + `housepoll` (aed35c6e, the focus-reps-
+> vs-every-seat poll — RESOLVES #219, fully AUTHORS #191) + `excelautomate` (79fbbb46, the spreadsheet GM-
+> automation progress log — charter corroboration + ORIGIN of NEW DH-78). **NO new keystone, NO re-sequence,
+> top-of-queue UNCHANGED (QW0 → K0/K2 → K3/K4 + scenarioBoot → E1).** 3 NEW gap rows #241/#242 + DH-78 (max gap
+> #242, max bug DH-78) + a RECONCILE-HEAVY harvest: #214/#215/#220 UNBLOCKED, DH-77 RE-SCOPED, the `pv*0.1`
+> double-count RULED OUT, #219 RESOLVED, #191 FULLY AUTHORED, #221 given its authoring source. **The two
+> headlines are a TINY high-leverage REMOVAL and an EPIC becoming buildable.** **The value:**
+> **(1) ★★★ HEADLINE A → REMOVE `pv*0.1` FROM ELECTIONS (debt #85; XS quick-win; `GM⇒App`; SUPERSEDES the
+> batch-30/31 "re-tune `pv*0.1`" note).** `calcStateVote` scores each candidate `50 + baseLean*5 + partyPref*5 +
+> enthusiasm*2 + pv*0.1 + factionBias + traitBonus + (Math.random()-0.5)*8` (`phaseRunners.ts:3709`, `pv =
+> c.pvCache` `:3699`). The designer + room RULED **PV must NOT feed elections** — pricing PV into the vote
+> DOUBLE-COUNTS the traits/abilities already in BOTH PV and the election roll (`groupthinkpv` POST 36-38; a
+> highest-PV election-bonus proposal was REJECTED). **So the prior "re-tune `pv*0.1`" call is REPLACED by DELETE
+> `+ pv * 0.1` at `:3709`** — the term should not exist. XS and high-leverage twice over: **(a)** it pairs with
+> **QW19's election-determinism work at the SAME line** (route the `:3711` `Math.random` jitter through `rng.ts`
+> in one touch — debt #1/#71); **(b)** it DECOUPLES the #214 PV reweight from elections so the reweight can
+> re-fit freely without distorting margins. **★ Tech-lead judgment-call (one line, NOT auto-done):** the 2.9.1
+> PRIMARY scorer's raw `pvCache` (`:3733`) is **KEPT** — the primary is candidate *selection* (the CPU picking
+> its nominee = the AI-utility use the ruling ENDORSES); remove ONLY `:3709`. **→ `pv*0.1`-removal JOINS the
+> cheap-fixes lane** (added as a new XS quick-win pairing with QW19/QW22/QW23). debt #85; game-mechanics §3.4.1.
+> **(2) ★★★ HEADLINE B → THE PV EPIC IS NOW BUILDABLE END-TO-END — #214 + #215 + #220 UNBLOCKED (debt #85;
+> `GM⇒App`; moves from GATED → READY-AFTER-#216).** The long-flagged gate — "the trait EFFECTS live in an
+> un-ingested thread" — is LIFTED: `groupthinkpv` IS that thread (the EFFECTS/office-PV sibling of `revampPV`'s
+> VALUES). Shipped state re-confirmed: flat ±4/−5 (`pv.ts:76-77`), `command×10` (`:74`), `Math.max(0)` (`:88`);
+> the **trait-EFFECTS-in-PV layer is 0% built** (verified — `pv.ts` has NO trait→office-conditional logic).
+> Direction now RULED: ability curve **Command×15 · Legislative/Governing/Admin×10 · Military/Judicial×5** per
+> level (+ expertise +5 each); display **0–100, 50 = average pol**; worst trait = Incompetent −20 (the
+> spreadsheet `lackey −53` was a TYPO → ruled −5, already correct in `pv.ts` → re-scopes DH-77). **Sequence the
+> epic:** **#216 trait-name remap FIRST** (QW22, already queued, BLOCKS the rest) → then **#214 tiers (M-L
+> re-fit) + #215 curve (M) + #220 0–100/floor-offset (XS+S) + remove `pv*0.1` (XS, headline A) + BUILD the
+> trait-EFFECTS-in-PV layer (M-L** — office-conditional ability buffs, Crisis-*, Magician take-higher,
+> Cosmopolitan/Provincial regional EV, Lackey behavioral lock-in; overlaps the §14.1.y #217 implementation
+> engine). **The ONLY remaining human-call across the whole epic = the office-magnitude ↔ 0–100 display-scale
+> reconciliation.** **★ Move the PV epic from the gated/Author-before-build bucket to ready-after-#216 (annotate;
+> do NOT re-sequence the top-of-queue); office-PV is scoped to the active-draft/persuasion AI, NOT the vote
+> (consistent with headline A).** debt #85; game-mechanics §3.4.1.
+> **(3) ★★ #221 THE 3-PRIMITIVE CONTENT-MODEL REGISTRY — primary authoring source DELIVERED (L, downstream of
+> K4; `GM⇒App`).** `legisexecgov` is vcczar's explicit crowdsourcing call for a registry of THREE content
+> primitives: **Legislative Proposals** (federal+state bills incl. constitutional Amendments) / **Presidential
+> Actions** (president-only, inactive pre-Constitution) / **Governor Actions** (state-scoped), with era/date
+> gating, importance-curation (joke laws REJECTED so the CPU doesn't propose them), meter/payoff tradeoffs,
+> prereq-chain ladders, and option-set/branching primitives + scripted events. **VERIFIED 0% shipped:** `grep
+> -riE 'presAction|legisProp|govAction|scriptedEvent' src/` = ZERO; the only adjacent thing is the runtime
+> `Legislation` INSTANCE record (`types.ts:1506`) built from tiny inline `templates` arrays. **#236/#237 both
+> RIDE this** — neither lands before #221. **L (a new typed primitive registry + era-gating + the CPU-selection
+> draw); folds into the era-content/K4 area, NOT a new keystone; stays where it is in the queue (downstream of
+> K4) — now WITH its authoring source.** debt #97/#98 area; game-mechanics §15.1.
+> **(4) ★ NEW BACKLOG — #242 AMENDABLE ARTICLES + #241 VARIABLE TERM LENGTH + DH-78 TRAIT-COMBO (debt #101/#102/
+> #103; all `GM⇒App`).** **#242** (M, gated on #221): `ConstitutionalArticles` (`types.ts:1389-1397`) is written
+> ONCE at the CC (`constitutionalConvention.ts:145`) and never mutated; the design wants it AMENDABLE mid-game
+> (a Legis-Prop Amendment rewrites an article on 75%-state ratification) + NEW fields (suffrage/EC-toggle/
+> houseSizeCap/term-length). Downstream of #221 (an Amendment IS a Legis-Prop) + #241; the data shape already
+> exists, the build is the mutation PATH + new fields + a `DB_VERSION` default. **#241** (M, → K3's cadence):
+> the election cadence is hardcoded `year%4`/`%2` (`phases.ts:53-58`), NO term-length field anywhere; a passed
+> 6-/2-yr-presidency Amendment would break every predicate. This is the **SECOND independent reason to replace
+> the year-predicates** (the FIRST is #92's era-advance) → build the predicate-replacement ONCE inside K3's
+> `advanceEra`/`year%4`-replacement work and a per-office term-length field serves both; ties #92. **The cost is
+> shared with K3 — no standalone epic.** **DH-78** (XS-S, gated on #216): `TraitElectionRule` (`types.ts:727`)
+> has only `opponentConditional` — it CANNOT express a same-candidate two-trait AND-combo (Celebrity AND Military
+> Leader → +1, `excelautomate` POST 50); add a `requiresAlsoHas: Trait[]` field + a consume-side check in
+> `applyTraitElectionBonus` (`electionEffects.ts:16`); gated on #216 (which adds `Military Leader` to the union);
+> verify it wasn't deliberately cut first. debt #101/#102/#103; game-mechanics §14.2, §2.3, §14.1.3.
+> **(5) ★ THE HOUSE MODEL — #219 RESOLVED + #191 FULLY AUTHORED (S-M; debt #87/#73; `GM⇒App`).** `housepoll`:
+> the community VOTED to **KEEP the focus-Rep abstraction; every-real-435-seat was REJECTED → parked "AMPU 2."**
+> Shipped state: flat `representativeIds: string[]` (`types.ts:1327`) — NO size enum, NO EV-ladder, NO
+> vote-weight, NO census. **#219 (RESOLVED):** US Reps = historical EVs−2 → Focus Reps via an **EV-derived 1-10
+> ladder** (≤5→1 … ≥46→10, SUPERSEDES #55's flat `(EV−2)/5`) → **vote power = `floor(stateUSReps / focusReps)`,
+> remainder → highest-Legislative rep**. **#191 (FULLY AUTHORED, `housepoll` POST 17-19):** a per-seat STATIC
+> `deviantPartyBias` (overrides only the party term) + the minority-seat guarantee (5+ Focus Reps → a Bias+2
+> minority seat) + the 25/25/50 new-seat / seat-gain / seat-loss rolls keyed to **era-gated growth lobbies**.
+> Both ride a NEW **per-seat struct** + the #34 census + the row-74 gerrymander gov-action that SETS the bias.
+> **S-M; folds into the census/apportionment + down-ballot-election clusters (#34/#55/#73/#74); not a new
+> keystone. Mark #219 RESOLVED (keep focus-reps; every-435 = AMPU-2 parking) + #191 FULLY AUTHORED.** debt #87/
+> debt #73; game-mechanics §29.5.
+> **(6) ★ SHARPENING — #20 Gov Actions FLAT/state-agnostic.** `legisexecgov` confirms Gov Actions today are
+> FLAT / state-agnostic (the Gov-Action primitive should be state-scoped with per-state variation) — sharpen the
+> existing #20 gerrymander/gov-action umbrella row (debt #74); no re-size. **DH-77 RE-SCOPE reflected:** the PV
+> floor-clamp fix (QW23) is re-scoped by `groupthinkpv` — worst trait is Incompetent −20 (not the spreadsheet
+> `lackey −53` typo); the floor-OFFSET fix stands, the magnitude is corrected. game-mechanics §15.1, §3.4.1.
+> **(7) ★★ GM-REPLACEMENT LENS additions (a VIEW, no re-sequence).** ① referee gains: **PV-as-AI-utility** —
+> annotate that PV is the ② CPU's draft/steal/persuasion/leadership/primary-selection metric and is **NOT an
+> election input** (the `pv*0.1` removal ENFORCES that boundary; the primary scorer's `:3733` raw `pvCache` is
+> the endorsed AI-utility use, KEPT); the **#221 content-primitive registry** (the typed action pool the GM
+> hand-curated, with the CPU-selection draw #70-#78 reading from it); the **House model** (the EV-ladder +
+> vote-power-with-remainder = the seat-tally math the `excelautomate` GM ranked automation priority #1, and the
+> focus-Rep abstraction is the deliberate ">435-seats is AMPU-2" tractability call); and **#241/#242** as the
+> referee half of constitutional adjudication (amendable rules). **★ The `excelautomate` charter metric — the
+> *">30 min/phase ⇒ automate"* GM-burden budget (game-mechanics §18.1)** — is the concrete quantified statement
+> of the ① mandate; corroborates #114/DH-36 from the build side. Lens stays a VIEW; adding pointers re-sequenced
+> nothing.
+> **(8) ★ HYGIENE / CORPUS-COVERAGE.** **★ "Groupthinking the Political Value" is now INGESTED** (`groupthinkpv`,
+> batch 33) — REMOVE it from the still-needed un-ingested list; the un-ingested set is now **1840-start
+> (persistent-Whig ~100-yr run) + matthewyoung123-1772** (the rookie founding run). **NO gap closed (5 RECONCILED:
+> #214/#215/#220 unblocked, DH-77 re-scoped, #219 resolved, #191 authored, the `pv*0.1` double-count ruled out),
+> NO new keystone, NO re-sequence; top of queue UNCHANGED (QW0 → K0/K2 → K3/K4 + scenarioBoot → E1) — the ONE
+> delta to the cheap-fixes lane is `pv*0.1`-removal as an XS quick-win, and the PV epic moves gated →
+> ready-after-#216. Within-batch order: remove `pv*0.1` + #216 remap (cheap-fixes, now) → the PV epic (#214/#215/
+> #220 + trait-EFFECTS layer) → #221 registry → #242 amendable articles + #241 cadence (inside K3) → the House
+> model → DH-78.** debt #85, #87, #97/#98, #101-#103; technical-guide §9 batch-33 lead + §9.6 + §8 debt #101-#103
+> + updated #85/#87/#73; game-mechanics §3.4.1, §15.1, §15.4(c), §29.5, §2.3, §14.2, §14.1.3, §18.1, §30.23.
+>
 > **★★★★ Batch-32 version — FIVE MIXED DATA/DESIGN/CHANGELOG threads (1 founding solo + 4 data/design/changelog),
 > NO playtest: `tomorrowlist` (vcczar's to-do + crowdsourcing call, Feb 2022 — the ORIGIN of the alternate-
 > government-form axis) + `businesslabor` (vcczar AUTHORS the Business/Labor policy GENRE — the origin of the
@@ -2270,6 +2376,57 @@ Reverse-chronological. The expertise/abilities/traits/cabinet/lobby epic (PR1–
 is complete; the knowledge-base infra and eight ingestion batches are knowledge
 milestones (no code, but they are what every item below is traced to).
 
+- **Batch-33 ingestion (knowledge milestone — FIVE DESIGN/DISCUSSION/BUILD threads, NO playtest; the RECONCILE/
+  UNBLOCK batch that DELIVERED the long-flagged gating threads).** Absorbed **`groupthinkpv`** (c6f6dcc7,
+  "Groupthinking the Political Value" — the trait-EFFECTS / office-PV / display-scale GATE; the sibling of
+  `revampPV`, read as ONE PV spec — **UNBLOCKS #214/#215/#220** + re-scopes DH-77), **`legisexecgov`** (518fb253,
+  the **#221 3-PRIMITIVE content-authoring source** — Legis-Prop / Pres-Action / Gov-Action, era-keyed,
+  meter-effecting), **`ampuelections`** (92f0659b, the elections content doc, ~70 primitives — **ORIGIN of NEW
+  #241** variable term-length + **#242** amendable articles), **`housepoll`** (aed35c6e, the focus-reps-vs-every-
+  seat poll — **RESOLVES #219**, fully **AUTHORS #191**), **`excelautomate`** (79fbbb46, the spreadsheet GM-
+  automation progress log — charter corroboration + **ORIGIN of NEW DH-78**). **3 NEW gap rows #241/#242 + DH-78**
+  (max gap #242, max bug DH-78) + a RECONCILE-HEAVY harvest. **★★★ HEADLINE A → REMOVE `pv*0.1` FROM ELECTIONS
+  (debt #85; XS quick-win; `GM⇒App`; SUPERSEDES the batch-30/31 "re-tune `pv*0.1`" note).** The designer + room
+  RULED **PV must NOT feed elections** (double-count — the traits/abilities are in BOTH PV and the election roll;
+  `groupthinkpv` POST 36-38, a highest-PV election-bonus proposal REJECTED) → **DELETE `+ pv * 0.1` at
+  `phaseRunners.ts:3709`** (not re-tune). Pairs with QW19's `Math.random`→`rng.ts` fix at the SAME line.
+  **★ Tech-lead judgment-call: the 2.9.1 PRIMARY scorer's raw `pvCache` (`:3733`) is KEPT** (candidate
+  *selection* = the endorsed AI-utility use; remove ONLY `:3709`). **→ `pv*0.1`-removal JOINS the cheap-fixes
+  lane** (new XS quick-win pairing QW19/QW22/QW23). **★★★ HEADLINE B → THE PV EPIC IS NOW BUILDABLE END-TO-END —
+  #214 + #215 + #220 UNBLOCKED (debt #85; moves GATED → READY-AFTER-#216).** The "trait-EFFECTS thread is
+  un-ingested" gate is LIFTED — `groupthinkpv` IS that thread. Direction RULED: **Command×15 · Legis/Gov/Admin×10
+  · Mil/Jud×5** per level (+ expertise +5); display **0–100, 50=average**; the **trait-EFFECTS-in-PV layer is 0%
+  built** (verified `pv.ts` has NO trait→office logic). Sequence: **#216 remap FIRST (QW22)** → #214 tiers (M-L)
+  + #215 curve (M) + #220 0–100/floor-offset (XS+S) + remove `pv*0.1` (XS) + BUILD the trait-EFFECTS-in-PV layer
+  (M-L). **Only open human-call: office-magnitude ↔ 0–100 scale. Move the PV epic gated → ready-after-#216.**
+  **★★ #221 THE 3-PRIMITIVE CONTENT-MODEL REGISTRY** (L, downstream of K4; `GM⇒App`) — `legisexecgov` delivers
+  the authoring source (Legis-Prop / Pres-Action / Gov-Action + scripted events, era-gated, importance-curated,
+  prereq-chained); VERIFIED 0% shipped (`grep -riE 'presAction|legisProp|govAction|scriptedEvent' src/` = ZERO);
+  **#236/#237 depend on it**; stays where it is (downstream of K4), now WITH its source. **★ NEW BACKLOG: #242
+  AMENDABLE `ConstitutionalArticles`** (M, gated #221 — Amendment-rewrites-an-article on 75%-state ratification +
+  suffrage/EC-toggle/houseSizeCap/term-length fields; `types.ts:1389-1397` written ONCE today) + **#241 VARIABLE
+  TERM LENGTH** (M, → K3's `year%4` predicate-replacement — a 6-/2-yr Amendment would break every predicate; the
+  SECOND reason to replace year-predicates after #92; cost shared with K3, ties #92) + **DH-78 two-trait AND-combo
+  field** (XS-S, gated #216 — `TraitElectionRule` `types.ts:727` can't express Celebrity AND Military Leader → +1;
+  add `requiresAlsoHas: Trait[]` + a check in `electionEffects.ts:16`). **★ THE HOUSE MODEL — #219 RESOLVED +
+  #191 FULLY AUTHORED** (S-M; debt #87/#73; `GM⇒App`): `housepoll` VOTED to KEEP focus-reps (every-435 REJECTED →
+  AMPU-2 parking); **#219** = US Reps=EVs−2 → EV-derived 1-10 focus-rep ladder (SUPERSEDES #55's flat `(EV−2)/5`)
+  → vote power=`floor(stateUSReps/focusReps)`, remainder→highest-Legislative rep; **#191** = the per-seat
+  `deviantPartyBias` + minority-seat guarantee (5+ focus reps→Bias+2) + 25/25/50 new-seat rolls (era-gated growth
+  lobbies); folds into #34/#55/#73/#74. **Mark #219 RESOLVED + #191 AUTHORED.** **★ SHARPENING:** #20 Gov Actions
+  are FLAT/state-agnostic today (`legisexecgov`) — sharpen the #20 umbrella (debt #74); **DH-77 RE-SCOPED** —
+  worst trait = Incompetent −20 (the `lackey −53` was a spreadsheet TYPO, already correct in `pv.ts`); the
+  floor-OFFSET fix stands. **★ GM-REPLACEMENT LENS additions** (a VIEW, no re-sequence): ① referee gains
+  PV-as-AI-utility (PV is the ② CPU's draft/persuasion metric, NOT an election input — the `pv*0.1` removal) +
+  the #221 content-primitive registry + the House model; the **`excelautomate` ">30 min/phase ⇒ automate"
+  charter budget** is the quantified ① mandate. **★ CORPUS-COVERAGE: "Groupthinking the Political Value" is now
+  INGESTED** — removed from the still-needed list; un-ingested set = **1840-start + matthewyoung123-1772**.
+  **NO gap closed (5 RECONCILED), NO new keystone, NO re-sequence, top-of-queue UNCHANGED (QW0 → K0/K2 → K3/K4 +
+  scenarioBoot → E1) — the ONE delta is `pv*0.1`-removal in the cheap-fixes lane + the PV epic gated →
+  ready-after-#216. Within-batch order: remove `pv*0.1` + #216 remap (cheap-fixes) → PV epic → #221 → #242 + #241
+  (inside K3) → House model → DH-78.** debt #85/#87/#97-#98/#101-#103; technical-guide §9 batch-33 lead + §9.6 +
+  §8 debt #101-#103 + updated #85/#87/#73; game-mechanics §3.4.1, §15.1, §29.5, §2.3, §14.2, §14.1.3, §18.1,
+  §30.23.
 - **Batch-32 ingestion (knowledge milestone — FIVE MIXED DATA/DESIGN/CHANGELOG threads, NO playtest [1 founding
   solo + 4 data/design/changelog]).** Absorbed **`tomorrowlist`** (vcczar's to-do + crowdsourcing call, Feb 2022 —
   the ORIGIN of the alternate-government-form axis), **`businesslabor`** (vcczar AUTHORS the Business/Labor policy
@@ -3491,7 +3648,20 @@ forum trait line-items mis-key/drop vs the shipped `Trait` union — an explicit
 independently useful, DO FIRST of the two**); **QW23 DH-77 the floor-offset clamp fix** swaps the
 `Math.max(0,…)` at `pv.ts:88` for a constant floor-OFFSET so the CPU keeps ordering among sub-zero pols (XS,
 standalone). Both are the cheap, no-balance-risk half of the PV overhaul; the reweight itself touches `pv.ts`
-which DRIVES elections, so it is held back as a balance epic.
+which DRIVES elections, so it is held back as a balance epic. **★★ Batch-33 adds ONE new XS quick-win (QW24) —
+REMOVE `pv*0.1` FROM ELECTIONS (`phaseRunners.ts:3709`), the SINGLE highest-leverage line in the batch
+(`GM⇒App`, debt #85).** The designer + room RULED that **PV must NOT feed elections** (it DOUBLE-COUNTS the
+traits/abilities already in BOTH PV and the election roll — `groupthinkpv` POST 36-38, a highest-PV
+election-bonus proposal REJECTED) — so this **SUPERSEDES the batch-30/31 "re-tune `pv*0.1`" note**: the term
+should not be there at all. **It PAIRS WITH QW19 at the SAME `:3709/3711` line** (route the `:3711`
+`Math.random` jitter through `rng.ts` in the same touch — debt #1/#71) and DECOUPLES the #214 PV reweight from
+elections (so the now-unblocked PV epic can re-fit freely). **★ KEEP the 2.9.1 PRIMARY scorer's raw `pvCache`
+at `:3733`** — the primary is candidate *selection* (the AI-utility use the ruling ENDORSES); remove ONLY
+`:3709`. **★ With `groupthinkpv` ingested, the BACK-HALF PV epic (#214/#215/#220 + the 0%-built trait-EFFECTS-
+in-PV layer) is now UNBLOCKED → READY-AFTER-#216** (still in Phase-1, no longer gated on an un-ingested thread;
+#220 0–100 display-scale RESOLVED to 0–100/50-avg, off Decision-gated). **★ DH-77 (QW23) RE-SCOPED** — worst
+trait = Incompetent −20 (the `lackey −53` was a spreadsheet TYPO, already correct in `pv.ts`); the floor-OFFSET
+fix stands at the corrected magnitude.
 
 | # | Item | Scope | Depends on | Size | Source | Status |
 |---|---|---|---|---|---|---|
@@ -3518,7 +3688,8 @@ which DRIVES elections, so it is held back as a balance epic.
 | **QW21** | **★★ batch-27 DH-72(c) — HIDE the raw election math in the UI (anti-collusion)** *(NEW, batch 27 — designer-blessed)* | **XS–S — UI surface change: stop exposing the raw `calcStateVote` formula / numeric percentages.** Show only **which ideologies like a position + polls/maps**, never the raw `50 + baseLean*5 + …` math. Anti-collusion (a multiplayer concern surfaced live: players reverse-engineered the scorer to over-optimize); the modern run's hand-driven platform exploit was visible only because the math was legible. Designer-blessed (`redbutton#POST 538-540`). The SAME hide-the-math principle the #184 platform meter-cap builds in from day one (sub-fix B → Phase-1 #10/#181) — here it lands on the SHIPPED election scorer as a presentation-track fix. Ship in the QUICK-WIN bucket alongside QW19/QW20. | — (presentation track; pairs with #184's day-one hide-the-math) | XS–S | bug **DH-72(c)** (`redbutton#POST 538-540`) — NEW (debt #64) | ready |
 | **QW18** | **★ batch-15 #153 — global ×2 Command-gain multiplier (the UNBUILT half of the rookie-Command rule, `terror2000#POST 91`) — ★★ batch-17: NOW 3-SOURCE CANONICAL + LIVE-DEMONSTRATED → build-with-confidence** *(NEW batch 15 — RULED; ★★ batch 17 PROMOTED to canonical)* | **XS–S — one global multiplier on the Command-gain roll path** (a `gainCommand(p, basePct)` helper applying ×2 + the committee/career-track expertise-grant sites). Ted (`terror2000#POST 91-93`) made TWO house-rules official: **(a)** nobody is born with Command — **all rookies enter at 0 Command** (verified SHIPPED via #136, `phaseRunners.ts:216`) **AND every in-game Command-gain % is DOUBLED** to compensate (so Presidents emerge from in-game action, not real-world reputation — the **×2 multiplier is the only UNBUILT piece**); **(b)** rolling an already-held expertise on a grant = **NO new expertise (do NOT re-roll)** — already an invariant in the grant path. Pin the ×2 on every Command-gain % (the success→+1-Command rolls in E11/E13/E18 + the draft-grant + e.g. the Father-of-the-Constitution `command + 1` at `constitutionalConvention.ts:158,168` + the RevWar grants in `revolutionaryWar.ts`), gated nowhere (all eras). **★★ Batch-17 (`ted1772`) PROMOTES this to build-with-confidence / CANONICAL:** a 3rd source applies the rule front-to-back from a 0-Command boot — **3-source canonical (`terror2000` · `tedchange` · `ted1772`)** — and DEMONSTRATES the payoff LIVE: an **emergent 1st President (Arthur St. Clair), a CPU pol who booted at 0-Command / obscure and rose purely through play.** The ×2-Command-gain knob is **load-bearing and keystone-free** (it sits on the draft/command path). Pairs with **QW17** (#143 Command decay) — same Command economy, opposite direction (decay pares the pool, the ×2 lets contenders climb). No dependency; ship with the QW0 / XS-consistency cluster. **RULED by Ted (`terror2000#POST 91-93`; ★★ 3-source canonical via `ted1772` + a live emergent-President audit).** | — | XS–S | gap **#153 / `terror2000#POST 91-93` + ★★ `ted1772` (3-source canonical + St. Clair live demo)** — NEW + PROMOTED (canonical) | **ready (build-with-confidence)** |
 | **QW22** | **★★ batch-30 #216 — PV trait-name remap (forum→shipped `Trait` union) — the BLOCKING PREREQUISITE of the PV overhaul (debt #85)** *(NEW, batch 30 — the front-half of the PV overhaul; DO FIRST of the two PV QWs)* | **S — produce an explicit forum-trait → shipped-`Trait`-union map**, then apply #214's tiers through it. The 2023 `revampPV` trait vocabulary ≠ the current `Trait` union (`types.ts:62-117`): of the ~57 traits in vcczar's POST-33 tier list, **~15 are ABSENT** from the shipped union (Teflon, Military Leader, Bookkeeper, Geostrategist, Everyman, Lawful/Cop, Jurisprudence, Union Loyalist, Disharmonious, Lackey, Late Bloomer, Illicit, Pliable, Incoherent, Easily Overwhelmed), **2 are pure RENAMES** (`Flipflopper`→`Flip-Flopper`, `Two-faced`→`Two-Faced`), and **12+ SHIPPED traits were NEVER valued in 2023** (Nationalist/Globalist/Reformist/Loyal/Ambitious/Opportunist/Impressionable/Scandalous/Corrupt/Traitor/Outsider/Ideologue) — so **~17 of ~57 line-items (~30%) mis-key or DROP without the remap.** A literal transcription is wrong; the table is **tiers to RE-MAP, not literal keys.** Independently useful (clarifies the trait vocabulary) and **UNBLOCKS #214** — without it the per-trait tier table is un-applyable. **Pairs with #168** (the `planb` terminology audit) + the existing trait-rename tracking. No dependency; ship in the cheap-fixes lane. | — | S | gap **#216 / `revampPV` §6 D8 / POST 33; codebase-verified `types.ts:62-117` trait union vs the 2023 forum vocabulary** — NEW (debt #85) | ready (DO FIRST of the PV pair) |
-| **QW23** | **★★ batch-30 DH-77 — PV floor-OFFSET clamp fix (replace `Math.max(0,…)` at `pv.ts:88`) (debt #85)** *(NEW, batch 30 — standalone XS; the rest of the PV overhaul is a balance epic)* | **XS — replace the `Math.max(0, Math.round(total))` clamp at `pv.ts:88` with a constant floor-OFFSET** so sub-zero Politician-Values keep their ORDERING for the CPU's draft/leadership heuristic. The clamp is the most clearly *wrong* line today: it floors every negative PV to 0, collapsing the ordering of below-average pols that the CPU still needs to rank (it can't tell JFK Jr −5 from John Payne Todd −34 — both become 0). Ted's one hard demand in `revampPV` was *"no negative numbers"* for human display, satisfiable via a flat offset, NOT a destructive clamp. **Independently shippable** — does NOT require the #214/#215 reweight (the remaining PV sites `pv.ts:70-79` are the balance epic). Pairs with #214/#215/#216/#220 (all rebuild `pv.ts:70-88`). No dependency; ship in the cheap-fixes lane. | — | XS | bug **DH-77** (codebase `pv.ts:88` `Math.max(0,…)` clamp; superseded by `revampPV` #220) — NEW (debt #85) | ready |
+| **QW23** | **★★ batch-30 DH-77 — PV floor-OFFSET clamp fix (replace `Math.max(0,…)` at `pv.ts:88`) (debt #85) — ★ batch-33 RE-SCOPED (worst trait = Incompetent −20, not the `lackey −53` typo)** *(NEW, batch 30 — standalone XS; the rest of the PV overhaul is a balance epic)* | **XS — replace the `Math.max(0, Math.round(total))` clamp at `pv.ts:88` with a constant floor-OFFSET** so sub-zero Politician-Values keep their ORDERING for the CPU's draft/leadership heuristic. The clamp is the most clearly *wrong* line today: it floors every negative PV to 0, collapsing the ordering of below-average pols that the CPU still needs to rank (it can't tell JFK Jr −5 from John Payne Todd −34 — both become 0). Ted's one hard demand in `revampPV` was *"no negative numbers"* for human display, satisfiable via a flat offset, NOT a destructive clamp. **Independently shippable** — does NOT require the #214/#215 reweight (the remaining PV sites `pv.ts:70-79` are the balance epic). Pairs with #214/#215/#216/#220 (all rebuild `pv.ts:70-88`). **★ Batch-33 RE-SCOPE (`groupthinkpv`):** the spreadsheet `lackey −53` was a TYPO (ruled −5, already correct in `pv.ts`); the genuine worst trait = **Incompetent −20** — the floor-OFFSET fix stands, just at the corrected magnitude. No dependency; ship in the cheap-fixes lane. | — | XS | bug **DH-77** (codebase `pv.ts:88` `Math.max(0,…)` clamp; superseded by `revampPV` #220; **★ batch-33 `groupthinkpv` RE-SCOPE: worst = Incompetent −20, `lackey −53` was a typo**) — NEW (debt #85) + RE-SCOPED | ready |
+| **QW24** | **★★ batch-33 REMOVE `pv*0.1` FROM ELECTIONS — delete the PV→election double-count (debt #85; the single highest-leverage line in batch 33) — SUPERSEDES the batch-30/31 "re-tune `pv*0.1`" note** *(NEW, batch 33 — designer-RULED; pairs with QW19 at the SAME line)* | **XS — delete the `+ pv * 0.1` term from `calcStateVote`'s general-election scorer at `phaseRunners.ts:3709`** (`pv = c.pvCache` `:3699`). The designer + room RULED **PV must NOT feed elections** — pricing PV into the vote DOUBLE-COUNTS the traits/abilities already present in BOTH PV and the election roll (`groupthinkpv` POST 36-38; a highest-PV election-bonus proposal was REJECTED). This is **not a re-tune** (the batch-30/31 note) — **the term should not exist.** **★ High-leverage twice over: (a)** it PAIRS WITH QW19's election-determinism work at the SAME line (route the `:3711` `Math.random` jitter through `rng.ts` in one touch — debt #1/#71); **(b)** it DECOUPLES the #214 PV reweight from elections so the now-unblocked PV epic can re-fit freely without distorting margins. **★ KEEP the 2.9.1 PRIMARY scorer's raw `pvCache` at `:3733`** — the primary is candidate *selection* (the CPU picking its nominee = the AI-utility use the ruling ENDORSES); remove ONLY `:3709`. No dependency; ship in the cheap-fixes lane alongside QW19/QW22/QW23. **RULED by the designer + room (`groupthinkpv` POST 36-38).** | — (ships with QW19 at the same line) | XS | gap **debt #85 / `groupthinkpv` POST 36-38** (codebase `phaseRunners.ts:3709` `+ pv*0.1`; `:3733` primary `pvCache` KEPT) — NEW; SUPERSEDES the batch-30/31 "re-tune `pv*0.1`" note | ready |
 
 ---
 
@@ -3703,11 +3874,11 @@ engine; the UI shows only player-visible numbers (fog of war).
 | GM labor this retires | Grouped gaps | Lives in the roadmap at |
 |---|---|---|
 | Election / platform scoring, the swing die, historical-bias terms, **the third-party SPOILER vote-drain + the swing-state/safe-state cap** *(batch-31)* | #184, DH-72, #18, #14, QW3, **QW19–QW21**, **debt #71**, **#228**, **#230**, **#231** | **Quick-wins** (QW3 ±3 cap, QW19/QW20/QW21 = DH-72(a/b/c) seed+narrow / bias-band / hide-the-math) → **E20** (bill/election scoring) → the #184 platform meter-cap builds INTO **E10/#181**. **★ Batch-28: debt #71 is the TECHNICAL DEFINITION of the QW19–QW21 trio + the batch headline — it fuses the swing-die seed+narrow + the flagship `Math.random` leak (debt #1) + the D6/D3 fork in ONE patch; the election die is REFUTED-as-shipped (`:3711` raw `Math.random`, no die), so this QW IS the work.** **★ Batch-31: #228** the third-party VOTE-DRAIN ruleset (party-of-origin + shared-ideology + incumbency + the Charisma region→nationwide escalation; wholly unbuilt, no `spoiler`/`thirdParty` drain in `src/`; M; `GM⇒App` → E20, pairs #48/#214) + **#230** the swing-state/safe-state CAP (only party-pref ≤1 states flip; safe states draw a bounded margin) — **#230 PAIRS WITH QW19 at the SAME `calcStateVote` `:3711` jitter** (seed it via `rng.ts`, then gate it behind the swing-state set; S-M) + **#231** the modern-Moderate over-performance balance REGRESSION CASE (re-tune when #18/#51 land — not a new system). |
-| **★ PV-electability — the per-trait + per-ability Politician-Value math that decides "who's electable" (the CPU's draft/leadership heuristic AND a direct election-score input)** *(batch-30 — `GM⇒App`)* | **#214** (per-trait tier table), **#215** (per-ability curve + Command re-weight), **#216** (trait-name remap — BLOCKING), **DH-77** (floor-offset clamp) | **Quick-wins** for the front half (**QW22 #216** remap + **QW23 DH-77** clamp — the cheap, no-balance-risk part) → a **Phase-1 GATED BALANCE EPIC** for #214/#215 (debt #85; `pv.ts:70-88` is a flat ±4/−5 + flat skill/command formula today). PV is BOTH the CPU's draft/leadership pick heuristic AND a direct election input — `calcStateVote` reads `pv=c.pvCache` and adds `pv*0.1` to every state score (`phaseRunners.ts:3699,3709`), so this is the SAME ① referee surface as the election/platform row above; the #214/#215 reweight MUST re-tune `pv*0.1` in the same PR. GATED on the un-ingested "Groupthinking the Political Value" trait-EFFECTS thread. |
+| **★ PV-electability / PV-AS-AI-UTILITY — the per-trait + per-ability Politician-Value math that decides "who's electable" (the CPU's draft/steal/persuasion/leadership/primary-selection heuristic; ★ batch-33: NOT an election input)** *(batch-30; ★ batch-33 RE-FRAMED — `GM⇒App`)* | **#214** (per-trait tier table), **#215** (per-ability curve + Command re-weight), **#216** (trait-name remap — BLOCKING), **DH-77** (floor-offset clamp), **★ QW24** (remove `pv*0.1`) | **Quick-wins** for the front half (**QW22 #216** remap + **QW23 DH-77** clamp + **★ batch-33 QW24** remove `pv*0.1` — the cheap, no-balance-risk part) → a **Phase-1 BALANCE EPIC** for #214/#215 + the 0%-built trait-EFFECTS-in-PV layer (debt #85; `pv.ts:70-88` is a flat ±4/−5 + flat skill/command formula today). **★★ BATCH-33 RE-FRAME (`groupthinkpv` POST 36-38):** the designer + room RULED **PV must NOT feed elections** — so the prior "PV is ALSO a direct election input … the reweight MUST re-tune `pv*0.1` in the same PR" framing is SUPERSEDED: PV is the ② GM-as-opponent's draft / steal / persuasion / leadership / primary-selection AI-utility metric ONLY, and `pv*0.1` is **REMOVED outright from `calcStateVote`** (QW24, `phaseRunners.ts:3709`) — the 2.9.1 PRIMARY scorer's raw `pvCache` (`:3733`) is the endorsed AI-utility use and is **KEPT**. **★ The "GATED on the un-ingested 'Groupthinking the Political Value' thread" call is LIFTED — that thread is now INGESTED (`groupthinkpv`); the epic moves gated → READY-AFTER-#216** (curve RULED: Command×15 · Legis/Gov/Admin×10 · Mil/Jud×5 per level + expertise +5; display 0–100/50-avg, so #220 is off Decision-gated; only open human-call = office-magnitude ↔ 0–100 scale). |
 | **★ Regime adjudication + active-policy tracking — the GOVERNMENT-FORM AXIS + the STATEFUL POLICY-GENRE FRAMEWORK the GM would hand-adjudicate / hand-track** *(batch-32 — `GM⇒App`)* | **#236** (the alternate-government-form scenario axis: Fascist/Communist/Theocratic regime transition + the cross-form authoritarian kit + Theocracy ×5 by denomination), **#237** (the stateful policy-genre framework: Business/Labor + Currency + Copyright genres, `*-Default` baselines, `L/P/G/S` prefixes, `Preq:` chains reading/feeding the SHIPPED `economic` meter) | **The era-content / #221 content-primitive area** (both ride the unbuilt #221 per-administration Pres-Action/Legis-Prop/Gov-Action/Scripted-Event registry — `grep -iE 'presAction\|legisProp\|govAction\|scriptedEvent' src/` = ZERO, so neither lands before #221). **#236** is **L**, additionally GATED on the **#239 religion field** (Theocracy) + §24 amendments (empower-executive primitive); its transition TRIGGER + win/loss/branch END-STATE are a HUMAN ruling (ties #88/#188 — Decision-gated). **#237** is **M-L**, couples to the SHIPPED EconStab economic engine (§29.7); its "no policy" default is a HUMAN ruling (Decision-gated). Both are the REFEREE half (the GM hand-adjudicated a regime transition / hand-tracked which policies were active + their meter effects). DISTINCT from #6/#354 movement-factions (those are lobbies) and from interest-cards/lobbies (those nudge state industries). debt #97/#98; game-mechanics §30.22.A, §30.22.B. |
 | **★ Curated DATA-MODEL + DATASET — the demographic/relationship/override fields + the president statlines the GM hand-tracked / hand-computed (FOUNDATIONAL: the schema + data the systems above read)** *(batch-32 — `GM⇒App`)* | **#238/#239/#194** (gender + suffrage gate + spousal Key-Advisor; the `southernUnionist`/`canBeIndependent`/`partyFlipBudget`/`canMoveStates` override flags + the race×religion×sex demographics triple; the dynasty/family graph), **#240** (the ~47 president statlines added to the `ROWS` source array → `CURATED_ROWS`) | **The dataset/roster work** (#238/#239/#194 = the SCHEMA half, **M**, a save-migration; #240 = the DATA half, **S-M**, a STANDALONE author task OFF the engine track, GATED on the #216 remap = QW22). The **OPPONENT/referee boundary** for #239 (the GM hand-decided who may go Independent / flip parties / stay Unionist → data-driven gates the CPU + engine read) + the **referee** content-authoring for #240 (removes statline math from the GM). FOUNDATIONAL: the **#239 religion field gates #236-Theocracy**, and the #99 cluster is the schema half that #240's Misc/Demographics statline lines wait on. HUMAN-CALL on #240: trust the 2021-vintage raw skills vs re-derive under the #214/#215 curve (Author-before-build). debt #99/#100; game-mechanics §30.22.C, §30.18.E. |
 | **★ Presidential/cabinet IMPLEMENTATION + governing engine — the post-legislation success→Blunder pass + ~30 governing traits the GM resolved by hand** *(batch-30 — `GM⇒App`)* | **#217** (implementation sub-engine: expertise-gated genre traits + Delegator/Micromanager + Crisis-{Manager,Admin,Gov} + Passive/Predictable + Passive+Pliable PUPPET + Magician) | **E16** (cabinet) + **E6** (lingering/blunder) — an **L system layer** riding #179's roll engine (`phaseRunners.ts:3260`) + #182's action budget (`:3632`) + §14.1.y; gated on federalism existing. De-dup vs Efficient/Egghead/Easily-Overwhelmed first; these traits also need PV values (#214) + the remap (#216). debt #86. |
-| **Down-ballot election scoring: per-office trait stack, expertise/lobby↔industry "Manchin" survival, per-seat gerrymander bias, max-margin→popular-vote-% caps** *(batch-28 — `GM⇒App`)* | **#189, #190, #191, #192** (with #103, #20) | **E20b / `calcStateVote`** — PARTLY-BUILT (the route already applies *some* presidential traits at `:3685,3707-3708`); debt #73, M, builds ON the existing routing. The per-seat `deviantPartyBias` (#191) is SET-BY the gerrymander gov-action (#20, debt #74). |
+| **Down-ballot election scoring: per-office trait stack, expertise/lobby↔industry "Manchin" survival, per-seat gerrymander bias, max-margin→popular-vote-% caps + ★ batch-33 THE HOUSE MODEL (EV-ladder + vote-power-with-remainder + per-seat deviant bias)** *(batch-28; ★ batch-33 — `GM⇒App`)* | **#189, #190, #191, #192** (with #103, #20), **★ batch-33 #219** (RESOLVED — the EV-derived 1-10 focus-rep ladder + vote-power remainder) | **E20b / `calcStateVote`** — PARTLY-BUILT (the route already applies *some* presidential traits at `:3685,3707-3708`); debt #73, M, builds ON the existing routing. The per-seat `deviantPartyBias` (#191) is SET-BY the gerrymander gov-action (#20, debt #74). **★ BATCH-33 (`housepoll`): the House model is the ① referee half of the single most-quit-over phase** — **#219 is RESOLVED** (community KEPT focus-reps, every-435 REJECTED → AMPU-2 parking): US Reps=EVs−2 → an **EV-derived 1-10 focus-rep ladder** (SUPERSEDES #55's flat `(EV−2)/5`) → **vote power=`floor(stateUSReps/focusReps)`, remainder→highest-Legislative rep** = exactly the seat-tally math the `excelautomate` GM ranked **automation priority #1**; **#191 is FULLY AUTHORED** (`housepoll` POST 17-19 — the per-seat deviant-bias engine: minority-seat guarantee at 5+ focus reps→Bias+2, 25/25/50 new-seat rolls keyed to era-gated growth lobbies). Both ride a NEW per-seat struct; fold into #34/#55/#73/#74; S-M, not a new keystone. The focus-Rep abstraction is the deliberate ">435-seats is AMPU-2" tractability call that keeps the phase under the ">30 min/phase ⇒ automate" charter budget. |
 | Primary → brokered convention: delegate weights, balloting, walkouts, kingmaker VP | #185, #183, #19, #20 | **E10** (Convention machinery 2.9.2; #185 the biggest election subsystem + #183 endorsement-momentum fold in here) + **E22** (primary) |
 | Scenario boot: year-correct incumbents, seeded delegates, back-dated careers, retro-fatigue (incl. mid-cycle / late-era shape) **+ a retro-cohort bench for thin-dataset starts** | #186, #187, #86, #115, #173, **#209** *(batch-29)* | **K4** (the `BootSheet` schema + `scenarioBoot` pipeline; #186 = a 5th `BootSheet` shape, #173 = start-year presets) + the boot validators **QW8/QW9** + #187 pairs with #15. **★ Batch-29: #209** = a boot-time retro-gen of SUB-FLOOR career-track cohorts (Ambassadors/Admirals/lower-Justices/bench-Reps, routed through `rng.ts`) for non-1772 starts whose real dataset thins — the boot prerequisite for ANY deep-modern / Future-band start; folds into this same `scenarioBoot` pipeline; debt #83. **★ Batch-30: #115 generate-a-candidate** (the candidate-pool generator the GM hand-ran when the bench thinned — `wilsons1916` hand-built "Joe Simpson (auto-generated)") is sharpened by the full `ampuUpdates` spec (name-DB demographic tagging + 1/9/20/20 tiering + generate-on-vacancy→lowest-score backfill); the forward rookie-gen path (`phaseRunners.ts:177-209`, raw `Math.random` `:188-198`) lacks all three → folds into this same `scenarioBoot`/retro-gen cluster (K4, §9.1.9; overlaps #74's player-facing generate); debt #90, S-M. |
 | Cabinet meter rolls / lingering effects | #179 | **E6** (lingering/meter) + **E16** (cabinet) — #179 is split-but-buildable across the two. **★ Batch-28: #179 now has NUMBERS** (debt #72; `Admin→{upOdds,downOdds}` roll + Efficient±2 + 25% lobby-dissat + the JCoS/Senior-Gen/Admiral exclusion [#49] → replaces the placeholder `drift()` at `phaseRunners.ts:3260`; S-M, standalone, READY). |
@@ -3818,6 +3989,27 @@ owns that surface — **adding a lens pointer never re-sequences the backlog.**
 > on (#240 itself is a STANDALONE author/DATA task OFF the engine track, gated only on the #216 remap = QW22).
 > **Adding these pointers re-sequenced nothing — top of queue is unchanged (QW0 → K0/K2 → K3/K4 + scenarioBoot →
 > E1).**
+
+> **★ Batch-33 sharpens the ① referee half AND restates the ② opponent BOUNDARY — still a VIEW, no re-sequence.**
+> The cleanest cross-batch statement yet of **PV-as-AI-utility** (the ② GM-as-opponent's metric): `groupthinkpv`
+> RULED that PV exists to drive the CPU's **draft / steal / persuasion / leadership / primary-selection**
+> decisions and **must NOT feed the vote** — so the ① referee/calculator does NOT use PV for elections, and the
+> PV-electability row above is RE-FRAMED accordingly: **`pv*0.1` is REMOVED from `calcStateVote` (QW24,
+> `phaseRunners.ts:3709`)** to enforce that boundary, while the 2.9.1 primary scorer's raw `pvCache` (`:3733`) is
+> the endorsed AI-utility use and is KEPT. New ① referee/calculator pointers: the **#221 content-primitive
+> registry** (`legisexecgov` — the typed Legis-Prop / Pres-Action / Gov-Action + scripted-event pool the GM
+> hand-curated, with the CPU-selection draw #70-#78 reading from it; L, downstream of K4; #236/#237 ride it) +
+> the **House model** (`housepoll` — #219 RESOLVED + #191 FULLY AUTHORED; the EV-ladder + vote-power-with-
+> remainder + per-seat deviant bias = the seat-tally math the `excelautomate` GM ranked automation priority #1,
+> with the focus-Rep abstraction the deliberate ">435-seats is AMPU-2" tractability call) + **#241/#242** (the
+> referee half of constitutional adjudication — amendable articles + variable term-length the GM hand-tracked).
+> **★ The `excelautomate` ">30 min/phase ⇒ automate" GM-burden budget** (game-mechanics §18.1) is the concrete,
+> quantified statement of the ① mandate (the GM's own dated automation-priority order: tallies → trait-lookup →
+> election-scoring → legislative-scoring), corroborating #114/DH-36 from the BUILD side — recorded as the
+> charter metric, not a build row. On the ② opponent half there is no new entry (the PV math the CPU uses sits
+> under ① as the rules-calculator it reads; PV-as-AI-utility is the boundary statement, not a new opponent
+> behavior). **Adding/sharpening these pointers re-sequenced nothing — top of queue is unchanged (QW0 → K0/K2 →
+> K3/K4 + scenarioBoot → E1).**
 
 ---
 
@@ -4673,14 +4865,21 @@ and #177/#178 are the federalism-era next-build content.**
 > `Kingmaker +6` at `pv.ts:76-79`; **M-L**) + **#215** (per-ability decreasing-returns curve replacing flat
 > `skill×weight×4`/`command×10` at `pv.ts:70-74` — first-point-worth-more, Command ≈25/level, Admin/Military
 > low-floor; restrict-born-Command left OPEN as a toggle; **M**). **Build them as ONE PV-reweight PR**, AFTER
-> QW22's #216 trait-name remap (un-applyable without it) and **GATED on the un-ingested "Groupthinking the
-> Political Value" trait-EFFECTS thread** (vcczar's POST-33 list sets only POINT VALUES, not what each trait
-> DOES). **★ MANDATORY same-PR coupling: re-tune `calcStateVote`'s `pv*0.1` (`phaseRunners.ts:3709`; `pv=
-> c.pvCache` at `:3699`) — a PV reweight directly shifts election margins, the SAME election-balance surface as
-> #18/#184/DH-72/QW19-21**, so this composes with E20b and must not ship the new PV ceiling without re-banding
-> the election input. Keep office/age/FF terms ADDITIVE; do NOT double-count `flipFlopperPenalty` (`:86`); fold
-> Kingmaker + Master-Kingmaker into the table (drop the `:79` `+6`). **(#220 display-scale is a Decision-gated
-> (A) User-gated pick — raw "pink" vs 100-normalized — see that bucket.)** **★ #217 the president/cabinet
+> QW22's #216 trait-name remap (un-applyable without it). **★★ BATCH-33 SUPERSEDES TWO calls in this row (see
+> the batch-33 Phase-1 fold-ins + the QW24 row):** (i) the **"GATED on the un-ingested 'Groupthinking the
+> Political Value' trait-EFFECTS thread"** call is LIFTED — `groupthinkpv` IS that thread (now INGESTED), so the
+> epic moves **gated → READY-AFTER-#216**; the curve is RULED (Command×15 · Legis/Gov/Admin×10 · Mil/Jud×5 per
+> level + expertise +5) and the build now ALSO includes the **0%-built trait-EFFECTS-in-PV layer** (M-L); (ii)
+> the **"MANDATORY same-PR `pv*0.1` re-tune"** call is REPLACED by **REMOVE `pv*0.1` outright (QW24)** — the
+> designer + room RULED PV must NOT feed elections (`groupthinkpv` POST 36-38), so the term is DELETED at
+> `phaseRunners.ts:3709` (the 2.9.1 primary's raw `pvCache` at `:3733` is KEPT), DECOUPLING the reweight from
+> elections so it can re-fit freely. ~~**★ MANDATORY same-PR coupling: re-tune `calcStateVote`'s `pv*0.1`
+> (`phaseRunners.ts:3709`; `pv= c.pvCache` at `:3699`) — a PV reweight directly shifts election margins, the
+> SAME election-balance surface as #18/#184/DH-72/QW19-21**, so this composes with E20b and must not ship the
+> new PV ceiling without re-banding the election input.~~ Keep office/age/FF terms ADDITIVE; do NOT double-count
+> `flipFlopperPenalty` (`:86`); fold Kingmaker + Master-Kingmaker into the table (drop the `:79` `+6`). **(#220
+> display-scale was a Decision-gated (A) User-gated pick — ★ batch-33 RESOLVED it to 0–100 / 50=average; the only
+> remaining human-call is the office-magnitude ↔ 0–100 scale reconciliation.)** **★ #217 the president/cabinet
 > IMPLEMENTATION sub-engine + ~30 governing traits → E16 (cabinet) + E6 (lingering/blunder); L, gated on
 > federalism (E1) existing.** A post-legislation success→Blunder pass modified by expertise-gated genre traits
 > + Delegator/Micromanager + Crisis-{Manager,Admin,Gov} (the Crisis-Admin 10/20% Lingering crisis-pull ON TOP
@@ -4778,6 +4977,88 @@ and #177/#178 are the federalism-era next-build content.**
 > **NO re-sequence; the top-of-queue is UNCHANGED (QW0 → K0/K2 → K3/K4 + scenarioBoot → E1).** debt #97-#100;
 > technical-guide §9 batch-32 lead + §9.6 + §8 debt #97-#100; game-mechanics §30.22.A, §30.22.B, §30.22.C,
 > §30.18.E, §29.7, §24.x, §3.1.
+
+> **★★ Batch-33 Phase-1 FOLD-INS (`groupthinkpv`/`legisexecgov`/`ampuelections`/`housepoll`/`excelautomate`;
+> debt #85/#87/#97-#98/#101-#103; dependency-ordered into the area each belongs to — NO new keystone, NO
+> re-sequence, top-of-queue UNCHANGED).** A RECONCILE/UNBLOCK batch: most deltas FOLD into existing epics or
+> UNBLOCK ones already on the board. **The within-batch order is binding: remove `pv*0.1` + the #216 remap
+> (cheap-fixes lane, now) → the PV epic (#214/#215/#220 + the trait-EFFECTS layer) → #221 registry → #242
+> amendable articles + #241 cadence (inside K3) → the House model (#219/#191) → DH-78.**
+> **★★ THE PV-REWEIGHT BALANCE EPIC IS NOW UNBLOCKED → READY-AFTER-#216 (debt #85; `pv.ts:70-88` + the 0%-built
+> trait-EFFECTS layer; the batch-30 block above scoped this as GATED — `groupthinkpv` LIFTS the gate).** The
+> long-flagged blocker ("the trait EFFECTS live in an un-ingested thread") is GONE: `groupthinkpv` IS that thread
+> (the EFFECTS/office-PV sibling of `revampPV`'s VALUES — read as ONE spec). **Direction now RULED:** the ability
+> curve = **Command×15 · Legislative/Governing/Admin×10 · Military/Judicial×5** per level (+ expertise +5 each);
+> display = **0–100, 50 = average pol** (so **#220 is RESOLVED to 0–100/50-avg, off Decision-gated (A)**); worst
+> trait = Incompetent −20 (the spreadsheet `lackey −53` was a TYPO → −5, already correct → re-scopes DH-77/QW23).
+> **The build is #214 tiers (M-L re-fit) + #215 curve (M) + #220 (XS+S) + remove `pv*0.1` (now QW24) + BUILD the
+> 0%-BUILT trait-EFFECTS-in-PV layer (M-L** — office-conditional ability buffs, Crisis-*, Magician take-higher,
+> Cosmopolitan/Provincial regional EV, Lackey behavioral lock-in; OVERLAPS the §14.1.y #217 implementation
+> engine). **Order: #216 remap (QW22) FIRST** (un-applyable without it). **★ The MANDATORY same-PR `pv*0.1`
+> re-tune from the batch-30 block is SUPERSEDED — `pv*0.1` is REMOVED outright (QW24), which DECOUPLES the
+> reweight from elections so it can re-fit freely; office-PV is scoped to the active-draft/persuasion AI, NOT the
+> vote.** **★ The ONLY remaining human-call across the whole epic = the office-magnitude ↔ 0–100 display-scale
+> reconciliation** (the #220 scale is otherwise resolved). **Net: this epic MOVES from gated → ready-after-#216;
+> it stays in Phase-1 (down-ballot/PV cluster, E20b/`pv.ts`), it is NOT a new top-of-queue item.** debt #85.
+> **★★ #221 THE 3-PRIMITIVE CONTENT-MODEL REGISTRY → folds into the era-content/K4 area; L, downstream of K4
+> (debt #97/#98 area; `GM⇒App`, the REFEREE half) — now WITH its authoring source.** `legisexecgov` is vcczar's
+> explicit crowdsourcing call for a registry of THREE content primitives: **Legislative Proposals** (federal+state
+> bills incl. constitutional Amendments) / **Presidential Actions** (president-only, inactive pre-Constitution) /
+> **Governor Actions** (state-scoped) + **scripted events**, with era/date gating, importance-curation (joke laws
+> REJECTED so the CPU doesn't propose them), meter/payoff tradeoffs, prereq-chain ladders, and option-set/
+> branching primitives + an era-weighted CPU-selection buff that "kind of exists already." **VERIFIED 0% shipped:**
+> `grep -riE 'presAction|legisProp|govAction|scriptedEvent' src/` = ZERO; the only adjacent thing is the runtime
+> `Legislation` INSTANCE record (`types.ts:1506`) built from tiny inline `templates` arrays
+> (`continentalCongress.ts:237`, `phaseRunners.ts:3437+`) — NO era-keyed authored proposal pool, NO Pres-Action
+> type, NO Gov-Action type. **★ #236 (alternate-government-form, debt #97) and #237 (policy-genre framework, debt
+> #98) BOTH RIDE this** — neither lands before #221. **L (a new typed primitive registry + era-gating + the
+> CPU-selection draw #70-#78 reading from it); folds into the era-content/K4 area, NOT a new keystone; stays
+> where it is in the queue (downstream of K4).** debt #97/#98 area; game-mechanics §15.1.
+> **★ #242 AMENDABLE `ConstitutionalArticles` → folds into the §24 amendments / #221 content area; M, gated on
+> #221 (debt #102; `GM⇒App`).** `ConstitutionalArticles` (`types.ts:1389-1397`) is written ONCE at the CC
+> (`constitutionalConvention.ts:145`) and never mutated; the design wants it AMENDABLE mid-game — a Legis-Prop
+> Amendment rewrites an article on 75%-state ratification — plus NEW fields (suffrage / EC-toggle / houseSizeCap /
+> term-length). **Downstream of #221 (an Amendment IS a Legis-Prop) + #241 (term-length is a shared field); the
+> data shape already exists, so the build is the mutation PATH + new fields + a `DB_VERSION` default.** debt #102;
+> game-mechanics §14.2, §15.4(c).
+> **★ #241 VARIABLE TERM-LENGTH CADENCE → folds into K3's `year%4`-predicate-replacement; M, cost shared with K3
+> (debt #101; `GM⇒App`; ties #92).** The election cadence is hardcoded `year%4`/`%2` (`phases.ts:53-58`) with NO
+> term-length field anywhere; a passed 6-/2-yr-presidency Amendment would break every predicate. vcczar flagged
+> this in his own voice (`ampuelections`). **This is the SECOND independent reason to replace the year-predicates**
+> (the FIRST is #92's era-advance, debt #5/§9.1.5) — so build the predicate-replacement ONCE inside K3's
+> `advanceEra`/`year%4`-replacement work and a per-office term-length field serves BOTH #92 and #241. **M, but the
+> cost is SHARED with K3 — no standalone epic; folds into K3's cadence/predicate work** (and feeds #242's
+> term-length article field). debt #101; game-mechanics §2.3.
+> **★ THE HOUSE MODEL — #219 RESOLVED + #191 FULLY AUTHORED → folds into the census/apportionment + down-ballot
+> clusters (#34/#55/#73/#74); S-M (debt #87/#73; `GM⇒App`, the REFEREE half).** `housepoll`: the community VOTED
+> to **KEEP the focus-Rep abstraction; every-real-435-seat was REJECTED → parked "AMPU 2."** Shipped state: flat
+> `representativeIds: string[]` (`types.ts:1327`) — NO size enum, NO EV-ladder, NO vote-weight, NO census.
+> **#219 (RESOLVED — keep focus-reps):** US Reps = historical EVs−2 (census recompute = first election after a
+> decade) → Focus Reps via an **EV-derived 1-10 ladder** (≤5→1 … ≥46→10, **SUPERSEDES #55's flat `(EV−2)/5`**) →
+> **vote power = `floor(stateUSReps / focusReps)`, remainder → the highest-Legislative rep**. **#191 (FULLY
+> AUTHORED, `housepoll` POST 17-19):** a per-seat STATIC `deviantPartyBias` (overrides ONLY the party term) + the
+> minority-seat guarantee (5+ Focus Reps → a Bias+2 minority seat) + the **25/25/50 new-seat / seat-gain /
+> seat-loss rolls** keyed to **era-gated growth lobbies** (the per-seat deviant-bias engine). Both ride a NEW
+> **per-seat struct** (the vote-power remainder + the deviant bias live on the same shape) + the #34 census + the
+> row-74 gerrymander gov-action that SETS the bias. **S-M; folds into the #34/#55/#73/#74 clusters; not a new
+> keystone. ★ Mark #219 RESOLVED (focus-reps kept; every-435 = AMPU-2 parking) + #191 FULLY AUTHORED.** debt #87/
+> debt #73; game-mechanics §29.5.
+> **★ DH-78 TWO-TRAIT AND-COMBO ELECTION-BONUS FIELD → folds into the trait-election-rule cluster (E20b); XS-S,
+> gated on #216 (debt #103; `GM⇒App`).** `TraitElectionRule` (`types.ts:727`) has only `opponentConditional` — it
+> CANNOT express a same-candidate two-trait AND-combo (Celebrity AND Military Leader → +1, `excelautomate` POST
+> 50). Fix = a `requiresAlsoHas: Trait[]` field + a consume-side check in `applyTraitElectionBonus`
+> (`electionEffects.ts:16`); **GATED on #216** (which adds `Military Leader` to the `Trait` union); **verify it
+> wasn't deliberately cut first.** debt #103; game-mechanics §14.1.3.
+> **★ SHARPENINGS (annotate in place, no new scope):** **#20** (gerrymander/gov-action umbrella, debt #74) —
+> `legisexecgov` confirms Gov Actions today are FLAT / state-agnostic; the Gov-Action primitive should be
+> state-scoped with per-state variation (sharpen #20, no re-size). **DH-77/QW23** — re-scoped (worst trait =
+> Incompetent −20, the `lackey −53` was a typo; the floor-OFFSET fix stands). **#114/DH-36** — `excelautomate`
+> corroborates the charter from the BUILD side (the *">30 min/phase ⇒ automate"* GM-burden budget; the ① automation
+> priority order tallies → trait-lookup → election-scoring → legislative-scoring); no scope change. **NO
+> re-sequence; the top-of-queue is UNCHANGED (QW0 → K0/K2 → K3/K4 + scenarioBoot → E1); the ONE delta to the
+> cheap-fixes lane is QW24 (`pv*0.1`-removal), and the PV epic moves gated → ready-after-#216.** debt #85/#87/
+> #97-#98/#101-#103; technical-guide §9 batch-33 lead + §9.6 + §8 debt #101-#103 + updated #85/#87/#73;
+> game-mechanics §3.4.1, §15.1, §29.5, §2.3, §14.2, §14.1.3, §15.4(c), §18.1, §30.23.
 
 ### Presentation track (parallel — separate workstream)
 
@@ -4928,7 +5209,18 @@ president statlines are **2021-vintage (pre-#214/#215 PV revamp)**, so the autho
 before authoring the ~47 tuples into the `ROWS` source array (debt #100; every president maxes a single ability at
 3 — no 4s/5s — consistent with #204; ties the un-ingested "Groupthinking the Political Value" trait-EFFECTS thread
 that gates #214/#215). Record it so the #240 author doesn't silently pick one; it does NOT block the QW22 remap or
-the engine track. game-mechanics §30.22.C, §3.4.1. **Total author-before-build RULES items: 13** (UNCHANGED — ★ batch-32 nets 0: one DATA-authoring human-call recorded, no new RULES hole; ★ batch-31 nets 0: 3 RECONCILED, no new hole)
+the engine track. game-mechanics §30.22.C, §3.4.1. **★★ BATCH-33 CORPUS-COVERAGE UPDATE — "Groupthinking the
+Political Value" is now INGESTED** (`groupthinkpv`, batch 33): it is **REMOVED from the still-needed un-ingested
+list above** (item (ii) is RESOLVED). With it ingested, the **PV-reweight balance epic (#214/#215/#220 + the
+0%-built trait-EFFECTS-in-PV layer) is UNBLOCKED → READY-AFTER-#216** and **leaves the gated/Author-before-build
+bucket** (it is now buildable Phase-1 work; #220 display-scale is RESOLVED to 0–100/50-avg, off Decision-gated;
+only the office-magnitude ↔ 0–100 scale reconciliation remains a human-call inside the epic). **★ The still-needed
+un-ingested set is now: (1) the 1840-start persistent-Whig ~100-yr run** (still highest-value, no 1840 scenario
+analog ships) **+ (2) matthewyoung123-1772** (the rookie founding run) — ask the human for these before any 1840 /
+Whig-realignment / founding-variant work. **Batch 33 records NO new author-before-build RULES hole** (its deltas
+are buildable engine/data work or fold-ins: the PV epic is now buildable; #221/#242/#241/the House model/DH-78
+fold into existing areas; the only human-call inside the PV epic is the 0–100 scale, recorded above). **Total
+author-before-build RULES items: 13** (UNCHANGED — ★ batch-33 nets 0 and UN-GATES the PV epic out of this bucket: one prior coverage gap RESOLVED, no new RULES hole; ★ batch-32 nets 0: one DATA-authoring human-call recorded, no new RULES hole; ★ batch-31 nets 0: 3 RECONCILED, no new hole)
 (DH-1, #10/#84, §25.9, DH-12, DH-13, DH-14, DH-15, DH-25, DH-33, DH-41, **DH-49**,
 **DH-54**, **#122 pardon mechanics batch-12**); **PLUS the batch-29 Era-of-the-Future proposal-library
 CONTENT epic (#206), tracked here for visibility, folds into E31 / the era-content authoring.** **Decision-gated category — ★★ batch-15
@@ -5335,7 +5627,12 @@ vcczar-authored DESIGN surfaces each carry one explicitly-OPEN canonical-model q
 — #236's transition TRIGGER + win/loss/persistent-branch END-STATE (ties #88/#188), and #237's "no policy"
 DEFAULT (flat "left to the states" vs computed-from-state-makeup)** (both added to (A) below; the rest of
 batch 32 is buildable dataset/schema work or fold-ins). **New User-gated count: 6 (#52 + delegate-class +
-#207 + #220 + #236 + #237).**
+#207 + #220 + #236 + #237).** **★★ Batch 33 nets −1 to (A) User-gated: #220's PV DISPLAY-SCALE pick is
+RESOLVED → 0–100 / 50 = average pol (`groupthinkpv` POST 39, 43)**, so it leaves the bucket (folds into the
+now-unblocked PV epic; the office-magnitude ↔ 0–100 scale reconciliation that remains is a human-call INSIDE
+that epic, not a canonical-model fork). The batch's other deltas are buildable engine/data work or fold-ins
+(the PV epic is un-gated; #221/#242/#241/the House model/DH-78 fold into existing areas). **New User-gated
+count: 5 (#52 + delegate-class + #207 + #236 + #237).**
 
 #### (A) User-gated (the HUMAN must pick first)
 
@@ -5375,7 +5672,12 @@ Distinct from "Roadmap decisions" below, which are tech-lead/planner calls alrea
   (`welcome2future#post 20`; `types.ts:1635`, `phaseRunners.ts:2871`, `phases.ts:49-58` →
   end-state at **E6**; pairs the #102/#68 cumulative scoreboard).
 - **★ #220 — PV DISPLAY-SCALE: raw ("pink") vs 0-100/0-200 vs 100-normalized (NEW batch 30,
-  debt #85).** The presentation/normalization side of the PV overhaul, left UNDECIDED in BOTH
+  debt #85) — ★★ BATCH-33 RESOLVED → 0–100, 50 = average pol (`groupthinkpv` POST 39, 43);
+  this is no longer a pending User-gated pick.** `groupthinkpv` settled the fork in the designer's
+  voice (display = 0–100 with 50 = average pol), so #220 leaves Decision-gated (A) and folds into
+  the now-unblocked PV-reweight epic (READY-AFTER-#216); the ONLY remaining human-call inside that
+  epic is the office-magnitude ↔ 0–100 scale reconciliation, not the display-scale family choice.
+  (Historical fork, kept for the record:) The presentation/normalization side of the PV overhaul, left UNDECIDED in BOTH
   source threads. `pv.ts` exposes the **raw** `computePV` number (`pvCache`); there is no
   display-scaling layer. `revampPV` debated raw vs 0-100 vs 0-200 vs %-of-Napoleon vs %-of-best
   at length and **leaned raw ("pink") for HUMAN display** (scaled views bunch pols too close —
@@ -5717,7 +6019,8 @@ row (often as an XS-S addition to an existing epic).
 
 ## Sequencing notes
 
-Why the order is what it is — the tech-lead's binding calls (§9 batch-32 lead +
+Why the order is what it is — the tech-lead's binding calls (§9 batch-33 lead +
+§9.6 batch-33 + §8 debt #101-#103 + updated #85/#87/#73 + §9 batch-32 lead +
 §9.6 batch-32 + §8 debt #97-#100 + §9 batch-31 lead +
 §9.6 batch-31 + §8 debt #91-#96 + §9 batch-30 lead +
 §9.6 batch-30 + §8 debt #85-#90 + §9 batch-29 lead +
@@ -5887,6 +6190,43 @@ batch-15, then batch-14, then batch-13, then batch-12, then batch-11, then batch
 batch-9, then batch-8, then batch-7, then the carried batch-5 leads.
 **The order itself is UNCHANGED — the TOP OF THE QUEUE is QW0 → K0/K2 → K3/K4 +
 `scenarioBoot`/`BootSheet` → `scenario1788` (E1).**
+
+**★★★★ Batch-33 lead — FIVE DESIGN/DISCUSSION/BUILD threads, NO playtest (the RECONCILE/UNBLOCK batch that
+DELIVERED the long-flagged gating threads: `groupthinkpv` [the trait-EFFECTS / office-PV / display-scale GATE —
+the sibling of `revampPV`; UNBLOCKS #214/#215/#220, re-scopes DH-77] + `legisexecgov` [the #221 3-PRIMITIVE
+content-authoring source] + `ampuelections` [the elections content doc — ORIGIN of #241 variable term-length +
+#242 amendable articles] + `housepoll` [the focus-reps-vs-every-seat poll — RESOLVES #219, AUTHORS #191] +
+`excelautomate` [the spreadsheet GM-automation progress log — charter corroboration + ORIGIN of DH-78]); 3 NEW
+gap rows #241/#242 + DH-78 (max gap #242, max bug DH-78) + a RECONCILE-HEAVY harvest. The two headlines are a
+TINY high-leverage REMOVAL and an EPIC becoming buildable; it does NOT move the top-of-queue. Reflect it by:
+(1) ★★ ADDING QW24 — REMOVE `pv*0.1` FROM ELECTIONS (debt #85; XS quick-win; `GM⇒App`): the designer + room
+RULED PV must NOT feed elections (double-count, `groupthinkpv` POST 36-38), so DELETE `+ pv * 0.1` at
+`phaseRunners.ts:3709` — this SUPERSEDES the batch-30/31 "re-tune `pv*0.1`" note; it pairs with QW19 at the SAME
+line, and the 2.9.1 primary scorer's raw `pvCache` (`:3733`) is the endorsed AI-utility use and is KEPT; (2) ★★
+MOVING THE PV-REWEIGHT EPIC gated → READY-AFTER-#216 (debt #85): `groupthinkpv` IS the previously-un-ingested
+trait-EFFECTS thread → the gate is LIFTED; the build = #214 tiers (M-L) + #215 curve (M; Command×15 ·
+Legis/Gov/Admin×10 · Mil/Jud×5 per level + expertise +5) + #220 (RESOLVED to 0–100/50-avg) + remove `pv*0.1` +
+the 0%-BUILT trait-EFFECTS-in-PV layer (M-L); #216 remap (QW22) FIRST; the only open human-call = office-magnitude
+↔ 0–100 scale; (3) ★★ ADDING #221 — THE 3-PRIMITIVE CONTENT-MODEL REGISTRY (L, downstream of K4; `GM⇒App`):
+`legisexecgov` delivers the authoring source (Legis-Prop / Pres-Action / Gov-Action + scripted events, era-gated,
+importance-curated); VERIFIED 0% shipped; #236/#237 depend on it; stays downstream of K4; (4) ★ ADDING #242
+AMENDABLE `ConstitutionalArticles` (M, gated #221) + #241 VARIABLE TERM-LENGTH (M, folds into K3's `year%4`
+predicate-replacement, ties #92, cost shared with K3) + DH-78 two-trait AND-combo field (XS-S, gated #216);
+(5) ★ THE HOUSE MODEL — #219 RESOLVED (keep focus-reps, every-435 → AMPU-2 parking; EV-derived 1-10 ladder +
+vote-power-with-remainder) + #191 FULLY AUTHORED (per-seat deviant-bias engine), S-M, folds into #34/#55/#73/#74;
+(6) ★ SHARPENING #20 (Gov Actions FLAT/state-agnostic) + reflecting the DH-77 re-scope (worst trait = Incompetent
+−20, not the `lackey −53` typo); (7) ★★ UPDATING THE GM-REPLACEMENT LENS (a VIEW, no re-sequence) — ① referee
+gains PV-as-AI-utility (PV is the ② CPU's draft/persuasion metric, NOT an election input — the `pv*0.1` removal),
+the #221 content-primitive registry, and the House model; the `excelautomate` ">30 min/phase ⇒ automate" charter
+budget is the quantified ① mandate; (8) ★ CORPUS-COVERAGE — "Groupthinking the Political Value" is now INGESTED
+(removed from the still-needed list; remaining = 1840-start + matthewyoung123-1772). NO new keystone, NO
+re-sequence, NO new author-before-build RULES item (the PV epic UN-GATES OUT of that bucket), Decision-gated
+RECOUNT −1 (#220 RESOLVED → 0–100/50-avg). **The order itself is UNCHANGED — the TOP OF THE QUEUE is QW0 → K0/K2
+→ K3/K4 + `scenarioBoot`/`BootSheet` → `scenario1788` (E1); the ONE delta to the cheap-fixes lane is QW24
+(`pv*0.1`-removal), and the PV epic moves gated → ready-after-#216. Within-batch order: remove `pv*0.1` + #216
+remap (cheap-fixes, now) → the PV epic → #221 → #242 + #241 (inside K3) → the House model → DH-78.**
+game-mechanics §3.4.1, §15.1, §15.4(c), §29.5, §2.3, §14.2, §14.1.3, §18.1, §30.23 + technical-guide §9 batch-33
+lead + §9.6 + §8 debt #101-#103 + updated #85/#87/#73. debt #85/#87/#97-#98/#101-#103.**
 
 **★★★★ Batch-32 lead — FIVE MIXED DATA/DESIGN/CHANGELOG threads, NO playtest (1 founding solo + 4
 data/design/changelog: `tomorrowlist` [vcczar's to-do + the alternate-government-form ORIGIN] + `businesslabor`
