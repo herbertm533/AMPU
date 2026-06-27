@@ -633,7 +633,7 @@ places that aren't territories, except if it's ME (part of MA) or WV (part of VA
 | **Can-Party-Flip cross-party draft** | **REMOVED** — politicians always enter at their **historically accurate party** at age 25; party-flip happens **later** via 2.1.6 conversion only | `tedchange#POST 8, 10, 48` |
 | **Per-draft random-trait + random-alt-state grant** | **3 random traits + 3 random alt-states per draft** | `tedchange#POST 50` |
 | **`Overeager` + `Late Bloomer` traits** | **REMOVED** from the trait library (universal agreement; "block player moves, nobody uses") | `tedchange#POST 14, 20, 23` |
-| **★ #153 — 0-Command rookies + DOUBLED Command-gain (now OFFICIAL; ★ 3-SOURCE CANONICAL)** | **Nobody is born with Command; ALL rookies enter at 0 Command, and EVERY in-game Command-gain % is DOUBLED** to compensate — so Presidents emerge from in-game action, not real-world reputation. ebrk: *"both have been adapted into the official rules now."* (Reinforces the no-Command-on-random-skill rule above + #143 use-it-or-lose-it decay; aligns with the [§28.11](#2811-modern-draft-lobby-cards--dataset-the-era-locked-content-rotation) "earn it forward" framing — Ted nuked the 2000 cast's Command to first-term levels at boot.) | `terror2000#POST 91-93` · `tedchange#POST 5-8,47` · `ted1772#POST 1, 25, 752, 1671` |
+| **★ #153 — 0-Command rookies + DOUBLED Command-gain (now OFFICIAL; ★ 3-SOURCE CANONICAL)** | **Nobody is born with Command; ALL rookies enter at 0 Command, and EVERY in-game Command-gain % is DOUBLED** to compensate — so Presidents emerge from in-game action, not real-world reputation. ebrk: *"both have been adapted into the official rules now."* (Reinforces the no-Command-on-random-skill rule above + #143 use-it-or-lose-it decay; aligns with the [§28.11](#2811-modern-draft-lobby-cards--dataset-the-era-locked-content-rotation) "earn it forward" framing — Ted nuked the 2000 cast's Command to first-term levels at boot.) **★ `grass1772#POST 538-540` confirms the dataset-default "almost no one starts with command" polSet IS the master-doc baseline + a 2nd emergent President (90-yr CPU botanist Bartram, #153 now 4-source).** | `terror2000#POST 91-93` · `tedchange#POST 5-8,47` · `ted1772#POST 1, 25, 752, 1671` · `grass1772#POST 202-205, 538-540` |
 | **★ #153 — no re-roll on already-held expertise (now OFFICIAL; ★ 3-SOURCE CANONICAL; ★ EARLIEST SOURCE = `fixes2022`)** | When rolling to GRANT an expertise (committee assignment / career-track exit), **rolling an already-held expertise = NO new expertise (do NOT re-roll)** — a *wasted* roll. Effect: pols **master a few expertises** instead of becoming renaissance men. | **★ `fixes2022#POST 581-583, 645-650` (CANONICAL/EARLIEST, Mar 2023)** · `terror2000#POST 91-93` · `ted1772#POST 378, 109, 562, 739, 1322` |
 
 > **★ #153 — TRIPLE-CONFIRMED + the emergent-President demo (`ted1772`, batch 17 = the 3rd independent
@@ -662,8 +662,10 @@ places that aren't territories, except if it's ME (part of MA) or WV (part of VA
 > not currently waste a roll on a held tag). Reconcile with [§4.1.y `tedchange#POST 7,47`](#41y--ted-ruled-draft-rules-designer-authoritative-tedchange)
 > (#136: random-skill draws no Command) — **same direction**: Command is never granted at draft and
 > is hard to come by, so it must be **earned forward** and **doubled** to make Presidents reachable.
-> **Now 3-source confirmed** (terror2000 / tedchange / ted1772 + a live emergent-President audit) —
-> implement with confidence.
+> **Now 4-source confirmed** (terror2000 / tedchange / ted1772 + `grass1772`, with TWO independent live
+> emergent-President audits — St. Clair and the 90-yr-old CPU botanist Bartram) — implement with
+> confidence. `grass1772` also nails the **dataset-default polSet** ("almost no one starts with command")
+> as the master-doc baseline, `grass1772#POST 538-540`.
 
 > **★ PROVENANCE — `fixes2022` is the CANONICAL/EARLIEST source for the no-reroll-on-held-expertise
 > rule (gap #153).** vcczar **adopted Ted's house rule LIVE in Fall 2022 → Mar 2023**: *"when you
@@ -760,7 +762,10 @@ reassignment** when the corrected person was the wrong party.
 **(b) Cosmopolitan ⊕ Provincial both held** (`ted1772#POST 49, 276, 914`): pols repeatedly held **BOTH**
 `Cosmopolitan` AND `Provincial`, which are **mutually exclusive**; Ted removed Provincial each time (*"you
 can only have one. I removed his provincial,"* POST 49/914), and the **shipped election tab mis-renders it**
-(POST 276 *"the election tab is saying people with Cosmopolitan have the Provincial trait"*).
+(POST 276 *"the election tab is saying people with Cosmopolitan have the Provincial trait"*). **★
+`grass1772` (batch 24) confirms the exclusion as a transfer rule:** *"being Cosmopolitan prevents
+transferring Provincial"* (`grass1772#POST 33`) — i.e. Cosmopolitan blocks acquiring Provincial in the
+first place, not just a cleanup-after-the-fact.
 
 **Build TODO:** (1) **audit the founding-era (1768-1776) draft classes for same-name-wrong-century
 collisions** and **validate at dataset-build time** (same disambiguation class as the `smallbugs`/
@@ -3803,6 +3808,39 @@ EV penalty, floor 3); (f) **threshold-amendable** amendment plank per #100; (g) 
 SCOTUS-count**; (h) the CC having no legislative power + the Continental Congress persisting until the
 1st President is sworn in. Cite `ted1772#POST 1393-1402, 1403, 1421, 1437, 1458-1561, 1569, 1571-1589, 1581`.)*
 
+> **★ #159/#133/#100 CORROBORATED from two MORE 1772 angles (`grass1772` + `rookie1772`, batch 24 — now
+> a 5th/6th source).**
+> - **The convention threshold + per-article loop confirmed** — `grass1772` ran **per-article propose →
+>   debate-sway → vote at 7/13 then 9/13** (the threshold was corrected mid-vote 7→9, `grass1772#POST
+>   185-186`), George Wythe named **"Father of the Constitution" via Egghead** (POST 170), and a President
+>   (Sam Adams, 4 Legislative) **converts 1 random same-party delegate per vote round + Manipulative sways
+>   4** (POST 183-187). The **Articles of Confederation flips the CC rules → 9/13 (66%+1) state passage,
+>   no consecutive terms, Gov picks delegates** (`grass1772#POST 136`; `rookie1772#POST 31` confirms 9/13);
+>   the CC composition uses a **4/3/2 delegate-size table** (PA/MA/VA/MD big; GA/RI/DE/NH small,
+>   `grass1772#POST 44`).
+> - **★ Multiplayer collusion forces an AHISTORICAL Constitution** — the marquee 2-player dynamic:
+>   `grass1772`'s two humans **colluded** (Red backed Blue's Article-I option) and Sam Adams's
+>   Manipulative-sway pushed it over → a **UNICAMERAL "Super House of Representatives" (US-Rep-only, no
+>   Senate)** (`grass1772#POST 186-187`), plus foreign-born-can-run-for-President and slaves-count-
+>   partially-for-EV planks. `rookie1772` produced a different ahistorical Constitution (Senate
+>   **appointed by Governors** + **President-for-life** with VP = runner-up; `rookie1772` ch12-15). **Two
+>   humans can coordinate to override the CPU bloc and force ahistorical constitutional outcomes** — a
+>   multiplayer-only dynamic the SOLO app's CPU must approximate (a single human can't collude with a
+>   CPU). Confirms #100 (convention pipeline + ahistorical Constitution + **mutable threshold**).
+> - **★ Phase-order integration is hard to hand-run** — `rookie1772` struggled with where the Convention
+>   slots into the loop: *"I believe we are supposed to immediately go into the Convention (before the
+>   Legislative phase)… it will be hard to track who is and is not a delegate"* and had to **REMOVE all
+>   current Reps' titles because Governors appoint new delegates** (`rookie1772#POST 528, 578`). Build
+>   TODO: encode the Convention's explicit phase-order slot.
+> - **★ Constitution/Presidency must be gated to the 1788 era boundary regardless of an early war-win
+>   (`grass1772`).** Because the war was won early, `grass1772` fired the Convention and installed a
+>   President in **1780** — but V/Ted ruled the Constitution is **supposed to take effect only at 1788**
+>   (*"just pretend it was an agreed-upon transition date,"* `grass1772#POST 220-221`); the rules say no
+>   President before 1788. Build TODO: gate Constitution/Presidency activation to the federalism boundary
+>   regardless of war-win timing (pairs with #92 era-band gating). Also: **no seat/state biases existed
+>   for 1780-1788** in the old sheet (a master sheet has 1774-1788 biases, `grass1772#POST 222-243`) —
+>   corroborates the missing-per-era-bias-table gap (#2/#92).
+
 ### 17.4 Revolutionary War (`revolutionaryWar.ts`)
 
 State `RevolutionaryWar` (`types.ts:1371`). Defaults (`ensureWar`, `:12`):
@@ -3828,6 +3866,40 @@ French alliance), senior general/admiral + benches, `frenchAlliance = false`.
   general military, and removes the loss condition. `applyTreatyOfParis` (`:279`) ends the
   war, disbands commanders, sets Britain diplomacy `−3`.
 
+> **★★ #176 (NEW, `grass1772` + `rookie1772`, batch 24) — Military Preparedness is HARD-CAPPED at ~2
+> for the entire Era of Independence, so every forced-war MilPrep roll is wasted (a permanent founding
+> military CRISIS). DESIGNED-content bug; flagged to V.** **Independently confirmed by both batch-24
+> 1772 runs.** MilPrep **boots at 2** (the canonical 1772 start, `rookie1772#POST 26`) and **cannot
+> rise above it until the Age of Federalism** because the meter's tier prerequisites are **mis-ordered**:
+> MilPrep tiers 3-4 require the **Militia Act** — a *federalism-era* bill (~1792 IRL) that **cannot be
+> proposed during Independence** — while the **auto-forced 1774 war bills (Continental Army /
+> Continental Navy)** are wired to the **higher tiers (5-6)**. So the meter is fenced between a floor
+> bill that can't fire yet and forced bills wired above the gap → **every MilPrep roll from the forced
+> opening war legislation is a dead roll**, and MilPrep sits at 2 (a recurring **−1 drag** + the
+> "Moderately Unprepared" band) the whole founding era. Cal: *"until the Constitution exists, AFTER the
+> war is over, military preparedness can never increase, rendering all war legislation completely
+> pointless… It's a glaring issue"* (`grass1772#POST 88-90`; Ted confirms the cap exists, POST 86/88).
+> Ted to the rookie (2nd source): *"the prerequisites for each meter level. For example, military prep
+> and revenue/budget can't get that high until bills are passed that can't actually be proposed yet"*
+> (`rookie1772#POST 32-33`); the rookie didn't know and raised MilPrep via the forced bills anyway —
+> *"ugh… so much for the 'Continental Army' of minutemen!"*. (Note Rev/Budget shares the same
+> can't-rise-until-federalism prerequisite trap.)
+>
+> - **Cal's live house-rule fix (flagged for V, used all run):** reverse the MilPrep 1-4 prerequisite
+>   ordering so **Continental Army → MilPrep 3** and **Continental Army + Navy → MilPrep 4** (treat
+>   Continental Army/Navy as equivalent to the later Standing Army/Navy), capping the founding era at
+>   MilPrep ~4-5 so the forced war bills actually move the meter (`grass1772#POST 88-90, 121, 252`).
+> - **★ Build TODO / OPEN Q:** audit the founding-era MilPrep ladder prerequisites — **either**
+>   re-order them so the auto-forced Continental Army/Navy bills CAN move MilPrep (Cal's fix), **or**
+>   confirm the permanent founding military crisis is intended. As-is the forced opening war legislation
+>   is mechanically inert. The shipped engine (`revolutionaryWar.ts`, this section) does not yet model
+>   the founding MilPrep ladder at all — MilPrep enters the battle formula via `milPrepMod`
+>   ([§21.1](#211-generic-cross-era-war-system)), so a permanently-floored MilPrep also **suppresses the
+>   battle-card odds** all era (compounding the genuine-losability finding below). Pairs with #56/#155
+>   (war engine) + #67 meter caps + #115 (the boot must set MilPrep = 2). Both 1772 runs hit it →
+>   surface meter prerequisites in-UI (a new player can't see them). `grass1772#POST 86-90, 121`;
+>   `rookie1772#POST 26, 32-33`.
+>
 > **★ Forum trace + the three winnability floors (`ted1772`, batch 17).** `ted1772` is the **cleanest
 > fresh-start RevWar trace in the KB**: from a fresh 1772 boot the war was **genuinely losable** — War
 > Score sat at **−2/−1** with **~20% loss-rolls per phase**, the **Navy won ZERO battles**, and the
@@ -3926,6 +3998,17 @@ and flags: `coreSpine` (inevitable openers), `realEvent` (false = counterfactual
   roll, and was elected 1st President unanimously (79 EV); VP Thomas Paine** (also 0-Command-via-events,
   also foreign-born). The definitive proof the command-bootstrap (#153/#136) produces an emergent
   President — see [§4.1.y #153](#41y--ted-ruled-draft-rules-designer-authoritative-tedchange). `ted1772#POST 1671-1677, 1719`.
+  **★ `grass1772` (batch 24) is the 2nd emergent-President instance (#153 now 4-source).** The 1st
+  President there was **John Bartram — a 90-year-old CPU botanist** who entered with **~1 Command and no
+  military record**, elected 1780 purely on his **Egghead/Celebrity bonus + Pennsylvania home-state +
+  luck** — *"everyone laughed when the 90 year old botanist was chosen… he's having the greatest success
+  by far of any of the other playtests' first presidents"* (`grass1772#POST 202-205, 285`). The run was
+  on the **dataset-default "almost no one starts with Command" polSet** — confirmed at relaunch as the
+  master-doc baseline: *"we're using the polSet where almost no one starts with command… very few pols
+  start with command anymore"* (`grass1772#POST 538-540`). (A *partial*-Command boot — Washington/
+  Jefferson kept some — but the master polSet default is the 0-Command set.) Two independent emergent
+  Presidents (St. Clair, Bartram) from near-0-Command boots = the strongest validation in the KB that
+  the command-bootstrap produces gameplay-driven, not reputation-driven, Presidents.
 - **Independence won by COMBAT ALONE — the explicit France event is not required.** The Revolutionary
   War was won after ~4 turns (1774–1782) **by combat rolls alone; the French-alliance event NEVER
   fired** (players: "Did i miss it or did we get the French alliance?", "shouldn't there be a flag…
@@ -3941,6 +4024,29 @@ and flags: `coreSpine` (inevitable openers), `realEvent` (false = counterfactual
   in `ted1772` the Carlisle peace vote got a **5-4 majority FOR peace (55.5%) and still failed** only
   because of the 2/3 threshold. Full coverage at [§13.2 #158](#132-272-military-action--runphase_2_7_2_military-phaserunnersts3593)
   + [§21.1 the three floors](#211-generic-cross-era-war-system).
+- **★ THIRD distinct RevWar win-path (`grass1772`, batch 24).** Independence won **1780 via the scripted
+  *"King George III Grants America Autonomy"* EVENT** — NOT a battle threshold and NOT the French alliance
+  (this run **never got France**; got Spain instead, `grass1772#POST 163, 254`). The KB now has **three
+  roads to independence — battle-threshold (`new1772`/`afc6cbd7` family), French-alliance-unloseable
+  (`ted1772`), and a scripted-autonomy event (`grass1772`)**. The build's war engine **must support the
+  scripted-event win path** alongside the battle-score `dominion_autonomy` terminal already in the 1772
+  era-graph ([§17.5](#175-era-event-graph-1772-eragraphts-data-eraevents1772ts)). Side-finding: the
+  **Treaty-of-Paris auto-processing requires UK/Spain/France Ambassadors that didn't exist**, so the CC
+  President processed it per-office (corroborates the founding offices-by-law / ambassador-prereq gap
+  #101). The NW Indian War fired post-war and was **fought and WON** here (vs declined in CPU-dominated
+  runs — corroborates the war-decision variability #158). `grass1772#POST 163, 254, 285`.
+- **★ Doubled-officer Planning-term cap OVERFLOW edge case (NEW, `rookie1772`, batch 24).** The
+  founding war-formula rule *"when no Secretary of War exists, double the highest officer's Mil rating
+  for the Planning term"* (the shipped `general.military` doubling stand-in, [§17.4](#174-revolutionary-war)
+  / [§21.1](#211-generic-cross-era-war-system)) can yield a **Planning value of 6 — above the 0-5 ability
+  max** (a Mil-3 officer ×2 = 6). The rookie applied it and got 6; Ted: *"a 6 is higher than the max an
+  ability can be (5)… I need to take another look at that rule"* (`rookie1772#POST 35`). Build TODO:
+  **clamp the doubled-officer Planning term to the 0-5 ability cap** (or rule the doubling exempt — open
+  Q). The same post flagged an **undocumented "+10% Military Leader" battle bonus** Ted "didn't
+  remember" — audit the founding war-formula trait bonuses. `rookie1772#POST 35`. The expanded
+  **"all-hands-on-deck" military rule** (all pols with a military skill join land battles unless on a
+  non-military career track or holding elected office) was the rookie run's stated test target and V
+  changed/expanded the war rules during it (`rookie1772#POST 1444`).
 
 *(designed, not built — model the **Inaugural+Rookie two-draft** founding open; the Convention's
 **five-required-items + trait-gated add-ons + 9-states-per-item + ≥9-Gov ratification + Convention-
@@ -4356,12 +4462,34 @@ eras — labels bumped inline):*
   (§21.3), the **presidential-vote modifier stack + era-stamped issue list** (§21.9),
   **stat-collapse → forced resignation** (§24.1), and the **lone-ideology minor-candidate
   convention exploit** (§25.4).
-- **★ META HOLE — DH-36 (the build must own all bookkeeping).** `afc6cbd7`, a 10-human
-  multiplayer 1772 campaign, **died at ~12 turns to GM burnout** — the GM resigned because the
-  manual Google-Sheets upkeep (career-track flags, formula breakage, missed gains, retro-fixes)
-  was unsustainable (POST 3607). No successor stepped up; the game stopped **before President-elect
-  Washington took any in-office action.** This is the **strongest cross-cutting case yet** that the
-  shipped build should **own all per-phase upkeep/bookkeeping** so a campaign survives to its end.
+- **★ META HOLE — DH-36 (the build must own all bookkeeping). NOW 4 KB THREADS killed by upkeep
+  burnout.** `afc6cbd7`, a 10-human multiplayer 1772 campaign, **died at ~12 turns to GM burnout** —
+  the GM resigned because the manual Google-Sheets upkeep (career-track flags, formula breakage,
+  missed gains, retro-fixes) was unsustainable (POST 3607). No successor stepped up; the game stopped
+  **before President-elect Washington took any in-office action.** This is the **strongest cross-cutting
+  case yet** that the shipped build should **own all per-phase upkeep/bookkeeping** so a campaign
+  survives to its end.
+  - **★ The burnout cluster is now FOUR threads, all upkeep-driven** (`afc6cbd7` + `modern`/`pop`-era
+    GA-burnout + the two batch-24 1772 runs). **`grass1772` pins the cause to the MANUAL CPU SIMULATION
+    specifically:** a 2-human game **died because 2 humans couldn't hand-run the other 8 CPU factions** —
+    *"Rezi and I simply didn't have the time to run the two player factions AND all 8 CPU factions on top
+    of other obligations"* (`grass1772#POST 328`); their fix was to **ADD MORE HUMANS to offload the CPU
+    work** (relaunched at 8 humans + 2 CPU, `POST 348`), then it petered out at setup anyway. The CPU
+    burden was so heavy GMs cut corners: *"when running CPU teams I don't bother figuring out what they're
+    trying to do until I've already determined if it succeeds or not… If they fail, I skip right past"*
+    (`grass1772#POST 196-197`), and the CPU rules were so incomplete the GM **authored his own** all run
+    (officer-replacement, cabinet-retention, ailment-resign — the exact #70-#79 handler holes).
+    **`rookie1772` is the 2nd 1772 instance of the SAME pattern:** solo-running 10 factions was *"a part
+    time job"* (`POST 36`) → the rookie added 4-5 helpers each taking 2 factions and became dice-roller
+    (`POST 42-48`), and the run still **died of GM time-burnout** (`POST 1444`).
+- **★ #114 STRENGTHENED — the manual CPU-faction simulation is the LOAD-BEARING cost the app's CPU-AI
+  must own.** The shipped build's shape (1 human runs 1 faction, 9 CPU) is exactly the inverse of what
+  killed both batch-24 1772 runs. **Both runs independently demonstrate that the per-faction manual
+  simulation — not the rules content — is what collapses a campaign**, and both reached for the same
+  (un-scalable) fix: add humans. This is the **single cleanest argument in the KB that the app's CPU-AI
+  (§25 / #70-#79) must own the per-faction simulation** so a solo player runs ONE faction, not ten —
+  validating solo-first-with-CPU-AI as load-bearing, not optional. `grass1772#POST 1, 196-197, 328, 348`;
+  `rookie1772#POST 36, 42-48, 1444`. (See [§25](#25-cpu-ai-specifications-designed-not-built-unless-flagged) for the heuristics the CPU must encode.)
 - **★ NEGATIVE RESULT — no thread reaches a "future" era.** Despite its title, `ad0f2875` ("A 1772
   to future") **stalls at 1874 (mid-Gilded), reaching no post-Gilded content** and never completing
   (it stops mid-export, no game-over). Across **all** ingested threads, **"Era of the Future"
@@ -4999,6 +5127,24 @@ econ, budget, party pref) and **grants/denies territory** (Canada/Quebec on a Wa
 > override (or the points equivalent) must still fire. A war engine tuned hard enough that a 1772 game
 > with all three floors still loses before 1788 is **over-tuned**. This is the cross-run reconciliation
 > the tech-lead must respect alongside the four `hd1` reconciliations above.
+>
+> **★ Batch-24 founding-RevWar corroborations (`grass1772` + `rookie1772`) — two MORE 1772 traces
+> (now 4+ fresh-start RevWar sources), plus two build constraints:**
+> - **The MilPrep `milPrepMod` term is FLOORED all founding era (#176).** Both batch-24 runs confirm
+>   MilPrep is **hard-capped at ~2 for the whole Era of Independence** (the auto-forced war bills are
+>   wired to federalism-only Militia-Act tiers — [§17.4 #176](#174-revolutionary-war)). So the
+>   `milPrepMod` contribution to the additive battle-card odds is **stuck low all founding war**, on top
+>   of the three floors above. **Any war-balance hardening must treat a permanently-floored founding
+>   MilPrep as a given** (or the #176 ladder must be fixed so the forced bills can lift it). `grass1772
+>   #POST 86-90`; `rookie1772#POST 26, 32`.
+> - **The "double the highest officer's Mil" Planning term can EXCEED the 0-5 cap (`rookie1772`).** With
+>   no Sec-of-War the founding formula doubles the top officer's Mil for Planning; a Mil-3 officer →
+>   **Planning 6 > the 5 ability max** (`rookie1772#POST 35`, Ted to re-check). **Clamp the doubled
+>   Planning term to 0-5** when generalizing the `War` model. (Also: an undocumented "+10% Military
+>   Leader" battle bonus to audit.)
+> - **A 3rd RevWar WIN-PATH = a scripted "King George grants autonomy" EVENT** (`grass1772#POST 163`,
+>   no France, won via battles + the event) — the `War` model must allow a **scripted-event terminal
+>   win**, not only a battle/War-Score threshold (full note at [§17.7](#177-forum-design-layer--the-multiplayer-1772-confirmation-designed-not-built)).
 
 *(designed, not built — generalize to a `War` model usable in any era: the additive
 success-chance formula, the warscore/momentum/×2 resolution, and the confirmation-cascade
@@ -7179,6 +7325,33 @@ Independent-Treasury** coupling; the Commerce/Labor split; and the same-party+Ki
 > `planet` (`types.ts:1399`) — **no per-power relations, no per-ideology enthusiasm tracks, no
 > Israel placeholder.** Strongly extends gap #50.
 
+> **★ Lingering is too complex to hand-run + is era-GATED OFF in Independence (`rookie1772` + `grass1772`,
+> batch 24 — corroborates #67/#134 + #92/#68).**
+> - **Headline hand-run difficulty:** when Lingering FIRST runs — only *after* the 1788 era transition —
+>   a player who had GM'd ~12 turns said *"which I have never run before… it's a little more complicated
+>   than I expected"* and needed a teammate's assist to finish (`rookie1772#POST 1370-1372`). The full
+>   bank shown (Rev/Budget, EconStab [capped at "Sound" until the US Dollar], MilPrep, DomStab [at
+>   "1-Rebellion Brewing… we risk end-of-game"], Honest-Gov [Integrity-vs-Controversial check],
+>   UK/France/Spain relations, each tagged "Lingering helps/hurts" + per-officer admin modifications)
+>   matches the deterministic multi-step resolution above — **a human couldn't hand-run it after a dozen
+>   turns, so the build must compute it deterministically** (the prime #67/#134 + DH-69 corroboration).
+> - **★ Era-gated OFF in the Era of Independence, ON at the 1788 boundary (canonical confirmation).**
+>   *"There is no Lingering Phase in the Era of Independence, so it's onto Gov Actions"* (`rookie1772
+>   #POST 199, 566`); and at the era transition: *"Many things that didn't happen in the Era of
+>   Independence (like lingering phase, retirements, Supreme Court, etc) will now begin to happen with
+>   this new era. Also, the meters will begin to be impacted more as political parties began to
+>   coalesce"* (`rookie1772#POST 1198`). So **Lingering, random retirements, and SCOTUS are all OFF
+>   during Independence and turn ON at the federalism boundary** — corroborates the era-as-content-band
+>   model (#92) + the era-boundary boot pipeline that activates new subsystems (#2/#68) + SCOTUS-created-
+>   by-law-in-federalism (#101), now from a 6th 1772 angle. (`grass1772` independently shows the
+>   enthusiasm-application step of Lingering is so under-specified even Ted is unsure of V's intent —
+>   Ted: *"the lingering part is the part I'm least confident about,"* `grass1772#POST 324-327`; folded
+>   into the §29.1 DH-69 strengthening.)
+> - **Era-boundary point-banking (corroborates #68):** at the Independence→Federalism boundary the
+>   rookie run **declared an era winner (Red, by <2000 points), reset ALL points to 0, and set the next
+>   draft order = last-era points (lowest score picks first)** (`rookie1772#POST 1196-1198`) — the
+>   per-era point-banking + draft-order-by-last-era-points, from a 6th 1772 angle.
+
 *(designed, not built — extend the §22.1 bank with **era-gated foreign-relation tracks** (added as
 nations become relevant; an **inactive-placeholder** state for not-yet-active powers like Israel);
 keep Planet's Health era-activatable (Conservation Era-Evo); and the policy-gated caps (QoL≤7
@@ -7247,6 +7420,26 @@ now the canonical, Ted-RULED value** (`tedchange#POST 50`, RULED) — the earlie
 > > 43-47). **Untested** (era predates them, as in `oopscpu`): the convention/SCOTUS CPU AI (#71/#52 —
 > > game ended in 1780, no presidency formed). Append `cpufull` to the #70–#79 corroboration set.
 > > (`cpufull#POST 8-57`.)
+>
+> > **★ `grass1772` (batch 24) — the GM had to AUTHOR his own CPU rules all run (a 5th 1772 angle on the
+> > #70-#79 handler holes).** Because the documented CPU rules were so incomplete, the GM hand-wrote his
+> > own for the exact handlers this section specifies: **military-officer replacement** (a highest-Mil /
+> > favor-own-party / 50-25-25 same-party-tiebreak ladder + a no-major-war 5-way-20% rule, POST 132);
+> > **cabinet retention** ("retain up to 5 unless a same-party higher-Admin option exists; don't replace
+> > a presidential-promise appointee; Passive Pres 50% retains anyway; Micromanager 25% replaces anyway,"
+> > POST 273); **CPU-president resigns on the ailment event** unless ≥3 Command OR Leadership/Charisma/
+> > Iron Fist (POST 120); **CPU faction-leader selection when all are Obscure** = highest-PV-same-
+> > ideology-not-on-track (POST 37, with Ted noting CPU FL-selection rules DO exist, POST 47-48). These
+> > are the precise #70-#79 holes — surfaced from a 5th 1772 angle. Also corroborated: **CPU leadership
+> > IRV** (multi-ballot Speaker elections with faction-bloc + endorsement defections, POST 235, 269 →
+> > #70); the **CPU shortcut** *"when running CPU teams I don't bother figuring out what they're trying
+> > to do until I've already determined if it succeeds or not"* (POST 196-197 — a tell that the manual
+> > sim is so heavy GMs cut corners, exactly the work the app removes). `rookie1772` is **human-driven
+> > after ch1** (a weak CPU source) but confirms the same rule *conventions* the CPU must encode (party-
+> > conversion immunities, Party-Leader-only cross-party conversion, elected-Pres auto-leads faction,
+> > FL eligibility = matching ideology + Interest/Lobby card, `rookie1772#POST 811-813, 1198`). Append
+> > `grass1772` (+ `rookie1772` for conventions) to the #70-#79 corroboration set. (`grass1772#POST 37,
+> > 47-48, 120, 132, 196-197, 235, 269, 273`.)
 
 ### 25.1 Candidate selection (open seats, primaries, conventions) — the 75/25 rule
 
@@ -8270,6 +8463,19 @@ covers 1788, 1856, 2012, and any future era boot, with the **"no leaders / no ca
 > Same shape for **DH-27 trait-conflict adjudication** (`pop` POST 1139: Quinn had both
 > Integrity AND Controversial simultaneously — `TRAIT_CONFLICTS` is run only on trait-add
 > events, not at dataset/boot import time). Validators run **at scenario-boot time**.
+>
+> > **★ Trait-conflict RESOLUTION itself is underspecified (NEW rookie-surfaced rules-clarity note,
+> > `rookie1772` batch 24).** Beyond *detecting* a conflict (DH-27 above), the **resolution rule is a
+> > genuine gap**: when a faction-leader trait roll would grant a trait that conflicts with one already
+> > held (the rookie hit **Incoherent vs Orator/Debater** on Mifflin), the rulebook is unclear whether
+> > the conflicting pair (a) **cancels out**, or (b) **rolls a d6** to decide which survives, and whether
+> > **multiple** conflicts each roll separately. **V deferred an official ruling:** *"Do whatever the
+> > rulebook says to specifically do. If it says nothing, then just cancel them out. I'll make an
+> > official decision when Anthony gets to this part of the rules"* (`rookie1772#POST 573-582`). So the
+> > current interim is **cancel-out**, but it is **not yet ruled**. The build must pick ONE deterministic
+> > resolution (cancel-out vs d6-keep-one, single vs per-conflict) — this is the engine-side companion to
+> > the boot-time `TRAIT_CONFLICTS` detector. Pairs with [§3 trait-conflict](#3-politicians--stats) +
+> > [§8.5.2.y faction-leader trait gains](#852y--ted-ruled-faction-leader-trait-gain-rates--passive-block-designer-authoritative-tedchange). (Open Q for the human; V deferred. `rookie1772#POST 573-582`.)
 
 > **★ BATCH-18 (`ideo1928`) — two boot-shape sharpenings (both GA-level, NOT designer-authoritative).**
 >
@@ -8973,6 +9179,15 @@ keyed to B#/R# slots (batch 8). Bank-points persist to end-game; everything else
     human **always accepts** (POST 1661-1664). **Build TODO:** in the pre-12A resolver, do **not**
     route the VP to a Senate contingent unless the runner-up is exactly tied; the >50% requirement
     is President-only.
+  - **★ Pre-12A two-SLATE messes + slate-submission ORDER gap (NEW, `grass1772`, batch 24 — SHARPENS
+    DH-62).** With two undifferentiated elector slates per state, `grass1772` produced **VP-ahead-of-
+    own-Pres** outcomes — *"Red wins but its preferred VP comes in last; Blue's preferred VP finishes
+    ahead of its own Pres"* (`grass1772#POST 296`). The CPU supports an **alternate (non-primary)
+    candidate only 25%**, and **50% if it's the alternate's home state** — *"super gameable by the
+    players"* (POST 116, 296-299). ebrk85 flagged a **slate-submission ORDER gap**: the spec must fix
+    **which party submits slates first** (proposed: the **lower-party-preference party**, or the
+    **non-incumbent if tied**) because slate order is exploitable (`grass1772#POST 299`). Build TODO:
+    spec the pre-12A two-slate resolver WITH a fixed party-submission order (open Q for the human).
 - **Legislature-chosen presidential electors** in many states: for those states the EV winner is
   decided by **who holds Gov / Senate / Rep** (the **majority party** in the state's legislature;
   the **Gov's party breaks ties**) — **NOT** by `calcStateVote`'s PV + dice. This is **directly
@@ -10069,6 +10284,47 @@ un-implementable Wyoming Rule — hole #5), and modern lobby cards. Event firing
 > the legal moves) — so a solo player never has to wing it. Pairs with #115 (boot procedure) + the
 > §25 CPU cluster (the CPU needs the same legal-move enumeration). Build TODO: surface per-phase legal
 > actions + rule text in-UI. Cite `modernday#POST 342-356`.
+>
+> > **★★ DH-69 STRENGTHENED — `rookie1772` (batch 24) is the STRONGEST in-KB onboarding evidence.** A
+> > genuine **self-described rookie** (`@matthewyoung123`, *"very basic"* sheet skills) set out to run
+> > the most-complex era — 1772 — solo, and the whole thread is a live record of a newcomer hitting
+> > documented walls with only a sheet + a rules doc and no guided onboarding. **Every wall is an in-app
+> > affordance the build must provide:**
+> > - **Can run the content, not the machinery** — explicitly needs help to *"process phases (when we go
+> >   from 1772 to 1774)"* and to import the rookie draft (`rookie1772#POST 1`).
+> > - **★ The Lingering phase is the headline wall** — when it FIRST runs (only after the 1788 era
+> >   transition; it's skipped the whole Era of Independence, §3 below) the rookie says *"which I have
+> >   never run before… and it's a little more complicated than I expected. So I'll need a little time to
+> >   figure it out"* and needs a teammate assist to finish (`rookie1772#POST 1370-1372`). A human who
+> >   had run ~12 turns *still* couldn't hand-run Lingering — the prime corroboration that Lingering is a
+> >   deterministic multi-step pass the build must own (see [§24.7](#247-67-lingering--the-16-meter-homeostasis-engine-era-gated-foreign-meters) / [§11.1](#111-251-lingering-meters--runphase_2_5_1_lingering-phaserunnersts3260)).
+> > - **Meter prerequisites were invisible/opaque** — the rookie raised MilPrep via forced war bills not
+> >   knowing MilPrep/Rev-Budget can't rise past a low tier until federalism-era bills fire ([§17.4 #176](#174-revolutionary-war); `rookie1772#POST 26, 32-33`).
+> > - **Wrong, undocumented boot data** — the given sheet was a **"hybrid between 1772 and 2020"** with
+> >   all meters mid-set; correct 1772 start values had to be dug from official start sheets (`rookie1772
+> >   #POST 19, 26` — corroborates #115/#86 boot procedure).
+> > - **Phase-order had to be improvised** — the founding era doesn't fit the standard loop, so the
+> >   rookie repeatedly **amended the phase order by hand** (no Army/Navy/commanders yet → *"amending the
+> >   phase order for this turn year only,"* `rookie1772#POST 31, 47`). The build must encode the
+> >   founding-era phase order.
+> > - **A rule error only the designer caught** — uneven faction counts per party; Ted: *"Should have
+> >   ended with an even number for red factions… if you're following the rules exactly"* (`rookie1772
+> >   #POST 8`). A new player can't self-verify rule compliance without an authoritative reference.
+> > - **Trait-conflict resolution was underspecified** (the rookie hit it, V deferred a ruling — logged
+> >   at [§3 / DH-27](#3-politicians--stats); `rookie1772#POST 573-582`).
+> >
+> > **★ Even the DESIGNER-adjacent can't fully specify a core meter rule (`grass1772`).** Ted: *"I've
+> > never really 100% understood @vcczar's intent on how [ideological enthusiasm] is supposed to work"*
+> > (`grass1772#POST 322-323`), with open questions on whether enthusiasm applies to all states or only
+> > preferred-ideology states (V: everywhere, POST 384) and when/how-often the meter→enthusiasm hit is
+> > computed (Ted: once, at end of Lingering; *"the lingering part is the part I'm least confident
+> > about,"* POST 324-327). If even the rules-owner can't fully specify enthusiasm, the **build must pick
+> > ONE deterministic enthusiasm model and own it** (pairs with [§22.2](#222-faction-enthusiasm--party-preference-election-engine--the-score-economy) enthusiasm engine + #108 realignment levers).
+> >
+> > **Build TODO (the roadmap headline for DH-69):** an **in-app guided phase-processing surface** — per-
+> > phase legal-move enumeration + inline rule text + visible meter prerequisites + a canonical boot
+> > (no wrong-era hybrid sheets) + a rules-compliance validator — so a solo player never has to ask "how
+> > do I process X" or wing it. `rookie1772#POST 1, 8, 19, 26, 31, 32, 1370-1372`; `grass1772#POST 322-327, 384`.
 
 The **1820 boot is a mid-government continuation boot** (same shape as 1856/1800/2012): sitting
 **President Monroe + VP + Cabinet + a 6-then-9-member SCOTUS + Speaker + Senate Pro-Tem + full
