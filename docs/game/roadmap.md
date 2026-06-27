@@ -1,5 +1,77 @@
 # AMPU — Roadmap
 
+> **★★★★★ Batch-25 version — ONE DESIGNER-GMed SINGLE-PLAYER FOUNDING→FEDERALISM RUN
+> (`principle1772`, the 7th captured 1772 thread + the cleanest, most designer-authoritative
+> 1-human-vs-9-CPU run in the KB), CORROBORATION-HEAVY, TWO net-new FEDERALISM-ERA gaps [#177,
+> #178] in the least-covered founding→federalism endpoint; NO new keystone, NO re-sequence, NO
+> keystone moves, top-of-queue UNCHANGED. ★ The marquee is the STRONGEST #114/E9/K5 ESCALATION
+> in the corpus: the run is the FIRST 1772-cluster run to reach a natural endpoint, and it did
+> so ONLY because the designer hand-simulated all 9 CPU factions → the CPU-AI cluster now carries
+> BOTH 4 GM-burnout deaths AND a designer-paid completion.** `principle1772` (`049ce855`, "Always
+> stand on principle… even if you stand alone. A Single-Player 1772 Adventure"; **DESIGNER-GMed —
+> @MrPotatoTed [game CO-AUTHOR] IS the GM and hand-ran all NINE CPU teams himself while @vcczar
+> live-ruled**, one human [@10centjimmy] on a Washington-led Red team; ~1772→~1800 natural endpoint,
+> slowed by the GM's health/grad-school load, NOT a loss/win/burnout) is **literally the shipped
+> game's intended 1-human-vs-9-CPU mode (#114) demonstrated end-to-end by the designer.** **The value:**
+> **(1) ★ #177 FEDERALISM FOREIGN-AFFAIRS DECISION-EVENT SPINE → FOLDS INTO E1/scenario1788 +
+> era-event/eraGraph (#92); couples to E12 diplomacy (#107/#162). Size M.** The late-1790s endpoint
+> surfaced the most-detailed Federalist-era foreign-affairs content in the KB — a spine of **8
+> president/cabinet decision-events** (French-Rev neutrality/alliance-betrayal, Citizen Genêt,
+> Pinckney's/Spanish Treaty, Jay Treaty, Haitian Revolution, alt-history "Bourbons Restored"
+> `realEvent:false` branch, NW Indian War, Bank-recharter), each with per-power diplomacy-relation +
+> DomStab/EconStab + enthusiasm consequences + implementation-blunder rolls + counterfactual branches,
+> plus the late-1790s cabinet + Key Advisor Hamilton. **★ Shipped-state CONFIRMED hard-walled:** the
+> era graph THROWS on this content via TWO authoring guards in `eraGraph.ts::validate()` — `:153-155`
+> rejects any node `chartIndex >= 49` ("Federalism out of scope") + `:150-152` rejects any
+> `president`/`cabinet` decider ("no President/Cabinet pre-1789"); every event in the spine is a
+> post-1788 president/cabinet decision-event, so authoring it requires **LIFTING BOTH walls** (gate
+> president/cabinet deciders on `year >= 1789` instead of forbidding them) + adding **per-power
+> diplomacy-relation meters** to the snapshot (none exist today — `grep relation|diplomacyMeter|
+> foreignRelations in src/` = ZERO). The federalism-side companion to §20.3's `fed` spine, from a 7th
+> 1772 angle — DESIGNED content the era graph deliberately omits, the clear intended next-era fill.
+> **Open Q (designer): confirm this is the intended next-era build, not a permanent scope wall;** V
+> deferred the EV/territory-event %-chances (POST 1801). debt #57; game-mechanics §20.3.1; technical-
+> guide §9 batch-25 lead + §9.6.
+> **(2) ★ #178 TREATY-GRANTS-TERRITORY + BOUNDED "3-STRIKES" RETRY → FOLDS INTO statehood/territory +
+> DH-61; GENERALIZES DH-61. Size S; PAIRS WITH #177** (Jay Treaty is the #177 carrier event). A NEW
+> territory-acquisition class the build has no path for: the **Jay Treaty** (a president decision-event)
+> grants WI/IN/IL/MI on signing ("Marshall refused it twice, signed Attempt Two → gained WI/IN/IL/MI"),
+> under a GM-ruled **per-event retry budget** — a territory-gating event may fire **up to 3 times**
+> before the land is **permanently lost** (origin: the NW Indian War "3 chances," POST 207). **★
+> Shipped-state CONFIRMED unbuilt:** `admitState` (`territories.ts:8-23`) admits ONLY from the static
+> `EXPANSION_STATES_BY_ID` registry, driven by 1772 era-event `postEffects` — no treaty path, no retry
+> budget (`grep treaty|retriesRemaining|retryBudget in src/territories.ts` = ZERO). The fix = a
+> **treaty→`admitState` post-effect path** (the Oregon-Treaty §10.4.2 pattern) **+ a `retriesRemaining`
+> (default 3) per-event budget** on the `EraEvent` type — one reusable per-event retry primitive
+> spanning treaty, war, AND event gates. **Open Q (designer): is ≤3-fires canonical for ALL
+> territory-gating events, or a GM house rule?** debt #58; game-mechanics §17.6.1/§21.5.
+> **(3) ★★ #114/E9/K5 ESCALATED (JUSTIFICATION, NOT new scope, NOT a re-sequence) — the LOAD-BEARING
+> PREREQUISITE for the shipped solo mode to be COMPLETABLE.** Every prior 1772 solo/2-player run
+> (`new1772`/`grass1772`/`rookie1772`) DIED to manual-upkeep/CPU-bookkeeping burnout before an
+> endpoint; `principle1772` is the FIRST 1772-cluster run to reach a natural endpoint — and ONLY
+> because the designer himself hand-simulated all 9 CPU factions (cabinets/draft lists/leadership votes/
+> event responses; he REWROTE the CPU career-track heuristic mid-run, POST 323). It simultaneously
+> proves the shipped 1-human-vs-9-CPU shape (#114) IS completable AND quantifies what the app must own
+> to make it so WITHOUT a designer-in-the-loop: the entire per-faction CPU sim (the **E9 handler suite
+> + K5 CpuController**). The cluster now carries BOTH ends — 4 GM-burnout deaths (cost of NOT having it)
+> + a designer-paid success (proof of the ceiling). CONFIRMED unbuilt (`grep cpuHandler|handlerSuite|
+> runCpuFaction|perFactionSim in src/` = ZERO). **★ Raise priority/confidence on E9/K5 (reflects on
+> #114/DH-36); do NOT re-sequence, do NOT add scope.** game-mechanics §25/§29.1/§30.15.
+> **(4) ★ CORROBORATIONS (confidence ↑, no rows):** **#176 founding MilPrep ordering bug = NOW
+> DESIGNER-FLAGGED + 3rd-source** — Ted himself flagged LIVE that the auto-forced war bills can't raise
+> MilPrep (Militia Act is federalism-only) and that the Army/Navy bills fire AFTER the Military phase
+> that needs them ("Seems… dumb," POST 73/259-261) → confidence ↑, STILL a content/authoring constraint
+> to honor when founding war-content + a meter-prereq ladder are built, NOT a regression (debt #56).
+> **#153 command-bootstrap = NOW 4-SOURCE** — 1st President = Abraham Whipple, an emergent Iron-Fist
+> Admiral with no celebrity head start (Washington went Unlikable + LOST Canada → never President),
+> confirming Presidents emerge from play. Plus 7th-angle re-confirmation of the founding cluster
+> (#86/#133/#100/#101/#92/#62/#31/#45/#155/#158) + the kingmaker ≤1-protégé/turn cap (POST 224).
+> **Decision-gated / parking-lot RECOUNT: 0** (#177 scope-wall + #178 ≤3-fires canonicity are
+> designer-gated WITHIN their own work, NOT new top-level decisions). **NO new keystone, NO re-sequence;
+> top of queue UNCHANGED (QW0 → K0/K2 → K3/K4 + scenarioBoot → E1) — but the CPU-AI cluster (E9/K5)
+> now carries the corpus's strongest justification, and #177/#178 are the federalism-era next-build
+> content.**
+>
 > **★★★★★ Batch-24 version — TWO FOUNDING-ERA PLAYTESTS (`grass1772` 2-human-vs-8-CPU
 > 1772, DIED of CPU-bookkeeping burnout then relaunched by ADDING humans + `rookie1772`
 > one-player ROOKIE solo run of the most-complex era), THE 5TH + 6TH CAPTURED 1772
@@ -1491,6 +1563,47 @@ Reverse-chronological. The expertise/abilities/traits/cabinet/lobby epic (PR1–
 is complete; the knowledge-base infra and eight ingestion batches are knowledge
 milestones (no code, but they are what every item below is traced to).
 
+- **Batch-25 ingestion (knowledge milestone).** Absorbed **ONE playtest**: **`principle1772`**
+  (`049ce855`, a **1825-post DESIGNER-GMed SINGLE-PLAYER founding→federalism run** "Always stand on
+  principle… even if you stand alone. A Single-Player 1772 Adventure"; **★ @MrPotatoTed [game
+  CO-AUTHOR] IS the GM and hand-ran all NINE CPU teams himself while @vcczar live-ruled** — the
+  cleanest, most designer-authoritative 1-human-vs-9-CPU run in the KB, one human [@10centjimmy] on a
+  Washington-led Red team; ~1772→~1800 NATURAL endpoint, slowed by the GM's health/grad-school load,
+  NOT a loss/win/burnout). The **7th captured 1772 source** and **literally the shipped game's
+  intended 1-human-vs-9-CPU mode (#114) demonstrated end-to-end by the designer.** **CORROBORATION-
+  HEAVY** + **TWO net-new federalism-era gaps [#177, #178]** + the **strongest #114/E9/K5 escalation
+  in the corpus.** **★ #177 federalism foreign-affairs decision-event spine** → folds into **E1/
+  scenario1788 + era-event/eraGraph (#92); couples to E12 diplomacy (#107/#162)**, M: an 8-event
+  president/cabinet decision spine (French-Rev neutrality, Genêt, Pinckney/Jay Treaties, Haitian-Rev,
+  alt-history "Bourbons Restored" `realEvent:false` branch, NW Indian War, Bank-recharter) with
+  per-power diplomacy-relation + DomStab/EconStab + enthusiasm + implementation-blunder rolls + the
+  late-1790s cabinet + Hamilton. **★ CONFIRMED hard-walled:** `eraGraph.ts::validate()` THROWS via TWO
+  guards — `:153-155` (`chartIndex >= 49` "Federalism out of scope") + `:150-152` (the pre-1789
+  president/cabinet decider ban) — so authoring it requires LIFTING BOTH walls (gate deciders on
+  `year >= 1789`) + adding per-power diplomacy-relation meters (none exist; grep `relation|
+  diplomacyMeter|foreignRelations` in `src/` = ZERO). The federalism-side companion to §20.3's `fed`
+  spine; DESIGNED content the era graph deliberately omits. **Open Q (designer): confirm the intended
+  next-era build, not a permanent scope wall** (V deferred the EV/territory %-chances, POST 1801).
+  debt #57. **★ #178 treaty-grants-territory + bounded "3-strikes" retry** → folds into **statehood/
+  territory + DH-61; GENERALIZES DH-61**, S, **PAIRS WITH #177** (Jay Treaty is the #177 carrier
+  event): a treaty→`admitState` post-effect path (Jay Treaty grants WI/IN/IL/MI — the Oregon-Treaty
+  §10.4.2 pattern) + a `retriesRemaining` (default 3) per-event budget (origin: the NW Indian War "3
+  chances," POST 207) → one reusable per-event retry primitive across treaty/war/event gates.
+  **CONFIRMED unbuilt:** `admitState` (`territories.ts:8-23`) admits only from the static
+  `EXPANSION_STATES_BY_ID` registry; grep `treaty|retriesRemaining|retryBudget` in `territories.ts` =
+  ZERO. **Open Q (designer): is ≤3-fires canonical for ALL territory gates, or a GM house rule?** debt
+  #58. **★★ #114/E9/K5 ESCALATED (justification, NOT new scope, NOT a re-sequence):** the FIRST
+  1772-cluster run to reach a natural endpoint, completable ONLY because the designer hand-simulated
+  all 9 CPU factions (he REWROTE the CPU career-track heuristic mid-run, POST 323) → the per-faction
+  CPU sim (E9 handler suite + K5) is the LOAD-BEARING prerequisite; the cluster now carries BOTH 4
+  GM-burnout deaths AND a designer-paid completion. Raise confidence; do NOT move it. **★
+  Corroborations:** #176 founding MilPrep ordering bug NOW DESIGNER-FLAGGED + 3rd-source (Ted: "Seems…
+  dumb," POST 73/259-261); #153 command-bootstrap NOW 4-SOURCE (Whipple, emergent Iron-Fist Admiral,
+  1st President with no celebrity head start); 7th-angle re-confirmation of #86/#133/#100/#101/#92/#62/
+  #31/#45/#155/#158 + the kingmaker ≤1-protégé/turn cap (POST 224). **No new keystone, no re-sequence,
+  batch 25 nets 0; top-of-queue UNCHANGED — but the CPU-AI cluster (E9/K5) carries the corpus's
+  strongest justification.**
+
 - **Batch-24 ingestion (knowledge milestone).** Absorbed **TWO founding-era playtests**:
   **`grass1772`** (`5b1b2c33`, a **544-post 2-human-vs-8-CPU 1772** "The Grassroots Divide";
   GM **@Cal**, NOT designer-authoritative — Ted/V posts are; ~1772→1788, **DIED of CPU-
@@ -2770,6 +2883,76 @@ collusion → unicameral "Super House"; rookie: Senate-appointed-by-Governors + 
 gated WITHIN that work; the rest is corroboration/justification). **No re-sequence; top-of-queue
 UNCHANGED (QW0 → K0/K2 → K3/K4 + scenarioBoot → E1) — but the onboarding/solo-app/CPU-AI cluster
 (E9/K5 + DH-69) now carries the strongest justification in the corpus.**
+**★★ Batch-25 fold-ins (ONE DESIGNER-GMed single-player run — `principle1772`, the 7th captured 1772
+source + the cleanest 1-human-vs-9-CPU run in the KB; TWO net-new federalism-era gaps [#177, #178],
+the strongest #114/E9/K5 escalation in the corpus, corroboration — NO new keystone, NO re-order, NO
+keystone moves):** **★ #177 FEDERALISM FOREIGN-AFFAIRS DECISION-EVENT SPINE → FOLDS INTO E1/
+scenario1788 + era-event/eraGraph (#92); couples to E12 diplomacy (#107/#162); M.** The late-1790s
+endpoint surfaced the most-detailed Federalist-era foreign-affairs content in the KB — a spine of **8
+president/cabinet decision-events** (French-Rev neutrality/alliance-betrayal, Citizen Genêt,
+Pinckney's/Spanish Treaty, Jay Treaty, Haitian Revolution, alt-history "Bourbons Restored"
+`realEvent:false` branch, NW Indian War, Bank-recharter), each with per-power diplomacy-relation +
+DomStab/EconStab + enthusiasm consequences + implementation-blunder rolls + counterfactual branches,
+plus the late-1790s cabinet + Key Advisor Hamilton. **★ Shipped-state CONFIRMED hard-walled:**
+`eraGraph.ts::validate()` THROWS on this content via TWO authoring guards — `:153-155` rejects any node
+`chartIndex >= 49` ("Federalism out of scope") + `:150-152` rejects any `president`/`cabinet` decider
+("no President/Cabinet pre-1789"); every event in the spine is a post-1788 president/cabinet
+decision-event, so authoring it requires **LIFTING BOTH walls** (gate president/cabinet deciders on
+`year >= 1789` instead of forbidding them) **+ adding per-power diplomacy-relation meters** to the
+snapshot (none exist today — `grep relation|diplomacyMeter|foreignRelations in src/` = ZERO) **+** the
+§10.4.1 multi-decider / implementation-blunder layer. **Binds at** `eraGraph.ts` (the 2 walls + a
+`year >= 1789` decider gate), a NEW federalism era-graph content file (the 8 decision-events +
+alt-history branches), a per-nation diplomacy-relation meter on the snapshot. The federalism-side
+companion to §20.3's `fed` spine, from a 7th 1772 angle — DESIGNED content the era graph deliberately
+omits, the clear intended next-era fill. **★ Open Q (designer-gated): confirm this is the intended
+next-era build, not a permanent scope wall;** V deferred the EV/territory-event %-chances (POST 1801),
+so firing probabilities are not yet authored. debt #57; game-mechanics §20.3.1.
+**★ #178 TREATY-GRANTS-TERRITORY + BOUNDED "3-STRIKES" RETRY → FOLDS INTO statehood/territory + DH-61;
+GENERALIZES DH-61; S; PAIRS WITH #177** (Jay Treaty is the #177 carrier event). A NEW
+territory-acquisition class the build has no path for: the **Jay Treaty** (a president decision-event)
+grants WI/IN/IL/MI on signing — "Marshall refused it twice, then signed Attempt Two → gained
+WI/IN/IL/MI" — under a GM-ruled **per-event retry budget**: a territory-gating event may fire **up to 3
+times** before the land is **permanently lost** (origin: the NW Indian War "3 chances," POST 207). **★
+Shipped-state CONFIRMED unbuilt:** `admitState` (`territories.ts:8-23`) admits ONLY from the static
+`EXPANSION_STATES_BY_ID` registry, driven by 1772 era-event `postEffects` — no treaty path, no bill
+path, no per-event retry budget (`grep treaty|retriesRemaining|retryBudget in src/territories.ts` =
+ZERO). The fix = a **treaty→`admitState` post-effect path** (a president decision-event whose effect
+calls `admitState` over a list of states, the Oregon-Treaty pattern, §10.4.2) **+ a `retriesRemaining`
+(default 3) per-event budget** on the `EraEvent` type (a field + the retry-on-fire mechanic) — one
+reusable per-event retry primitive spanning treaty, war, AND event gates. **★ Open Q (designer-gated):
+is ≤3-fires canonical for ALL territory-gating events, or a GM house rule?** debt #58; game-mechanics
+§17.6.1/§21.5.
+**★★ #114/E9/K5 ESCALATED (JUSTIFICATION, NOT new scope, NOT a re-sequence) — the LOAD-BEARING
+PREREQUISITE for the shipped solo mode to be COMPLETABLE.** Every prior 1772 solo/2-player run
+(`new1772`/`grass1772`/`rookie1772`) DIED to manual-upkeep/CPU-bookkeeping burnout before an endpoint;
+`principle1772` is the FIRST 1772-cluster run to reach a natural endpoint — and ONLY because the
+designer himself hand-simulated all 9 CPU factions (their cabinets, draft lists, leadership votes,
+event responses; he REWROTE the CPU career-track heuristic mid-run, POST 323). The run simultaneously
+proves the shipped 1-human-vs-9-CPU shape (#114) IS completable AND quantifies exactly what the app
+must own to make it sustainable WITHOUT a designer-in-the-loop: the entire per-faction CPU sim (the
+**E9 handler suite + K5 CpuController**). The cluster now carries BOTH ends — 4 GM-burnout deaths (cost
+of NOT having it) AND a designer-paid success (proof of the ceiling). CONFIRMED unbuilt (`grep
+cpuHandler|handlerSuite|runCpuFaction|perFactionSim in src/` = ZERO; only inline `isPlayer`/
+`playerFactionId` gates in `phaseRunners.ts`). **★ Raise priority/confidence on E9/K5 (reflects on
+#114/DH-36); do NOT re-sequence, do NOT add scope.** debt #114/E9/K5; game-mechanics §25/§29.1/§30.15.
+**★ #176 founding MilPrep ordering bug → NOW DESIGNER-FLAGGED + 3rd-source (confidence ↑, no scope
+change):** Ted himself flagged LIVE that the auto-forced war bills can't raise MilPrep (Militia Act is
+federalism-only) and that the Army/Navy bills fire AFTER the Military phase that needs them ("Seems…
+dumb," POST 73/259-261) — the designer-acknowledged confirmation of the batch-24 #176 finding; STILL a
+content/authoring constraint to honor when founding war-content + a meter-prereq ladder are built, NOT
+a regression (the build has no tier-prereq system yet). debt #56; game-mechanics §17.4.
+**★ Corroborations (tags, not rows):** **#153 command-bootstrap NOW 4-SOURCE** — 1st President =
+Abraham Whipple, an emergent Iron-Fist Admiral with no celebrity head start (Washington went Unlikable
++ LOST Canada → never President), confirming Presidents emerge from play; the founding cluster #86 boot
+/ #133 CC 4-3-2 table / #100 sway-driven ahistorical Constitution (Hamilton swung racial-minority
+suffrage in → DomStab crisis) / #101 offices-by-law (incl. the DH-40 "Judicial Act vs Judiciary Act"
+naming bug) / #92 era-as-content-band / #62 pre-12A VP=runner-up / #31 cabinet-region-snub election
+penalty / #45 concurrent multi-war + loss-debuff / #155 French-alliance unloseable flag + #158
+solo-RevWar-losable, all re-confirmed from a 7th 1772 angle; the kingmaker ≤1-protégé/turn cap (V
+ruled, POST 224). **Decision-gated RECOUNT: 0** (#177 scope-wall + #178 ≤3-fires canonicity are
+designer-gated WITHIN their own work). **No re-sequence; top-of-queue UNCHANGED (QW0 → K0/K2 → K3/K4 +
+scenarioBoot → E1) — but the CPU-AI cluster (E9/K5) now carries the corpus's strongest justification,
+and #177/#178 are the federalism-era next-build content.**
 
 | # | Item | Scope | Depends on | Size | Source | Status |
 |---|---|---|---|---|---|---|
@@ -3743,6 +3926,45 @@ then batch-20,
 then batch-19, then batch-18, then batch-17, then batch-16, then
 batch-15, then batch-14, then batch-13, then batch-12, then batch-11, then batch-10, then
 batch-9, then batch-8, then batch-7, then the carried batch-5 leads.
+**The order itself is UNCHANGED — the TOP OF THE QUEUE is QW0 → K0/K2 → K3/K4 +
+`scenarioBoot`/`BootSheet` → `scenario1788` (E1).**
+
+**★★★★★ Batch-25 lead — ONE DESIGNER-GMed single-player run (`principle1772`, the 7th captured 1772
+thread + the cleanest, most designer-authoritative 1-human-vs-9-CPU run in the KB: @MrPotatoTed [game
+CO-AUTHOR] IS the GM and hand-ran all 9 CPU teams himself while @vcczar live-ruled; ~1772→~1800 NATURAL
+endpoint, NOT a loss/win/burnout). CORROBORATION-HEAVY + TWO net-new federalism-era gaps [#177, #178] +
+the strongest #114/E9/K5 escalation in the corpus. It does NOT move the top-of-queue. Reflect it by:
+(1) ADDING #177 — the federalism foreign-affairs DECISION-EVENT SPINE (8 post-1788 president/cabinet
+decision-events: French-Rev neutrality, Genêt, Pinckney/Jay Treaties, Haitian-Rev, alt-history
+"Bourbons Restored" `realEvent:false` branch, NW Indian War, Bank-recharter; per-power
+diplomacy-relation + DomStab/EconStab + enthusiasm + implementation-blunder rolls + late-1790s cabinet
++ Hamilton) to E1/scenario1788 + era-event/eraGraph (#92), coupling to E12 diplomacy (#107/#162), M —
+which requires LIFTING THE TWO `eraGraph.ts::validate()` walls (`:153-155` `chartIndex >= 49`
+"Federalism out of scope" + `:150-152` the pre-1789 president/cabinet decider ban → gate on `year >=
+1789`) + adding per-power diplomacy-relation meters (none exist today); DESIGNED content the era graph
+deliberately omits — Open Q (designer): confirm the intended next-era build, not a permanent scope wall;
+(2) ADDING #178 — treaty-grants-TERRITORY + the bounded "3-strikes" retry budget (Jay Treaty grants
+WI/IN/IL/MI on signing; a territory-gating event may fire up to 3 times before the land is permanently
+lost, origin the NW Indian War "3 chances") to statehood/territory + DH-61, S, PAIRED WITH #177 (Jay
+Treaty is the #177 carrier event): a treaty→`admitState` post-effect path (the Oregon-Treaty §10.4.2
+pattern) + a `retriesRemaining` (default 3) per-event budget on the `EraEvent` type → GENERALIZES DH-61
+into one reusable per-event retry primitive across treaty/war/event gates — Open Q (designer): ≤3-fires
+canonical for ALL territory gates or a GM house rule?; (3) ★★ ESCALATING — NO new scope, NO re-sequence
+— #114/E9/K5: `principle1772` is the FIRST 1772-cluster run to reach a natural endpoint, completable
+ONLY because the designer hand-simulated all 9 CPU factions (he REWROTE the CPU career-track heuristic
+mid-run, POST 323), so the per-faction CPU sim (the E9 handler suite + K5 CpuController) is the
+LOAD-BEARING prerequisite — the cluster now carries BOTH 4 GM-burnout deaths AND a designer-paid
+completion; raise confidence, do NOT move it; (4) STRENGTHENING corroborated items — #176 founding
+MilPrep ordering bug NOW DESIGNER-FLAGGED + 3rd-source (Ted: "Seems… dumb," POST 73/259-261, still a
+content/authoring constraint not a regression), #153 command-bootstrap NOW 4-SOURCE (Whipple, an
+emergent Iron-Fist Admiral, 1st President with no celebrity head start), 7th-angle re-confirmation of
+#86/#133/#100/#101/#92/#62/#31/#45/#155/#158 + the kingmaker ≤1-protégé/turn cap (POST 224). NO new
+keystone, NO re-sequence, NO new author-before-build or Decision-gated items (batch 25 nets 0 — #177 is
+buildable in E1; #178 in the territory work; the #177 scope-wall + #178 ≤3-fires questions are
+designer-gated WITHIN their own work). The TOP OF THE QUEUE is UNCHANGED: QW0 → K0/K2 → K3/K4 +
+`scenarioBoot`/`BootSheet` → `scenario1788` (E1) — but the CPU-AI cluster (E9/K5) now carries the
+corpus's strongest justification, and #177/#178 are the federalism-era next-build content.
+game-mechanics §20.3.1 (#177) + §17.6.1/§21.5 (#178) + technical-guide §9 batch-25 lead + §9.6.**
 **The order itself is UNCHANGED — the TOP OF THE QUEUE is QW0 → K0/K2 → K3/K4 +
 `scenarioBoot`/`BootSheet` → `scenario1788` (E1).**
 

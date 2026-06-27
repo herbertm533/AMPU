@@ -3900,6 +3900,19 @@ French alliance), senior general/admiral + benches, `frenchAlliance = false`.
 >   surface meter prerequisites in-UI (a new player can't see them). `grass1772#POST 86-90, 121`;
 >   `rookie1772#POST 26, 32-33`.
 >
+> - **★★ 3rd-source confirmation + DESIGNER-FLAGGED (`principle1772`, batch 25).** The bug surfaced
+>   **independently a 3rd time**, here **flagged by Ted himself mid-run**: the auto-forced Lexington-&-Concord
+>   war bills (Continental Army/Navy) fire in the **Military phase BEFORE the Legislative phase that must pass
+>   them**, so the war's first turn has *"no Army… no way to actually win a battle"* (`principle1772` POST 73,
+>   flagged to V for the fixes thread). Then late-game: *"not only is it not possible to improve military prep
+>   higher because we don't have a standing army… it ALSO can't even stay at its current level because we don't
+>   have a Militia Act (and can't, until after we have a constitution, which can't happen until we win the
+>   Revolutionary War). So… our Military Preparedness actually drops by two, near end-of-game mode, and it's
+>   going to have to stay there for a while"* (POST 259/261). The human: *"Seems… dumb."* **Now 3-source
+>   (`grass1772` + `rookie1772` + `principle1772`) AND designer-acknowledged as a glaring ordering bug** — both
+>   the phase-ordering (war bills before the legislative phase) and the tier-prereq (Militia-Act-gated) facets
+>   confirmed. `principle1772#POST 73, 259-261`.
+>
 > **★ Forum trace + the three winnability floors (`ted1772`, batch 17).** `ted1772` is the **cleanest
 > fresh-start RevWar trace in the KB**: from a fresh 1772 boot the war was **genuinely losable** — War
 > Score sat at **−2/−1** with **~20% loss-rolls per phase**, the **Navy won ZERO battles**, and the
@@ -3940,7 +3953,40 @@ and flags: `coreSpine` (inevitable openers), `realEvent` (false = counterfactual
 `admitState` (`:8`): idempotent; pulls a seed from `EXPANSION_STATES_BY_ID`
 (`expansionStates.ts`), stamps `admissionYear = current year`, pushes a fresh `State`
 (empty legislature, `isColony:false`), logs a system entry. Invoked from era-event
-`postEffects`.
+`postEffects`. **No treaty path, no bill path, no per-event retry budget** (confirmed
+`territories.ts:8-23`; grep "treaty" → none).
+
+#### 17.6.1 ★ #178 (NEW, `principle1772`, batch 25) — treaty-grants-territory + the bounded "3-strikes" retry budget (DESIGNED)
+
+> **★ DESIGNER-AUTHORITATIVE** (`principle1772`, Ted-GMed, V live-ruling). The late-1790s endpoint
+> surfaced a **NEW territory-acquisition class the build has no path for**: territory granted **by
+> TREATY** (a president decision-event), plus a **bounded retry budget** on territory-gating events.
+
+- **★ Treaty grants territory.** Signing the **Jay Treaty** (a president decision-event in the
+  federalism foreign-affairs spine, [§20.3.1 #177](#2031--177-new-principle1772-batch-25--the-federalism-foreign-affairs-decision-event-spine--the-eragraphts154-scope-wall-to-lift-designed-hard-walled-out-of-the-build))
+  grants the US **WI / IN / IL / MI** (+ trade rights, anti-French maritime policy, UK Most-Favored-Nation).
+  **Marshall refused it twice, then signed Attempt Two → gained WI/IN/IL/MI** (`principle1772` ch23/ch25 POST
+  566/1005). Shipped `admitState` only admits from the static `EXPANSION_STATES_BY_ID` registry via 1772
+  era-event `postEffects` — there is **no treaty→territory route** (and the broader bill→statehood route is
+  also unbuilt, [§21.5](#215-bill-driven-statehood--auto-generated-officials)).
+- **★ The bounded "3-strikes" retry budget.** A **territory-gating event can fire up to 3 times** before the
+  land is **permanently lost**. The GM/designer ruled the same rule for the Jay Treaty (refused twice, signed
+  on the 3rd window) that he used for the **NW Indian War** — where the rule **originates**: *"certain events
+  that lose historical states if ignored can be repeated three times before they're gone for good"*
+  (`principle1772` ch21 POST 207; ch25 POST 905, 915-922). **★ This GENERALIZES DH-61** (the "3 chances" /
+  boot-must-seed-era-active-wars rule) into a reusable **per-event retry-budget** that applies to **treaty,
+  war, AND event** territory gates alike.
+
+> **Open Q (flagged to the human, `principle1772` POST 207, 1801):** is the bounded-retry (≤3 fires before
+> permanent loss) the **canonical model for ALL territory-gating events** (treaty + war + event), or a GM
+> house rule? Pairs with **DH-61**. V deferred the EV-event %-chances, so the firing probabilities are not
+> yet authored.
+
+*(DESIGNED, not built — add a **treaty→territory acquisition path** [a president decision-event whose
+post-effect calls `admitState` for a list of states, like the Oregon-Treaty pattern in
+[§10.4.2](#1042-foreign-territory-grants-via-era-event)] **+ a bounded per-event retry budget**
+[`retriesRemaining`, default 3] on territory-gating events, after which the territory is permanently lost.
+Generalizes DH-61; pairs with #177.)*
 
 ### 17.7 Forum design layer — the MULTIPLAYER-1772 confirmation (designed, not built)
 
@@ -4009,6 +4055,17 @@ and flags: `coreSpine` (inevitable openers), `realEvent` (false = counterfactual
   Jefferson kept some — but the master polSet default is the 0-Command set.) Two independent emergent
   Presidents (St. Clair, Bartram) from near-0-Command boots = the strongest validation in the KB that
   the command-bootstrap produces gameplay-driven, not reputation-driven, Presidents.
+  **★ `principle1772` (batch 25) is the 3rd emergent-President instance (#153 now 4-source overall).** The
+  1st President there was **Abraham Whipple** — an **EllsworthCPU Admiral who won Canada's ONLY naval battle**,
+  became **Iron-Fist**, then President — with **NO Washington/Arnold celebrity-general head start**. Pointedly,
+  the human's own Washington team had **Washington go *Unlikable* and then LOSE the Canada invasion as a
+  battlefield general**, sinking his presidential prospects entirely (so the most-famous founder was a
+  battlefield loser while an obscure CPU admiral won the presidency). The later Presidents also emerged from
+  play: **(1792) Peleg Arnold** (RandolphCPU, Blue), **(~1796) John Marshall** (the human's Red Mod/Cons pol —
+  the human finally took the presidency in the late 1790s). **Three independent emergent Presidents
+  (St. Clair, Bartram, Whipple) from near-0-Command boots, across three separate 1772 runs**, definitively
+  confirm #153/#136 (Presidents emerge from play, not real-world reputation). `principle1772#POST 407` (ch12),
+  ch13.
 - **Independence won by COMBAT ALONE — the explicit France event is not required.** The Revolutionary
   War was won after ~4 turns (1774–1782) **by combat rolls alone; the French-alliance event NEVER
   fired** (players: "Did i miss it or did we get the French alliance?", "shouldn't there be a flag…
@@ -4490,6 +4547,24 @@ eras — labels bumped inline):*
   (§25 / #70-#79) must own the per-faction simulation** so a solo player runs ONE faction, not ten —
   validating solo-first-with-CPU-AI as load-bearing, not optional. `grass1772#POST 1, 196-197, 328, 348`;
   `rookie1772#POST 36, 42-48, 1444`. (See [§25](#25-cpu-ai-specifications-designed-not-built-unless-flagged) for the heuristics the CPU must encode.)
+- **★★ #114 ESCALATED — the DESIGNER himself sustained 1-human-vs-9-CPU to a NATURAL endpoint, but ONLY by
+  hand-absorbing the entire CPU-sim load (`principle1772`, batch 25 — the STRONGEST #114 validation in the
+  KB).** `principle1772` is the **cleanest 1-human-vs-9-CPU run** in the corpus: **GMed by @MrPotatoTed (the
+  designer himself)**, one human (@10centjimmy, Red Washington team) vs **nine designer-run CPU factions**,
+  with @vcczar live-ruling. It is **literally the shipped game's intended mode (#114) demonstrated end-to-end
+  by the designer** (POST 1: *"This will be a single-player playthrough… I will control the other nine CPU
+  teams"*). **★ It is the FIRST 1772-cluster run to reach a NATURAL endpoint (~1800) WITHOUT a burnout death**
+  — it slowed only at the GM's **health / grad-school load** (*"playing with arthritis meds… leaves me
+  exhausted… feel free to keep pushing things forward if you're able to,"* POST 1814), NOT a loss/win/burnout
+  collapse, and the **human kept carrying it forward**. **★ BUT it worked ONLY because the designer personally
+  hand-simulated every CPU faction's cabinet, draft list, IRV leadership vote, conversion, and event-response
+  — even REWRITING the CPU career-track heuristic mid-run** (POST 323; see [§30.15](#3015-rulings-folded-from-principle1772-the-7th-1772-thread--designer-gmed-1-human-vs-9-cpu)).
+  This is the **strongest evidence yet that the shipped intended mode (1-human-vs-9-CPU, #114) is sustainable
+  ONLY when the app's CPU-AI (§25 / #70-#79) absorbs the per-faction sim load** — the designer succeeded where
+  the four burnout deaths failed *because* he ate the cost the build must own. The +1 here over `grass1772`/
+  `rookie1772`: this is **NOT a "burnout proves the gap" data point — it is a "designer-paid success proves the
+  ceiling" data point**: the run reached its end ONLY because a human did the CPU-AI's job. `principle1772#POST
+  1, 323, 1814`. (See [§25](#25-cpu-ai-specifications-designed-not-built-unless-flagged) + [§30.15](#3015-rulings-folded-from-principle1772-the-7th-1772-thread--designer-gmed-1-human-vs-9-cpu).)
 - **★ NEGATIVE RESULT — no thread reaches a "future" era.** Despite its title, `ad0f2875` ("A 1772
   to future") **stalls at 1874 (mid-Gilded), reaching no post-Gilded content** and never completing
   (it stops mid-export, no game-over). Across **all** ingested threads, **"Era of the Future"
@@ -4928,6 +5003,53 @@ Plus a swarm of **census-flavor events** stashing EV deltas ([§10.4.3](#1043-ce
 `fed` 30) and **Latin-American independence** flavor events (Colombia/Ecuador/Venezuela/
 Peru/Bolivia/Gran Colombia, `fed` 76).
 
+#### 20.3.1 ★ #177 (NEW, `principle1772`, batch 25) — the federalism foreign-affairs decision-event spine + the `eraGraph.ts:154` scope-wall to lift (DESIGNED, hard-walled OUT of the build)
+
+> **★ DESIGNER-AUTHORITATIVE source.** `principle1772` (the 7th captured 1772 thread, **GMed by
+> @MrPotatoTed himself** with @vcczar live-ruling) ran the **full founding→federalism arc ~1772→~1800**
+> and reached the **late-1790s endpoint** — the least-covered part of the era band. Its load-bearing NEW
+> content is the **most-detailed Federalist-era foreign-affairs decision-event content in the KB**, and it
+> is **explicitly excluded by the shipped era graph**: `eraGraph.ts:154` **throws** on any node with
+> `chartIndex >= 49` ("French Revolution / Federalism is out of scope"), and `eraGraph.ts:147-152`
+> **forbids `president`/`cabinet` deciders pre-1789**. **★ Every event below is a president/cabinet
+> decision-event in the post-1788 band** — so authoring this spine requires **lifting the chartIndex≥49
+> wall AND allowing president/cabinet deciders once `year >= 1789`** (the era graph deliberately omits it
+> today; the design clearly intends to fill it). This is the **federalism-side companion to §20.3's
+> `fed`-sourced spine**, from a 7th 1772 angle. Cite `principle1772 §1` + the chunk/POST refs below.
+
+Each is a scripted A/B/C **decision-event** firing in the federalism band, with meter + relation +
+point + enthusiasm consequences (so the build must add **diplomacy-relation meters** + DomStab/EconStab
+shocks + enthusiasm deltas to the president/cabinet decision layer):
+
+| Decision-event | Choices / outcome (this run) | Decider | Consequences | Source |
+|---|---|---|---|---|
+| **★ French Revolution** | Intervene-for-France ⇄ **NEUTRALITY toward Britain**; **Pres Whipple declared NEUTRALITY, betraying the alliance** | President | keeps the alliance meter but **DomStab crashes into crisis**; **EconStab −1 into recession**; the defining federalism foreign-policy fork (split banking/mercantile pro-Britain vs pro-Republic factions) | ch13 POST 496/540/602-604 |
+| **★ Citizen Genêt** | a French envoy rousing pro-Revolution sentiment, endangering neutrality; **Pres Arnold condemned Genêt + demanded recall** | President | UK relations −1; **French Relations −1 = END of the French alliance** | ch21 POST 199-200/239-322 |
+| **★ Pinckney's Treaty / Treaty with Spain** | defines southern/western borders + Mississippi navigation; **signed, Whipple BLUNDERED the implementation** | Pres + cabinet | **implementation difficulty bumped to "difficult" because there is NO Secretary of State yet** (offices-by-law #101, [§21.5](#215-bill-driven-statehood--auto-generated-officials)); blunder → **Whipple gains Easily-Overwhelmed + Spain relations −1** (the implementation-blunder layer, [§10.4.1](#1041-multi-decider-events)) | ch13 POST 500-501/614 |
+| **★ Jay Treaty** (the treaty-GATES-TERRITORY case, see [§17.6.1 / §21.5 #178](#1761--178-new-principle1772-batch-25--treaty-grants-territory--the-bounded-3-strikes-retry-budget-designed)) | signing grants **US rights to MI/IN/IL/WI** + trade rights + anti-French maritime policy + UK "Most Favored Nation", at the cost of pro-French/anti-impressment factions; **Marshall refused it TWICE, then signed Attempt Two → gained WI/IN/IL/MI** | President | territory acquisition by TREATY (NEW class, #178); the GM ruled the **"3-strikes" retry budget** applies (fires ≤3× before the land is permanently lost) | ch23/ch25 POST 566/1005, 905, 915-922 |
+| **★ Haitian Revolution** | endorse / oppose / **ignore** ("we like France losing hemisphere territory" vs "endorsing a slave revolution upsets slaveholders / risks a Southern slave revolt"); **Marshall IGNORED it** | President | France relations would rise but already maxed; England drops below neutral; "The Revolution Is Dead, Long Live the (French) King" | ch25/ch26 POST 933/989/1806-1808 |
+| **★ "French Revolution Quelled, Bourbons Restored"** (ALT-HISTORY branch) | "a British-Austrian coalition has stormed Paris… the new King Louis is on his way from exile"; **Marshall picked "Revolution was silly, thank goodness for the Coalition!"** | President | England relations improve to neutral; **the standard alt-history caveat made concrete** — the GM offers counterfactual European outcomes as scripted branches (cf. `realEvent:false` graph nodes, [§17.5](#175-era-event-graph-1772-eragraphts-data-eraevents1772ts)) | ch25/ch26 POST 937/993/1024/1808 |
+| **NW Indian War / Huron Confederacy** | "British-supported Huron-led Confederacy resists settlement of the Northwest Territory"; **ignored once by Arnold, then declared war** (the US "doesn't actually have an army" — the federalism military-rebuild problem) | President | ★ the **"3 chances" house rule ORIGINATES here** ("certain events that lose historical states if ignored can be repeated three times before they're gone for good," POST 207) — pairs with **DH-61** + the #178 territory-retry budget | ch21 POST 204-207/254-269 |
+| **Bank recharter** | the US Bank charter comes up for renewal; **Arnold let it expire (Bank dies)**, then it is **re-established by bill in the late 1790s** | Congress | V ruled the Bank **can be re-established after repeal** ("Technically there was a 2nd bank of the US," POST 1818-1820) — confirms institutions created↔killed↔recreated by law (offices-by-law #101, [§21.5](#215-bill-driven-statehood--auto-generated-officials); #175 repealable flags) | ch21 POST 209-271, 1818-1820 |
+
+**Other federalism scripted events confirmed this run** (corroborate §20.3 / §20.5): **Compromise of
+1790** (debt-assumption-for-capital → **Whipple DC on the Potomac**, ch13 POST 522/556); **Conway Cabal**
+(defend the C-in-C, ch5); **Quaker abolition petition** (ignored, ch21); **PA/MA legislatures abolish
+slavery** as state policy flags ([§10.4.4](#1044-era-event-side-effect-state-policy-toggles), #21);
+**Manufacturing industry appears** (era-gated industry unlock, ch13).
+
+**Late-1790s Federalist cabinet (fully populated, offices-by-law — ch26 POST 1809):** Sec of State Richard
+Peters, Sec of Treasury Benjamin Stoddert, Sec of War Philip Key, AG James Sullivan, and **Key Advisor
+Alexander Hamilton** (the one office NOT created by law — see the offices-by-law boot, #101, [§21.5](#215-bill-driven-statehood--auto-generated-officials)).
+
+*(DESIGNED, not built — lift the `eraGraph.ts:154` `chartIndex>=49` wall AND the pre-1789 president/cabinet
+decider ban [`eraGraph.ts:147-152`]; author the federalism foreign-affairs decision-event band with
+per-power **diplomacy-relation meters** + DomStab/EconStab shocks + enthusiasm effects + alt-history
+`realEvent:false` branches + the implementation-blunder rolls; confirm with the human this is the intended
+next-era build, not a permanent scope wall. V deferred the EV/territory-event %-chances — "I won't put them
+in until I finish coming up with all the events," POST 1801 — so the firing probabilities are not yet
+authored.)*
+
 ### 20.4 The Hamiltonian financial program as bills (fed 38, 250)
 
 The program is a cluster of **foundational/crisis bills** ([§21.6](#216-bill-typing--budget-gated-spending-cap)):
@@ -5303,6 +5425,10 @@ the on-election cabinet wipe with hold-over; same-faction guard on Bank-Presiden
   **Territories** first (organized vs unorganized status precedes statehood).
 - **Annexation by era event / war:** **Louisiana Purchase** (era event); **rights to
   Canada/Quebec** on **winning the War of 1795**.
+- **★ Annexation by TREATY + a bounded retry budget (#178, `principle1772`).** A **treaty grants
+  territory** (Jay Treaty → WI/IN/IL/MI) and a **territory-gating event may fire ≤3× before permanent
+  loss** (the "3-strikes" rule, generalizing DH-61). Full spec in
+  [§17.6.1 #178](#1761--178-new-principle1772-batch-25--treaty-grants-territory--the-bounded-3-strikes-retry-budget-designed).
 - **Auto-generate officials for sparse new states** (`fed` 168, 386, 571: "pols had to be
   generated"): when a freshly admitted state has too few politicians to fill its
   Gov/Senate/House seats, the engine must **generate filler officials**.
@@ -11221,6 +11347,15 @@ winning the presidency).
 > [§10.4.7](#1047--169-new-biden2021--the-elderly-president-drops-out-of-reelection--endorse-vp-mid-campaign-replacement-event-designed-not-built);
 > the Biden 2021-2025 content band into [§28.13](#2813-era-of-terror-content-2000-2005-fired-in-the-late-game);
 > the #168 authoring-quality pass + the `dbomit`→#120 dataset fold also in §30.11.
+>
+> **Companion thread (`principle1772` = `049ce855`, the 7th captured 1772 thread, batch 25)** is
+> **Ted-GMed with vcczar live-ruling** ⇒ **designer-authoritative** (same hierarchy as `oopscpu`/`ted1772`).
+> The **cleanest 1-human-vs-9-CPU run in the KB**, run to a **natural ~1800 endpoint**. It is
+> corroboration-heavy but RULED **two NEW federalism foreign-affairs gaps (#177, #178)** + adjudicated the
+> full Federalist-era decision-event spine, ruled the **repealed-Bank-can-be-re-established** rule, pinned the
+> **kingmaker ≤1-protégé-per-turn cap**, and saw **Ted REWRITE the CPU career-track heuristic mid-run**. It is
+> also the **strongest #114 (solo-app) validation in the KB** and a 3rd-source designer-flag on **#176** + a
+> 3rd emergent-President demo (#153, Whipple). Indexed in **§30.15** below.
 
 ### 30.1 Rulings folded into existing topical sections
 
@@ -11881,6 +12016,46 @@ modern cluster):**
 > the **DH-36 meta hole**: the automation-reduces-upkeep argument + the **DH-69 in-app-rules-surface
 > need** (a solo digital app that *is* the computer removes both the upkeep burden and the
 > show-your-work trust problem). Cross-ref [§26.4](#264-apocalypse-planet-health-endgame--the-10-year-clock-new-endgame-model) endgame note + §27 burnout cross-refs.
+
+### 30.15 Rulings folded from `principle1772` (the 7th 1772 thread — designer-GMed 1-human-vs-9-CPU)
+
+> **★ DESIGNER-AUTHORITATIVE.** `principle1772` (`049ce855`, "Always stand on principle…," batch 25) is the
+> **7th captured 1772 thread and the cleanest 1-human-vs-9-CPU run in the KB** — **GMed by @MrPotatoTed (Ted,
+> the co-author) himself**, hand-running the nine CPU teams, with **@vcczar (V, lead designer) live-ruling**
+> rules questions. Same **Ted/V > GA** authority class as `oopscpu`/`ted1772` (tier 1-2). The thread is
+> **corroboration-heavy** (it re-confirms the entire 1772 founding cluster) but its **load-bearing value** is
+> (a) the **strongest #114 validation in the KB** ([§17.7](#177-forum-design-layer--the-multiplayer-1772-confirmation-designed-not-built): designer sustained the intended mode to a natural ~1800 endpoint by absorbing
+> the CPU-sim load), and (b) **two NEW federalism foreign-affairs gaps — #177** (the decision-event spine the
+> era graph explicitly excludes, [§20.3.1](#2031--177-new-principle1772-batch-25--the-federalism-foreign-affairs-decision-event-spine--the-eragraphts154-scope-wall-to-lift-designed-hard-walled-out-of-the-build))
+> **and #178** (treaty-grants-territory + the bounded "3-strikes" retry, [§17.6.1](#1761--178-new-principle1772-batch-25--treaty-grants-territory--the-bounded-3-strikes-retry-budget-designed)).
+> Cite `principle1772#POST n` (+ `chN` for chunk refs). Founding/federalism polarity (RED = Federalist side,
+> BLUE → the "Arnoldian Republicans").
+
+**★ V (designer) live-rulings — tier 1-2:**
+
+| Topic | Ruling | Folded into | `principle1772` POSTs |
+|---|---|---|---|
+| **★ Federalism foreign-affairs decision-event adjudications (#177)** | V/Ted adjudicated the full federalism decision-event spine LIVE (French Revolution neutrality fork, Citizen Genêt ending the alliance, Pinckney's/Jay Treaties, Haitian Revolution, the alt-history "Bourbons Restored" branch) — content the era graph explicitly walls out (`eraGraph.ts:154`) | [§20.3.1 #177](#2031--177-new-principle1772-batch-25--the-federalism-foreign-affairs-decision-event-spine--the-eragraphts154-scope-wall-to-lift-designed-hard-walled-out-of-the-build) | ch13/21/23/25/26 (POST 496, 199-322, 500-501, 566/1005, 933/1806-1808, 937/1808) |
+| **★ Treaty-grants-territory + "3-strikes" retry budget (#178 / DH-61)** | V ruled a territory-gating event (NW Indian War, then Jay Treaty) can fire **≤3× before permanent loss** ("repeated three times before they're gone for good"); the Jay Treaty grants WI/IN/IL/MI by TREATY | [§17.6.1 #178](#1761--178-new-principle1772-batch-25--treaty-grants-territory--the-bounded-3-strikes-retry-budget-designed) | ch21 POST 207; ch25 POST 905, 915-922 |
+| **★ Repealed Bank can be RE-ESTABLISHED** | V ruled the US Bank, once allowed to lapse, **can be re-established by a later bill** ("Technically there was a 2nd bank of the US") — institutions created↔killed↔recreated by law | [§20.3.1 #177](#2031--177-new-principle1772-batch-25--the-federalism-foreign-affairs-decision-event-spine--the-eragraphts154-scope-wall-to-lift-designed-hard-walled-out-of-the-build) (#101, #175 repealable flags) | POST 1818-1820 |
+| **★ Ted REWROTE the CPU career-track heuristic MID-RUN** | Ted made the CPU career-track rules "more strategic" mid-thread, **prioritizing kingmaker creation in the state where the faction has the most pols** (result: all 5 Red factions piled backrooms into Pennsylvania) — exactly the kind of CPU heuristic authoring the app's CPU-AI must own | [§25](#25-cpu-ai-specifications-designed-not-built-unless-flagged) (#70-#79) + [§17.7 #114](#177-forum-design-layer--the-multiplayer-1772-confirmation-designed-not-built) | POST 323 |
+| **Kingmaker takes ≤1 protégé per turn** | V ruled a Leadership kingmaker adds **≤1 protégé per turn (one every 2 years)**, NOT all 3 at once — pins the per-turn protégé cap (refines the kingmaker pipeline, #129; corroborates the same `ted1772` one-protégé-per-turn ruling, [§30.8](#308-rulings-folded-from-ted1772-the-4th-1772-thread--designer-authoritative)) | [§25](#25-cpu-ai-specifications-designed-not-built-unless-flagged) / kingmaker pipeline (#129) | POST 224 |
+| **CPU Gov declines a nomination 50% if sitting** | a sitting CPU Governor declines a nomination ~50% (keeps serving constituents; no Disharmonious penalty) | [§25.1](#251-candidate-selection-open-seats-primaries-conventions--the-7525-rule) | POST 238 |
+
+**Corroborations field-validated from the 7th-1772 angle (no new rule — strengthen existing entries):**
+
+| Existing entry | `principle1772` corroboration | POSTs |
+|---|---|---|
+| **★ #114** solo-app | designer (Ted) hand-ran 1-human-vs-9-CPU to a **natural ~1800 endpoint WITHOUT a burnout death** — but ONLY by absorbing every CPU faction's cabinet/draft/IRV-leadership/conversion/event-response sim. Strongest #114 validation in the KB ("designer-paid success proves the ceiling," not "burnout proves the gap"). | 1, 323, 1814 |
+| **★ #176** founding MilPrep cap | **3rd source AND designer-flagged by Ted himself**: forced war bills fire before the legislative phase + the Militia-Act tier prereq is federalism-only → MilPrep floored / drops to 2 ("Seems… dumb"). | 73, 259-261 |
+| **★ #153/#136** command-bootstrap | **3rd emergent President** — Abraham Whipple, an 0-Command CPU Admiral → Iron-Fist → President; Washington (the famous founder) went Unlikable + lost Canada → never President. (#153 now 4-source overall w/ St. Clair + Bartram.) | 407 (ch12), ch13 |
+| **#155/#158/#56/#45** RevWar | genuinely losable (0 naval wins 2 phases, Canada side-war LOST outright, concurrent multi-war), rescued ONLY by the French-alliance unloseable flag; full war-formula (no Sec-of-War starves Planning; immediate-defeat rolls pre-difficulty; whole-war loss punishes top leadership not the field general). | ch3 166-167, ch6 379-388, ch10 16-18, 264, 386 |
+| **#159/#100** Convention | per-article propose→sway→vote; **Manipulative convention-Pres Hamilton swung 7/13 states to grant racial-minority suffrage** → DomStab crisis + 2 minority pols draftable; near-historical ONLY because Moderate CPU delegates dominated ("a more dominant single player would railroad weird constitutions"). | ch11 306/322/746, ch12 811, 742-744 |
+| **#133** Continental Congress | 4/3/2 delegate-size table; 1st-CC faction-with-most-pols / 2nd-CC Governors appoint delegates; CC Pres = faction with most delegates; Articles → 2/3-of-states passage. | ch1 41/54, ch3 158/184/199 |
+| **#101/DH-40** offices-by-law | cabinet empty at 1788 (built bill-by-bill: Treasury/State/War/AG/Mint/Bank/SCOTUS); ★ same "Judicial Act" (Constitution) vs "Judiciary Act" (legis) **naming-mismatch DH-40 bug**; late-1790s cabinet incl. Key Advisor Hamilton. | ch14 962-964, ch16, ch26 1809 |
+| **#92** founding subsystem-gating | no CC until 1774; no leaders/conversions/cabinet/Lingering/presidential-Senate-House elections in the Era of Independence — phases SKIPPED, all turn ON at 1788. | ch1 30, ch2 38-40, ch6 388 |
+| **DH-61** "3 chances" rule | the NW-Indian-War "repeat 3× before gone for good" rule generalized into the #178 per-event retry budget (treaty + war + event territory gates). | ch21 207 |
+| **#31** cabinet-region-snub | Jay-Treaty event landed Marshall near-last partly from "lack of southerners in the cabinet" + an SC slave rebellion; cabinet meter impact net ±1-capped (corroborates the ±1/±3 swing cap, #80). | ch25 1802, ch26 1809 |
 
 ### 30.4 Authority hierarchy reminder
 
