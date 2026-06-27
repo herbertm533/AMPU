@@ -12,6 +12,66 @@
 > unchanged: **QW0 → K0/K2 → K3/K4 + `scenarioBoot`/`BootSheet` → `scenario1788`
 > (E1)**).
 
+> **★★★★ Batch-34 version — FIVE DESIGN/DATA/RECORD threads, NO playtest (a WAR/DATA/RECORD batch — 1 war-system
+> redesign + 2 dataset-authoring rosters + 1 highlights-record feed + 1 era-start interest-poll): `rethinkwar`
+> (0fd0f2e5, "Rethinking how war works" — the War-Score model design-origin frozen as **#45** + the naval-as-land-
+> DIFFICULTY-modifier sub-design; the ORIGIN of NEW bug **DH-79**) + `kiaofficers` (68fa2220, the war-KIA officer
+> dataset gap + war-death-vs-roster scaling; the ORIGIN of NEW **#243** war-death scaling + **#244** West-Point⇒no-
+> reappointment) + `strongnevernom` (326eee56, vcczar's ~18 STRONG never-nominated AMPU statlines at FULL strength;
+> the ORIGIN of NEW **#246/N1** the won-never balance tension) + `majorevents` (358cafc4, the marquee-playtest-events
+> RECORD feed; the ORIGIN of NEW **#245** party-leader-election die + corpus-coverage cross-refs) + `newplaytest`
+> (96690191, the 7-option era-start interest-poll → births the un-ingested **1868-Bushwa** run). **NO new keystone,
+> NO re-sequence, top-of-queue UNCHANGED (QW0 → K0/K2 → K3/K4 + scenarioBoot → E1).** 4 NEW gap rows #243/#244/#245/
+> #246 + 1 NEW bug DH-79 (max gap #246, max bug DH-79) + the #45 war-origin reconcile + merges (#240/#194/#216/#226).
+> **The two headlines are a TINY high-leverage QUICK-WIN and a deliberately DEFERRED epic.** **The value:**
+> **(1) ★★★ HEADLINE A → DH-79 NAVAL-BUG IS A QUICK-WIN (cheap-fixes lane; XS, RevWar-scoped; the #45-aligned
+> slice).** The RevWar win-check (`revolutionaryWar.ts:254-264`) NEVER consults `navalWins/navalLosses` (recorded at
+> `:202`) — so naval combat is **cosmetic** (the "one naval win ends naval forever" defect, confirmed in code;
+> `rethinkwar` origin). The fix is the **#45-aligned slice**: a naval WIN → next ground general **+1 Mil (75%)**, a
+> LOSS → **−1 Mil** (dropping into the `:212-214` baseTarget — forward-compatible with the eventual #45 War-Score
+> engine). **XS, RevWar-scoped → JOINS the cheap-fixes/quick-win lane (QW25).** debt #104; game-mechanics §30.24.A.
+> **(2) ★★★ HEADLINE B → #45 WAR-SCORE REDESIGN IS A DEFERRED POST-LAUNCH EPIC — RECORDED, NOT SCOPED PRE-LAUNCH
+> (debt #105).** `rethinkwar` is the design-ORIGIN of the full War-Score model (asymmetric Easy/Mod/Diff battle points
+> WIN +1/+2/+3 · LOSE −3/−2/−1; per-Military-Phase |score|×10% win/lose roll; Momentum d6; an **End-War Multiplier**
+> replacing fixed battle/phase counts). **★ The GM RULED war is "a side show" and the redesign WAITS until the game
+> ships (`rethinkwar` POST 26).** So #45 is recorded as the canonical war-engine spec it folds into — the **generic-
+> `War` engine (E3) / debt #16/#29/#152**, bounded by the RevWar winnability floors (#34a/#158) — but it is **NOT
+> scoped as a near-term row.** The DH-79 slice above is the ONLY pre-launch war change; #45 itself is post-launch.
+> **★ Annotate the existing war epic (E3) as the home of #45; do NOT add a near-term backlog row.** debt #105;
+> game-mechanics §30.24.A.
+> **(3) ★★ #243 WAR-DEATH SCALING + #244 WEST-POINT⇒NO-REAPPOINTMENT → war-casualty + appointment-eligibility
+> clusters (debt #106; both `GM⇒App`).** **#243** (M, → the war-casualty cluster, pairs #115): war casualties out-kill
+> the historical KIA roster → the casualty rate must be a **roster-aware governor** (scale to the living-officer pool)
+> + an **era-gated death-reduction** once a DoD/CJCS exists; ALSO a **`Math.random`→`rng.ts` determinism fix** at the
+> casualty sites (`revolutionaryWar.ts:89,:97`). **#244** (XS-S, → the appointment-eligibility cluster WITH DH-75):
+> a West-Point graduate, once appointed to a major military office, is **NOT re-appointable** to another (a one-office-
+> per-career gate); rides the same officer-appointment filter as DH-75's citizenship/branch gates. **★ #240 DATASET
+> EXPAND** = a STANDALONE author/DATA task (~10 KIA officers at sub-floor stats / **Army** expertise + ~18 never-
+> nominees at FULL strength → `scripts/seedDataset.mjs`); **★ #216 "Military"→"Army" EXPERTISE RENAME** = an S quick-
+> win (NOTE: "Transportation" already ships — the work is ONLY the rename + disambiguation from the `Military` trait).
+> **(4) ★ #245 PARTY-LEADER-ELECTION DIE → the leadership cluster (debt #107; `GM⇒App`).** `majorevents` (Cal POST 36):
+> the party-leader election = a **Kingmaker count + a die**; the Presidency USURPS the party-leadership; there is **NO
+> party-leader-ENDORSEMENT rule shipped.** Folds into the leadership cluster (Kingmaker/PL machinery). S-M.
+> **(5) ★ NEW DECISION-GATED (A) — #246/N1 STRONG NEVER-NOMINEES AT FULL STRENGTH (debt #108; HUMAN balance call).**
+> `strongnevernom` statted ~18 strong never-nominated figures (Sanders → Leonard Wood 1920) at **FULL CURATED_ROWS
+> strength, NOT sub-floor** (the sub-floor rule is wired only to `ERA_ROWS`/`ERA_FIGURES`, `seedDataset.mjs:239-242`)
+> — won-never is modeled by **PV/electability, NOT stat suppression.** **★ The HUMAN call: a THIRD electoral tier
+> (full-strength-but-won-never) vs. trusting won-never to EMERGE from PV** — i.e. whether a never-nominee can win the
+> presidency in-sim. **→ Decision-gated (A) User-gated** (folds into #240 the roster / #194 dynasties / #216 / #220).
+> **(6) ★ GM-REPLACEMENT LENS additions (a VIEW, no re-sequence).** ① referee gains the **war engine** (#45/#243/
+> DH-79 — the battle-points/casualty/peace math the GM hand-rolled) + the **appointment-eligibility** gate (#244 +
+> DH-75, the GM hand-checked who may hold a military office); ② opponent gains the **party-leader election** (#245 —
+> the GM hand-ran every CPU faction's leadership contest). Lens stays a VIEW; adding pointers re-sequenced nothing.
+> **(7) ★ HYGIENE / CORPUS-COVERAGE.** **1840-start** (persistent-Whig ~100-yr run) is **RECONFIRMED the top still-
+> needed** un-ingested run; add **1868-Bushwa** (the `newplaytest` Gilded-Age governor-appointed-Senators run, distinct
+> from `gilded`/`gild1868`) as a NEW un-ingested candidate; **2016-start** is flagged to confirm; **1960 = `redbutton`**
+> (already ingested). **NO gap closed (the #45 war-origin RECONCILED + 4 merges #240/#194/#216/#226), NO new keystone,
+> NO re-sequence; top of queue UNCHANGED (QW0 → K0/K2 → K3/K4 + scenarioBoot → E1) — the ONE delta to the cheap-fixes
+> lane is DH-79 (QW25, the #45-aligned naval slice), and #45 itself is a recorded POST-LAUNCH epic (NOT a near-term
+> row). Within-batch order: DH-79 (cheap-fixes, now) → #216 Army-rename + #240 dataset expand (data) → #243 war-
+> casualty + #244 appointment-eligibility + #245 leadership clusters → #45 deferred post-launch.** debt #104-#108;
+> technical-guide §9 batch-34 lead + §9.6 + §8 debt #104-#108; game-mechanics §30.24.A, §30.24.B, §30.24.C.
+>
 > **★★★★ Batch-33 version — FIVE DESIGN/DISCUSSION/BUILD threads, NO playtest (a RECONCILE/UNBLOCK batch that
 > DELIVERED the LONG-FLAGGED GATING THREADS): `groupthinkpv` (c6f6dcc7, "Groupthinking the Political Value" —
 > the trait-EFFECTS / office-PV / display-scale GATE; the sibling of `revampPV`, read as ONE PV spec — UNBLOCKS
@@ -2376,6 +2436,45 @@ Reverse-chronological. The expertise/abilities/traits/cabinet/lobby epic (PR1–
 is complete; the knowledge-base infra and eight ingestion batches are knowledge
 milestones (no code, but they are what every item below is traced to).
 
+- **Batch-34 ingestion (knowledge milestone — FIVE DESIGN/DATA/RECORD threads, NO playtest; a WAR/DATA/RECORD
+  batch).** Absorbed **`rethinkwar`** (0fd0f2e5, "Rethinking how war works" — the War-Score model design-origin
+  frozen as **#45** + the naval-as-land-DIFFICULTY-modifier sub-design; **ORIGIN of NEW bug DH-79**), **`kiaofficers`**
+  (68fa2220, the war-KIA officer dataset gap + war-death-vs-roster scaling; **ORIGIN of NEW #243/#244**, folds into
+  #240/#226/#225/#216), **`strongnevernom`** (326eee56, vcczar's ~18 STRONG never-nominated AMPU statlines at FULL
+  strength; **ORIGIN of NEW #246/N1**, folds into #240/#194/#216/#220), **`majorevents`** (358cafc4, the marquee-
+  playtest-events RECORD feed; **ORIGIN of NEW #245** + corpus-coverage cross-refs), **`newplaytest`** (96690191, the
+  7-option era-start interest-poll → births the un-ingested **1868-Bushwa** run). **4 NEW gap rows #243/#244/#245/#246
+  + 1 NEW bug DH-79** (max gap #246, max bug DH-79) + the #45 war-origin reconcile + merges (#240/#194/#216/#226).
+  **★★★ HEADLINE A → DH-79 NAVAL-BUG IS A QUICK-WIN (cheap-fixes lane; XS, RevWar-scoped; the #45-aligned slice; debt
+  #104; `GM⇒App`).** The RevWar win-check (`revolutionaryWar.ts:254-264`) NEVER consults `navalWins/navalLosses`
+  (recorded `:202`) → naval is COSMETIC (the "one naval win ends naval forever" defect). Fix = the #45-aligned slice:
+  naval WIN → next ground general **+1 Mil (75%)**, LOSS → **−1 Mil** (drops into `:212-214` baseTarget; forward-
+  compatible with #45). **→ JOINS the cheap-fixes lane (QW25).** **★★★ HEADLINE B → #45 WAR-SCORE REDESIGN IS A
+  DEFERRED POST-LAUNCH EPIC — RECORDED, NOT SCOPED PRE-LAUNCH (debt #105).** `rethinkwar` is the design-ORIGIN of the
+  full War-Score model (asymmetric Easy/Mod/Diff battle points; per-phase |score|×10% roll; Momentum d6; an End-War
+  Multiplier). **★ The GM RULED war is "a side show," redesign WAITS until the game ships (`rethinkwar` POST 26).** #45
+  is recorded as folding into the generic-`War` engine (E3) / debt #16/#29/#152, bounded by the RevWar floors (#34a/
+  #158), but is NOT a near-term row; the DH-79 slice is the ONLY pre-launch war change. **★★ #243 WAR-DEATH SCALING**
+  (M, → war-casualty cluster, pairs #115; debt #106): a roster-aware casualty governor + era-gated DoD/CJCS death-
+  reduction + a `Math.random`→`rng.ts` determinism fix at `revolutionaryWar.ts:89,:97`. **★★ #244 WEST-POINT⇒NO-
+  REAPPOINTMENT** (XS-S, → appointment-eligibility cluster WITH DH-75; debt #106): a West-Pointer, once in a major
+  military office, is not re-appointable; rides the DH-75 citizenship/branch officer filter. **★ #240 DATASET EXPAND**
+  = a STANDALONE author/DATA task (~10 KIA officers sub-floor/Army-expertise + ~18 never-nominees FULL-strength →
+  `scripts/seedDataset.mjs`). **★ #216 "Military"→"Army" EXPERTISE RENAME** = an S quick-win (NOTE: "Transportation"
+  already ships — work is ONLY the rename + disambiguation from the `Military` trait). **★ #245 PARTY-LEADER-ELECTION
+  DIE** (S-M, → leadership cluster; debt #107; `GM⇒App`): the PL election = Kingmaker count + a die; the Presidency
+  USURPS the PL; NO PL-endorsement rule shipped (`majorevents` Cal POST 36). **★ #246/N1 STRONG NEVER-NOMINEES AT FULL
+  STRENGTH → Decision-gated (A) User-gated** (debt #108; HUMAN balance call): ~18 strong never-nominees statted FULL-
+  strength NOT sub-floor (sub-floor wired only to `ERA_ROWS`/`ERA_FIGURES` `seedDataset.mjs:239-242`); the call =
+  a 3rd electoral tier (full-strength won-never) vs. trusting won-never to EMERGE from PV. **★ GM-REPLACEMENT LENS
+  additions** (a VIEW, no re-sequence): ① referee gains the war engine (#45/#243/DH-79) + the appointment-eligibility
+  gate (#244 + DH-75); ② opponent gains the party-leader election (#245). **★ CORPUS-COVERAGE: 1840-start RECONFIRMED
+  top still-needed; add 1868-Bushwa as a NEW un-ingested candidate; 2016-start to confirm; 1960=`redbutton` (ingested).**
+  **NO gap closed (the #45 war-origin RECONCILED + 4 merges), NO new keystone, NO re-sequence, top-of-queue UNCHANGED
+  (QW0 → K0/K2 → K3/K4 + scenarioBoot → E1) — the ONE delta is DH-79 (QW25) in the cheap-fixes lane + #45 a recorded
+  POST-LAUNCH epic. Within-batch order: DH-79 (cheap-fixes) → #216 Army-rename + #240 dataset expand → #243/#244/#245
+  clusters → #45 deferred.** debt #104-#108; technical-guide §9 batch-34 lead + §9.6 + §8 debt #104-#108; game-
+  mechanics §30.24.A, §30.24.B, §30.24.C.
 - **Batch-33 ingestion (knowledge milestone — FIVE DESIGN/DISCUSSION/BUILD threads, NO playtest; the RECONCILE/
   UNBLOCK batch that DELIVERED the long-flagged gating threads).** Absorbed **`groupthinkpv`** (c6f6dcc7,
   "Groupthinking the Political Value" — the trait-EFFECTS / office-PV / display-scale GATE; the sibling of
@@ -3661,7 +3760,16 @@ at `:3733`** — the primary is candidate *selection* (the AI-utility use the ru
 in-PV layer) is now UNBLOCKED → READY-AFTER-#216** (still in Phase-1, no longer gated on an un-ingested thread;
 #220 0–100 display-scale RESOLVED to 0–100/50-avg, off Decision-gated). **★ DH-77 (QW23) RE-SCOPED** — worst
 trait = Incompetent −20 (the `lackey −53` was a spreadsheet TYPO, already correct in `pv.ts`); the floor-OFFSET
-fix stands at the corrected magnitude.
+fix stands at the corrected magnitude. **★★ Batch-34 adds ONE new XS quick-win (QW25) — FIX THE DH-79 NAVAL BUG
+(`revolutionaryWar.ts:254-264`), the #45-ALIGNED naval slice (`GM⇒App`, debt #104).** The RevWar win-check NEVER
+consults `navalWins/navalLosses` (recorded at `:202`), so naval combat is COSMETIC today (the "one naval win ends
+naval forever" defect, confirmed in code; `rethinkwar` origin). The fix is the **#45-aligned slice**: a naval WIN →
+the next ground general gets **+1 Mil (75%)**, a LOSS → **−1 Mil** (dropping into the `:212-214` baseTarget) —
+deliberately the SAME shape #45's future War-Score engine will read, so it is **forward-compatible** and not thrown
+away. **XS, RevWar-scoped, standalone (no dependency); ship in the cheap-fixes lane.** **★ This is the ONLY pre-launch
+war change** — the full #45 War-Score redesign is a DEFERRED POST-LAUNCH epic (the GM RULED war is "a side show,"
+`rethinkwar` POST 26 → it folds into the generic-`War` engine E3 / debt #16/#29/#152, NOT a near-term row).
+**RULED-as-bug by code-verification (`revolutionaryWar.ts:254-264` vs `:202`); the slice is `rethinkwar`-aligned.**
 
 | # | Item | Scope | Depends on | Size | Source | Status |
 |---|---|---|---|---|---|---|
@@ -3690,6 +3798,7 @@ fix stands at the corrected magnitude.
 | **QW22** | **★★ batch-30 #216 — PV trait-name remap (forum→shipped `Trait` union) — the BLOCKING PREREQUISITE of the PV overhaul (debt #85)** *(NEW, batch 30 — the front-half of the PV overhaul; DO FIRST of the two PV QWs)* | **S — produce an explicit forum-trait → shipped-`Trait`-union map**, then apply #214's tiers through it. The 2023 `revampPV` trait vocabulary ≠ the current `Trait` union (`types.ts:62-117`): of the ~57 traits in vcczar's POST-33 tier list, **~15 are ABSENT** from the shipped union (Teflon, Military Leader, Bookkeeper, Geostrategist, Everyman, Lawful/Cop, Jurisprudence, Union Loyalist, Disharmonious, Lackey, Late Bloomer, Illicit, Pliable, Incoherent, Easily Overwhelmed), **2 are pure RENAMES** (`Flipflopper`→`Flip-Flopper`, `Two-faced`→`Two-Faced`), and **12+ SHIPPED traits were NEVER valued in 2023** (Nationalist/Globalist/Reformist/Loyal/Ambitious/Opportunist/Impressionable/Scandalous/Corrupt/Traitor/Outsider/Ideologue) — so **~17 of ~57 line-items (~30%) mis-key or DROP without the remap.** A literal transcription is wrong; the table is **tiers to RE-MAP, not literal keys.** Independently useful (clarifies the trait vocabulary) and **UNBLOCKS #214** — without it the per-trait tier table is un-applyable. **Pairs with #168** (the `planb` terminology audit) + the existing trait-rename tracking. No dependency; ship in the cheap-fixes lane. | — | S | gap **#216 / `revampPV` §6 D8 / POST 33; codebase-verified `types.ts:62-117` trait union vs the 2023 forum vocabulary** — NEW (debt #85) | ready (DO FIRST of the PV pair) |
 | **QW23** | **★★ batch-30 DH-77 — PV floor-OFFSET clamp fix (replace `Math.max(0,…)` at `pv.ts:88`) (debt #85) — ★ batch-33 RE-SCOPED (worst trait = Incompetent −20, not the `lackey −53` typo)** *(NEW, batch 30 — standalone XS; the rest of the PV overhaul is a balance epic)* | **XS — replace the `Math.max(0, Math.round(total))` clamp at `pv.ts:88` with a constant floor-OFFSET** so sub-zero Politician-Values keep their ORDERING for the CPU's draft/leadership heuristic. The clamp is the most clearly *wrong* line today: it floors every negative PV to 0, collapsing the ordering of below-average pols that the CPU still needs to rank (it can't tell JFK Jr −5 from John Payne Todd −34 — both become 0). Ted's one hard demand in `revampPV` was *"no negative numbers"* for human display, satisfiable via a flat offset, NOT a destructive clamp. **Independently shippable** — does NOT require the #214/#215 reweight (the remaining PV sites `pv.ts:70-79` are the balance epic). Pairs with #214/#215/#216/#220 (all rebuild `pv.ts:70-88`). **★ Batch-33 RE-SCOPE (`groupthinkpv`):** the spreadsheet `lackey −53` was a TYPO (ruled −5, already correct in `pv.ts`); the genuine worst trait = **Incompetent −20** — the floor-OFFSET fix stands, just at the corrected magnitude. No dependency; ship in the cheap-fixes lane. | — | XS | bug **DH-77** (codebase `pv.ts:88` `Math.max(0,…)` clamp; superseded by `revampPV` #220; **★ batch-33 `groupthinkpv` RE-SCOPE: worst = Incompetent −20, `lackey −53` was a typo**) — NEW (debt #85) + RE-SCOPED | ready |
 | **QW24** | **★★ batch-33 REMOVE `pv*0.1` FROM ELECTIONS — delete the PV→election double-count (debt #85; the single highest-leverage line in batch 33) — SUPERSEDES the batch-30/31 "re-tune `pv*0.1`" note** *(NEW, batch 33 — designer-RULED; pairs with QW19 at the SAME line)* | **XS — delete the `+ pv * 0.1` term from `calcStateVote`'s general-election scorer at `phaseRunners.ts:3709`** (`pv = c.pvCache` `:3699`). The designer + room RULED **PV must NOT feed elections** — pricing PV into the vote DOUBLE-COUNTS the traits/abilities already present in BOTH PV and the election roll (`groupthinkpv` POST 36-38; a highest-PV election-bonus proposal was REJECTED). This is **not a re-tune** (the batch-30/31 note) — **the term should not exist.** **★ High-leverage twice over: (a)** it PAIRS WITH QW19's election-determinism work at the SAME line (route the `:3711` `Math.random` jitter through `rng.ts` in one touch — debt #1/#71); **(b)** it DECOUPLES the #214 PV reweight from elections so the now-unblocked PV epic can re-fit freely without distorting margins. **★ KEEP the 2.9.1 PRIMARY scorer's raw `pvCache` at `:3733`** — the primary is candidate *selection* (the CPU picking its nominee = the AI-utility use the ruling ENDORSES); remove ONLY `:3709`. No dependency; ship in the cheap-fixes lane alongside QW19/QW22/QW23. **RULED by the designer + room (`groupthinkpv` POST 36-38).** | — (ships with QW19 at the same line) | XS | gap **debt #85 / `groupthinkpv` POST 36-38** (codebase `phaseRunners.ts:3709` `+ pv*0.1`; `:3733` primary `pvCache` KEPT) — NEW; SUPERSEDES the batch-30/31 "re-tune `pv*0.1`" note | ready |
+| **QW25** | **★★ batch-34 FIX THE DH-79 NAVAL BUG — wire naval WIN/LOSS into the RevWar resolution (the #45-aligned naval slice; debt #104; `GM⇒App`)** *(NEW, batch 34 — code-verified bug; the ONLY pre-launch war change)* | **XS — make the RevWar win-check consult naval results.** Today `revolutionaryWar.ts:254-264` resolves the war WITHOUT ever reading `navalWins/navalLosses` (recorded at `:202`), so naval combat is **purely cosmetic** (the "one naval win ends naval forever" defect, confirmed in code). The fix is the **#45-aligned slice** vcczar sketched: a naval **WIN** → the next ground general gets **+1 Mil at 75%**, a naval **LOSS** → **−1 Mil**, both routed into the `:212-214` baseTarget so they shift the ground odds. This is deliberately the SAME shape the eventual #45 War-Score engine will consume (naval = a land-DIFFICULTY modifier), so the slice is **forward-compatible**, not throwaway. **★ This is the ONLY pre-launch war change** — the full #45 War-Score redesign is a DEFERRED POST-LAUNCH epic (the GM RULED war is "a side show," `rethinkwar` POST 26). RevWar-scoped, standalone (no dependency); ship in the cheap-fixes lane. **Code-verified bug (`revolutionaryWar.ts:254-264` vs `:202`); the slice is `rethinkwar`-aligned.** | — | XS | bug **DH-79** (codebase `revolutionaryWar.ts:254-264` ignores `navalWins/navalLosses` recorded `:202`; `rethinkwar` naval-as-land-difficulty origin) — NEW (debt #104) | ready |
 
 ---
 
@@ -3885,9 +3994,10 @@ engine; the UI shows only player-visible numbers (fog of war).
 | **Confirmation/appointment toxicity + laws that move people, not just numbers** *(batch-28 — `GM⇒App`)* | **#199** (confirmation-rejection fallout — ★ batch-31 RE-SPEC: the 33/33/34 blame roll + already-Controversial→lifetime-cabinet-ban, SUPERSEDING the Controversial→Incompetent cascade), **#200** (bills with personnel effects — eject/disqualify officeholders), **#193** (interest-acquisition at the 20-yr career mark) | **E16/E9-handler-9d** (#199, now lands INSIDE the §9.3.11 confirmation flow as XS once #91 exists — re-spec before #112/#73) + **E2/E25** (#200 bill `personnelEffect`, optionally via SCOTUS, S-M) + **E13/#163** (#193, RESOLVED, S) — debt #77; all NOT-built today. |
 | **★ THE CABINET/SCOTUS CONFIRMATION SUBSYSTEM — the confirmation VOTE/block/filibuster/cloture/fallout the GM hand-adjudicated every turn** *(batch-31 — `GM⇒App`, the batch headline; the REFEREE half)* | **#91** (the canonical 12-rule §9.3.11 procedure), **#172** (era-keyed thresholds + Nuclear-Option), **DH-76** (the cloture half, finally supplied) | **E16 + E14c — it GROWS the existing cabinet/appointments epic (debt #50) from S-M to M-L; NOT a new keystone, NOT a duplicate row.** Both `runPhase_2_3_1_Cabinet` (`phaseRunners.ts:2158`) AND SCOTUS (`runPhase_2_8_2_CourtMgmt:3667`) auto-confirm with NO vote (`grep -iE 'nuclearOption\|cloture\|filibuster\|topFour' src/` = ZERO). The flow: auto-confirm gate (Admin≥3 ∧ ¬Controversial ∧ ¬IronFist-SML ∧ ¬Top-Four) → hearing at the #172 era-keyed threshold → SML party-wide block [5 reasons] → Puritan filibuster + Manipulation-cloture [DH-76] → president's tools [compel / convert N=Legislative senators] → vote [Admin-1 50/50-flip = the DH-23 root cause; trait→vote 75%] → #199 33/33/34 fallout → SML 5-name recovery → office-vacancy cascades → the #181 promise. **GATED on K2** (the SML enact/repeal + president's-tools rows are ActionRegistry entries) **+ K5** (CPU votes / SML block are CpuController handlers). The two PRIMARY sources are `rulebook` + `apptdeepdive`; debt #91; game-mechanics §9.3.11. |
 | **★ Legislative referee: filibuster + era-keyed cloture, the CPU legislative/confirmation vote rules, cross-party cabinet caps, and a bill-proposal validator** *(batch-29 — `GM⇒App`; the LEGISLATIVE HALF of the referee that the modern hands-off run proved the engine doesn't yet own)* | **#208** (CPU maj-leader filibuster-override + maj/min-leader vote rule + cross-party cabinet caps), **DH-76** (filibuster→era-keyed Cloture counter, no cloture path today), **DH-74** (`billProposable` predicate — only LEGAL proposals surface) | **E9 handlers 9b (legislation) + 9d (cabinet), K5-DEPENDENT** for #208/DH-76 (`grep filibuster\|cloture src/` = ZERO; the loop is committee `phaseRunners.ts:3463` → floor `:3498` with NO filibuster step between; all deterministic, NOT a roll; debt #80, M). **DH-74** binds at `runPhase_2_6_1_Proposals` (`phaseRunners.ts:3431/3444`) and **SHARES the territory/era content-filter with #206/#92 + DH-60 — build the predicate library ONCE, use it for events AND bills** (debt #81, S-M). **DH-14 is NOT here** — it is a ② opponent-half CPU-AI artifact (see below), not a mechanical block. **★ Batch-30: DH-76 now has its ORIGIN** — the filibuster-without-cloture rule was FIRST authored in `summer2021` (the batch-26 run's changelog); the batch-29 `wilsons1916#P349` finding was the downstream symptom. No re-size (the cloture build stays E9 9b, K5-dependent, debt #80/#208). **The legislative content-filter this row's DH-74 validator shares with #206/#92 + DH-60 is also where #221's per-category era-activation metadata (legislation incl. deactivations) lives** (debt #88, K4). |
-| **★ Military-appointment eligibility (citizenship + experience-type→branch gating)** *(batch-29 — `GM⇒App`)* | **DH-75** | The GeneralInChief filter checks ONLY `!p.currentOffice && p.skills.military >= 3` (`phaseRunners.ts:2256-2261`) — no citizenship gate, no Army↔Navy match (so Pancho Villa/Aguinaldo were appointable as US generals, Nimitz auto-slotted despite naval exp, `wilsons1916#P162-169`). Add both checks to the officer-appointment filter; XS-S, standalone, pairs the 1916-bare-boot officer corps (#209). debt #82. |
+| **★ Military-appointment eligibility (citizenship + experience-type→branch gating + ★ batch-34 West-Point⇒no-reappointment)** *(batch-29; ★ batch-34 — `GM⇒App`)* | **DH-75**, **★ batch-34 #244** | The GeneralInChief filter checks ONLY `!p.currentOffice && p.skills.military >= 3` (`phaseRunners.ts:2256-2261`) — no citizenship gate, no Army↔Navy match (so Pancho Villa/Aguinaldo were appointable as US generals, Nimitz auto-slotted despite naval exp, `wilsons1916#P162-169`). Add both checks to the officer-appointment filter; XS-S, standalone, pairs the 1916-bare-boot officer corps (#209). **★ BATCH-34 (`kiaofficers`) ADDS A THIRD ELIGIBILITY GATE — #244 West-Point⇒no-reappointment:** a West-Point graduate, once appointed to a major military office, is **NOT re-appointable** to another (a one-major-office-per-career gate the GM hand-enforced). Build it INTO the SAME officer-appointment filter as DH-75's citizenship/branch checks (one eligibility predicate, three gates); XS-S, relates DH-75. The GM hand-decided who was eligible for a military office each turn → this gate retires that adjudication. debt #82, #106. |
 | **Subsystems the GM ran by hand that have NO code path at all** *(batch-28 — `GM⇒App`; 9 re-confirmed ABSENT, spec'd, LOWER priority)* | **debt #74** (US-Rep Voting-Power #34/#62, player Generate-a-candidate 3.0.25, gerrymander gov-action #20), **debt #75** (Acting-Presidency 3.0.33, Do-Not-Enforce Pres-Actions #23, Master-Kingmaker promotion #128), **debt #76** (Secessionist/pardons 3.0.35 #121/#122, rising-sea EV #41, trait-renames #168) | Each binds where its gap row notes (E2/E4/E13/E22/E25/E28 + the #20 gov-action umbrella); sizes XS→M. **The B2/B3 Vic3 gov-actions (meter-boost + migration) fold into the #20 gerrymander/gov-action umbrella (debt #74), not a new row.** |
 | Treaty / decision-event / diplomacy adjudication, retry budgets | #177, #178, #107, #162 | **E1** (federalism epic — #177/#178 territory + decision-events) + **E15** (era-event extensions) + **E12** (diplomacy) + **E13** (exec actions) |
+| **★ War adjudication — the battle-points / casualty / naval / peace math the GM hand-ROLLED every Military Phase** *(batch-34 — `GM⇒App`)* | **#45** (the War-Score model — asymmetric battle points + |score|×10% roll + Momentum d6 + End-War Multiplier), **★ DH-79** (naval WIN/LOSS → land Mil-difficulty), **★ #243** (roster-aware casualty governor + era-gated death-reduction + the `Math.random`→`rng.ts` casualty determinism fix), with **#152/#155/#34a/#158/#56** | **E3 (generic war) — the GM rolled wars by hand; this is the ① referee that retires it.** ★ TWO speeds: **(a) DH-79 = the QUICK-WIN slice NOW** (QW25, cheap-fixes lane — wire `navalWins/navalLosses` into the RevWar win-check `revolutionaryWar.ts:254-264`; naval = a land Mil-difficulty modifier, the #45-aligned shape; XS, RevWar-scoped) + **#243** (the war-death scaling cluster — a roster-aware casualty governor + DoD/CJCS-gated reduction + the `:89,:97` determinism fix; M, pairs #115); **(b) #45 = the DEFERRED POST-LAUNCH EPIC** (the full War-Score redesign — the GM RULED war is "a side show," `rethinkwar` POST 26 → it folds into the generic-`War` engine E3 / debt #16/#29/#152, bounded by the RevWar winnability floors #34a/#158, and is RECORDED-but-NOT-scoped pre-launch). The GM hand-computed every battle roll, casualty tally, and peace check → the war engine retires that arithmetic, exactly as the `excelautomate` ">30 min/phase ⇒ automate" budget demands. debt #104/#105/#106. |
 | End-condition tracking (incl. the "big red button" nuclear loss) **+ the timeline-COMPLETION terminus** | #88, #188, **#207** *(batch-29)* | **E6** (meter-floor game-end + endgame/apocalypse clocks; #188 is a configured end-condition ROW on #88, NOT a MAD engine). **★ Batch-29: #207** is the COMPLETION-vs-LOSS half — the build has NO year-cap / victory / sandbox terminus (`gameEnded` fires at ONE event-driven site, `phaseRunners.ts:2871`; `phases.ts` predicates are pure `year % N`), so a timeline-completion DECISION (year-cap / sandbox / score-out) is owed, modeled as a DISTINCT end-state from LOSS; decision-gated, debt #79. |
 | Explaining the rules so players don't need a GM to interpret them | DH-69, QW21, **#195, #202** | **K4** boot/onboarding surface (DH-69 in-app rules / legal-move surface, CITE-only) + **QW21** hide-the-math (presentation track) + **★ batch-28 #195 records-archive** (queryable past elections/administrations/votes/wars + per-pol history tab + end-of-era summary + graveyard — the GM hand-maintained these records) + **#202 Campaign-Advisor / Think Tank** (reuses CPU logic to suggest 1-3 moves to a solo player; pairs with #114 the CPU controller it reuses). |
 
@@ -3899,6 +4009,7 @@ all 9). The app is a **solo adaptation of a multiplayer game** (#114: built for
 |---|---|---|
 | Per-faction CPU decisions: candidate selection, voting, meter management, cabinet/legislative heuristics | #114, E9, K5, CPU-AI spec cluster **#70–#78** | **K5** (`CpuController` scaffold — keystone) → **E9** (the 15-PR handler suite). **★ Batch-29: `welcome2future` (8-of-10 factions on CPU rules) is the corpus's MOST COMPLETE modern CPU-turn sample** — a full 2022 turn ran hands-off and produced plausible outcomes (charter evidence that zero-human resolution WORKS), reinforcing E9/K5; no re-sequence. |
 | **★ CPU NOMINATION-ACCEPTANCE (who says yes by candidate type) + the founding-CC appointment opponent half** *(batch-31 — `GM⇒App`)* | **#229** (the per-candidate-type CPU acceptance/decline matrix + humans-freely-accept-except-VP), **#233** (CC-appointment: committee-chair nominates → delegates vote → CC-President breaks ties) | **E9 handler 9d + E16** for **#229** — the OPPONENT half of the appointment phase (the appointee always accepts today), DISTINCT from #73 (the CPU picker) and #91 (the confirmation vote): the §E matrix (Senate/House officers + SC = 10/25% top, never lower; Senators/Govs = 90/75/50/10%; Reps = ALWAYS; military = ALWAYS unless Disharmonious; career-track 100/75/50% → pulled off-track; sitting VP CANNOT accept) + trait gates (Incompetent/Easily-Overwhelmed/fired-quit); M; `apptdeepdive§E POST 40`. **E1** for **#233** — the founding-era CC appointment flow (chair-nominates → delegates-vote → CC-Pres-tiebreak, incumbent-stays-on-fail), wired to `continentalCongress.ts`; S; `playtestdraft POST 230-238` + `apptdeepdive§A POST 19/30/40`. Both NOT-built today; neither re-sequences anything. |
+| **★ Party-leader ELECTION — the per-faction leadership contest the GM hand-ran every cycle (Kingmaker count + a die)** *(batch-34 — `GM⇒App`)* | **★ #245** (the PL-election die; Presidency-usurps-PL; no PL-endorsement rule) | **The leadership cluster** (Kingmaker / party-leader machinery, `phaseRunners.ts:2010/2035/2076/2309` writers). `majorevents` (Cal POST 36): the party-leader election = a **Kingmaker count + a die**, the **Presidency USURPS the party-leadership**, and there is **NO party-leader-ENDORSEMENT rule shipped.** This is the ② opponent half — the GM hand-ran each non-human faction's leadership contest every cycle; the die + the usurp rule + the (absent) endorsement rule retire that. S-M; folds into the leadership cluster; debt #107. |
 | **★ CPU-AI *artifacts* mistaken for mechanical blocks** *(batch-29 — a ② lens correction)* | **DH-14** | The 19th Amendment ("Equal Voting Rights for Women") PASSES in the 10-human 1916 game (House 374-61, Senate 79-17, ratified, `wilsons1916`), so the `drums` all-CPU "this amendment will never pass with CPUs" is a **CPU-AI / era-ideology-weighting artifact, NOT a mechanical block** → fixed by the era-keyed bill-ideology table (move Mods off suffrage's negative side in 1916; debt #5-adjacent) + a CPU vote model (**#208** / E9 handler 9b) that can reach 2/3 like a human field. No standalone work — it folds into the era-content table (① data) + the CPU legislative engine (② opponent). |
 | (the cost of NOT having it) | **DH-36** | the 4 documented GM-burnout playtest deaths — the *reason* K5/E9 are load-bearing, not optional |
 
@@ -4010,6 +4121,23 @@ owns that surface — **adding a lens pointer never re-sequences the backlog.**
 > under ① as the rules-calculator it reads; PV-as-AI-utility is the boundary statement, not a new opponent
 > behavior). **Adding/sharpening these pointers re-sequenced nothing — top of queue is unchanged (QW0 → K0/K2 →
 > K3/K4 + scenarioBoot → E1).**
+
+> **★ Batch-34 adds a WAR-ADJUDICATION referee row to ① + a party-leader-election opponent row to ② — still a VIEW,
+> no re-sequence.** The new ① referee/calculator pointer is the **war engine** (the NEW "War adjudication" row above):
+> #45 (the War-Score battle-points/casualty/peace math the GM hand-rolled every Military Phase), **DH-79** (the naval
+> WIN/LOSS → land Mil-difficulty slice — the ONLY pre-launch piece, QW25 in the cheap-fixes lane), and **#243** (the
+> roster-aware casualty governor + DoD/CJCS-gated death-reduction + the `Math.random`→`rng.ts` casualty determinism
+> fix). **★ The war engine is the cleanest single example of the ① referee this batch** — the GM literally rolled
+> dice for battles and tallied casualties by hand; #45 is the spec that retires it, but the GM RULED it "a side show"
+> so the FULL engine is DEFERRED post-launch (it folds into E3 / debt #16/#29/#152, bounded by the RevWar floors) —
+> only the DH-79 slice + the #243 scaling land near-term. The **appointment-eligibility row** is sharpened: **#244
+> West-Point⇒no-reappointment** joins DH-75 as a THIRD gate on the SAME officer-appointment filter (the GM hand-
+> decided who could hold a military office). On the ② opponent half the new entry is the **party-leader election (the
+> NEW row above)**: **#245** — the Kingmaker-count + die + Presidency-usurps-PL contest the GM hand-ran for every
+> non-human faction each cycle (no PL-endorsement rule shipped; `majorevents` Cal POST 36). **★ The `excelautomate`
+> ">30 min/phase ⇒ automate" budget the batch-33 lens recorded directly motivates the war-engine automation** (the
+> GM's hand-rolled battle/casualty math is exactly the kind of per-phase arithmetic that budget targets). **Adding
+> these pointers re-sequenced nothing — top of queue is unchanged (QW0 → K0/K2 → K3/K4 + scenarioBoot → E1).**
 
 ---
 
@@ -5060,6 +5188,66 @@ and #177/#178 are the federalism-era next-build content.**
 > #97-#98/#101-#103; technical-guide §9 batch-33 lead + §9.6 + §8 debt #101-#103 + updated #85/#87/#73;
 > game-mechanics §3.4.1, §15.1, §29.5, §2.3, §14.2, §14.1.3, §15.4(c), §18.1, §30.23.
 
+> **★★ Batch-34 Phase-1 FOLD-INS (`rethinkwar`/`kiaofficers`/`strongnevernom`/`majorevents`/`newplaytest`;
+> debt #104-#108; dependency-ordered into the area each belongs to — NO new keystone, NO re-sequence, top-of-queue
+> UNCHANGED).** A WAR/DATA/RECORD batch: every delta FOLDS into an existing epic/cluster or is a recorded post-launch
+> deferral. **The within-batch order is binding: DH-79 (cheap-fixes lane, now → QW25) → #216 Army-rename + #240
+> dataset expand (data) → #243 war-casualty + #244 appointment-eligibility + #245 leadership clusters → #45 deferred
+> post-launch.**
+> **★ DH-79 NAVAL BUG = the ONLY pre-launch war change → QW25 (cheap-fixes lane; XS, RevWar-scoped; debt #104;
+> `GM⇒App`).** The RevWar win-check (`revolutionaryWar.ts:254-264`) NEVER reads `navalWins/navalLosses` (recorded
+> `:202`) → naval is COSMETIC. Fix = the #45-aligned slice (naval WIN → next ground general +1 Mil at 75% / LOSS →
+> −1 Mil, into the `:212-214` baseTarget). Forward-compatible with #45 (naval = a land-difficulty modifier).
+> **★★ #45 WAR-SCORE REDESIGN = DEFERRED POST-LAUNCH EPIC → folds into the generic-`War` engine (E3) / debt #16/#29/
+> #152; RECORDED, NOT scoped pre-launch (debt #105).** `rethinkwar` is the design-ORIGIN of the full War-Score model:
+> asymmetric Easy/Mod/Diff battle points (WIN +1/+2/+3 · LOSE −3/−2/−1) + a per-Military-Phase |score|×10% win/lose
+> %-roll + Momentum d6 + an **End-War Multiplier** replacing fixed battle/phase counts (MrPotatoTed POST 1/2; vcczar
+> codified the ordered Military-Phase ruleset POST 16/18). **★ The GM RULED war is "a side show" and the redesign
+> WAITS until the game ships (`rethinkwar` POST 26).** So #45 is the canonical spec the generic-`War` engine row (E3)
+> will build TO — bounded by the RevWar winnability floors (#34a/#158, "1772 must stay winnable") — but it is **NOT a
+> near-term row.** **★ Annotate E3 as the home of #45; do NOT add a near-term backlog row** (the DH-79 slice + #243
+> scaling are the only near-term war work). debt #105; game-mechanics §30.24.A.
+> **★ #243 WAR-DEATH SCALING → folds into the war-casualty cluster (E3-adjacent + #115); M (debt #106; `GM⇒App`).**
+> War casualties out-kill the historical KIA roster, so the casualty rate must be a **roster-aware governor** (scale
+> to the living-officer pool, not a flat rate) + an **era-gated death-reduction** that activates once a DoD/CJCS
+> office exists; ALSO a **`Math.random`→`rng.ts` determinism fix** at the casualty sites (`revolutionaryWar.ts:89,
+> :97` — engine must be seeded). **Pairs #115** (the candidate/officer generator that refills the bench the war
+> thins). M; folds into the war-casualty cluster, NOT a new epic. debt #106; game-mechanics §30.24.B.
+> **★ #244 WEST-POINT⇒NO-REAPPOINTMENT → folds into the appointment-eligibility cluster WITH DH-75; XS-S (debt #106;
+> `GM⇒App`).** A West-Point graduate, once appointed to a major military office, is NOT re-appointable to another
+> (a one-major-office-per-career gate). Build it INTO the SAME officer-appointment filter as DH-75's citizenship +
+> experience-type→branch gates (`phaseRunners.ts:2256-2261` — one eligibility predicate, three gates). **Relates
+> DH-75**; XS-S; folds into the appointment-eligibility cluster. debt #106; game-mechanics §30.24.B.
+> **★ #245 PARTY-LEADER-ELECTION DIE → folds into the leadership cluster; S-M (debt #107; `GM⇒App`).** `majorevents`
+> (Cal POST 36): the party-leader election = a **Kingmaker count + a die**; the **Presidency USURPS the party-
+> leadership**; there is **NO party-leader-ENDORSEMENT rule shipped.** The faction `leadershipStartYear` is written
+> (`phaseRunners.ts:2010/2035/2076/2309`) but the contest itself is GM-hand-run today → build the die + the usurp
+> rule (and decide whether to ADD a PL-endorsement rule) into the leadership cluster. S-M; the ② opponent half of
+> faction leadership. debt #107; game-mechanics §30.24.C.
+> **★ #240 DATASET EXPAND → a STANDALONE author/DATA task OFF the engine track (E18d / `scripts/seedDataset.mjs`);
+> S-M (debt #106/#108; the DATA half).** Two rosters to add: **(a)** ~10 KIA officers (`kiaofficers`) at **sub-floor
+> stats + Army expertise + NO seeded Frail/Celebrity/Military-Leader** (all earned in play) → `ROWS`/`ERA_FIGURES`;
+> **(b)** ~18 STRONG never-nominees (`strongnevernom`, Sanders → Leonard Wood 1920) at **FULL CURATED_ROWS strength**
+> (NOT sub-floor — see #246/N1 in Decision-gated). Then regenerate (`bash scripts/fetchLegislators.sh && node
+> scripts/legislatorsToDataset.mjs && npm run build`). **★ HARD PREREQ = the #216 trait-name remap (QW22) + the #216
+> Army-rename** (the KIA officers carry `Army` expertise; the never-nominees carry novel traits). It does NOT block
+> or get blocked by the engine track. Folds alongside the #120 dataset umbrella. debt #100/#106/#108.
+> **★ #216 "MILITARY"→"ARMY" EXPERTISE RENAME → an S quick-win extension of the #216 trait/expertise remap (QW22).**
+> `kiaofficers` confirms the military starting-EXPERTISE should be named **"Army"** (it is the KIA roster's expertise).
+> **★ NOTE: "Transportation" already ships** — so the work is ONLY the rename + **disambiguation from the `Military`
+> TRAIT** (the trait and the expertise must not collide). Folds into the QW22 #216 remap; S. debt #106; game-mechanics
+> §30.24.B.
+> **★ SHARPENINGS / MERGES (annotate in place, no new scope):** **#226** (Frail/Hale lifespan auto-traits, #120
+> dataset umbrella) — `kiaofficers` confirms **Frail keys on natural LIFESPAN, not battle death** (a wound-Frail is
+> earned in play, never seeded), and `strongnevernom` adds **Hale = lived-past-80** (reconcile with #226's 86+
+> cutoff); no re-size. **#225** (Celebrity expiry) — Celebrity is EARNED, never seeded (corroboration). **#194**
+> (dynasty/lineage) — `strongnevernom` adds 11 dynasties + marriage-based membership (folds into the #194 seed table).
+> **#220** (PV display/effects) — `strongnevernom` notes Predictable = an anti-stonewall legislation EFFECT (folds
+> into the trait-EFFECTS-in-PV layer). **NO re-sequence; the top-of-queue is UNCHANGED (QW0 → K0/K2 → K3/K4 +
+> scenarioBoot → E1); the ONE delta to the cheap-fixes lane is QW25 (DH-79), and #45 is a recorded POST-LAUNCH epic.**
+> debt #104-#108; technical-guide §9 batch-34 lead + §9.6 + §8 debt #104-#108; game-mechanics §30.24.A, §30.24.B,
+> §30.24.C.
+
 ### Presentation track (parallel — separate workstream)
 
 > Almost all of P0–P4 are **read-only views over snapshot data that already
@@ -5219,8 +5407,20 @@ un-ingested set is now: (1) the 1840-start persistent-Whig ~100-yr run** (still 
 analog ships) **+ (2) matthewyoung123-1772** (the rookie founding run) — ask the human for these before any 1840 /
 Whig-realignment / founding-variant work. **Batch 33 records NO new author-before-build RULES hole** (its deltas
 are buildable engine/data work or fold-ins: the PV epic is now buildable; #221/#242/#241/the House model/DH-78
-fold into existing areas; the only human-call inside the PV epic is the 0–100 scale, recorded above). **Total
-author-before-build RULES items: 13** (UNCHANGED — ★ batch-33 nets 0 and UN-GATES the PV epic out of this bucket: one prior coverage gap RESOLVED, no new RULES hole; ★ batch-32 nets 0: one DATA-authoring human-call recorded, no new RULES hole; ★ batch-31 nets 0: 3 RECONCILED, no new hole)
+fold into existing areas; the only human-call inside the PV epic is the 0–100 scale, recorded above). **★★ BATCH-34
+CORPUS-COVERAGE UPDATE.** **(1) The 1840-start persistent-Whig ~100-yr run is RECONFIRMED the top still-needed
+un-ingested source** (reconfirmed independently by both `majorevents` and `newplaytest`; still no 1840 scenario
+analog ships) — get it before any 1840 / Whig-realignment work. **(2) ADD `1868-Bushwa` as a NEW un-ingested
+candidate** — the `newplaytest` GM @Bushwa777's Gilded-Age run (1868 start, governor-appointed-Senators ⇒ a
+House+Governor-only election surface), **distinct from `gilded`/`gild1868`** — flagged as a candidate upload.
+**(3) `2016-start` is flagged to confirm** (`majorevents` cross-refs a 2016 run — confirm whether it is captured).
+**(4) `1960` = `redbutton`** (already INGESTED — `majorevents`'s 1960 cross-ref is the batch-27 thread, no new
+upload needed). **★ matthewyoung123-1772 remains an un-ingested founding-variant candidate** (carried from batch
+33). **Batch 34 records NO new author-before-build RULES hole** — its deltas are buildable engine/data work, a
+quick-win (DH-79), a recorded post-launch deferral (#45), or a Decision-gated balance call (#246/N1, recorded in
+Decision-gated (A), not here): #243/#244/#245 fold into existing clusters; #240 is the `scripts/` DATA task; #216
+Army-rename folds into QW22. **Total
+author-before-build RULES items: 13** (UNCHANGED — ★ batch-34 nets 0: a new un-ingested coverage candidate [1868-Bushwa] + a balance Decision-gated item [#246/N1], no new RULES hole; ★ batch-33 nets 0 and UN-GATES the PV epic out of this bucket: one prior coverage gap RESOLVED, no new RULES hole; ★ batch-32 nets 0: one DATA-authoring human-call recorded, no new RULES hole; ★ batch-31 nets 0: 3 RECONCILED, no new hole)
 (DH-1, #10/#84, §25.9, DH-12, DH-13, DH-14, DH-15, DH-25, DH-33, DH-41, **DH-49**,
 **DH-54**, **#122 pardon mechanics batch-12**); **PLUS the batch-29 Era-of-the-Future proposal-library
 CONTENT epic (#206), tracked here for visibility, folds into E31 / the era-content authoring.** **Decision-gated category — ★★ batch-15
@@ -5754,6 +5954,23 @@ Distinct from "Roadmap decisions" below, which are tech-lead/planner calls alrea
   sub-PRs proceed; only the apportionment sub-PR waits). Pairs with #13/#71/#104
   (the lone-ideology delegate-sweep handling). — #13 delegate-class fork (`arkzag` ch3
   POST 276 AI-auto vs ch32 POST 2466 human-set; → E10 delegate sub-PR + E24).
+- **★ NEW (batch 34) — #246/N1 STRONG NEVER-NOMINEES: a THIRD ELECTORAL TIER (full-strength-but-
+  won-never) vs. WON-NEVER EMERGES FROM PV (DECISION-GATED, debt #108).** `strongnevernom` statted
+  ~18 STRONG never-nominated figures (Sanders → Leonard Wood 1920) at **FULL CURATED_ROWS strength,
+  NOT sub-floor** — and that is the tension (N1): the existing sub-floor balance rule (the deliberate
+  "failed candidates / era figures get sub-floor electoral stats so they rarely win") is wired ONLY to
+  `ERA_ROWS`/`ERA_FIGURES` (`seedDataset.mjs:239-242`), so these full-strength never-nominees would
+  enter the draft as fully competitive pols. vcczar's intent is that **won-never is modeled by PV /
+  electability, NOT by stat suppression** — i.e. a strong-but-never-nominated figure SHOULD be able to
+  win in-sim if the player/CPU plays them well. **★ The HUMAN call: (a) trust won-never to EMERGE from
+  PV** (give them full stats; the PV/election model decides they usually lose — no new tier, consistent
+  with vcczar's stated intent) **vs. (b) a THIRD ELECTORAL TIER** (full draft strength but a won-never
+  electability dampener, between full-strength marquee pols and sub-floor era-figures). This is **the
+  open Q of whether a never-nominee can win the presidency in-sim** — a balance decision the build
+  cannot pick on its own. The DATA half (adding the ~18 statlines) is the standalone #240 author task
+  (Phase-1 fold-ins); only the TIER MODEL waits here. Folds into #240 (the roster) / #194 (dynasties) /
+  #216 (the Army-rename + novel traits) / #220 (PV effects) once chosen. — #246/N1 (`strongnevernom`;
+  debt #108; `seedDataset.mjs:239-242` sub-floor rule → DATA half = #240, tier model gated).
 
 #### (B) Designer-gated (Ted/vcczar must close — NEW batch-12)
 
@@ -6019,7 +6236,8 @@ row (often as an XS-S addition to an existing epic).
 
 ## Sequencing notes
 
-Why the order is what it is — the tech-lead's binding calls (§9 batch-33 lead +
+Why the order is what it is — the tech-lead's binding calls (§9 batch-34 lead +
+§9.6 batch-34 + §8 debt #104-#108 + §9 batch-33 lead +
 §9.6 batch-33 + §8 debt #101-#103 + updated #85/#87/#73 + §9 batch-32 lead +
 §9.6 batch-32 + §8 debt #97-#100 + §9 batch-31 lead +
 §9.6 batch-31 + §8 debt #91-#96 + §9 batch-30 lead +
@@ -6034,7 +6252,22 @@ Why the order is what it is — the tech-lead's binding calls (§9 batch-33 lead
 §9.1.10 gilded-era content epic + §9 batch-13 lead +
 §6.6.1 batch-13 + §9.6 batch-13 + §9.1.3 methodology + §9 batch-12 lead +
 §9.6 batch-12 + §9 batch-11 lead + §9 batch-10 lead + §9.1.9 + §9 batch-9 lead +
-§9.1.5 + §9.1.8 + §9.1.3 + §9.6 + §9.1.6 + §9.1.7). **Batch 16 (`hd1`) HANDS the
+§9.1.5 + §9.1.8 + §9.1.3 + §9.6 + §9.1.6 + §9.1.7). **★ Batch 34
+(`rethinkwar`/`kiaofficers`/`strongnevernom`/`majorevents`/`newplaytest`) is a WAR/DATA/RECORD
+batch — its single binding sequencing call is a SPLIT of the war work into two speeds: the
+DH-79 naval bug is a QUICK-WIN NOW (QW25, cheap-fixes lane — the #45-aligned naval-as-land-
+difficulty slice, XS, RevWar-scoped), while the FULL #45 War-Score redesign is a DEFERRED
+POST-LAUNCH epic (the GM RULED war is "a side show," `rethinkwar` POST 26 → it folds into the
+generic-`War` engine E3 / debt #16/#29/#152, bounded by the RevWar floors #34a/#158, RECORDED
+but NOT scoped pre-launch). The other deltas fold cleanly: #243 → the war-casualty cluster
+(roster-aware governor + DoD/CJCS-gated reduction + a `Math.random`→`rng.ts` casualty fix,
+pairs #115), #244 → the appointment-eligibility filter WITH DH-75 (West-Point⇒no-reappointment,
+a 3rd gate on the one officer predicate), #245 → the leadership cluster (the Kingmaker-count +
+die PL election, Presidency-usurps-PL), #240 → the standalone `scripts/` DATA task (~10 KIA
+officers sub-floor/Army + ~18 never-nominees full-strength), #216 Army-rename → an S extension
+of QW22. #246/N1 (full-strength never-nominees) is the ONLY new HUMAN call → Decision-gated (A).
+NO new keystone, NO re-sequence; top-of-queue UNCHANGED (QW0 → K0/K2 → K3/K4 + scenarioBoot →
+E1). debt #104-#108.** **Batch 16 (`hd1`) HANDS the
 DESIGNED FIX for the long-named Reconstruction solo-blocker — #156's 4-plan model
 RE-SCOPES E3b's (d) readmission half as its DoD (the canonical DH-29 fix, M–L,
 removes the K5 soft-dep for solo); DH-29 is REFRAMED from CPU-only to a STRUCTURAL

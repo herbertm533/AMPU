@@ -358,6 +358,7 @@
       - [30.22.C — #240 / #239 / #238 — the data-model extensions (curated-statline schema, demographics/Misc flags, gender)](#3022c--240--239--238--the-data-model-extensions-curated-statline-schema-demographicsmisc-flags-gender-new-histpres--georgemartha--designeddata-0-shipped)
       - [30.22.D — Sharpenings + corroborations](#3022d--sharpenings--corroborations-annotate-existing-rows-do-not-re-doc-as-live)
     - [30.23 Rulings folded from batch 33 — the FIVE design/discussion/build threads (`groupthinkpv` / `legisexecgov` / `ampuelections` / `housepoll` / `excelautomate`)](#3023-rulings-folded-from-batch-33--the-five-designdiscussionbuild-threads-that-delivered-long-flagged-gating-items-groupthinkpv--legisexecgov--ampuelections--housepoll--excelautomate)
+    - [30.24 Rulings folded from batch 34 — the FIVE war/data/record threads (the #45 War-Score DESIGN ORIGIN + DH-79) (`rethinkwar` / `kiaofficers` / `strongnevernom` / `majorevents` / `newplaytest`)](#3024-rulings-folded-from-batch-34--the-five-wardatarecord-threads-the-45-war-score-design-origin--dh-79-rethinkwar--kiaofficers--strongnevernom--majorevents--newplaytest)
     - [30.4 Authority hierarchy reminder](#304-authority-hierarchy-reminder)
 31. [Gilded-Age era systems (designed, not built)](#31-gilded-age-era-systems-designed-not-built)
     - [31.1 (#147) Tariff-as-national-%-rate + the mutually-exclusive MonetaryRegime](#311-147-tariff-as-national-rate--the-mutually-exclusive-monetaryregime-designed)
@@ -564,6 +565,20 @@ A `Politician` (`types.ts:1251`) is the atomic unit. Its game-relevant axes:
 The **19 expertise tags** (`types.ts:188`): Agriculture, Business, Economics, Education,
 Energy, Environment, Foreign Affairs, Healthcare, Housing, Justice, Labor, Media, Military,
 Naval, Science, Technology, Trade, Transportation, Welfare.
+
+> **★ #216 (sharpened, `kiaofficers` + `strongnevernom`, batch 34) — the "Military" EXPERTISE is being
+> renamed "Army"; legacy entries still say "Military"; the `Military` TRAIT must be disambiguated.** vcczar
+> ruled the **expertise/career-track formerly "Military" is now "Army"** (`kiaofficers#POST 22`), to
+> disambiguate it from the **`Military` *trait*** (e.g. the earned "Military Leader" trait, [§17.4](#174-revolutionary-war)).
+> New dataset adds use **Army**; **many older dataset entries still carry `Military`** → a dataset-consistency
+> sweep. **★ Codebase note:** shipped `Expertise` (`types.ts:182-186`, this list) and the dataset authoring
+> set (`scripts/seedDataset.mjs:30` `EXPERTISE_NAMES`) **both still say `'Military'`** (and `'Naval'`) — the
+> rename is **DESIGNED, not built** (it would touch the `Expertise` union, `EXPERTISE`, `EXPERTISE_NAMES`,
+> `OFFICE_EXPERTISE`/`TRACK_EXPERTISE` tables, and every dataset row). `Transportation` is **already a shipped
+> expertise** (`strongnevernom` stats McAdoo with it; it is the **one NOVEL tag** the never-nominee roster
+> needed beyond `Agriculture`, which is also already shipped — so no new tag is required, just confirmation).
+> (`kiaofficers#POST 22`; `strongnevernom#POST 30`; code `types.ts:182-191`, `seedDataset.mjs:30`;
+> `game-context.md` #216.)
 
 > **★ #204 — the 0-5 skill scale is a DELIBERATE design decision, NOT an oversight (0-10 DEFERRED to
 > "AMPU 2"; designer-authoritative, `to-do` POST 721-755, vcczar + Ted, batch 28).** The community
@@ -1089,6 +1104,41 @@ collisions** and **validate at dataset-build time** (same disambiguation class a
 `tedchange` dataset-accuracy passes), via `scripts/seedDataset.mjs` `CURATED_ROWS`; (2) **enforce
 `Cosmopolitan` ⊕ `Provincial` mutual exclusion in the engine AND the dataset** (a pol may hold at most
 one). Pairs with the draft-class authoring playbook + #136. *(dataset/engine bug — DESIGNED fix.)*
+
+### 4.1.x ★ #246 / N1 (NEW, `strongnevernom`) — "strong never-nominated" candidates ingest at FULL `ROWS` strength (the sub-floor rule applies ONLY to `ERA_FIGURES`); won-never is modeled by PV/electability, not stat suppression (designed/data)
+
+> **★ #246 / tension N1 (NEW, `strongnevernom`, vcczar designer-authoritative).** vcczar posted AMPU
+> statlines for **~16-18 STRONG candidates who were never their party's nominee** (frontrunners / near-misses
+> / perennial #2s: Bernie Sanders, Aaron Burr, John C. Calhoun, RFK & Ted Kennedy, Nelson Rockefeller,
+> William Seward, Robert Taft, Leonard Wood, …) — the same fully-curated record schema as the #240 47-president
+> roster. **The headline tension is which dataset tier they belong to:**
+> - **The sub-floor balance rule applies ONLY to `ERA_FIGURES`, NOT to these figures.** `CLAUDE.md` +
+>   `scripts/seedDataset.mjs:239-242` give **failed / never-served era notables sub-floor electoral stats
+>   (legislative ≤ 1, low command)** so they rarely win — but that rule is wired to **`ERA_FIGURES`** (the
+>   additive-only never-served notables list). These never-nominees are stated at **FULL strength** (Ted
+>   Kennedy / Calhoun / Taft = **3 Legislative**; Sanders / Jesse Jackson / Rockefeller = **2 Command**; Burr
+>   = 2 Leg / 2 Mil; rich trait sets) — *the whole point is they were strong.* So they are
+>   **`CURATED_ROWS`-class (marquee, full-strength `ROWS`) overrides, NOT `ERA_FIGURES`** — the sub-floor rule
+>   does **not** apply.
+> - **★ The open design question (for tech-lead / human): do never-nominees need a THIRD electoral tier, or
+>   is "won-never" emergent from PV / electability?** There are today **two** dataset tiers — `ROWS`
+>   (full-strength marquee) and `ERA_FIGURES` (sub-floor). A "strong but historically never nominated" figure
+>   fits **neither** cleanly: full strength (so they're a real contender) yet they should *plausibly keep
+>   losing*. vcczar's **stated design intent is to model never-winning through PV / electability mechanics,
+>   NOT stat-flooring** — he flags several as "may have a hard time getting elected" via **regional /
+>   likability / ideology** factors (Rockefeller, Seward, Calhoun, Jesse Jackson), i.e. they lose on the
+>   election scorer's region/ideology/likability terms, not because their stats were suppressed. **OPEN:**
+>   is there (or should there be) any guard keeping a never-nominee like Ted Kennedy from *winning the
+>   presidency in-sim*, or is "strong but never nominated" purely flavor with no electoral cap? Flag any
+>   wiring assumption that auto-floors these on ingest — it would contradict the design intent.
+> - **★ Codebase reality:** none of these ~16-18 figures are in the dataset today (mostly **modern-era**,
+>   1900s-2020s — a roster gap distinct from the founding/antebellum `ROWS` and the #240 presidents). On
+>   ingest they go into the `ROWS` source array (full strength). `Transportation` (McAdoo) and `Agriculture`
+>   (Calhoun) are **already shipped** expertises, so no new tag is needed (see [§3.1](#31-the-four-character-axes) / #216).
+>   Dynasty content is turnkey for **#194** (11 named dynasties; **Taft links to President Taft** as a
+>   cross-roster dynasty link; **marriage-based membership** — Burr's daughter joins another dynasty via
+>   marriage, McAdoo = Wilson's son-in-law — a #194 modeling nuance). (`strongnevernom#POST 1, 10-42`; code
+>   `seedDataset.mjs:239-242`; `game-context.md` #246/N1/#240/#194/#216.)
 
 ### 4.2 Picking — `pickBestForFaction` (`phaseRunners.ts:33`)
 
@@ -1946,6 +1996,33 @@ counter on `Faction.leaderId` / party leadership.
 > the House 58R-42D unchecked ("liberal bloodbath," §15.3.5 / §28.6). (New gap **#187**; boot-step
 > requirement folded into §28.1 / #186; ruling index [§30.17](#3017-rulings-folded-from-8bc0231c-the-big-red-button-1960-playtest-the-first-cold-warcivil-rights-source).)
 
+#### 8.5.3.A ★ #245 (NEW, `majorevents`) — the party-leader election = "Kingmaker count + a die" (the rules doc has NO party-leader-endorsement rule) (designed, not built)
+
+> **★ #245 (NEW, `majorevents#POST 29-36`, vcczar designer-authoritative).** When a party leader is NOT
+> auto-determined by the §8.4 Presidency-usurps rule, the party leadership is an **election decided by each
+> contender's Kingmaker count PLUS a die roll** — so a low-Kingmaker contender can upset a Kingmaker-rich one
+> on the dice. The marquee illustration (2022-start, POST 26-29): **Ivanka Trump (1 Kingmaker) beat Donald
+> Trump (4 Kingmakers) for Party Leader / presumed 2024 nominee** because *"Ivanka had 1 Kingmaker but rolled
+> great vs Donald's 4 Kingmakers rolling trash."*
+> - **★ The Presidency USURPS the party leadership (the override).** The shipped §8.4 already encodes the
+>   precedent: *"if the sitting President is of the party, they become party leader."* Cal notes the only way
+>   to **wrest a Kingmaker-locked party** is to **"pull a Trump" — win the Presidency and usurp the Party
+>   Leader slot** (POST 36) — i.e. the Presidency-usurps rule is the *escape hatch* from a party whose
+>   Kingmakers are permanently dominated (he had **11/18 Reds Kingmakers** in his current 1772 game).
+> - **★ The die size is an OPEN balance knob (d3 ↔ d10).** The die was recently changed **6→10-sided**;
+>   POST 30-36 debates it: **Cal wants d3** (the dominant faction should stay dominant — a smaller die makes
+>   Kingmaker count decisive); **Ted wants to keep d6/larger** (keeps low-performers in contention — a bigger
+>   die lets upsets happen). Unresolved — log d3 ↔ d10 as a **tunable knob**, larger = more upset variance.
+> - **★ The rules doc has NO party-leader-endorsement rule at all (Cal, POST 36) — a designed-vs-doc DRIFT
+>   flag.** This Kingmaker+die mechanic is in play but **not written into the canonical rules doc**, alongside
+>   the §15.5(e)/#183 endorsement/withdraw-MOMENTUM spec that the rules doc also lacked.
+> - **★ Codebase reality:** UNBUILT. The shipped `runPhase_2_2_4_PartyLeaders` (`phaseRunners.ts:2130`,
+>   §8.4) picks the party leader **deterministically** — President-of-party, else **top-PV** party member —
+>   with **no Kingmaker-count tally and no die roll.** There is a Kingmaker/Protégé *trait* system
+>   ([§6.5](#65-217-kingmakers--protégés), `KINGMAKER_RULES`) and CPU kingmaker-endorsement preferences
+>   ([§25.11](#2511-kingmaker--endorsement-preference-rules)), but **no party-leader-election die mechanic.**
+>   (`majorevents#POST 29-36`; code `phaseRunners.ts:2130`; relates §6.5/#29/#30, DH-5; `game-context.md` #245.)
+
 #### 8.5.4 ★ #210 (NEW, `welcome2future`) — the "Ex President" / "Ex Nominee" super-Kingmaker career state (designed, not built)
 
 > **★ #210 (NEW, `welcome2future`, batch 29). A lasting-influence mechanic players asked for twice
@@ -2052,6 +2129,22 @@ primitive for one direction; DH-75 generalizes it to a proper two-track Admiral/
 SecWar appointed the *entire* general/admiral roster from scratch because the 1916 BootSheet ships no
 starting officers — see [§26.1](#261-the-mid-government-boot-shape-general) + #186/#209). (`game-context.md`
 DH-75; pairs §9.3.1 / §22.9 (military-leadership tier) / #56/#186; `wilsons1916#P162-169`.)
+
+#### 9.2.2 ★ #244 (NEW, `kiaofficers`) — West Point ⇒ no-reappointment to a vacated major military office (office-eligibility rule, with DH-75) (designed)
+
+> **★ #244 (NEW, `kiaofficers#POST 12`) — once West Point Military Academy is created, a major military
+> officer position CANNOT be re-filled by the same person after a holder vacates / is removed.** A new
+> **office-eligibility rule** scoped to the major military seats (General-in-Chief / Senior General / Senior
+> Admiral; and modern CJCS/service chiefs). The intent: with a professional officer pipeline (a service
+> academy) in place, a removed/retired senior officer is replaced **from the corps**, not reinstalled —
+> career officers don't bounce back into top command once vacated. **Era-gated:** the rule only takes effect
+> **after the West Point bill passes** (the §24.6-style offices-by-law institutional layer — West Point is
+> one of the founding-era academies stood up by bill, [§17.7](#177-forum-design-layer--the-multiplayer-1772-confirmation-designed-not-built)),
+> so pre-academy eras can still re-appoint. **★ Codebase reality:** UNBUILT — the shipped GiC fill (§9.2) and
+> founding `appointMilitary` (`revolutionaryWar.ts:41`) re-pick "highest military" each time with no
+> per-person no-reappointment flag and no West-Point gate. Sits alongside DH-75's citizenship +
+> exp-type→branch eligibility checks as the **military-appointment-eligibility cluster**. (`kiaofficers#POST
+> 12`; relates DH-75; `game-context.md` #244.)
 
 ### 9.3 Forum design layer (designed, not built)
 
@@ -2714,6 +2807,34 @@ ex-Pres retires at end of half-term not on appointment. Cite `tedchange#POST 137
 > generation rule sitting alongside the `draftYear`/sub-floor conventions in CLAUDE.md. *(designed — add a
 > lifespan-derived auto-trait pass to dataset generation: died <60 ⇒ Frail, lived 86+ ⇒ Hale.
 > `game-context.md` #226.)*
+>
+> > **★ #226 RECONCILED + sharpened (`kiaofficers` + `strongnevernom`, batch 34).** Two batch-34 dataset
+> > threads pin the exact semantics of the Frail/Hale auto-trait and surface a cutoff number to reconcile:
+> > - **★ Frail keys on NATURAL lifespan, NOT battle death (`kiaofficers#POST 20-21`, RULED).** A figure who
+> >   **died young in battle but could have lived to their 90s otherwise** does **NOT** get seeded Frail. So
+> >   the auto-trait rule reads the figure's **counterfactual natural longevity** (when would they have died
+> >   of natural causes), not their (early, violent) historical death year. Frail is a
+> >   **constitution/longevity** trait — and the **wound-Frail variant is EARNED in play** (the shipped
+> >   `revolutionaryWar.ts:99-117` grants Frail on a battle wound, with a Hale resist roll), so you never seed
+> >   Frail onto a KIA at birth.
+> > - **★ Hale cutoff: "lived past 80" vs "lived to 86+" — RECONCILE.** `strongnevernom#POST 34` defines
+> >   **Hale = auto-assigned to any politician who lived past age 80**; the batch-30 `ampuUpdates` rule above
+> >   says **86+** (corrected up from 80). These two designer statements **disagree on the threshold (80 vs
+> >   86+)** — flag to the human; the **later/more-specific `ampuUpdates` 86+** is the stronger source per the
+> >   §30.4 authority hierarchy, but `strongnevernom` re-asserts 80, so the cutoff is an **open numeric knob.**
+> >   (Both agree on the *direction* — Hale = unusual longevity, a death-avoidance modifier.)
+> > (`kiaofficers#POST 20-21`; `strongnevernom#POST 34-35`; code `revolutionaryWar.ts:99-117`;
+> > `game-context.md` #226.)
+>
+> > **★ #225 (sharpened, `kiaofficers`, batch 34) — Celebrity is EARNED in play, NOT seeded at birth
+> > (RULED).** Even famous-by-heroic-death figures (Robert Gould Shaw, Custer) do **NOT** get seeded
+> > Celebrity (`kiaofficers#POST 20-21`), and vcczar **removed the `Military Leader` trait from every dataset
+> > fill** — *"that has to be earned"* (POST 21). So **Celebrity and Military-Leader are both earned-only**:
+> > granted in play by events / war heroics (the [§21.1.A](#211-generic-cross-era-war-system) narrow war-hero
+> > grant: +1 Mil + Celebrity to a non-office-holder on a difficult battle in a major war; and the §17.7
+> > "Washington Rule" Long-Island Celebrity+Military-Leadership grant), never written onto a `ROWS`/`ERA_FIGURES`
+> > entry. This matches the §10.x Celebrity-expiry rework (#225) — Celebrity is a *dynamic, in-play* trait,
+> > not a static seed flag. (`kiaofficers#POST 20-21`; `game-context.md` #225/#226.)
 
 #### 10.1.z ★★ THE CANONICAL PER-ERA DEATH-RATE BRACKET TABLE + succession cascade (#130/#143) (NEW, `rulebook`, batch 31; DESIGNED)
 
@@ -3962,6 +4083,14 @@ Each nation in `game.diplomacy`: `0.20` chance to drift `±0.5` (50/50 sign), cl
 - **Generic wars (1856+)**: per active war, `milPower = meters.military +
   GiC.military`, `enemyPower = 1 + rand×4`; win iff `milPower×10 + d100 > enemyPower×10 +
   50`. War score `±10/−5`; war ends at `±50` (`phaseRunners.ts:3615`).
+
+> **★ The full DESIGNED war model that replaces BOTH shipped paths lives at
+> [§21.1.A](#211-generic-cross-era-war-system) (the #45 War-Score redesign, design origin Sept 2022,
+> POST-LAUNCH):** asymmetric War-Score battle points (Easy/Mod/Diff WIN +1/+2/+3 / LOSE −3/−2/−1; Decisive
+> diff-win +5), a per-Military-Phase **`|score|×10%` win/lose roll**, a **Momentum d6** swing, and an
+> **End-War Multiplier** that replaces fixed phase/battle counts — plus **naval as a land-difficulty modifier
+> (no standalone naval win; naval feeds the land general ±1 Mil)**, which fixes the shipped
+> [§17.4 DH-79](#174-revolutionary-war) "one naval win ends naval forever" bug.
 
 > **★ #158 (NEW, `ted1772`) — CPU bias AGAINST game-over / peace decisions. DESIGNED, not built.**
 > The shipped engine has **no CPU vote on war-surrender or game-ending peace** — terminal
@@ -5369,6 +5498,48 @@ French alliance), senior general/admiral + benches, `frenchAlliance = false`.
   no French alliance**. `applyFrenchAlliance` (`:268`) sets France diplomacy to 4, `+1`
   general military, and removes the loss condition. `applyTreatyOfParis` (`:279`) ends the
   war, disbands commanders, sets Britain diplomacy `−3`.
+
+> **★★ DH-79 (NEW, `rethinkwar`) — SHIPPED BUG: "one naval win ends naval forever" — the naval tally is
+> RECORDED but NEVER READ by the win-check.** Confirmed in code: the naval phase records the result —
+> `if (win) war.navalWins++; else war.navalLosses++;` (`revolutionaryWar.ts:202`) — but the win/loss check
+> reads **only the ground tallies**: win at `war.currentGroundWins >= war.groundWinsNeeded`, loss at
+> `war.currentGroundLosses >= war.groundLossesRemaining && !war.frenchAlliance` (`:254–264`).
+> **`navalWins`/`navalLosses` are dead state** — they affect nothing in the outcome. So naval battles are
+> cosmetic to the war's resolution: a single naval win (or loss) changes nothing, and the war can be won
+> with the navy losing every battle (exactly the `ted1772` trace, [§21.1's #155 floors](#211-generic-cross-era-war-system):
+> the Navy won ZERO at sea yet the war was won). This is the **shipped confirmation of MrPotatoTed's "one
+> naval win ends naval forever" complaint** that originates the [§21.1.A](#211-generic-cross-era-war-system)
+> naval-as-difficulty-modifier redesign. **The fix is the §21.1.A design:** naval feeds the land general
+> **±1 Mil** rather than (un)setting a standalone naval win-condition. (`rethinkwar#POST 1, 16`; code
+> `revolutionaryWar.ts:202, 254-264`; `game-context.md` DH-79.)
+>
+> **★★ #243 (NEW, `kiaofficers`) — war-death rate must SCALE to roster size + an era-gated death reduction;
+> shipped `applyCasualties` has NEITHER. DESIGNED, not built.** The war-casualty loop is **out-killing the
+> dataset's supply of historically-KIA pols** in those wars (*"the deaths are exceeding the number of in-game
+> politicians that died in those respective war,"* `kiaofficers#POST 1`). vcczar's two-pronged design:
+> - **(a) Death-% scalar + a roster-vs-deaths measurement loop (POST 1, 2, 12).** **Slightly lower the
+>   death %** (a single RevWar half-term had Civil-War-level officer fatalities), and **after early
+>   release, measure** avg generals/admirals/career-track pols killed per playtest: if **< the # of
+>   historically-killed statesmen in the dataset → raise the %**; if **still > → add even more military
+>   pols.** An explicit roster-vs-death-rate balance governor. (Pairs with #115 roster-exhaustion: when a
+>   war out-kills the roster, cap battle deaths or auto-generate replacements.)
+> - **(b) Era-gated death reduction (POST 12).** Death %s **drop further once Chairman of the Joint Chiefs /
+>   Dept of Defense exists** — post-DoD flag officers rarely die on the front line (*"command from Qatar, not
+>   the front line"*); modern politically-ambitious KIAs are also rarer. An **era-conditional scalar** on the
+>   casualty roll.
+> - **★ Codebase reality:** `applyCasualties` (`revolutionaryWar.ts:67–121`) rolls **fixed** per-tier d6
+>   death/wound counts (difficult: 1–3 deaths / 1–3 wounds; moderate/easy: 0–1 each), picks victims from pols
+>   with **`military >= 1 && !Frail`** sparing the senior General/Admiral, then grants survivors `+1 military`
+>   at 10%. There is **NO death-% scalar, NO roster-size scaling, NO era/DoD reduction, and NO measurement
+>   loop** — and it exists **only for the 1772 RevWar** (no generalized multi-war casualty engine; the thread
+>   spans 10 wars RevWar→War-on-Terror, none of the other 9 have a shipped combat-death loop).
+> - **Dataset side (the thread's other half):** add ~10 KIA officers (from a ~50-name candidate pool across
+>   10 wars) to `scripts/seedDataset.mjs` `ROWS`/`ERA_FIGURES` with **sub-floor electoral stats**
+>   (legislative ≤ 1, combat-only) and **Army** expertise; **NO seeded Frail / Celebrity / Military-Leader —
+>   all earned in play** (see [§5](#5-career-tracks--the-expertise-pipeline-212) for Army rename and #226 for
+>   Frail). Also a per-figure **"die-or-become-Celebrity" scripted EVENT** (the Robert Gould Shaw pattern —
+>   keep the standard draft date; an event resolves to death-and-removal OR Celebrity). (`kiaofficers#POST 1,
+>   2, 8, 12, 20-22`; code `revolutionaryWar.ts:67-121`; `game-context.md` #243/#244/#240/#226.)
 
 > **★★ #176 (NEW, `grass1772` + `rookie1772`, batch 24) — Military Preparedness is HARD-CAPPED at ~2
 > for the entire Era of Independence, so every forced-war MilPrep roll is wasted (a permanent founding
@@ -6876,6 +7047,14 @@ blunder; negatives → near-AUTO-blunder in that policy genre):
 - **Predictable** — Pres can **auto-FAIL** federal intervention + is a **war weakness** (POST 172); a
   Predictable Justice is only convertible by the Chief Justice; Predictable congresspeople are problematic
   if misaligned with their faction leader.
+  > **★ #220 — Predictable's core EFFECT = anti-stonewall on legislation (`strongnevernom#POST 12`,
+  > vcczar).** The durable definition: a Predictable politician is **so consistent in behavior / demands /
+  > rhetoric that the OPPOSITION can strategize against them and stonewall** — concretely it **hurts passing
+  > legislation when Congress is opposed** (the opposition pre-positions against a predictable mover). vcczar
+  > cited it on Sanders, Bayard, Kefauver, Taft. This is the trait-EFFECT data point behind its
+  > **−10 "wholly negative" PV tier** ([§3.4.1 table](#341--the-pv-system-overhaul--per-trait-tiers--non-linear-ability-curve--trait-remap--display-scale-new-revamppv--summer2021-batch-30-designed-the-shipped-pvts-is-at-a-pre-revamp-state--dh-77)) and folds into the #220 trait-effects epic — implement as a **legislation penalty when the opposing
+  > bloc controls the relevant chamber**, distinct from (and additive to) the Blunder-roll read above.
+  > (`strongnevernom#POST 12`; `game-context.md` #220.)
 
 **(e) Compound + special:**
 - **★ Passive + Pliable = PUPPET president** — a manipulative **Key Advisor / VP / cabinet member makes
@@ -7283,6 +7462,139 @@ econ, budget, party pref) and **grants/denies territory** (Canada/Quebec on a Wa
 > - **A 3rd RevWar WIN-PATH = a scripted "King George grants autonomy" EVENT** (`grass1772#POST 163`,
 >   no France, won via battles + the event) — the `War` model must allow a **scripted-event terminal
 >   win**, not only a battle/War-Score threshold (full note at [§17.7](#177-forum-design-layer--the-multiplayer-1772-confirmation-designed-not-built)).
+
+> #### 21.1.A ★★ The #45 War-Score redesign — THE DESIGN ORIGIN (`rethinkwar`, Sept 2022; DESIGNED, POST-LAUNCH; replaces the shipped count-based win-path)
+>
+> > **★★ This is the design-origin discussion that INVENTS the War-Score model** logged elsewhere in this
+> > section (the additive success-chance formula, warscore/momentum/×N resolution) as frozen spec. It is the
+> > single fullest origin-spec for **gap #45** and **dates the entire war redesign to Sept 2022**.
+> > **Attribution:** the points-system OP is **MrPotatoTed** (POST 1/2); **vcczar (Anthony, the lead)**
+> > codifies the ordered ruleset (POST 16/18) and owns the final ruling (POST 19/26). **★ Priority: vcczar
+> > rules war is *"a side show for AMPU"* and that "any major development… will have to wait until the game is
+> > out"** (POST 26) — so the **whole War-Score redesign is explicitly POST-LAUNCH, NOT a pre-launch must-have.**
+> > It is logged here because it is the canonical war model the build will eventually adopt, and because the
+> > **shipped `revolutionaryWar.ts` win-path is the very thing it deletes.**
+>
+> **The problem being fixed (POST 1, 5, 7).** Three complaints about the SHIPPED win-N-battles mechanic:
+> 1. **No fluidity** — you win a fixed *count* of battles, then the war just ends (no graded progress).
+> 2. **"One naval win ends naval forever"** — *"winning one naval battle means you no longer have to worry
+>    about naval at all, even if the land invasion continues for another ten years"* → the **shipped DH-79
+>    bug** (see [§17.4](#174-revolutionary-war)), confirmed in code.
+> 3. **Wars run far too long / average militaries are stacked toward defeat** — the 1840 Mexican War dragged
+>    1840→1848+ (4 turns), *"entirely too long and very ahistorical."* Ich_bin_Tyler simulated the Civil War
+>    under the then-config (**5 wins to win / 5 losses to lose / 2 losses ends the phase**) with an average
+>    setup (Mil-3 officers, neutral prep, 2 of 4 benchmarks) → **per-battle win odds only 37–39%**, ~10 yrs to
+>    *win* a front but only ~6 yrs to *lose* it. **Note:** the 5/5/2 constants describe a **Civil-War config**,
+>    NOT the shipped 1772 RevWar config (7 wins / 16 losses) — different wars/eras, not a contradiction.
+> Historical lengths target: RevWar 7–8 yrs (longest), 1812 <3, Mexican 2.5, Civil War 4, Span-Am 1 → most
+> wars should resolve in **1–2 turns**.
+>
+> **What stays UNCHANGED (POST 1, explicit):** how a single battle is won/lost (the same Chance-of-Success
+> d100 roll); the per-officer (General/Admiral) gains/losses from battle outcomes. **ONLY the war-over
+> determination changes.**
+>
+> **(1) Battle → War-Score points (the asymmetric grading; POST 1, restated POST 16 "Sum Up the Progress"):**
+>
+> | Battle difficulty | WIN | LOSS |
+> |---|---|---|
+> | **Easy** | **+1** | **−3** |
+> | **Moderate** | **+2** | **−2** |
+> | **Difficult** | **+3** | **−1** |
+>
+> - **Rationale of the inversion:** winning easy battles is cheap progress; **losing an *easy* battle is the
+>   most damaging** (−3) while losing a *difficult* battle is excusable (−1).
+> - **Raw score = Σ over the ENTIRE war** (not just the current half-term). Worked example (POST 1): one
+>   difficult win (+3) + one moderate loss (−2) = **+1**.
+> - **★ vcczar bonus (POST 16):** a **Decisive General winning a difficult battle upgrades +3 → +5.**
+>
+> **(2) The per-Military-Phase war-end %-roll (POST 1, restated POST 16) — the |score|×10% table.** After each
+> Military Phase, roll **once** against a table keyed to the (momentum-adjusted, multiplier-applied) total raw
+> score:
+>
+> | Raw score | War-end roll |
+> |---|---|
+> | **0** | war continues — **no roll** |
+> | **+1 … +10** | **% chance to WIN** the war, linear: +1 = 10% … **+10 = 100%** |
+> | **−1 … −10** | **% chance to LOSE** the war, linear: −1 = 10% … **−10 = 100%** |
+>
+> A **failed roll** (e.g. roll 70 with only 30% win odds) → **the war simply continues.** **Close wars drag;
+> curbstomps end fast.** (This linear `|score| × 10%` table is verbatim the table logged as frozen spec in #45.)
+>
+> **(3) Momentum (matthewyoung123's "momentum meter," POST 4/5/11/12, folded by vcczar as a swing bonus).**
+> If the war was active last term, compare this half-term's raw points to last term's: if **same-or-more**,
+> roll **d6 → 1-2:+1, 3-5:+2, 6:+3**; if **fewer**, the **reverse (negative)** swing. Applied to the score
+> before the war-end roll. (Implemented as a turn-vs-turn swing bonus, NOT a separate 1–9 bar.)
+>
+> **(4) ★ The End-War Multiplier (POST 16/18) — REPLACES the fixed phase/battle counts.** Apply
+> `End-War Multiplier × (momentum-adjusted score)` **before** the §(2) war-end roll. **Most wars = ×1; a
+> historically-lengthy war = ×0.5** (a +4 becomes +2, round up at .5) so it **drags** to a realistic length.
+> **★ The End-War Multiplier explicitly REPLACES the old "how many phases / how many battles per turn"
+> constants** (POST 18) — i.e. it deletes the shipped `battleCount < 3 && d100() <= 66` loop and the
+> `groundWinsNeeded`/`groundLossesRemaining` hard counts as the war-length governor. The ×0.5 multiplier is
+> also the **partial answer** for "historically lengthy" / insurgency wars (Vietnam, War on Terror) that
+> should drag (POST 2/3 — but a full asymmetric-insurgency model remains **OPEN**).
+>
+> **(5) ★ The verbatim Chance-of-Success formula (vcczar's codified ordered Military Phase, POST 16/18).**
+> The ordered phase the engine must implement — the fullest origin-spec for the success-chance formula:
+>
+> | # | Step | Spec |
+> |---|---|---|
+> | 1 | **Ground & Naval Battles** | ≥1 of each per phase if both exist; **naval FIRST**; naval result feeds land (see Naval below). |
+> | 2 | **Battle Name + Difficulty** | war-specific, generated per battle. |
+> | 3 | **Planning Phase** | `Admin(SecWar/SecDefense; SecNavy for naval) + Mil(highest-ranking officer)` = **2–10**. A **President with Mil 5 replaces the highest officer.** **Before Sec'ys exist, DOUBLE the highest officer's Mil** (the founding / Continental-Congress case — the design intent behind the shipped doubled-officer path; #176). **Crisis Manager (Pres) or Crisis Admin (SecDef) in a "win or die" war → +10%.** |
+> | 4 | **Officer Leading the Battle** | randomized **unless** the SecWar/officer has **Efficient + ability ≥4** → 50% chance to *choose* the officer. **Leading officer's Mil ×10 = 10–50.** |
+> | 5 | **Apply the Meters** | **Military Preparedness** meter → **0–15** (*"chance an unprepared military could suffer immediate defeat"*). **Foreign Relations** meter → **+5** per the alliance test (below). Sum = **0–20**. |
+> | 6 | **Era Military Benchmarks** | each era has **4 benchmarks**, **+5 each → 0–20.** |
+> | 7 | **Chance of Success** | **sum the above (cap ~100).** **Difficulty deduction: Easy −0, Moderate −10, Difficult −25.** **Decisive General in a win-or-die battle → +10%.** |
+> | 8 | **Fight!** | win → immediately next battle; loss → check max-phase-attempts + max-attempts-until-defeat; if neither hit, continue, **alternating ground/naval.** |
+> | 9 | **Sum Up Progress** (whole war) | the §(1) War-Score point table (incl. Decisive +3→+5). |
+> | 10 | **Determine Momentum** | the §(3) d6 swing. |
+> | 11 | **Determine if War is Over** | apply the §(4) End-War Multiplier, then roll vs the §(2) `|score|×10%` table. |
+>
+> Net formula (steps 3–7): **`ChanceOfSuccess = Planning(Admin + officer-Mil, doubled pre-SecWar) +
+> (leading-officer Mil × 10) + MilPrep(0–15) + ForRel(+5 if alliance test met) + EraBenchmarks(4 × +5) −
+> Difficulty(0 / −10 / −25) [+10% Crisis-Mgr/Crisis-Admin/Decisive-General in a win-or-die war]`.** This is
+> the same formula re-confirmed natively in 1856+ and the 2000s (the §21.1 additive battle-card, the §17.4
+> `ted1772` trace, the §23.3 two-theater formula, and `terror2000`'s 2000s re-confirmation) — so the model
+> generalizes cleanly across eras.
+>
+> **(6) ★ Naval as a land-DIFFICULTY modifier — THE FIX for "naval ends forever" (POST 1 + POST 16).** The
+> headline sub-design: **naval is NO LONGER a standalone win-condition.** Instead:
+> - **POST 1 intent:** naval **control modifies the DIFFICULTY of land battles** (sea control → easier land
+>   battles via reinforcement/support; losing at sea → harder land battles). *"I don't have that fully mapped
+>   out yet."*
+> - **POST 16 implementation:** fight **≥1 naval + ≥1 ground per phase, naval FIRST**; a **naval WIN → the
+>   next land battle's general gets +1 Mil for that battle only (75% chance); a naval LOSS → −1 Mil.** So
+>   naval **persists every phase and feeds the land general ±1 Mil** — it never "ends." (vcczar kept naval in
+>   the tally too — *"Span-Am was arguably won at Manila Bay"* — but the modifier is the durable mechanic.)
+> - **OPEN Q:** is ±1 Mil to the land general the final intent, or should naval shift the difficulty *tier*
+>   directly? (POST 1 left it "not fully mapped out.")
+>
+> **(7) ★ The French-alliance caveat — DON'T generalize "alliance = auto-win" (POST 24/25).** The shipped
+> French alliance makes RevWar defeat *impossible* (`revolutionaryWar.ts:259, 274`; one of the three §17.4
+> winnability floors). vcczar's open ruling: the **French alliance is likely HISTORICALLY UNIQUE as a
+> war-*winner*** — other alliances can *LOSE* you a war (CSA + UK/France = Union "game over"). So the
+> %-roll model must **NOT** generalize a war-winning auto-flag from one alliance; how a war-*winning*
+> alliance maps onto a %-roll model is **left as an open rule** for the human.
+>
+> **★ SHIPPED-vs-DESIGNED delta (the concrete tech-lead requirement).** The shipped `revolutionaryWar.ts`
+> win-path (`:254–264`) ends a war on a **hard count** (7 ground wins / 16 losses; French-alliance =
+> auto-win) and **ignores naval entirely** (the DH-79 bug). The replacement is **War-Score points →
+> per-phase `|score|×10%` roll → Momentum d6 → End-War Multiplier → naval-feeds-land-difficulty**. Fold into
+> #45 (this thread is its origin); flag the count-based → roll-based win-path swap as the build delta.
+>
+> **★ The "all hands on deck" faction-stake proposal — DISCUSSED but NOT adopted (POST 5/16/20–26).**
+> matthewyoung123's parallel idea (more PERSONAL faction stake in war): in a **MAJOR WAR**, every faction
+> member with **Mil ≥1** not in office / not on a non-military career track **goes to fight**, with age gates
+> (50/55+ exempt; sweet spot 25–45), **Pacifist** exemptions, a faction **"safe-list"** (the Eisenhower-WWI
+> case — kept home, survived for WW2), and much higher death/trait/skill rates by difficulty×outcome →
+> **auto-generates future war heroes** (a Mexican-War win seeding Meade's Leadership). **vcczar ADOPTED only a
+> NARROW slice (POST 26):** *"a chance of +1 Mil and Celebrity to a non-office-holding politician with at
+> least 1 Mil ability for **difficult battles in major wars**"* — *"about as much general/admiral expansion
+> I'm willing to do."* So the full conscription model is **designed-but-NOT-adopted**; only this narrow
+> war-hero grant is committed. (This narrow grant is the same earned-Celebrity / earned-Military-Leader rule
+> the dataset thread relies on — see [§17.4 / #243](#174-revolutionary-war).) (`rethinkwar#POST 1, 4-5, 11-12,
+> 16, 18, 20-26`; `game-context.md` #45/#56/#106/#176.)
 
 *(designed, not built — generalize to a `War` model usable in any era: the additive
 success-chance formula, the warscore/momentum/×2 resolution, and the confirmation-cascade
@@ -7931,6 +8243,15 @@ region→nationwide, 50%→75%):
 > CHALLENGER drains the challenger. `GM⇒App`. Pairs with §22.4/#48 (trigger + region-weighted PV), #214
 > (Charisma valuation, §3.4.1), #18 (party-pref). Cite `primary2020#§4 POST 68, 71-72, 75-77`. Ruling
 > index [§30.21](#3021-rulings-folded-from-batch-31--the-canonical-rulebook--four-rulesfeedbacktestdata-threads-rulebook--apptdeepdive--primary2020--playtestdraft--bestmoments).)*
+>
+> > **★ #228 — fresh independent corroboration (`majorevents`, batch 34).** A 2016-start run flagged the
+> > **same design concern from a different game**: a **Sanders/De Blasio 3rd-party ticket did NOT visibly
+> > play spoiler** to the most-aligned major party (Mark Warner, who was re-elected), with Ted citing
+> > Perot/TR precedent and wanting 3rd-party rules to **punish the most-aligned party harder**
+> > (`majorevents#POST 54-58`). The recap notes the 3rd party **did** cost Warner OH/SD/NH and nearly
+> > flipped NY/IL — i.e. the spoiler **drains the wrong target / not hard enough**, exactly the §22.4.1
+> > drain-by-party-of-origin fix. (Independent of `primary2020`, the #228 origin.) (`majorevents#POST 54-58`;
+> > `game-context.md` #228.)
 
 ### 22.5 General-election library (2.9.4)
 
@@ -8538,6 +8859,23 @@ The antebellum pressure pays off as a **scripted Era-Event chain**, not a passiv
 >   permanent +1 in future elections**; a blunder on the implementation roll does **NOT** undo the
 >   treaty (only **land-acquisition** events require successful implementation — cross-ref §27.1's
 >   "win a war but fail to claim territory") (`rep1800` §C POST 8542–8550, 8654, 8661).
+
+> **★ #56 — a GENERIC 1806-era "rebellion → Civil War" path (NON-regional), distinct from the
+> 1856-native scripted Secession Winter — a CANDIDATE VARIANT to confirm (`majorevents`).** In a
+> **1772-start** multiplayer run, a **1806 rebellion + economic recession escalated into a "full-scale
+> Civil War"** (`majorevents#POST 42`), and the GM clarified it is **"just a generic war," NOT regionally
+> specified** (no North/South or East/West fronts) (`majorevents#POST 43-44`). This is a **distinct
+> mechanism from the 1856-native Secession Winter** (the §23.1 blundered-decision → regional CSA secession
+> with two named theaters): here a **founding-era domestic rebellion** (the Whiskey/Fries-rebellion family,
+> [§17.5](#175-era-event-graph-1772-eragraphts-data-eraevents1772ts) / `eraEvents1772.ts`) **plus an
+> EconStab/DomStab crisis** spawns an **era-agnostic generic Civil War** routed through the
+> [§21.1](#211-generic-cross-era-war-system) generic war engine (no secession-state flags, no Southern-Unionist
+> gating). **OPEN — confirm whether a generic rebellion→Civil-War path is SHIPPED or was a then-house-ruled
+> outcome.** If real, it means **two CW codepaths**: (1) the **regional 1856 Secession Winter** (state-flag
+> secession + two theaters), and (2) a **generic non-regional rebellion→war** firing off a low DomStab/EconStab
+> in *any* era — the §23.2 "DomStab is the secession/CW trigger meter" finding generalized to a non-secession,
+> non-regional war. Pairs with the §21.1.A Major/Minor/Operation war tiers (a generic rebellion would be a
+> Minor/Operation-tier war). (`majorevents#POST 42-44`; `game-context.md` #56.)
 
 > **★ `hd1` (3rd-campaign corroboration of #58) — sharpened secession trigger + RANDOM CSA
 > leadership + ★ #157 the CSA-government-seeding gap + ★ DH-64 the trait dataset bug** (`hd1` =
@@ -14931,6 +15269,15 @@ cross-referencing the existing [§15.3.5 #184 nerf](#1535-platform-scoring--5-pl
     corroborated: `georgemartha`'s Abigail Adams *"giving birth to all of the three pols she was meant to
     create"* before death is the same line-extinction-on-predecease hook (ties #238 women-as-pol-generators).
     (`histpres#POST 1-48`; `georgemartha#POST 34`; `game-context.md` #194/#240/#238.)
+  - **★ SHARPENED (batch 34, `strongnevernom`) — a 2nd turnkey dynasty seed table + MARRIAGE-BASED
+    membership.** The strong-never-nominee roster (§4.1.x / #246) supplies **11 more named dynasties**
+    (Sanders, Bayard, Calhoun, Clark, Clinton, Crawford, Jackson[Jesse], Kennedy[RFK+Ted], Rockefeller,
+    Seward, **Taft → links to the existing President-Taft dynasty**, a cross-roster link). **★ The modeling
+    NUANCE: dynasty membership can be acquired by MARRIAGE, not just birth** — **Burr** has "no dynasty, but
+    his daughter joins another dynasty via marriage" (`strongnevernom#POST 14`); **McAdoo = Wilson's
+    son-in-law** (a marriage link with no dynasty of his own). So the #194 lineage model needs a
+    **marriage/in-law edge** alongside `parentId` (a pol can join a line by marrying into it), not only a
+    parent-child tree. (`strongnevernom#POST 14, 30`; `game-context.md` #194/#246.)
 - **#202 — In-app "Campaign Advisor / Think Tank" suggestion helper (`GM⇒App` + onboarding; Vols21 OPEN,
   `fixes#§J POST 9`).** Reuse the (unbuilt, #114) CPU decision logic to **suggest 1-3 moves to a SOLO
   player each phase** — a built-in advisor that lowers the rules-mastery wall (a human GM informally
@@ -15680,6 +16027,76 @@ into the #194 lineage system. Cite `histpres#POST 1, 3, 7, 13, 19, 28, 34, 36, 3
 > (both pair with #92's predicate-replacement) + **DH-78** combo field. Cross-ref `game-context.md` rows
 > **#214/#215/#216/#220 (UNBLOCKED)**, **DH-77 (re-scoped)**, **#221/#20/#219/#191/#55 (sharpened/resolved)**,
 > and the NEW **#241/#242/DH-78** + the charter GM-burden budget.
+
+### 30.24 Rulings folded from batch 34 — the FIVE war/data/record threads (the #45 War-Score DESIGN ORIGIN + DH-79) (`rethinkwar` / `kiaofficers` / `strongnevernom` / `majorevents` / `newplaytest`)
+
+> **★★ Batch 34 = a 5-thread DESIGN/DATA/RECORD batch (NO playtest, NO historian).** Nothing new ships; the
+> value is the **war-system DESIGN ORIGIN**, war-death/dataset rulings, and corpus-coverage. Tier-1 designer
+> `@vcczar` authors/rules across all five; `@MrPotatoTed` (Ted) co-proposes the War-Score points. The sources:
+> - **`rethinkwar`** (0fd0f2e5, "Rethinking how war works," WAR-SYSTEM REDESIGN / design-origin, Sept 2-9
+>   2022, 26 posts) — **★★ the design ORIGIN of the #45 War-Score model + the ORIGIN of bug DH-79.** Folded
+>   into [§21.1.A](#211-generic-cross-era-war-system) (the full spec) + [§17.4](#174-revolutionary-war)
+>   (DH-79 in the shipped engine) + [§13.2](#132-272-military-action--runphase_2_7_2_military-phaserunnersts3593) (pointer). Cite `rethinkwar#POST n`.
+> - **`kiaofficers`** (68fa2220, "KIA Military Leaders Possibly Adding to AMPU," DATASET / WAR-DEATH
+>   MECHANIC, Sep 26 – Oct 4 2022, 25 posts) — **ORIGIN of NEW #243** (war-death rate must scale to roster +
+>   era-gated death reduction) + **NEW #244** (West-Point ⇒ no-reappointment). Folded into
+>   [§17.4](#174-revolutionary-war) (#243) + [§9.2.2](#922--244-new-kiaofficers--west-point--no-reappointment-to-a-vacated-major-military-office-office-eligibility-rule-with-dh-75-designed) (#244) +
+>   [§3.1](#31-the-four-character-axes) (Army rename) + the #226/#225 blocks ([§10.1](#101-241-deaths-retirements--decay--runphase_2_4_1_deaths-phaserunnersts2341)). Cite `kiaofficers#POST n`.
+> - **`strongnevernom`** (326eee56, "AMPU Strong Never-Nominated Candidates," DATASET-AUTHORING, Oct 12-23
+>   2021, 46 posts) — **ORIGIN of NEW #246 / tension N1** (strong never-nominees ingest at FULL `ROWS`
+>   strength; sub-floor applies only to `ERA_FIGURES`). Folded into
+>   [§4.1.x](#41x--246--n1-new-strongnevernom--strong-never-nominated-candidates-ingest-at-full-rows-strength-the-sub-floor-rule-applies-only-to-era_figures-won-never-is-modeled-by-pvelectability-not-stat-suppression-designeddata) + [§20.10.1(d)](#20101--217-new-summer2021--the-presidentcabinet-implementation-sub-engine--30-governing-traits-designed-not-built) (Predictable) + the #194 dynasty block ([§30.18 list](#3018-rulings-folded-from-the-batch-28-designer-catalogs-to-do--fixes--completions--vic3--a-discussionspec-batch-not-a-playtest)) + the #226 block. Cite `strongnevernom#POST n`.
+> - **`majorevents`** (358cafc4, "Major Playtest Events," HIGHLIGHTS / RECORD feed, Jun-Oct 2022, 58 posts)
+>   — **ORIGIN of NEW #245** (party-leader election = Kingmaker count + a die; rules doc has NO PL-endorsement
+>   rule) + corpus-coverage cross-refs. Folded into
+>   [§8.5.3.A](#8533a--245-new-majorevents--the-party-leader-election--kingmaker-count--a-die-the-rules-doc-has-no-party-leader-endorsement-rule-designed-not-built) (#245) + [§23.3](#233-56-civil-war--the-two-theater-combat-engine-multi-term-subsystem) (1806-generic-rebellion candidate variant, #56) + [§22.4.1](#2241--228--the-third-partyspoiler-vote-drain-ruleset-the-drain-half-the-224-trigger-is-the-spawn-half-new-primary2020-batch-31-designer-authored-gmapp-designed-wholly-unbuilt) (#228 corroboration). Cite `majorevents#POST n`.
+> - **`newplaytest`** (96690191, "Possible New Playtest," PLANNING / interest-poll, Mar 16-21 2023, 67
+>   posts) — corpus-coverage + era-menu only; **births the un-ingested `1868-Bushwa` run**; corroborates the
+>   **7-option era-start menu** (#86/#186/#92). No engine rulings; no topical-section edits. Cite `newplaytest#POST n`.
+>
+> **The HEADLINE findings (lead with these):**
+> 1. **★★ THE #45 WAR-SCORE REDESIGN — DESIGN ORIGIN, dated Sept 2022, POST-LAUNCH.** Asymmetric battle
+>    points (Easy/Mod/Diff WIN +1/+2/+3 / LOSE −3/−2/−1; Decisive-General diff-win +5), a per-Military-Phase
+>    **`|score|×10%`** win/lose roll (0 = continue), a **Momentum d6** swing, and an **End-War Multiplier**
+>    (×1 / ×0.5 long wars) that **replaces fixed phase/battle counts**, plus the verbatim Chance-of-Success
+>    formula and **naval-as-difficulty-modifier** (naval feeds the land general ±1 Mil, NO standalone naval
+>    win). vcczar rules war is "a side show" → POST-LAUNCH. Replaces the shipped `revolutionaryWar.ts:254-264`
+>    count-based win-path. Full spec at [§21.1.A](#211-generic-cross-era-war-system).
+> 2. **★★ DH-79 — the shipped "one naval win ends naval forever" bug.** `revolutionaryWar.ts:202` records
+>    `navalWins/navalLosses` but the `:254-264` win-check reads **only the ground tallies** → naval is dead
+>    state in the outcome. Documented at [§17.4](#174-revolutionary-war).
+>
+> **★ Designer rulings + new gaps folded (the topical sections carry the detail; this is the index):**
+>
+> | Item | Ruling / spec | Where folded | Cite |
+> |---|---|---|---|
+> | **★★ #45 War-Score redesign (DESIGN ORIGIN)** | asymmetric War-Score points; per-phase `|score|×10%` roll; Momentum d6; End-War Multiplier (replaces fixed counts); verbatim ChanceOfSuccess formula (Planning + Officer-Mil×10 + MilPrep + ForRel + Benchmarks − Difficulty); naval-as-land-difficulty (±1 Mil, no standalone naval win); French-alliance "don't generalize auto-win" caveat; the narrow adopted war-hero grant (+1 Mil + Celebrity, non-office-holder, difficult battle in a major war); GM ruling war = "a side show" → POST-LAUNCH | [§21.1.A](#211-generic-cross-era-war-system) + [§13.2](#132-272-military-action--runphase_2_7_2_military-phaserunnersts3593) | `rethinkwar#POST 1, 4-5, 11-12, 16, 18, 20-26` |
+> | **★★ DH-79 naval-win bug** | `:202` records navalWins/navalLosses; `:254-264` win-check never reads them → "one naval win ends naval forever"; fix = naval feeds land ±1 Mil | [§17.4](#174-revolutionary-war) | `rethinkwar#POST 1, 16`; code `revolutionaryWar.ts:202, 254-264` |
+> | **★ #243 war-death scaling** | death-% scalar + roster-vs-deaths measurement loop (raise % if under, add pols if over) + era-gated reduction once DoD/CJCS exists; shipped `applyCasualties` has none + is RevWar-only; add ~10 KIA officers (sub-floor, Army expertise, no seeded Frail/Celebrity/Military-Leader); Shaw "die-or-Celebrity" event | [§17.4](#174-revolutionary-war) | `kiaofficers#POST 1, 2, 8, 12, 20-22`; code `revolutionaryWar.ts:67-121` |
+> | **★ #244 West-Point ⇒ no-reappointment** | once West Point exists, a vacated/removed major military office can't be re-filled by the same person; era-gated on the academy bill; UNBUILT; sits with DH-75 | [§9.2.2](#922--244-new-kiaofficers--west-point--no-reappointment-to-a-vacated-major-military-office-office-eligibility-rule-with-dh-75-designed) | `kiaofficers#POST 12` |
+> | **★ #245 party-leader election = Kingmaker + die** | PL election decided by Kingmaker count + a die (Ivanka 1-KM beat Donald 4-KM on the roll); **Presidency USURPS PL** (the escape hatch from a KM-locked party); **rules doc has NO PL-endorsement rule** (Cal); die size **d3 ↔ d10 open knob** (Cal d3 / Ted d6+); shipped `phaseRunners.ts:2130` picks PL deterministically (Pres-of-party else top-PV) — no count, no die | [§8.5.3.A](#8533a--245-new-majorevents--the-party-leader-election--kingmaker-count--a-die-the-rules-doc-has-no-party-leader-endorsement-rule-designed-not-built) | `majorevents#POST 29-36`; code `phaseRunners.ts:2130` |
+> | **★ #246 / N1 strong never-nominees** | full-strength `ROWS`-class (NOT `ERA_FIGURES` sub-floor); won-never modeled by PV/electability (region/likability/ideology), not stat suppression; OPEN: do they need a 3rd electoral tier, or is won-never emergent? + 11 dynasties + marriage-based membership; Transportation/Agriculture already shipped | [§4.1.x](#41x--246--n1-new-strongnevernom--strong-never-nominated-candidates-ingest-at-full-rows-strength-the-sub-floor-rule-applies-only-to-era_figures-won-never-is-modeled-by-pvelectability-not-stat-suppression-designeddata) | `strongnevernom#POST 1, 10-42` |
+> | **★ #216 "Military" expertise → "Army" rename** | expertise/track renamed Army (disambiguate from the `Military` trait); legacy entries still "Military"; both `types.ts` + `seedDataset.mjs` still say `'Military'` (UNBUILT rename); Transportation = the one novel tag (already shipped) | [§3.1](#31-the-four-character-axes) | `kiaofficers#POST 22`; `strongnevernom#POST 30`; code `types.ts:182-191` |
+> | **★ #226 Frail/Hale reconcile** | Frail keys on NATURAL lifespan, NOT battle death (don't seed Frail on a young KIA); wound-Frail is earned in play; **Hale cutoff 80 (`strongnevernom`) vs 86+ (`ampuUpdates`) — OPEN numeric** | [§10.1](#101-241-deaths-retirements--decay--runphase_2_4_1_deaths-phaserunnersts2341) | `kiaofficers#POST 20-21`; `strongnevernom#POST 34-35` |
+> | **★ #225 Celebrity earned-not-seeded** | Celebrity + Military-Leader are BOTH earned in play, never seeded onto `ROWS`/`ERA_FIGURES`; vcczar removed Military-Leader from every fill ("that has to be earned") | [§10.1](#101-241-deaths-retirements--decay--runphase_2_4_1_deaths-phaserunnersts2341) | `kiaofficers#POST 20-21` |
+> | **★ #220 Predictable = anti-stonewall** | Predictable = opposition can strategize against you and stonewall → hurts passing legislation when Congress is opposed; the trait-EFFECT behind its −10 PV tier | [§20.10.1(d)](#20101--217-new-summer2021--the-presidentcabinet-implementation-sub-engine--30-governing-traits-designed-not-built) | `strongnevernom#POST 12` |
+> | **★ #194 marriage-based dynasty + 2nd seed table** | dynasty membership can be acquired by MARRIAGE (Burr's daughter, McAdoo=Wilson son-in-law); 11 more dynasties (Taft→President-Taft cross-link); model needs an in-law edge | [§15.x #194](#3018-rulings-folded-from-the-batch-28-designer-catalogs-to-do--fixes--completions--vic3--a-discussionspec-batch-not-a-playtest) | `strongnevernom#POST 14, 30` |
+> | **★ #56 generic 1806 rebellion → Civil War** | a NON-regional generic rebellion+recession → "full-scale Civil War" in a 1772-start (1806), GM "just a generic war"; distinct from 1856 Secession Winter; OPEN: shipped or house-ruled? candidate 2nd CW codepath | [§23.3](#233-56-civil-war--the-two-theater-combat-engine-multi-term-subsystem) | `majorevents#POST 42-44` |
+> | **★ #228 spoiler corroboration** | fresh 2016-start corroboration (Sanders/De Blasio under-spoiled Warner) — drain hits the wrong target / not hard enough | [§22.4.1](#2241--228--the-third-partyspoiler-vote-drain-ruleset-the-drain-half-the-224-trigger-is-the-spawn-half-new-primary2020-batch-31-designer-authored-gmapp-designed-wholly-unbuilt) | `majorevents#POST 54-58` |
+> | **Corpus-coverage (no topical edit)** | 1840-start (Manifest Destiny) = top still-needed upload (2 runs surfaced in `majorevents`); `1868-Bushwa` Gilded run births from `newplaytest` (distinct from `gilded`/`gild1868`); 2016-start + 1960(=`redbutton`) to confirm; 7-option era-start menu corroborates #86/#186/#92 | `game-context.md` corpus map | `majorevents` / `newplaytest` |
+>
+> **Roadmap takeaway (for the tech-lead + roadmap-planner).** Batch-34 build surface, ranked:
+> (1) **★★ The #45 War-Score model is now fully origin-spec'd** ([§21.1.A](#211-generic-cross-era-war-system)) — when war is taken off "side show" (POST-LAUNCH per vcczar), implement the asymmetric points + per-phase `|score|×10%`
+> roll + Momentum d6 + End-War Multiplier + naval-as-difficulty, replacing the shipped count-based win-path,
+> while preserving the three §17.4/#155 RevWar-winnability floors. (2) **★★ DH-79 is a small, clear shipped
+> bug** — the naval tally must feed the outcome (as the ±1-Mil land modifier), not be dead state. (3) **#243
+> war-death scaling** — a death-% scalar + roster-size scaling + DoD/CJCS era-reduction + the measurement
+> loop, plus the KIA-officer dataset adds. (4) **#244 / #245** — the West-Point no-reappointment office rule
+> and the party-leader Kingmaker+die election (with the Presidency-usurps escape hatch + the d3↔d10 knob).
+> (5) **Dataset/trait rulings** — the "Military"→"Army" expertise rename sweep, the #246 third-tier question,
+> the Hale 80-vs-86+ cutoff reconcile, marriage-based dynasty edges, and earned-only Celebrity/Military-Leader.
+> Cross-ref `game-context.md` rows **#45 (dated/origin'd)**, **DH-79 (NEW bug)**, **#243/#244/#245/#246/N1
+> (NEW)**, and **#240/#194/#216/#226/#225/#220/#56/#228 (sharpened)**.
 
 ### 30.4 Authority hierarchy reminder
 
