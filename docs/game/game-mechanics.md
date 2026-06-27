@@ -350,6 +350,7 @@
     - [30.14 Rulings folded from `pop2012b` (the 2nd 2012-start "Era of Populism" — MrPotatoTed designer-authoritative point-of-order corrections)](#3014-rulings-folded-from-pop2012b-the-2nd-2012-start-era-of-populism--mrpotatoted-designer-authoritative-point-of-order-corrections)
     - [30.19 Rulings folded from batch 29 — the two timeline-edge playtests (`wilsons1916` 1916-MP "Era of Hollywood" + `welcome2future` 2022-hands-off "Era of the Future")](#3019-rulings-folded-from-batch-29--the-two-timeline-edge-playtests-wilsons1916-1916-mp-era-of-hollywood--welcome2future-2022-hands-off-era-of-the-future)
     - [30.20 Rulings folded from batch 30 — the FIVE designer DESIGN/DATA/changelog threads (`revampPV` / `summer2021` / `ampuData` / `ampuUpdates` / `presidents`)](#3020-rulings-folded-from-batch-30--the-five-designer-designdatachangelog-threads-revamppv--summer2021--ampudata--ampuupdates--presidents)
+    - [30.21 Rulings folded from batch 31 — the CANONICAL RULEBOOK + four RULES/FEEDBACK/TEST/DATA threads (`rulebook` / `apptdeepdive` / `primary2020` / `playtestdraft` / `bestmoments`)](#3021-rulings-folded-from-batch-31--the-canonical-rulebook--four-rulesfeedbacktestdata-threads-rulebook--apptdeepdive--primary2020--playtestdraft--bestmoments)
     - [30.4 Authority hierarchy reminder](#304-authority-hierarchy-reminder)
 31. [Gilded-Age era systems (designed, not built)](#31-gilded-age-era-systems-designed-not-built)
     - [31.1 (#147) Tariff-as-national-%-rate + the mutually-exclusive MonetaryRegime](#311-147-tariff-as-national-rate--the-mutually-exclusive-monetaryregime-designed)
@@ -708,6 +709,34 @@ normalization layer, `Math.max(0,…)`-clamped (`pv.ts:88`, negatives lost). Two
 > *standalone* defect, the clamp is the clearest wrong: replace it with a constant floor-offset so the CPU
 > keeps ordering among bad pols. (`game-context.md` DH-77; folded into the §30.20 index.)
 
+> **★ PROVENANCE-UPGRADED (batch 31, `primary2020`, May-2022 — the EARLIEST + CLEANEST exhibits, predating
+> `revampPV` Feb-2023).** Two batch-31 datapoints strengthen #214/#215 without changing the spec:
+> - **#214 — the "Alt Hist Hypothetical James Dean" OP build is the single best "why a flat +4/trait is
+>   wrong" exhibit in the corpus** (`primary2020#POST 1-2, 18, 20`): **2 command, 0 in EVERY skill**,
+>   ideology Liberal, ~8 traits (Pacifist + Technology + Likable + Charisma + Orator + Propagandist +
+>   Celebrity + Passive + Cosmopolitan + Crisis-Manager), declared *"OP — nuff said"* and confirmed
+>   "powerful" by Ted + the roller **purely on the trait stack** (skills all 0). The shipped flat **+4/trait**
+>   (`pv.ts:76`) makes an 8-trait pol = **+32 PV** swamping skills — exactly what #214's per-trait tiers
+>   target. It also enumerates the in-game **±1 trait/identity ELECTORAL knobs** the reweight must *price*
+>   (POST 31): **home-state +2, home-region +1, Experience +1, debate-win +1**, preferred/least-preferred
+>   ideology ±1, Puritan −1 (fires for both), enthusiastic-base up to +2, domestic/economic crisis −2 — so
+>   home-state/region & debates are the high-value knobs, far above raw skills. (Charisma is *also* the
+>   disproportionate force-multiplier on the designed 3rd-party spoiler rule, §22.4.1 — region→nationwide,
+>   50%→75%, POST 75.) Note the **command-floor-too-easy** datum: the shipped primary gate requires
+>   command ≥ 2 (`phaseRunners.ts:3729`), and this 0-skill 2-command trait-stack pol clears it and rides
+>   traits to the top — the floor is too cheap for an otherwise-empty pol (POST 22).
+> - **#215 — the May-2022 office→PV table** (`primary2020#POST 112`): designers set *"Positions now give
+>   increase to politician value"* = **President +30 / Justice / Senate-Maj / Senate-Min / Speaker +25 /
+>   Senator / House-Maj / House-Min +20 / Gov / VP +15 / Rep +10 / Cabinet +5.** The shipped `OFFICE_PRESTIGE`
+>   (`pv.ts:7-31`) badly **under-shoots**: Senator 5 (spec 20), Rep 2 (spec 10), Gov 6 (spec 15), Speaker 12
+>   (spec 25) — legislators/reps grossly under-weighted. Treat `revampPV#POST 33` as the LATER word, but
+>   this confirms the office tier was already being raised dramatically in May 2022. (`primary2020#POST 22,
+>   31, 75, 112`; `game-context.md` #214/#215; folded into §30.21.)
+
+> **★ #183 RESOLVED (the endorsement/withdraw-MOMENTUM spec EXISTS) — see [§15.5(e)](#155--election-system-specs-absent-from-our-build-the-2022-reference-game-completions--the-live-d6d3-fork-completions--fixes-batch-28-not-in-our-build).** Not a PV
+> mechanic, but `primary2020` is the earliest detailed source and it settles the #183 CONFLICT direction:
+> the momentum spec is specced and the app implements NONE of it (specced-but-unbuilt). Documented at §15.5(e).
+
 *(designed, not built — replace the §3.4 flat trait/skill/command math with the per-trait tier table
 (#214) + the non-linear ability curve (#215) AFTER running the #216 name remap; fold Kingmaker/Master-
 Kingmaker into the table (drop the `+6`); keep the office/age/FF terms (additive); decide the display scale
@@ -981,6 +1010,71 @@ pairs #4/#92/#108/#171; `welcome2future#post 68`.)
 distinct from the within-party draft; (b) make the assigned-faction-ideology draft restriction an
 era-keyed toggle that can be fully DISABLED at a configured boundary (2026 in the future band), not just
 re-profiled per era — consolidates with #171.)*
+
+#### 4.4.1 ★ Draft BASELINE sharpened (#211/#115) + the starting-draft 2-ideology restriction (#232) (NEW, `playtestdraft` + `rulebook` + `primary2020`, batch 31)
+
+> **★ The canonical record of the STANDARD within-party draft (`playtestdraft` = 38ecfaeb, a founding-era
+> 1772/1774 multiplayer draft run end-to-end by `@vcczar`) — the BASELINE the §4.4 #211 cross-party
+> PV-snake is the *variant* of.** This SHARPENS the "build today" note: the shipped/baseline draft is a
+> **FIXED PER-PARTY ROUND-ROBIN**, not a snake, not PV-ordered.
+
+**(1) ★ The baseline draft FORMAT** (`playtestdraft#POST 1, 6, 86, 90, 196`):
+- **Within-party** only: Blue drafts Blue, Red drafts Red, from **independent same-color pools** advanced
+  in parallel.
+- **A single GM-assigned ordering per party that REPEATS each round** — it does **NOT reverse** (NOT a
+  snake) and is **NOT PV-ranked**. (Confirmed by the cyclic re-tagging returning to the top of the list
+  each round.)
+- **Uneven pool sizes** → ~10 picks/Blue-player vs ~27 picks/Red-player (far more Red-coded founding pols),
+  so per-player roster size differs by party. Draft runs *"until all politicians are drafted."*
+- Pool is **birth/era-gated** (Crockett undraftable "12 years before his birth" — confirms `draftYear =
+  birthYear + 25`); **double-draft collisions** from a stale shared tab document the need for
+  **TRANSACTIONAL draft locking** (lock a pol the instant it's drafted — `playtestdraft#POST 101-102, 123-125`).
+
+> **★ Reconcile with the rulebook's NORMAL draft.** The RULEBOOK's 2.1.1 (`rulebook#§B POST 3`) gives a
+> **score-ordered** normal draft: **draft order = LOWEST faction score → highest** (ties random,
+> automated-draft always available), done once every 4 years. This **differs from `playtestdraft`'s flat
+> GM-assigned list** (both are within-party). So the build has two within-party orderings to reconcile:
+> the rulebook's **lowest-score-first** (the §4.2 shipped picker's natural fit) vs the practiced flat
+> round-robin. The rulebook also pins the **post-draft random-trait sprinkle** (one of each trait, minus
+> exclusions `celebrity`/`two-faced`/`military hero`/`incompetent`/`flip-flopper` except in the Future era;
+> no rookie >1 random trait, no trait to >1 rookie; conflicting random trait cancelled) and the **suffrage
+> gate** (women/racial-minority pols undraftable until their demographic can legally vote → enter the NEXT
+> draft). (`rulebook#§B POST 3`.)
+
+**(2) ★ CPU autodraft + preference-list automation (#115 — concrete, citable specs):**
+- **CPU autodraft = D10 → take the Nth-highest-ranked available pol of that party** (*"if you roll an 8,
+  give me the 8th highest ranking politician in that party"* — `playtestdraft#POST 132`). I.e. PV-rank +
+  a small random offset. (The rulebook's CPU draft, `rulebook#§B POST 3`, is the slightly different
+  *"pick one of the top 10, preferring an ideology-card match, else random among the top 10"* — same
+  top-10 family.)
+- **Preference-list automation:** a player privately submits the GM a names-or-skills/ideology list and
+  the GM **"use[s] the list as if you were automating the draft"** (`playtestdraft#POST 1`, used
+  throughout) — the `GM⇒App` automation core for the draft (distinct from #115's *generate-a-candidate*
+  backfill: this automates *picking*, not *creating*).
+
+**(3) ★ #232 — the STARTING-year draft needs a TIGHTER ideology restriction (2/faction) than a mid-game
+draft (3) (NEW, `primary2020`).** A draft-balance finding from the May-2022 2022-start CPU draft
+(`primary2020#§5 POST 96, 99-104`). With **3 ideologies/faction at a COLD START** the CPU produced
+incoherent factions: *"Joe Biden is in charge of Bernie Sanders and AOC,"* only Seth Moulton could lead
+Harris/Warren, and Trump landed in a faction he wasn't even allowed to *lead* (couldn't be Party Leader;
+the GM hand-traded him for Santorum). **Fix: trim the STARTING draft to 2 ideologies/faction** (an explicit
+ten-faction ideology ladder). vcczar (POST 100): **3 is fine for a ROOKIE (mid-game) draft but NOT a
+STARTING-year draft** — *"there's no established baseline to temper the factions"*; for the 1960 boot they
+**manually balanced** the starting pols. So the draft-ideology restriction is **tighter at a cold boot (2,
+or manual seeding) than mid-game (3)** — a distinct angle on #4 (per-era profile) / #171 (era-keyed
+on/off toggle, §4.1.w) / #213 (the toggle can switch fully OFF, §4.4): #232 is the **start-of-game-vs-mid-
+game TIGHTNESS** axis. It also corroborates the CPU-draft holes (#114/DH-36): non-served pols leaked
+Charisma/Leadership (the sub-floor rule), no CPU rule to prioritize sitting office-holders ("passed the
+sitting President"), too many pols with 2-3 command. (`primary2020#§5 POST 95, 96, 99-104`.)
+
+> *(designed, not built — (a) document the within-party baseline as a **fixed per-party round-robin** /
+> reconcile with the rulebook's **lowest-score-first** order; add **transactional draft-locking** + the
+> **random-trait sprinkle** + the **suffrage gate**; (b) CPU autodraft = **D10 → Nth-highest-PV** (or the
+> rulebook top-10 ideology-match variant) + **preference-list automation**; (c) #232 — the boot-time
+> STARTING draft uses a **TIGHTER ideology restriction (2/faction)** or manual seeding vs the mid-game
+> rookie draft (3), folded into the scenario-boot pipeline (#115). Cite `playtestdraft#POST 1, 6, 86, 90,
+> 101-102, 123-125, 132, 196`; `rulebook#§B POST 3`; `primary2020#§5 POST 96, 99-104`. Ruling index
+> [§30.21](#3021-rulings-folded-from-batch-31--the-canonical-rulebook--four-rulesfeedbacktestdata-threads-rulebook--apptdeepdive--primary2020--playtestdraft--bestmoments).)*
 
 ---
 
@@ -1432,8 +1526,46 @@ and add at high score (the shipped `dropThreshold ≤ −4` / `addThreshold ≥ 
 [§7.3](#73-alignment-drift--runphase_2_1_8_factionpersonalities-phaserunnersts1623), is the
 nearest shipped analog).
 
+> **★★ THE CANONICAL CARD-ASSIGNMENT ALGORITHM (#50/#51) — the AUTHORITATIVE compatibility/ban tables +
+> 5-pol floor + cascade (NEW, `rulebook`, batch 31).** The RULEBOOK's most data-dense post
+> (`rulebook#§I POST 10`, designer `@vcczar`, the **Faction Personalities** phase 2.1.8) pins the exact
+> distribution the 1772-solo digest sketched above. Cards **re-evaluate EVERY 2 YEARS**, score +/- points
+> when relevant laws/events occur, and are **driven by the STRENGTHS of the faction's own politicians**.
+> Three card families, each by **PLURALITY** (most-pols-with-X wins; ties → cards SHARED; a faction may
+> hold >1):
+> - **Ideology cards (6):** Progressive / Liberal / Moderate / Conservative / Traditionalist / **Populist**
+>   (= most LW + RW Populists combined). The faction with the **MOST pols of that ideology** gets it (e.g.
+>   40 Lib / 39 Mod / 38 Con ⇒ Liberal). **★ EVERY faction MUST have ≥1 ideology card** — if none after
+>   distribution, it gets its **party's Historical-Era ideology** (era-specific; multi-ideology era → the
+>   one it has most pols for; random tie).
+> - **Interest cards (8):** Nationalist / Expansionist / RW-Activist / LW-Activist / Reformist /
+>   Civil-Rights / Pacifist / Theocrat. **★ COMPATIBILITY BANS:** Civil-Rights ✗ Con/Trad cardholder ·
+>   Expansionist ✗ Progressive · Nationalist ✗ Lib/Mod · Pacifist ✗ Con/Mod · **LW-Activist ONLY Lib/Prog**
+>   · **RW-Activist ONLY Con/Trad** · Reformist ✗ Moderate · Theocrat ✗ Progressive.
+> - **Lobby cards (25+, each keyed to an EXPERTISE):** most-matching-expertise-pols. **★ BAN table** (sample
+>   from POST 10): Wall Street[Econ] ✗ Prog/Pop/Reformist · Big Oil&Gas ✗ Prog/Lib/LW-Activist · **LW-Media
+>   MUST have Lib/Prog** · **RW-Media MUST have Con/Trad** · Military-Industrial ✗ Prog/Pacifist · Big
+>   Ag/Transportation join anyone.
+>
+> **★ The two structural rules the §7.4 sketch under-specified:**
+> - **5-POLITICIAN FLOOR:** interest AND lobby cards each require the faction to have **≥5 pols** with the
+>   required interest/expertise; **if no faction qualifies, NO ONE gets that card** (broader than the
+>   1772-solo "top-up only" floor — the rulebook applies it to the whole interest/lobby distribution).
+> - **CASCADE:** when a faction is **INELIGIBLE** for a card (a compatibility/ban hit), the card **cascades
+>   to the next-most-relevant ELIGIBLE faction.**
+>
+> This is the canonical source for the card LAYER under the §22.2 enthusiasm/Score engine (#50/#51) — and
+> the **Faction-Leader's personal ideology determines WHICH ideology-enthusiasm meter the faction is bound
+> to** (§8.5; though ALL cards still score). Corroborates the draft→card pipeline #24: cards derive from
+> the most-represented ideologies/interests among *drafted* pols, **cross-party-relative**
+> (`playtestdraft#POST 218`: faction cards "depend on the Red Party Draft"). (`rulebook#§I POST 10`;
+> `playtestdraft#POST 218`; `game-context.md` #50/#51; folded into §30.21.)
+
 *(designed, not built — implement the five-step allocation + lobby-activation gating in
-2.1.8, alongside (not replacing) the existing card-drift swaps.)*
+2.1.8, alongside (not replacing) the existing card-drift swaps; use the §7.4 batch-31 box as the
+authoritative compatibility/ban tables + the **5-pol floor** (interest/lobby) + the **cascade-to-next-
+eligible-faction** rule + the **every-faction-≥1-ideology-card** fallback + the **2-yr re-evaluation**
+cadence + Populist = LW+RW-Pop combined.)*
 
 #### 7.4.1 Era-gated multi-pool card library (designed, not built)
 
@@ -1916,6 +2048,33 @@ shipped rule.
   president follows by **majority** (corroborates [§9.3.4](#934-cabinet-auto-sign-behavior--egghead-advisory-step));
   officers passed over for promotion may **resign** (post 1512).
 
+> **★ #229 (NEW, `apptdeepdive`, batch 31) — the appointee-SIDE acceptance matrix: WHO says yes (CPU
+> per-candidate-type odds) + "humans freely accept/decline ANY nomination EXCEPT VP" (designer-
+> authoritative, `GM⇒App`; DESIGNED).** Everything above is the appointer/picker side; this is the
+> ACCEPT/DECLINE side — the full per-candidate-type CPU odds table (`apptdeepdive#§E POST 40`, ACCEPTED
+> FINAL), with the human rule confirmed: **humans freely accept/decline any nomination EXCEPT VP** (a
+> sitting VP cannot accept any nomination, POST 40/250 — corroborates the pop2012b POST 820-821 split at
+> #25). Distinct from the CPU FILL logic (#73, the picker side) and from #25 (tenure/firing).
+
+| Candidate type | CPU acceptance |
+|---|---|
+| **Senate/House officers, SC justices** | **10%** top-cabinet (State/Treasury/AG/War-Def), **25%** for Sec-State; **NEVER** lower-cabinet / cabinet-level / ambassador |
+| **Senators (non-officer), Governors** | **90%** top / **75%** lower / **50%** cabinet-level / **10%** ambassador (UN-Amb is cabinet-level) |
+| **Representatives** | **ALWAYS** (unless a House officer) |
+| **Generals / Admirals / military** | **ALWAYS** unless **Disharmonious (50%)** |
+| **Career-track pols** | cabinet **100%** / cabinet-level **75%** / ambassador-or-military **50%**; if confirmed → **PULLED off the career track** with milestone benefits earned so far |
+| **Incumbent movement** | top-cabinet only retain/move to another top post; lower-cabinet retain or move **up 100%** / to cabinet-level **50%** / to ambassador **25%**; cabinet-level & ambassadors accept all |
+| **Sitting VP** | **CANNOT accept ANY nomination** |
+
+- **Trait gates:** **Incompetent** can't accept any cabinet post; **Easily-Overwhelmed** declines **50%** —
+  both lifted only if no one else is available; a **fired/quit** pol is never appointable again.
+
+> *(designed, not built — add a per-candidate-type CPU acceptance/decline roll on nominations (the matrix
+> above) + the human rule (free accept/decline except VP) + the Incompetent/Easily-Overwhelmed/fired-quit
+> gates; on a career-track pol accepting, pull them off-track with milestone benefits. `GM⇒App`. Pairs with
+> #25 (tenure/firing) + #73 (CPU fill/picker) + the §9.3.11 confirmation flow. Cite `apptdeepdive#§E/§B
+> POST 40, 250`. Ruling index [§30.21](#3021-rulings-folded-from-batch-31--the-canonical-rulebook--four-rulesfeedbacktestdata-threads-rulebook--apptdeepdive--primary2020--playtestdraft--bestmoments).)*
+
 *(designed, not built — add per-officer tenure/term fields; the opp-party cap; the
 failed-confirmation ban + SML-5-names auto-confirm recovery; the diversity-floor and
 faction-equity scoring dimensions.)*
@@ -2068,7 +2227,24 @@ nomination pickers; encode the 60%-of-states CC-era confirmation gate. Cite `ted
 > requirement changed to "does NOT have Passive," POST 84-85 — fixes the lifetime-cabinet lock; cross-
 > ref §21.4 firing-precedent).
 
-> **★ #199 — the confirmation-REJECTION trait cascade (a rejected nominee becomes toxic; Ted ACCEPTED,
+> **★★ #199 SUPERSEDED (batch 31, `apptdeepdive`) — the rejected-nominee fallout is the 33/33/34 blame
+> roll, NOT the Controversial→Incompetent cascade below.** The Sept-2022 appointments deep-dive is the
+> DESIGN ORIGIN of the whole 2.3 confirmation process and POSTDATES the `fixes` cascade. Ted's FINAL
+> ruling (`apptdeepdive#POST 88-92`, with Cal's 9-historical-rejection analysis): on a rejected/withdrawn
+> nominee → **33% Pres blamed → nominee gains `Controversial` / 33% SML blamed → nothing / 34% nobody
+> cares → no trait**; AND an **already-`Controversial`** denied nominee → a **LIFETIME Cabinet +
+> Cabinet-Level ban** (Ambassador / no-confirmation roles still allowed). **So the toxicity is only
+> `Controversial` (33% chance) + the already-Controversial lifetime ban — there is NO `Incompetent`
+> escalation and NO blanket re-nomination block.** The full canonical rule is documented at
+> [§9.3.11(8)](#9311--the-canonical-cabinetscotus-confirmation-subsystem-172dh-76--199--the-authoritative-spec-new-rulebook--apptdeepdive-batch-31-designed-not-built). The
+> cascade text immediately below is the **SUPERSEDED `fixes` version, retained for provenance** —
+> implement the 33/33/34 rule instead unless a human re-affirms the older draft is the later word
+> (`apptdeepdive` flags this as a human-call: this 2022 thread is OLDER than `fixes`, so `fixes`'s
+> cascade *could* be a later re-revision, but the deep-dive is Ted's section-by-section FINAL lock of
+> 2.3 — so 33/33/34 is authoritative absent a human override). Cite `apptdeepdive#§G POST 88-92`.
+
+> **★ #199 (SUPERSEDED — see the box above; retained for provenance) — the confirmation-REJECTION trait
+> cascade (a rejected nominee becomes toxic; Ted ACCEPTED,
 > `fixes#§D POST 434-436`, batch 28). DESIGNED for our build (marked "already implemented" in the 2022
 > forum game; NOT-IN-OUR-BUILD — `phaseRunners.ts` has no trait cascade on a rejected appointment).**
 > A nominee **rejected at confirmation AUTOMATICALLY gains `Controversial`, then (on a further/second
@@ -2177,6 +2353,90 @@ replace the pre-Terror region-coverage malus (§9.3.3) — a §27.1 era-BAND rul
 > with #124 (the auto-pass gate decides *whether* a vote happens) + #52 (decides *who* votes aye) + the
 > batch-9 user cloture model (decides *how* the vote runs). Indexed in
 > [§30.13](#3013-rulings-folded-from-modernday-ga-run-2016-start-modern-multiplayer--ted-blessed-marquee-rulings). Cite `modernday#POST 416-423, 426, 582-603`.
+
+#### 9.3.11 ★★ THE CANONICAL CABINET/SCOTUS CONFIRMATION SUBSYSTEM (#172/DH-76 + #199) — the AUTHORITATIVE spec (NEW, `rulebook` + `apptdeepdive`, batch 31; DESIGNED, not built)
+
+> **★★ The two PRIMARY sources for the entire confirmation subsystem.** The **canonical RULEBOOK** (`rulebook` = b9e4f534, designer `@vcczar`, §M2 POST 16 + §Z POST 32) pins the BASE FORM (thresholds, party-block, filibuster/cloture, presidential tools); the **appointments deep-dive** (`apptdeepdive` = b9028796, the Sept-2022 Ted-led DESIGN ORIGIN, §G POST 57/82/87/88) supplies the CONTROL STRUCTURE (the auto-confirm gate + the Top-Four-always-vote compromise + the defeated-nominee fallout). Together they are the authoritative spec for **#172** (threshold + nuclear option, §9.3.10) + **DH-76** (the filibuster-without-cloture defect, [§12.6](#126-forum-design-layer-filibuster-designed-not-built)) + the **presidential promise** system (#181). The shipped `runPhase_2_3_1_Cabinet` (`phaseRunners.ts:2158`) **auto-picks the top-scored candidate and logs "confirmed" with NO vote / block / filibuster / cloture / nuclear-option / promises** (codebase-verified — no `confirmThreshold`/`nuclearOption`/`cloture` tokens) — so this **entire subsystem is designed-not-built**. (§9.3.10 has the era-keyed threshold NUMBERS; this section has the procedure they sit inside.)
+
+**(1) ★ The confirmation flow, end to end** (`rulebook#POST 16, 32`; `apptdeepdive#POST 57, 82`):
+
+```
+nominee → AUTO-CONFIRM GATE → [pass] auto-confirmed (no vote)
+                            → [fail] FULL HEARING: relevant committee (50%+1) → full Senate vote
+                                       ↳ party-wide block? · filibuster? → invoke cloture? · nuclear option?
+                                       ↳ president's tools: compel / convert senators
+                                       → [confirmed] / [rejected → fallout + SML 5-name recovery list]
+```
+
+**(2) ★ THE AUTO-CONFIRM GATE (`apptdeepdive#POST 57/82/87/88`, FINAL).** A nominee is auto-confirmed (no Senate vote) **ONLY IF ALL FOUR** hold:
+
+| # | Condition | Note |
+|---|---|---|
+| 1 | **Admin ≥ 3** (Military skill for senior officers) | the competence floor |
+| 2 | **NOT Controversial** | the integrity floor |
+| 3 | **SML is NOT Iron-Fist** | an Iron-Fist SML can force a hearing for ANY nominee regardless of all else (CPU default vs out-of-faction picks) |
+| 4 | **NOT one of the Top-Four** (State / Defense / Treasury / War) | the high-impact seats players fight over |
+
+If any fails → **full hearing** (relevant committee first, then a Senate-wide vote). This is the gate that decides *whether a vote happens at all*; #172 (§9.3.10) is the *threshold* the nominees who DO get a vote must clear (60% default, or 50%+1 under the Nuclear Option). The two compose: gate → (if contested) threshold.
+
+**(3) ★ TOP-FOUR ALWAYS VOTE — and the TWO "Top-Four" sets are DIFFERENT (flag for the build).** The compromise that resolved the Sept-2022 design blow-up (`apptdeepdive#POST 82/100/102`): **State / Defense / Treasury / War always go to a full Senate vote** (never auto-confirm), because they carry the biggest impact/bonuses. **★ This always-vote Top-Four is NOT the same set as the cross-party-CAP Top-Four.**
+
+| "Top-Four" set | Members | Rule it governs | Cite |
+|---|---|---|---|
+| **Always-vote Top-Four** | State / Defense / Treasury / **War** | exempt from the auto-confirm gate → always a full Senate vote | `apptdeepdive#POST 82` |
+| **Cross-party-cap Top-Four** | State / War-Def / **AG** / Treasury | ≤1 cross-party nominee allowed among these (≤3 cross-party total) | `apptdeepdive#POST 40` ([§9.3.6](#936-modern-cabinet-detail-sharpens-931-933-designed-not-built)/§9.3.8) |
+
+The two sets differ by **AG vs War**: AG is in the cross-party cap but NOT the always-vote set; "War" double-lists with Defense in Ted's always-vote phrasing (POST 82). Open Q flagged for the human (`apptdeepdive` Open-Questions): confirm the always-vote list is exactly State/Defense/Treasury/War.
+
+**(4) ★ PARTY-WIDE BLOCK — the SML's 5 reasons** (`rulebook#POST 16`). The Senate Majority Leader may block a nominee party-wide only with **`Manipulative` OR `Leadership`** + a stated reason; a **`harmonious`** SML may block ONLY on inexperience. **Block cap = the opposing leader's Legislative Power.**
+
+| Reason | Triggers on | Replacement must … |
+|---|---|---|
+| **Controversial** | the Controversial trait | … have `Integrity` |
+| **Too Partisan** | LW/RW Activist | … be Lib / Mod / Con |
+| **Inexperienced** | Admin ≤ 2 (Judicial ≤ 2 for SCOTUS) | … have Admin ≥ 3 |
+| **Wrong Personality** | Disharmonious or Unlikable | … lack the offending trait |
+| **Just for Spite** | (Iron-Fist SML only) | — |
+
+A blocked officer → the President picks a replacement that **alleviates the stated concern**, which is then **AUTO-CONFIRMED**.
+
+**(5) ★ FILIBUSTER + INVOKE CLOTURE (the DH-76 half the field found "missing")** (`rulebook#POST 16`):
+- A **committee-relevant Senator with `Puritan`** may **filibuster** one cabinet officer (the officer withdraws) unless bypassed.
+- **INVOKE CLOTURE** = an SML with **`Manipulation` + higher Legislative than the filibusterer** forces a vote. (This is the cloture half DH-76 flagged absent; the authored mechanic is at [§12.6](#126-forum-design-layer-filibuster-designed-not-built)/§30.20-B.)
+
+**(6) ★ PRESIDENT'S TOOLS** (`rulebook#POST 16`): higher Legislative than the SML → **compel** confirmation; **`Iron Fist`** (same-party SML) → compel; **Legislative ≥ 1** → **convert up to (Legislative#) moderate/pliable/own-ideology Senators** (5-6 roll; 4-6 vs a Pliable senator).
+
+**(7) ★ THE VOTE ITSELF** (`apptdeepdive#POST 81/82/93`):
+- **Admin-1 penalty** (the DH-23 root cause): a nominee with only **1** in the relevant skill → a senator who would have voted AYE has a **50/50 chance to flip to NAY**.
+- **Ideology auto-lean**: Populists vote against Moderates and vice-versa; some traits vote against anyone off their personal ideology — *only when a vote occurs at all*.
+- **★ Trait → vote = 75% (not 100%)**: trait impact on a confirmation vote was changed from 100% certainty to **75%** (some still 100% / 50-50) — so humans can no longer predict every vote.
+- **Voter-side effect**: a senator voting NAY may gain **Controversial or Integrity** depending on perception.
+
+**(8) ★★ DEFEATED-NOMINEE FALLOUT (#199 — the SUPERSEDED cascade replaced).** On a rejected/withdrawn nominee (`apptdeepdive#POST 88-92`, Ted FINAL, with Cal's 9-historical-rejection analysis):
+
+| Roll | Outcome |
+|---|---|
+| **33%** | the **President** is blamed → nominee gains **`Controversial`** |
+| **33%** | the **SML** is blamed (politics) → nominee gains **nothing** |
+| **34%** | nobody cares → **no trait** |
+
+AND: a nominee who **already had `Controversial`** and is then denied → a **LIFETIME ban from Cabinet + Cabinet-Level roles** (may still serve as **Ambassador** or any no-confirmation role). **★ This REPLACES the prior #199 Controversial→Incompetent cascade** (§9.3.8, `fixes` origin) — the toxicity is only **Controversial (33% chance) + an already-Controversial pol's lifetime Cabinet ban**, NOT an Incompetent escalation. On a defeat, the **SML names the 5 most-qualified replacements** (traits/ideology shift the list) and the President picks one, auto-confirmed (the §9.3.10 recovery list).
+
+**(9) ★ PLIABLE/PASSIVE-PRES → IRON-FIST-SML NOMINATION SUBSTITUTION (sharpens #112's Iron-Fist force-vote)** (`apptdeepdive#POST 40`). An Iron-Fisted **same-party SML makes the NOMINATION instead of the President**, rolled **per available office**: **Pliable Pres → 50%**, **Passive → 75%**, **BOTH → 100%**. (Distinct from the Iron-Fist *force-a-vote* power above — this is who *nominates*.)
+
+**(10) ★ OFFICE-VACANCY CASCADES on confirming a sitting officeholder** (`rulebook#POST 16`): confirming a sitting **Governor** → the faction appoints a placeholder same-state **Lt-Gov** (or Vacant-but-party-controlled); confirming a sitting **Senator** → the **Governor** replaces or leaves vacant until the next election.
+
+**(11) ★ PRESIDENTIAL PROMISES (#181) are honored HERE** (`rulebook#POST 15`): promises made during the election **must be honored** at appointment unless (1) the Pres is `disharmonious` AND (2) the only eligible person is gone; a **broken promise → −3 (later −2) faction enthusiasm** for the wronged faction (`apptdeepdive#POST 40/43`).
+
+**(12) ★ SCOTUS confirmation = the SAME machine** (`rulebook#POST 32, 34, 35`): SCOTUS needs **60%** (Nuclear-Option → majority), reuses the cabinet block rules (substitute "inexperienced" = **Judicial ≤ 2**), adds the **"Merrick Garland" delay** (only in a 2nd-term lame-duck OR for an unelected VP-president), and a blocked nominee → Pres picks a moderate/other-party pol, auto-confirmed. The nominee floor is **Judicial ≥ 2** (designer-confirmed, NOT 1, POST 35). Documented at [§22.7](#227-scotus-subsystem-253--282)/[§26.6](#266-modern-scotus-confirmation-rules--refinements).
+
+> **★ How this reconciles with what's already documented:**
+> - **#172 (§9.3.10)** = the **threshold number** (era-keyed 60% / 50%+1 + the Nuclear-Option boot flag). **This section** = the **gate + control structure** the threshold sits inside (auto-confirm gate → hearing → block/filibuster/cloture/tools → fallout). They compose; neither overturns the other.
+> - **#124 (§9.3.8 / §26.6)** = the auto-pass gate captured from later threads — **this is the SAME gate**, now pinned to its canonical 4-condition form (Admin≥3 ∧ ¬Controversial ∧ ¬IronFist-SML ∧ ¬Top-Four). Treat §9.3.11(2) as the authoritative statement.
+> - **#199 (§9.3.8)** = the **superseded** Controversial→Incompetent cascade; (8) above is the **authoritative replacement** (annotated in place at §9.3.8).
+> - **batch-9 USER cloture model** ("60% then majority") = the *procedure for legislation*; the Nuclear-Option flag here is exactly the in-game lever that sets the appointments cloture bar — no tension (§30.4 rank-3).
+>
+> *(designed, not built — model cabinet + SCOTUS confirmation as a real Senate vote: the **auto-confirm gate** (4 conditions) → **full hearing** (committee 50%+1 → Senate at the §9.3.10 era-keyed threshold) → **party-wide block** (5 reasons, cap = opp-leader Legislative) → **filibuster + invoke-cloture** → **president's compel/convert tools** → **defeated-nominee 33/33/34 fallout + already-Controversial lifetime ban + SML 5-name recovery**; plus the **Top-Four-always-vote** carve-out (distinct from the cross-party-cap Top-Four), the **admin-1 50/50 flip**, **trait→vote 75%**, **Pliable/Passive→Iron-Fist-SML nomination substitution (50/75/100%)**, **office-vacancy cascades**, and **presidential promises**. Cite `rulebook#§M2/§Z POST 16, 32, 34, 35`; `apptdeepdive#§G POST 40, 57, 82, 87, 88, 92, 93, 100, 102`. Ruling index [§30.21](#3021-rulings-folded-from-batch-31--the-canonical-rulebook--four-rulesfeedbacktestdata-threads-rulebook--apptdeepdive--primary2020--playtestdraft--bestmoments).)*
 
 ---
 
@@ -2289,6 +2549,48 @@ ex-Pres retires at end of half-term not on appointment. Cite `tedchange#POST 137
 > generation rule sitting alongside the `draftYear`/sub-floor conventions in CLAUDE.md. *(designed — add a
 > lifespan-derived auto-trait pass to dataset generation: died <60 ⇒ Frail, lived 86+ ⇒ Hale.
 > `game-context.md` #226.)*
+
+#### 10.1.z ★★ THE CANONICAL PER-ERA DEATH-RATE BRACKET TABLE + succession cascade (#130/#143) (NEW, `rulebook`, batch 31; DESIGNED)
+
+> **★★ The source numeric table for the §10.1.y Ted-ruled schedule.** The RULEBOOK's 2.4.1 (`rulebook#§N
+> POST 17`, designer `@vcczar`) uses a **0-100% system (NOT a d6)**, with age measured at the **START of
+> the 2-yr cycle** (not updated mid-cycle). This pins the era-scaled brackets §10.1.y / #130 left as bands.
+
+**The per-era death-rate brackets** (`rulebook#§N POST 17`):
+
+| Era band | 25-55 | 55-75 | 75+ | 90+ |
+|---|---|---|---|---|
+| **1972-present** | **1%** | **3%** | **5%** | **20%** |
+| **1900-1972** | **2%** | **10%** | **25%** | — |
+| **pre-1900** | **5%** (25-50), **10%** (51-60), **25%** (61-74) | | **40%** (75+) | — |
+
+- **`Frail` = +5% & rolled FIRST**; **`Hale` = not rolled until the 75 bracket** (the §10.1.y "Hale = ½
+  death" reading; here Hale simply isn't subject to a roll until 75+). **Auto-retire at 100.**
+- **★ CAPS** (per faction, per pass): a faction loses **≤3 pols to death/retire** — **2 random retirements
+  (never Pres/VP/Speaker/Sen-Maj-Ldr/party-leader) + 1 death**; brackets rolled **oldest→youngest**, frail
+  in the oldest bracket. (This is the source for §10.1.y's 3%-retire/2%-death decomposition reading.)
+- **★ Per-era cause-of-death tables** = 10 equal-chance causes each, era-specific (typhoid/smallpox in
+  Independence … cancer/heart-attack/virus in Terror/Populism).
+
+**★ The immediate-SUCCESSION cascade** (fires the moment a death/retirement lands — `rulebook#§N POST 17`):
+
+| Vacated office | Filled by |
+|---|---|
+| **Senator** | the state **Governor** appoints/replaces |
+| **Governor** | the **controlling faction** appoints |
+| **Congressional leaders** | **Whips promote → Maj-Ldr → Speaker** (cascade up) |
+| **Cabinet** | the **President** fills (with **re-confirmation**) |
+| **Ambassadors** | **SecState** fills |
+| **Military officers** | **SecWar** fills |
+| **President** | the **VP / line of succession** elevates |
+| **SCOTUS seat** | stays **VACANT until the next nomination phase** (no auto-fill) |
+
+> *(designed — implement death on the **0-100% per-era bracket table** above (age at cycle start; Frail
+> +5% & first; Hale unrolled until 75; auto-retire at 100); the **≤3-loss cap** (2 protected-exempt random
+> retirements + 1 death, oldest→youngest); **per-era 10-cause cause-of-death tables**; and the **immediate-
+> succession cascade** (Senators←Govs, Govs←faction, Whips→Maj-Ldr→Speaker, Pres-fills-cabinet-w/-reconfirm,
+> SecState→ambassadors, SecWar→officers, VP/line→Pres, SCOTUS stays vacant). This is the AUTHORITATIVE
+> source for the §10.1.y Ted schedule (#130/#143). Cite `rulebook#§N POST 17`. Ruling index [§30.21](#3021-rulings-folded-from-batch-31--the-canonical-rulebook--four-rulesfeedbacktestdata-threads-rulebook--apptdeepdive--primary2020--playtestdraft--bestmoments).)*
 
 ### 10.2 (2.4.2) Anytime events — `runPhase_2_4_2_Anytime` (`phaseRunners.ts:2782`)
 
@@ -2647,6 +2949,59 @@ volatility rolls as one-shot (not added to running totals); **the debt-table eff
 target meter (category roll → hit roll), N/A categories skipped** (`oopscpu#POST 148-153`). Cite
 `tedchange#POST 397-408`.)*
 
+#### 11.1.z ★★ THE CANONICAL 2.5.1 LINGERING ALGORITHM (#179/#134) — multi-roll meter pit + tax/tariff decay + admin-save ladder + officer→meter map (NEW, `rulebook`, batch 31; DESIGNED, the AUTHORITATIVE source)
+
+> **★★ The designer's own 2.5.1 algorithm — the source spec for the §11.1.y step-order + the §20.10
+> cabinet-roll engine.** The RULEBOOK (`rulebook#§P POST 20`, designer `@vcczar`) states the whole
+> Lingering phase uses a **0-100% system** (not a d6); economic crises/booms **never last >10 years**; and
+> **each era increases the chance of a meter falling** (the era-keyed decay pressure). This pins the
+> numbers §11.1.y / §24.7 left as bands and corroborates §20.10's per-officer roll.
+
+**(1) ★ The multi-roll resolution algorithm** (per meter, each pass):
+1. **Pit** the meter's **positive% vs negative%** accumulated from lingering legislation.
+2. **Roll whether it moves at all.**
+3. **Roll the winning direction vs no-change** — **top-2 / bottom-2 meters → 25% no-change, else 50%**.
+- Maxed-meter edge: a meter held at max **>4 years → 1-2 roll to decay**; a meter at its **worst → 5-6 roll to improve**.
+
+**(2) ★★ TAX/TARIFF DECAY — the pinned numbers (#134's carry-forward gets its values).** **Tariffs & income tax DECAY 10% every 2 years once their age ≥10; at age 20 they DO NOTHING → which triggers a tariff crisis / income-tax crisis.** **Volatility rolls fire at the 2 / 4 / 8-year marks (5%–20% swings).** This is the source for the §11.1.y step-3 carry-forward (decay propagates into the next half-term's step 3) and the §11.1.y step-7 one-shot volatility — the rulebook gives the actual 10%/2yr-from-age-10 → dead-at-20 schedule.
+
+**(3) ★ The cabinet ADMIN-SAVE ladder (below-mid meters can be rescued by the relevant officer).** Corroborates / supersedes the §20.10(g) endpoints with the full ladder:
+
+| Officer Admin | Lingering save roll |
+|---|---|
+| **5 admin** | **5-6 up / 1 down** |
+| 4 admin | 6 up / 1 down |
+| 3 admin | (none up) / 1 down |
+| 2 admin | (none up) / 1-2 down |
+| **1 admin** | (none up) / 1-3 down |
+
+- **`Efficient` doubles** the move at the worst meter; **`Easily Overwhelmed` can't help or hurt**; **`Incompetent` can't roll the positive** (can only harm). (This is the rulebook's authoritative form of the §20.10(g) "Admin5 75%/0% … Admin0 0%/100%" odds table and the §20.10(h) Efficient=2× rule.)
+
+**(4) ★ THE OFFICER → METER MAP (the canonical portfolio table — corroborates §9.3.1.1, §20.10, DH-53).** Two batch-31 sources give the SAME map (`rulebook#§P POST 20` for the save; `apptdeepdive#§C POST 40` for the appointment-scoring side):
+
+| Meter | Cabinet officers that drive it |
+|---|---|
+| **Revenue / Budget** | Treasury & Commerce |
+| **Economic Stability** | Treasury & Fed-Chair |
+| **Foreign Relations** | State & UN-Ambassador |
+| **Military Preparedness** | War / Defense & Homeland (apptdeepdive adds Navy / DNI / CIA / JCS / NSA / Sr-Gen / Sr-Adm) |
+| **Domestic Stability** | Attorney-General & HUD & Labor (apptdeepdive adds Religion) |
+| **Honest Government** | *special tally* (see below) — apptdeepdive adds Media / Postmaster |
+| **Quality of Life** | Health / Education / Agriculture (apptdeepdive adds Welfare / Tech) |
+| **Planet's Health** | Energy & Science/Environment (apptdeepdive adds Interior) |
+| **Party Preference** | (apptdeepdive) Postmaster & Key-Advisor — **Key-Advisor potentially hits EVERY meter** |
+
+- **★ Honest-Government is special:** tally **Controversial vs Integrity** among **Governors / Senators / Reps / Justices** — more Controversial → 1-2 roll honest decrease; more Integrity → 5-6 roll increase (NOT an officer-portfolio roll). (Trait multipliers from `apptdeepdive#§C POST 40`: **Efficient = 2×** meter impact; **Numberfudger TOXIC at Treasury**; **Bookkeeper** great there; **Egghead** = extra pts for egghead + Pres factions.)
+
+> *(designed, not built — implement 2.5.1 as: the **multi-roll positive%-vs-negative% pit per meter**
+> (top/bottom-2 → 25% no-change, else 50%); **tax/tariff decay 10%/2yr from age 10 → dead-at-20 → crisis**,
+> carried forward to next pass's step 3 (§11.1.y); **2/4/8-yr volatility rolls** (5-20%, one-shot); the
+> **Admin-save ladder** (5-admin 5-6up/1down … 1-admin 1-3down; Efficient doubles at worst meter; Easily-
+> Overwhelmed inert; Incompetent can't help); the **officer→meter map** above; and the **Honest-Gov special
+> tally** (Controversial vs Integrity among Govs/Sens/Reps/Justices). This is the AUTHORITATIVE source for
+> #179 (the cabinet input, §20.10) + #134 (the ordering, §11.1.y). Cite `rulebook#§P POST 20`;
+> `apptdeepdive#§C POST 40`. Ruling index [§30.21](#3021-rulings-folded-from-batch-31--the-canonical-rulebook--four-rulesfeedbacktestdata-threads-rulebook--apptdeepdive--primary2020--playtestdraft--bestmoments).)*
+
 ### 11.2 (2.5.2) Governor actions — `runPhase_2_5_2_Governors` (`phaseRunners.ts:3382`)
 
 Each governor, `0.30` chance, nudges home-state `bias` by `(governing−1)×0.05`; **BLUE
@@ -2913,6 +3268,17 @@ cardVoteBias(chairFaction, bill.interestGroups), 0, 1)`. Pass → `passed_commit
 > members at 50 states**. Affects the committee/legislative-ladder system; the **Legislative ladder (1 =
 > committee member · 2 = chair · 3 = whip · 4 = Maj/Min Leader · 5 = Speaker) is confirmed canonical**
 > (`summer2021#POST 233-235`). Author-side design data, not yet in code. (`game-context.md` #222.)
+>
+> **★ CORROBORATED-AUTHORITATIVE (batch 31, `rulebook#§K POST 12`).** The canonical RULEBOOK confirms the
+> 3→11 scaling verbatim (1788 base = **chair + 1 same-party + 1 ranking other-party**; **+1 per party at
+> 20 states**; **+1 per party per +10 states** → **11-member committees at 50 states**; chair breaks ties)
+> and pins the committee STRUCTURE the scaling sits on: **4 standard committees** (Domestic / Foreign-
+> Military / Economics / Judicial) + an optional **Special**; **chair = a Rep/Senator with Legislative ≥2 +
+> prior membership of that committee**; **member needs Legislative ≥1**; **all committee positions earn 50
+> pts** on appointment; and a **majority-flip reshuffle** (Ranking Member → 3rd member, Chair → Ranking
+> member, a random former-majority member removed if the count is odd; an Iron-Fist Speaker / no-minority-
+> leader → the Speaker appoints the minority members too). So the #222 scaling is now backed by the
+> canonical rulebook (matches `ampuUpdates`). (`rulebook#§K POST 12`; folded into §30.21.)
 
 > **★ #223 (NEW, `ampuUpdates`, batch 30) — committee-chair selection has a 25% chance to RAISE ideological
 > enthusiasm, DESIGNED.** Selecting a committee chair has a **25% chance to raise that chair's-ideology
@@ -4304,12 +4670,75 @@ difficulty if attempted mid-decade) (`completions#POST 145`; `fixes#§G POST 281
 `src/`** — no gerrymander action exists. This is the gov-action that *sets* the #191 per-seat deviant
 bias. Maps to #20/#34.
 
+**(e) ★★ #183 RESOLVED — the endorsement/withdraw-MOMENTUM spec EXISTS (specced-but-unbuilt) (NEW,
+`primary2020`, the May-2022 ORIGIN, EARLIEST detailed version).** The KB long flagged a **CONFLICT** on
+whether a withdraw+endorse conveys *momentum*: the 2022 reference game said it did (`completions#POST 46`:
+endorsements give **25% major / 10% minor** chance of +1 momentum next stage), while `redbutton`'s 1960
+run found **none in practice**. `primary2020` **settles the direction** — the full momentum/redistribution
+spec EXISTS and is detailed; **the app implements NONE of it** (specced-but-unbuilt; shipped
+`runPhase_2_9_1_Primaries` sorts once on PV+command+traits and picks the top — no withdraw, no endorsement,
+no momentum, no convention). The GM's *"official rules"* for serial primary groups (`primary2020#POST 5,
+11`):
+
+| Stage | Withdraw chance (last-in-delegates) | Endorsement split on withdraw |
+|---|---|---|
+| After group 1 | **60%** | 50% front-runner / 25% nearest-ideology / 25% most-states-won |
+| Later groups | last **75%**, 2nd-to-last 50% | 50/50 front-runner vs nearest-ideology |
+| Final three | last 50% **unless delegate gap > 20%** (then auto) | — |
+
+- **★ Puritan / Disharmonious SPITE rule:** on a triggered withdraw, a **4-6 d6 means they STAY IN to
+  spite the front-runner, taking −2 in all future primary groups.**
+- **★ Withdraw chances were then DOUBLED** as an "official rules change" (POST 11).
+- **Endorsements VISIBLY REDISTRIBUTE DELEGATES** with the split (Biden→Buttigieg: "245 Buttigieg, 81
+  Bloomberg" of his bloc, POST 7, 11) — endorsement = an **actual delegate transfer**, not flavor.
+- Designer-confirmed the app doesn't model it (*"I don't think endorsements are included outright… could
+  be included easy enough"*, POST 9-10).
+
+> **Magnitude reconcile** (the build picks one): `primary2020` (60/75/50% withdraw + the endorsement splits,
+> doubled — the most DETAILED) vs `completions#POST 46` (25%/10% → +1 next stage — the most RECENT terse
+> rule) vs `redbutton` (none). The momentum half of #183 is **SPECCED** (`primary2020` is the earliest
+> source) and **unbuilt**. Couples to the §22.3 primary loop (step-1 debate momentum ±1; step-4
+> withdraw+endorse) + §15.3.2 convention momentum. (`primary2020#§2 POST 5, 7, 9-11`; `completions#POST 46`;
+> `game-context.md` #183.)
+
+**(f) ★ #230 — competitive-map / swing-state cap (election scoring) (NEW, `primary2020`).** The shipped
+`calcStateVote` (`phaseRunners.ts:3685-3723`) scores EVERY state identically and lets the
+`(Math.random()-0.5)*8` jitter flip anything → the May-2022 2020-map re-rolls produced implausible flips
+(Dem wins OK/KS/AK; *"Florida votes to the right of Mississippi"*; *"Wyoming and Kentucky highly
+competitive"*; CA/NV swapped). **Root cause** (`primary2020#POST 28`): the state-bias MARGIN BONUS only
+fires above a sub-point CUTOFF (≥6, debated ≥4), so **safe states never LOCK** and tiny rolls flip them.
+**Proposed fix** (ShortKing + others, POST 40-49): **CAP the competitive map** — only **party-pref ≤1
+states** are true BATTLEGROUNDS (the 0-lean **PA/WI** + the ±1 list **ME/MI/NH/NV / AZ/FL/GA/MT/NC/OH**);
+everything else draws its margin from a **BOUNDED random range** so MS/CA can't become swing states.
+V deferred (*"might wait until we can do elections on CPU… run 100+ tests a day"*, POST 61). Pairs with
+the §15.3.5/#184/DH-72 flat-margin-amplifier overpower + the §15.5(a) D6/D3 fork. **Open: wanted feature
+or shelved? — designer confirm before roadmapping.** (`primary2020#§3 POST 28, 40-50, 61`.)
+
+**(g) ★ #231 — modern Moderate over-performance is METER-DRIVEN and reproducible (a balance DATUM, not a
+new system) (NEW, `primary2020`, designer-confirmed cause).** Running the 2020 Dem primary 4+ times,
+**Buttigieg wins EVERY run** (600 → 989 → 700 delegates) while Biden/Sanders are *"mired toward the
+bottom"* (`primary2020#§2-§3 POST 4, 7, 8, 11`). Designer answer (Ted, POST 12): **SYSTEMIC, not rolls** —
+*"in the modern era Liberals, Progressives and LW-populists have MALUSES due to meter issues. Biden is a
+Lib. The only Mods are Buttigieg and Bloomberg"* — the **ideology-enthusiasm METER STATE, not candidate
+quality, hands Moderates the primary.** It carries into the GENERAL too (POST 66-67): Moderates get **+1
+in the 2020 general** (after −1 in the primary), are rarely any state's hated ideology, preferred in many
+R-leaning states → Buttigieg/Klobuchar land at ~49.7% vs Trump (a coin-flip). So the **primary-penalty +
+general-bonus is an INTENTIONAL knob** that reads as overpowered in the modern era. **Treat as a balance
+REGRESSION CASE** when implementing the §29.3 meter→election map (#18) + per-ideology enthusiasm (#51) +
+the §3.4.1 PV reweight (#214): re-tune so candidate quality, not meter state, decides modern primaries.
+(`primary2020#§2-§3 POST 4, 7, 8, 11, 12, 66-67`; `game-context.md` #231; pairs #18/#51/#214.)
+
 > *(designed, not built — these four are election/voting subsystems the 2022 reference game had but our
 > build lacks: pick the **D6-vs-D3 swing die** (and re-tune the bias table to match); add **per-
 > delegation Rep voting-power** for floor votes only; add a **player Generate-a-candidate** flow for
 > empty primaries (3.0.25 stats, no-President carve-out); add a **post-census gerrymander gov-action**
-> that nudges the #191 seat deviant bias. Cite `completions#POST 69-176, 145`; `fixes#§G/§J POST
-> 276-282`. Ruling index [§30.18](#3018-rulings-folded-from-the-batch-28-designer-catalogs-to-do--fixes--completions--vic3--a-discussionspec-batch-not-a-playtest).)*
+> that nudges the #191 seat deviant bias. **Plus three batch-31 additions:** (e) the **#183 endorsement-
+> momentum** spec (withdraw → endorse-split → delegate transfer + the Puritan/Disharmonious spite rule —
+> magnitude per the reconcile above); (f) the **#230 swing-state set / safe-state floor** (only party-pref
+> ≤1 states flip-eligible; safe states draw a bounded margin so the jitter can't flip them); (g) **#231 is
+> a balance regression case** (the modern-Moderate primary-penalty/general-bonus knob), not a new system.
+> Cite `completions#POST 69-176, 145`; `fixes#§G/§J POST 276-282`; `primary2020#§2-§4 POST 4-12, 28, 40-50,
+> 66-67`. Ruling index [§30.18](#3018-rulings-folded-from-the-batch-28-designer-catalogs-to-do--fixes--completions--vic3--a-discussionspec-batch-not-a-playtest) + [§30.21](#3021-rulings-folded-from-batch-31--the-canonical-rulebook--four-rulesfeedbacktestdata-threads-rulebook--apptdeepdive--primary2020--playtestdraft--bestmoments).)*
 
 ---
 
@@ -4431,10 +4860,35 @@ state", the **lowest-score faction** makes the appointment; if still tied, rando
 > action**, not the seat. **Build TODO:** change the self-appoint outcome from "vacate the governorship"
 > to "keep the governorship, forfeit this turn's Gov action."
 
+> **★ #233 (NEW, batch 31) — CC-era APPOINTMENT adjudication: committee chair NOMINATES → delegates VOTE
+> → CC-President breaks TIES (the CC-Pres is PRESIDING, NOT executive) (`playtestdraft` GM⇒App +
+> `apptdeepdive` corroboration; DESIGNED).** A founding-era appointment rule settled LIVE and corroborated
+> across BOTH batch-31 process/design threads. `playtestdraft#POST 230-238` (`@MrPotatoTed` ↔ `@vcczar`):
+> the GM **REJECTED** *"CPU just picks highest-value eligible"* for CC-era appointments (e.g. Commander-
+> in-Chief of the Continental Army) because the **CC President is a PRESIDING role, not executive**
+> (historically Adams *nominated* Washington; Hancock *called the vote*; delegates approved). Settled
+> rule: **the CHAIR OF THE RELEVANT COMMITTEE (Foreign/Military) NOMINATES, delegates VOTE, the CC
+> President BREAKS TIES** (*"Ok, I'll make that change to the rules"*). **`apptdeepdive#§A POST 19/30/40`
+> CONFIRMS the same CC-mode structure from the design side:** while the CC exists, committee chairs
+> nominate (**Foreign/Military Chair to Generals / Admirals / Ambassadors / SecState / SecWar**; **Economic
+> Chair to SecTreasury**); delegates **vote to confirm**; if the vote **FAILS the incumbent stays**; if
+> **no incumbent, the CC President picks freely** (CPU voluntarily removes its CC appointee if the relevant
+> skill drops below 2 and a >=2 replacement exists). This is **distinct from the post-Constitution
+> Presidential appointment phase** (§9.3.11) — wire it to `continentalCongress.ts`. Pairs with the §17.1.y
+> CC composition (#133), §17.5 offices-by-law (#101), and the §27.1.2 founding subsystem-gating (#92). The
+> shipped `appointCCCommittees`/CC machinery has chairs, but the founding-era APPOINTMENT of C-in-C /
+> Generals / Ambassadors / Secretaries is **not** modeled as a chair-nominate, delegates-vote, CC-Pres-
+> tiebreak flow — add it. (`playtestdraft#POST 230-238`; `apptdeepdive#§A POST 19, 30, 40`;
+> `game-context.md` #233.)
+
 *(designed, RULED — confirm per-state delegate slots match the size table; encode the appointment-
 rule transition keyed on `coloniesIndependent` / `declarationOfIndependence` state flag; route
-PMG appointment via the Domestic Committee chair in CC era; encode the lowest-score-tie-break
-+ random secondary. Cite `tedchange#POST 211, 217-236, 222, 277, 352-355`.)*
+PMG appointment via the Domestic Committee chair in CC era; **#233 — implement CC-era appointments
+(C-in-C / Generals / Ambassadors / Secretaries) as committee-chair-NOMINATES, delegates-VOTE,
+CC-Pres-tiebreak (incumbent-stays-on-fail / CC-Pres-picks-if-no-incumbent), distinct from the
+post-Constitution Presidential appointment phase**; encode the lowest-score-tie-break + random
+secondary. Cite `tedchange#POST 211, 217-236, 222, 277, 352-355`; `playtestdraft#POST 230-238`;
+`apptdeepdive#§A POST 19, 30, 40`.)*
 
 ### 17.2 First Continental Congress builder (`firstContinentalCongress.ts`)
 
@@ -5987,6 +6441,22 @@ Key Advisor→foreign relations). Worked examples from the run:
 > highest); and a **hard exclusion of Senior General / Senior Admiral / JCoS from the lingering roll**.
 > Cite `to-do#POST 479-480, 494-502, 854-855`; `fixes#POST 2, 80, 90`. Ruling index [§30.18](#3018-rulings-folded-from-the-batch-28-designer-catalogs-to-do--fixes--completions--vic3--a-discussionspec-batch-not-a-playtest).)*
 
+> **★★ PROVENANCE-UPGRADED to CANONICAL (batch 31, `rulebook` + `apptdeepdive`).** What `summer2021`
+> proved hand-rolled and the to-do/fixes backlog gave numbers, the **canonical RULEBOOK now pins as the
+> designer's own 2.5.1 algorithm** — see [§11.1.z](#111z--the-canonical-251-lingering-algorithm-179134--multi-roll-meter-pit--taxtariff-decay--admin-save-ladder--officermeter-map-new-rulebook-batch-31-designed-the-authoritative-source) for the full spec.
+> It corroborates this section's three load-bearing claims and sharpens them:
+> - **the per-officer roll exists** → the rulebook's **Admin-save ladder** (5-admin 5-6up/1down … 1-admin
+>   1-3down; **Efficient doubles at the worst meter**; Easily-Overwhelmed inert; Incompetent can't roll the
+>   positive) is the authoritative form of §20.10(g)'s odds table + §20.10(h)'s Efficient=2×;
+> - **the officer→meter map** is confirmed identically from BOTH the lingering side (`rulebook#§P POST 20`)
+>   AND the appointment-scoring side (`apptdeepdive#§C POST 40`) — Treasury→Revenue/Econ; State/UN-Amb→
+>   Foreign-Rel; War/Def/Navy/DNI/CIA/JCS/Sr-Gen/Sr-Adm→Mil-Prep; AG/HUD/Labor→Domestic; Health/Edu/Ag/
+>   Welfare/Tech→Quality-of-Life; Energy/Sci/Env/Interior→Planet; Media/Postmaster→Honest-Gov; Postmaster/
+>   Key-Advisor→Party-Pref (Key-Advisor potentially EVERY meter) — corroborating DH-53;
+> - **the tax/tariff decay numbers** (#134) are pinned: **10%/2yr from age 10 → dead-at-20 → crisis**, plus
+>   2/4/8-yr volatility rolls (§11.1.z). So §20.10's hand-rolled engine is now backed by the canonical rule;
+>   build it per §11.1.z. (`rulebook#§P POST 20`; `apptdeepdive#§C POST 40`; folded into §30.21.)
+
 > **System interaction (the cascade chain this exposes):** cabinet lingering rolls →
 > **EconStab/MilPrep/relation meters** → (EconStab cascade, #116/#160: 2 industries −1 nationwide
 > → EV reflow + meter-gating of other meters in crisis) → **election party-preference drag** ([§22.2](#222-faction-enthusiasm--party-preference-election-engine--the-score-economy)).
@@ -6102,8 +6572,19 @@ actions per Presidential-Action phase** (more command = more actions). This **ge
 [§24.1 #61](#241-61-succession--eligibility--the-acting-president-state) succession rule** (a
 0-command *acting* president is inert / can take **no** actions) into a positive budget: 0 command
 = inert, N command = N actions/turn. Each action is then **implemented by the relevant cabinet
-member with a blunder roll** (§20.10(f)). *(NEW gap #182 — make a President's `command` drive his
-per-turn executive-action count; confirm whether the same budget applies to governors/other offices.)*
+member with a blunder roll** (§20.10(f)).
+>
+> **★ CONFIRMED-AUTHORITATIVE (batch 31, `rulebook` — upgrades #182 from a single-thread inference to
+> the canonical rule).** The RULEBOOK pins it explicitly at phase **2.8.1 Executive Actions**
+> (`rulebook#§Y POST 30`): **"The President may take as many executive actions per half-term as he has
+> Command Points."** So #182 is no longer a `summer2021`-only inference — Command = the **per-half-term
+> executive-action budget** is designer ground-truth. The same post adds two couplings: the President may
+> **DEACTIVATE prior administrations' actions** (and deactivating a card-hurting action → −100 pts + leader
+> penalties), and a **Pliable Pres → a manipulative VP/advisor/cabinet makes the first action on a 5-6
+> roll** (the §20.10(b)/§24.1 Pliable-decider override, now confirmed for exec actions too). *(NEW gap
+> #182, now CONFIRMED — make a President's `command` drive his per-half-term executive-action count + the
+> deactivate-prior-actions capability + the Pliable→manipulative-advisor first-action override; confirm
+> whether the same budget applies to governors/other offices. Cite `rulebook#§Y POST 30`; `summer2021#ch95:159`.)*
 
 **(3) SCOTUS replacement timing — at the PRESIDENTIAL-ACTION phase ON PURPOSE.** A replacement
 justice is nominated at the **Presidential-Action phase deliberately** — GM: *"to replicate
@@ -7056,6 +7537,38 @@ Resolution:
 general; spawn an independent ticket from the rule-selected faction; nationwide ballot for a
 Celebrity.)*
 
+#### 22.4.1 ★ #228 — the third-party/spoiler VOTE-DRAIN ruleset (the DRAIN half; the §22.4 trigger is the SPAWN half) (NEW, `primary2020`, batch 31; designer-authored, `GM⇒App`; DESIGNED, wholly unbuilt)
+
+> **★ The DRAIN half of the spoiler system — designer-authored, both designers liked it, and it exists
+> NOWHERE in code** (no `thirdParty`/`spoiler` in `src/`, codebase-verified). §22.4 (#48) covers the
+> spoiler **trigger + region-weighted 3rd-party PV** (the SPAWN); this is **how a 3rd party DRAINS votes
+> from the major parties** (`primary2020#§4 POST 68-78`, `@vcczar` + `@MrPotatoTed`).
+
+**The motivating balance break** (`primary2020#POST 68, 71-72`): a Sanders/McKinney 3rd-party ticket
+(6.85% PV) — Blue **still won comfortably and GAINED red states**. Ted: *"a popular blue third-party should
+have been much more devastating to Blue."* The spoiler currently only models the drain **vs the INCUMBENT**
+and *"should also affect the challenging party if the 3rd party springs from it"* — i.e. the build
+**mis-attributes the drain** (always to the incumbent, never to a challenger the 3rd party split off from).
+
+**The ruleset** (`primary2020#POST 75-77`; **Charisma is the disproportionate force-multiplier** —
+region→nationwide, 50%→75%):
+
+| Spoiler relationship to a nominee | Drain effect |
+|---|---|
+| 3rd party **sprung from a nominee's PARTY** | **50% chance −1 party-pref in the 3rd-party nominee's HOME REGION**; expand **NATIONWIDE at 50% IF the nominee has Charisma** |
+| 3rd party **shares a nominee's PERSONAL IDEOLOGY** | **50% −1 party-pref NATIONWIDE** → **75% if Charisma** |
+| **INCUMBENT** facing a major 3rd party | **50% −1** if party-pref leans away from the incumbent party (rationale: Anderson-1980 / Weaver-1892 / Nader-2000) |
+
+- **Open extension** (Ted POST 77, V *"I'll think about it"*): if the 3rd-party ideology exists in only
+  ONE party's factions, drain **THAT** party.
+
+> *(designed, not built — add a third-party/spoiler **vote-drain** sub-system keyed on **party-of-origin**,
+> **shared personal-ideology**, and **incumbency**, with the **Charisma region→nationwide escalation**
+> (50%→75%); **correct the current incumbent-only mis-attribution** so a 3rd party springing from the
+> CHALLENGER drains the challenger. `GM⇒App`. Pairs with §22.4/#48 (trigger + region-weighted PV), #214
+> (Charisma valuation, §3.4.1), #18 (party-pref). Cite `primary2020#§4 POST 68, 71-72, 75-77`. Ruling
+> index [§30.21](#3021-rulings-folded-from-batch-31--the-canonical-rulebook--four-rulesfeedbacktestdata-threads-rulebook--apptdeepdive--primary2020--playtestdraft--bestmoments).)*
+
 ### 22.5 General-election library (2.9.4)
 
 > **Sharpens the batch-1 convention/general library ([§15.3.6](#1536-general-election-action-library-designed-not-built)–[§15.3.9](#1539-faithless-electors))
@@ -7497,6 +8010,17 @@ framing (modern#post 1, 769, 1080, 1106, 1172, 1200, 1771):
 > So #206 is now confirmed from BOTH the **enum side** (code: no `future` member) AND the **data side** (no
 > rows authored): the Future era is under-content'd at source, not just an absent label. (`ampuUpdates#POST
 > 2, 6, 17, 26`; `ampuData#POST 81`; `game-context.md` #206; folded into the §30.20 index.)
+
+> **★★ The canonical 15-era trigger-year TABLE (NEW, `rulebook`, batch 31) is the authoritative band-label
+> spec this enum-too-coarse gap needs.** The designer's own era calendar — 15 named eras with trigger-cycle
+> years, from **Era of Independence (1774-1776)** through **Era of Populism (2012-2014)** to the **Era of
+> the Future** ("begins after the current real-world election cycle is met") — is documented in full at
+> [§27.1.2](#2712--the-canonical-15-era-trigger-year-table-92206--the-authoritative-band-label-calendar-new-rulebook-batch-31-the-era-label-spec-the-data-model-decision-needs). It pins the
+> **Future band's trigger** ("after the current real-world cycle"), confirms the **`Era` enum collapses 15
+> labels into 4 buckets**, and the rulebook states eras change **legislation/event availability, state
+> population sizes, preferred ideologies, and the death rate** (each with a player alert). Adopt those 15
+> labels (as enum values OR §27.1 content-band data) and reserve the transition predicate for game-state
+> (§27.1.2 three-way reconcile). (`rulebook#§A POST 2`; `game-context.md` #92/#206.)
 
 > **Design holes & possible bug (point to `game-context.md`, not re-documented):**
 > - **DH-1** — a **filibustered "MUST-pass" bill has no rules remedy** (GM-confirmed gap).
@@ -8688,10 +9212,25 @@ large carry, the sharper Iron-Fist/Kingmaker incumbent-block ladder, and the res
   7273); the Income Tax Amendment needs ⅔, failed repeatedly, **ratified by 1904** (POST 8979). A
   SCOTUS ruling that **changes what legislation is legal**.
 
+> **★ CANONICAL DEFAULT pinned (batch 31, `rulebook`).** The RULEBOOK pins the **baseline** the era-keyed
+> table above tunes from: amendment ratification happens in the **Governor phase 2.5.2** — *Congress-passed
+> amendments are voted Aye/Nay by **every Governor; 75% of states needed to ratify**, and **amendments
+> BYPASS the President*** (no veto/sign — they go straight to the states) (`rulebook#§Q POST 21` + §X POST
+> 27/28). Voting behavior: **Puritan Govs auto-vote by faction interest; others auto-vote by industry
+> point impact; Pliable Govs are convertible by a Party Leader** (1-2 roll; better with Leadership/Iron
+> Fist). So the canonical default = **75% of states via Governors, President bypassed** (the §24.4 3/4 ≈
+> 75% Nationalism rule is this baseline; the Gilded 2/3 + the Ratification-Options table are in-game
+> tunings of it). Companion canonical thresholds the rulebook pins: **veto OVERRIDE = 2/3 of Legislative
+> Voting Power in EACH chamber** (House first, then Senate; override → Pres −100 pts + 1-2 roll
+> Disharmonious; Speaker & Sen-Maj-Ldr +100 each — `rulebook#§X POST 29`), and a **President CANNOT
+> veto/sign an amendment** (`rulebook#§X POST 28`). (`rulebook#§Q POST 21`, `§X POST 27-29`;
+> `game-context.md` #64/#39; folded into §30.21.)
+
 *(designed, not built — make the amendment **ratifier + threshold an era-keyed field** (Gov vote;
-3/4 in Nationalism, 2/3 from Gilded), itself **changeable by a passed amendment** carrying a
-faction-enthusiasm side effect from the Ratification-Options table; and a SCOTUS-ruling effect
-that gates a bill category until an amendment passes. Extends gap #39.)*
+**canonical default 75% of states, President bypassed**; 3/4 in Nationalism, 2/3 from Gilded), itself
+**changeable by a passed amendment** carrying a faction-enthusiasm side effect from the Ratification-
+Options table; a SCOTUS-ruling effect that gates a bill category until an amendment passes; and the
+**veto-override = 2/3 of Legislative Voting Power in each chamber** (House then Senate). Extends gap #39.)*
 
 ### 24.5 (#65) Investigations — the authored "3.0.40" 5d6 special-committee spec
 
@@ -10614,6 +11153,66 @@ draftees, bias-table}** keyed by band; gate every bill/event/draftee on **territ
 so un-owned-land content is invalid; add a **scripted/flavor tier flag** + **per-category first-active-era
 metadata** to the registry (#221). Pairs with §2.5 (point-banking at the boundary), §26 (the BootSheet /
 era-content registry), §27.1.1, and `game-context.md` #92/#221.)*
+
+#### 27.1.2 ★★ THE CANONICAL 15-ERA TRIGGER-YEAR TABLE (#92/#206) — the AUTHORITATIVE band-label calendar (NEW, `rulebook`, batch 31; the era-LABEL spec the data-model decision needs)
+
+> **★★ The designer's own calendar of era labels + trigger years — the missing authoritative spec the
+> §27.1 content-band finding and the §22.11 enum-too-coarse finding both point at.** The canonical
+> RULEBOOK (`rulebook#§A POST 2`, designer `@vcczar`) states: historical eras are **"automatically
+> updated when their trigger date is reached,"** and the active era influences **legislation/event
+> availability, state population sizes, preferred ideologies, and the death rate of statesmen** — players
+> get an **alert explaining what changed** at each transition. This is the single authoritative source
+> for *what the era labels are and when they trigger* — the build has only the coarse 4-value enum.
+
+**The 15-era trigger-year table** (`rulebook#POST 2` — trigger = the election-CYCLE years):
+
+| # | Era | Trigger cycle | First president (modernday POST 2964 map) | Shipped `Era` bucket |
+|---|---|---|---|---|
+| 1 | **Era of Independence** | **1774-1776** *(special rules)* | (Continental Congress) | `independence` |
+| 2 | **Era of Federalism** | **1788-1790** | Washington | `federalism` |
+| 3 | **Era of Republicanism** | **1800-1802** | Jefferson | sub-band of `nationalism` |
+| 4 | **Era of Democracy** | **1820-1822** | Monroe | sub-band of `nationalism` |
+| 5 | **Era of Manifest Destiny** | **1840-1842** | Harrison | sub-band of `nationalism` |
+| 6 | **Era of Nationalism** | **1856-1858** | Buchanan | **`nationalism`** |
+| 7 | **Era of the Gilded Age** | **1868-1870** | Grant | (no enum — `modern` tuning, §31) |
+| 8 | **Era of Progressivism** | **1892-1894** | Cleveland | (no enum) |
+| 9 | **Era of Normalcy** | **1916-1918** | Wilson | (no enum) |
+| 10 | **Era of Ideologies** | **1928-1930** | Hoover | (no enum — §27.1 1928 band) |
+| 11 | **Era of the Nuclear Age** | **1948-1950** | Truman | `modern` |
+| 12 | **Era of Neocons** | **1972-1974** | Nixon | `modern` (NB: also a faction-rebrand label, see below) |
+| 13 | **Era of Terror** | **2000-2002** | Bush | `modern` |
+| 14 | **Era of Populism** | **2012-2014** | Obama | `modern` (no enum member) |
+| 15 | **Era of the Future** | **begins after the current real-world election cycle is met** | (procedural) | **none** (absent from the enum — #206, §22.11) |
+
+> **★ THE THREE-WAY RECONCILE (the headline — three descriptions of "what is an era" that must be
+> reconciled):**
+> - **(a) the rulebook's 15 DATE-TRIGGERED named eras** = the **designer's calendar of era LABELS +
+>   point-bank boundaries** (this table).
+> - **(b) the §27.1 content-band model** (the multi-save finding #92) = the **TRANSITION PREDICATE is
+>   game-state + territory, not pure year** (a 1772 save still closes Nationalism ~1868 on post-
+>   Reconstruction game-state; content for un-owned land is invalid).
+> - **(c) the shipped 4-value `Era` enum** (`independence/federalism/nationalism/modern`, `types.ts:1337`)
+>   = **15 labels collapsed into 4 mechanical buckets** + `year % 4`/`year % 2` predicates.
+>
+> **Reconciliation read:** the 15 named eras ARE the missing authoritative band-label spec the build
+> lacks; #92 says the advance is game-state-gated, so **"trigger date reached" is the EARLIEST a band can
+> open** (with content/scoring era-gated thereafter), NOT a hard annual flip; the **modernday 14-band map**
+> (POST 2964 — which OMITS the Future band and starts Neocons at 1972) and the **`nuke` "Neocons = faction
+> rebrand, not a point-banked band"** finding both reconcile via the §27.1 **two-level model**: *Neocons
+> (#12) is a labeled trigger-cycle but mechanically a faction REBRAND + a decade content-rotation, not a
+> scoring band* (§27.1, logged so it is not re-introduced). So a startable poll-list (every band is a
+> poll-able start point per the modernday map) uses these labels, but the runtime advance + scoring stays
+> game-state-gated. This 15-row table is the canonical answer to "what are the era labels and when do they
+> trigger."
+
+> **Build implication.** This table is **#92/#206's answer to "what bands exist"** — adopt it as the
+> band-label set (either as enum values OR as content-band data under the §27.1 two-level model), gate the
+> *content* per band on territory ownership (§27.1), and reserve the *transition predicate* for game-state
+> (NOT the year). The Future band (#15) is the terminal stub — under-content'd AND absent from the enum
+> (§22.11/#206). The per-era **death-rate brackets** the era system changes are at [§10.1.z](#101z--the-canonical-per-era-death-rate-bracket-table--succession-cascade-130143-new-rulebook-batch-31-designed); the per-era
+> **preferred-ideology / draft profile** is #4 (§4.1.w); the per-era **state population sizes** = the EV /
+> census level-(b) mechanic (§28.9). (`rulebook#§A POST 2`; `game-context.md` #92/#206/#2; cross-ref
+> §22.11, §27.1, §27.1.1, §30.21.)
 
 ### 27.2 Era-boundary machinery (the "End of Historical Era" phase)
 
@@ -14122,6 +14721,117 @@ P340-345`.)
 > systems. **Two HYGIENE flags:** the lowest-faction score penalty (ADOPTED-then-REVERSED) and the
 > randomized proposer (REJECTED) must NOT be presented as live. Cross-ref `game-context.md` rows
 > **#214-#227** + **DH-77**, and the sharpened **#206 / #115 / #179 / #92 / #86**.
+
+### 30.21 Rulings folded from batch 31 — the CANONICAL RULEBOOK + four RULES/FEEDBACK/TEST/DATA threads (`rulebook` / `apptdeepdive` / `primary2020` / `playtestdraft` / `bestmoments`)
+
+> **★★ Batch 31 = a 5-thread RULES/FEEDBACK/TEST/DATA batch — NO playtest, NO historian.** Every source is
+> a designer document, so this batch is **mostly RECONCILE/SHARPEN to the rulebook's authoritative rules**
+> + a handful of new specs. Tier-1 designers author all five (`@vcczar` / `@MrPotatoTed`). The threads:
+> - **`rulebook`** (b9e4f534, the **CANONICAL RULEBOOK**, designer `@vcczar`, 40 posts) — the polished
+>   per-turn loop 2.1→2.8 + SCOTUS, section-by-section ("the rules 95% of the time"); the **single most
+>   authoritative mechanics spec in the corpus**. **STOPS before the election phases** (author withheld
+>   primary/convention/general math as "massive", POST 33). SETTLES #182 (Command=action-budget), the
+>   60%-confirm/nuclear-option/cloture spec (#172/DH-76), amendment-ratify=75%-of-states-via-Governors,
+>   override=2/3-each-chamber, the card-assignment algorithm (#50/#51), per-era death brackets (#130), the
+>   lingering algorithm (#179/#134), committee-size scaling (#222), and **★ the canonical 15-era trigger-
+>   year TABLE** (#92/#206). Cite `rulebook#§A-§Z POST n`.
+> - **`apptdeepdive`** (b9028796, the Sept-2022 DESIGN-ORIGIN of the appointment/confirmation ruleset,
+>   `@MrPotatoTed`-led / vcczar-final, 102 posts) — **★ SUPERSEDES #199** (33/33/34 blame + already-
+>   Controversial→lifetime-cabinet-ban); supplies the **auto-confirm gate + Top-Four-always-vote** (#172),
+>   the CPU acceptance-odds matrix + humans-freely-accept-except-VP (NEW #229), the ±1-ideology gate +
+>   Pliable/Passive→Iron-Fist-SML substitution (#112), the +50/expertise + 16-yr tenure + ambassador
+>   rotation (#25/#49), the lobby-enthusiasm scoring (#31), Fog-of-War (#234) + D6-vetting (#235). Cite
+>   `apptdeepdive#§A-§H POST n`.
+> - **`primary2020`** (74f1da28, "The 2020 Democratic Primary: Robust Testing Forum", GA `@Arkansas
+>   Progressive`, designers rule in-thread, May-2022 balance/edge-case STRESS-TEST — NOT a played game,
+>   114 posts) — **★ RESOLVES #183** (the endorsement/withdraw-momentum spec exists here), the cleanest
+>   #214 exhibit (James Dean) + #215 office→PV table, and the ORIGIN of NEW #228 (3rd-party spoiler vote-
+>   drain), #230 (competitive-map cap), #231 (modern-Moderate over-performance), #232 (starting-draft
+>   2-ideology). Cite `primary2020#§n POST n`.
+> - **`playtestdraft`** (38ecfaeb, "AMPU Playtest Draft", GA `@vcczar`, a founding-era 1772/1774 MP DRAFT-
+>   PROCESS record, 238 posts) — corroborates #211 (within-party FIXED round-robin baseline), #115 (CPU
+>   autodraft = D10→Nth-highest-PV + preference-list automation), #24/#92, + NEW #233 (CC-President
+>   appointment rule). Cite `playtestdraft#POST n`.
+> - **`bestmoments`** (4f90149c, "AMPU Best Playtest Moments", HIGHLIGHTS/design-intent, Aug-2022→Sep-2023,
+>   177 posts) — the corpus's best window into what makes AMPU FUN (pre-12th EC chaos + succession/scandal
+>   cascades + per-2-yr skill-roll reshuffles); **★ POST-143 designed→built CLOSURE**; NO net-new
+>   architecture. Cite `bestmoments#POST n`.
+>
+> **The headline findings (lead with these two):**
+> 1. **★★ THE CANONICAL CABINET/SCOTUS CONFIRMATION SUBSYSTEM** (#172/DH-76 + #199) — the full
+>    authoritative spec: the **auto-confirm gate** (Admin≥3 ∧ ¬Controversial ∧ ¬IronFist-SML ∧ ¬Top-Four),
+>    **Top-Four-always-vote** (State/Def/Treasury/War — *different* from the cross-party-cap Top-Four-with-
+>    AG), 60% default → nuclear-option→majority, the 5-reason party-block, filibuster + invoke-cloture, the
+>    president's compel/convert tools, admin-1→50/50-flip, trait→vote=75%, Pliable/Passive→Iron-Fist-SML
+>    nomination substitution (50/75/100%), and the **#199 SUPERSEDE** (rejected-nominee = 33% Pres→Controversial
+>    / 33% SML→nothing / 34% nobody; already-Controversial→lifetime Cabinet ban, Ambassador OK). Documented
+>    in full at [§9.3.11](#9311--the-canonical-cabinetscotus-confirmation-subsystem-172dh-76--199--the-authoritative-spec-new-rulebook--apptdeepdive-batch-31-designed-not-built); the old #199 cascade marked SUPERSEDED in place at §9.3.8.
+> 2. **★★ THE CANONICAL 15-ERA TRIGGER-YEAR TABLE** (#92/#206) — the designer's own era-label calendar
+>    (Independence 1774 … Populism 2012 … Future), the authoritative band-label spec the 4-value enum
+>    lacks, with the **three-way reconcile** (15 date-triggered labels vs the #92 game-state content-band
+>    predicate vs the shipped 4-enum). Documented at [§27.1.2](#2712--the-canonical-15-era-trigger-year-table-92206--the-authoritative-band-label-calendar-new-rulebook-batch-31-the-era-label-spec-the-data-model-decision-needs); cross-ref §22.11.
+
+**A. RECONCILE/SHARPEN — sections sharpened to the rulebook's authoritative rules (DESIGNED unless tagged):**
+
+| Item | Ruling / what changed | Folded into | Cite |
+|---|---|---|---|
+| **★★ confirmation subsystem (#172/DH-76)** | the full canonical spec (auto-confirm gate · Top-Four-always-vote · 60%/nuclear · 5-reason block · filibuster+cloture · compel/convert · admin-1 flip · trait→vote 75% · Pliable/Passive→Iron-Fist nomination sub · office-vacancy cascades · promises) | [§9.3.11](#9311--the-canonical-cabinetscotus-confirmation-subsystem-172dh-76--199--the-authoritative-spec-new-rulebook--apptdeepdive-batch-31-designed-not-built) (new) | `rulebook#§M2/§Z POST 16, 32, 34, 35`; `apptdeepdive#§G POST 40, 57, 82, 87, 88, 92, 93, 100, 102` |
+| **★★ #199 SUPERSEDED** | rejected-nominee fallout = **33% Pres→Controversial / 33% SML→nothing / 34% nobody** + already-Controversial→**lifetime Cabinet/Cabinet-Level ban** (Ambassador OK) — REPLACES the Controversial→Incompetent cascade | §9.3.11(8) + SUPERSEDED marker on §9.3.8 | `apptdeepdive#§G POST 88-92` |
+| **★★ #92/#206 era trigger-year table** | the canonical 15-era band-label calendar + the three-way reconcile | [§27.1.2](#2712--the-canonical-15-era-trigger-year-table-92206--the-authoritative-band-label-calendar-new-rulebook-batch-31-the-era-label-spec-the-data-model-decision-needs) (new) + §22.11 annotation | `rulebook#§A POST 2`; modernday POST 2964 |
+| **★ #182 Command = action budget CONFIRMED** | upgraded from `summer2021` inference to authoritative — *"as many executive actions per half-term as he has Command Points"* + deactivate-prior + Pliable→manipulative-first-action | [§20.11(2)](#2011--the-federalism-presidency-vetooverride-command-as-action-budget-182-scotus-timing-summer2021-designed) annotation | `rulebook#§Y POST 30` |
+| **★ #179/#134 lingering algorithm** | the multi-roll positive%-vs-negative% pit + tax/tariff 10%/2yr-from-age-10→crisis-at-20 + 2/4/8-yr volatility + Admin-save ladder (5-admin 5-6up/1down…1-admin 1-3down; Efficient doubles) + officer→meter map + Honest-Gov special tally | [§11.1.z](#111z--the-canonical-251-lingering-algorithm-179134--multi-roll-meter-pit--taxtariff-decay--admin-save-ladder--officermeter-map-new-rulebook-batch-31-designed-the-authoritative-source) (new) + §20.10 annotation | `rulebook#§P POST 20`; `apptdeepdive#§C POST 40` |
+| **★ #50/#51 card-assignment engine** | the canonical plurality + compatibility/ban tables (8 interest + 25+ lobby) + **5-pol floor** + cascade-to-next-eligible + every-faction-≥1-ideology-card + 2-yr re-eval; Populist = LW+RW-Pop combined | §7.4 annotation | `rulebook#§I POST 10`; `playtestdraft#POST 218` |
+| **★ #130/#143 death brackets** | the per-era death-rate bracket table (1972+: 1/3/5/20%; 1900-72: 2/10/25%; pre-1900: 5/10/25/40%) + Frail+5%-first/Hale-unrolled-til-75/auto-100 + ≤3-loss caps + immediate-succession cascade + cause tables | [§10.1.z](#101z--the-canonical-per-era-death-rate-bracket-table--succession-cascade-130143-new-rulebook-batch-31-designed) (new) | `rulebook#§N POST 17` |
+| **★ #64/#39 amendment ratify + override** | canonical default = **75% of states via Governors, President bypassed** (the §24.4 era-keyed table tunes from this); **override = 2/3 of Legislative Voting Power each chamber**; Pres can't veto/sign an amendment | [§24.4](#244-64-amendment-ratification-by-34-of-state-governors--era-keyed-then-tunable) annotation | `rulebook#§Q POST 21, §X POST 27-29` |
+| **★ #222 committee-size scaling** | rulebook CONFIRMS 3→11 (base chair+1+1; +1/party at 20 states; +1/party per +10) + pins structure (4 committees + Special; chair = Legis≥2 + prior member; 50 pts/position; majority-flip reshuffle) | §12.2 annotation | `rulebook#§K POST 12` |
+| **★ #211/#115 draft baseline** | within-party **FIXED round-robin** (NOT snake/PV) baseline + the rulebook's **lowest-score-first** normal-draft order + random-trait sprinkle + suffrage gate; CPU autodraft = **D10→Nth-PV**; preference-list automation | [§4.4.1](#441--draft-baseline-sharpened-211115--the-starting-draft-2-ideology-restriction-232-new-playtestdraft--rulebook--primary2020-batch-31) (new) | `playtestdraft#POST 1, 6, 86, 132, 196`; `rulebook#§B POST 3` |
+| **★ #214/#215 PV exhibits** | the James Dean OP build (0-skill 8-trait → "OP") = the cleanest "flat +4/trait is wrong" exhibit + the ±1 electoral-knob list; the May-2022 office→PV table (Pres+30…Rep+10…Cab+5) vs the under-shooting shipped `OFFICE_PRESTIGE` | [§3.4.1](#341--the-pv-system-overhaul--per-trait-tiers--non-linear-ability-curve--trait-remap--display-scale-new-revamppv--summer2021-batch-30-designed-the-shipped-pvts-is-at-a-pre-revamp-state--dh-77) annotation | `primary2020#POST 1-2, 22, 31, 75, 112` |
+
+**B. NEW specs folded into their home systems (DESIGNED unless tagged):**
+
+| # | Spec | Folded into | Cite |
+|---|---|---|---|
+| **★ #228** | third-party/spoiler **VOTE-DRAIN** ruleset (party-of-origin + shared-ideology + incumbency, Charisma region→nationwide 50%→75%); corrects the incumbent-only mis-attribution. `GM⇒App` | [§22.4.1](#2241--228--the-third-partyspoiler-vote-drain-ruleset-the-drain-half-the-224-trigger-is-the-spawn-half-new-primary2020-batch-31-designer-authored-gmapp-designed-wholly-unbuilt) (new) | `primary2020#§4 POST 68, 71-72, 75-77` |
+| **★ #229** | CPU appointee **NOMINATION-ACCEPTANCE odds matrix** (per candidate type) + **humans freely accept/decline except VP** + Incompetent/Easily-Overwhelmed/fired-quit gates; career-track pol accepting → pulled off-track with milestones. `GM⇒App` | [§9.3.6](#936-modern-cabinet-detail-sharpens-931-933-designed-not-built) annotation (the appointee SIDE) | `apptdeepdive#§E/§B POST 40, 250` |
+| **★ #230** | competitive-map / **swing-state cap** — only party-pref ≤1 states flip-eligible; safe states draw a bounded margin so the jitter can't flip them | [§15.5(f)](#155--election-system-specs-absent-from-our-build-the-2022-reference-game-completions--the-live-d6d3-fork-completions--fixes-batch-28-not-in-our-build) | `primary2020#§3 POST 28, 40-50, 61` |
+| **★ #231** | modern **Moderate over-performance** is METER-DRIVEN + reproducible (Buttigieg sweeps every 2020 run) — a balance REGRESSION CASE for #18/#51/#214, NOT a new system | [§15.5(g)](#155--election-system-specs-absent-from-our-build-the-2022-reference-game-completions--the-live-d6d3-fork-completions--fixes-batch-28-not-in-our-build) | `primary2020#§2-§3 POST 4-12, 66-67` |
+| **★ #232** | STARTING-year draft needs a **TIGHTER ideology restriction (2/faction)** or manual seeding than a mid-game/rookie draft (3) | [§4.4.1(3)](#441--draft-baseline-sharpened-211115--the-starting-draft-2-ideology-restriction-232-new-playtestdraft--rulebook--primary2020-batch-31) | `primary2020#§5 POST 96, 99-104` |
+| **★ #233** | CC-era **APPOINTMENT** = committee-chair NOMINATES → delegates VOTE → CC-Pres breaks TIES (incumbent-stays-on-fail / CC-Pres-picks-if-no-incumbent), distinct from the post-Constitution Presidential phase | [§17.1.y](#171y--ted-ruled-1st--2nd-cc-composition--appointment-designer-authoritative-tedchange) annotation | `playtestdraft#POST 230-238`; `apptdeepdive#§A POST 19, 30, 40` |
+| **#183 RESOLVED** | the endorsement/withdraw-MOMENTUM spec EXISTS (specced-but-unbuilt) — withdraw% → endorse-split → delegate transfer + Puritan/Disharmonious spite; magnitude reconcile across the three sources | [§15.5(e)](#155--election-system-specs-absent-from-our-build-the-2022-reference-game-completions--the-live-d6d3-fork-completions--fixes-batch-28-not-in-our-build) + §3.4.1 pointer | `primary2020#§2 POST 5, 7, 9-11` |
+
+**C. PARKING-LOT (record the rationale; do NOT schedule — annotate, don't re-doc as live):**
+
+| # | Item | Status |
+|---|---|---|
+| **#234** | **"Fog of War" hidden-ability/hidden-trait** game option (stats shown as a range/blurb, scoutable, vet-to-reveal) | DEFERRED to **AMPU-2** (both Ted + vcczar endorsed, "more programming realm than rules", `apptdeepdive#§H POST 94-98`). Pairs with #184 (hide-the-election-formula) + #220 (PV display) + #235 |
+| **#235** | **D6 pre-nomination VETTING roll** (1=career-ending retire / 2=Controversial / 3-5=nothing / 6=Integrity) | DEFERRED — Ted judged it playtest-impractical ("30 hearings…"), group concurred (`apptdeepdive#§G POST 6-8, 20, 233, 251`). Pairs with #234 |
+
+**D. Corroborations / closures (annotate existing rows, do not duplicate):**
+
+| Item | What batch 31 confirms | Where |
+|---|---|---|
+| **★ POST-143 designed→built CLOSURE** | `bestmoments` re-confirms the trait proposal SHIPPED: `Cosmopolitan` / `Provincial` / `Magician` / `Numberfudger` / `Crisis Manager` / `Crisis Admin` / `Crisis Gov` are all in `types.ts` (vcczar's POST 144 "the three crisis skills are the same thing" objection was OVERRIDDEN — all three shipped separately); **`Lackey` was NOT adopted** (no match in code — the one proposed trait that didn't ship). A corroborated closure, NOT an open gap. (`bestmoments#POST 143-144`; §3.4.1/§3.x trait tables) |
+| **#25/#49 tenure + military confirmation** | `apptdeepdive` is the Sept-2022 ORIGIN, already merged at §9.3.1/#25 (16-yr cumulative cap broadened to everything-but-military; ambassador 16-yr + rotate-once-per-full-term + isolationist-relations-penalty; senior-military-confirmation; firing-precedent auto-set post-1800; +50-pts-per-extra-expertise) | §9.3.1 (#25) / §9.2 (#49) — no re-doc |
+| **#31 lobby-enthusiasm scoring** | `apptdeepdive#§C POST 40` is the ORIGIN of the cabinet-from-lobby-card enthusiasm mechanic (25% +1 per holding faction / 25% −1 per ignored card; cabinet-LEVEL 10%; Efficient 2×, Numberfudger-toxic-at-Treasury, special-office rules) | §9.3.7 (#31) — no re-doc |
+| **#112 ±1-ideology gate + Iron-Fist force-vote** | `apptdeepdive` is the ORIGIN: the ±1 cross-party gate verbatim + caps (≤1 cross-party Top-Four, ≤3 total) + SML-names-5-replacements + Pliable/Passive→Iron-Fist nomination substitution | §9.3.11(2,3,9) / §9.3.6 — folded |
+| **#24/#92 founding gating** | `playtestdraft` restates founding subsystem-gating (no Kingmaker/SCOTUS/diplomacy/US-office elections in Independence; Continental Delegation; one-vote-per-state; ConCon@1788) + draft pool birth/era-gated (Crockett undraftable) + draft→card pipeline cross-party-relative | §27.1.2 / §7.4 — no re-doc |
+
+> **Roadmap takeaway (for the tech-lead + roadmap-planner).** The batch-31 NEW build surface, ranked:
+> (1) **★★ the confirmation subsystem** (§9.3.11) — the single largest reconciled spec: model cabinet +
+> SCOTUS confirmation as a real vote with the auto-confirm gate → hearing → block/filibuster/cloture/tools
+> → 33/33/34 fallout (the **#199 cascade is SUPERSEDED** — implement 33/33/34); note the two "Top-Four"
+> sets DIFFER (always-vote = State/Def/Treasury/War; cross-party-cap = State/War-Def/AG/Treasury).
+> (2) **★★ the 15-era trigger-year table** (§27.1.2) — adopt the band labels (enum or content-band data)
+> under the §27.1 two-level model; transition predicate = game-state, not year. (3) **The canonical
+> lingering** (§11.1.z) + **death-bracket** (§10.1.z) + **card-assignment** (§7.4) + **committee-scaling**
+> (§12.2) specs now have authoritative numbers — build to them. (4) **Three NEW election specs** —
+> #228 spoiler vote-drain (§22.4.1), #230 swing-state cap + #231 Moderate-balance-case + #183 momentum
+> (§15.5 e/f/g). (5) **Small fold-ins:** #229 CPU acceptance matrix (§9.3.6), #232 starting-draft
+> 2-ideology + #211 round-robin baseline (§4.4.1), #233 CC-appointment (§17.1.y), #182 Command=budget
+> CONFIRMED (§20.11). **Parking-lot:** #234 fog-of-war + #235 D6-vetting (AMPU-2). **Closure:** POST-143
+> traits SHIPPED (Lackey not adopted). Cross-ref `game-context.md` rows **#228-#235**, the SUPERSEDED
+> **#199**, RESOLVED **#183**, CONFIRMED **#182**, and the sharpened **#172/#92/#206/#179/#134/#50/#51/
+> #130/#222/#211/#115/#214/#215/#25/#31/#112/#64**.
 
 ### 30.4 Authority hierarchy reminder
 
