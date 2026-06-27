@@ -349,6 +349,7 @@
     - [30.13 Rulings folded from `modernday` (GA-run 2016-start modern multiplayer — Ted-blessed marquee rulings)](#3013-rulings-folded-from-modernday-ga-run-2016-start-modern-multiplayer--ted-blessed-marquee-rulings)
     - [30.14 Rulings folded from `pop2012b` (the 2nd 2012-start "Era of Populism" — MrPotatoTed designer-authoritative point-of-order corrections)](#3014-rulings-folded-from-pop2012b-the-2nd-2012-start-era-of-populism--mrpotatoted-designer-authoritative-point-of-order-corrections)
     - [30.19 Rulings folded from batch 29 — the two timeline-edge playtests (`wilsons1916` 1916-MP "Era of Hollywood" + `welcome2future` 2022-hands-off "Era of the Future")](#3019-rulings-folded-from-batch-29--the-two-timeline-edge-playtests-wilsons1916-1916-mp-era-of-hollywood--welcome2future-2022-hands-off-era-of-the-future)
+    - [30.20 Rulings folded from batch 30 — the FIVE designer DESIGN/DATA/changelog threads (`revampPV` / `summer2021` / `ampuData` / `ampuUpdates` / `presidents`)](#3020-rulings-folded-from-batch-30--the-five-designer-designdatachangelog-threads-revamppv--summer2021--ampudata--ampuupdates--presidents)
     - [30.4 Authority hierarchy reminder](#304-authority-hierarchy-reminder)
 31. [Gilded-Age era systems (designed, not built)](#31-gilded-age-era-systems-designed-not-built)
     - [31.1 (#147) Tariff-as-national-%-rate + the mutually-exclusive MonetaryRegime](#311-147-tariff-as-national-rate--the-mutually-exclusive-monetaryregime-designed)
@@ -611,6 +612,108 @@ The single scalar that ranks politicians. Steps:
 > (**PV drives elections**, [§15](#15-elections-29x-and-calcstatevote)). Sibling of #120 (dataset balance) + DH-51 (modern-pol
 > overpower) — a **formula/weight** bug, addressable in `pv.ts` (the per-trait weight table), not the
 > dataset. Cite `modernday#POST 1939-1945`.
+
+#### 3.4.1 ★★ The PV-system OVERHAUL — per-trait tiers + non-linear ability curve + trait remap + display scale (NEW, `revampPV` + `summer2021`, batch 30; DESIGNED, the shipped `pv.ts` is at a PRE-REVAMP state — DH-77)
+
+> **★★ The single most build-relevant DESIGN delta in batch 30.** The `revampPV` thread (Feb 2023,
+> dev `@vcczar` authoritative) re-values **every trait and ability's PV contribution** on a fixed tier
+> scale, explicitly **superseding the shipped flat ±4/−5** the §3.4 steps above describe. Recorded here as
+> the designed spec (the §3.4 steps remain the *shipped* truth). **★ Status: UNRESOLVED — the thread DIED
+> on a GM handoff** (POST 95-99; Will took over 1772). vcczar disowned the exact numbers (*"the RANKING is
+> the point"*, P33) and deferred a fitted formula to OrangeP47 (never delivered). So apply this as **tiers
+> + a re-mapping + a fit pass, NOT a literal transcription of coefficients** (`revampPV#POST 1, 33`).
+> **★ The trait EFFECT changes (what each trait DOES) are in a SEPARATE, un-ingested thread —
+> "Groupthinking the Political Value" (`revampPV#POST 1`) — chase it; this thread sets only the POINT
+> VALUES.** The four shipped code sites this overhaul supersedes are logged as defect **DH-77** (`pv.ts:70-88`).
+
+**(a) #214 — the per-trait TIERED point table replaces the flat ±4/−5.** vcczar's POST-33 tier scale
+(the designer-authoritative column; ~8 abilities + ~57 traits ≈ 65 line-items):
+
+| Tier | Value | Meaning | Marquee members (vcczar P33; forum trait names) |
+|---|---|---|---|
+| Extreme positive | **+25** | most-ideal | Master Kingmaker, Kingmaker, Iron Fist, Leadership, Magician, Teflon |
+| Wholly positive | **+10** | clear net good | Charisma, Celebrity, Debater, Efficient, Likable, Manipulative, Orator, Propagandist |
+| Mostly positive | **+7** | net good, < a 10 | Integrity, Hale, Cosmopolitan, Bookkeeper, Crisis Manager, Crisis Gov, Crisis Admin, Decisive General, Military Leader |
+| Mixed net-positive | **+3** | real downsides | Egghead, Puritan, Geostrategist, Domestic Warrior, Harmonious, Everyman, Micromanager (vcczar; field says −3), Jurisprudence, Lawful/Cop |
+| Mixed net-negative | **−3** | net bad, marginal | Frail, Naive Strategist, Carpetbagger, Delegator, Illicit, Domestic Apathy |
+| Mostly negative | **−7** | net bad, < a −10 | Numberfudger, Disharmonious |
+| Wholly negative | **−10** | clear net bad | Lackey, Uncharismatic, Unlikable, Pliable, Controversial, Incoherent, Obscure, Two-Faced, Flipflopper, Passive, Predictable |
+| Extreme negative | **−25** | absolute worst | Easily Overwhelmed, Incompetent |
+
+> Career-track-only traits (**Late Bloomer, Overeager**) value at **0** mid-game (they act on the career
+> track, not PV — P52). Most-contested (sign flips / wide community splits): **Iron Fist, Teflon, Crisis
+> Manager, Obscure, Harmonious, Micromanager, Numberfudger** — so trust the EXTREMES (+25/−25) and treat
+> the contested middle as a calibration target. Near-unanimous: **+25 Master Kingmaker; −25 Easily
+> Overwhelmed / Incompetent**. Two structural notes: (1) a **per-trait "absence bonus"** (points for
+> LACKING e.g. Obscure) was endorsed but the additive model can't express it (P37-39, design idea, not
+> built); (2) the shipped `flipFlopperPenalty × 5` (`pv.ts:87`) ≈ the Flipflopper trait penalty in the
+> table — **do NOT double-count** when the table lands. Fold the shipped magic `Kingmaker +6` (`pv.ts:79`)
+> into the table and drop it. (`revampPV#POST 33, 37-39, 52`; `game-context.md` #214.)
+
+**(b) #215 — non-linear per-ability curve replaces the flat `skill × officeWeight × 4`.** The shipped
+formula (§3.4 step 1, `pv.ts:70-73`) weights every skill point the same; the designed curve makes the
+**1st point of an ability worth MORE** than later points, with two inversions:
+
+| Ability | Designed curve (Cal P32/P40, jnewt P35/P36) | Shipped today |
+|---|---|---|
+| **Command** | **+25** for the 1st level, **+5** each level after (decreasing). The single highest-value attribute, universally #1. | flat `command × 10` (`pv.ts:74`) |
+| Legislative | +10 then +3/level | flat `skill × weight × 4` |
+| **Admin** (inversion) | 1st point near-worthless; **+10 starts at the 2nd point** (the cabinet-eligibility threshold) — a 1-Admin pol is "absolute trash" | flat |
+| **Military** (inversion) | same low-floor as Admin (1-Military ≈ trash) | flat |
+| Governing / Judicial / Expertise / Interest | decreasing-returns, lower magnitude (Interest ~5, Media interest ~7) | flat |
+
+> **★ The Command re-weight (+25/level vs shipped ×10) is tied to the PERENNIAL, UNRESOLVED "restrict
+> who's BORN with Command" fight.** Ted (P12): only real-life nominees should boot with 1 Command, to stop
+> nobodies windfalling +25 off a token presidential run. OrangeP47 (P45-50) "vehemently oppose":
+> restricting born-Command **breaks modern-start scenarios** (too few Command pols to field a presidential
+> field) **and the 3rd-party-run rules** (which key off Command). Leave this **OPEN** — it is a balance
+> toggle, not a coefficient. (`revampPV#POST 12, 32, 35, 36, 40, 45-50`; `game-context.md` #215.)
+
+**(c) #216 — BLOCKING: the 2023 forum trait vocabulary ≠ the shipped `Trait` union.** The PV table's
+keys are partly stale — the trait set was renamed/reworked between Feb 2023 and the current code, so a
+literal transcription would **mis-key or drop ~20%** of the table. The tech-lead MUST produce an explicit
+old→new map before #214/#215 land. Codebase-verified against `types.ts:62-117`:
+
+| Forum name (2023) | Shipped `Trait` union | Action |
+|---|---|---|
+| `Flipflopper`, `Two-faced` | `Flip-Flopper`, `Two-Faced` | pure rename — apply the value to the new key |
+| `Naive Strategist` (≈ "Strategically naïve") | `Naive Strategist` | already matches |
+| `Teflon`, `Lackey`, `Bookkeeper`, `Geostrategist`, `Easily Overwhelmed`, `Incoherent`, `Pliable`, `Disharmonious`, `Lawful`/`Cop`, `Illicit`, `Everyman`, `Late Bloomer`, `Jurisprudence`, `Military Leader`, `Union Loyalist` | **(no shipped slot)** | gone — either add the trait or drop the value |
+| (no 2023 value) | `Nationalist`, `Globalist`, `Reformist`, `Loyal`, `Ambitious`, `Opportunist`, `Impressionable`, `Scandalous`, `Corrupt`, `Traitor`, `Outsider`, `Failed Bid` | the shipped ideology/career axis was **never valued** — needs new tiers |
+
+> (`revampPV#POST 33`; codebase `types.ts:62-117`; `game-context.md` #216.)
+
+**(d) #220 — PV DISPLAY-scale is UNRESOLVED.** `pv.ts` exposes the **raw** `computePV` number with no
+normalization layer, `Math.max(0,…)`-clamped (`pv.ts:88`, negatives lost). Two sources pull opposite ways:
+- **`revampPV` leans RAW ("pink") for human display** (§6 D7, P66-91) — scaled views bunch pols too close
+  (Santos 22 vs Biden 28); a normalized scale is acceptable **only for a hidden/AI value**.
+- **`summer2021` (POST 200-205) pulls the opposite way** — a recalibration so the **top pol = 100** on a
+  normalized scale, founding pols getting a larger *draft* value.
+- **Ted's one hard demand: "no negative numbers"** — but fix via a **flat `+X` floor offset**, NOT the
+  shipped hard `Math.max(0,…)` clamp (which destroys ordering among the bad pols the CPU's draft heuristic
+  still needs). **No final vote was taken** in either source — the build is free to calibrate.
+  (`revampPV#POST 16, 18, 20, 57, 66-91`; `summer2021#POST 200-205`; `game-context.md` #220.)
+
+> **Sample PV under the P33 spec (RAW, no scaling — the PV-ordering ground truth the #192 caps reference):**
+> Napoleon **341** (highest in game) / Jefferson 201 / Henry Clay 197 / T. Roosevelt 184 / FDR 171 / LBJ
+> 170 / Jackson 166 / Franklin 161 / Lincoln 152 / Washington 144 / … / Trump 72 / Biden 50 / JFK Jr −5 /
+> John Payne Todd −34 (`revampPV#POST 55`). The designer **confirms Napoleon #1 + Jefferson #2** are the
+> two strongest pols in the game (P59-60; Napoleon only joins post-exile with huge Command + Military +
+> Leadership + Charisma + Iron Fist). Theoretical bounds under the spec ≈ **+648 / −79** (P64).
+
+> **DH-77 (codebase — the defect counterpart).** `pv.ts:70-88` ships the pre-revamp formula: flat ±4/−5
+> traits (`:76-77`), flat `skill × weight × 4` (`:70-73`), flat `command × 10` (`:74`), magic `Kingmaker
+> +6` (`:79`), and a `Math.max(0,…)` clamp (`:88`) that collapses sub-zero ordering. NOT a quick fix — the
+> replacement is the whole #214/#215/#216/#220 cluster (a re-fit + a name remap + a display decision). As a
+> *standalone* defect, the clamp is the clearest wrong: replace it with a constant floor-offset so the CPU
+> keeps ordering among bad pols. (`game-context.md` DH-77; folded into the §30.20 index.)
+
+*(designed, not built — replace the §3.4 flat trait/skill/command math with the per-trait tier table
+(#214) + the non-linear ability curve (#215) AFTER running the #216 name remap; fold Kingmaker/Master-
+Kingmaker into the table (drop the `+6`); keep the office/age/FF terms (additive); decide the display scale
+(#220, raw vs 100-normalized) and replace the hard clamp with a floor-offset; leave restrict-born-Command
+OPEN. Treat as tiers + remap + fit, not literal coefficients. `GM⇒App` — PV drives the CPU's draft +
+leadership picks even if hidden from humans.)*
 
 ---
 
@@ -1126,6 +1229,17 @@ posts 37, 311, 316):
   such failure-bounce table.
 *(design divergence — engine uses uniform willingness multipliers; forum runs a stricter
 trait-gated targeting+success table.)*
+
+> **★ #224 (NEW, `ampuUpdates`, batch 30) — satisfaction-driven AUTO-FLIP (no conversion attempt),
+> DESIGNED.** Distinct from ALL of the above (which require an explicit attempt by a leader): a
+> **flippable** politician has a **25% chance to AUTO-FLIP with NO conversion attempt** when their
+> faction's **ideology-satisfaction meter is at its LOWEST level** (`ampuUpdates#POST 226`). This models
+> **post-1964 Southern Democrats bolting** — an automatic defection triggered by a bottomed satisfaction
+> meter, not a targeted poach. Ties the ideology-enthusiasm/satisfaction cluster (#18/#51/#124,
+> [§22.2](#222-faction-enthusiasm--party-preference-election-engine--the-score-economy)) into the
+> realignment levers (#108, [§28.4](#284--the-realignment--mechanically-but-gradually-enforced-not-a-single-scripted-flip)). Author-side
+> design data. *(designed — add a per-cycle 25% auto-flip roll on flippable pols whose faction's
+> ideology-satisfaction meter is bottomed, no conversion attempt required. `game-context.md` #224.)*
 
 #### 6.4.y ★ Ted-RULED conversion-rate schedule (designer-authoritative; `tedchange`)
 
@@ -2155,6 +2269,27 @@ scaled retirement %s tuned with modern 60-65 near-0%; (c) Frail-first death-roll
 (f) Pres+VP age-60 retirement = "won't run for re-election" (term completed first); (g) cabinet
 ex-Pres retires at end of half-term not on appointment. Cite `tedchange#POST 137-148, 195-197, 396`.)*
 
+> **★ #227 (NEW, `ampuUpdates`, batch 30) — the Trim-Roster phase was REMOVED; random retirements prune
+> the roster instead (rules-structure delta).** vcczar **cut the Trim Roster phase** — **random retirements
+> now handle keeping the roster from bloating** (`ampuUpdates#POST 215`). **★ Codebase-verified:** there is
+> **NO Trim-Roster step in `src/`** (the only `trim` in the engine is `String.trim()` parsing) — so the
+> shipped build already aligns with the removal; the companion ruleset that absorbs the cut phase is the
+> §10.1.y retirement schedule above plus the `summer2021` tuning: **no random retirement under age 60**,
+> **one-term president who LOSES = 50% retire**, **losing nominee under 60 = 25% retire** (the WJB/Trump/
+> Wallace "populists don't retire" rationale, generalized — `summer2021#POST 66, 174-176`). So roster
+> pruning = the retirement engine, not a dedicated trim step. (`game-context.md` #227.)
+
+> **★ #226 (NEW, `ampuUpdates`, batch 30) — Frail / Hale AUTO-TRAITS assigned by historical lifespan
+> (dataset-generation rule).** A `scripts/` dataset-authoring convention: **"Frail"** is auto-assigned to a
+> pol who **died before 60**; **"Hale"** to one who **lived to 86+** (corrected up from 80)
+> (`ampuUpdates#POST 253, 254`). This drives the death/age-roll cluster above (Frail × 1.5 death / Frail-
+> first roll order; Hale = ½ death). **★ Codebase note:** `Frail`/`Hale` exist as traits and are granted at
+> runtime by war/events (e.g. `revolutionaryWar.ts:99-112` grants Frail on a wound, sheds Hale), but there
+> is **NO lifespan-derived auto-assignment pass** in the dataset pipeline — this is a NEW `scripts/`
+> generation rule sitting alongside the `draftYear`/sub-floor conventions in CLAUDE.md. *(designed — add a
+> lifespan-derived auto-trait pass to dataset generation: died <60 ⇒ Frail, lived 86+ ⇒ Hale.
+> `game-context.md` #226.)*
+
 ### 10.2 (2.4.2) Anytime events — `runPhase_2_4_2_Anytime` (`phaseRunners.ts:2782`)
 
 Constants `ANYTIME_EVENTS_RULES` (`types.ts:1073`). Two pools:
@@ -2771,6 +2906,19 @@ cardVoteBias(chairFaction, bill.interestGroups), 0, 1)`. Pass → `passed_commit
 `killed_committee`. Missing chair → auto-pass. `cardVoteBias` (`phaseRunners.ts:1516`) adds
 `ALIGNMENT_RULES.cardBiasPerDelta (0.03) × delta` per matching interest/lobby card.
 
+> **★ #222 (NEW, `ampuUpdates`, batch 30) — committee SIZE scales with state count (3 → 11 at 50 states),
+> DESIGNED.** The shipped engine resolves a committee through its chair only; the designed committee has a
+> **membership that grows with the federation** (`ampuUpdates#POST 236`). Baseline = **Chair + Majority +
+> Ranking Minority (3)**; **+1 per party at 20 states**, then **+1 per party per +10 states** → **11
+> members at 50 states**. Affects the committee/legislative-ladder system; the **Legislative ladder (1 =
+> committee member · 2 = chair · 3 = whip · 4 = Maj/Min Leader · 5 = Speaker) is confirmed canonical**
+> (`summer2021#POST 233-235`). Author-side design data, not yet in code. (`game-context.md` #222.)
+
+> **★ #223 (NEW, `ampuUpdates`, batch 30) — committee-chair selection has a 25% chance to RAISE ideological
+> enthusiasm, DESIGNED.** Selecting a committee chair has a **25% chance to raise that chair's-ideology
+> enthusiasm** box (`ampuUpdates#POST 240`) — models Solid-South traditionalist chairs entrenching their
+> bloc. Hooks the **ideology-enthusiasm meter** (#18/#51/#124, [§22.2](#222-faction-enthusiasm--party-preference-election-engine--the-score-economy)) FROM the committee system. Author-side design data. (`game-context.md` #223.)
+
 ### 12.3 (2.6.3) Floor votes — `runPhase_2_6_3_Floor` (`phaseRunners.ts:3498`)
 
 Tally House and Senate **separately**. Per member, yes-probability:
@@ -3033,6 +3181,29 @@ re-queue next session.)*
 > filibuster-override decision** must be specified (own-party-unless-targets-my-faction baseline) — this
 > folds into #208 (CPU legislative logic, §28.10). (`game-context.md` DH-76; pairs §12.6 / §9.3.10 (#172)
 > / #208; `wilsons1916#P349`; `welcome2future#post 331, 343`.)
+
+> **★ ORIGIN of the cloture half (NEW, `summer2021`, batch 30 — the rule was FIRST AUTHORED here, then
+> never carried into the build).** The Constructive-Results changelog records vcczar **ADDING filibuster +
+> cloture to the US Senate** out of the Summer-2021 run (*"don't know why this was missing"*,
+> `summer2021#POST 98`). The authored spec — the cloture mechanic DH-76's later threads re-discovered was
+> absent:
+> - **Cloture is invoked by the Senate Majority Leader to beat a filibuster.** A **failed cloture delays
+>   the bill/package a half-term** (so a filibuster is *contestable*, not an automatic full-term delay).
+> - **One filibuster per half-term** (first-come), **TWO if the filibusterer is Efficient**; amended so a
+>   **Puritan may filibuster more than once if also Disharmonious** (replaces the Efficient route for the
+>   extra, `summer2021#POST 129`).
+> - **Filibuster only by a Senate officer / committee member.** Both filibuster and cloture are **procedure
+>   bills** (created/modified by vote). The **Senate default = simple majority.**
+> So `wilsons1916`'s *"no cloture rule exists"* is the field re-discovering that this `summer2021`-authored
+> cloture half was never built. (`summer2021#POST 98, 129`; folded into the §30.20 index.)
+>
+> **★ HYGIENE — the randomized-proposer system was REJECTED (committee system kept).** During the same run
+> vcczar floated replacing the committee with a **randomized proposer weighted by Legislative (5×…1×),
+> Efficient = 2 proposals, officer steal/swap via Manipulative/Iron-Fist/Magician**; Ted/Cal pushed back
+> (a dominant party would monopolize proposals; too complex) and it was **rejected — the committee system
+> stands** (`summer2021#POST 222-235`). What WAS confirmed canonical is the **Legislative ladder: 1 =
+> committee member · 2 = chair · 3 = whip · 4 = Maj/Min Leader · 5 = Speaker** (POST 233-235). So the docs
+> must NOT present a randomized/Legis-weighted proposer as a live design.
 
 ### 12.7 Forum design layer: `*Crisis Bill*` tag (designed, not built)
 
@@ -3420,6 +3591,14 @@ modifier per the 5-tier table); honor Easily-Overwhelmed → skip-Step-2 and Inc
 Applies to era-event implementation rolls (§10.3 + §10.4.1), exec actions (§14.1), and any
 phase requiring presidential implementation. Cite `tedchange#POST 163, 159-164`.)*
 
+> **★ The #217 governing-trait layer SITS ON TOP of this 2-step rule (NEW, `summer2021`, batch 30).** The
+> `tedchange` rule above is the *spine* (Pres Admin roll → Command-gated blunder). `summer2021` adds **~30
+> implementation/governing traits** that modify the SAME Blunder roll by **policy genre** (Bookkeeper/
+> Numberfudger=economic, Cop/Illicit=judicial, Geostrategist/Strategically-naïve=foreign-mil, Domestic-
+> Warrior/Apathy=domestic), plus **Delegator** (skip an implementation roll) / **Micromanager** (take over
+> a cabinet officer's roll), **Crisis-{Manager,Admin,Gov}**, and **Passive/Predictable**. Documented in
+> full at [§20.10.1](#20101--217-new-summer2021--the-presidentcabinet-implementation-sub-engine--30-governing-traits-designed-not-built) — apply it as the modifier set on this 2-step pass. (`summer2021#POST 128, 139-156, 167-184`; `game-context.md` #217.)
+
 #### 14.1.1 Action library + persistence
 
 Forum 2.8.1 runs as a **player-driven library** with persistence:
@@ -3589,6 +3768,21 @@ swap to a bumped magnitude when any opponent holds a listed trait. Bands `SMALL 
 / LARGE 8`. Examples: Charismatic `+MEDIUM` presGeneral; Integrity `+SMALL`, bumped `+MEDIUM`
 vs a tainted opponent; Unlikable `−MEDIUM`, bumped `−LARGE` vs a Charismatic opponent; Outsider
 `+SMALL` general but `−MEDIUM` primary; Domestic Apathy and several PR4b traits are **era-scaled**.
+
+> **★ Celebrity trait — DESIGN deltas (NEW, `summer2021` + `ampuUpdates`, batch 30).** Two batch-30 sources
+> rework the Celebrity election trait:
+> - **The `summer2021` merge + nerf (POST 92-98):** **Celebrity was MERGED with "Military Leader"**
+>   (identical effects); Celebrity was **nerfed to a 50% chance of +1 in PRESIDENTIAL elections** and now
+>   **also applies to Gov / Sen / US-Rep** elections; a pol with **BOTH Celebrity + Military Leader gets a
+>   guaranteed +1**. (Direction on eligibility, POST 74-80: vcczar wants a celebrity usable only from their
+>   "obscure-remove" date — a built-in late bloomer — and "losing **Obscure** should be a big deal";
+>   *considering*, not ruled.)
+> - **★ #225 — Celebrity EXPIRY (`ampuUpdates#POST 128):** the **Celebrity trait is KEPT only if the
+>   celebrity does NOT run for office before age 40** (worked example: Herschel Walker). **Codebase note:**
+>   `Celebrity` is a static trait granted at boot/events (`types.ts:74`, the §17 event grants) with **no
+>   expiry/eligibility-by-age rule** in `src/`. *(designed — add Celebrity expiry: drop the trait if the
+>   pol runs for any office before 40; reconcile with the merge/nerf when valuing/applying Celebrity and
+>   with the #214 PV table. `game-context.md` #225; ties #136 draft/obscure + #16/#18 election bonuses.)*
 
 > **Forum modifier stack (designed, not built; batch 8).** The forum layers an enumerated
 > **presidential-vote modifier stack** onto this score for the EC general (3rd-term −1,
@@ -4074,6 +4268,34 @@ eligible pol for a primary office, they may **generate one**: **obscure / pliabl
 demographics**, **CANNOT generate a President**, and the generated pol **won't auto-resign**
 (`completions#POST 88, 93, 103, 176`). **Absent from `src/`** — only filler-pol seeding for staffing
 exists, not a player-facing generate-for-primary flow. Maps to #115/#90/#43.
+
+> **★ #115 — the FULL generate-a-candidate SPEC (NEW, `ampuUpdates`, batch 30 — the authoritative origin
+> of the flow above).** vcczar's Apr-Jul 2021 dev changelog is the designer's own build of the procedural
+> name + politician generator. Three components pin the intended rule (the shipped build has the
+> `ImportedDraftee` + generated "standard draft classes" pipeline but **no runtime name/pol generator and
+> no vacancy-backfill generator** — codebase-verified):
+> - **(i) The NAME DATABASE + demographic tagging.** ~6,600 names (later expanded), **80% drawn from the
+>   historical-politician database, 20% external** (`ampuUpdates#POST 46`). The three open tagging needs:
+>   **GENDER on given names, RACE/RELIGION on surnames, and DE-DUPLICATION** (POST 4). Names are bucketed
+>   by **sex + heritage** — Male Given / Female Given / Surname / Given-Spanish / Given-Portuguese /
+>   Given-French / Given-Scandinavian / … (POST 39, 45) — so a generated name is demographically coherent
+>   (*"No need for a female politician named Bruce Popinski"*).
+> - **(ii) The GENERATOR + class TIERING.** The generator computes **state + number of starting abilities
+>   + traits / expertise / interests / race / religion** (POST 14, 62). A generated draft class is tiered:
+>   **1 STANDOUT + 9 SECOND-tier + 20 THIRD-tier + 20 BOTTOM-tier** (the "noticeably more talented than the
+>   rest" structure), with **~2 "Blue Chips" (4-ability) per class** on average (POST 14, 62).
+> - **(iii) ★ The on-demand BACKFILL rule (the #115 core).** *"MT needs a governor but no player has a
+>   politician eligible for the spot. If this is the case, a politician is generated with 1 Gov ability and
+>   the spot goes to the player with the lowest score"* (POST 14). So: when an office needs filling and no
+>   player has an eligible pol → **generate a pol with 1 ability in the NEEDED track, routed to the
+>   LOWEST-SCORING faction** (the same routing family as the foreign-volunteer rule #46 and the sub-floor
+>   balance principle in `scripts/`). The generator is only really *needed* when **starting at the END of
+>   the historical timeline (the Future era)** OR when a player opts for **fictional-pols-only** (POST 62).
+>
+> Note this `ampuUpdates` spec (minimal stat → lowest-score faction, used at boot/vacancy) is the
+> **author-side origin** of both §15.5(c)'s player-facing 3.0.25 primary flow AND the §26.1 boot-time
+> retro-generation pass (#209) — one generator, three call sites. (`ampuUpdates#POST 4, 14, 39, 45, 46,
+> 62`; `game-context.md` #115; folded into the §30.20 index.)
 
 **(d) Gerrymander gov-action (NOT-IN-OUR-BUILD).** Reworked for the new House-seats model: a
 gerrymander **shifts a state's house-deviation bias +1 toward the Governor's party (except +5 the
@@ -5779,6 +6001,78 @@ gated confirmation by office; regional-representation meter rule; executive-acti
 cabinet-with-blunders. Confirm scoping with the human — #179 bundles ≥6 sub-rules that may be ≥2
 systems.)*
 
+### 20.10.1 ★ #217 (NEW, `summer2021`) — the president/cabinet IMPLEMENTATION sub-engine + ~30 governing traits (DESIGNED, not built)
+
+> **★ A distinct unbuilt SYSTEM LAYER beyond the shipped flat `traits[]` tag set.** Out of the Summer-2021
+> run vcczar added **~30 governing/implementation traits** (`summer2021#POST 128, 139-156, 167-184, 239`)
+> that drive a **president+cabinet implementation pass**: after legislation/actions pass, a **success roll
+> → a Blunder roll** runs, modified by the traits below. This **deepens #179** (the cabinet lingering-roll
+> meter engine, §20.10) and #182 (Command = action budget, §20.11), and SUPERSETS the shipped 2-step
+> Admin-then-Command blunder rule ([§14.1.y](#141y--ted-ruled-pres-implementation--2-step-admin-then-command-blunder-rule-designer-authoritative-tedchange), `tedchange#POST 163`) with a wide trait layer. **★ Designer-flag (Ted/Cal pushback, POST 149-158):** several of these overlap Efficient / Egghead / Easily-Overwhelmed / Incompetent — vcczar kept them ("slightly different"), so **de-dup against those first (overlap risk)**. Mostly "won't affect this playthrough" but added to the master rules ⇒ canonical going-forward. These traits ALSO need PV values (#214/§3.4.1) and a trait-name remap (#216).
+
+**(a) Expertise-gated genre modifiers on the Blunder roll** (positives → high chance to AVOID the
+blunder; negatives → near-AUTO-blunder in that policy genre):
+
+| Policy genre | Positive trait (avoids blunder) | Negative trait (near-auto-blunder) |
+|---|---|---|
+| **Economic** | Bookkeeper | Numberfudger |
+| **Judicial** | Cop / Lawful | Illicit (lenient) |
+| **Foreign / Military** | Geostrategist | Strategically-naïve (≈ shipped `Naive Strategist`) |
+| **Domestic** | Domestic Warrior | Domestic Apathy |
+
+**(b) Delegation traits:**
+- **Delegator** — a **chance to SKIP an implementation roll** (usually GOOD, since the president himself
+  causes failures); also a multiplier UP on cabinet effects (§22 PR6) + can send the VP anywhere (§13).
+- **Micromanager** — a chance to **take over a cabinet officer's roll** (can be BAD — Carter/Hoover); gets
+  **extra federal-intervention attempts** (POST 169) and **must approve allies' platform planks** (POST 184).
+
+**(c) Crisis traits** (rare):
+- **Crisis Manager** (president — start set Washington/Lincoln/FDR) — boosts everyone's crisis-related
+  implementation incl. self; **+1 Command to deal with a crisis** (POST 183, ties #182); **+10% battle-plan
+  when one loss from defeat** (POST 173, ties the RevWar floor #155).
+- **Crisis Admin** (cabinet) — high chance to avoid blunder; with Efficient can pull the whole team out of
+  a blunder roll. **★ The directly-#179-relevant Lingering sub-rule:** a Crisis Admin cabinet member has a
+  **10% chance to pull a meter OUT of crisis during Lingering, 20% if the President is also a Crisis
+  Manager** — ON TOP OF the standard per-cabinet-member meter rolls in §20.10 (POST 168).
+- **Crisis Gov** (governor) — boost for crisis-dealing Gov Actions (§20, #20).
+
+**(d) Passive / Predictable (the opposites of Iron-Fist / Manipulative):**
+- **Passive** — Pres can block his OWN federal intervention; a **Passive Justice won't attempt vote
+  conversions** (POST 171); a **Passive Chief Justice can't refuse cases** (POST 239 — the same read #218
+  uses); a Passive Speaker = less interference (allies may *want* one).
+- **Predictable** — Pres can **auto-FAIL** federal intervention + is a **war weakness** (POST 172); a
+  Predictable Justice is only convertible by the Chief Justice; Predictable congresspeople are problematic
+  if misaligned with their faction leader.
+
+**(e) Compound + special:**
+- **★ Passive + Pliable = PUPPET president** — a manipulative **Key Advisor / VP / cabinet member makes
+  ALL veto + Pres-Action decisions** ("unelected king" play, POST 182-183). The federalism face of the
+  §24.1/#61 Pliable-decider read, escalated to total control.
+- **Magician** — a manipulative pol **grows its manipulative ability** by TBD% while serving in the
+  legislature (POST 148).
+- **Jurisprudence** (Chief-Justice super-ability) — boosts vote-conversion odds of same-ideology justices
+  (a `5-6` roll becomes `4-6`); deepens compelled-retirement/nomination/confirmation roles; **may refuse
+  UNLIMITED state cases** (the #218 CJ gate; POST 170, 239).
+- **Cosmopolitan / Provincial** (presidential-election only, POST 128) — Cosmopolitan: 25% +1 in all
+  party-competitive regions as Pres (no VP bonus); Provincial: 25% +2 home state / +1 home region / −1
+  elsewhere as Pres, +2/+1 (no penalty) as VP. **Carpetbagger** (relocation, POST 156) — 25% chance of −1
+  election for **8 years**, then expires (§6.x relocation; see also #225's celebrity expiry pattern).
+
+> **System interactions (why this is a layer, not a list).** The genre-gated Blunder modifiers sit ON TOP
+> OF the §14.1.y Admin→Command blunder rule and the §20.10 cabinet→meter rolls; the same trait reads
+> (Passive / Jurisprudence / Iron-Fist) gate the #218 SCOTUS case-refusal; Crisis-Admin's 10/20% crisis-
+> pull feeds the §20.10 Lingering pass; Passive+Pliable PUPPET re-routes the §20.11 veto/Pres-Action
+> decisions. So expertise → genre → blunder → meter → election is a single chain, and the governing traits
+> are the modifiers all along it.
+
+*(designed, not built — build a president/cabinet implementation sub-engine: a post-legislation
+success→Blunder pass modified by the expertise-gated genre traits + Delegator/Micromanager +
+Crisis-{Manager,Admin,Gov} (incl. the Crisis-Admin 10/20% Lingering crisis-pull on top of §20.10's rolls)
++ Passive/Predictable + Passive+Pliable PUPPET + Magician + Jurisprudence. De-dup against
+Efficient/Egghead/Easily-Overwhelmed/Incompetent first (overlap risk). Pairs with §14.1.y / §20.10 (#179)
+/ §20.11 (#182) / §22.7.z (#218) / §3.4.1 (#214, these traits need PV values). Cite `summer2021#POST 128,
+139-156, 167-184, 239`; `game-context.md` #217.)*
+
 ### 20.11 ★ The federalism presidency: veto/override, command-as-action-budget (#182), SCOTUS timing (`summer2021`, DESIGNED)
 
 > **The president's powers as PLAYED forward.** Couples to [§14](#14-executive--court-management-28x)
@@ -6997,6 +7291,32 @@ bills tied to a court-disabled policy **should** auto-deactivate but **don't** (
 *(designed, RULED — implement the ladder for CPU Chief-Justice selection on vacancy. Cite
 `tedchange#POST 387-390`.)*
 
+#### 22.7.z ★ #218 (NEW, `summer2021`) — Rule of Four / Chief-Justice case-refusal (Gov-Action state cases) (DESIGNED, not built)
+
+> **★ A SCOTUS GATEKEEPING rule with no shipped analogue.** The shipped docket (and §22.7's modern
+> docket) has no case-refusal / Rule-of-Four step — cases brought via **Gov Actions** (a player/governor
+> brings a state case to the court, §11.6 / #20) aren't gated by a CJ-discretion screen. `summer2021`
+> authored one (`summer2021#POST 236-239`). This is the *refusal* face of the §29.2 player-court fork's
+> **delay/dismiss** rule (where a Gov-Action case — never a historical one — may be dismissed): #218 makes
+> the dismissal a **Chief-Justice power with a quorum override**.
+
+**The case-refusal mechanic (DECIDED):**
+
+| Actor / trait | Effect on a Gov-Action state case |
+|---|---|
+| **Chief Justice (≥ 4 Judicial)** | may **REFUSE** to hear the case (the baseline gate). |
+| **Rule of Four** (4 justices) | **OVERRIDES** the CJ's refusal → the case is heard anyway. |
+| **Iron Fist** Chief Justice | the **Rule of Four does NOT apply** — the refusal stands (the authoritarian-CJ bypass). |
+| **Jurisprudence** Chief Justice | may **refuse UNLIMITED** cases (the CJ super-ability, `summer2021#POST 170`). |
+| **Passive** Chief Justice | **cannot refuse at all** (the Passive governing-trait, #217). |
+
+> **System interaction.** The same three traits (Iron-Fist / Jurisprudence / Passive) gate CJ behavior in
+> the #217 governing-trait engine ([§20.10.1](#20101--217-new-summer2021--the-presidentcabinet-implementation-sub-engine--30-governing-traits-designed-not-built)) — Passive there *"can't refuse cases"* and *"won't convert votes,"* so #218 and #217 must share the same trait reads. Wires into the Gov-Actions→court-case path (#20) and the SCOTUS cluster (#52).
+
+*(designed, not built — add a CJ case-refusal step on Gov-Action state cases: a ≥4-Judicial CJ may refuse;
+Rule-of-Four (4 justices) overrides; Iron-Fist CJ bypasses the override; Jurisprudence = unlimited
+refusals; Passive = cannot refuse. Cite `summer2021#POST 236-239, 170`; `game-context.md` #218.)*
+
 *(designed, not built — a SCOTUS module: a per-term case docket + ideology-vote model; the
 Iron-Fist/Manipulative compel-vote and compel-retire powers (with the 12-year minimum + the
 conditional-retirement bargain); dynamic court size + court-packing (age-70 trigger, shrink
@@ -7156,6 +7476,27 @@ framing (modern#post 1, 769, 1080, 1106, 1172, 1200, 1771):
 >   so these stop being enum values and become content-band data; and **author the Era-of-the-Future
 >   legislation/proposal library** (events are reportedly already solid). (`game-context.md` #206;
 >   `welcome2future#post 6, 23, 55, 378`; `wilsons1916#P191`.)
+
+> **★ #206 SHARPENED from TWO authoring sources (NEW, `ampuUpdates` + `ampuData`, batch 30).** Two
+> designer-side documents pin the Future band's INTENDED span and confirm it is a TRUE STUB at source —
+> not merely absent from the enum:
+> - **`ampuUpdates` (vcczar's own Apr-Jul 2021 dev changelog) pins the span = "beyond the present to 2099"**
+>   (`ampuUpdates#POST 2`), with EVs authored **through the 2090 census** (POST 17) and hypothetical-state
+>   EVs out to **3000** (POST 26). It is explicitly the **lowest-priority, last-authored era** ("I'll be
+>   doing this last … might still be working on this beyond the May 1st due date"). **★ And it names the
+>   specific BALANCE HOLE:** the era is *"so geared towards science and tech that anyone that isn't holding
+>   these lobbies has a huge weakness — I need to balance it out"* (POST 6) — i.e. the Future band over-
+>   weights the science/tech lobbies, a designer-flagged tuning problem the build inherits. **Open Q:** is
+>   **2099** the playable era boundary while **3000** is just the EV table's open upper bound? (POST 238/262
+>   "fleshing out 2024-3000".)
+> - **`ampuData` (the per-administration content index) is the AUTHORING-SIDE CONFIRMATION the band is a
+>   stub:** the canonical authored content **terminates at Biden / 2022** (last event = Russia-invades-
+>   Ukraine, `ampuData#POST 81`) with **ZERO** scripted events / legislation / pres actions / SC cases /
+>   wars authored for ANY post-2022 band. The present band (Biden 2021-22) is itself the **thinnest live
+>   era** (4 events / 4 legis / 5 pres-actions / 1 SC) and flagged high-need.
+> So #206 is now confirmed from BOTH the **enum side** (code: no `future` member) AND the **data side** (no
+> rows authored): the Future era is under-content'd at source, not just an absent label. (`ampuUpdates#POST
+> 2, 6, 17, 26`; `ampuData#POST 81`; `game-context.md` #206; folded into the §30.20 index.)
 
 > **Design holes & possible bug (point to `game-context.md`, not re-documented):**
 > - **DH-1** — a **filibustered "MUST-pass" bill has no rules remedy** (GM-confirmed gap).
@@ -10226,12 +10567,53 @@ scenario boots into — `scenario1856.ts:177`). The Republicanism / Democracy / 
 bands have **no shipped enum representation at all**. (Open Q for the build: are these distinct
 enum values, sub-phases, or just content-band markers on a game-state gate? — `rep1800` open-Q 2.)
 
+#### 27.1.1 ★ #221 (NEW, `ampuData`, batch 30) — the era-content registry SCHEMA: per-administration payload + scripted-vs-flavor tier + per-category era-activation (DESIGNED, two schema fields)
+
+> **★ The authoring-side confirmation of the era-content registry shape (the K4 payload).** The "AMPU
+> Historical Data" thread is vcczar walking the **entire 1774→2022 timeline administration by
+> administration**, posting each one's content as a fixed-schema record — and that record IS the registry
+> the build needs. Two small but load-bearing STRUCTURAL fields fall out of it.
+
+**(1) The per-administration / per-era-band payload = 6 categories** (`ampuData#POST 1`). vcczar chose the
+**administration/era-band axis (NOT calendar year)** deliberately, *because* it surfaces per-period
+coverage holes — the authoring mirror of the §27.1 content-band model:
+
+| Category (thread label) | Build entity |
+|---|---|
+| **Scripted Events (excl. flavor)** | `EraEvent` (`eraEvents1772.ts` / `eraEvents1856.ts`) — runtime form of one row |
+| **Legislation** (incl. **deactivations/repeals**, e.g. "Deactivated the Alien Friends Act") | bill / legislation catalog |
+| **Pres Actions** | presidential-action catalog |
+| **SC Cases** | named-Justice SCOTUS docket |
+| **Warfare** | war charts (begins / continues / resolved markers per year) |
+| **New Gov Actions Available/Unavailable** | gov-action unlocks |
+
+**(2) ★ Two NEW schema fields the registry/importer must carry:**
+- **Scripted-vs-flavor TIER flag.** The *"excl. flavor"* qualifier is explicit and load-bearing: only
+  **scripted (modeled)** events are tracked; **flavor / 2nd-3rd-tier events are narration-only and
+  post-launch scope** — vcczar repeatedly DECLINES flavor-event suggestions (`ampuData#POST 4, 41`). Every
+  event needs a **tier flag** (flavor = deferred).
+- **Per-category era-ACTIVATION metadata.** Pres Actions / SC Cases / Gov Actions are explicitly *"Not
+  functional"* pre-1789 (`ampuData#POST 1, 2, 5`). The registry must model each content category as
+  **era-gated on/off with explicit first-active-era metadata**, NOT a flat uniform schema across all bands
+  (corroborates the era-gated-content cluster #68/#92).
+
+> **Content-completeness signal (corroborates #206).** The authored content **terminates at Biden/2022
+> with zero future-band rows** — the authoring-side confirmation that the Future band is a true stub (see
+> §22.11). Three authoring rulings worth recording: **bills must be historically-ENACTED** (not merely
+> proposed — JQA's never-realized national-university/observatory ideas were rejected as fills, POST 20-22);
+> **carry-over events are one-shot today** and the intended fix is a **conditional follow-on Pres Action**
+> if the tagged pol is still in office (e.g. McCarthyism, POST 65); and **cabinet inheritance is an
+> unlockable Pres Action** — a player inherits the prior cabinet until a "name your own cabinet" action is
+> taken (POST 12-13). (`ampuData#POST 1, 2, 4, 5, 12-13, 20-22, 41, 65, 81`; `game-context.md` #221;
+> folded into the §30.20 index.)
+
 *(designed, not built — replace year-derived era selection with an explicit `game.eraBand`
 content-band gate advanced at a **game-state / territory boundary** (NOT `year % …`); keep the
 year predicates for phase *cadence* only; model the era as a **registry of {bills, era-events,
 draftees, bias-table}** keyed by band; gate every bill/event/draftee on **territory ownership**
-so un-owned-land content is invalid. Pairs with §2.5 (point-banking at the boundary), §26
-(the BootSheet / era-content registry), and `game-context.md` #92.)*
+so un-owned-land content is invalid; add a **scripted/flavor tier flag** + **per-category first-active-era
+metadata** to the registry (#221). Pairs with §2.5 (point-banking at the boundary), §26 (the BootSheet /
+era-content registry), §27.1.1, and `game-context.md` #92/#221.)*
 
 ### 27.2 Era-boundary machinery (the "End of Historical Era" phase)
 
@@ -12035,6 +12417,16 @@ so the **census** (which reapportions EV) drives both rep count *and* the incumb
 exception window; the **(EV−2)/5** formula and per-seat biases are the unbuilt House-election surface
 the A9 scaling wall demands the build **persist + auto-fill** across cycles.
 
+> **★ #219 (NEW, `summer2021`, batch 30) — US-Rep proportional representation: each influential/focus Rep
+> carries a SHARE of the state's REAL apportioned seat count (DESIGNED).** A second, complementary
+> abstraction to the (EV−2)/5 rule above: instead of `count = (EV−2)/5`, each influential US Rep
+> **represents `floor(stateReps / influentialReps)`** of the state's *actual* apportioned House seats —
+> e.g. **21 reps / 3 influential = 7 each**; an odd **remainder goes to the highest-Legislative** rep
+> (`summer2021#POST 59-63`). This lets the dataset's real House members carry vote weight proportional to
+> their state (ties #34/#62 US-Rep voting power, #110 legislative loop). Open Q for the build: is the focus-
+> Rep weight derived from **EV** (§29.5 / #55) or from the **real apportioned seat count** (#219)? — the
+> two formulas disagree; pick one. (`game-context.md` #219; folded into the §30.20 index.)
+
 ### 29.6 Corroborations & the era slice (1820–23)
 
 > **Mostly CORROBORATION from a 3rd start year (1820).** The 1820 start independently confirms a
@@ -13640,6 +14032,96 @@ P340-345`.)
 > tells the AI/tuning track that suffrage-never-passes is a CPU-vote-model + era-weighting problem, not
 > a bill block. Cross-ref `game-context.md` rows **#206-#213**, **DH-74/75/76**, and the reframed
 > **DH-14 / #92 / #106 / #115 / #173 / #186**.
+
+### 30.20 Rulings folded from batch 30 — the FIVE designer DESIGN/DATA/changelog threads (`revampPV` / `summer2021` / `ampuData` / `ampuUpdates` / `presidents`)
+
+> **★ Batch 30 = a 5-thread DESIGN/DATA/CHANGELOG batch — NO playtest, NO historian.** Every source is a
+> designer document, so almost every delta below is **DESIGNED, not built** (the few codebase-verified
+> facts are flagged). Tier-1 designers author all five (`@vcczar` throughout; `@MrPotatoTed` co-rules in
+> `summer2021`). The batch threads:
+> - **`revampPV`** (4266d56e, Feb 2023, 99 posts) — the **PV-system overhaul** DESIGN thread (the trait→PV
+>   tier table + the per-ability curve + the display-scale debate); **DIED UNRESOLVED on a GM handoff.**
+> - **`summer2021`** (f2aa81fd, the CHANGELOG for the batch-26 Summer-2021 run fe15db25, 249 posts) — ~50
+>   tier-1 DECIDED rulings: the **president/cabinet implementation sub-engine + ~30 governing traits**, the
+>   **Rule of Four / CJ case-refusal**, **US-Rep proportional rep**, and the **ORIGIN of the DH-76
+>   filibuster+cloture** rule.
+> - **`ampuData`** (853ce63f, 89 posts) — the **era-content registry** authoring source (the per-
+>   administration 1774→2022 content index; the K4 registry shape + scripted-vs-flavor tier).
+> - **`ampuUpdates`** (970616d5, vcczar's Apr-Jul 2021 dev changelog, 287 posts) — the **earliest GM⇒App
+>   charter doc**: Era-of-Future→2099 + the sci/tech balance hole, the full generate-a-candidate spec, and
+>   six small mechanic deltas (committees / celebrity / frail-hale / trim-roster / auto-flip).
+> - **`presidents`** (5e00ec8e, 238 posts) — a RECORD/coverage map; **no new mechanics** (confirms
+>   `summer2021` = the forum's "1772 multiplayer I"; balance topline = healthy party alternation).
+> Cite `revampPV#POST n` / `summer2021#POST n` / `ampuData#POST n` / `ampuUpdates#POST n`.
+>
+> **The headline finding (lead with this):**
+> 1. **★★ The PV-system OVERHAUL (#214/#215/#216/#220 + DH-77).** `revampPV` re-values **every trait and
+>    ability** on a fixed tier scale, explicitly superseding the shipped flat **±4/−5** trait math and the
+>    flat **`skill × weight × 4`** / **`command × 10`** skill math (`pv.ts:70-88` = pre-revamp, DH-77).
+>    Documented in full at [§3.4.1](#341--the-pv-system-overhaul--per-trait-tiers--non-linear-ability-curve--trait-remap--display-scale-new-revamppv--summer2021-batch-30-designed-the-shipped-pvts-is-at-a-pre-revamp-state--dh-77). **★ UNRESOLVED — apply as tiers + a name-remap + a fit pass, NOT literal coefficients**; the
+>    trait-EFFECT changes live in a SEPARATE un-ingested thread ("Groupthinking the Political Value").
+
+**A. NEW design holes folded into topical sections (DESIGNED unless tagged):**
+
+| Hole | Ruling / observation | Folded into | Cite |
+|---|---|---|---|
+| **★★ #214 per-trait TIERED PV table** | replaces the shipped flat ±4/−5 (`pv.ts:76-77`); vcczar POST 33 = the authoritative ~65-item tier list (25/10/7/3/−3/−7/−10, ±25 extremes); fold Kingmaker+Master-Kingmaker into the table (drop the magic `+6`) | [§3.4.1](#341--the-pv-system-overhaul--per-trait-tiers--non-linear-ability-curve--trait-remap--display-scale-new-revamppv--summer2021-batch-30-designed-the-shipped-pvts-is-at-a-pre-revamp-state--dh-77)(a) | `revampPV#POST 1, 33, 37-39, 55` |
+| **★ #215 non-linear per-ability curve** | first-point-worth-more (Command ≈25/level decreasing; Legislative 10 then +3); **Admin/Military low-floor** (Admin +10 from the 2nd point); replaces flat `skill×weight×4`/`command×10`; ties the UNRESOLVED restrict-born-Command fight | [§3.4.1](#341--the-pv-system-overhaul--per-trait-tiers--non-linear-ability-curve--trait-remap--display-scale-new-revamppv--summer2021-batch-30-designed-the-shipped-pvts-is-at-a-pre-revamp-state--dh-77)(b) | `revampPV#POST 12, 32, 35, 36, 40, 45-50` |
+| **★ #216 BLOCKING trait-name remap** | the 2023 forum trait vocabulary ≠ shipped `Trait` union (`types.ts:62-117`): ~15 forum names gone (Teflon/Lackey/Bookkeeper/…), 2 renames (Flipflopper→Flip-Flopper, Two-faced→Two-Faced), a whole shipped axis never valued — produce the old→new map BEFORE applying #214 | [§3.4.1](#341--the-pv-system-overhaul--per-trait-tiers--non-linear-ability-curve--trait-remap--display-scale-new-revamppv--summer2021-batch-30-designed-the-shipped-pvts-is-at-a-pre-revamp-state--dh-77)(c) | `revampPV#POST 33`; codebase `types.ts:62-117` |
+| **★ #220 PV display-scale UNRESOLVED** | raw ("pink", revampPV lean) vs 0-100/100-normalized (summer2021 POST 200-205); Ted's "no negative numbers" → floor-OFFSET, not the hard `Math.max(0,…)` clamp; no final vote | [§3.4.1](#341--the-pv-system-overhaul--per-trait-tiers--non-linear-ability-curve--trait-remap--display-scale-new-revamppv--summer2021-batch-30-designed-the-shipped-pvts-is-at-a-pre-revamp-state--dh-77)(d) | `revampPV#POST 16, 18, 20, 57, 66-91`; `summer2021#POST 200-205` |
+| **★ DH-77 `pv.ts` PRE-REVAMP formula** | codebase defect counterpart: flat ±4/−5 (`:76-77`), flat skill+command (`:70-74`), magic Kingmaker +6 (`:79`), `Math.max(0,…)` clamp (`:88`) that destroys sub-zero ordering the CPU needs | [§3.4.1](#341--the-pv-system-overhaul--per-trait-tiers--non-linear-ability-curve--trait-remap--display-scale-new-revamppv--summer2021-batch-30-designed-the-shipped-pvts-is-at-a-pre-revamp-state--dh-77)(DH-77 note) | codebase `pv.ts:70-88` |
+| **★ #217 president/cabinet IMPLEMENTATION sub-engine + ~30 governing traits** | post-legislation success→Blunder pass modified by expertise-gated genre traits (Bookkeeper/Numberfudger…) + Delegator/Micromanager + Crisis-{Manager,Admin,Gov} (Crisis-Admin 10/20% Lingering crisis-pull) + Passive/Predictable + Passive+Pliable PUPPET + Magician + Jurisprudence; de-dup vs Efficient/Egghead/Easily-Overwhelmed (overlap risk) | [§20.10.1](#20101--217-new-summer2021--the-presidentcabinet-implementation-sub-engine--30-governing-traits-designed-not-built) (new) + [§14.1.y](#141y--ted-ruled-pres-implementation--2-step-admin-then-command-blunder-rule-designer-authoritative-tedchange) annotation | `summer2021#POST 128, 139-156, 167-184, 239` |
+| **★ #218 Rule of Four / CJ case-refusal** | a ≥4-Judicial Chief Justice may refuse a Gov-Action state case; Rule-of-Four (4 justices) overrides; Iron-Fist CJ bypasses the override; Jurisprudence = unlimited refusals; Passive = cannot refuse | [§22.7.z](#227z--218-new-summer2021--rule-of-four--chief-justice-case-refusal-gov-action-state-cases-designed-not-built) (new) | `summer2021#POST 236-239, 170` |
+| **★ #219 US-Rep proportional representation** | each influential US Rep carries `floor(stateReps/influentialReps)` of the state's real apportioned seats (21/3 = 7 each; remainder → highest-Legislative) — enables real House figures | [§29.5](#295-the-focus-rep-house-abstraction-gap-55) annotation | `summer2021#POST 59-63` |
+| **#221 era-content registry schema fields** | (a) a scripted-vs-flavor TIER flag (flavor = post-launch); (b) per-category first-active-era metadata (Pres-Actions/SC-Cases/Gov-Actions dormant pre-1789) — two schema fields, not engine logic | [§27.1.1](#2711--221-new-ampudata-batch-30--the-era-content-registry-schema-per-administration-payload--scripted-vs-flavor-tier--per-category-era-activation-designed-two-schema-fields) (new) | `ampuData#POST 1, 2, 4, 5, 41, 81` |
+| **#222 committee size scales with state count** | Chair + Majority + Ranking-Minority (3); +1/party at 20 states, +1/party per +10 → **11 at 50 states** | [§12.2](#122-262-committee-review--runphase_2_6_2_committee-phaserunnersts3463) annotation | `ampuUpdates#POST 236` |
+| **#223 committee-chair → enthusiasm** | committee-chair selection has a **25%** chance to raise that ideology's enthusiasm (Solid-South chairs entrench their bloc) | [§12.2](#122-262-committee-review--runphase_2_6_2_committee-phaserunnersts3463) annotation | `ampuUpdates#POST 240` |
+| **#224 satisfaction-driven AUTO-FLIP** | a flippable pol has a **25%** chance to auto-flip (NO conversion attempt) when their faction's ideology-satisfaction meter is bottomed (post-1964 Southern Dems) | [§6.4.x](#64x-forum-design-layer-trait-gated-conversion-targeting-designed-not-built) annotation | `ampuUpdates#POST 226` |
+| **#225 Celebrity trait EXPIRY** | keep Celebrity only if the celeb does NOT run for office before age 40 (Herschel Walker); pairs the `summer2021` Celebrity↔Military-Leader merge + nerf (50% +1 pres, now also Gov/Sen/Rep) | [§15.1](#151-calcstatevote--the-core-resolver-phaserunnersts3685) annotation | `ampuUpdates#POST 128`; `summer2021#POST 92-98, 74-80` |
+| **#226 Frail/Hale auto-traits by lifespan** | dataset-gen rule: died <60 ⇒ Frail; lived 86+ ⇒ Hale (codebase: traits exist, granted at runtime by war/events, NO lifespan auto-pass in `scripts/`) | [§10.1.y](#101y--ted-ruled-death--retirement-schedule-designer-authoritative-tedchange) annotation | `ampuUpdates#POST 253, 254` |
+| **#227 Trim-Roster phase REMOVED** | designer cut the Trim-Roster phase → random retirements prune the roster (codebase-verified: NO Trim-Roster step in `src/`; companion = `summer2021` retirement tuning) | [§10.1.y](#101y--ted-ruled-death--retirement-schedule-designer-authoritative-tedchange) annotation | `ampuUpdates#POST 215`; `summer2021#POST 66, 174-176` |
+
+**B. ORIGIN finding (annotates an existing batch-29 row — does not duplicate):**
+
+- **★ DH-76 filibuster+cloture ORIGIN.** The cloture half DH-76 (batch 29) flagged as *missing* was
+  **FIRST AUTHORED in `summer2021#POST 98`**: cloture is invoked by the **Senate Majority Leader** to beat
+  a filibuster; **failed cloture delays the bill/package a half-term**; **one filibuster per half-term**
+  (TWO if **Efficient**; a **Puritan** may filibuster more than once if also **Disharmonious**, POST 129);
+  filibuster only by a Senate officer/committee member; both are procedure bills; Senate default = simple
+  majority. So `wilsons1916`'s *"no cloture rule exists"* is the field re-discovering that this authored
+  half was never built. Annotated at [§12.6](#126-forum-design-layer-filibuster-designed-not-built).
+
+**C. HYGIENE — do NOT present these as live (annotate, don't re-doc):**
+
+| Item | Status | Annotated at |
+|---|---|---|
+| **Winning-party lowest-faction score penalty** (top player −25% / others −10% if their party holds the lowest-scoring faction) | **ADOPTED then REVERSED** — Ted flagged a "nosedive" effect, vcczar: *"Let's not use this rule"* (`summer2021#POST 1/8 → reversed POST 10`). The §2.5/§22.2 faction-enthusiasm balance already does much of this. | logged here so the era-end point-banking docs (§2.5 / §30.16) don't reintroduce it |
+| **Randomized/Legis-weighted proposer** (replace the committee with a proposer weighted by Legislative 5×…1×, Efficient = 2 proposals, officer steal/swap) | **REJECTED** — the committee system stands (`summer2021#POST 222-235`); what was confirmed canonical is the **Legislative ladder (1=committee/2=chair/3=whip/4=leader/5=Speaker)** | [§12.6](#126-forum-design-layer-filibuster-designed-not-built) hygiene note |
+
+**D. Corroborations (annotate existing rows, do not duplicate):**
+
+| Item | What batch 30 changes | Annotated at |
+|---|---|---|
+| **★ #206 Era-of-Future** | SHARPENED from two authoring sources: `ampuUpdates` pins the span = **present→2099** + names the **science/tech-lobby balance hole** (POST 6); `ampuData` confirms the band is a **true stub at source** (content terminates at Biden/2022, zero future rows) | [§22.11](#2211-era-clock--era-enum-alt-history) |
+| **#115 generate-a-candidate** | `ampuUpdates` is the FULL spec: name-DB gender/race/religion tagging + dedup; class tiering **1/9/20/20 + ~2 Blue Chips**; generate-on-vacancy → 1 ability in the needed track → **lowest-score faction** | [§15.5(c)](#155--election-system-specs-absent-from-our-build-the-2022-reference-game-completions--the-live-d6d3-fork-completions--fixes-batch-28-not-in-our-build) |
+| **#179 cabinet lingering engine** | `summer2021#POST 168` adds the Crisis-Admin **10%/20% pull-a-meter-out-of-crisis** Lingering sub-rule on top of the §20.10 per-officer rolls | [§20.10](#2010--179-new-summer2021--the-cabinet-lingering-roll-meter-engine-designed-hand-rolled) / §20.10.1 |
+| **#159 / #92 founding gating** | `summer2021` corroborates the CC/Const-Convention machine (CC-Pres CPU 2nd-round 25/25/25/25 vote; CC = 50 pts; delegate ≥1-Legis baseline; article/capital-move menu) + the **1772 (not 1774) start** decision (POST 216-220) | §17 / §27.1 (no re-doc) |
+| **#86/#186/#187 scenario boot** | `ampuUpdates#POST 102-105`: **any presidential term 1789-2021 (+1774) is a valid start**, incumbents seated, **cabinet pre-appointed**, president just-elected — the designer's start-anywhere boot charter | [§26.1](#261-the-mid-government-boot-shape-general) (no re-doc) |
+
+> **Roadmap takeaway (for the tech-lead + roadmap-planner).** The batch-30 NEW build surface, ranked:
+> (1) **★★ the PV-system overhaul** (#214/#215/#216/#220 + DH-77) — the single most build-relevant delta:
+> replace the flat `pv.ts` math with the per-trait tier table + the non-linear ability curve, but ONLY
+> after the **#216 trait-name remap** (a hard prerequisite), and apply it as tiers + a fit pass (the exact
+> coefficients are non-final; chase the un-ingested "Groupthinking the Political Value" thread for trait
+> EFFECTS); decide the display scale (#220) and replace the hard clamp with a floor-offset. (2) **The
+> #217 president/cabinet implementation sub-engine** — a wide governing-trait layer over the cabinet/
+> lingering/blunder systems (de-dup overlap first). (3) **Legislative/judicial/apportionment additions** —
+> the DH-76 cloture mechanic (now with its authored spec), the #218 Rule-of-Four CJ gate, the #219 US-Rep
+> proportional rep. (4) **Two era-content-registry schema fields** (#221) + the **generate-a-candidate
+> spec** (#115) for non-1772/Future starts. (5) **Six small fold-ins** (#222-#227) into their home
+> systems. **Two HYGIENE flags:** the lowest-faction score penalty (ADOPTED-then-REVERSED) and the
+> randomized proposer (REJECTED) must NOT be presented as live. Cross-ref `game-context.md` rows
+> **#214-#227** + **DH-77**, and the sharpened **#206 / #115 / #179 / #92 / #86**.
 
 ### 30.4 Authority hierarchy reminder
 
