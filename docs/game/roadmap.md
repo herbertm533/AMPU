@@ -12,6 +12,108 @@
 > unchanged: **QW0 → K0/K2 → K3/K4 + `scenarioBoot`/`BootSheet` → `scenario1788`
 > (E1)**).
 
+> **★★★★ Batch-35 version — FIVE threads (1 PLAYTEST + 4 design/content/data; a CONTENT/DESIGN batch — 1 state-lean-
+> realignment brainstorm + 1 Future/Independence content call + 1 SCOTUS-docket content survey + 1 election-rules
+> review + 1 1960 playtest RESTART): `statelean` (fc461242, the event-driven state party-lean realignment brainstorm —
+> #92's TWIN; the ORIGIN of NEW **#247**) + `futureideas` (eaf5cc51, the Era-of-Future + Era-of-Independence content
+> call — the ORIGIN of the 33-value legislative-proposal `subtype` taxonomy → NEW **#248**) + `scotusfuture` (aa227625,
+> the Era-of-Future SCOTUS docket + the "Landmark Tier" case-importance model → NEW **#249** + the ~45-case Future
+> docket DATA) + `electiondisc` (5a5d988f, the election-rules review / House-seat-competition fork → NEW **#250** + the
+> NOT-yet-a-bug **DH-80**; the DESIGN-ORIGIN of **#191**) + `redbutton1960` (3c3c46f0, the RESTART of the `redbutton`
+> 1960 playtest — overwhelmingly CORROBORATING; the #186 cabinet-stat-seed PROOF + the #208/#182 CPU swing-vote/
+> Presidential-pressure subsystems). **NO new keystone, NO re-sequence, top-of-queue UNCHANGED (QW0 → K0/K2 → K3/K4 +
+> scenarioBoot → E1).** 4 NEW gap rows #247/#248/#249/#250 + 1 NEW candidate bug DH-80 (max gap #250, max bug DH-80).
+> **NO cheap-fixes-lane delta this batch** (the ±1-clamp lift at `phaseRunners.ts:2608` is a possible micro-QW but is
+> MEANINGLESS without the realignment schedule, so it RIDES #247). **The two headlines are a fold-in twin and a live
+> proof.** **The value:**
+> **(1) ★★ HEADLINE A → #247 EVENT-DRIVEN STATE-LEAN REALIGNMENT = #92's TWIN → FOLDS INTO THE K3 ERA-SYSTEM WORK
+> (debt #109; M; `GM⇒App`; NOT a standalone epic).** `State.bias` is a single STATIC scalar (`types.ts:1324`; header
+> "positive = Red lean, negative = Blue lean" `states1856.ts:3`) with **NO decade/era bias schedule and NO realignment-
+> event layer** — the only dynamics are the ~30%/term governor drift clamped ±5 (`phaseRunners.ts:3388-3389`) + a
+> region anytime-event `stateBias` effect **clamped ±1, un-time-boxed** (`:2608-2616`). Draft party-assignment is ALSO
+> static (`recordDraftPick` sets `p.partyId = faction.partyId` `:55-60`), so **landmark events CANNOT re-key incoming-
+> pol party today** (e.g. MLK should stay GOP if Taft ends Jim Crow). The canonical exhibit (1928): year-keyed bias
+> modifiers MIS-FIRE when the timeline diverges (the crash never fired in-game, yet bias swung blue → Dems
+> unrealistically swept 1930). **★ SAME CLASS as #92 (debt #5, era-as-content-band) and #241 (debt #101, year-predicate
+> replacement) — game-state-keyed, NOT year-keyed → BUILD #92/#241/#247 TOGETHER inside K3's `advanceEra` work** (an
+> era/decade base-lean schedule + an event-keyed, TIME-BOXED ≈10-yr realignment modifier by region OR the underutilized
+> `State.industries` map; lift the `:2608` clamp beyond ±1 + add expiry; make the draft pipeline read landmark-event
+> flags). The ±1-clamp lift at `:2608` is meaningless without the realignment schedule. **Supersedes the DH-34 "ship
+> static biases" stance for the alt-history aspiration (DH-34 stays the cheap fallback if balance permits); keep
+> realignment DISTINCT from the meter inputs (no double-count).** **→ Annotate the K3 era-system row as the home of
+> #247 (with #92/#241); do NOT add a standalone backlog row.** debt #109; game-mechanics §11.4.1, §15.1.
+> **(2) ★★ HEADLINE B → #186 BOOTSHEET STAT-SEED PROOF + the `cabinetStatSeed` TABLE → FOLDS INTO K4 BOOTSHEET (debt
+> #68; SHARPENS the K4/scenarioBoot spec; `GM⇒App`).** The `redbutton1960` RESTART is the cleanest LIVE PROOF a boot
+> requirement is load-bearing: the original 1960 run was STOPPED because the cabinet was seeded with STARTER-LEVEL
+> stats ("all at starter levels and it tanked all the meters since we didn't have any Cabinet members above 3", POST 1)
+> → the low-Admin officers drove the #179 lingering meter-roll into crisis at turn 1, UNPLAYABLE until the GM hand-RE-
+> STATTED the whole cabinet. VERIFIED: scenario boots pull cabinet from the hand-authored seed roster or leave the seat
+> `null` (`scenario1856.ts:127-142`) — **NO per-office/per-era stat-seed table.** **★ NEW K4 REQUIREMENT: a
+> deterministic per-office, per-era `cabinetStatSeed` table** so the sitting government boots at era-appropriate mid/
+> peak strength, not draftee starter levels (the per-era curve is an OPEN Q — the reset was eyeballed). **→ Annotate
+> the K4 `BootSheet` row (debt #68 g; §9.1.9) — folds in alongside the existing #187/DH-25/asOfYear fields; #179
+> cabinet→meter coupling re-confirmed at WHOLE-CABINET scale.** game-mechanics §28.1, §28.6.
+> **(3) ★ #248 CONTENT-PRIMITIVE `subtype` TAXONOMY → FOLDS INTO #221 (debt #110; XS-S schema add; `GM⇒App`).**
+> VERIFIED: `Legislation` carries ONLY a 4-value `committee` field (`types.ts:1513`); NO `subtype`/`category` anywhere
+> in `src/` (grep ZERO). The design = a flat 33-value policy-area enum tagging ALL FOUR #221 primitives (Legis-Prop/
+> Pres-Action/Gov-Action/SC-Case), **DISTINCT from #237 genres (a genre = the few subtypes with STATEFUL treatment;
+> genre ⊂ subtype).** A schema field, not engine logic — BUT #221 (the primitive registry it tags) is itself 0% built,
+> so this ships WITH the K4 era-content registry; it cannot land before the primitives exist. Open (human): single- vs
+> multi-valued; REPLACE vs sit-ATOP `committee`. **→ Annotate #221/K4; not a standalone row.** game-mechanics §14.1.3.a.
+> **(4) ★ #249 SCOTUS "LANDMARK TIER" + Future docket → the SCOTUS-docket epic (Phase-2 #25/E25) + a standalone DATA
+> task (debt #111; `GM⇒App`).** RE-CONFIRMED: the shipped court is a `chance(0.5)` coin-flip on **4 hardcoded title
+> strings** (`phaseRunners.ts:3397-3414`) — NO `ScotusCase` type, NO docket, NO tier, NO opinion meters (grep ZERO).
+> Two NEW layers: **(1) a per-case `tier` field** (Landmark = movement-spawn-capable → wires to #6/#354, not just a
+> meter nudge) → folds into the SCOTUS-docket epic (Phase-2 #25/E25); **(2) AMPU-2 context-dependent significance** =
+> f(drifting national opinion meters [Religious Affiliation/Fundamentalism/Luddism], same dynamic as #237) → a
+> downstream AMPU-2 add. **★ The thread also FROZE the ~45-case Era-of-Future docket DATA (= the content #25/E25
+> needs) → a STANDALONE author/DATA task gated on the future-band era** (NB batch-8 negative-scope: no future era is a
+> build target yet, so the docket data is recorded but its consumer is post-Gilded). **→ Annotate E25; add the ~45-case
+> Future docket as a DATA task in the corpus-coverage/Author-before-build area; not a near-term engine row.** game-
+> mechanics §22.7.w, §11.6.
+> **(5) ★ NEW DECISION-GATED (A) — #250 HOUSE-SEAT-COMPETITION fork = a HUMAN DESIGN PICK (debt #112; `GM⇒App`).**
+> VERIFIED: focus-Reps are a flat `representativeIds: string[]` (`types.ts:1327`) + `seatClass?:1|2|3` (`types.ts:1247`)
+> with NO seat-competition grouping / per-seat race / reapportionment-eligibility — **DISTINCT from #219 (seat SIZING)
+> + #191 (seat LEAN); this is the COMPETITION STRUCTURE.** THREE options — **(A) per-seat status-quo [informally
+> PREFERRED, unratified] / (B) free-for-all / (C) multi-member pool** — + a concrete CPU rule (CPU keeps incumbents in
+> their seat by default; a HUMAN may override; the both-incumbents-run-for-GA-1 quirk) + a seat-lock released only on
+> reapportionment (sharpens #55). **★ This is a HUMAN design pick — Decision-gated (A) User-gated, like the #52 player-
+> SCOTUS fork; nothing builds until the model is PICKED.** Then S-M, on the focus-Rep ladder (#219) + per-seat lean
+> (#191), in the House-slate/census epic (debt #20/#34/#55). **→ Decision-gated (A); sharpens #219/#55/#191.** game-
+> mechanics §29.5.1.
+> **(6) ★ #208/#182 RECONCILE — the convert-faction lever is COMMAND (this run) vs LEGISLATIVE (rulebook); a HUMAN
+> STAT FORK → folds into the CPU legislative engine (E9, after K5; debt #80, `GM⇒App`).** `redbutton1960` hands us two
+> GM-improvised CPU subsystems verbatim: **(a) a CPU MODERATE-faction SWING-VOTE model** (base 50-50 + modifiers:
+> proposing party / party-leader support / faction make-up), COMPLEMENTARY to `welcome2future`'s leader-level own-vote
+> rule — the build's CPU legislative engine should subsume BOTH; **(b) Presidential PRESSURE = roll (Command) d6 → a
+> 5-6 rerolls → result ×10 = % of a faction swayed.** **⚠ THIS USES COMMAND, vs `rulebook` §Y's "convert up to
+> (Legislative#) senators on a 5-6" which uses LEGISLATIVE — two designer-improvised forms of the same lever; the tech-
+> lead/designer must PICK the canonical stat.** Command is PV-only today (`pv.ts:74`); the exec phase is FLAT (#182
+> unbuilt; `phaseRunners.ts:3632-3645` does ONE `chance(0.5)`→`pick(actions)`). The Command-as-GATE fired LIVE too
+> (Tip O'Neill, 0 Command, barred from the 1964 primary). **→ Annotate #208/#182/E9 with the swing-vote + Presidential-
+> pressure + the Command-vs-Legislative fork; no re-size (E9 9b/9d, K5-dependent).** game-mechanics §8.5.x, §29.x.
+> **(7) ★ #191 DESIGN-ORIGIN + DH-53 + #31 sharpened; DH-80 NOT-A-BUG-YET.** `electiondisc` is the DESIGN-ORIGIN of
+> #191 (the "Kevin McCarthy problem" / `+2/+2/+1`, PREDATING `housepoll`) — a provenance note, no re-size. NEW sub-
+> items fold into existing rows: a disable-historical-lean setup toggle + a Kingmaker-D6 trivial-primary resolver
+> (#185) + lame-duck/ex-President endorsement sway (deduped vs #210). **★ DH-80 IS NOT A SHIPPED BUG TODAY** — the
+> mis-signed "Other racial" election-scorer term is a SPREADSHEET issue; there is NO race/ethnicity per-candidate
+> scorer in `src/` (grep returns only the per-race log idiom + the `demographic-*` anytime-event categories) → DH-80 is
+> a **sign-correctness CONSTRAINT for WHEN the #238/#239 demographics scorer is built (it does not exist yet).** game-
+> mechanics §15.1 (DH-80).
+> **(8) ★ GM-REPLACEMENT LENS additions (a VIEW, no re-sequence).** ① referee gains: the **event-driven state-lean
+> realignment** (#247 — the engine realigns biases off EVENTS, the work the spreadsheet GM did by hand) + the **SCOTUS
+> docket/tier** (#249 — the per-case Landmark tier + docket the GM hand-curated) + **#186-g** (the GM hand-re-statted
+> the cabinet to make the meter engine work). ② opponent gains the **CPU legislative engine** (#208/#182 — the CPU
+> swing-vote model + Presidential-pressure roll the GM improvised). Lens stays a VIEW; adding pointers re-sequenced
+> nothing.
+> **(9) ★ HYGIENE / CORPUS-COVERAGE.** `redbutton1960` extends the 1960 boot (the `redbutton`/8bc0231c restart);
+> **1840-start RECONFIRMED the top still-needed** un-ingested run; **1868-Bushwa** carried from batch 34. **NO gap
+> closed (4 NEW gaps, 0 closed), NO new keystone, NO re-sequence, top-of-queue UNCHANGED (QW0 → K0/K2 → K3/K4 +
+> scenarioBoot → E1) — NO cheap-fixes-lane delta this batch. Within-batch order: #247 + #186-g (fold into K3/K4 — the
+> two headlines) → #248 → #249 + the Future-docket DATA → #208/#182 (E9, after K5) → #250 (Decision-gated, awaits the
+> human pick).** debt #109-#112; technical-guide §9 batch-35 lead + §9.6 + §8 debt #109-#112; game-mechanics §11.4.1,
+> §14.1.3.a, §22.7.w, §29.5.1, §28.1, §15.1.
+>
 > **★★★★ Batch-34 version — FIVE DESIGN/DATA/RECORD threads, NO playtest (a WAR/DATA/RECORD batch — 1 war-system
 > redesign + 2 dataset-authoring rosters + 1 highlights-record feed + 1 era-start interest-poll): `rethinkwar`
 > (0fd0f2e5, "Rethinking how war works" — the War-Score model design-origin frozen as **#45** + the naval-as-land-
@@ -2436,6 +2538,52 @@ Reverse-chronological. The expertise/abilities/traits/cabinet/lobby epic (PR1–
 is complete; the knowledge-base infra and eight ingestion batches are knowledge
 milestones (no code, but they are what every item below is traced to).
 
+- **Batch-35 ingestion (knowledge milestone — FIVE threads, 1 PLAYTEST + 4 design/content/data; a CONTENT/DESIGN
+  batch).** Absorbed **`statelean`** (fc461242, the event-driven state party-lean realignment brainstorm — #92's TWIN;
+  **ORIGIN of NEW #247**, folds into K3 with #92/#241), **`futureideas`** (eaf5cc51, the Era-of-Future + Era-of-
+  Independence content call — **ORIGIN of NEW #248** the 33-value legislative-proposal `subtype` taxonomy, folds into
+  #221/K4), **`scotusfuture`** (aa227625, the Era-of-Future SCOTUS docket + the "Landmark Tier" case-importance model —
+  **ORIGIN of NEW #249** + the ~45-case Future docket DATA, → Phase-2 #25/E25), **`electiondisc`** (5a5d988f, the
+  election-rules review / House-seat-competition fork — **ORIGIN of NEW #250** + the NOT-yet-a-bug **DH-80**; the
+  DESIGN-ORIGIN of #191), **`redbutton1960`** (3c3c46f0, the RESTART of the `redbutton`/8bc0231c 1960 playtest —
+  overwhelmingly CORROBORATING; the #186 cabinet-stat-seed PROOF + the #208/#182 CPU subsystems). **4 NEW gap rows
+  #247/#248/#249/#250 + 1 NEW candidate bug DH-80** (max gap #250, max bug DH-80). **★★ HEADLINE A → #247 EVENT-DRIVEN
+  STATE-LEAN REALIGNMENT = #92's TWIN → FOLDS INTO K3's `advanceEra` work (debt #109; M; `GM⇒App`; NOT a standalone
+  epic).** `State.bias` is a single STATIC scalar (`types.ts:1324`) with NO era bias schedule and NO realignment-event
+  layer; the region anytime-event effect is clamped ±1 un-time-boxed (`phaseRunners.ts:2608-2616`) and draft party-
+  assignment is static (`:55-60`) → landmark events can't re-key incoming-pol party (MLK should stay GOP if Taft ends
+  Jim Crow). The 1928 exhibit: year-keyed modifiers mis-fire when the timeline diverges. **★ SAME CLASS as #92 (debt #5)
+  + #241 (debt #101) — game-state-keyed, NOT year-keyed → BUILD #92/#241/#247 TOGETHER; the ±1-clamp lift at `:2608` is
+  meaningless without the realignment schedule.** Supersedes DH-34's static-bias stance for alt-history (DH-34 stays the
+  cheap fallback). **★★ HEADLINE B → #186 BOOTSHEET STAT-SEED PROOF + the `cabinetStatSeed` TABLE → FOLDS INTO K4
+  (debt #68; `GM⇒App`).** The `redbutton1960` RESTART is the cleanest LIVE PROOF a boot requirement is load-bearing:
+  the original 1960 run was STOPPED because a STARTER-STAT cabinet tanked the meters at turn 1 (POST 1), UNPLAYABLE
+  until the GM hand-re-statted it; VERIFIED no per-office/per-era stat-seed table (`scenario1856.ts:127-142`). **NEW K4
+  REQUIREMENT: a deterministic per-office, per-era `cabinetStatSeed` table** (folds into the `BootSheet` schema, debt
+  #68 g; §9.1.9). **★ #248 CONTENT-PRIMITIVE `subtype` TAXONOMY** (XS-S schema add, → #221/K4; debt #110; `GM⇒App`): a
+  flat 33-value policy-area enum tagging ALL FOUR #221 primitives, DISTINCT from #237 genres (genre ⊂ subtype); ships
+  WITH #221 (0% built today, grep ZERO). **★ #249 SCOTUS "LANDMARK TIER" + Future docket** (→ Phase-2 #25/E25 + a
+  standalone DATA task; debt #111; `GM⇒App`): a per-case `tier` field (Landmark = movement-spawn-capable, wires #6/#354)
+  → E25; AMPU-2 context-meter significance → downstream; the ~45-case Future docket = a STANDALONE author/DATA task
+  gated on the future-band era (NB batch-8: no future era is a build target yet). Shipped court = a coin-flip on 4
+  strings (`phaseRunners.ts:3397`), 0% built. **★ #250 HOUSE-SEAT-COMPETITION fork → Decision-gated (A) User-gated**
+  (debt #112; `GM⇒App`): focus-Reps are a flat `representativeIds: string[]` (`types.ts:1327`) with NO seat-competition
+  grouping — DISTINCT from #219 (SIZING) + #191 (LEAN); the COMPETITION STRUCTURE = a HUMAN pick among (A) per-seat
+  status-quo [preferred] / (B) free-for-all / (C) multi-member pool, + a CPU-keeps-incumbents rule; sharpens #219/#55/
+  #191; nothing builds until PICKED. **★ #208/#182 RECONCILE** (→ E9, after K5; debt #80; `GM⇒App`): a CPU MODERATE
+  swing-vote model + Presidential PRESSURE = roll (Command) d6 → 5-6 rerolls → ×10 = % swayed; **⚠ this uses COMMAND vs
+  `rulebook`'s convert-(Legislative#)-senators which uses LEGISLATIVE — a HUMAN stat fork the designer must pick.** **★
+  #191 design-origin** = `electiondisc` (the "Kevin McCarthy problem", predating `housepoll`) + DH-53/#185/#210 sub-
+  items fold into existing rows. **★ DH-80 IS NOT A SHIPPED BUG TODAY** — a constraint on the unbuilt #238/#239
+  demographics scorer (no race scorer in `src/`; grep ZERO). **★ GM-REPLACEMENT LENS additions** (a VIEW, no re-
+  sequence): ① referee gains the event-driven realignment (#247) + the SCOTUS docket/tier (#249) + #186-g (the GM hand-
+  re-statted the cabinet); ② opponent gains the CPU legislative engine (#208/#182 swing-vote + Presidential-pressure).
+  **★ CORPUS-COVERAGE: `redbutton1960` extends the 1960 boot; 1840-start RECONFIRMED top still-needed; 1868-Bushwa
+  carried.** **NO gap closed (4 NEW gaps, 0 closed), NO new keystone, NO re-sequence, top-of-queue UNCHANGED (QW0 →
+  K0/K2 → K3/K4 + scenarioBoot → E1) — NO cheap-fixes-lane delta this batch (the `:2608` micro-QW rides #247).
+  Within-batch order: #247 + #186-g (fold into K3/K4) → #248 → #249 + Future-docket DATA → #208/#182 (E9) → #250
+  (Decision-gated).** debt #109-#112; technical-guide §9 batch-35 lead + §9.6 + §8 debt #109-#112; game-mechanics
+  §11.4.1, §14.1.3.a, §22.7.w, §29.5.1, §28.1, §15.1.
 - **Batch-34 ingestion (knowledge milestone — FIVE DESIGN/DATA/RECORD threads, NO playtest; a WAR/DATA/RECORD
   batch).** Absorbed **`rethinkwar`** (0fd0f2e5, "Rethinking how war works" — the War-Score model design-origin
   frozen as **#45** + the naval-as-land-DIFFICULTY-modifier sub-design; **ORIGIN of NEW bug DH-79**), **`kiaofficers`**
@@ -4138,6 +4286,31 @@ owns that surface — **adding a lens pointer never re-sequences the backlog.**
 > ">30 min/phase ⇒ automate" budget the batch-33 lens recorded directly motivates the war-engine automation** (the
 > GM's hand-rolled battle/casualty math is exactly the kind of per-phase arithmetic that budget targets). **Adding
 > these pointers re-sequenced nothing — top of queue is unchanged (QW0 → K0/K2 → K3/K4 + scenarioBoot → E1).**
+
+> **★ Batch-35 adds an EVENT-DRIVEN-REALIGNMENT + SCOTUS-DOCKET referee row to ① and a CPU-LEGISLATIVE-ENGINE opponent
+> row to ② — still a VIEW, no re-sequence.** The new ① referee/calculator pointers: **event-driven state-lean
+> realignment (#247)** — the engine must re-lean state biases off SCRIPTED EVENTS (and re-key incoming-pol party
+> assignment) instead of a year/era tab, exactly the work the spreadsheet GM did by hand (the 1928 exhibit: year-keyed
+> modifiers mis-fired when the timeline diverged); it is #92's TWIN (game-state-keyed, not year-keyed) and **folds into
+> the SAME K3 era-system row as #92/#241** (the "Scenario boot" + era rows above already carry it — annotate, do not
+> re-sequence) — the ±1-clamp lift at `phaseRunners.ts:2608` is meaningless without the realignment schedule, so it
+> rides #247; and the **SCOTUS docket/tier (#249)** — the per-case "Landmark Tier" (movement-spawn-capable, wires
+> #6/#354) + the ~45-case Future docket DATA the GM hand-curated, folding into the SCOTUS-docket epic (Phase-2 #25/E25;
+> the shipped court is a coin-flip on 4 strings, `phaseRunners.ts:3397`). A sharpening of the **boot row**: **#186-g**
+> the per-office/per-era `cabinetStatSeed` table — the `redbutton1960` RESTART is the cleanest LIVE PROOF the GM hand-
+> re-statted the cabinet to make the #179 meter engine work (a starter-stat cabinet tanked the meters at turn 1); it
+> folds into the K4 BootSheet. On the ② opponent half the new entry is the **CPU legislative engine** (#208/#182): the
+> `redbutton1960` GM improvised a CPU MODERATE swing-vote model (base 50-50 + proposing-party / party-leader-support /
+> faction-makeup modifiers) + a Presidential PRESSURE roll (roll Command d6 → 5-6 rerolls → ×10 = % of a faction
+> swayed) — both fold into the E9 CPU legislative engine (after K5), **with a HUMAN stat fork flagged: the convert-
+> faction lever uses COMMAND in this run vs LEGISLATIVE in `rulebook` §Y** (the designer must pick the canonical stat).
+> **★ #248** (the content-primitive `subtype` taxonomy) is the ① REFEREE half of the #221 content registry (a typed
+> tagging axis on the action pool the GM hand-curated; genre ⊂ subtype); **DH-80** is recorded as a ① CONSTRAINT-not-a-
+> bug (a sign-correctness rule for the still-unbuilt #238/#239 demographics scorer). The HUMAN-left items this batch
+> are NOT lens entries: **#250** (the A/B/C House-seat-competition pick) → Decision-gated (A); the #208/#182 Command-vs-
+> Legislative stat choice; and #249's context-meter design — every one is a `GM⇒App` automation requirement logged
+> against an existing gap-log row. **Adding these pointers re-sequenced nothing — top of queue is unchanged (QW0 →
+> K0/K2 → K3/K4 + scenarioBoot → E1).**
 
 ---
 
@@ -5971,6 +6144,22 @@ Distinct from "Roadmap decisions" below, which are tech-lead/planner calls alrea
   (Phase-1 fold-ins); only the TIER MODEL waits here. Folds into #240 (the roster) / #194 (dynasties) /
   #216 (the Army-rename + novel traits) / #220 (PV effects) once chosen. — #246/N1 (`strongnevernom`;
   debt #108; `seedDataset.mjs:239-242` sub-floor rule → DATA half = #240, tier model gated).
+- **★ NEW (batch 35) — #250 HOUSE-SEAT-COMPETITION MODEL: per-seat status-quo (A) vs free-for-all (B) vs
+  multi-member pool (C) (DECISION-GATED, debt #112).** `electiondisc` (MrPotatoTed-led, vcczar deferred-not-ruling)
+  opens the House-seat-COMPETITION fork — **distinct from #219 (seat SIZING / the EV-derived focus-Rep ladder) and
+  #191 (seat LEAN / the per-seat deviant bias): this is the COMPETITION STRUCTURE** (how candidates contest a given
+  Focus-Rep seat). VERIFIED: focus-Reps are a flat `representativeIds: string[]` (`types.ts:1327`) + `seatClass?:1|2|3`
+  (`types.ts:1247`) with **NO seat-competition grouping / per-seat race / reapportionment-eligibility.** THREE live
+  models: **(A) per-seat status-quo** — each Focus-Rep seat is a separate race where the incumbent runs by default
+  (informally PREFERRED in-thread, but UNRATIFIED); **(B) free-for-all** — all of a state's Focus-Rep candidates run in
+  one undifferentiated pool; **(C) multi-member pool** — a state's seats are filled from a ranked pool. A concrete CPU
+  rule is attached (the CPU keeps its incumbents in their seat by default; a HUMAN may override; the both-incumbents-
+  run-for-GA-1 quirk) and a seat-lock released only on reapportionment (which sharpens #55). **★ A HUMAN must pick the
+  canonical competition model — like the #52 player-SCOTUS fork, nothing builds until it is PICKED.** Once chosen it is
+  S-M, building on the #219 focus-Rep ladder + the #191 per-seat lean, inside the House-slate/census epic (debt
+  #20/#34/#55). `electiondisc` is ALSO the DESIGN-ORIGIN of #191 (the "Kevin McCarthy problem" / `+2/+2/+1`, predating
+  `housepoll`) — a provenance note, not a re-size. — #250 (`electiondisc`; debt #112; `types.ts:1327`/`:1247` →
+  House-slate/census epic once picked; sharpens #219/#55/#191; game-mechanics §29.5.1).
 
 #### (B) Designer-gated (Ted/vcczar must close — NEW batch-12)
 
@@ -6236,7 +6425,8 @@ row (often as an XS-S addition to an existing epic).
 
 ## Sequencing notes
 
-Why the order is what it is — the tech-lead's binding calls (§9 batch-34 lead +
+Why the order is what it is — the tech-lead's binding calls (§9 batch-35 lead +
+§9.6 batch-35 + §8 debt #109-#112 + §9 batch-34 lead +
 §9.6 batch-34 + §8 debt #104-#108 + §9 batch-33 lead +
 §9.6 batch-33 + §8 debt #101-#103 + updated #85/#87/#73 + §9 batch-32 lead +
 §9.6 batch-32 + §8 debt #97-#100 + §9 batch-31 lead +
@@ -6252,7 +6442,30 @@ Why the order is what it is — the tech-lead's binding calls (§9 batch-34 lead
 §9.1.10 gilded-era content epic + §9 batch-13 lead +
 §6.6.1 batch-13 + §9.6 batch-13 + §9.1.3 methodology + §9 batch-12 lead +
 §9.6 batch-12 + §9 batch-11 lead + §9 batch-10 lead + §9.1.9 + §9 batch-9 lead +
-§9.1.5 + §9.1.8 + §9.1.3 + §9.6 + §9.1.6 + §9.1.7). **★ Batch 34
+§9.1.5 + §9.1.8 + §9.1.3 + §9.6 + §9.1.6 + §9.1.7). **★ Batch 35
+(`statelean`/`futureideas`/`scotusfuture`/`electiondisc`/`redbutton1960`) is a CONTENT/DESIGN
+batch (1 playtest RESTART + 4 design/content/data) whose binding sequencing call is a SET OF
+FOLD-INS, not a re-sequence: the two headlines BOTH fold into existing keystones. **#247 event-
+driven state-lean realignment is #92's TWIN — game-state-keyed, NOT year-keyed — so it FOLDS INTO
+the K3 era-system work and is BUILT TOGETHER with #92/#241** (the year-predicate replacement); it
+is NOT a standalone epic, and the ±1-clamp lift at `phaseRunners.ts:2608` is meaningless without
+the realignment schedule (so there is NO cheap-fixes-lane delta this batch — the micro-QW rides
+#247). **#186-g the per-office/per-era `cabinetStatSeed` table FOLDS INTO the K4 BootSheet** (the
+`redbutton1960` RESTART is the cleanest live proof a boot requirement is load-bearing — a starter-
+stat cabinet tanked the meters at turn 1). The rest fold cleanly: **#248** the 33-value `subtype`
+taxonomy → #221 (genre ⊂ subtype; ships WITH the K4 era-content registry, 0% built); **#249** the
+SCOTUS "Landmark Tier" → the SCOTUS-docket epic (Phase-2 #25/E25) + the ~45-case Future docket as a
+STANDALONE author/DATA task (gated on the future-band era — NB batch-8: no future era is a build
+target yet); **#208/#182** the CPU MODERATE swing-vote model + Presidential-pressure roll → the CPU
+legislative engine (E9, after K5), carrying a HUMAN STAT FORK (the convert-faction lever is COMMAND
+in this run vs LEGISLATIVE in `rulebook` §Y — the designer must pick). The ONLY new HUMAN call is
+**#250 the House-seat-COMPETITION fork (A per-seat status-quo [preferred] / B free-for-all / C
+multi-member pool) → Decision-gated (A)** (distinct from #219 SIZING + #191 LEAN; sharpens
+#219/#55/#191). **#191's design-origin** is recorded (`electiondisc`, predating `housepoll`) and
+**DH-80 is NOT-a-bug-yet** (a sign-correctness constraint on the unbuilt #238/#239 demographics
+scorer). NO gap closed (4 NEW gaps), NO new keystone, NO re-sequence; top-of-queue UNCHANGED (QW0 →
+K0/K2 → K3/K4 + scenarioBoot → E1). Within-batch order: #247 + #186-g (fold into K3/K4) → #248 →
+#249 + the Future-docket DATA → #208/#182 (E9) → #250 (Decision-gated). debt #109-#112.** **★ Batch 34
 (`rethinkwar`/`kiaofficers`/`strongnevernom`/`majorevents`/`newplaytest`) is a WAR/DATA/RECORD
 batch — its single binding sequencing call is a SPLIT of the war work into two speeds: the
 DH-79 naval bug is a QUICK-WIN NOW (QW25, cheap-fixes lane — the #45-aligned naval-as-land-

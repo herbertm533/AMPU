@@ -359,6 +359,7 @@
       - [30.22.D — Sharpenings + corroborations](#3022d--sharpenings--corroborations-annotate-existing-rows-do-not-re-doc-as-live)
     - [30.23 Rulings folded from batch 33 — the FIVE design/discussion/build threads (`groupthinkpv` / `legisexecgov` / `ampuelections` / `housepoll` / `excelautomate`)](#3023-rulings-folded-from-batch-33--the-five-designdiscussionbuild-threads-that-delivered-long-flagged-gating-items-groupthinkpv--legisexecgov--ampuelections--housepoll--excelautomate)
     - [30.24 Rulings folded from batch 34 — the FIVE war/data/record threads (the #45 War-Score DESIGN ORIGIN + DH-79) (`rethinkwar` / `kiaofficers` / `strongnevernom` / `majorevents` / `newplaytest`)](#3024-rulings-folded-from-batch-34--the-five-wardatarecord-threads-the-45-war-score-design-origin--dh-79-rethinkwar--kiaofficers--strongnevernom--majorevents--newplaytest)
+    - [30.25 Rulings folded from batch 35 — the FIVE content/design/playtest threads (#247 event-state-lean + #248 subtype-taxonomy + the 1960-restart #186 PROOF + #249/#250/DH-80) (`statelean` / `futureideas` / `scotusfuture` / `electiondisc` / `redbutton1960`)](#3025-rulings-folded-from-batch-35--the-five-contentdesignplaytest-threads-247-event-state-lean--248-subtype-taxonomy--the-1960-restart-186-proof--249250dh-80-statelean--futureideas--scotusfuture--electiondisc--redbutton1960)
     - [30.4 Authority hierarchy reminder](#304-authority-hierarchy-reminder)
 31. [Gilded-Age era systems (designed, not built)](#31-gilded-age-era-systems-designed-not-built)
     - [31.1 (#147) Tariff-as-national-%-rate + the mutually-exclusive MonetaryRegime](#311-147-tariff-as-national-rate--the-mutually-exclusive-monetaryregime-designed)
@@ -3466,6 +3467,100 @@ interface State {
 > Natural Gas**, and industry leadership shifts **per-region** via era events ("Manufacturing
 > −2 in the Midwest", post 1224).
 
+#### 11.4.1 ★ #247 (NEW, `statelean`, batch 35) — event-driven state party-lean REALIGNMENT (the state-lean / realignment projection of #92) (DESIGNED, not built)
+
+> **★ #92's TWIN on the state-lean / party-realignment axis.** A state's base partisan lean
+> (`State.bias`, the ×5 election lever in `calcStateVote`, [§15.1](#151-calcstatevote--the-core-resolver-phaserunnersts3685))
+> must move when the **causal game-state EVENT** fires — NOT when the wall clock reaches the
+> historical date / era flips. **Same class of finding as [#92](#271--the-era-model--eras-are-content-bands-gated-by-game-state--territory-not-calendar-year)** (eras = content bands gated by
+> game-state, not `year %`), here applied to the **base-bias table** rather than the bill/event/draft
+> bands. The forum implementation discussed is the **Excel census doc** (the spreadsheet game), which
+> already moved its bias sets **off era-keyed to decade-keyed** but still pins them to the calendar —
+> the bug. Source: `statelean` (the brainstorm thread; NOT a playthrough). 0% built as a *schedule*
+> (the build has only the static scalar + a small region event-effect below).
+
+**The canonical exhibit (the 1928 bug, `statelean#POST 2/10/15`).** In the 1928 playtest the **market
+crash did NOT fire in-game** (it's a scripted/anytime event on a chance roll — `POST 12`: "Right now
+it's a 50% chance"), so going into the **1930 midterms** the economy/quality meters were *good*. **But**
+the "historical era tab → party modifiers" still moved most states **heavily blue / less red** — as if
+the Depression had happened — because those modifiers are **pinned to the year/era, not to the event.**
+Result: **Democrats unrealistically swept the 1930 midterms** ("almost a red supermajority to blue
+taking control of congress", `POST 10`) despite a good economy → an **ahistorical-for-THIS-timeline**
+outcome. The fix: **tie each era's bias shift to a specific scripted EVENT** (one scripted to fire early
+in the era), not to the calendar flip.
+
+**Two layers MUST be kept distinct (`statelean#POST 5/6/7/15`):**
+| Layer | Already dynamic? | Role |
+|---|---|---|
+| **Meters** (national QoL/econ + the midterm −1-to-incumbents + the maxed-enthusiasm bonus) | YES — drive nation-wide incumbent punishment / ideology swings already | NOT the bug; do NOT also key bias off meters (that would **double-count** / "stack those effects", `POST 6`) |
+| **State base lean / bias** (`State.bias`) | NO realignment schedule | The bug — "it's the **base lean** that needs a reason" (`POST 15`); without the Depression event there is "nothing to justify the state leans moving to their decade set points" |
+
+**The design fork (UNRESOLVED — "play it out in the 1840 playtest", `POST 11/24/28`):**
+1. **Multiple bias SETS per decade** — 3-or-5 (odd) state-lean sets/decade; an event field reads "Switch
+   to State Bias Set N Until Overwritten" (`POST 6`). **Self-rejected** (`POST 25`): sets are "completely
+   arbitrary" and switching is "too complicated to model unless we... completely rewrite the game."
+2. **Industry-keyed time-boxed event modifier (the PREFERRED, "more elegant", `POST 11/16/19/20`)** — keep
+   ONE base-lean set; an event applies a **time-boxed modifier** ("+1 blue for 10 years to all
+   **agriculture-leading** states the moment the event fires"). The **bias shift comes from the event**;
+   the **industry only SELECTS which states** are hit at that moment — a modifier **ON TOP of the decade
+   core**, not a replacement (`POST 19/20`). Precedent: election losers already carry a temporary −1 for
+   6 yrs. **Leverages the underutilized Industry system** (`State.industries`). OPEN: which industries
+   shift a state Right vs Left (`POST 16`, undetermined).
+3. **Force the Depression to auto-fire 1928–30** (`POST 12`) — **REJECTED** (railroads history; misses
+   the point — in the 1840 playtest "the Depression isn't for 60 years").
+4. **Remove historical bias entirely** (start from start-date-accurate bias; let meters/Gov-actions/
+   industry carry it, `POST 17/18`) — counter (`POST 18/26`): this **DESYNCS hard-coded politician party
+   assignments** (a "red California / blue Idaho" modern map would mismatch the parties pols are imported
+   with). The static-party-assignment coupling is a **real cross-system constraint** (see below).
+
+**★ Sub-finding — landmark events re-key BOTH regional lean AND incoming-pol party-assignment
+(`statelean#POST 30/32/33`).** A handful of **counterfactual** milestones must SUPERSEDE era/state biases
+on two axes at once:
+- **Regional realignment (macro):** e.g. if a Red President (Taft) **ends Jim Crow by executive action in
+  1953**, the **South does NOT flip red in '64/'72** (it shows a stronger, prolonged anti-Red reaction)
+  and diverse states (NY/IL) lean MORE Red. The bias swing must reward the party that ACTUALLY held office
+  in the playtest, not the one history says (`POST 34`: today, if the Depression fired with a Democrat as
+  President, biases still swing blue and the D party reaps the era's election bonuses — wrong).
+- **Incoming-pol / party-switch assignment (micro):** **MLK** (a Republican in '53, who party-switched to
+  D in '60 irl) would **STAY Republican** after the GOP ended Jim Crow — so the **draft / party-assignment
+  pipeline must be reactive to game events**, not pinned to real-history dates.
+- **Proof-of-concept already validated:** the census doc **ALREADY differentiates bias for
+  "Reconstruction going strong" vs. "Hayes ended it"** and it "has generally worked well" (`POST 32/33`) —
+  at least one event-driven (sub-era) bias shift exists; the concrete model for the event-keyed approach.
+
+**Shipped reality (verified — the build is BEHIND the spreadsheet on this axis):**
+- **`State.bias` is a single STATIC scalar**, hand-set per state ("positive = Red lean, negative = Blue
+  lean"; e.g. SC −2.4, VT 1.6, `states1856.ts`). There is **NO decade bias set, NO era party-modifier
+  table, NO per-year/per-era bias schedule** — so the **exact 1928 bug cannot occur** (no year-keyed table
+  to mis-fire), **but the converse gap is worse: there is essentially NO cross-era realignment of state
+  lean at all.**
+- **Three small in-game-dynamic bias nudges DO exist (and they ARE event/state-driven, i.e. on-thesis):**
+  - **Governor drift** — `runPhase_2_5_2_Governors` ([§11.2](#112-252-governor-actions--runphase_2_5_2_governors-phaserunnersts3382)):
+    ~30%/term a governor nudges home-state `bias` by `(governing−1)×0.05` toward their party (clamped ±5).
+  - **★ The region anytime-event `stateBias` effect** (`phaseRunners.ts:2608-2614`): an event shifts `bias`
+    by `eff.amount` for states in named `regions` — **clamped to ±1**. This is the **closest existing
+    primitive to OrangeP47's "event applies a regional/industry modifier" idea** — but it is **region-keyed,
+    not industry-keyed**, appears **permanent / un-time-boxed** (no 10-yr expiry), and the **±1 clamp makes
+    it a nudge, not a realignment**.
+  - `bias` also feeds **politician ideology drift** (`phaseRunners.ts:903-906`, `stateBias` kind) and the
+    **`baseLean` ×5 on-ballot term** (`calcStateVote`: `partyId==='BLUE' ? -state.bias : state.bias`,
+    [§15.1](#151-calcstatevote--the-core-resolver-phaserunnersts3685)) — so `bias` is genuinely the
+    state-lean lever; changing how it evolves directly moves elections.
+- **NO event→bias-SET switching, NO industry-keyed realignment, NO decade census-set rotation, NO
+  Reconstruction-style sub-era bias differentiation** in the engine. The "set points / era tab / census
+  doc" layer is **wholly unbuilt** in the browser game.
+
+*(designed, not built — when this ships, **build it EVENT-keyed from the start** (per #92): a state's
+`bias` realignment must trigger on the **causal game-state event** (the Depression scripted event, a
+landmark exec action), NOT a hardcoded year/era tab. Leading shape = an **industry-keyed time-boxed
+event modifier** layered on a decade/start-date base (some shifts stay gradual/decade-keyed by design);
+**keep it distinct from the meter layer** to avoid double-counting; couple landmark events to BOTH the
+regional realignment AND the **draft/party-assignment pipeline** (MLK stays GOP); respect the
+static-historical-party-assignment cross-constraint. Today: a static `bias` + the ±1-clamped region
+event-effect (`phaseRunners.ts:2608`) + governor/ideology drifts — no realignment schedule. Cite
+`statelean#POST 2, 5, 6, 7, 11, 15, 16, 19, 20, 25, 30, 32, 33, 34`; codebase `phaseRunners.ts:2608-2614,
+903-906`, `states1856.ts`; `game-context.md` #247; CORROBORATES #92/#108/#205/#241/#20.)*
+
 ### 11.5 Industry leadership scoring (designed, not built)
 
 A per-half-term scoreboard ranks each state's `industries` and awards points to the
@@ -3481,6 +3576,32 @@ A per-half-term scoreboard ranks each state's `industries` and awards points to 
 
 Couples to the scoring leaderboard (`Faction` totals). *(designed, not built — add
 end-of-half-term industry-leadership tally tied to `State.industries`.)*
+
+> **★ Per-BILL geographic-scoring lever corroborated (`redbutton1960`, batch 35; DH-53).** The
+> end-of-half-term industry-leadership tally above is the *standing* version; a single BILL can carry the
+> same geographic→points lever. Verbatim (`redbutton1960#POST 17-18`): the **Farm Subsidy bill = +100 pts
+> to EVERY Gov, Senator, and Rep from states where agriculture is king** — *"Those points made half of some
+> faction totals, and turned a few negatives into positives."* A single bill swung whole faction standings
+> (paired with a companion "tax farm-equipment producers to pay for it" bill, both passed). This is a
+> concrete **per-bill effect TABLE** the app must own (an officeholder-from-an-{industry}-leading-state →
+> +N-points effect), the kind of geographic per-bill effect **DH-53** says is missing/illogical in the
+> shipped bill set. It feeds **legislation → per-faction point deltas → disgruntled-flip pressure**
+> (#15/#108): in the same session conservative/Southern bills enriched the right-leaning factions and
+> **punished the left** (the disgruntled-ideology +2 trigger fired — "the liberals are not so happy… (+2
+> red)"). *(designed, not built — author per-bill geographic effect tables (officeholder-from-{leading-
+> industry}-state → +N pts), sign-checked per DH-53; couples to §11.5's standing industry tally + the
+> #15/#108 ideology-flip pressure. Cite `redbutton1960#POST 17-18`; `game-context.md` DH-53/#208/#15.)*
+
+> **★ Circuit-court +1-Judicial appointment sub-mechanic (`redbutton1960`, batch 35; ties #52).** A bill
+> *"to fill vacant judges on circuit courts"* resolves (`redbutton1960#POST 13, 20`) as: the **President
+> fills some vacancies — 1 per faction in his party, all selected by a RANDOM roll** — and each appointee's
+> **Judicial stat +1** (e.g. 2→3, 3→4), explicitly *"set[ting] up 2 of them for possible appointments to
+> the Supreme Court in later years."* A small **roster-development affordance** (a +1-stat / future-Justice
+> pipeline), not a power lever — to capture alongside the SCOTUS subsystem
+> ([§22.7](#227-scotus-subsystem-253--282) / #52) and the appointment phases. Hand-rolled here; 0% built.
+> *(designed, not built — a circuit-court fill bill: President fills 1 vacancy per same-party faction by
+> random roll, each appointee gets Judicial +1 (a SCOTUS-feeder roster lever). Cite `redbutton1960#POST 13,
+> 20`; `game-context.md` #52.)*
 
 > **★ Governor industry-boost now REQUIRES matching EXPERTISE (NEW Ted house rule ADOPTED, `ted1772#POST
 > 252`).** A governor's "improve industry" Gov action can only boost industries his **expertise maps to**
@@ -4442,12 +4563,59 @@ the existing `loseCommand` (`abilities.ts:15`). Slot it at the presidential-year
 > primitives. Both layer ON #221. The Era-of-Future band is the thinnest (Future Gov + Exec actions NEEDED,
 > Future legislation LOW priority, POST 1 items 6-8) — directly corroborates #206 (Future doubly-unbuilt).
 >
+##### 14.1.3.a ★ #248 (NEW, `futureideas`, batch 35) — the legislative-proposal `subtype` (policy-area) taxonomy: a 33-value enum on ALL FOUR primitives (DESIGNED, 0% shipped)
+
+> **★ A finer-grained classification axis on the #221 primitives.** vcczar opens a content-collection
+> call for the two high-need eras (Era-of-Future + Era-of-Independence) and frames it with a
+> **legislative-proposal SUBTYPE taxonomy** — explicitly *"Use these to consider ideas for legislative
+> proposals, governor actions, presidential actions, and supreme court cases"* (`futureideas#POST 1`).
+> So the **SAME category axis spans all four content primitives** (Legis-Prop / Pres-Action / Gov-Action /
+> **SC-Case**, [§22.7](#227-scotus-subsystem-253--282)), not just bills. Source: `futureideas`
+> (a #221 content-authoring source; NOT a playthrough; posts 20-35 drift off-topic).
+
+**The canonical 33-value `subtype` enum (verbatim, `futureideas#POST 1`):**
+`Agriculture · Bailout · Banking · Business/Labor · Civil Rights · Civil Service · Credit/Debt ·
+Crimes/Punishments · Currency · Diplomacy · Drugs · Education · Elections · Environment · Expansion ·
+Guns · Healthcare · Immigration · Infrastructure · Investigation · Military · National Security · Courts ·
+Procedure · Reconstruction · Regulations · Slavery · Space · Taxation · Trade · Warfare · Welfare`
+(some subtypes are clearly **era-specific** — Slavery/Reconstruction → 1856/Reconstruction; Space → Future).
+
+**`subtype` ≠ #237 GENRE (genre ⊂ subtype) — two distinct concepts:**
+| Concept | What it is | Examples |
+|---|---|---|
+| **#248 SUBTYPE** | a **flat classification / tagging** axis over individual content items (one of 33 filing categories) | Slavery, Space, Guns, Diplomacy — most are plain one-shot Legis-Props/Pres-Actions just *tagged* with the subtype |
+| **#237 GENRE** ([§30.22.B](#3022b--237--the-stateful-policy-genre-framework-businesslabor--currency--copyright-new-businesslabor--designed-0-shipped)) | **stateful, toggleable** policy *families* with `*-Default` baselines + prereq chains + `L/P/G/S` mechanism prefixes | Business/Labor, Currency, Copyright (authored so far) |
+
+They overlap by name (Business/Labor, Currency are **both** a genre AND a subtype) → **a genre is one
+realization of a subtype**: subtypes are the superset filing categories; the **few subtypes that got the
+full stateful treatment** become #237 genres. Open Qs (`futureideas#POST 4` evidence): items can span TWO
+subtypes (Space elevator = Infrastructure + Diplomacy) → likely **multi-valued** tags; the 33-subtype axis
+probably sits **ATOP** the shipped 4-value `committee` field as a **many-subtypes→1-committee** mapping
+(Banking/Currency/Bailout → Economic), not a replacement.
+
+**Shipped reality (the gap):** the shipped `Legislation` interface (`types.ts:1506`) has only the **coarse
+4-value `committee` routing field** (`Domestic | Foreign | Economic | Justice`, `types.ts:1513`) and **NO
+policy `subtype`/`category` field** — and there is no Pres-Action / Gov-Action / SC-Case type at all
+(§14.1.3 above). So the taxonomy is **0% shipped** and is a concrete addition to the #221 primitive record
+schema. (Also from this thread: **Era-of-Independence Gov-Actions are explicitly STATE-scoped** — organize
+volunteer militia, establish state currency, write state constitution, establish state judicial circuits —
+sharpening #20's flat-vs-per-state axis; **LaFayette / "Petition France" already SHIPPED** incl. LaFayette
+as a playable faction character, `POST 22`; and a **foreign-leadership-change 50/50 better/worse-relations
+scripted event** was ACCEPTED, `POST 17/18`.)
+
+*(designed, 0% shipped — add a **`subtype` (policy-area) field** drawn from the fixed 33-value enum above to
+the #221 primitive record schema on **ALL FOUR primitives** (Legis-Prop / Pres-Action / Gov-Action /
+SC-Case); likely **multi-valued** and **atop** (not replacing) the 4-value `committee`; cross-link #237
+(genre = a subtype given stateful treatment). Cite `futureideas#POST 1, 4, 7, 17, 18, 22`; codebase
+`types.ts:1506, 1513`; `game-context.md` #248; CORROBORATES #221 / #237 / #206 / #20 / #109.)*
+
 > *(designed, 0% shipped — add three content-primitive TYPES (`LegisProp` / `PresAction` / `GovAction`) + a
 > `ScriptedEvent` type; **per-category era-activation gating** (Pres/Gov actions dormant pre-Constitution);
 > the **realm-of-possibility / importance curation as a `scripted`-vs-`flavor` tier flag**; a **CPU
-> era-weighted selection buff**; the **flat-vs-per-state Gov-Action axis** (today flat); and **option-set /
-> branching primitives + prereq-chained ladders**. Cite `legisexecgov#POST 1, 2, 5-8, 13, 15, 16, 18, 20,
-> 23-38`; `ampuelections#POST 1, 6`; `game-context.md` #221 / #20 / #236 / #237 / #206.)*
+> era-weighted selection buff**; the **flat-vs-per-state Gov-Action axis** (today flat); **option-set /
+> branching primitives + prereq-chained ladders**; and the **#248 33-value `subtype` policy-area tag** on
+> every primitive (§14.1.3.a). Cite `legisexecgov#POST 1, 2, 5-8, 13, 15, 16, 18, 20,
+> 23-38`; `ampuelections#POST 1, 6`; `futureideas#POST 1`; `game-context.md` #221 / #20 / #236 / #237 / #206 / #248.)*
 
 ### 14.2 Forum design layer: Constitutional Amendments durable state (designed, not built)
 
@@ -4560,6 +4728,22 @@ a `+1.6` swing in state bias; **traits and ideology/enthusiasm dominate the clos
 > trait union (#216) and that the combo was not deliberately cut. `game-context.md` DH-78; pairs #189/#190/
 > #216/#103.)*
 
+> **★ DH-80 (NEW, `electiondisc` 5a5d988f, batch 35) — a mis-signed "Other racial" election-scorer
+> demographic term (a SPREADSHEET-scorer issue, NOT in `src/`).** Cal (`electiondisc#POST 31`): *"'Other
+> racial' shouldn't count as a negative in states like Hawaii."* This implies the (spreadsheet) election
+> scorer applies a **demographic/racial term to candidates that is mis-signed for non-mainland states** —
+> a small but concrete data/scoring fix. **★ Build status — NOT REPRODUCIBLE in the shipped build:** the
+> React/TS `calcStateVote` ([§15.1](#151-calcstatevote--the-core-resolver-phaserunnersts3685)) has **NO
+> race / demographic scorer term at all** (`grep -niE "racial|demograph|ethnic" src/` finds no election
+> scorer); the candidate's demographics axis (#238 Sex/Misc flags, #239) is **unbuilt** ([§30.22.C](#3022c--240--239--238--the-data-model-extensions-curated-statline-schema-demographicsmisc-flags-gender-new-histpres--georgemartha--designeddata-0-shipped)).
+> So DH-80 is a **verify-and-confirm note to RECONCILE when the #238/#239 demographics scorer is built** —
+> whatever demographic election terms that scorer introduces must be **sign-checked per state** (the "Other
+> racial" term must not be a flat negative in HI / non-mainland states), reusing the same sign-discipline
+> as the DH-53 per-bill-effect sign audit. Ties the hidden election-scorer bias terms (#184/#18).
+> *(verify-and-confirm — when #238/#239 lands a demographic election scorer, add per-state sign-correctness
+> to its demographic terms (no flat-negative "Other racial" in HI). Cite `electiondisc#POST 31`;
+> `game-context.md` DH-80; pairs #238/#239/#184/#18, DH-53.)*
+
 **`electionFactionBias`** (`phaseRunners.ts:1539`): sum the faction's interest-card +
 lobby-proxy interest-group scores, `× electionBiasPerScore 0.5`, clamp to `±electionBiasCap
 3`; a faction-leader candidate (non-independence era) multiplies by `electionOnBallotMul
@@ -4593,6 +4777,16 @@ vs a tainted opponent; Unlikable `−MEDIUM`, bumped `−LARGE` vs a Charismatic
 > [§21.9](#219-presidential-vote-modifier-stack--era-stamped-popularunpopular-issue-list-designed-not-built)
 > (`ad0f2875` POST 137, 139, 151). The same thread shows national meters can **swamp `state.bias`**,
 > producing implausible maps — `state.bias` is a soft modifier (realism gap, §21.9).
+
+> **★ `baseLean` (= `state.bias`) needs an EVENT-driven REALIGNMENT schedule (#247, batch 35).** The
+> `baseLean × 5` term above reads a **static, hand-set `state.bias`** with **no cross-era realignment**.
+> The `statelean` brainstorm (#92's twin) rules that a state's base lean must shift on the **causal
+> game-state EVENT** (e.g. the Depression scripted event), not a hardcoded year/era — the 1928 exhibit:
+> the crash never fired in-game yet year-keyed modifiers swept the Democrats into the 1930 midterms. Full
+> spec (the industry-keyed time-boxed modifier, the meters-vs-base-lean separation, landmark events
+> re-keying party-assignment) at
+> [§11.4.1](#1141--247-new-statelean-batch-35--event-driven-state-party-lean-realignment-the-state-lean--realignment-projection-of-92-designed-not-built).
+> (`game-context.md` #247.)
 
 ### 15.2 The election phases
 
@@ -7128,6 +7322,17 @@ member with a blunder roll** (§20.10(f)).
 > deactivate-prior-actions capability + the Pliable→manipulative-advisor first-action override; confirm
 > whether the same budget applies to governors/other offices. Cite `rulebook#§Y POST 30`; `summer2021#ch95:159`.)*
 
+> **★ #182 EXTENDED (`redbutton1960`, batch 35) — Command is ALSO a legislative-PRESSURE budget + an
+> eligibility gate.** Beyond the per-half-term action budget above, the 1960-restart playtest improvised a
+> **Presidential-pressure rule keyed to Command**: roll **(Command) d6**; each **5-6** triggers a reroll
+> whose **value ×10 = the % of a targeted faction that defects** on a bill/confirmation (so a President
+> leans on fence-sitters to flip a close vote). And the **Command-eligibility gate fired live** — Tip
+> O'Neill, a faction leader with **0 Command, could NOT run** in the 1964 primary. Both extend #182 (Command
+> = action/influence) into the legislative + candidacy surfaces; the pressure rule must be reconciled with
+> the `rulebook` §Y "convert up to (Legislative#) senators" tool (Command vs Legislative — pick one). Full
+> spec at [§28.10.1](#28101--208--182-extended-new-redbutton1960-batch-35--two-gm-improvised-cpu-vote-subsystems-the-moderate-faction-swing-vote-model--presidential-pressure-the-command-die-flip-gmapp-designed-not-built).
+> (`redbutton1960#POST 11, 24`; `game-context.md` #182/#208.)
+
 **(3) SCOTUS replacement timing — at the PRESIDENTIAL-ACTION phase ON PURPOSE.** A replacement
 justice is nominated at the **Presidential-Action phase deliberately** — GM: *"to replicate
 real-world empty-seat periods; nominating isn't overnight"* (ch43 POST 3718) — refining
@@ -8513,6 +8718,77 @@ bills tied to a court-disabled policy **should** auto-deactivate but **don't** (
 *(designed, not built — add a CJ case-refusal step on Gov-Action state cases: a ≥4-Judicial CJ may refuse;
 Rule-of-Four (4 justices) overrides; Iron-Fist CJ bypasses the override; Jurisprudence = unlimited
 refusals; Passive = cannot refuse. Cite `summer2021#POST 236-239, 170`; `game-context.md` #218.)*
+
+#### 22.7.w ★ #249 (NEW, `scotusfuture`, batch 35) — per-case importance TIER ("Landmark Tier") + context-dependent significance + the Era-of-Future docket content (DESIGNED, 0% shipped)
+
+> **★ Two NEW SCOTUS mechanics + the Era-of-Future docket DATA.** GM @vcczar posts the ~45-case
+> Era-of-Future SCOTUS docket and asks players to score which are **"Landmark Tier"** — as big a deal as
+> Roe / Brown / Plessy / Dred Scott. Source: `scotusfuture` (CONTENT-AUTHORING + design-survey; NOT a
+> playthrough; **content-FROZEN** — "PLEASE DO NOT SUGGEST ANY NEW CASES UNTIL EARLY RELEASE"). Extends
+> #25/E25 (the docket data) + #52 (who decides). **0% shipped** — the shipped court is a coin-flip on 4
+> hardcoded title strings ([§11.6](#116-253-supreme-court--runphase_2_5_3_court-phaserunnersts3397),
+> `phaseRunners.ts:3397`) with no case identity, no tier, and no per-case significance.
+
+**(1) ★ NEW — case-importance TIER model ("Landmark Tier").** SCOTUS cases carry an importance/impact
+**TIER**. The top tier is defined by analogy (Roe/Brown/Plessy/Dred-Scott) and given a sharper working
+definition by players (`POST 9`): a Landmark case is **a ruling that can create or fuel a political
+MOVEMENT by itself** — "like how the Roe decision led to the birth of the Pro-Life movement." This couples
+the tier **directly to the social-movement system** ([#6/#354](#288-civil-rights--distributed-across-systems-the-canonical-era-content-via-generic-mechanics-example)): a
+Landmark ruling is an event that can **SPAWN a faction / movement**, not just nudge a meter. The data needs
+**at minimum a 2-tier importance field** (Landmark vs. lesser/"less influential tier", `POST 9`). **Tier is
+NOT binary-obvious** — `POST 9` explicitly puts several cases "in this category, but I could also see them
+in a less influential tier" → tier is **fuzzy / context-sensitive**, which motivates (2). Consensus #1
+Landmark = **Advanced Robot Inc v California** (robot/AI personhood — flagged by every scorer; "define what
+it means to be a citizen"); strong consensus also on Anikan Vader-C v South Carolina + Bender v New York
+(personhood / marriage-rights cluster); the GM puts only **Walton-Koch v United States** (corporate
+self-sovereignty) into Landmark among the 5 late additions.
+
+**(2) ★ NEW (AMPU-2 / aspirational) — context-dependent case significance** (`scotusfuture#POST 8`, the
+highest-design-value post). A case's importance **should not be a fixed tier at all** — it "will often
+depend entirely on the context of the playthrough… public opinion on almost any of these topics could be
+vastly different depending on how the country has developed." Proposed model:
+- **New national OPINION METERS** that drift over time from **sustained policy**: proposed **Religious
+  Affiliation, Fundamentalism, Luddism** ("I'm sure there's other things"). Meters move from the
+  *length-of-time* a policy is in place (not one-shots): e.g. sustained evolution-over-creationism education
+  → Religious Affiliation drifts agnostic; legislation discriminating against religious groups →
+  Fundamentalism rises; long-term quality-education access → Luddism drops. (Same **policy-genre-over-time**
+  dynamic as #237 / [§30.22.B](#3022b--237--the-stateful-policy-genre-framework-businesslabor--currency--copyright-new-businesslabor--designed-0-shipped); a stateful policy store feeding a meter.)
+- **Case significance = a FUNCTION of the meters at decision time** + the ruling's DIRECTION vs that state:
+  **ruling AGAINST the population's drift = high significance.** Worked example: *Roe Jr v Wade Jr* is
+  explosive if the court rules pro-abortion in a high-religion/high-fundamentalism country, OR anti-abortion
+  in a low-religion/low-fundamentalism country. Robot/AI-marriage cases (Bender) key to a **combination** of
+  Luddism + Religious Affiliation + Fundamentalism.
+- **This REFRAMES (1)** as a possible **v1 STATIC approximation** of a **v2 DYNAMIC, meter-driven**
+  significance score — the design's stated end-state for "how big is this case." Sibling of the shipped
+  `NationalMeters`, the #237 policy-genre meters, and the #18/#51 enthusiasm/meter election model. Flag as
+  **aspirational AMPU-2** (the poster's own framing).
+
+**(3) The Era-of-Future SCOTUS docket content (→ #25/E25, #206/#221).** ~45 authored, content-FROZEN cases.
+**Record shape = dead simple:** `case name` (`Plaintiff v Defendant`) + the **constitutional question**
+(one sentence). No outcome, no statute, no tier field in the data itself; the era ("Era of the Future") is
+**thread-level metadata**. This is exactly the shape #25/E25 (`src/data/scotusCases<Era>.ts` +
+`GameState.scotusDocket`) is specced to hold (none of which exists in the build). Thematic clusters:
+**robot/AI personhood & rights** (Advanced Robot Inc v California; Bender v NY robot-marriage; Texas v Robot
+Car Factory Union deactivation; Jefferson Bot-C-1826 naturalization) · **consciousness upload** (Jones v
+Alabama; Quackenbush v Schyster taxing uploads) · **body-mod / trans-species** (Dracul v Arkansas) ·
+**space/sea colonies & jurisdiction** (Florida v Alabama sea-colony federal authority; Space Colony v US
+Courts; Fergus v FAA spaceport ban) · **crypto/economy** (Televangelist Inc v Future Transactions mandated
+crypto) · **animal/environmental rights** (Woodworks Inc v Oregon DEQ tree-rights) · **1A/2A/criminal
+procedure carryovers** (California v Gooch — 2A only firearms existing at ratification; Weissenberg v Provo
+involuntary DNA 4A; Utah v Nelson polygamy; Roe Jr v Wade Jr) · plus the GM-favorite **United States v
+United States** (does the US have authority to dissolve itself?) and the late add **Walton-Koch v United
+States** (corporate self-sovereignty). *(Names need normalization at authoring time — spelling drift across
+reposts: `Woordworks`/`Woodworks`, `Anikan`.)* The docket is a **SCOTUS-case content-primitive** for the
+#221 registry, complementary to the docket → Rule-of-Four (#218) → decision (#52) → importance (this
+section) pipeline.
+
+*(designed, 0% shipped — add (a) a per-case **`tier`** field (Landmark vs lesser) on the SCOTUS docket
+record, where a Landmark ruling can SPAWN a movement (#6/#354); (b) the AMPU-2 **context-dependent
+significance** — a new national-opinion-meter axis (Religious Affiliation / Fundamentalism / Luddism) drifting
+from sustained policy, with significance = f(meter state, ruling direction); and (c) seed E25's **Era-of-
+Future docket file** with the ~45 content-frozen cases (record = name + constitutional question, era-keyed).
+Cite `scotusfuture#POST 1, 2, 7, 8, 9, 10, 11, 12, 13`; codebase `phaseRunners.ts:3397`; `game-context.md`
+#249; extends #25/E25/#52/#206/#221, ties #218.)*
 
 *(designed, not built — a SCOTUS module: a per-term case docket + ideology-vote model; the
 Iron-Fist/Manipulative compel-vote and compel-retire powers (with the 12-year minimum + the
@@ -12944,6 +13220,51 @@ are roadmap items.)*
 > **[§9.3.9](#939--ted-ruled-era-of-terror-cabinet-fairness--diversity-penalties-151-designer-authoritative-terror2000)**. The cabinet→enthusiasm channel was ALSO re-tuned LIVE here to the 3-state
 > upset/fine/happy model (**[§9.3.7](#937--ted-ruled-cabinet--enthusiasm-rework-designer-authoritative-tedchange)**, #124 sharpened). (`terror2000#POST 1280, 428-441, 486-489, 154`.)
 
+> **★ CORROBORATED LIVE for a 1960 board (`redbutton1960`, batch 35) — the Gilded→Terror "−1 region"
+> band + TWO new sub-findings (#31 abuse-vector + the #186/#179 cabinet→meter restart proof).** The
+> 1960-restart playtest confirms the **pre-Terror region rule firing on a 1960 board** and pins **when the
+> region rule stops mattering** with a designer-authoritative answer; it also gives the **single cleanest
+> live proof that late-era boots need real cabinet stats** (#186/#179).
+>
+> - **★★ The RESTART CAUSE = starter-stat cabinet TANKED the meters → forced reset (#186 + #179 proof).**
+>   Verbatim (`POST 1`): *"The 1960 playtest had to be stopped because some of the ratings, especially
+>   Admin were all at starter levels and it tanked all the meters since we didn't have any Cabinet members
+>   above 3 (and very few at 3)."* The fix (`POST 1, 2`): **reset ratings to mid/peak strength** — the new
+>   cabinet has **one 5-Admin, four 4's, the rest 3's ("no more 2's!!")**, ambassadors a 5 (Kissinger) +
+>   four 4's, Key Advisor upgraded 2→4. **Why it's load-bearing:** a late-era cabinet of all ≤3-Admin
+>   officers makes the **per-officer lingering meter-roll table FAIL** — low Admin ⇒ the meters only fall —
+>   so the run was UNPLAYABLE until stats were peaked. This is the **0-Admin-tanks-the-meter (DH-23 / #179
+>   admin-ladder) failure reproduced at WHOLE-CABINET scale**, and the strongest single datapoint that
+>   **[#186](#261-the-mid-government-boot-shape-general)'s "correct stats for the year" requirement is NOT
+>   cosmetic — it gates whether the [§11.1](#111-251-lingering-meters--runphase_2_5_1_lingering-phaserunnersts3260)
+>   / [§24.7](#247-67-lingering--the-16-meter-homeostasis-engine-era-gated-foreign-meters) meter engine
+>   works at all.** A deterministic late/mid-era boot ([§26.1](#261-the-mid-government-boot-shape-general))
+>   **must seed cabinet/ambassador/advisor officers at era-appropriate mid/peak strength**, not draftee
+>   starter levels. (Mirrors `wilsons1916`'s "1916 BootSheet is bare / filler economic numbers" finding
+>   under #186; the GM here had to **eyeball** the mid/peak reset — #186 still needs a deterministic
+>   per-office, per-era stat-seed table.)
+> - **The era-scaling of the region rule (designer-authoritative resolution, `POST 3-8`).** Debated live
+>   (Ted/Willthescout7: "Era of terror is when that stops"; others: post-Progressive / "right after the
+>   most recent realignment"); **V's current rules resolve it:** region *"stops leading to civil domestic
+>   stability problems after the civil war era. It does potentially lead to party popularity issues until
+>   era of terror."* — i.e. the **pre-Gilded DomStab penalty → Gilded→Terror −1-in-the-snubbed-region →
+>   Terror+ faction-balance** band model (this section + [§9.3.9](#939--ted-ruled-era-of-terror-cabinet-fairness--diversity-penalties-151-designer-authoritative-terror2000) / #31 /
+>   #151) is confirmed for a 1960 board.
+> - **★ NEW abuse-vector on #31 (`POST 8-9`):** snubbing a region = a **−1 election penalty in that
+>   region** ("makes sense… especially in the South"), but **Ted flags the exploit** — *"Danger is it opens
+>   the door to block someone from a region just for that reason (if opposition has the majority in the
+>   Senate)"*: an **opposition Senate majority can deliberately REJECT a region's nominees to inflict the
+>   −1** on the incumbent President. So **confirmation-blocking weaponizes the cabinet regional penalty** —
+>   the region-penalty engine and the confirmation-vote engine ([§9.3.11](#9311--the-canonical-cabinetscotus-confirmation-subsystem-172dh-76--199--the-authoritative-spec-new-rulebook--apptdeepdive-batch-31-designed-not-built) / #172/#208) interact. (Noted
+>   as a recent rule change "since we started the second playtests.") Reconcile under #31/#208/#172.
+> - **Region × lobby is a simultaneous constraint** (`POST 2`): *"a pain trying to find someone from all
+>   the regions and still appease the proper lobbies"* — confirms the cabinet = simultaneous **region ×
+>   lobby** constraint satisfaction. **Live color (not a build delta):** **Samuel Pierce confirmed as the
+>   first Black Attorney General** 88-12 over a Byrd/Thurmond Southern-Democrat bloc thwarted by the Senate
+>   Majority Leader (`POST 10`) — a region-not-party confirmation split (#172/#208), still UNBUILT
+>   (`runPhase_2_3_1_Cabinet` auto-confirms; no vote/block/cloture). (`redbutton1960#POST 1, 2, 3-9, 10`;
+>   `game-context.md` #186/#179/#31/#172/#208; ties DH-23.)
+
 *(designed, not built — most is §9 / §22.9; the modern ADDS the **±1-ideology appointment gate**,
 the **60→70% confirmation scaling**, the **lobby-posts enthusiasm model** (hole #15 — replaces the
 broken direct swing), and — the era-BAND delta — the **Era-of-Terror diversity + faction-balance
@@ -13096,6 +13417,81 @@ filibuster + debate-sway + bill packaging (2.6.x), and the full primary→conven
 > Hochul→Suozzi). **Build implication:** formalize all of (1)-(3) + the pliable-Pres delegation as
 > deterministic engine logic (folds into §25 CPU AI + #208). (`game-context.md` #208 + DH-76;
 > `welcome2future#post 129-380, 307-349, 322, 331, 343`.)
+
+#### 28.10.1 ★ #208 / #182 EXTENDED (NEW, `redbutton1960`, batch 35) — two GM-improvised CPU vote subsystems: the moderate-faction SWING-VOTE model + Presidential PRESSURE (the Command-die flip) (`GM⇒App`; DESIGNED, not built)
+
+> **★ The 1960-restart playtest hands us two CPU legislative subsystems VERBATIM** (`redbutton1960#POST
+> 11` is the goldmine). Source: `redbutton1960` = the RESTART/continuation of the `redbutton`/`8bc0231c`
+> 1960 Cold-War run (same GM @Vols21), resumed at the 1962 Congress-in-Session phase. GM Vols21 *devised
+> "rules" for deciding Congressional votes (since they are all basically AI driven)* while the project was
+> on hold. **Both are 0% in `src/`** (no CPU legislative-vote logic, no Command-as-budget). Both are
+> `GM⇒App` automation requirements straight from the charter — `POST 11`: *"Can't wait for the actual game
+> so the computer can take over a lot of the tedious processes."* Read after `redbutton`
+> ([§30.17](#3017-rulings-folded-from-8bc0231c-the-big-red-button-1960-playtest-the-first-cold-warcivil-rights-source)) + `historical-context-1960-coldwar.md`.
+
+**(1) ★ The CPU moderate-faction SWING-VOTE model (extends #208).** Verbatim (`POST 11`): *"The moderate
+faction starts at 50-50 but the bill gains or loses support based on (1) which party proposed the bill,
+(2) if their party leader supports it or not, and (3) the actual make-up of the faction (we know it's
+mostly moderates, but is the rest more conservative or liberal)."* So:
+- **Base rate = 50-50** for the **moderate (swing) faction** only — partisan factions' votes are
+  deterministic and obvious ("easy when the bill helps or hurts your faction"), so the stochastic model is
+  applied **only to moderates**.
+- **Three modifiers** shift that base: **proposing party** · **own party-leader support** · **the faction's
+  internal lean** (mostly-moderate, but tilted conservative-vs-liberal in the remainder).
+- Explicitly designed *"to keep me from allowing any biases to filter into the results"* — a true swing
+  vote.
+- **★ Reconciliation note for #208:** this is **complementary to, not identical with**, `welcome2future`'s
+  improvised rule (a **leader-LEVEL** rule: "maj/min-leader own-vote = own-party + within-2-ideology-clicks;
+  iron-fist → within-1", §28.10 above). Vols21's is a **faction-LEVEL base-rate ± modifiers** swing model.
+  **The build's CPU legislative engine should subsume BOTH** — a faction-level swing model for moderates
+  AND a leader-level own-vote rule — plus the Presidential-pressure flip below. **OPEN Q:** does the
+  moderate-swing model generalize, or are moderates the **only** stochastic bloc (Vols21 applied it only to
+  moderates)?
+
+**(2) ★ Presidential PRESSURE / influence — the Command-die flip (extends #182 + #208).** Verbatim (`POST
+11`): *"The President could roll the number of 6-sided dice that corresponds to his Command rating. A 5 or
+6 would allow him to roll again with the number ×10 being the percent of a faction he could sway. Example,
+a 2 means 20% of the targeted faction would defect."* So:
+1. Roll **(Command) d6**.
+2. Each **5 or 6** triggers a **reroll**; the reroll's **value × 10 = the % of a targeted faction that
+   defects** (e.g. reroll = 2 → 20% of that faction flips).
+3. Models Reagan/Biden arm-twisting fence-sitters — usually small numbers, but can flip a close vote. (In
+   the first live test the pressure roll **FAILED → didn't come into play**.)
+- **★ Reconciliation vs the `rulebook` convert-senators tool (OPEN):** the canonical RULEBOOK (§Y) already
+  pins the **President's "convert up to (Legislative#) senators on a 5-6"** lever (the
+  confirmation/legislation tool). Vols21's d6-Command pressure **overlaps but differs** — it uses
+  **Command** (this thread), targets a **% of a FACTION** (not N senators), and is the CPU-vote-flip half.
+  **Which is canonical, and does pressure key off `command` (this thread) or `legislative` (rulebook)?** —
+  reconcile under #182/#208. This is a **second designer-improvised form** of the same President-leans-on-
+  the-legislature lever to fold into one engine rule.
+
+**(3) The Command-eligibility gate fired LIVE (corroborates #182/#61/#185).** In the 1964 Democratic
+primary the **major-candidacy = faction-leader-runs check** ran: 2 of 5 faction leaders ran, 3 declined —
+and **Tip O'Neill *"doesn't have any Command points"* → CANNOT run** (the Command-eligibility gate kept a
+faction leader OUT of the race, `POST 24`). This is the **eligibility face** of #182 (Command isn't just an
+action budget — 0 Command bars candidacy) firing in play.
+
+**(4) CPU minor-candidate field generation (the algorithm — sharpens #111/#185).** Verbatim (`POST 24`):
+*"I filtered each faction by command and age requirement. Then I used a random # generator for the number
+of qualified candidates plus 3 (if the random # was in the +3 range, that meant that faction would not
+enter a minor candidate, so it left a small chance for that to happen)."* So the CPU primary-field rule is:
+**eligible pool = faction filtered by ≥Command + age → pick one at random**, with a **built-in chance of NO
+minor candidate** (the **+3 padding** range on the RNG). Plus the **faction-leader-runs check** for majors
+(with logged decline reasons: LBJ defers to the party leader / focus on Senate; JFK "lost to Bricker
+badly… wasn't up to a rematch"; O'Neill barred for 0 Command). **Front-runner / debate momentum**
+corroborated: Byrd (party leader) was front-runner, a **bad debate damaged the front-runner** ("Byrd was
+the clear loser" after Pat Brown's "Bricker on steroids" line; snap poll tightened), and the **front-runner
+LOST the NH opener** (Earl Long, the Tip-endorsed LW leader, won NH 4 delegates) — debate→momentum visibly
+mattered (#111/#185).
+
+*(designed, not built (`GM⇒App`) — the CPU legislative engine must implement (1) a **faction-level moderate
+swing-vote model** (50-50 base ± proposing-party / own-party-leader-support / faction-internal-lean), (2)
+the **Presidential-pressure Command-die flip** (roll Command d6; each 5-6 rerolls; reroll×10 = % of a
+targeted faction that defects) reconciled with the `rulebook` convert-senators tool (Command vs
+Legislative — pick one), (3) the **Command-eligibility candidacy gate** (0 Command bars a run), and (4) the
+**CPU minor-candidate field generator** (filter faction by Command+age → random pick, with a +3-padded
+chance of no candidate) + the major-candidacy faction-leader-runs check. Cite `redbutton1960#POST 11, 22,
+24, 25, 27`; `game-context.md` #208/#182/#185/#111; folds into [§25](#25-cpu-ai-specifications-designed-not-built-unless-flagged).)*
 
 ### 28.11 Modern draft, lobby cards & dataset (the era-locked content rotation)
 
@@ -13789,6 +14185,79 @@ the A9 scaling wall demands the build **persist + auto-fill** across cycles.
 > the engine AUTO-derive focus-rep counts from EV at each census, or keep the static authored per-start-date
 > rosters vcczar hand-built (POSTs 27-41)? Also: *"no penalty for LOSING a House election unless you're the
 > incumbent"* (POST 17). (`housepoll#POST 1, 7, 12-15, 17-23, 27-41`; `game-context.md` #219/#55/#34/#191.)
+
+#### 29.5.1 ★ #250 (NEW, `electiondisc`, batch 35) — the House-seat-COMPETITION fork (how multi-seat states run their focus-Rep races) (DESIGNED; direction-set, not ratified)
+
+> **★ The DESIGN-ORIGIN of the focus-Rep competition shape that #219/#55 leave open.** `electiondisc` is a
+> @MrPotatoTed-led open review of the election rules with a focus on House elections under the focus-Rep
+> model (vcczar deferred — "no time, just gathering ideas"). #219 (`summer2021`) records the resolved EV
+> ladder + per-seat vote-power; #55 records seat-locked incumbency — but the **seat-competition shape**
+> (how a multi-seat state's races relate to each other) is what those leave open, and this thread is its
+> origin. Source: `electiondisc` (DESIGN / rules-review; NOT a played-forward game). The question is
+> **raised and informally dispositioned but NOT finalized by vcczar — an OPEN fork.**
+
+**House-model facts confirmed here (corroborate #219/#55):** AMPU does NOT model all 435 seats — each
+state runs the **1–3 most important Reps** ("focus Reps"), seat count scaled by population (`POST 1, 8`).
+**Balance target (Ted, `POST 26`): 1–3 Reps/state, averaging ~2 → a ~100-seat House** at 50 states (more
+on a conquest spree) — a NEW explicit House-size number, sharpening #219. **Seats are NOT geographic
+districts** (`POST 5/15/16`): "Bill Clinton could be AR-1 and Hillary AR-2 despite living in the same
+house" — geography is deliberately abstracted away; real-life relocations are modeled via the
+politician's **alternate states** instead (Hillary = NY/IL/AR), confirming the per-pol home/alt-state model
+and the **absence of any congressional-district geography layer** (the same intent behind the #191 per-seat
+deviant-bias workaround, [§15.4(c)](#154--the-down-ballot-govsenrep-election-model-189192-designer-authoritative-to-do--fixes-batch-28-mostly-designed)).
+
+**★ The fork — how a state with multiple important seats runs them** (`POST 1, 7, 14`). Under focus-Reps a
+candidate **declares which seat they run for** (a GA-1 candidate never competes against a GA-2 candidate):
+| # | Option | Description | Disposition in-thread |
+|---|---|---|---|
+| **A** | **Per-seat (status quo)** | separate race per seat; candidate picks GA-1 *or* GA-2; per-seat primaries (`POST 1`) | **Informally PREFERRED / kept** — Ted (`POST 5`): "GA-1 stays in GA-1's lane, GA-2 in GA-2's lane, no crossover." NOT ratified by vcczar. |
+| **B** | **Free-for-all (top-N overall)** | one pool, **no per-seat primaries**; the **top 2 contenders overall** take GA's 2 seats (`POST 1, 7`) | Raised, not adopted. |
+| **C** | **Single multi-member pool** | primaries still exist, but every GA Rep candidate competes in **ALL** GA races at once (`POST 1, 7, 13`) | Raised; OrangeP47 (`POST 13`) says this is what Ted's explanation *logically implied* but "I don't know how to make that work." No implementation path. |
+
+**The quirk that motivated the question (`POST 1, 2`):** under Option A the GA-1 incumbent and GA-2
+incumbent can both choose to run **against each other for GA-1**, leaving GA-2 to outsiders. Disposition →
+**two concrete CPU/incumbency rules:**
+- **★ CPU rule (Ted, `POST 2`; agreed `POST 3, 4`): the CPU keeps incumbents in their CURRENT seat** —
+  incumbents default to running in their own seat; if a *human* moves their GA-2 incumbent into GA-1,
+  "that's the human's fault." A NEW concrete CPU-behavior requirement (the CPU must not self-cannibalize
+  its own incumbents).
+- **★ Seat-lock + unlock-on-reapportionment (Rezi, `POST 3`; corroborates #55):** the harder variant — once
+  a statesman wins a seat they are **required to stay in it**, the lock **releasing only when the state's
+  rep count CHANGES** (a district added/removed by reapportionment) so the pol gets a chance to move.
+  vcczar's #55 ruling settled locked-incumbency; this thread articulates the **unlock-on-reapportionment
+  refinement.** Reapportionment edge case (`POST 5`): if Georgia shrinks to 1 Rep, the displaced GA-2
+  incumbent becomes eligible to contest GA-1 → **seat count must be dynamic per era** and the lock/
+  eligibility logic keys off it (the same dynamic census the [§29.5](#295-the-focus-rep-house-abstraction-gap-55) (EV−2)/5-ladder + census recompute drive).
+
+**Other election-rule sub-items raised here (sharpen the primary/scorer clusters):**
+- **Disable-historical-lean SETUP TOGGLE** (Willthescout7, `POST 24`) — a setup-time switch on whether
+  state bias is seeded historically vs. emergent, so states "develop naturally" and a good player can
+  pre-empt the unwinnable-state ("Kevin McCarthy") problem (#191). NEW idea. (Same family as the #247
+  "remove historical bias entirely" option, [§11.4.1](#1141--247-new-statelean-batch-35--event-driven-state-party-lean-realignment-the-state-lean--realignment-projection-of-92-designed-not-built).)
+- **Kingmaker-D6 trivial-primary resolver** (themiddlepolitical, `POST 10`) — when a nomination is
+  uncontested-within-party (and for no-primary Rep/Sen races), resolve by skill + Kingmaker trait instead
+  of auto-award: **1 D6 per Kingmaker + ability**; ≥2 Kingmakers ≈ auto-win (unless both roll 1); lets a
+  weak-but-Kingmaker pol usually beat a strong-but-no-Kingmaker pol, with an upset chance. A concrete dice
+  proposal for the trivial-primary path (sharpens #185/#183, [§25.11](#2511-kingmaker--endorsement-preference-rules)).
+- **Lame-duck / ex-President primary-endorsement sway** (themiddlepolitical, `POST 10, 12`) — does a
+  term-limited or former President carry primary-kingmaker weight? (cites Eisenhower 1960 + Trump's outsized
+  endorsement power). Ted: primary rules not yet reviewed. **Dedupe vs #210** (Ex-President super-Kingmaker).
+- **DH-80 (mis-signed "Other racial" demographic scorer term)** — see [§15.1](#151-calcstatevote--the-core-resolver-phaserunnersts3685)
+  annotation (this is a spreadsheet-scorer issue, no race scorer in `src/`).
+
+**Shipped reality:** still the flat per-state `representativeIds: string[]` (`types.ts:1327`) with
+`seatClass?: 1|2|3` (`types.ts:1247`) and per-state `bias` only — **no per-seat race grouping, no
+competition model, no CPU keep-incumbents-in-seat rule, no unlock-on-reapportionment.** The
+seat-competition shape is wholly unbuilt.
+
+*(designed; direction-set, not ratified — decide the House-seat-competition model: per-seat (A, leading) vs
+free-for-all top-N (B) vs single multi-member pool (C). Requires **per-seat race grouping**, a **CPU rule =
+incumbents run in their current seat** (humans may override), a **seat-lock released on reapportionment**
+(dynamic per-era seat count), and the reapportionment eligibility shuffle (GA→1 seat frees GA-2 incumbent).
+Plus the disable-historical-lean setup toggle, the Kingmaker-D6 trivial-primary resolver, and the
+lame-duck/ex-President endorsement-sway sub-items. Cite `electiondisc#POST 1, 2, 3, 4, 5, 7, 8, 10, 12, 13,
+14, 15, 16, 24, 26`; codebase `types.ts:1327, 1247`; `game-context.md` #250; sharpens #219/#55/#191, ties
+#185/#183/#210.)*
 
 ### 29.6 Corroborations & the era slice (1820–23)
 
@@ -16097,6 +16566,94 @@ into the #194 lineage system. Cite `histpres#POST 1, 3, 7, 13, 19, 28, 34, 36, 3
 > the Hale 80-vs-86+ cutoff reconcile, marriage-based dynasty edges, and earned-only Celebrity/Military-Leader.
 > Cross-ref `game-context.md` rows **#45 (dated/origin'd)**, **DH-79 (NEW bug)**, **#243/#244/#245/#246/N1
 > (NEW)**, and **#240/#194/#216/#226/#225/#220/#56/#228 (sharpened)**.
+
+### 30.25 Rulings folded from batch 35 — the FIVE content/design/playtest threads (#247 event-state-lean + #248 subtype-taxonomy + the 1960-restart #186 PROOF + #249/#250/DH-80) (`statelean` / `futureideas` / `scotusfuture` / `electiondisc` / `redbutton1960`)
+
+> **★★ Batch 35 = a 5-thread batch (1 PLAYTEST + 4 design/content/data; the historian separately extended
+> the 1960 companion `historical-context-1960-coldwar.md`).** The value is **two NEW architecture-class
+> findings** (#247 event-driven state-lean = #92's twin; #248 the subtype taxonomy), the **Era-of-Future
+> SCOTUS content + tier model** (#249), the **House-seat-competition fork** (#250), and a
+> **corroboration-rich 1960-restart playtest** that gives the cleanest live proof for #186/#179 and hands us
+> two GM-improvised CPU vote subsystems. Tier-1 designer `@vcczar` authors/frames the four design/content
+> threads; `@MrPotatoTed` co-leads the election review; GM `@Vols21` runs the playtest. The sources:
+> - **`statelean`** (fc461242, "Dynamic State Leans Brainstorm," DESIGN/brainstorm, Mar 2023, 34 posts;
+>   the Excel census doc, not the browser build) — **★ ORIGIN of NEW #247** (event-driven state party-lean
+>   realignment; #92's twin). Canonical exhibit = the 1928 crash-didn't-fire-yet-modifiers-went-blue bug.
+>   Folded into [§11.4.1](#1141--247-new-statelean-batch-35--event-driven-state-party-lean-realignment-the-state-lean--realignment-projection-of-92-designed-not-built) (full spec) + [§15.1](#151-calcstatevote--the-core-resolver-phaserunnersts3685) (the `baseLean` pointer). Cite `statelean#POST n`.
+> - **`futureideas`** (eaf5cc51, "Era of the Future and Era of Independence Ideas," CONTENT-AUTHORING, Mar–
+>   Apr 2022, 35 posts; posts 20-35 off-topic) — **★ ORIGIN of NEW #248** (the 33-value legislative-proposal
+>   `subtype` taxonomy on ALL FOUR #221 primitives; genre ⊂ subtype). Folded into
+>   [§14.1.3.a](#1413a--248-new-futureideas-batch-35--the-legislative-proposal-subtype-policy-area-taxonomy-a-33-value-enum-on-all-four-primitives-designed-0-shipped). Cite `futureideas#POST n`.
+> - **`scotusfuture`** (aa227625, "SC Case Era of the Future Scoring," CONTENT-AUTHORING + design-survey,
+>   May 2022, 13 posts; content-FROZEN) — **★ ORIGIN of NEW #249** (the SCOTUS Landmark-tier + the AMPU-2
+>   context-dependent-significance model) + the ~45-case Era-of-Future docket DATA (→ #25/E25). Folded into
+>   [§22.7.w](#227w--249-new-scotusfuture-batch-35--per-case-importance-tier-landmark-tier--context-dependent-significance--the-era-of-future-docket-content-designed-0-shipped). Cite `scotusfuture#POST n`.
+> - **`electiondisc`** (5a5d988f, "Election discussion," DESIGN/rules-review, Apr 2022, 31 posts; MrPotatoTed-
+>   led, vcczar deferred) — **★ ORIGIN of NEW #250** (the House-seat-competition fork + CPU-keeps-incumbents-
+>   in-seat + seat-unlock-on-reapportionment) + candidate bug **DH-80** (mis-signed "Other racial" scorer
+>   term) + the DESIGN-ORIGIN of #191. Folded into [§29.5.1](#2951--250-new-electiondisc-batch-35--the-house-seat-competition-fork-how-multi-seat-states-run-their-focus-rep-races-designed-direction-set-not-ratified) (#250) + [§15.1](#151-calcstatevote--the-core-resolver-phaserunnersts3685) (DH-80). Cite `electiondisc#POST n`.
+> - **`redbutton1960`** (3c3c46f0, "Out of the Ashes: 1960 Playtest Restart," PLAYTEST — the RESTART of the
+>   `redbutton`/8bc0231c 1960 run, same GM @Vols21, 27 posts) — **overwhelmingly CORROBORATING.** Folded
+>   into [§28.7](#287-modern-cabinet--the-era-of-terror-cabinet-rework-231) (the #186/#179 restart proof + the #31 abuse-vector) + [§28.10.1](#28101--208--182-extended-new-redbutton1960-batch-35--two-gm-improvised-cpu-vote-subsystems-the-moderate-faction-swing-vote-model--presidential-pressure-the-command-die-flip-gmapp-designed-not-built)
+>   (the two CPU vote subsystems) + [§20.11(2)](#2011--the-federalism-presidency-vetooverride-command-as-action-budget-182-scotus-timing-summer2021-designed) (#182 pressure pointer) + [§11.5](#115-industry-leadership-scoring-designed-not-built)
+>   (Farm Subsidy DH-53 + circuit-court +1-Judicial). Read after `redbutton` + the 1960 companion. Cite
+>   `redbutton1960#POST n`.
+>
+> **The HEADLINE findings (lead with these):**
+> 1. **★★ #247 — event-driven state party-lean REALIGNMENT (#92's TWIN; ORIGIN).** A state's base lean
+>    (`State.bias`, the ×5 election lever) must shift on the **causal game-state EVENT**, NOT a hardcoded
+>    year/era tab. The 1928 exhibit: the crash never fired in-game, yet year-keyed modifiers swept the
+>    Democrats into the 1930 midterms despite a healthy economy. Leading shape = an **industry-keyed
+>    time-boxed event modifier** atop a decade/start-date base, **kept distinct from meters**; landmark
+>    events re-key **BOTH** regional lean AND the **incoming-pol party-assignment** pipeline (MLK stays GOP
+>    if Taft ends Jim Crow). Build is BEHIND the spreadsheet: static `bias` scalar + a ±1-clamped region
+>    anytime-event (`phaseRunners.ts:2608`), no realignment schedule. Full spec at [§11.4.1](#1141--247-new-statelean-batch-35--event-driven-state-party-lean-realignment-the-state-lean--realignment-projection-of-92-designed-not-built).
+> 2. **★★ #248 — the legislative-proposal `subtype` (policy-area) taxonomy (ORIGIN).** A **33-value enum**
+>    (Agriculture…Welfare) carried as a `subtype` field on **ALL FOUR** #221 primitives (Legis-Prop /
+>    Pres-Action / Gov-Action / SC-Case); distinct from #237 GENRES (**genre ⊂ subtype** — a genre is a
+>    subtype given stateful treatment). Shipped `Legislation` has only a coarse 4-value `committee`
+>    (`types.ts:1513`), no policy subtype → 0% shipped. Full spec at [§14.1.3.a](#1413a--248-new-futureideas-batch-35--the-legislative-proposal-subtype-policy-area-taxonomy-a-33-value-enum-on-all-four-primitives-designed-0-shipped).
+> 3. **★★ The 1960-restart #186 PROOF — starter-stat cabinet TANKED the meters → forced reset.** The single
+>    cleanest live evidence that **#186** (correct-stats-for-the-year boot) isn't cosmetic and **#179**
+>    (cabinet→meter lingering coupling) is load-bearing: an all-≤3-Admin cabinet made the per-officer
+>    lingering meter-roll table fail (meters only fell), so the run was UNPLAYABLE until the GM re-stat the
+>    whole cabinet to mid/peak. The DH-23 0-Admin-tanks-the-meter failure at WHOLE-CABINET scale. At [§28.7](#287-modern-cabinet--the-era-of-terror-cabinet-rework-231).
+>
+> **★ Designer rulings + new gaps folded (the topical sections carry the detail; this is the index):**
+>
+> | Item | Ruling / spec | Where folded | Cite |
+> |---|---|---|---|
+> | **★★ #247 event-driven state-lean (ORIGIN)** | `State.bias` realignment keyed to the causal EVENT not a year/era tab (1928 crash-didn't-fire exhibit); leading = industry-keyed time-boxed modifier atop a decade base, distinct from meters; landmark events re-key regional lean AND incoming-pol party-assignment (MLK/Taft); Reconstruction sub-era bias already a validated proof-of-concept; design fork (bias-sets self-rejected vs industry-modifier preferred) UNRESOLVED; shipped = static `bias` + ±1 region event-effect (`phaseRunners.ts:2608`), no schedule | [§11.4.1](#1141--247-new-statelean-batch-35--event-driven-state-party-lean-realignment-the-state-lean--realignment-projection-of-92-designed-not-built) + [§15.1](#151-calcstatevote--the-core-resolver-phaserunnersts3685) | `statelean#POST 2, 5, 6, 7, 11, 15, 16, 19, 20, 25, 30, 32, 33, 34`; code `phaseRunners.ts:2608-2614, 903-906` |
+> | **★★ #248 subtype taxonomy (ORIGIN)** | 33-value policy-area `subtype` enum on Legis-Prop/Pres-Action/Gov-Action/SC-Case; genre ⊂ subtype (genre = a subtype given stateful treatment); likely multi-valued + atop the 4-value `committee`; Era-of-Independence Gov-Actions state-scoped (#20); LaFayette already shipped; foreign-leadership-change 50/50 event accepted | [§14.1.3.a](#1413a--248-new-futureideas-batch-35--the-legislative-proposal-subtype-policy-area-taxonomy-a-33-value-enum-on-all-four-primitives-designed-0-shipped) | `futureideas#POST 1, 4, 7, 17, 18, 22`; code `types.ts:1506, 1513` |
+> | **★ #249 SCOTUS Landmark-tier + significance + Future docket** | per-case importance TIER (Landmark = a ruling that can spawn a movement by itself, ties #6/#354; consensus #1 = Advanced Robot Inc v California); AMPU-2 context-dependent significance = f(drifting opinion meters Religious Affiliation/Fundamentalism/Luddism, ruling direction vs drift); ~45 content-frozen Future cases (name + constitutional question) to seed E25 | [§22.7.w](#227w--249-new-scotusfuture-batch-35--per-case-importance-tier-landmark-tier--context-dependent-significance--the-era-of-future-docket-content-designed-0-shipped) | `scotusfuture#POST 1, 2, 7, 8, 9, 10, 11, 12, 13`; code `phaseRunners.ts:3397` |
+> | **★ #250 House-seat-competition fork** | per-seat (A, leading) vs free-for-all top-N (B) vs single multi-member pool (C); CPU keeps incumbents in their current seat (humans override); seat-lock released on reapportionment (dynamic per-era seat count); ~100-seat / 1-3-per-state balance; seats ≠ geographic districts (alt-states model); + disable-historical-lean setup toggle + Kingmaker-D6 trivial-primary resolver + lame-duck/ex-Pres endorsement sway | [§29.5.1](#2951--250-new-electiondisc-batch-35--the-house-seat-competition-fork-how-multi-seat-states-run-their-focus-rep-races-designed-direction-set-not-ratified) | `electiondisc#POST 1-5, 7, 8, 10, 12-16, 24, 26`; code `types.ts:1327, 1247` |
+> | **★ DH-80 mis-signed "Other racial" scorer term** | a SPREADSHEET-scorer issue ("Other racial" shouldn't be a flat negative in HI); NO race/demographic scorer in `src/`; reconcile when the #238/#239 demographics scorer is built (sign-check per state, like the DH-53 audit) | [§15.1](#151-calcstatevote--the-core-resolver-phaserunnersts3685) | `electiondisc#POST 31` |
+> | **★★ #186/#179 restart proof** | starter-stat cabinet (all ≤3 Admin) tanked the meters → forced full re-stat to mid/peak (5-Admin + four 4's + 3's); the per-officer lingering meter-roll fails at whole-cabinet scale; boot must seed cabinet/ambassador/advisor at era-appropriate mid/peak | [§28.7](#287-modern-cabinet--the-era-of-terror-cabinet-rework-231) | `redbutton1960#POST 1, 2` |
+> | **★ #208/#182 two CPU vote subsystems (`GM⇒App`)** | (a) CPU **moderate-faction swing-vote** = 50-50 base ± proposing-party / own-party-leader-support / faction-internal-lean (moderates the only stochastic bloc; complementary to `welcome2future`'s leader-level rule); (b) **Presidential pressure** = roll (Command) d6, each 5-6 rerolls, reroll×10 = % of a faction that defects (reconcile vs the `rulebook` convert-(Legislative#)-senators tool — Command vs Legislative); + Command-eligibility gate fired live (O'Neill 0-Command barred); + CPU minor-candidate generator (faction filtered by Command+age → random pick, +3-padded no-candidate chance) | [§28.10.1](#28101--208--182-extended-new-redbutton1960-batch-35--two-gm-improvised-cpu-vote-subsystems-the-moderate-faction-swing-vote-model--presidential-pressure-the-command-die-flip-gmapp-designed-not-built) + [§20.11(2)](#2011--the-federalism-presidency-vetooverride-command-as-action-budget-182-scotus-timing-summer2021-designed) | `redbutton1960#POST 11, 22, 24, 25, 27` |
+> | **★ #31 cabinet-region-snub abuse-vector + era-scaling** | snubbing a region = −1 election in that region (Gilded→Terror band, confirmed for a 1960 board); region stops mattering for DomStab after the Civil War, for party-popularity at the Era of Terror; **NEW abuse-vector**: an opposition Senate majority can reject a region's nominees to inflict the −1 (confirmation-blocking weaponizes the penalty) | [§28.7](#287-modern-cabinet--the-era-of-terror-cabinet-rework-231) | `redbutton1960#POST 3-9` |
+> | **★ DH-53 Farm Subsidy geographic-bill scoring + circuit-court appointments** | Farm Subsidy = +100 pts to every Gov/Sen/Rep from an agriculture-leading state (a per-bill geographic effect table; "half of some faction totals"); circuit-court fill = 1 vacancy/same-party-faction by random roll, each +1 Judicial (a SCOTUS-feeder roster lever, #52) | [§11.5](#115-industry-leadership-scoring-designed-not-built) | `redbutton1960#POST 13, 17, 18, 20` |
+> | **Corroborations (no NEW row)** | #92/#108/#205/#241/#20 (state-lean = #92's projection); #206/#221/#237/#109 (Future content + the primitive model); #6/#354/#218/#25/E25/#52 (SCOTUS); #219/#55/#191/#185/#183/#210 (House/primary); #15/#108/#172/DH-23 (ideology-flip + confirmation); #111 (primary momentum) | the topical sections | per-thread |
+>
+> **Roadmap takeaway (for the tech-lead + roadmap-planner).** Batch-35 build surface, ranked:
+> (1) **★★ #247 — when state-lean realignment is built, build it EVENT-keyed from the start** (per #92): an
+> industry-keyed time-boxed event modifier on `State.bias` atop a decade/start-date base, kept distinct from
+> the meter layer, with landmark events re-keying both regional lean and the draft/party-assignment pipeline
+> (respecting the static-historical-party-assignment cross-constraint). The build today has only the static
+> scalar + the ±1 region event-effect — no schedule. (2) **★★ #248 — extend the #221 primitive schema with
+> a 33-value `subtype` policy-area tag** on all four primitives (multi-valued, atop the 4-value `committee`),
+> cross-linked to the #237 genre framework. (3) **★★ The #186/#179 boot proof is now LIVE-corroborated** —
+> the deterministic late/mid-era BootSheet ([§26.1](#261-the-mid-government-boot-shape-general)) must seed
+> cabinet/ambassador/advisor officers at era-appropriate mid/peak strength, with a per-office per-era
+> stat-seed table (the GM eyeballed it — #186 still needs the deterministic table). (4) **#208/#182 — the
+> CPU legislative engine** must subsume the faction-level moderate swing-vote model + the leader-level
+> own-vote rule + the Presidential-pressure Command-die flip (reconciled with the rulebook convert-senators
+> tool) + the Command-eligibility gate + the CPU minor-candidate generator. (5) **Content + niche** — seed
+> E25's Era-of-Future SCOTUS docket + a per-case tier field (#249); ratify the House-seat-competition model
+> + CPU-keeps-incumbents-in-seat + unlock-on-reapportionment (#250); the #31 confirmation-blocking
+> abuse-vector reconcile; per-bill geographic effect tables (DH-53 Farm Subsidy) + the circuit-court
+> +1-Judicial feeder; and the DH-80 demographic-scorer sign-check (when #238/#239 lands). Cross-ref
+> `game-context.md` rows **#247/#248/#249/#250 + DH-80 (NEW)**, and **#186/#179/#208/#182/#31/#52/#191/#219/
+> DH-53 (sharpened/corroborated)**.
 
 ### 30.4 Authority hierarchy reminder
 

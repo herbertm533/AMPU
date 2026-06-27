@@ -23,6 +23,16 @@
 > That arc is the parent framing; this file is the **1960 snapshot of it** plus
 > this batch's divergence flags. Do not re-derive the realignment here — read it
 > there.
+>
+> **Restart note (`3c3c46f0` "Out of the Ashes: 1960 playtest restart", 27 posts):**
+> a continuation of this run after a **reset** — the original stalled because
+> cabinet **Admin ratings were all at starter levels and tanked the meters** (no
+> Cabinet member above 3); the GM reset ratings to mid/peak and resumed at the
+> **1962 Congress-in-Session phase**. A game-mechanics note, not real history. The
+> restart **confirms** the core divergences below (Bricker won 1960; governs
+> 1962–64; alt Test Ban Treaty; LBJ Majority Leader + O'Neill Speaker) and **adds**
+> the Samuel-Pierce-first-Black-AG divergence + the 1964 Byrd-vs-Long primary
+> (Divergences §7–8).
 
 ## ★ The load-bearing framing: a 1960 start is mid-realignment (the South is still BLUE)
 
@@ -219,7 +229,11 @@ era framing isn't accidentally "corrected" back to reality:**
    JFK**, and the Cuban Missile Crisis (the treaty's real catalyst) was an LBJ-era
    *no* — it was **JFK's** crisis. The game compresses/reassigns these to its
    Bricker administration. **[divergence; anchor: State Dept Cuban Missile Crisis;
-   the real PTBT is 1963/JFK]**
+   the real PTBT is 1963/JFK]** *Restart date-pin:* the treaty + a Democratic House
+   recapture (255–182, +20 since 1960) both land in **1962** (restart chunk-001
+   post 1), with **Tip O'Neill taking the Speakership from Joseph Martin** in the
+   '62 midterms (Sam Rayburn lost his primary). The real Limited Test Ban Treaty
+   was Aug 1963 under JFK — the game runs it ~a year early under Bricker.
 
 4. **A different Democratic legislative leadership.** With the White House lost,
    the game's BLUE coalition builds a **congressional** power base: a **Democratic
@@ -242,6 +256,24 @@ era framing isn't accidentally "corrected" back to reality:**
    1964"* (chunk-022 post 1677). In real history MLK **never sought elective
    office** — he led the movement from outside electoral politics. Treat MLK-as-
    draftee as a game affordance, not history. **[divergence; inference]**
+
+7. **Samuel Pierce appointed the first Black U.S. Attorney General (1962)** — from
+   the `3c3c46f0` "Out of the Ashes" restart. Bricker names **Samuel Pierce** AG,
+   confirmed 88–12 over a Southern-Democrat bloc (Byrd, Thurmond) (restart
+   chunk-001 posts 2 & 10). The game's bio is **accurate to the real man** (Harlem
+   native; NY state judge 1959–60; argued *NYT v. Sullivan* before the Supreme
+   Court for MLK and the NYT). **The divergence is the office and era:** the real
+   **Samuel R. Pierce Jr.** was **Reagan's HUD Secretary (1981–89)** — never
+   Attorney General; the **first real Black U.S. AG was Eric Holder (2009)**, so
+   the game advances a Black AG by ~47 years. **[divergence; anchors below]**
+8. **The 1964 Democratic primary axis is Byrd (right) vs. Earl Long (left)** —
+   restart. With the presidency held by Republican Bricker, the BLUE fight is
+   intra-party: party leader **Sen. Harry Byrd (VA)** the Traditionalist
+   front-runner vs. **former Gov. Earl Long (LA)** leading the left wing (+ minor
+   candidates incl. James Farley, Tip O'Neill's New-Deal pick). **Earl Long won
+   the first primary (New Hampshire), Byrd second** (restart chunk-001 posts
+   23–27). Pure alt-history (real 1964 = LBJ uncontested). A 1960-ticket detail the
+   restart adds: **Bricker/Laxalt** beat **Kennedy/Reagan**. **[divergence/fiction]**
 
 ## Pop-history simplifications to avoid (era-specific)
 
@@ -306,3 +338,6 @@ era framing isn't accidentally "corrected" back to reality:**
 - [Britannica — John W. Bricker](https://www.britannica.com/biography/John-W-Bricker) and [CFR — the Bricker Amendment](https://www.cfr.org/articles/remembering-the-bricker-amendment) — Bricker's real career; out of the Senate by 1959.
 - Batch source: `docs/game/sources/8bc0231c-ampu-the-big-red-button-1960-playtest/` (chunk-001 setup/factions; chunk-005 Bricker nomination; chunk-009 Bricker 284–251 win; chunk-022 1962–64 scripted events, Test Ban Treaty, LBJ/O'Neill).
 - Parent framing: `historical-context.md` §6/§7 + polarity map; `historical-context-1948-coldwar.md` ★ (the full Southern realignment arc).
+- [Samuel Pierce — Wikipedia](https://en.wikipedia.org/wiki/Samuel_Pierce) / [BlackPast — Samuel R. Pierce Jr.](https://blackpast.org/african-american-history/pierce-samuel-r-jr-1922-2000/) — real Pierce = Reagan's HUD Sec (1981–89), Harlem native / NY judge / *NYT v. Sullivan*; never AG. [Britannica — Eric Holder](https://www.britannica.com/biography/Eric-Holder) — real first Black U.S. AG (2009).
+- [State Dept — Limited Test Ban Treaty (1963)](https://history.state.gov/milestones/1961-1968/limited-ban) — real treaty signed Moscow Aug 5, 1963 under JFK.
+- Batch-35 restart source: `docs/game/sources/3c3c46f0-out-of-the-ashes-1960-playtest-restart/chunk-001.md` (post 1 restart-after-reset + 1962 midterms/Test Ban; posts 2 & 10 Samuel Pierce AG; posts 23–27 the 1964 Byrd-vs-Long primary).
