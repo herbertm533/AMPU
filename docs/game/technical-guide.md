@@ -1908,6 +1908,15 @@ continental congress era system) + #120 (dataset umbrella — one coordinated
 
 ## 9. Build-sequencing advice
 
+> **★ Framing: this whole section sequences the GM-replacement program.** Per the
+> north-star (`game-context.md` → "The app must subsume the human GM"), every
+> `GM⇒App`-tagged gap is the engine taking over work a human GM does by hand —
+> the referee/calculator half (election/platform math, conventions, scenario
+> boot, lingering rolls, decision-event/treaty adjudication, end-conditions,
+> in-app rules) and the opponent half (the E9/K5 CPU faction AI). Order below is
+> dependency-first; the `roadmap.md` "GM-replacement lens" groups the same gaps
+> by which half of the GM's job they retire.
+
 > **This section is written for the roadmap-planner to lift directly.** It is my
 > engineering opinion on order, dependencies, and rough size/risk for the
 > game-pm gap log (~176 rows across 5+ eras + A1–A9 presentation + the CPU-AI

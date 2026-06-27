@@ -213,6 +213,59 @@
 > stuck on and the designer re-implements differently each playthrough (POST
 > 713-716).
 
+## ★ North-star: the app must subsume the human GM
+
+**AMPU's core engineering mandate is a zero-human-GM game.** Every playtest and
+discussion thread in this corpus is run by a human Game Master (usually
+MrPotatoTed / vcczar) who, turn after turn, performs work *by hand* that the
+shipped build does not yet do. **Every GM hand-adjudication recorded in these
+digests is, by definition, a feature the shipped game must perform
+automatically and deterministically** (seeded RNG, `src/rng.ts` — never a human
+die-roll or a raw `Math.random`). The gap log below is, read correctly, the
+catalogue of exactly that work.
+
+The GM is doing **two distinct jobs**, and the game must own **both**:
+
+**① GM as referee / calculator** — the rules math and machinery the GM computes
+by hand each turn. This is the half that is *least* visible in a casual read of
+the corpus, and the one the batch-27 `redbutton` platform finding surfaced
+(a 492-40 landslide caused by the GM mis-applying a `+1` as `+3`; the platform
+"engine" does not exist in code — it is GM arithmetic). It must move into the
+deterministic engine:
+
+| GM computes by hand | Must become engine | Gaps |
+|---|---|---|
+| Election/platform scoring, the swing die, historical-bias terms | The election scorer owns the math; UI shows only player-visible numbers ("fog of war") | #184, DH-72, #18, #14, QW3, **QW19–QW21** |
+| Primary → brokered-convention: delegate weights, balloting, walkouts, kingmaker VP | A convention state-machine | #185, #183, #19, #20 |
+| Scenario boot: year-correct incumbents, seeded delegates, back-dated careers, retro-fatigue | A deterministic per-year `BootSheet` (incl. mid-cycle/late-era shape) | #186, #187, #86, #115, #173 |
+| Cabinet meter rolls / lingering effects | A lingering-roll engine | #179 |
+| Treaty / decision-event / diplomacy adjudication, retry budgets | Era decision-event spine + treaty→territory + bounded retries | #177, #178, #107, #162 |
+| End-condition tracking (incl. the "big red button" nuclear loss) | Meter-floor game-end model | #88, #188 |
+| Explaining the rules so players don't need a GM to interpret them | In-app rules surface | DH-69, QW21 |
+
+**② GM as opponent** — the GM also *plays* every non-human faction (in solo
+runs, all 9). This half the docs already headline hard:
+
+| GM does by hand | Must become engine | Gaps |
+|---|---|---|
+| Per-faction CPU decisions: candidate selection, voting, meter management, cabinet/legislative heuristics | The **E9 handler suite + K5 `CpuController`** (today `grep runCpuFaction\|perFactionSim src/` = ZERO) | #114, E9, K5, CPU-AI spec cluster #70–#78 |
+| (cost of NOT having it) | — | **DH-36** — 4 documented GM-burnout playtest deaths |
+
+**The single most-corroborated cross-batch lesson** in the corpus is that the
+manual CPU-faction simulation + opaque rules are what *kill* playtests (burnout
+on the build side, confusion on the player side), and that the only runs to reach
+a natural endpoint did so because the **designer personally absorbed the GM load**
+(batch-25 `principle1772`: a 1-human-vs-9-CPU game completed *only* because Ted
+hand-simulated all 9 CPU factions to ~1800). That is precisely the work ① + ②
+above must remove from the human.
+
+> **Going-forward convention (digests + gap log):** when a digest records the GM
+> doing something by hand, tag it **`GM⇒App`** and ensure it has (or gets) a
+> gap-log row. A `GM⇒App` item is never "designer flavor" to leave to a human —
+> it is an automation requirement. The roadmap's **"GM-replacement" lens**
+> (`roadmap.md`) groups these into a buildable program; the technical-guide
+> (`technical-guide.md` §9) sequences them.
+
 ## What this game is
 
 AMPU is a turn-based American political strategy game that runs in the browser
