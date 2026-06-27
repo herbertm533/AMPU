@@ -348,6 +348,7 @@
     - [30.12 Rulings folded from `trump2024` (Ted-run 2024/Jan-2025-start modern campaign — SETUP-ONLY)](#3012-rulings-folded-from-trump2024-ted-run-2024jan-2025-start-modern-campaign--setup-only)
     - [30.13 Rulings folded from `modernday` (GA-run 2016-start modern multiplayer — Ted-blessed marquee rulings)](#3013-rulings-folded-from-modernday-ga-run-2016-start-modern-multiplayer--ted-blessed-marquee-rulings)
     - [30.14 Rulings folded from `pop2012b` (the 2nd 2012-start "Era of Populism" — MrPotatoTed designer-authoritative point-of-order corrections)](#3014-rulings-folded-from-pop2012b-the-2nd-2012-start-era-of-populism--mrpotatoted-designer-authoritative-point-of-order-corrections)
+    - [30.19 Rulings folded from batch 29 — the two timeline-edge playtests (`wilsons1916` 1916-MP "Era of Hollywood" + `welcome2future` 2022-hands-off "Era of the Future")](#3019-rulings-folded-from-batch-29--the-two-timeline-edge-playtests-wilsons1916-1916-mp-era-of-hollywood--welcome2future-2022-hands-off-era-of-the-future)
     - [30.4 Authority hierarchy reminder](#304-authority-hierarchy-reminder)
 31. [Gilded-Age era systems (designed, not built)](#31-gilded-age-era-systems-designed-not-built)
     - [31.1 (#147) Tariff-as-national-%-rate + the mutually-exclusive MonetaryRegime](#311-147-tariff-as-national-rate--the-mutually-exclusive-monetaryregime-designed)
@@ -838,6 +839,46 @@ drafted**. (A draft-bookkeeping rule the build must honor when it adds draft-ord
 hard gate); the **9th/10th draft-order skill bonus must attach to the first ACTUAL pick** not the
 first-round attempt. Cite `oopscpu#POST 227-228, 239`.)*
 
+### 4.4 ★ #211 + #213 (NEW, batch 29) — inter-faction (cross-party, PV-ordered snake) draft mode + era-conditional faction-ideology assignment (designed, not built)
+
+> **Two batch-29 draft-mode findings — an alternate DRAFT ORDERING (`wilsons1916`) and a forward
+> era TOGGLE on the faction-ideology restriction (`welcome2future`).** Both are designed, not built; the
+> shipped draft (`runPhase_2_1_1_Draft`, `phaseRunners.ts`) is the standard per-faction within-party
+> draft.
+
+**#211 — inter-faction (cross-party, PV-ordered) snake-draft mode.** `wilsons1916` ran its 10-human
+multiplayer setup as a **snake-style rookie draft ordered by total summed PV**, run across **BOTH
+parties simultaneously** — each of 10 factions drafting ~10-11 picks in rounds (*"BLUE DRAFT 1… RED
+DRAFT 1…"*, `wilsons1916#P1-15`), entirely GM-administered with no engine support. Distinct from:
+- the shipped **within-party** draft (each party's factions draft from a party-restricted pool), and
+- the `nuke`/`modern` **worst-score-picks-first** snake order *within* a draft (§28.11).
+
+This is a **cross-party simultaneous snake** keyed on summed-PV — an alternate draft-ordering mode the
+build could offer for multiplayer/alt setups. It re-confirms the dataset's **`draftYear = birthYear+25`
+cohort placement**: the pool was a **1940s-vintage real-history cohort** (Earl Warren, Eisenhower,
+Robert Taft, James Farley, Joseph P. Kennedy Sr, Hugo Black, Truman, Sam Rayburn) landed on a 1916
+board — i.e. a whole mid-century cohort arrives as the 1916 rookie class (**alt-history is expected**,
+not a bug). Lower priority (MP setup flavor). (`game-context.md` #211; pairs #24/#92/#4/#115 + the
+dataset `draftYear` rule, `CLAUDE.md`; `wilsons1916#P1-15, P453`.)
+
+**#213 — era-conditional faction-ideology assignment (assigned ideologies DROPPED at a future
+boundary).** In `welcome2future` factions are assigned **2 draft-eligible ideologies "for now"** (the
+3-ideology version produced "bizarre teammates", so it was trimmed to 2), but the GM states:
+*"**Starting in 2026, factions will no longer have assigned ideologies for the drafts**"*
+(`welcome2future#post 68`). So the era-keyed draft-ideology restriction — which §4.1.w/#171 and §4.1
+document as **TIGHTENING** per era through the realigning eras — is eventually **removed altogether** at
+a modern/future boundary, letting factions draft any ideology. This **pins the specific boundary
+(2026)** for the #171 finding (`trump2024`/`modernday`: draft-ideology restrictions are OFF in the
+modern present and the toggle FLIPS mid-save at the modern→future band boundary). So the draft-ideology
+restriction is itself an **era-keyed toggle that can switch fully OFF**, not just re-profile per era —
+consolidate with [§4.1.w (#171)](#41w--171-new-trump2024--era-keyed-draft-ideology-restrictions-on-earlyrealigning-off-modern-present-designer-authoritative-designed-not-built). (`game-context.md` #213;
+pairs #4/#92/#108/#171; `welcome2future#post 68`.)
+
+*(designed, not built — (a) an optional cross-party PV-ordered snake-draft mode for MP/alt setups,
+distinct from the within-party draft; (b) make the assigned-faction-ideology draft restriction an
+era-keyed toggle that can be fully DISABLED at a configured boundary (2026 in the future band), not just
+re-profiled per era — consolidates with #171.)*
+
 ---
 
 ## 5. Career tracks & the expertise pipeline (2.1.2)
@@ -1004,6 +1045,24 @@ Forum runs ideology shifts as a **per-half-term budget**, not per-politician rol
   per-attempt success but the **count of attempts is forum-budgeted**, not engine-budgeted.
   *(design divergence — shipped engine rolls per-pol with no faction cap; forum has a hard
   per-faction cap of 3-9.)*
+
+> **★ #212 (NEW, `wilsons1916`, batch 29, balance + `GM⇒App`) — bulk per-term ideology-shift abuse is
+> the era's dominant manual-upkeep sink, and the run shows the per-faction budget above was NOT enforced
+> (the uncapped-shift balance hole).** In `wilsons1916` players performed **40-60+ ideology shifts per
+> faction per term** — OrangeP: *"I consider myself a failure if I do less than 60 shifts"*; *"this era
+> sucks for mods"* → bulk **Mod→Cons/Lib conversions** to escape the hinge era's Moderate glut. Each
+> shift is a **per-pol die roll the GM resolved by hand** (`=randbetween()`), with **~20% gaining
+> `flip-flopper`** (`wilsons1916#P472, P487, P494`). Two requirements collide:
+> 1. **`GM⇒App`** — the per-pol shift roll + flip-flopper outcome must be **engine-automated** (it is
+>    the single biggest by-hand load of the era; this is exactly the shipped §6.3 per-pol roll, which
+>    proves the automation already exists — the gap is wiring the 2.1.5 *pass* to it at scale).
+> 2. **BALANCE** — there was **no cap on shifts/faction/term** in this run, **contradicting** the
+>    `modernday` **max-9** per-faction budget documented above (#110). So either the 3-9 budget is **not
+>    era-universal**, or it **wasn't applied** here. vcczar explicitly **declined** a cap: a rule to
+>    limit shifts was *"thought about… but nah."* The build must pick ONE: enforce the per-faction shift
+>    BUDGET (the balance lever vcczar declined) or allow uncapped shifts with the `flip-flopper` risk
+>    (~20%) as the only brake. (`game-context.md` #212; pairs #108/#110 (the budget spec) + DH-36
+>    (GM-burnout class); `wilsons1916#P472, P487, P494`.)
 
 #### 6.3.y ★ Ted-RULED ideology shift schedule (designer-authoritative; `tedchange`)
 
@@ -1476,6 +1535,32 @@ counter on `Faction.leaderId` / party leadership.
 > the House 58R-42D unchecked ("liberal bloodbath," §15.3.5 / §28.6). (New gap **#187**; boot-step
 > requirement folded into §28.1 / #186; ruling index [§30.17](#3017-rulings-folded-from-8bc0231c-the-big-red-button-1960-playtest-the-first-cold-warcivil-rights-source).)
 
+#### 8.5.4 ★ #210 (NEW, `welcome2future`) — the "Ex President" / "Ex Nominee" super-Kingmaker career state (designed, not built)
+
+> **★ #210 (NEW, `welcome2future`, batch 29). A lasting-influence mechanic players asked for twice
+> (`welcome2future#post 27, 30, 46`).** Kingmaker/protege machinery already exists (§8.4/#30 on-elect
+> Kingmaker; the CPU master-kingmaker rows in §25.11), but there is **no special STATUS for a former
+> President / nominee** — today they re-enter the normal pol pool.
+
+In `welcome2future`'s 2022 boot, living ex-Presidents get a terminal **career STATE**:
+
+| State | Entered when | Powers |
+|---|---|---|
+| **"Ex President"** | a President leaves office (**2-term**, OR out of office **>20 yrs**) | **office-INELIGIBLE** (cannot hold any office) + a **super-Kingmaker**: Kingmaker **AND may pick proteges from ANY state** (not just the home state ordinary kingmakers are constrained to) |
+| **"Ex Nominee"** | a designated losing nominee (bespoke) | same powers (Hillary Clinton got this version) |
+
+Notes: **Trump was kept as a normal, still-eligible pol** — entering the Ex-President state is a
+**per-figure call** at boot, not automatic for every former President. Purpose: model the lasting party
+influence a former President wields **+** give a clean way to track when they die. This is **distinct
+from** the ordinary on-elect Kingmaker (§8.4/#30) and CPU kingmaker behavior (§25.11): it is a
+**terminal career state with an UNCONSTRAINED protege range** (any state). (`game-context.md` #210;
+pairs §8.4/#30 + §25.11; `welcome2future#post 27, 30, 46`.)
+
+*(designed, not built — add an "Ex President" / "Ex Nominee" career state on `Politician`:
+office-ineligible, a super-Kingmaker whose proteges may be drawn from ANY state; entered when a
+President leaves office (2-term or out >20 yrs) or a losing nominee is so designated; tracked through
+death. Pairs with §8.4/#30 Kingmaker-on-elect + the §25.11 CPU kingmaker rules.)*
+
 ---
 
 ## 9. Cabinet & military appointments (2.3.x)
@@ -1535,6 +1620,27 @@ Grants Military expertise. If a war is active, grant **Command** with PR6 trait 
 (`military_command` context, `TRAIT_GOVERNANCE_EFFECTS` `types.ts:1028`): base `+1`,
 **Decisive General → +2**, **Naive Strategist → 0**; a Decisive-General Secretary of War
 adds another `+1` to the GiC.
+
+#### 9.2.1 ★ DH-75 (NEW, `wilsons1916`) — military-appointment eligibility (citizenship + exp-type→branch matching) unenforced (designed)
+
+> **★ DH-75 (NEW, `wilsons1916`, batch 29, `GM⇒App`).** Military appointment (the shipped §9.2 GiC fill,
+> the designed §9.3.1 Senior General / Senior Admiral benches, and the founding `appointMilitary`,
+> [§17](#17-era-systems) / `revolutionaryWar.ts:41`) has **two unenforced eligibility rules** the rulebook
+> doesn't answer:
+
+| Rule | What `wilsons1916` shows | Intended check |
+|---|---|---|
+| **(a) Citizenship** | **Pancho Villa and Emilio Aguinaldo** — a Mexican and a Filipino — could be appointed **US Army generals** (*"In the game, nothing prevents it. IRL it wouldn't happen"*; flagged to vcczar; Villa kept *"because it's badass"*) | a **citizenship gate** — foreign nationals ineligible for the US officer corps (or an explicit per-pol exception flag) |
+| **(b) exp-type→branch matching** | **Nimitz was auto-slotted as a *General* despite Naval experience** and had to be hand-corrected to **Admiral** | match **experience type → service branch**: naval-experience pols slot to **Admiral** (Navy track), army-experience pols to **General** (Army track) |
+
+Both were `GM⇒App` hand-resolutions (the GM hand-corrected the branch and hand-waved citizenship). The
+shipped GiC fill already filters out *naval* military for the **General** seat (`appointMilitary`,
+`revolutionaryWar.ts:41` — "highest military, **non-naval**"), so the founding engine has the (b)
+primitive for one direction; DH-75 generalizes it to a proper two-track Admiral/General split + adds the
+(a) citizenship gate. Surfaced live alongside the **1916-bare-boot officer-corps appointment** (the
+SecWar appointed the *entire* general/admiral roster from scratch because the 1916 BootSheet ships no
+starting officers — see [§26.1](#261-the-mid-government-boot-shape-general) + #186/#209). (`game-context.md`
+DH-75; pairs §9.3.1 / §22.9 (military-leadership tier) / #56/#186; `wilsons1916#P162-169`.)
 
 ### 9.3 Forum design layer (designed, not built)
 
@@ -2326,6 +2432,21 @@ fallback + VP-age guard; Era-of-Populism-scoped until it fires twice. Cite `bide
 > other prior-event) gate? *(DESIGNED-content bug — a few keyed preconditions + the precondition layer
 > ported to the non-1772 builders; cite `solo1916#POST 31, 34`.)*
 
+> **★ #106 CORROBORATED from the FIRST multiplayer 1916 (`wilsons1916`, batch 29) — WWI entry is an
+> OPTIONAL event-gated trigger; the whole military/combat subsystem stays DORMANT unless it is taken.**
+> Where `solo1916` *was presented* the Unrestricted-Submarine-Warfare *"Enter the World War"* A/B
+> decision, the 10-human `wilsons1916` run shows the **other branch**: Wilson kept the no-war promise and
+> **the US NEVER entered WWI for the entire run**. The consequence is explicit: *"**Because we've not
+> entered WWI, no military phase**"* (`wilsons1916#P230`). Congress *did* **create a Selective Service**
+> (*"handy for that World War thing"*, `P320`) and grew the army/navy as ordinary legislation — but the
+> war-entry event **never fired**, so **no military/combat phase ever ran**. This confirms #106's
+> engine-wars-vs-flavor split from the demand side: the §13/§21.1 war engine is **dormant unless the
+> war-entry event is chosen** (the war is genuinely optional, not scripted-inevitable), and military
+> *legislation* (Selective Service, force buildup) is decoupled from *fighting a war*. (`game-context.md`
+> #106; the SCOTUS *Selective Draft Law Cases* still fired in 2.6.3 — court ruled drafts constitutional
+> 7-1, ideology-voted, Brandeis lone dissent — so the **legal/legislative** WWI footprint exists without
+> the **combat** one. `wilsons1916#P230, P320, P83`.)
+
 ---
 
 ## 11. Governance (2.5.x)
@@ -2605,6 +2726,44 @@ Each faction with a member of `legislative ≥ 1` has a **`0.60`** chance to pro
 the highest-legislative member sponsors a random `BILL_TEMPLATES` entry (`phaseRunners.ts:3420`).
 Bill carries a `committee`, `effects`, status `proposed`.
 
+#### 12.1.1 ★ DH-74 (NEW, `wilsons1916`) — the bill-proposal list MUST be state-validated BEFORE proposal/vote (the Progressive face of DH-60 for LEGISLATION) (designed)
+
+> **★ DH-74 (NEW, `wilsons1916`, batch 29, `GM⇒App`). The single biggest PROCESS failure in the run.**
+> The bill-proposal list offered bills that were **illegal given current game state** — and the illegality
+> was discovered only **mid-vote**, after committee + packaging + a House vote.
+
+In `wilsons1916` bills were proposed, voted through committee, packaged, and House-voted — then found
+INVALID against game state during the second (Senate) vote. The GM's verbatim list of why
+(`wilsons1916#P303`):
+- *"Hawaii territory is **legis active**, so I won't move it to the Senate"* — a territory bill duplicated
+  an already-active legislative item.
+- *"**Teller Amendment is active**, so we can't make Cuba a client-state"* — an already-ratified amendment
+  blocked a class of bill.
+- *"**Spanish-American war is not recent** so we can't issue pensions"* — a **"recent war" predicate** was
+  false, but the pension bill was still proposable.
+
+The GM **HALTED and restarted phase 2.6** (`P311-313`) and players had to **replace 3 already-voted
+bills**; it recurred (`P337` Hudson-waterway "another proposal-that-should-not-have-been"), with players
+asking *"why are so many things in the proposal list that we can't propose?"* (`P338`).
+
+**The rule (DESIGNED).** The bill-proposal list must be **validated against current game state BEFORE a
+bill can be proposed/voted** — filter out any bill whose preconditions fail:
+
+| Precondition class | Validation | Example failure |
+|---|---|---|
+| **Territory** | target owned AND not already legis-active | Hawaii bill while Hawaii already legis-active |
+| **Amendment** | required amendment ratified / blocking amendment not active | Teller Amendment blocks Cuba client-state |
+| **"Recent war" predicate** | a qualifying war ended within the era's recency window | Spanish-American war "not recent" → no pensions |
+| **Era prerequisite** | the era/decade gate is met (§27.1 content band; the "Wrong Era" rejection, §28.13) | a Keystone-XL subsidy in 1972 (`nixon1972`) |
+
+The engine **already owns this state** (`game.territories`, `game.amendments`, `game.wars`, the era band)
+— so surface **only legal proposals** at 2.6.1, never a bill the committee/floor will later have to throw
+out. This **extends DH-60** (era-prereq gating for EVENTS) to **legislation**, and matches the existing
+`drums` rule that *"proposal validity must check active amendments"* (a "Apply Civil Rights to Former
+Slaves" auto-proposed after the 14A made it invalid, §12.3 blockquote / `drums#POST 2006`) — DH-74 is the
+**generalization** of that one-amendment check to the full precondition set. (`game-context.md` DH-74;
+pairs DH-60 / #92 / BUG-1 / #11; `wilsons1916#P303, P311-313, P337-338`.)
+
 ### 12.2 (2.6.2) Committee review — `runPhase_2_6_2_Committee` (`phaseRunners.ts:3463`)
 
 The committee chair decides: `passChance = clamp((sameParty? 0.85 : 0.25) +
@@ -2849,6 +3008,31 @@ re-queue next session.)*
 > **modern instance** of the §25.9 Iron-Fist overload, surfaced as a specific cascade
 > ("≈ auto-54-votes" is the modern-era manifestation of "**auto-cloture for majority items**"
 > in `drums` POST 5920).
+
+> **★ DH-76 (NEW, `wilsons1916` + `welcome2future`, batch 29, `GM⇒App`) — when NO cloture path exists a
+> filibuster is an automatic full-term delay, and the CPU filibuster-override decision is undefined.**
+> The cloture thresholds above (67% pre-modern / 60-vote modern / the Nuclear-Option-keyed bar of #172)
+> assume a cloture mechanic *exists*. Two batch-29 threads show the **failure modes when it doesn't**:
+> - **`wilsons1916` — the 1916 ruleset had NO cloture path at all.** `P349`: *"No rules to invoke
+>   cloture exist, so any bill filibustered will be **delayed until 1918-20**."* Puritan senators
+>   filibustered (hard-drugs criminalization + an income-tax change were **killed for the whole term**)
+>   and there was simply **no way to break it** — so a filibuster defaults to an **automatic full-term
+>   delay**, not a contestable vote. This is the era-content face of the cloture gap: the
+>   Progressive/1916 band's ruleset (UNBUILT) inherits "filibuster but no cloture."
+> - **`welcome2future` — the CPU side is undefined.** CPU senators with the right profile DO filibuster
+>   nominees (Mike Lee killed Sullivan + Locke; Cruz killed Solis; filibustered pols gained
+>   `Controversial`), and the GM flagged **there is NO rule for whether a CPU Majority Leader overrides
+>   a filibuster** → improvised *"won't override own party unless it targets his faction"*
+>   (`welcome2future#post 331, 343`).
+>
+> **The fix (DESIGNED).** (a) A filibuster must always have a **cloture path** — a vote at an era-keyed
+> threshold (tied to the `nuclearOption` state where relevant, §9.3.10/#172) — so it is **breakable
+> rather than an automatic full-term delay** (the §12.6 *"no Cloture until the Cloture bill passes"* rule
+> and the early-era "filibuster exists before cloture is instituted" window are the *intended* gap; the
+> 1916 *"no cloture rules at all"* state is the *un-authored* gap). (b) The **CPU maj-leader
+> filibuster-override decision** must be specified (own-party-unless-targets-my-faction baseline) — this
+> folds into #208 (CPU legislative logic, §28.10). (`game-context.md` DH-76; pairs §12.6 / §9.3.10 (#172)
+> / #208; `wilsons1916#P349`; `welcome2future#post 331, 343`.)
 
 ### 12.7 Forum design layer: `*Crisis Bill*` tag (designed, not built)
 
@@ -6042,6 +6226,27 @@ flags — this is the EC selection mode.)*
 > leaves the office vacant** until the VP-vacancy-fill amendment is ratified. Engine has no
 > VP-succession path regardless.
 
+> **★ DH-14 REFRAMED (`wilsons1916`, batch 29) — the 19th Amendment PASSES in a human-majority 1916
+> game, so "suffrage never passes" is a CPU-AI / era-weighting artifact, NOT a hard mechanical block.**
+> DH-14 originated from the all-CPU `drums` run, where the **"Equal Voting Rights for Women" Amendment
+> never passed** (60.5% / 63.6% — short of 2/3) and the GM concluded *"this amendment will never pass in
+> a game with CPUs"* — the diagnosis being that **Moderates sit on the amendment's NEGATIVE-points
+> side**, so a CPU field can't muster 2/3. The 10-human `wilsons1916` run shows the **opposite outcome
+> from the same era**: the **"Equal Voting Rights for Women Amendment" PASSES comfortably** — **House
+> 374-61, Senate 79-17**, then ratified by states (VT the 36th, `wilsons1916#P383`). So the suffrage
+> block is **NOT a hard wall**; it is a **CPU-vote-modeling + era-keyed-bill-ideology weighting** problem.
+> The fix is therefore TWO things, not one:
+> 1. **The era-keyed bill-ideology impact table** (the original DH-14 ask): move Mods OFF the suffrage
+>    NEGATIVE side in 1916 so the bill's ideology effects are era-sensitive (a #92 era-keyed-content
+>    instance for *bills*).
+> 2. **The CPU vote model for amendments must be able to reach a 2/3** the way a human field does
+>    (`GM⇒App`) — pairs with #114 (CPU decision logic) / #208 (CPU legislative logic).
+>
+> This also corroborates the **demographic-gated draft-ENTRY** flag (§11 / line 2233: women + Black
+> politicians enter the draft *after* the 19th ratifies) — i.e. a passed amendment **opens** the pol
+> pool, the inverse of the bill-ejects-officeholder pattern. (`game-context.md` DH-14 [reframed]; pairs
+> #92/#114/#208; `wilsons1916#P383`; orig. `drums#POST 6691, 6878, 6912`.)
+
 **★ SCOTUS can OVERTURN a ratified Amendment, and the amendment threshold is itself amendable
 (batch 8, `ad0f2875`).** Two new operations on the amendment substrate, both used in play:
 
@@ -6926,6 +7131,31 @@ framing (modern#post 1, 769, 1080, 1106, 1172, 1200, 1771):
   **Gilded Age** *and* the modern arc above as distinct eras, so the enum likely needs to grow
   (`gilded` / `progressive` between `nationalism` and `modern`) — an open question in
   `game-context.md`.
+
+> **★★ #206 (NEW, `welcome2future` + `wilsons1916`, batch 29) — the TERMINAL edge of this gap: the
+> "Era of the Future" is DOUBLY UNBUILT, and the realignment-hinge band is named "Era of Hollywood."**
+> Two timeline-edge sources confirm the era-enum-too-coarse finding from the extremes:
+> - **The terminal "Era of the Future" band is doubly unbuilt.** (1) It is **absent from the shipped
+>   `Era` enum entirely** — `types.ts:1337` has no `future` (and no `populism`) member; `modern` is the
+>   only modern-side tuning. (2) Even in the forum sheet it is **under-content'd**: dev vcczar — *"the
+>   only issue is that Era of the Future isn't completely fleshed out. So you might want to create some
+>   proposals… **Events are fairly solid. Mainly I need more proposals.**"* (`welcome2future#post 6`). So
+>   the era's **scripted-event spine exists but its legislation/proposal library is the missing piece** —
+>   the SAME "events before legislation" shape as the §2/§20 Federalism gap, now at the far END of the
+>   timeline. The band exists only as a master-spreadsheet **Historical Era tab** label (`welcome2future#post
+>   55`).
+> - **The 1916 realignment-hinge band is named "Era of Hollywood."** Confirmed in-game by a scripted
+>   **"Golden Era of Hollywood"** event firing in 2.4.3 (Columbia Pictures + MGM Studios formed; the
+>   "Red Baron" WWI ace; points to CA Gov Stephens + Sens Hiram Johnson/Shafroth) — same
+>   spreadsheet-label-vs-code-enum phenomenon (a content-band name with no distinct enum value).
+>   (`wilsons1916#P191`.)
+> - **The era model holds at BOTH edges.** §27.1's content-band model (most-corroborated finding in the
+>   KB) is now confirmed from the timeline's opening hinge (1916) AND its terminal edge (Future), in
+>   addition to the 6 mid-timeline start years. **Build implication:** add the missing bands to the enum
+>   (`future`, plus the Hollywood/Populism labels) **OR** adopt the §27.1 finer-grained two-level model
+>   so these stop being enum values and become content-band data; and **author the Era-of-the-Future
+>   legislation/proposal library** (events are reportedly already solid). (`game-context.md` #206;
+>   `welcome2future#post 6, 23, 55, 378`; `wilsons1916#P191`.)
 
 > **Design holes & possible bug (point to `game-context.md`, not re-documented):**
 > - **DH-1** — a **filibustered "MUST-pass" bill has no rules remedy** (GM-confirmed gap).
@@ -9352,6 +9582,39 @@ The shape, common to all three:
 > that career-track seeding (DH-25 / #163) must run from the very first post-boot draft, not just at
 > boot. (`pop2012b` POST 381-392; `game-context.md` #90/#43.)
 
+> **★ #209 (NEW, `welcome2future` + `wilsons1916`, batch 29) — a mid-timeline boot needs a BOOT-TIME
+> RETRO-GENERATION pass for "career-track cohorts" (synthetic incumbents stat-dated to PRIOR cycles).**
+> The empty-career-tracks finding (item 3) and the thin modern dataset (#90/#43) have a third face the
+> two timeline-edge threads surfaced: a real mid-timeline boot is **missing the standing bench
+> entirely** — not just career-track pols, but **Ambassadors, most Admirals, lower Justices, and bench
+> Reps** — because the dataset only knows who eventually became prominent. Two live failures:
+> - **`welcome2future` — the CPU literally could not field a candidate where the pool was exhausted.**
+>   **Alabama had no eligible Republican** for an open Senate seat (Sessions auto-retired at 75+
+>   unemployed; the rest already placed) → the GM hand-added sub-floor real reps to avoid a Dem sweep
+>   (`welcome2future#post 137, 144, 148`). A **structural CPU/roster failure, not an AI-logic failure**
+>   (the AI ran fine; there was simply no one to field).
+> - **`wilsons1916` — the GM hand-generated a filler candidate.** *"TN-1: **Joe Simpson
+>   (auto-generated)** defeats Rep. William C Houston"* (`P453`) — the live manual instance of the
+>   missing generate-a-candidate flow; the GM also used a **"pol editor" to inject arbitrary pols
+>   mid-game** (AG "Mook", `P118`).
+>
+> **The proposed fix (`welcome2future#post 364-369`):** at boot, **pre-generate fake career-track
+> cohorts "whose stats would look like they were drafted in 2020, 2016, 2012, 2008, 2004"** — synthetic
+> sub-floor incumbents back-filling the bench a real mid-timeline boot lacks. **Distinct from the
+> forward procedural-gen of #90/#43** (which triggers at a year/exhaustion going FORWARD): it is
+> **retro-generation of a plausible PRIOR-cohort bench AT boot time** — the same need #186's "back-date
+> the last 2-4 draft classes into career tracks" hit from the 1960 angle, and the natural home for the
+> #163 career-track pre-placement house rule above. **This also explains the 1916-bare-boot:** the 1916
+> BootSheet ships **NO starting generals/admirals** (*"the start era for 1916 is pretty bare"*; "the
+> other start eras all have starting generals" → the SecWar appointed the entire officer corps from
+> scratch, see §9.2.1/DH-75) and **filler credit/debt** figures (vcczar zeroed US-debt-to-UK/France by
+> fiat — the US was a *creditor* by 1916) — exactly the missing-bench shape a retro-generation pass
+> would fill. **Build implication:** add a **boot-time retro-generation pass** for non-1772 starts that
+> synthesizes sub-floor career-track cohorts stat-dated to the prior ~5 cycles, so a mid-timeline boot
+> isn't missing officeholders and the CPU can always field a candidate. (`game-context.md` #209; pairs
+> #86/#115/#186/#163 + #90/#43; `welcome2future#post 137, 144, 148, 364-369`; `wilsons1916#P453, P118,
+> P149-157, P340-345`.)
+
 The implication for the build: **build the boot-sheet schema once, instantiate per era.**
 Era identity is **data configuration**, not a code path. A `BootSheet` structure parameter-
 ized by `{era, startYear, factions: FactionSeed[], sittingGovernment: …, stateRoster: …}`
@@ -9627,6 +9890,25 @@ bottom-tier threshold + countdown clock + scheduled game-end if not recovered; p
 clock in `FullGameSnapshot` (e.g. `game.endgameClocks: { meter; threshold; remainingYears
 }[]`); render a HUD warning when active; reconcile with `EraEvent.triggersGameEnd` so both
 paths terminate the game cleanly.)*
+
+> **★ #207 (NEW, `welcome2future`, batch 29) — every endgame in this section is a LOSS; there is NO
+> terminal COMPLETION / end-of-timeline state, and no thread ever plays through one.** The catalog above
+> (APOCALYPSE clock, per-event-phase coup rolls, Autocratic Coup, Economic Collapse, secession/CW) is
+> entirely **mid-run LOSS conditions** — meter-driven or event-driven game-overs. `welcome2future`
+> refines the standing corpus-wide negative result about the **terminal** edge:
+> - The run was PLANNED to run hands-off to **2072**, but the 2072 endpoint is an **arbitrary author
+>   cutoff, not an engine end-state** (GM: *"I'd be 89… 50 years was a nice round number"*, `welcome2future#post
+>   20`), and **the run never reaches it** — it covers setup + exactly ONE turn (the 2022 midterm cycle)
+>   and stops mid-2022, never reaching 2024, never entering the Future band proper.
+> - So across the WHOLE corpus the **Era of the Future is DEFINED as a (stub) band (#206) but never
+>   PLAYED THROUGH**, and **no thread ever hits a natural end-of-timeline terminus**. The only
+>   game-overs ever observed are the mid-timeline meter/scripted LOSSES above (Autocratic Coup
+>   `terror2000`, Carlisle Peace `tea1772`/`cpufull`) — never a "campaign complete."
+> - **Open design question (no source answers):** is the timeline meant to be **open-ended** (sandbox),
+>   **capped at a year** (a 2072-like terminus), or **won by a victory/score-out condition**? This is
+>   **distinct from the #88/#188 LOSS endgame** — it is the absence of a **COMPLETION/terminal** boundary.
+>   Until decided, the build has no "you finished the game" state. (`game-context.md` #207; pairs
+>   §22.11/§27.1 the terminal Future band #206; `welcome2future#post 20, 378`.)
 
 ### 26.5 Era-event-creates-office (bill installs a new cabinet seat)
 
@@ -11068,6 +11350,46 @@ filibuster + debate-sway + bill packaging (2.6.x), and the full primary→conven
   possible" because "changing one thing can break eight others" (POST 12064–12067). **Open Q
   (§28.12):** is "all of phase 2.1 coded, rules set" the authoritative app scope, or
   playtest-specific?
+
+> **★ #208 (NEW, `welcome2future`, batch 29) — the most complete HANDS-OFF MODERN CPU-TURN in the
+> corpus, and the proof that CPU legislative/confirmation logic is UNSPECIFIED.** `welcome2future` ran a
+> **2022-midterm-start spreadsheet campaign hands-off** (GM mechanically resolving every roll) with **8
+> of 10 factions on CPU rules** (only 2 light-touch humans) — the clearest mass-CPU sample at modern
+> scale. It progressed cleanly through a full modern turn **without stalling or looping**, validating
+> the §28.10 loop AND the §28.12 "solo-first with CPU-faction AI" design intent. But it exposed that
+> large swaths of CPU behavior are **invented on the fly** — the heart of the `GM⇒App` charter:
+>
+> **The observed full-turn CPU sequence (the concrete spec for the modern engine loop):** elections (D6
+> + state/seat historic bias; net R+1 Senate 51-49 / House R+33 246-189, judged realistic) → mass
+> **age-degradation** (advancing age grants `pliable`/`uncharismatic`/`incoherent`/`passive` + −1 skill;
+> `pliable` cancels `puritan`; auto-retire any unemployed pol 75+) → **office-gains** (winning office =
+> +skill/random expertise/traits; committee seats grant the committee's interest/expertise to every
+> member; chairs/leaders shed `obscure`; losing candidate takes **−1 in elections for 6 years**) →
+> **CPU ideology shifts + conversions** (mostly fail → `pliable`/`flip-flopper`; raids concentrate on
+> the **Moderate faction** because everyone else sits at max enthusiasm in polarized politics) →
+> **CPU kingmakers** auto-assign proteges + grant interest/expertise/trait bonuses → **CPU leadership**
+> via multi-round plurality votes (drop lowest, endorse, re-tally — the §25.3 ladder) → **cabinet
+> confirmation** → **ambassadors** → events.
+>
+> **The three UNSPECIFIED CPU rules the GM had to improvise (`GM⇒App`):**
+> 1. **CPU Majority-Leader filibuster-override** — *"there is NO rule for whether a CPU Majority Leader
+>    overrides a filibuster"* → improvised **"won't override own party unless it targets his faction."**
+>    (CPU senators with the right profile DID filibuster nominees: Mike Lee killed Sullivan + Locke,
+>    Cruz killed Solis; filibustered pols gained `Controversial`.) See [§12.6](#126-forum-design-layer-filibuster-designed-not-built)
+>    DH-76.
+> 2. **How maj/min leaders themselves VOTE** — no rule → invented **"support own party + within-2-
+>    ideology-clicks; iron-fist → within-1."**
+> 3. **Cross-party cabinet caps** — felt "too easy" ("weird that it's so Republican") → GM rewrote
+>    mid-thread: **≤25% accept w/o integrity; ≤1 cross-party in top-4; ≤3 total; ≤1 ideology step away.**
+>    (Sharpens the §9.3.1 / §28.7 cabinet caps with explicit modern numbers.)
+>
+> **Two more CPU/agency rules this run pins:** a **`pliable` President cedes appointing power to the
+> Senate floor leader** (Biden `pliable` → Minority Leader Tester did the cabinet appointing,
+> `welcome2future#post 307, 315-316`); and CPU **vacancy appointments** follow the *appointer's own
+> ideology*, NOT the faction-leader's (GM corrected himself mid-thread; produced cross-faction
+> Hochul→Suozzi). **Build implication:** formalize all of (1)-(3) + the pliable-Pres delegation as
+> deterministic engine logic (folds into §25 CPU AI + #208). (`game-context.md` #208 + DH-76;
+> `welcome2future#post 129-380, 307-349, 322, 331, 343`.)
 
 ### 28.11 Modern draft, lobby cards & dataset (the era-locked content rotation)
 
@@ -13213,6 +13535,111 @@ DESIGNER-DONE-UNVERIFIED** ("designer marked complete 2022, UNVERIFIED in our co
 **#183 endorsement-momentum CONFLICT is surfaced explicitly** as an OPEN frozen-spec reconciliation
 (2022 sheet: **25%/10%** momentum, `completions#POST 46`; vs `redbutton`: **none**) — see
 [§28.6](#286-the-modern-election-machine--1948-era-refinements) / [§30.17 #183](#3017-rulings-folded-from-8bc0231c-the-big-red-button-1960-playtest-the-first-cold-warcivil-rights-source).
+
+### 30.19 Rulings folded from batch 29 — the TWO timeline-edge playtests (`wilsons1916` 1916-MP "Era of Hollywood" + `welcome2future` 2022-hands-off "Era of the Future")
+
+> **★ Batch 29 = the two TIMELINE-EDGE sources** — the realignment-hinge **opening** (1916) and the
+> terminal **end** (the Future band, entered at a 2022 tail). Both are **100% forum-spreadsheet** (no
+> 1916/2022 scenario exists in `src/`; the `Era` enum has no `progressive`/`populism`/`future` member,
+> `types.ts:1337`), so every delta below is **designed-but-unbuilt** unless flagged. Tier-1 designers
+> post in both (`wilsons1916`: @vcczar + @MrPotatoTed rulings authoritative in-thread; `welcome2future`:
+> host @MrPotatoTed, dev @vcczar). Cite `wilsons1916#POST n` / `welcome2future#post n`.
+>
+> **The two headline findings (lead with these):**
+> 1. **★★ The "Era of the Future" is DOUBLY UNBUILT + there is NO terminal game-over / completion
+>    state.** The terminal content-band is (a) **absent from the shipped `Era` enum entirely** and (b)
+>    **under-content'd even in the forum sheet** (events solid, proposals a stub — dev `welcome2future#post
+>    6`). And across the WHOLE corpus the Future band is **defined but never PLAYED THROUGH**, and **no
+>    thread ever reaches an end-of-timeline terminus** — the only game-overs observed are the mid-run
+>    meter/scripted LOSSES (§26.4 / #88/#188), never a "campaign complete." Annotated at
+>    [§22.11](#2211-era-clock--era-enum-alt-history) (the terminal edge of the era enum) + [§26.4](#264-apocalypse-planet-health-endgame--the-10-year-clock-new-endgame-model)
+>    (the missing COMPLETION state, distinct from the LOSS catalog). **NEW #206, #207.**
+> 2. **★ The hands-off `welcome2future` run is the most complete MODERN CPU-TURN spec in the corpus**
+>    (8 of 10 factions on CPU rules, GM mechanically resolving one full 2022 turn) — and it exposes that
+>    large swaths of CPU legislative/confirmation behavior are **unspecified and were invented on the
+>    fly** (`GM⇒App` charter). Folded into [§28.10](#2810-the-25-sub-phase-modern-turn-loop-scale-note).
+>    **NEW #208 + DH-76.**
+
+**A. NEW design holes folded into topical sections (DESIGNED unless tagged):**
+
+| Hole | Ruling / observation | Folded into | Cite |
+|---|---|---|---|
+| **★★ #206 "Era of the Future" DOUBLY UNBUILT** | terminal content-band absent from `Era` enum (`types.ts:1337`) AND proposals a stub per dev ("Events are fairly solid. Mainly I need more proposals"); companion 1916 band = **"Era of Hollywood"** (confirmed by a "Golden Era of Hollywood" scripted event, Columbia/MGM + Red Baron) — same spreadsheet-label-vs-code-enum gap | [§22.11](#2211-era-clock--era-enum-alt-history) (terminal-edge annotation); [§27.1](#271--the-era-model--eras-are-content-bands-gated-by-game-state--territory-not-calendar-year) (the architectural row) | `welcome2future#post 6, 23, 55, 378`; `wilsons1916#P191` |
+| **★★ #207 NO terminal game-over / completion state** | the 2072 endpoint is an arbitrary author cutoff (not an engine end-state) and is never reached; the Future band is defined-as-stub but never played through; distinct from the meter/scripted LOSS endings (#88/#188) | [§26.4](#264-apocalypse-planet-health-endgame--the-10-year-clock-new-endgame-model) (completion-vs-loss annotation) | `welcome2future#post 20, 378` |
+| **★ #208 CPU legislative/confirmation logic UNSPECIFIED** | GM improvised at modern scale: (a) no rule for CPU Maj-Leader **filibuster override** ("won't override own party unless it targets his faction"); (b) no rule for **how maj/min leaders themselves vote** ("own party + within-2-ideology-clicks; iron-fist → within-1"); (c) **cross-party cabinet caps** ("≤25% accept w/o integrity; ≤1 in top-4; ≤3 total; ≤1 ideology step") | [§28.10](#2810-the-25-sub-phase-modern-turn-loop-scale-note) (hands-off CPU-turn block); pairs §25 / §9.3.x / DH-76 | `welcome2future#post 307-349, 322, 331, 343` |
+| **★ DH-74 proposal list NOT state-validated** | bills proposed/voted/packaged → found INVALID mid-vote (Hawaii already legis-active; Teller Amendment blocks Cuba client-state; Spanish-American war "not recent" blocks pensions) → GM **halted + restarted 2.6**, players replaced 3 voted bills; recurred. The Progressive face of DH-60 for LEGISLATION | [§12.1.1](#1211--dh-74-new-wilsons1916--the-bill-proposal-list-must-be-state-validated-before-proposalvote-the-progressive-face-of-dh-60-for-legislation-designed) (new) | `wilsons1916#P303, P311-313, P337-338` |
+| **★ DH-75 military-appointment eligibility unenforced** | non-citizens appointable to the US officer corps (Pancho Villa + Aguinaldo as US Army generals); no exp-type→branch matching (Nimitz auto-slotted GENERAL despite naval exp, hand-corrected to Admiral) | [§9.2.1](#921--dh-75-new-wilsons1916--military-appointment-eligibility-citizenship--exp-typebranch-matching-unenforced-designed) (new) | `wilsons1916#P162-169` |
+| **★ DH-76 filibuster with NO cloture + NO CPU override** | `wilsons1916`: *"No rules to invoke cloture exist, so any bill filibustered will be delayed until 1918-20"* (1916 ruleset had NO cloture path at all → filibuster = automatic full-term delay); `welcome2future`: CPU senators filibuster nominees (Lee kills Sullivan+Locke, Cruz kills Solis; filibustered pols → `Controversial`), no rule for CPU override | [§12.6](#126-forum-design-layer-filibuster-designed-not-built) (cloture-gap annotation) | `wilsons1916#P349`; `welcome2future#post 331, 343` |
+
+**B. NEW mechanic asks (designed, not built — no separate topical subsection; compact specs folded into adjacent sections):**
+
+- **★ #209 — pre-generated "career-track cohorts" for non-1772 starts.** A real mid-timeline boot is
+  missing Ambassadors, most Admirals, lower Justices, and bench Reps (`welcome2future` Alabama had no
+  eligible Republican for an open seat → CPU could not field a candidate; `wilsons1916` hand-generated
+  "Joe Simpson (auto-generated)" to fill a TN seat). Fix = a **boot-time retro-generation pass**
+  synthesizing sub-floor career-track cohorts stat-dated to the prior ~5 cycles (2004–2020 for a 2022
+  boot). Folded into [§26.1](#261-the-mid-government-boot-shape-general). (`welcome2future#post 137, 144,
+  148, 364-369`; `wilsons1916#P453, P118`.)
+- **★ #210 — "Ex President" / "Ex Nominee" super-Kingmaker career state.** Living ex-Presidents
+  (2-term OR out >20 yrs) get an office-INELIGIBLE state that acts as a super-Kingmaker (Kingmaker +
+  proteges from ANY state, unconstrained); Hillary got a bespoke "Ex Nominee"; Trump kept as a normal
+  still-eligible pol (a per-figure call). Folded into [§8.5.4](#854--210-new-welcome2future--the-ex-president--ex-nominee-super-kingmaker-career-state-designed-not-built)
+  (new). (`welcome2future#post 27, 30, 46`.)
+- **★ #211 — inter-faction (cross-party, PV-ordered snake) DRAFT mode.** A snake draft ordered by total
+  summed PV run across BOTH parties simultaneously ("BLUE DRAFT 1… RED DRAFT 1…"), distinct from the
+  shipped within-party draft (`runPhase_2_1_1_Draft`); the pool was a 1940s-vintage real-history cohort
+  (Warren, Eisenhower, Taft, Kennedy Sr) landed on a 1916 board by the dataset's `draftYear =
+  birthYear+25` rule. Folded into [§4.4](#44--211--213-new-batch-29--inter-faction-cross-party-pv-ordered-snake-draft-mode--era-conditional-faction-ideology-assignment-designed-not-built)
+  (new, with #213). (`wilsons1916#P1-15`.)
+- **★ #212 — bulk per-term ideology-shift upkeep + the UNCAPPED-shift balance hole.** `wilsons1916`
+  players ran **40-60+ ideology shifts/faction/term** (OrangeP: *"I consider myself a failure if I do
+  less than 60 shifts"*), each a per-pol die roll the GM hand-resolved (`=randbetween()`, ~20% gain
+  `flip-flopper`) — the era's dominant manual-upkeep sink. vcczar declined a cap (*"thought about… but
+  nah"*). Contradicts `modernday`'s max-9 per-faction shift budget (#110) → the budget is either not
+  era-universal or wasn't applied. Folded into [§6.3.x](#63x-forum-design-layer-per-faction-shift-budget-designed-not-built)
+  (ideology-shift pass annotation). (`wilsons1916#P472, P487, P494`.)
+- **★ #213 — era-conditional faction-ideology assignment (assigned ideologies DROPPED at a future
+  boundary).** Factions get 2 draft-eligible ideologies "for now," but *"Starting in 2026, factions
+  will no longer have assigned ideologies for the drafts"* — the per-era draft-ideology restriction
+  (#92/#4 tighten it per era) is eventually **removed altogether** at a modern/future boundary. Pins
+  the boundary (2026) for the #171 restriction-OFF toggle (`trump2024`/`modernday`). Folded into
+  [§4.4](#44--211--213-new-batch-29--inter-faction-cross-party-pv-ordered-snake-draft-mode--era-conditional-faction-ideology-assignment-designed-not-built)
+  (alongside #211) + cross-ref §7. (`welcome2future#post 68`.)
+
+**C. REFRAMES & corroborations (annotate existing rows, do not duplicate):**
+
+| Item | What batch 29 changes | Annotated at |
+|---|---|---|
+| **★ DH-14 reframe** | The **19th Amendment ("Equal Voting Rights for Women") PASSES** in a 10-human 1916 game (House **374-61**, Senate **79-17**, ratified, VT 36th state) → the `drums` all-CPU *"this amendment will never pass with CPUs"* is a **CPU-AI / era-ideology-weighting artifact, NOT a hard mechanical block**. The fix is TWO things: the era-keyed bill-ideology table (move Mods off suffrage's negative side in 1916) AND a CPU vote model that can reach 2/3 like a human field does | [§21.3](#213-amendments-as-durable-separately-ratified-state) (amendment reframe annotation) |
+| **#106 WWI optionality** | `wilsons1916` corroborates: **the US NEVER entered WWI** (*"Because we've not entered WWI, no military phase"*); a Selective Service was created + army/navy grown, but the war-entry event never fired and **no military/combat phase ever ran** → the war engine is **dormant unless the war-entry event is taken** | [§10.4.8](#1048--dh-68-new-solo1916--progressive-era-successor-state-era-evos-lack-a-wwi-end-prerequisite-a-wrong-ordering-bug-corroborates-dh-60-designed-content-bug) (multiplayer-1916 corroboration) |
+| **#92 / §27.1 era-band model** | Two more start-year confirmations from the timeline EDGES: 1916 ("Era of Hollywood") and 2022→Future ("Era of the Future"); both confirm forum content-band labels map onto the coarse 4-value code enum | [§22.11](#2211-era-clock--era-enum-alt-history) + [§27.1](#271--the-era-model--eras-are-content-bands-gated-by-game-state--territory-not-calendar-year) |
+| **#173 / #186 era-boundary-aligned starts** | **METHODOLOGY CONVERGENCE** — both threads independently re-affirm: start at an era's OPENING, not its edges. `wilsons1916` opened with the explicit decision *"starting at the beginning of an era, rather than the middle, was better"* (the deliberate fix to the 1960 #186 failure → it booted cleanly); `welcome2future` confirms the INVERSE edge — a 2022 TAIL-of-band start has thin scripted-event density (*"only one scripted event capable of occurring right now"*). BOTH era edges (mid-band AND tail) are thin-content friction zones | [§27.9](#279--173-new-modernday--scenario-starts-should-be-era-boundary-aligned--the-canonical-14-band-erastart-map-gm-verdict-designed) (cross-ref; not duplicated here) |
+| **#109 scripted-event deck** | `wilsons1916` puts the **"Era of Hollywood" deck** on record (Golden Era of Hollywood, Tomb of King Tut, Tallulah Bankhead→celebrity→retired, Scopes Trial [Theocrats +50 / Law&Order+Science −50], Penicillin QoL roll); density is **RICH** — only the BOOT is thin | folded into the §22.11 / §27.1 era-band annotations + the era-content note below |
+| **#179 lingering meter engine** | `wilsons1916` P202 displays the full **8-meter** 2.5.1 Lingering pass (Revenue-Budget, Economic, per-country Foreign-Relations, Military-Preparedness, Domestic, Honest-Government, Quality-of-Life, Planet's-Health, Party-Preference) rolled from cabinet skill + traits — corroborates the §20.10 meter-engine spec | [§24.7](#247-67-lingering--the-16-meter-homeostasis-engine-era-gated-foreign-meters) / [§20.10](#2010--179-new-summer2021--the-cabinet-lingering-roll-meter-engine-designed-hand-rolled) (no re-doc) |
+| **#110 faction-leader fallback ladder** | `wilsons1916` exercised the full FL-eligibility **cascading-omission fallback** (FL needs matching ideology + interest/lobby + Leadership, not on career track / lackey / obscure; passive non-incumbent 25% decline; drop criteria in order when no one qualifies → settle for ideology only) — a concrete spec | [§8](#8-leadership-selection-22x) / §25.10 (no re-doc) |
+| **#115 GM⇒App roster injection** | `wilsons1916` GM used a "pol editor" to inject arbitrary pols mid-game (AG "Mook") + hand-generated filler candidates — the live manual instance of the missing generate-a-candidate/roster-extension flow | [§15.5(c)](#155--election-system-specs-absent-from-our-build-the-2022-reference-game-completions--the-live-d6d3-fork-completions--fixes-batch-28-not-in-our-build) + #209 above |
+
+**D. Era-content note — the "Era of Hollywood" deck is DENSE; only the 1916 BOOT is thin.** Unlike the
+Federalism/Future "events before legislation" content gaps, the 1896-1932 hinge has a **rich,
+era-accurate scripted/era deck** already authored in the GM sheet (the table above). The thin part is
+the **scenario BOOT**: the 1916 BootSheet ships **NO starting generals/admirals** (the SecWar appointed
+the entire officer corps from scratch — *"the start era for 1916 is pretty bare"*, while "the other start
+eras all have starting generals") and the **start-date credit/debt are admitted "filler numbers"**
+(vcczar zeroed US-debt-to-UK/France by fiat — the US was a *creditor* by 1916). Both feed the boot
+cluster (#186/#187/#86 → see [§26.1](#261-the-mid-government-boot-shape-general) + #209). (`wilsons1916#P149-157,
+P340-345`.)
+
+> **Roadmap takeaway (for the tech-lead + roadmap-planner).** The batch-29 NEW build surface, ranked:
+> (1) **the missing terminal-edge model** — add a `future` era band + its proposal library AND decide
+> the timeline's **completion** state (#206/#207); (2) **CPU legislative/confirmation logic** — the
+> hands-off run proves it works but is unspecified (#208 + DH-76, the `GM⇒App` core); (3) **the
+> legislative-pipeline state-validator** (DH-74, surface only legal proposals); (4) **boot-time
+> retro-generation of career-track cohorts** for non-1772 starts (#209); (5) smaller asks — military
+> eligibility (DH-75), Ex-President super-Kingmaker (#210), interfaction draft (#211), the bulk
+> ideology-shift pass + cap decision (#212), era-conditional faction-ideology (#213). The DH-14 reframe
+> tells the AI/tuning track that suffrage-never-passes is a CPU-vote-model + era-weighting problem, not
+> a bill block. Cross-ref `game-context.md` rows **#206-#213**, **DH-74/75/76**, and the reframed
+> **DH-14 / #92 / #106 / #115 / #173 / #186**.
 
 ### 30.4 Authority hierarchy reminder
 
