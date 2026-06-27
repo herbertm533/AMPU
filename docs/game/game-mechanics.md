@@ -351,6 +351,11 @@
     - [30.19 Rulings folded from batch 29 — the two timeline-edge playtests (`wilsons1916` 1916-MP "Era of Hollywood" + `welcome2future` 2022-hands-off "Era of the Future")](#3019-rulings-folded-from-batch-29--the-two-timeline-edge-playtests-wilsons1916-1916-mp-era-of-hollywood--welcome2future-2022-hands-off-era-of-the-future)
     - [30.20 Rulings folded from batch 30 — the FIVE designer DESIGN/DATA/changelog threads (`revampPV` / `summer2021` / `ampuData` / `ampuUpdates` / `presidents`)](#3020-rulings-folded-from-batch-30--the-five-designer-designdatachangelog-threads-revamppv--summer2021--ampudata--ampuupdates--presidents)
     - [30.21 Rulings folded from batch 31 — the CANONICAL RULEBOOK + four RULES/FEEDBACK/TEST/DATA threads (`rulebook` / `apptdeepdive` / `primary2020` / `playtestdraft` / `bestmoments`)](#3021-rulings-folded-from-batch-31--the-canonical-rulebook--four-rulesfeedbacktestdata-threads-rulebook--apptdeepdive--primary2020--playtestdraft--bestmoments)
+    - [30.22 Rulings folded from batch 32 — the FIVE mixed DATA/DESIGN/CHANGELOG threads + ONE 1772 solo (`tomorrowlist` / `businesslabor` / `histpres` / `georgemartha` / `calsleaderboard`)](#3022-rulings-folded-from-batch-32--the-five-mixed-datadesignchangelog-threads--one-1772-solo-tomorrowlist--businesslabor--histpres--georgemartha--calsleaderboard)
+      - [30.22.A — #236 — The alternate-government-form scenario axis (Fascist/Communist/Theocratic USA)](#3022a--236--the-alternate-government-form-scenario-axis-fascistcommunisttheocratic-usa-new-tomorrowlist--designed-0-shipped)
+      - [30.22.B — #237 — The stateful policy-genre framework (Business/Labor + Currency + Copyright)](#3022b--237--the-stateful-policy-genre-framework-businesslabor--currency--copyright-new-businesslabor--designed-0-shipped)
+      - [30.22.C — #240 / #239 / #238 — the data-model extensions (curated-statline schema, demographics/Misc flags, gender)](#3022c--240--239--238--the-data-model-extensions-curated-statline-schema-demographicsmisc-flags-gender-new-histpres--georgemartha--designeddata-0-shipped)
+      - [30.22.D — Sharpenings + corroborations](#3022d--sharpenings--corroborations-annotate-existing-rows-do-not-re-doc-as-live)
     - [30.4 Authority hierarchy reminder](#304-authority-hierarchy-reminder)
 31. [Gilded-Age era systems (designed, not built)](#31-gilded-age-era-systems-designed-not-built)
     - [31.1 (#147) Tariff-as-national-%-rate + the mutually-exclusive MonetaryRegime](#311-147-tariff-as-national-rate--the-mutually-exclusive-monetaryregime-designed)
@@ -556,6 +561,27 @@ Naval, Science, Technology, Trade, Transportation, Welfare.
 > release; pairs with the dataset (#120). No build change now. (`fixes#§F POST 152, 162`; ruling index
 > [§30.18](#3018-rulings-folded-from-the-batch-28-designer-catalogs-to-do--fixes--completions--vic3--a-discussionspec-batch-not-a-playtest).)
 
+> **★ #238 — a `gender`/sex character axis + a suffrage-keyed eligibility gate (NEW, Ted-endorsed,
+> `georgemartha`, batch 32).** The build has **NO gender field** (`grep -i gender|sex|spouse|wife src/` =
+> ZERO). The designed model (Lars's house rule, Ted POST 5 *"I like your spouses can be Key Advisor rule"*):
+> a **`Politician.gender`** attribute + a **suffrage-keyed electoral-eligibility gate** — women are barred
+> from *electoral* office in pre-suffrage eras but **permitted in non-electoral backroom/lobby roles**, and
+> eligible as **Key Advisor via a SPOUSAL LINK** to a sitting President (which requires a **spouse/family
+> relationship edge** between pols — none in the build; only loyalty/faction). Era-faithful: women's suffrage
+> is itself a Convention/amendment plank (§27/#159). Hint that women may also double as pol-GENERATORS (a
+> what-if-descendant hook, ties #194 dynasty + the #115 generator). Documented at §30.22.C(2). (`georgemartha#POST
+> 1, 5, 19, 34`; `game-context.md` #238.)
+
+> **★ #239 — curated-override Misc-flags + race×religion×sex demographics (NEW, `histpres`, batch 32).** The
+> curated-statline schema (§30.22.C) encodes **five orthogonal curated-override flags with no schema home
+> today**: **`Southern Unionist`** (won't secede — corroborates #121/#122, currently a trait-only string,
+> §23.1), **`Can be Independent`**, **`Can party flip N times`** (Trump ×3, JQA/Tyler ×2, Eisenhower/Buchanan
+> ×1, Reagan starts Dem), **`Can move from <ST> to <ST>`** (Z. Taylor KY→LA, Grant OH→IL, Trump NY→FL), and
+> **Demographics = race × religion × sex** ("Standard" = White/Protestant/Male; JFK/Biden White Catholic;
+> Obama Black Protestant). **★ The religion field is the PREREQUISITE for the #236 Theocracy government-form
+> branch** (§30.22.A(2)) — not low-priority flavor. Documented at §30.22.C(3). (`histpres#POST 1, 7, 10, 13,
+> 19, 36, 37, 42, 46, 47, 48`; `game-context.md` #239/#236.)
+
 ### 3.2 Ideology (7-point scale)
 
 `IDEOLOGY_ORDER` (`types.ts:14`), indices 0–6:
@@ -684,6 +710,16 @@ old→new map before #214/#215 land. Codebase-verified against `types.ts:62-117`
 
 > (`revampPV#POST 33`; codebase `types.ts:62-117`; `game-context.md` #216.)
 
+> **★ #216 SECOND-SOURCE CORROBORATION (batch 32, `histpres`, the 2021 47-president dataset).** The same
+> trait-vocabulary drift recurs in the curated-statline source — **14 of 50 `histpres` trait names mismatch
+> the shipped `Trait` union** (codebase-verified): the textbook rename **`Charisma` → `Charismatic`**
+> (`Charisma` = 0 hits / `Charismatic` = 13 hits in `types.ts`; used on Washington/Jefferson/Jackson/TR/FDR/
+> Reagan/Obama) + 13 others each at 0 hits (`Bookkeeper, Cop, Disharmonious, Geostrategist, Illicit,
+> Incoherent, Jurisprudence, Lackey, Late Bloomer, Low Brow, Military Leader, Pliable, Teflon`). `Teflon`/
+> `Geostrategist`/`Cop`/`Jurisprudence`/`Bookkeeper` have **no obvious shipped analog** (confirm rename-vs-cut).
+> This makes the #216 rename/cut map a **prerequisite for authoring `CURATED_ROWS`** (§30.22.C), not just for
+> the `revampPV` PV table. (`histpres#POST 1-48`; codebase `types.ts:62-117`; `game-context.md` #216/#240.)
+
 **(d) #220 — PV DISPLAY-scale is UNRESOLVED.** `pv.ts` exposes the **raw** `computePV` number with no
 normalization layer, `Math.max(0,…)`-clamped (`pv.ts:88`, negatives lost). Two sources pull opposite ways:
 - **`revampPV` leans RAW ("pink") for human display** (§6 D7, P66-91) — scaled views bunch pols too close
@@ -732,6 +768,30 @@ normalization layer, `Math.max(0,…)`-clamped (`pv.ts:88`, negatives lost). Two
 >   (spec 25) — legislators/reps grossly under-weighted. Treat `revampPV#POST 33` as the LATER word, but
 >   this confirms the office tier was already being raised dramatically in May 2022. (`primary2020#POST 22,
 >   31, 75, 112`; `game-context.md` #214/#215; folded into §30.21.)
+
+> **★ #214/#215 NARRATIVE CONFIRMATION (batch 32, `calsleaderboard` — the cleanest in-corpus sanity check).**
+> @Cal's per-phase "most influential politician" leaderboard for the `summer2021`/fe15db25 founding run is an
+> organic, human-authored proxy for PV ordering, and it confirms the office-weighted model precisely:
+> - **Office-weighting is RIGHT.** The ranking tracks **office held above all**: **Presidency ≫ document-
+>   authorship / CC-President > governor / Congress > faction-leadership** (@Cal POST 27: the list "trend[s]
+>   heavily towards presidents… they just have so much more individual influence"). Arnold leaps **+5 to #1
+>   the cycle he wins the Presidency**; Lee debuts **#2 the cycle he becomes 2nd President** despite "pretty
+>   much unimportant before his presidency." "Author of the Constitution" / "President of the Constitutional
+>   Convention" / "First President" are called **guaranteed list spots** (POST 14) — maps to the #215 office
+>   curve crediting CC-President / document-author roles (the §3.4 OFFICE_PRESTIGE under-shoots these).
+> - **Office LOSS = instant PV collapse, NO legacy carry.** Sherman & Langdon fall off the leaderboard the
+>   cycle they lose office; Arnold drops **−4** the moment his ambassadorship concludes (POST 13). Consistent
+>   with the office-weighted `pv.ts` and a **counterpoint to a legacy/monument stat** (#180) — a built legacy
+>   carry would change who ranks here.
+> - **★ Raw Command is OVER-CREDITED EARLY (the #215 decreasing-returns target).** War-hero Ward holds **#1
+>   in 1783/84 on PURE command** (0 domestic — "doesn't have a leg to stand on domestically") then **slides
+>   to #6** once the war ends and others take office; Arnold (Chief Admiral) ranks #2 *for the same reason*
+>   and only sustains it by converting it into the Presidency. The **0-domestic war-hero at #1 → #6** is
+>   exactly what the #215 Command curve targets (**+25 for the 1st Command level, +5 each level after**,
+>   §3.4.1(b)) — so the design lever is RIGHT (office-weighting) and the calibration lever (raw-command
+>   over-credit) is the one batch-32 makes visible. The community itself treats top-of-list raw-influence as
+>   noisy (vcczar POST 3: "Arnold is #5 at best," later conceding #1 once he wins) — the same tension #214/#215
+>   resolve. (`calsleaderboard#POST 1, 3, 13, 14, 19, 20, 27, 42, 56`; `game-context.md` #214/#215; §30.22.D.)
 
 > **★ #183 RESOLVED (the endorsement/withdraw-MOMENTUM spec EXISTS) — see [§15.5(e)](#155--election-system-specs-absent-from-our-build-the-2022-reference-game-completions--the-live-d6d3-fork-completions--fixes-batch-28-not-in-our-build).** Not a PV
 > mechanic, but `primary2020` is the earliest detailed source and it settles the #183 CONFLICT direction:
@@ -8022,6 +8082,23 @@ framing (modern#post 1, 769, 1080, 1106, 1172, 1200, 1771):
 > labels (as enum values OR §27.1 content-band data) and reserve the transition predicate for game-state
 > (§27.1.2 three-way reconcile). (`rulebook#§A POST 2`; `game-context.md` #92/#206.)
 
+> **★ #206/#221 RE-CONFIRMED — Future content is an ACTIVELY-AUTHORED frontier (batch 32, `tomorrowlist` +
+> `businesslabor`).** Two batch-32 design threads show vcczar actively populating the Future band, **explicitly
+> scoped NON-tech / non-foreign / non-military** (the inverse of the `ampuUpdates` "over-geared toward science/
+> tech" balance hole above — vcczar is deliberately filling the *non*-tech categories to balance it):
+> - **`tomorrowlist`** (POST 1, restated 14) solicits Future **Economic / Judicial / Domestic / Cultural-flavor
+>   + an optimistic-utopian** category — peak oil, post-capitalist thought, **USCoin / bitcoin-as-currency**,
+>   abolition-of-currency→universal-digital-credit, **congressional-election-system reform** (MMP/PR/Ranked-
+>   Choice), service-industry death, **white-people-no-longer-majority→reactionary instability**, vocaloids /
+>   hologram fashion / cyberpunk counterculture, e-democracy, "Back to the Land movement II" — and explicitly
+>   FILTERS OUT player-pitched robots/androids/fusion/Mars (POST 4/11) as out-of-scope.
+> - **`businesslabor`** authors `-Fut`-tagged B/L policy-genre entries (§30.22.B): drones, lab-grown meat,
+>   AI/robot-employee restrictions, sovereign-corporation ban, Work-from-Home law, sea-colony/Brazil/antimatter/
+>   fusion subsidies.
+> Both confirm #206 (Future DOUBLY UNBUILT — actively authored at source) + #221 (the per-administration
+> content registry). NO new architecture. (`tomorrowlist#POST 1, 6, 9, 20, 44, 45, 47, 48`; `businesslabor#POST
+> 1, 23`; `game-context.md` #206/#221; §30.22.D.)
+
 > **Design holes & possible bug (point to `game-context.md`, not re-documented):**
 > - **DH-1** — a **filibustered "MUST-pass" bill has no rules remedy** (GM-confirmed gap).
 >   When a required tariff was filibustered to death, the rulebook had no answer; the GM
@@ -13157,6 +13234,18 @@ institution (§27.6); a **per-bill-class change cooldown** (`Bill.lockedUntilYea
 tariff cadence; sectional ±100 (Agriculture/Finance) meter effects on resolution. Couples to §12.7
 crisis bills, §12.6 filibuster, §27.6 Bank office, §21.6 budget/era gating.)*
 
+> **★ The #237 STATEFUL POLICY-GENRE FRAMEWORK (batch 32, `businesslabor`) reads/gates off THIS economic
+> engine.** The Business/Labor policy genre (documented at [§30.22.B](#3022b--237--the-stateful-policy-genre-framework-businesslabor--currency--copyright-new-businesslabor--designed-0-shipped))
+> is the **content layer that sits on top of the economic meter** — its prereq chains gate explicitly on the
+> shipped `economic` meter (`types.ts:1399-1407`): *"Economic Meter better than Stagnant"* → End-of-Indentured-
+> Servitude / Golden-Age-of-Productivity; **"Recession or Worse" → Create Government Work; "Depression or
+> Worse" → Create WPA / PWA** (the FDR-stimulus framing). So #237 is the **policy-flag content engine** and
+> §29.7/§29.7.1 is the **meter-crisis state machine it feeds off** — the same Bank/Treasury-CRISIS-bill ↔
+> EconStab-meter loop, generalized to a toggleable per-genre policy store with `*-Default` baselines + L/P/G/S
+> mechanism prefixes + era-band tags. The Currency sibling genre (gold/silver/crypto, §30.22.B) is the same
+> family as the §29.7 / §31.1 `MonetaryRegime` axis. Build them as ONE economic-content registry. (`businesslabor#POST
+> 1, 17, 22`; `game-context.md` #237; §30.22.B.)
+
 #### 29.7.1 ★★ NEW — the Great-Depression META-EVENT + EconStab cascade + crisis-gated New-Deal bills (the interwar economic engine; gap #160, `ideo1928`)
 
 > **★★ THE HEADLINE OF BATCH 18. NEW this batch (`ideo1928`, the 1928-start "Era of Ideologies"
@@ -14485,6 +14574,14 @@ cross-referencing the existing [§15.3.5 #184 nerf](#1535-platform-scoring--5-pl
   exhausts into pure procedural-gen, §28.11). *(designed, not built — add `Politician.parentId?` /
   lineage links; shed `Obscure` on an elder's Presidency; extinguish a line if the parent predeceases
   the heir's birth year; allow ahistorical dynasties **only** for Era-of-Future generated pols.)*
+  - **★ SHARPENED (batch 32, `histpres`) — a turnkey dynasty SEED TABLE now exists.** The curated 47-president
+    statlines (§30.22.C / #240) each carry a named **Dynasty** with explicit members (~37 named dynasties incl.
+    multi-president **Adams / Harrison / Roosevelt / Bush**; "n/a" for the loners Polk / Buchanan / A.Johnson /
+    Arthur / McKinley / Truman / Ford / Reagan). This **feeds the #194 system its initial data** — the spec
+    above no longer lacks a seed source. The "what-if early-death descendant" branch (rule 2) is directly
+    corroborated: `georgemartha`'s Abigail Adams *"giving birth to all of the three pols she was meant to
+    create"* before death is the same line-extinction-on-predecease hook (ties #238 women-as-pol-generators).
+    (`histpres#POST 1-48`; `georgemartha#POST 34`; `game-context.md` #194/#240/#238.)
 - **#202 — In-app "Campaign Advisor / Think Tank" suggestion helper (`GM⇒App` + onboarding; Vols21 OPEN,
   `fixes#§J POST 9`).** Reuse the (unbuilt, #114) CPU decision logic to **suggest 1-3 moves to a SOLO
   player each phase** — a built-in advisor that lowers the rules-mastery wall (a human GM informally
@@ -14832,6 +14929,341 @@ P340-345`.)
 > traits SHIPPED (Lackey not adopted). Cross-ref `game-context.md` rows **#228-#235**, the SUPERSEDED
 > **#199**, RESOLVED **#183**, CONFIRMED **#182**, and the sharpened **#172/#92/#206/#179/#134/#50/#51/
 > #130/#222/#211/#115/#214/#215/#25/#31/#112/#64**.
+
+### 30.22 Rulings folded from batch 32 — the FIVE mixed DATA/DESIGN/CHANGELOG threads + ONE 1772 solo (`tomorrowlist` / `businesslabor` / `histpres` / `georgemartha` / `calsleaderboard`)
+
+> **★★ Batch 32 = a 5-thread MIXED DATA/DESIGN/CHANGELOG batch (1 founding-solo playtest + 4 content-
+> authoring/design/changelog/record threads — NO historian).** Like batch 30/31, this batch is **mostly
+> NEW DESIGNED SPECS + DATA-MODEL schema + corroborations** — almost nothing is shipped. Tier-1 designer
+> `@vcczar` authors three of the four design threads; `@MrPotatoTed` endorses in the solo thread. The
+> sources:
+> - **`tomorrowlist`** (b1533a8f, "Tomorrow's To-Do List 2/6/2022", CONTENT-AUTHORING/CHANGELOG, `@vcczar`
+>   + ~12 players, 48 posts, Feb 2022) — vcczar's to-do + open crowdsourcing call. The **ORIGIN of NEW
+>   #236** (the alternate-government-form scenario axis: Fascist/Communist/Theocratic USA + the reusable
+>   "authoritarian kit" + denomination-branched Theocracy; trigger/end-state UNSPECIFIED). Also corroborates
+>   #206/#221 (Era-of-Future NON-tech content). **100% designed / 0% shipped.** Cite `tomorrowlist#POST n`.
+> - **`businesslabor`** (dc0316f0, "AMPU Business/Labor", CONTENT-AUTHORING/DESIGN, `@vcczar`, 23 posts) —
+>   vcczar authors the Business/Labor policy GENRE. The **ORIGIN of NEW #237** (the stateful policy-genre
+>   framework: `*-Default` baselines + prereq chains + `L/P/G/S` mechanism prefixes + era-band tags;
+>   couples to the shipped `economic` meter; Currency + Copyright sibling genres named; DISTINCT from
+>   interest-cards/lobbies). Corroborates #206 + the EconStab cluster. **0% shipped.** Cite
+>   `businesslabor#POST n`.
+> - **`histpres`** (e6ff0ddc, "Historic US Presidents in AMPU", DATASET-AUTHORING source, `@vcczar`, 54
+>   posts) — vcczar's AMPU statlines for **47 real presidents** (Washington→Biden) + the canonical curated-
+>   pol record SCHEMA. The **ORIGIN of NEW #240** (the `CURATED_ROWS` fill — `CURATED_ROWS` is built at
+>   runtime from the `ROWS` source array, 143 marquee 1772/1856 figures + 23 `ERA_FIGURES`; the `= []` at
+>   `seedDataset.mjs:275` is only the initializer; the 47 presidents are NOT in `ROWS`), **NEW #239** (the Misc-flags/race×religion×sex demographics curated-override
+>   schema), a turnkey dynasty seed table for **#194**, and corroborates **#216** (14/50 trait names
+>   mismatch the shipped union; `Charisma`→`Charismatic`) + **#238** (the Sex demographics axis). Skill-cap=3
+>   balance note. Cite `histpres#POST n`.
+> - **`georgemartha`** (0500fa72, "The Adventures of George and Martha Washington…", 1772 SOLO playtest,
+>   `@Lars` solo dice-roller, 80 posts, 1772→~1784) — the ~9th captured 1772 founding source, MOSTLY
+>   CORROBORATION of the deep founding cluster. 2 NEW: the **gender-eligibility model (NEW #238**, Ted-
+>   endorsed) + a curated "what-if" draft-pool toggle (folded into #115/#24). Cite `georgemartha#POST n`.
+> - **`calsleaderboard`** (b0bf5d78, "Cal's Most Influential Politicians in American History: 1783",
+>   PLAYTEST RANKING-RECORD, @Cal, 56 posts) — @Cal's per-phase "most influential pol" leaderboard for the
+>   ALREADY-INGESTED `summer2021`/fe15db25 run; a corpus-coverage CROSS-REF, NOT a new upload. Load-bearing
+>   value = the cleanest NARRATIVE confirmation of office-weighted PV (#214/#215) + command-as-presidential-
+>   gate (#182). NO net-new gaps. Cite `calsleaderboard#POST n`.
+>
+> **The two HEADLINE findings (lead with these — both wholly-new designed systems):**
+> 1. **★★ NEW #236 — THE ALTERNATE-GOVERNMENT-FORM SCENARIO AXIS.** The USA can *transition INTO* a
+>    non-democratic government form — **Fascist / Communist / Theocratic** — each unlocking its own Pres-
+>    Action/Legis-Prop/Scripted-Event menu + candidate pool, with a reusable cross-form **"authoritarian
+>    kit."** Theocracy further branches by denomination ×5. The transition TRIGGER and the win/loss/branch
+>    END-STATE are UNSPECIFIED (a human ruling, ties #88/#188). **DISTINCT from #6/#354** (mid-era social-
+>    MOVEMENT factions). Documented in full at [§30.22.A](#3022a--236--the-alternate-government-form-scenario-axis-fascistcommunisttheocratic-usa-new-tomorrowlist--designed-0-shipped). **0% shipped** (only a
+>    `Theocrats` interest-faction string exists, `factions1856.ts:28`).
+> 2. **★★ NEW #237 — THE STATEFUL POLICY-GENRE FRAMEWORK.** Discrete toggleable policies organized into
+>    named **genres** (Business/Labor is ONE; Currency + Copyright are siblings), each with a `*-Default`
+>    baseline (absence-of-policy IS a state), prereq chains, `L/P/G/S` mechanism prefixes, and era-band
+>    tags from the **same #92/#206 vocabulary**. Couples to (reads/gates off) the **shipped `economic`
+>    meter**. **DISTINCT from interest-cards/lobbies** (those nudge state industries; this is a national +
+>    per-state policy-flag axis). Documented in full at [§30.22.B](#3022b--237--the-stateful-policy-genre-framework-businesslabor--currency--copyright-new-businesslabor--designed-0-shipped). **0% shipped** (Business/Labor
+>    exist only as Expertise tags + faction lean signs; no policy store).
+
+#### 30.22.A — #236 — The alternate-government-form scenario axis (Fascist/Communist/Theocratic USA) — NEW (`tomorrowlist`); DESIGNED, 0% shipped
+
+> **★★ NEW design system (`tomorrowlist`, vcczar-authored, `@vcczar` POST 1/2/43 are the authoritative
+> content seed; players' posts are suggestions he cherry-picks).** vcczar's plan (POST 1): *"Add pres
+> actions and legis props for if the US becomes Fascist, Communist, or Theocratic."* Each is a **government-
+> form the USA can transition INTO**, gated on a **government-form STATE FLAG** (not on year/era), unlocking
+> a distinct menu of Pres Actions + Legis Props + Scripted Events (POST 20: vcczar *"added a ton of things…
+> to Pres Actions, Legis Props, Scripted Events"*) and, for the named regimes, a **candidate pool**. The
+> crowdsourced content strongly implies a **PLAYABLE BRANCH** (you govern AS the new regime), not an instant
+> game-over.
+
+**Shipped status (codebase-verified):** the entire axis is **UNBUILT.** A case-insensitive search of
+`src/` for `fascist|communist|theocra|governmentForm` returns ONE hit — a **`Theocrats` interest-faction
+STRING** in a faction-name list (`factions1856.ts:28`, a pressure-group faction, NOT a USA-government-form
+state). There is **no** Fascist/Communist/Theocratic *regime* flag, transition, or menu; and **no** Pres-
+Action / Legis-Prop / Gov-Action / Scripted-Event content SYSTEM at all (`presAction|legisProp|govAction|
+scriptedEvent` → zero files — shipped content lives in `eraEvents1772.ts`/`eraEvents1856.ts`/`anytimeEvents.ts`,
+a different shape). So this thread **widens** the designed-vs-built gap; it closes nothing.
+
+**(1) The three government forms** (each its own menu + the named regimes a candidate pool):
+
+| Form | Authored Pres-Action / Legis-Prop content (POST 43 = vcczar's canonical list) | Candidate pool |
+|---|---|---|
+| **Fascist USA** | Social Darwinism · Eugenics · immigration ban · nationalize all businesses · **"Fascist interpretation of / abolish / replace the Constitution"** · state church (e.g. Positive Christianity if Nazism) · race-based citizenship · ban opposition parties · **dissolve Congress / transfer power to the President** | Huey Long, Lindbergh, McCarthy, Rockwell, Duke… (POST 43) |
+| **Communist USA** | Marxism · **nationalize all businesses** (+ agriculture / healthcare sectors) · universal healthcare · state media · **Personality Cult** · ban/restrict religion · internationalism · **"spread the revolution"** to Canada/Mexico · show trials · **"Blue Scare"** (capitalist analog of the Red Scare, POST 9, endorsed 13) · "Socialism with American Characteristics" | Gus Hall, Angela Davis, Paul Robeson… (POST 43) |
+| **Theocratic USA** | branches **by denomination** (see (2)); simplest gating suggestion (POST 9/11): **only `Theocrat`-trait pols may hold office** | denomination-keyed |
+
+**(2) Theocracy denomination branch (×5)** — each sub-form carries its own fiscal/social policy vector
+(POST 43, +7/8/11/12):
+
+| Sub-form | Policy vector |
+|---|---|
+| **Episcopalian** (liberal) | pro-LGBT, social justice, liberation theology |
+| **Evangelical** | abortion ban, creationism in schools, anti-LGBT |
+| **Roman Catholic** | Inquisition, Pope > political leader, anti-Protestant |
+| **Muslim** | Sharia, hijab, ban apostasy |
+| **State Atheism** ("for fun") | ban/tax religion, every policy dictated by Science |
+
+> **★ The hard part (POST 8, raised by a player):** the engine "would have to know to assign one of these
+> denominations to each politician" and **form party splits along denominational lines** — i.e. the Theocracy
+> branch needs the **demographics-religion field** (#239/#240, §3.1 below) to be real, and a denomination-
+> based party-split mechanic. This ties the alternate-government axis to the curated-statline DEMOGRAPHICS
+> schema: Theocracy is unimplementable until pols carry a religion tag.
+
+**(3) The reusable "authoritarian kit"** — the cross-form primitives buried in the content (the load-bearing
+mechanics — a **shared authoritarian-regime Pres-Action/Legis-Prop kit** specialized per form, POST 5/43):
+
+1. **Ban opposition parties** (toward a one-party state).
+2. **Empower the executive via constitutional amendment** — POST 5: amendments that *"'protect' and 'update'
+   the constitution but in reality just give the president a metric-shitton of power and make it extremely
+   hard for other parties to win"* (couples to the §24.x amendments-mutate-core-params machinery).
+3. **Ban classes of politicians from office** (by ideology / race / religion — couples to #239 flags).
+4. **State media** (propaganda; couples to the Propagandist trait / DomStab).
+5. **Nationalize sectors** (all-business / agriculture / healthcare / labor unions — the recurring Communist
+   Legis-Prop primitive; **corroborates the batch-31 Business/Labor "Communist → Nationalize Unions" prereq**,
+   §30.22.B / #237).
+6. (Plus) dissolve/transfer state power to the federal gov't; secret police / camps.
+
+**★ DISTINCT from #6/#354 (the mid-era social-MOVEMENT factions) — make this explicit.** The existing gap-log
+"communist" rows (gap **#6** / **#354**) are *mid-era social-movement pressure factions* (feminists /
+socialists / communists / prohibitionists "rumbling" inside a normal democracy, era-gated, §31.6 / §22.x) and
+the shipped `Theocrats` faction (`factions1856.ts:28`) is the same kind of pressure-group string. **#236 is a
+GOVERNMENT-FORM STATE OF THE USA** — the country itself *becomes* the regime, replacing its democratic
+constitution and unlocking a whole branch menu + candidate pool. A movement-faction is a lobby; a government-
+form is a scenario branch. Do NOT conflate the `Theocrats` faction with a "Theocratic USA" regime.
+
+**★ OPEN (needs a human ruling) — trigger + end-state UNSPECIFIED.** The thread authors *content* only, not:
+1. The **TRIGGER** for becoming Fascist/Communist/Theocratic (players speculate Business-Plot / FDR-figure /
+   governmental incompetence → local fascist movements, POST 3).
+2. Whether the resulting regime is a **WIN / LOSS / persistent BRANCH** end-state (ties the #88/#188 end-
+   condition model — the only game-overs anywhere in the corpus are mid-run meter/scripted LOSSES, §26.4 /
+   §30.19 #207).
+3. How the engine assigns a **denomination** per pol + forms denominational party splits (POST 8).
+4. Whether `Theocrat` is the gating trait and how it relates to the existing `Theocrats` faction (POST 9/11).
+
+*(designed, not built — a `game.governmentForm: 'democracy' | 'fascist' | 'communist' | 'theocratic'` state
+flag (Theocracy sub-keyed by denomination) that, when set, swaps in the form's Pres-Action/Legis-Prop/Scripted-
+Event menu + candidate pool; implement the cross-form **authoritarian-kit** primitives (ban-parties / empower-
+executive-via-amendment / ban-politicians-by-class / state-media / nationalize-sector) as reusable Pres-
+Action/Legis-Prop content; needs the #239/#240 **religion demographics field** before Theocracy is possible;
+the **transition trigger + win/loss/branch end-state are a human design ruling** (ties #88/#188). Sits ON the
+#221 per-administration content registry but gated by the government-form flag, NOT year/era. Cite `tomorrowlist#POST
+1, 2, 3, 5, 8, 9, 11, 13, 20, 43`; `game-context.md` #236; codebase `factions1856.ts:28`.)*
+
+#### 30.22.B — #237 — The stateful policy-genre framework (Business/Labor + Currency + Copyright) — NEW (`businesslabor`); DESIGNED, 0% shipped
+
+> **★★ NEW design system (`businesslabor`, vcczar-authored — "policy genre" is vcczar's own term, POST 17).**
+> A **policy genre** = a named family of **discrete, toggleable, prerequisite-gated** policies. Business/Labor
+> is **one** genre; vcczar explicitly names **Currency** (gold/silver/crypto-USD/bitcoin) and **Copyright**
+> (term ladder) as **sibling genres** of the same framework (POST 17, 22). The framework slots INTO the
+> #92/#206 era-content registry as a set of policy genres.
+
+**Shipped status (codebase-verified):** **NO policy-genre / policy-flag system in `src/`.** "Business"/"Labor"
+appear only as (a) two of the 19 **`Expertise`** character tags (`types.ts:188`) and (b) **faction economic-
+lean SIGNS** (`EXPERTISE_IDEOLOGY_LEAN` { Agriculture:1, Business:0.5, Labor:−1 }, `types.ts:421`; the 1856
+faction→economic-tag map). These are **static ideology-lean inputs, NOT a stateful policy system.** The shipped
+meters (`NationalMeters`, `types.ts:1399-1407`: `revenue, economic, military, domestic, honest, quality, planet`)
+include the **`economic` meter the framework reads/gates off — but there is NO B/L meter, no policy-flag store,
+and no `*-Default` baseline state** anywhere.
+
+**(1) The framework model** (the core artifact — Business/Labor as the worked example, POST 1/5/12):
+
+| Element | Rule | Example |
+|---|---|---|
+| **`*-Default` baseline** | **absence of policy IS a state** — `If No B/L Policies Active:` → "Business and Labor Policies Left to the States" (`L-Ind-Default`); sub-genre `If no Minimum Wage Active` → "No Federal Minimum Wage (`L-Ind-Default`)". A genre is **stateful**: policies shift it AWAY from the default baseline. | the states-rights baseline |
+| **Two codes per entry** | a **letter PREFIX** = mechanism type + a **parenthetical TAG** = era band | `Pro-Business Over Labor (P-Prog)` |
+| → **mechanism prefixes** | **`L-`** = Legislation · **`P-`** = Presidential Action · **`G-`** = Governor Action · **`S-`** = Scripted event | `Establish State Minimum Wage (G-Ide)`; `Labor Movement (S-Gild)` |
+| → **era-band tags** | the **same #92/#206 era vocabulary**: `Ind, Fed, Rep, Dem, Prog, Gild, Nat, Nuc, Neo, Norm, Ter, Pop, Ide, Fut, Luc`; **`-Fut`** = Era of the Future; **`-Default`** = baseline. (Tags also loosely lean ideology — Ide/Pop/Prog left, Norm/Ter/Neo right — but used primarily as era keys.) | `S-Gild` = Gilded scripted event |
+| **Prereq chains (`Preq:`)** | many entries are gated on prior STATE (see (2)) | min-wage ladder, child-labor chain |
+| **Scripted-event reaction nodes** | each `S-` event is a world event the **President REACTS to** with options (vcczar POST 20: *"I list the events but not the options"*) — so every S-event has an attached Pres-Action decision node | Haymarket reaction |
+
+**(2) Prerequisite chains** — four kinds of prereq (the framework's real teeth, POST 1/22):
+
+| Prereq on… | Example |
+|---|---|
+| **Other policies (the genre's own state)** | "A Minimum Wage is Active" → unlocks the raise-min-wage ladder (75¢ → $1 → $1.60 → $2 → $3.10 → $5.15 → $7.25 → $10.10 → $12 → $15, + Tie-to-Inflation / Cost-of-Living, +$20); "Federal 30-Hour Week active" → apply to private sector; "Any Child Labor Ban active" → more child-labor entries |
+| **Scripted events / world-state** | "Manufacturing Spreads" → II → III; "AFL exists & unions not outlawed" → AFL-CIO; "Labor Movement occurred" → Haymarket / 1,200 Strikes / Pullman; "Intercontinental RR built" → Great Railroad Strike |
+| **★ the SHIPPED `economic` meter** | "Economic Meter better than Stagnant" → End-of-Indentured-Servitude / Golden-Age-of-Productivity; **"Recession or Worse" → Create Government Work; "Depression or Worse" → Create WPA / PWA** (FDR-stimulus framing) — **the policy genre READS the `economic` meter as a gate and policies presumably FEED BACK into it** |
+| **Party type / scenario flags** | "Communist/Fascist/Theocratic as Major Party" → Ban Women from Labor Force (`L-Norm`); "American Communist Party major" → **Nationalize Labor Unions** (ties #236 authoritarian kit); future-tech flags → Restrict Human-AI / Robot Employees, Ban-Corps-as-Sovereign-Nations, Subsidize Fusion / antimatter (all `-Fut`) |
+
+**(3) What meter(s) it feeds.** Primarily the **shipped `economic` meter** (read as a gate; coupling is
+explicit — corroborates the EconStab cluster #116/#160, §29.7/§29.7.1). There is **NO separate "Business/Labor
+meter"** — B/L is a **set of stateful policy FLAGS, not a −5..+5 dial.** Implicit secondary effects named in
+flavor: real-estate / environment (Work-from-Home), state-industry strength (G-Ind Improve/Neglect a State
+Industry).
+
+**(4) The Traditionalist/RW-Pop/Conservative gap vcczar is filling + symmetry.** The explicit ask: most right-
+favoring B/L options are **repeals/reversals**; vcczar wants **NON-repeal** right-coded content. Player
+proposals: a **National Business Council / Business-Affairs Board** as a pro-business **counterpart to the
+NLRB** (possibly a new **Secretary of Business** cabinet seat — strong evidence the axis is meant to be
+**symmetric**, pro-business institutions mirroring pro-labor ones); narrow the Interstate Commerce Clause
+(gated on "Wickard v. Filburn decided"); union-weakening Pres/Gov Actions (Jackson break-a-strike-with-troops,
+Reagan/PATCO fire-strikers — vcczar confirms "on the list"); a **Youngstown** branch (rule Truman's EO
+proper → executive can nationalize via EO; conservative variant → nationalize-then-sell-to-private). Right-
+coded entries already listed: Taft-Hartley, Right-to-Work, Ban Union Dues, Ban Communist union officers.
+
+**★ DISTINCT from the interest-cards / lobbies cluster.** Lobbies (`LobbyCardId`, `LOBBY_INDUSTRY`) are
+**faction influence cards** that nudge **state industries**; the policy genre is a **national + per-state
+policy-FLAG axis** with a baseline default, prereq chains, and L/P/G/S action types. Do not conflate. It is the
+**same era-band content vocabulary** as the #92/#206 registry (so it slots in as one "policy genre"), and it is
+**one of a FAMILY of parallel genres** (Business/Labor + Currency + Copyright).
+
+> **★ OPEN (POST 12):** should the "no B/L policy" default be a flat "left to the states" placeholder, or
+> **computed from a state's political makeup**? vcczar does not commit — a human design ruling.
+
+*(designed, not built — a `game.policies` store of stateful policy FLAGS organized by **genre**, each genre with
+a `*-Default` baseline flag (absence-of-policy = a state); each policy entry carries a **mechanism prefix**
+(`L/P/G/S` → Legislation/Pres-Action/Gov-Action/Scripted-event) + an **era-band tag** (the #92/#206 vocabulary)
++ a **`Preq:` chain** (gated on other policy flags / scripted-event state / the SHIPPED `economic` meter /
+party-type/scenario flags); each `S-` entry attaches a **Pres-Action reaction decision node**. Author the
+Business/Labor genre content (min-wage ladder, child-labor chain, strike/union rights, right-to-work, the
+Gilded strike scripted-event chain), the symmetric pro-business institutions (National Business Council / Sec.
+of Business), and the sibling **Currency** + **Copyright** genres. Couples to the EconStab economic engine
+(§29.7/§29.7.1 / #116/#160) and the era-content registry (#92/#206). Cite `businesslabor#POST 1, 5, 11, 12, 13,
+14, 15, 17, 19, 20, 21, 22, 23`; `game-context.md` #237; codebase `types.ts:188, 421, 1399-1407`.)*
+
+#### 30.22.C — #240 / #239 / #238 — the data-model extensions (curated-statline schema, demographics/Misc flags, gender) — NEW (`histpres` / `georgemartha`); DESIGNED/DATA, 0% shipped
+
+> **★ Three data-model schema extensions** the curated-authoring threads reveal. All are **annotated into §3.1
+> (the character axes)** as the home; the curated-override *pipeline* is annotated into §4.x (draft) cross-refs.
+> `histpres` is the canonical SCHEMA + a 47-president dataset; `georgemartha` adds the gender axis.
+
+**(1) #240 — the canonical curated-pol record SCHEMA + the 47-president dataset (`CURATED_ROWS` fill).**
+`histpres` POST 1 is the **template** for a fully-curated `CURATED_ROWS`-style override. Pipeline-critical
+fact (codebase-verified at runtime): **`CURATED_ROWS` builds to 143 entries** from the `ROWS` source array
+(the `export const CURATED_ROWS = [];` at `seedDataset.mjs:275` is only the initializer — the loop at
+`:276-289` fills it; +23 `ERA_FIGURES`), but **none of these 47 presidential statlines are in `ROWS`** — this
+thread is the canonical source to add them (per `CLAUDE.md` merge precedence: marquee figures → `CURATED_ROWS`
+overrides; **do NOT hand-edit** `defaultDraftClasses.ts` / `standard-draft-classes.json` / `politicians-dataset.csv`).
+
+The schema (one fixed-shape record per pol):
+
+| Field | Meaning | Shipped type? |
+|---|---|---|
+| **Name** | first + last | `firstName`/`lastName` ✓ |
+| **Dynasty** | named lineage + members (spouse/children/nephews/"what-ifs") | **NO field** (→ #194, §3.1 / §30.22.C(4)) |
+| **Ideology** | the 7-point scale (Mod/Cons/Lib/Prog/RW Pop) | `Ideology` ✓ |
+| **Initial Abilities** | the **6 abilities 0-5**: Command + the 5 Skills (Legislative/Governing/Judicial/Military/Administrative) | `command` (separate) + `Skills` ✓ — *the schema groups Command as the 1st of "6 abilities" even though code splits it out* |
+| **Initial Expertise** | ONE expertise tag | `Expertise[]` ✓ (all 10 used are valid) |
+| **Special Interests** | 0-3 interest tags (Expansionist/Reformist/Nationalist/Civil Rights/Pacifist/RW-LW Activist/Theocrat…) | `interests: string[]` (free-string; type-narrowing candidate, #193) |
+| **Traits** | named traits; "doesn't start with Obscure" is itself a flag | `Trait[]` — **14/50 names mismatch the union (#216)** |
+| **Misc** | flags: `Can be Independent` / `Can party flip N times` / `Southern Unionist (won't secede)` / `Can move from <ST> to <ST>` | **NO fields** (→ #239) |
+| **Demographics** | "Standard (White Protestant Male)" or e.g. White Catholic / Black Protestant | **NO field** (→ #238/#239) |
+| **Notes** | prose design rationale (ideal office, crisis fit, manipulator risk) | n/a |
+
+> **★ Skill-cap = 3 in practice (balance note).** Every one of the 47 presidents maxes a single ability at
+> **3** (Madison 3-Leg, Taft 3-Jud, Grant/Eisenhower 3-Mil, LBJ 3-Leg, Lincoln/Cleveland/TR/FDR/Nixon 3-Cmd).
+> **No 4s or 5s anywhere** — the curated marquee tier tops out at 3, consistent with `CLAUDE.md`'s "5s are
+> rare" (#204). A `CURATED_ROWS` importer should expect 0-3, not 0-5, for curated marquee pols.
+>
+> **★ The dataset is 2021-vintage (pre-#214 PV revamp).** Open Q for the importer: trust the raw skill numbers,
+> or re-derive under the #214/#215 PV curve? (`histpres#POST 1-48`; `game-context.md` #240.)
+
+**(2) #238 — gender + suffrage-eligibility + spousal Key-Advisor (NEW; Ted-endorsed).** `georgemartha` (Lars,
+solo, 1772) house rule (POST 1, 19): *"Women can enter backrooms politics despite the lack of suffrage.
+Likewise, if her husband becomes president, she can become key advisor."* Ted endorses (POST 5: *"I like your
+spouses can be Key Advisor rule"*). Implies:
+- A **`gender`/sex attribute on `Politician`** (codebase-verified ABSENT: `grep -i gender|sex|spouse|wife src/`
+  = ZERO).
+- A **suffrage-keyed eligibility GATE**: women barred from *electoral* office in pre-suffrage eras but
+  **permitted in non-electoral backroom/lobby roles**, and eligible as **Key Advisor via a spousal LINK** to a
+  sitting President — so a **spouse/family relationship edge** between pols (none in the build; only loyalty/
+  faction). Era-faithful (women's suffrage is itself a Convention/amendment plank elsewhere, §27/#159).
+- A hint that **women may double as pol-GENERATORS** (Abigail Adams dies *"but not before giving birth to all of
+  the three pols she was meant to create"* — a what-if-descendant hook on top of the eligibility gate; ties #194
+  dynasty + the #115 generator).
+
+**(3) #239 — the curated-override Misc-flags / demographics schema (NEW; partially corroborates #121/#122).**
+The `Misc:` line + `Demographics:` line encode **five orthogonal curated-override flags with no schema home**:
+
+| Flag | Meaning | Exemplars |
+|---|---|---|
+| **`Southern Unionist`** | won't secede if the South secedes (corroborates #121/#122; currently a trait-only string, §23.1) | Washington, Jackson, Z. Taylor, A. Johnson |
+| **`Can be Independent`** | may run/sit as an Independent | Washington, JQA, Tyler, Z. Taylor, Fillmore, TR, Eisenhower, Trump |
+| **`Can party flip N times`** | bounded party-flip budget | Trump ×3, JQA/Tyler ×2, Buchanan/Eisenhower ×1, **Reagan starts Dem** |
+| **`Can move from <ST> to <ST>`** | a curated relocation allowance | Z. Taylor KY→LA, Grant OH→IL, Trump NY→FL |
+| **Demographics: race × religion × sex** | "Standard" = White/Protestant/Male; else explicit | JFK/Biden White Catholic; Obama Black Protestant |
+
+> **★ The demographics-religion flag is the PREREQUISITE for the #236 Theocracy branch** (§30.22.A(2): the
+> engine must "assign one of these denominations to each politician"). So #239 demographics is not low-priority
+> flavor for the alternate-government axis — it is load-bearing.
+
+**(4) #194 dynasty — SHARPENED: `histpres` is a turnkey dynasty SEED TABLE.** Every statline carries a named
+**Dynasty** with explicit members (~37 named dynasties incl. multi-president Adams / Harrison / Roosevelt /
+Bush; "n/a" for the loners Polk/Buchanan/A.Johnson/Arthur/McKinley/Truman/Ford/Reagan). This **feeds the #194
+dynasty system its initial data** — the existing §30.18.E #194 spec (auto-shed-`Obscure`-on-elder's-Presidency
+/ extinguish-line-if-parent-predeceases-heir-birth-year / ahistorical-only-for-Future-gen) now has a ready-made
+seed table. Annotated at §30.18.E (#194) + §3.1.
+
+> **★ Trait corroboration (#216): 14/50 `histpres` trait names mismatch the shipped `Trait` union** (codebase-
+> verified). The textbook rename **`Charisma` → `Charismatic`** (`Charisma` = 0 hits, `Charismatic` = 13 hits
+> in `types.ts`; used on Washington/Jefferson/Jackson/TR/FDR/Reagan/Obama). The other 13 mismatches (each 0
+> hits): `Bookkeeper, Cop, Disharmonious, Geostrategist, Illicit, Incoherent, Jurisprudence, Lackey, Late
+> Bloomer, Low Brow, Military Leader, Pliable, Teflon`. This is the **same #216 trait-vocabulary drift** the
+> `revampPV` table hit (§3.4.1(c)) — an importer needs the **rename/cut map** before authoring `CURATED_ROWS`.
+> Note `Teflon`/`Geostrategist`/`Cop`/`Jurisprudence`/`Bookkeeper` have **no obvious shipped analog** (confirm
+> rename-vs-cut, ties the #214/#216 revamp). Annotated at §3.4.1(c). (`histpres#POST 1-48`; codebase
+> `types.ts:62-117`.)
+
+*(designed/data, not built — (a) author the 47 presidential statlines into `CURATED_ROWS` (`seedDataset.mjs`,
+currently `[]`) under the `CLAUDE.md` merge precedence, applying the #216 trait rename/cut map; (b) add a
+`Politician.gender` field + a suffrage-keyed electoral-eligibility gate (women→backroom-only pre-suffrage) + a
+spouse/family relationship edge enabling spousal Key-Advisor (#238); (c) add the #239 curated-override flag set
+(`canBeIndependent` / `partyFlipBudget` / `southernUnionist` / `canMoveStates` / `race`+`religion`+`sex`
+demographics) — the **religion field is required by the #236 Theocracy branch**; (d) wire the dynasty seed table
+into the #194 lineage system. Cite `histpres#POST 1, 3, 7, 13, 19, 28, 34, 36, 37, 42, 46, 47, 48`;
+`georgemartha#POST 1, 5, 19, 34`; `game-context.md` #240/#239/#238/#194/#216; codebase `seedDataset.mjs:275`,
+`types.ts:62-117, 182, 1251, 1399-1407`, `factions1856.ts:28`.)*
+
+#### 30.22.D — Sharpenings + corroborations (annotate existing rows; do not re-doc as live)
+
+| Item | What batch 32 confirms / sharpens | Where folded | Cite |
+|---|---|---|---|
+| **★ #214/#215 office-weighted PV** | `calsleaderboard` is the **cleanest NARRATIVE confirmation** that AMPU "influence" tracks office-weighted PV: **Presidency ≫ document-authorship/CC-President > governor/Congress > faction-leadership**; **office LOSS = instant PV collapse, NO legacy carry** (Sherman/Langdon fall off the cycle they lose office; Arnold −4 when his ambassadorship ends; Arnold +5 to #1 the cycle he wins the Presidency; Lee debuts #2 the cycle he becomes 2nd President despite no prior résumé). **Confirms office-weighting is RIGHT but raw command is OVER-CREDITED early** (0-domestic war-hero Ward holds #1 in 1783/84 on pure command, slides to #6 once others gain office) — the **decreasing-Command-returns target** of the #215 curve (+25 for the 1st Command level, +5 after; §3.4.1(b)). | [§3.4.1](#341--the-pv-system-overhaul--per-trait-tiers--non-linear-ability-curve--trait-remap--display-scale-new-revamppv--summer2021-batch-30-designed-the-shipped-pvts-is-at-a-pre-revamp-state--dh-77) annotation | `calsleaderboard#POST 1, 13, 14, 20, 27, 42, 56` |
+| **#182 Command = presidential gate** | `calsleaderboard` POST 45: *"no command → essentially zero chance at the Presidency"* — reconfirms Command as the presidential-eligibility/action-budget gate (already authoritative via the rulebook §30.21). NO re-doc. | §20.11(2) / §30.21 (no change) | `calsleaderboard#POST 45` |
+| **★ #206/#221 Era-of-Future NON-tech content** | BOTH `tomorrowlist` + `businesslabor` confirm the Future band is an **actively-authored content frontier**, explicitly scoped **NON-tech / non-foreign / non-military** (`tomorrowlist#POST 1, 14`: Economic/Judicial/Domestic/Cultural-flavor + an optimistic-utopian category — e-democracy, USCoin, congressional-election-system reform, vocaloids, Back-to-the-Land II; `businesslabor` `-Fut` B/L entries: drones, lab-grown meat, AI/robot-employee restrictions, sovereign-corp ban, fusion). Reconfirms #206 (Future DOUBLY UNBUILT) + #221 (per-administration registry). NO new architecture beyond §30.19 #206/#207. | [§22.11](#2211-era-clock--era-enum-alt-history) / [§27.1](#271--the-era-model--eras-are-content-bands-gated-by-game-state--territory-not-calendar-year) annotation | `tomorrowlist#POST 1, 6, 9, 20, 44, 45, 47, 48`; `businesslabor#POST 1, 23` |
+| **#115/#24 "what-if" draft-pool toggle** | `georgemartha` argues for a curated **"what-if" draft-pool TOGGLE** at setup — real people who never served the actual US (women + Toussaint Louverture, Haitian) added to the draftable dataset for alt-history flavor (Toussaint drafted to the American Whigs, persists). DISTINCT from the #115 PROCEDURAL backfill; broader than the shipped male-only `ERA_FIGURES` (`seedDataset.mjs:293`). Ties **#238** (gender makes drafted women PLAYABLE). A sub-row of #115/#24, layered on `ERA_FIGURES`. Already folded into the §30.21/§115 sub-row. | §4.x / `game-context.md` #115 (no re-doc) | `georgemartha#POST 1, 6, 14, 20` |
+| **#158 Rev-War-Ends auto-prompt (founding)** | `georgemartha` = a clean live instance of the **already-settled** #158: no-Lee's-Resolution stalled the whole Declaration→governors→next-Congress chain → designers ruled the "Rev War Ends Due To War Weariness" event must **auto-prompt Declaration + Articles + Annapolis, else reunify = GAME OVER** (Ted POST 56). CORROBORATION of the §16/§30.8 founding spec, NOT new. | §16.x founding (no change) | `georgemartha#POST 15, 45-60` |
+| **#159 Convention per-article-vs-all-vote ambiguity** | `georgemartha` = a 9th-source Convention trace (celebrity+command+military-leader→President auto-pick; 4-Legislative→first-proposal; 3/5 slave-EV compromise; ahistorical unicameral + lifetime-president planks). Re-surfaces the **unresolved Convention-procedure ambiguity**: per-article-as-standalone-legislation (Lars) vs all-propose-then-all-vote (@Cal) — already logged at §17.3.y / §30.8. CORROBORATION, not new. | §17.3.y / §30.8 (no change) | `georgemartha#POST 70-80` |
+| **#114/DH-36 solo-burden** | `georgemartha` = the ~9th 1772 solo confirmation of the shipped single-player shape (1 human + 9 hand-run CPU factions, 5/5 ideology ladder) + the death/retirement Python script offload (the same "Lars script" reused in `arkzag`). CORROBORATION. | §25 / §30.x (no change) | `georgemartha#POST 1, 6, 24, 34, 43, 63` |
+
+> **★ NOTE — `calsleaderboard` adds NO net-new gaps.** It is the companion RANKING-RECORD of the already-
+> ingested `summer2021`/fe15db25 run (Arnold→Lee→Butler→Hiester line; same polarity/GMs). It does not add to
+> the ≥7-missing-playtests list. Its sole load-bearing value is the office-weighted-PV narrative confirmation
+> above (#214/#215) + #182. Treaty-of-Paris office-ownership (Ambassador vs Sec-War vs Sec-State) is fuzzy even
+> to the GM (POST 23-26) — a minor open Q for #177, not a new gap.
+
+> **Roadmap takeaway (for the tech-lead + roadmap-planner).** Batch-32 NEW build surface, ranked:
+> (1) **★★ #237 the stateful policy-genre framework** (§30.22.B) — a new `game.policies` store with `*-Default`
+> baselines + L/P/G/S mechanism prefixes + era-band tags + `Preq:` chains gated off the SHIPPED `economic`
+> meter; author Business/Labor + the sibling Currency/Copyright genres; couples to the EconStab engine
+> (§29.7/§29.7.1) and the #92/#206 registry. (2) **★★ #236 the alternate-government-form axis** (§30.22.A) — a
+> `game.governmentForm` flag swapping in Fascist/Communist/Theocratic menus + candidate pools + the reusable
+> **authoritarian kit**; needs the #239 religion field before Theocracy; **trigger + win/loss/branch end-state
+> are a HUMAN ruling** (ties #88/#188). (3) **Data-model extensions** (§30.22.C) — fill `CURATED_ROWS` from the
+> 47-president dataset (currently `[]`) with the #216 trait rename/cut map; add `Politician.gender` + suffrage
+> gate + spousal-link Key-Advisor (#238); add the #239 curated-override flags (incl. the **religion field #236
+> depends on**); wire the dynasty seed table into #194. (4) **Sharpenings:** #214/#215 office-weighting-RIGHT-
+> but-command-over-credited-early confirmed (§3.4.1); #206/#221 Future-content corroborated (§22.11/§27.1);
+> #115/#24 what-if-pool toggle + #158/#159/#114 founding corroborations (no re-doc). Cross-ref `game-context.md`
+> rows **#236-#240**, the sharpened **#194/#216/#214/#215/#206/#182/#121/#122/#115/#24**, and the founding
+> corroborations **#158/#159/#114/DH-36**.
 
 ### 30.4 Authority hierarchy reminder
 
