@@ -1532,6 +1532,8 @@ draft runner instantiates the year's class via `instantiateDraftees`
 | 51 | **★ #173 era-boundary-aligned starts — New-Game start-year PRESETS = the 14-band era openings; couples scenario-boot (#115); DESIGNED, not built (batch 22 / `modernday`, GM's own verdict)** | **NO start-year picker:** `NewGameScreen.tsx` hard-codes a two-entry `SCENARIOS` array (`:8-21`, `type ScenarioId = '1772' \| '1856'` `:6`); `startNewGame(factionId, scenarioId)` (`GameContext.tsx:264`, sig `scenarioId?: '1772' \| '1856'`) admits exactly those two boots — no era→start-year axis | GM's closing verdict (`modernday#POST 2964`): *"For any new test start date, it must be the date a new era begins. One of the issues we ran into with this test was it started in the middle of an era."* **The fix:** a New-Game **PRESETS table** keyed to the canonical 14-band era→start-year map (POST 2964: Independence 1774 / Federalism 1788 / Republicanism 1800 / Democracy 1820 / Manifest Destiny 1840 / Nationalism 1856 / Gilded 1868 / Progressivism 1892 / Normalcy 1916 / Ideologies 1928 / Nuclear Age 1948 / Neocons 1972 / Terror 2000 / Populism 2012). **★ This is a presets table ON TOP of the K4 `BootSheet`/`scenarioBoot` pipeline (#115, §9.1.9)** — each preset is "another scenario-as-data-row" (same pattern as `scenario1868`/`scenario1788`), GATED on `scenarioBoot` existing. UI delta is small (a presets grid on `NewGameScreen.tsx` instead of two hard-coded buttons); the WEIGHT is the boot sheets each preset points at (the existing era-content/scenario work). **Size: S** (the picker presets table; the boot sheets are existing scenario-boot work). game-mechanics §27.9. |
 | 52 | **★ DH-70 `Lackey` trait over-weighted in PV — actually a "when ported, no special-case" note: pv.ts already gives every negative trait a flat −5 (batch 22 / `modernday`)** | `pv.ts:77` applies a **flat `−5` to EVERY negative trait** (`else if (NEGATIVE.includes(t)) total -= 5;`); **grep `Lackey` in `src/` = ZERO** — it is NOT a shipped trait | The digest flags a LW-Pop with only `Lackey` (+Obscure) at PV −47 ("Lackey shouldn't be that much worse than any other bad trait… just a formula issue", `modernday#POST 1939-1945`). **The shipped formula already treats all bad traits equally** (flat −5), so the over-weight the forum saw was a SPREADSHEET artifact, not the engine. **The fix when `Lackey` is ported: add it to `NEGATIVE_TRAITS` (`types.ts`) so it takes the SAME flat −5 — NO special-case.** **XS; pairs with #120 dataset-balance + DH-51 (modern-pol balance).** game-mechanics §3.4. |
 | 53 | **★ DH-69 NO in-app rules / legal-move surface — players wing it (onboarding/UX gap; serves the CPU cluster too) (batch 22 / `modernday`)** | **grep `rulebook\|legalMove\|availableActions\|helpPage\|tutorial\|onboard` in `src/` = ZERO hits** — no rules page, no legal-move enumeration, no onboarding/help surface | Players (jnewt/ebrk85/Willthescout7) report never being given the rulebook/Discord and "winging it" (`modernday#POST 342-356`). **The fix is an in-app rules + legal-move surface** (a Rules page keyed by phase + an enumerator of the currently-legal actions). **★ It serves THREE constituencies:** onboarding (sharpens #115's boot-procedure gap), the **CPU cluster** (a legal-move enumerator is the same primitive a CPU action-picker needs — pairs with K5/E9), and the GM-burnout theme (DH-36 family — less "ask the GM what's legal"). **UX/onboarding item, no engine size of its own; cite under the #115/CPU-AI work.** game-mechanics §29.1. |
+| 54 | **★ #174 committee bill-shaping is a CHAIR-ONLY stub — no ranking-member counter, no packaging, no chair-add powers (batch 23 / `pop2012b`, the fullest packaging spec in the KB)** | the committee runner `runPhase_2_6_2_Committee` (`phaseRunners.ts:3463-3496`) reads ONLY `snap.game.committeeChairs[bill.committee]` (`:3476`) → sets `passed_committee`/`killed_committee` per-bill; **grep `rankingMember\|packageOf\|chairBlock` in `src/` = ZERO**; the committee STATE is chair-only (`GameState.committeeChairs: Partial<Record<…, string\|null>>` `types.ts:1583`; same for `ContinentalCongress.committeeChairs` `:1350`) — **no ranking-member entity, no package structure, no per-bill block/add ledger** | **The fullest committee-packaging spec captured anywhere** (`pop2012b#POST 724, verbatim; MrPotatoTed-area). On TOP of the still-unbuilt #8/#9 chair-block/package, it adds: **(a)** a **Ranking-Member (always opposing party) un-package / repackage counter** firing under any of **5 trait gates** (Efficient+crisis-trait on a matching crisis bill / higher-Legislative-than-chair / Manipulative-vs-Pliable-or-Predictable-chair / Iron-Fist-vs-Passive-chair / Magician-with-equal-Legislative); **(b)** two **chair-add-bill** powers (5 Legis+Efficient → add a tax/income-tax/tariff to ANY package even off-committee; 5 Legis+Magician → add one extra off-topic proposal); **(c)** **cross-chamber + cross-committee packaging FORBIDDEN** (the chair-add-tax is the lone off-committee exception) + a **Puritan committee-voting rule** (never votes for/against anything that (de)scores its own ideology; on conflict, ignore the Puritan rule for that bill). Makes committee bill-shaping a **chair-vs-ranking-member duel** at two pipeline points (chair block/replace/package/add → ranking-member un-package/repackage → committee vote with Puritan abstention → §12.5 floor). **Binds in the committee runner (`:3463`) + needs `committeeChairs` to grow a ranking-member field + a `Bill.packageOf?: BillId[]` package structure.** **★ Cross-check the 5 gates + chair-add powers vs. `tedchange` BEFORE building** (open Q logged, `game-context.md` #174 / digest §6). **S–M; folds into the committee/bill-packaging epic E14b (#8/#9/#12).** game-mechanics §12.5.1. |
+| 55 | **★ #175 `Legislation` has NO `repealable` flag and NO law-class tag — a small data-model add (batch 23 / `pop2012b`, MrPotatoTed designer-authoritative)** | the `Legislation` interface (`types.ts:1506-1520`) has `id/year/title/description/sponsor*/committee/status/effects/votes` and **NO `repealable` and NO `lawClass`**; the floor runner `runPhase_2_6_3_Floor` (`phaseRunners.ts:3498`) resolves only `passed_committee` bills with no repeal/replace branch; **grep `repealable\|lawClass` in `src/` = ZERO** (the existing `Challenge-Legislation-can't-target-REPEAL` filter #132 is a separate guard) | MrPotatoTed (game co-author) ruled (`pop2012b#POST 687-688): *"Every law is marked with whether or not it can be repealed"* — a per-row flag ("Column P", LegisActive sheet) with **three classes**: **repealable** (a Repeal bill removes it through the normal pipeline — most policy bills); **replace-only** (non-repealable but **replaceable** — you cannot remove it, only supersede it with a new same-kind bill; **tax + immigration** laws); **permanent** (irreversible — **statehood**, *"once a state is a state, it's a state"*; no state can be abolished). This is the authoritative resolution of the `pop` §5.5 data-tag hole and explains why some passed policies are "downgrade-only" and why no Repeal-Statehood bill exists. **The fix: add `Legislation.repealable: boolean` + a `lawClass: 'repealable' \| 'replace-only' \| 'permanent'` tag; gate Repeal proposals on the flag; for replace-only laws expose a Replace action that supersedes (not removes) the prior law; mark statehood (and other one-way structural bills) `permanent` so no repeal/replace is offered.** **Pairs with #42 (the bill-relationship graph, §12.9 — `Not repealable`/replace-by-X/amendment-tier) + §27.5 (statehood-by-bill: stamp every admit-state bill `permanent`).** **S — a small data-model + pipeline-guard add inside the legislation/bill-relationship epic; needs an authored repealable/replace-only/permanent per-bill list (open Q, `game-context.md` #175).** game-mechanics §12.9. |
 
 ### 8.1 Confirmed shipped bugs + GM-confirmed design holes
 
@@ -1905,7 +1907,137 @@ continental congress era system) + #120 (dataset umbrella — one coordinated
 > `gilded` + `fed` + `1772s` + `modern` + `hd` + `drums` + `pop` + `rep1800` +
 > **`new1772` + `tea1772` + `dem1820` + `arkzag` + `tedchange` + `smallbugs` +
 > `oopscpu` + `gild1868` + `hd1` + `terror2000` + `ted1772` + `ideo1928` +
-> `fixes2022`**.
+> `fixes2022` + `biden2021` + `planb` + `nixon1972`/`cpufull`/`solo1916`/`trump2024` +
+> `modernday` + `pop2012b`**.
+>
+> **★ Batch-23 changes to the plan (`pop2012b` / `409a7c18` — "Era of Populism — AMPU
+> Playtest, 2012 Start Date", a 939-post 2012-START modern multiplayer; GM **Rodja** but
+> **MrPotatoTed (game co-author) plays here and his in-thread point-of-order corrections
+> are DESIGNER-AUTHORITATIVE**. This is the **2nd, DISTINCT 2012-start "Era of Populism"
+> run** [`pop`/`c50d9da7` is the FIRST] — same seed/factions, different players/outcome
+> [Ron Paul wins the GOP nom, flips OH+FL in a losing general; thread dies at GA-burnout
+> ~the 2014 cycle]. CORROBORATION-HEAVY: a 2nd independent 2012-boot re-confirms the entire
+> modern cluster. TWO net-new gaps [#174, #175], both legislation-data details; the rest is
+> clarifications + a predicate sharpening. NO new keystone, NO re-sequence, TOP-OF-QUEUE
+> UNCHANGED):**
+>
+> > **★ Read this block if you only read one for batch 23.** This batch is
+> > **corroboration-heavy + two committee/legislation-data gaps that sit in EXISTING epics**;
+> > nothing re-sequences the keystones. The load-bearing moves: **(a) ★ #174** is the
+> > **fullest committee-bill-packaging spec captured anywhere in the KB** (`pop2012b#POST 724`
+> > verbatim) — a **ranking-member un-package/repackage COUNTER-mechanic** (5 trait gates) +
+> > two **chair-add-bill** powers (5 Legis+Efficient → off-committee tax; 5 Legis+Magician →
+> > one off-topic) + the **cross-chamber/cross-committee package guards** + the **Puritan
+> > committee-voting rule** → it **FOLDS INTO the committee/bill-packaging epic E14b (#8/#9/#12)**
+> > on top of the chair-block/package. **★ Cross-check the 5 gates + chair-add powers vs.
+> > `tedchange` BEFORE building** (open Q logged). Size S–M. **(b) ★ #175** is a **small
+> > law-repealability DATA MODEL** (MrPotatoTed designer ruling, `#POST 687-688`): add
+> > `Legislation.repealable: boolean` + a `lawClass` tag (`repealable` / `replace-only` /
+> > `permanent`); gate Repeal on the flag, expose Replace for tax/immigration laws, mark
+> > statehood `permanent` → **FOLDS INTO #42 (the bill-relationship graph, §12.9) + §27.5
+> > (statehood-by-bill)**. Size S. **(c) ★ #15 VP-rubric age checks + cabinet-decline-CPU-only
+> > are CLARIFICATIONS, not new build** — the canonical tables/code-intent were ALREADY
+> > correct (the rubric is "+1 if YOUNGER than 60", and cabinet accept/decline %s are CPU-only);
+> > this batch just pins the AUTHORITY (MrPotatoTed) + the `canBeIndependent` tag (row 7 reads
+> > a discrete pol flag, not out-of-office status) + the `isCPU` gating on the decline rolls.
+> > No code surface beyond what E16 / the convention rubric already scope. **(d) ★ #88 fires at
+> > the meter FLOOR band, NOT "Crisis" — a PREDICATE SHARPENING** of the existing #88/#158
+> > end-condition work: `pop2012b` shows Planet's Health hitting "Crisis" (and Rev/Budget
+> > "Crisis") with **NO apocalypse clock** (`#POST 632`), pinning the trigger to the bottom
+> > tier one band BELOW Crisis. The build predicate is `meter === floorBand`, not
+> > `meter <= crisisBand` — no new item, just the correct predicate on debt #28 + §9.1.4. **(e)**
+> > a **2nd 2012-start CORROBORATION** of the modern cluster (boot/primary→convention→general/
+> > SCOTUS/cabinet/leadership/meters/12A-VP) bumps confidence; #90/#43 procedural-pol-gen is
+> > LIVE again (2nd corroboration of the dual procedural-gen gates — career-track starvation
+> > from the FIRST post-boot draft); and **another GM-burnout death** (Rodja resigns; "freaking
+> > hard to be the literal computer") adds a 3rd data point to the DH-36/DH-69/#114 automation
+> > argument. The top of the queue does NOT move: QW0 → K0/K2 → K3/K4 + scenarioBoot → E1.
+> >
+> > **Verified shipped-state of every batch-23 item (grep/Read-confirmed):**
+> > **(1) ★ #174 committee packaging + ranking-member counter — UNBUILT; FOLDS INTO E14b.**
+> > **★ CONFIRMED zero shipped surface:** grep `rankingMember|packageOf|chairBlock` in `src/`
+> > = **ZERO hits**; the committee runner `runPhase_2_6_2_Committee` (`phaseRunners.ts:3463-3496`)
+> > reads ONLY the chair (`snap.game.committeeChairs[bill.committee]`, `:3476`) and sets
+> > `passed_committee`/`killed_committee` per-bill — **NO ranking member, NO package structure,
+> > NO chair-add path.** The committee STATE is chair-only at both `GameState.committeeChairs:
+> > Partial<Record<…, string|null>>` (`types.ts:1583`) and `ContinentalCongress.committeeChairs`
+> > (`:1350`). **★ Where it binds:** the committee runner (`:3463`) grows the ranking-member
+> > action + the 2 chair-add powers; `committeeChairs` grows a ranking-member field (or a
+> > parallel `committeeRanking` map); `Legislation`/a new `Bill` carries a `packageOf?: BillId[]`
+> > package structure; the Puritan self-ideology abstention reuses the §22.7/§25.6 Puritan-abstain
+> > primitive. **★ It STACKS on, doesn't replace, the still-unbuilt #8/#9 chair-block/package
+> > (the chair lever and the ranking-member lever are TWO distinct opposing-side levers at two
+> > pipeline points)** — build them in one E14b pass, chair-side first. **Size: S–M.** **★ Open Q
+> > (designer-gated, BEFORE building): cross-check the 5 ranking-member gates + the 2 chair-add
+> > powers vs. `tedchange`** (the official rules-doc channel; this is the fullest packaging spec
+> > but is sourced from a single thread). game-mechanics §12.5.1. debt #54.
+> > **(2) ★ #175 law-repealability data flag + replace-only/permanent classes — UNBUILT; FOLDS
+> > INTO #42/§27.5.** **★ CONFIRMED shipped-state:** the `Legislation` interface
+> > (`types.ts:1506-1520`) has **NO `repealable` and NO `lawClass`** (just `id/year/title/
+> > description/sponsor*/committee/status/effects/votes`); grep `repealable|lawClass` in `src/`
+> > = **ZERO hits**; the floor runner `runPhase_2_6_3_Floor` (`:3498`) resolves only
+> > `passed_committee` bills with no repeal/replace branch (the existing #132
+> > `Challenge-Legislation-can't-target-REPEAL` is a different guard). **★ The fix (MrPotatoTed
+> > designer ruling, `pop2012b#POST 687-688`):** add `Legislation.repealable: boolean` + a
+> > `lawClass: 'repealable' | 'replace-only' | 'permanent'` tag — **repealable** (Repeal bill
+> > removes it via the normal pipeline; most policy bills), **replace-only** (cannot repeal,
+> > only supersede with a same-kind bill; **tax + immigration** laws), **permanent**
+> > (irreversible; **statehood** — no Repeal-Statehood bill exists). Gate Repeal proposals on
+> > the flag; expose a Replace action for replace-only laws that supersedes (not removes) the
+> > prior law; mark statehood + other one-way structural bills `permanent`. **★ Where it binds:**
+> > the `Legislation` type (`:1506`) + the proposal/floor pipeline (`:3431`/`:3498`) + §27.5's
+> > statehood-by-bill (stamp every admit-state bill `permanent`). **★ This is the authoritative
+> > resolution of the `pop` §5.5 data-tag hole + the concrete form of #42's `Not repealable` /
+> > replace-by-X / amendment-tier constraints (§12.9)** — build it WITH #42, not as a standalone.
+> > **Size: S.** **★ Open Q: is there an authored repealable/replace-only/permanent per-bill
+> > list, or is it per-row hand-marked?** (a content/authoring task that joins the #120 dataset
+> > umbrella). game-mechanics §12.9. debt #55.
+> > **(3) ★ #88 — the apocalypse/coup endgame fires at the meter FLOOR band, NOT "Crisis":
+> > PREDICATE SHARPENING, no new item.** **★ CONFIRMED:** the only game-over today is
+> > event-driven (`EraEvent.triggersGameEnd` `types.ts:1476` → `phaseRunners.ts:2871` →
+> > `game.gameEnded`); there is NO meter-watcher / no per-event-phase game-end roll anywhere
+> > (debt #28). `pop2012b` independently confirms the THRESHOLD tier: Planet's Health hit
+> > "Crisis" (and Rev/Budget "Rev/Budget Crisis") in a Lingering tick and **NO apocalypse clock
+> > fired** (`#POST 632`), so the bottom tier (APOCALYPSE) — one band BELOW "Crisis" — is the
+> > trigger, NOT "Crisis." **Build implication:** the countdown predicate (and the §26.4
+> > per-event-phase coup rolls, e.g. Honest-Gov) gate on `meter === floorBand`, NOT
+> > `meter <= crisisBand`. **No new build item — this is the correct predicate folded into the
+> > existing #88/#158 end-condition + APOCALYPSE-clock work (debt #28, debt #32, §9.1.4).**
+> > game-mechanics §26.4.
+> > **(4) ★ #15 VP-rubric age checks + the `canBeIndependent` tag + cabinet-decline-CPU-only —
+> > CLARIFICATIONS; NO new build surface.** **★ CONFIRMED the canonical tables/code-intent were
+> > ALREADY right:** the convention VP rubric (game-mechanics §15.3.4) and the §25.2.1 rubric
+> > already encode **"+1 if at least one ticket member is YOUNGER than 60"** (and +1 if one is
+> > OLDER than 50) — there is **NO "+1 for older than 60"** (a GA mis-scored it; MrPotatoTed
+> > corrected it LIVE and it was re-scored). Row 7's "independent / out-of-office / outsider"
+> > check reads a **discrete `canBeIndependent` pol TAG** (Ron Paul lacks it despite a 1988
+> > third-party run) — **NOT inferred** from office status or party history. Separately, the
+> > cabinet **accept/decline percentages are CPU-ONLY** (MrPotatoTed, `#POST 820-821`): they
+> > describe what the CPU does; **human players freely accept/decline ANY nomination except VP**
+> > (corroborates `pop` §5.19). **Build note (no new item):** when E16 builds the cabinet
+> > runner, **gate the accept/decline % rolls behind `isCPU`** (free choice for human-controlled
+> > pols, VP excepted); when K2/the convention rubric is built, **row 7 reads the explicit
+> > `canBeIndependent` field**, and the age checks are exactly the table — these are CONFIRMATIONS
+> > the existing E16 + convention-rubric scope already covers. game-mechanics §15.3.4 + §25.2.1 +
+> > §9.1 (cabinet runner).
+> > **(5) ★ CORROBORATION (confidence ↑, no scope change):** a 2nd independent 2012-boot
+> > re-confirms the **modern cluster** — scenario-boot #86 (no leaders at boot → Major falls back
+> > to FL criteria with the omit-leadership→omit-interest/lobby→void-career-track fallback
+> > ladder), the **primary→convention→general** pipeline (#47/#13/#15/#16/#18), **SCOTUS** #52
+> > (drift, Shenanigans, compelled-retire OFFER, vacate-by-appointment), **cabinet** #25/#112/#124,
+> > **leadership** #70 (kingmaker-weighted bloc vote; first-elected-Pres auto-becomes faction+party
+> > leader), the **meta-pass** #86 (ideology-shift +bonuses, LW↔RW-Pop circular block #99, kingmaker
+> > rules), the **meter→election 2-layer map** #18/#51, and the **12A-gated "Send VP to Shore Up
+> > Support"** #91 — all the FROZEN-SPEC items the build already scopes. **#90/#43 procedural-pol-gen
+> > is LIVE for the 2nd time** as career-track starvation (the 2013 draft yielded only 15 Dem + 14
+> > GOP rookies vs the usual ~100+; players flag generated pols should be appearing) — corroborates
+> > the **dual gates** (per-era year-trigger AND dataset-exhaustion fallback, debt #19 + Phase-1 #8).
+> > **And a 3rd GM-burnout DEATH** (Rodja resigns as GM; MrPotatoTed: *"it's freaking hard to run a
+> > game this complex — to be the literal computer tracking every rule, every role, every trait"*,
+> > `#POST 938`) strengthens the **DH-36 / DH-69 / #114 automation argument** behind E9/#55/#115/K5.
+> > **Decision-gated RECOUNT: 0** (the #174 `tedchange` cross-check + the #175 authored-list question
+> > are designer/content-gated WITHIN their epics, not new top-level decisions). **No NEW keystone,
+> > NO re-sequence; top of queue UNCHANGED** (QW0 → K0/K2 → K3/K4 + scenarioBoot → E1).
 >
 > **★★ Batch-22 changes to the plan (`modernday` / `65f81fe8` — "AMPU Modern Day
 > Playtest", a 3014-post 2016-START current-rules 8-human modern multiplayer that is
@@ -6004,6 +6136,45 @@ planning. Specifically:
 > within E16/E14c). **No NEW keystone, NO re-sequence; top of queue UNCHANGED** (QW0 → K0/K2 →
 > K3/K4 + scenarioBoot → E1) — this batch is corroboration-heavy + two modern build items (#172,
 > #173) that sit in their existing epics.
+>
+> **★ Batch-23 change (`pop2012b` / `409a7c18` — the 2nd, DISTINCT 2012-START "Era of Populism"
+> run [`pop` is the 1st]; GA-run [Rodja] but MrPotatoTed [game co-author, playing] point-of-order
+> corrections are DESIGNER-AUTHORITATIVE; CORROBORATION-HEAVY, TWO legislation-data gaps in
+> EXISTING epics; NO new keystone, NO re-sequence, TOP-OF-QUEUE UNCHANGED):** **★ #174 committee
+> bill-packaging → FOLDS INTO E14b (#8/#9/#12):** the fullest packaging spec in the KB
+> (`pop2012b#POST 724` verbatim) — a **ranking-member un-package/repackage COUNTER** (5 trait
+> gates: Efficient+crisis-trait / higher-Legislative / Manipulative-vs-Pliable-or-Predictable /
+> Iron-Fist-vs-Passive / Magician-equal-Legislative) + two **chair-add-bill** powers (5
+> Legis+Efficient → off-committee tax; 5 Legis+Magician → one off-topic) + **cross-chamber/
+> cross-committee package GUARDS** + the **Puritan committee-voting rule**. UNBUILT (grep
+> `rankingMember\|packageOf\|chairBlock` in `src/` = ZERO; the committee runner
+> `phaseRunners.ts:3463-3496` is chair-only via `committeeChairs[bill.committee]` `:3476`; state
+> is chair-only `types.ts:1583`). Build on TOP of the still-unbuilt #8/#9 chair-block/package
+> (chair lever + ranking-member lever = two pipeline points); needs a ranking-member field on
+> `committeeChairs` + a `Bill.packageOf?: BillId[]`. **★ Cross-check the 5 gates + chair-add
+> powers vs. `tedchange` BEFORE building** (open Q). S–M. debt #54. **★ #175 law-repealability
+> DATA MODEL → FOLDS INTO #42 (bill-relationship graph) + §27.5 (statehood-by-bill):**
+> MrPotatoTed ruling (`#POST 687-688`) — add `Legislation.repealable: boolean` + `lawClass:
+> 'repealable'\|'replace-only'\|'permanent'`; gate Repeal on the flag, expose Replace for
+> **tax/immigration** (replace-only), mark **statehood** `permanent`. UNBUILT (`Legislation`
+> `types.ts:1506-1520` has neither field; grep `repealable\|lawClass` in `src/` = ZERO). The
+> authoritative form of #42's `Not repealable`/replace-by-X constraints — build WITH #42. S.
+> debt #55. **★ #88 PREDICATE SHARPENING (no new item):** the apocalypse/coup endgame fires at
+> the meter FLOOR band, NOT "Crisis" — `pop2012b` shows Planet's Health at "Crisis" with NO clock
+> firing (`#POST 632`), so the predicate is `meter === floorBand`, NOT `meter <= crisisBand`;
+> folds into the existing #88/#158 end-condition + APOCALYPSE-clock work (debt #28/#32, §9.1.4).
+> **★ #15 VP-rubric + cabinet-decline-CPU-only = CLARIFICATIONS (no new build):** the canonical
+> rubric already says "+1 if YOUNGER than 60" (NO "+1 older than 60"), row 7 reads a discrete
+> `canBeIndependent` tag (not office status), and cabinet accept/decline %s are CPU-only (gate
+> behind `isCPU`; humans free-choose except VP) — all confirmations the E16 + convention-rubric
+> scope already covers. **CORROBORATION only:** a 2nd 2012-boot re-confirms the modern cluster
+> (boot #86 / primary→convention→general #47/#13/#15/#16/#18 / SCOTUS #52 / cabinet #25/#124 /
+> leadership #70 / meta-pass #86/#99 / 2-layer scorer #18/#51 / 12A-VP #91 — confidence ↑);
+> #90/#43 procedural-pol-gen LIVE again as career-track starvation (2nd corroboration of the dual
+> gates, debt #19); a 3rd GM-burnout DEATH strengthens the DH-36/DH-69/#114 automation argument.
+> **Decision-gated RECOUNT: 0** (the #174 `tedchange` cross-check + the #175 authored-list question
+> are designer/content-gated WITHIN their epics). **No NEW keystone, NO re-sequence; top of queue
+> UNCHANGED** (QW0 → K0/K2 → K3/K4 + scenarioBoot → E1).
 
 **Cheap fixes first (do immediately — XS each, high value):**
 **★ BUG-0/QW0 (relocation cap `5`→`4`, `types.ts:247`, divergence #9 — ★ batch-12

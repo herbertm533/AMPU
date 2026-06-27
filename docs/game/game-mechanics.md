@@ -347,6 +347,7 @@
     - [30.11 The `planb` build-finishing PROCESS + authoring-pipeline rulings + the AMPU-2 quarantine (batch 20 — meta)](#3011-the-planb-build-finishing-process--authoring-pipeline-rulings--the-ampu-2-quarantine-batch-20--meta)
     - [30.12 Rulings folded from `trump2024` (Ted-run 2024/Jan-2025-start modern campaign — SETUP-ONLY)](#3012-rulings-folded-from-trump2024-ted-run-2024jan-2025-start-modern-campaign--setup-only)
     - [30.13 Rulings folded from `modernday` (GA-run 2016-start modern multiplayer — Ted-blessed marquee rulings)](#3013-rulings-folded-from-modernday-ga-run-2016-start-modern-multiplayer--ted-blessed-marquee-rulings)
+    - [30.14 Rulings folded from `pop2012b` (the 2nd 2012-start "Era of Populism" — MrPotatoTed designer-authoritative point-of-order corrections)](#3014-rulings-folded-from-pop2012b-the-2nd-2012-start-era-of-populism--mrpotatoted-designer-authoritative-point-of-order-corrections)
     - [30.4 Authority hierarchy reminder](#304-authority-hierarchy-reminder)
 31. [Gilded-Age era systems (designed, not built)](#31-gilded-age-era-systems-designed-not-built)
     - [31.1 (#147) Tariff-as-national-%-rate + the mutually-exclusive MonetaryRegime](#311-147-tariff-as-national-rate--the-mutually-exclusive-monetaryregime-designed)
@@ -1453,6 +1454,16 @@ counter on `Faction.leaderId` / party leadership.
 > pairs with the [§9.3.8](#938--ted-ruled-nomination-filters-designer-authoritative-tedchange)
 > Integrity-cannot-nominate-Controversial precondition. (`ideo1928`#post 213-214; `game-context.md`
 > §30 confirmation-auto-pass.)
+
+> **★ Cabinet accept/decline percentages are CPU-ONLY (MrPotatoTed designer ruling; `pop2012b` POST
+> 820-821).** The rulebook's **per-office accept/decline percentages** (e.g. "leaders/justices
+> decline 75%, SoS 50%," "Easily-Overwhelmed rejects 50%" — §30.13 / §28.7) describe **what the CPU
+> does** when offered a nomination. **Human players freely accept or decline ANY nomination — with
+> ONE exception: the Vice Presidency** (a human VP nominee cannot freely decline; the VP-retention
+> rule, §25.2). So the decline-roll model is a **CPU-AI behavior, not a hard game rule** binding
+> human players. (2nd-source confirmation of `pop` §5.19; here MrPotatoTed attributes it cleanly as
+> a designer reading.) Build note: gate the accept/decline % rolls behind `isCPU`; for human-
+> controlled pols, surface a free accept/decline choice (except VP). `pop2012b` POST 820-821.
 
 ### 9.2 (2.3.2) Military — `runPhase_2_3_2_Military` (`phaseRunners.ts:2246`)
 
@@ -2650,6 +2661,56 @@ Posts 176-179 introduce **bill packaging**: between 2.6.2 and 2.6.3, a chair may
 > across the package (POST 507, 542). Confirms the package step as a **chair-discretion**
 > action (not deterministic).
 
+#### 12.5.1 ★ #174 (NEW, `pop2012b`) — the full committee-packaging spec: ranking-member counter-mechanic + chair-add-bill rules + Puritan voting (designer-area; DESIGNED, not built)
+
+> **★ The fullest committee-packaging spec captured anywhere in the KB** (`pop2012b` POST 724,
+> verbatim packaging ruleset; 2nd 2012-start, GM Rodja). Extends §12.4 (block-and-replace) and
+> §12.5 (packaging) with the **opposing-side counter-mechanic** and the trait-gated chair powers
+> the prior `pop`/`fed`/`1772s` captures only gestured at. **Packaging choices are made by the
+> chair AND the ranking member BEFORE the committee vote.** Cross-check vs. `tedchange` before
+> building (open Q logged in `game-context.md` #174).
+
+**(a) Ranking-Member un-package / repackage counter-mechanic.** The **Ranking Member is always
+the opposing party** (the highest-ranking minority member of the committee, §8.5.1). The ranking
+member may **UNDO a chair's package** OR **repackage one of their OWN party's proposals together
+with a majority-party proposal** — but only when **one of these five trait gates** is met:
+
+| # | Gate (Ranking Member …) | vs. Chair / context |
+|---|---|---|
+| 1 | **Efficient** + a relevant **crisis trait** (Bookkeeper / Geostrategist / Cop / Domestic Warrior) | on a **crisis bill** matching the crisis trait |
+| 2 | **higher Legislative** than the chair | any package |
+| 3 | **Manipulative** | vs. a **Pliable / Predictable** chair |
+| 4 | **Iron Fist** | vs. a **Passive** chair |
+| 5 | **Magician** | with **Legislative equal** to the chair |
+
+**(b) Chair-add-bill (trait-gated).** A chair may inject extra bills into ANY package they form:
+
+| Chair trait combo | Add power |
+|---|---|
+| **5 Legislative + Efficient** | may add a **tax / income-tax / tariff** bill to any package — **even off-committee** (off-topic for that committee's domain) |
+| **5 Legislative + Magician** | may add **one extra off-topic proposal** to a package |
+
+**(c) Scope limits + the Puritan committee-voting rule.**
+- **Cross-chamber packaging is forbidden** (House bills don't bundle with Senate bills).
+- **Cross-committee packaging is forbidden** (a package is one committee's domain — the
+  chair-add-tax in (b) is the one explicit exception, an off-committee TAX bill).
+- **A Puritan never votes for/against anything that (de)scores their own ideology** in the
+  committee vote (the §22.7/§25.6 Puritan-abstains-on-self-ideology rule, here applied to
+  committee voting): on a conflict, **ignore the Puritan rule** for that bill.
+
+**Interaction with §12.4 block-and-replace:** the chair-block (one discretionary block per cycle
++ mandatory duplicate-block, §12.4) operates on the **incoming proposal slate**; the
+ranking-member counter (a) operates on the **chair's PACKAGE** — two distinct opposing-side levers
+at two pipeline points. This makes committee bill-shaping a **chair-vs-ranking-member duel**: chair
+blocks/replaces/packages/adds → ranking member un-packages/repackages → committee votes (Puritan
+self-ideology abstention applied) → §12.5 floor vote on the resulting package(s).
+
+*(designed, not built — implement on top of §12.4/§12.5: a ranking-member action that fires when
+any of the 5 trait gates holds (un-package or merge-a-minority-bill-into-a-majority-bill), the two
+chair-add-bill powers (5 Legis+Efficient → off-committee tax; 5 Legis+Magician → one off-topic),
+the cross-chamber/cross-committee package guards, and the Puritan self-ideology committee-vote
+abstention with the on-conflict-ignore fallback. `pop2012b` POST 724.)*
+
 *(designed, not built — add `Bill.packageOf?: BillId[]`, a chair-side bundling action, and a
 CPU bundling-eligibility heuristic: bundle if net-positive or a statehood bill; ~75% baseline.)*
 
@@ -2782,6 +2843,30 @@ faction's ideology**.)*
   (REPEAL Protect-Gay-Marriage required an amendment, posts 2265-2268). Some passed policies
   are **downgrade-only**. There is also a **change-cooldown**: "can't propose what we just
   repealed unless a chamber changed" (post 646).
+
+  > **★ #175 (NEW, `pop2012b`) — per-law repealability is a DATA FLAG, and there are replace-only
+  > / permanent-effect law classes (MrPotatoTed designer ruling; DESIGNED, not built).** The
+  > concrete, designer-authoritative form of the above `modern` constraints. **MrPotatoTed (game
+  > co-author, here a player) ruled** (`pop2012b` POST 687-688): *"Every law is marked with whether
+  > or not it can be repealed"* — every law carries a **per-row `repealable` flag** ("Column P" of
+  > the LegisActive sheet). Three classes follow:
+  >
+  > | Class | Behavior | Examples |
+  > |---|---|---|
+  > | **repealable** | a Repeal bill removes it through the normal pipeline | most ordinary policy bills |
+  > | **replace-only** (non-repealable but **replaceable**) | you **cannot repeal it — only supersede it** with a new bill of the same kind (the policy is swapped, never removed) | **tax laws**, **immigration laws** |
+  > | **permanent-effect** (irreversible) | the effect **cannot be undone at all** | **statehood** — *"once a state is a state, it's a state"* (a state can never be abolished) |
+  >
+  > This is the authoritative resolution of the `pop` §5.5 data-tag hole (*"not sure why everything
+  > that can impact the meter doesn't have that attribute"*) — the `repealable` flag IS that missing
+  > attribute, and the replace-only / permanent split explains why some passed policies are
+  > "downgrade-only" and why no Repeal-Statehood bill exists. Pairs with the bill-relationship graph
+  > above (#42) and §27.5 (statehood-by-bill).
+  >
+  > *(designed, not built — add `Legislation.repealable: boolean` + a `lawClass: 'repealable' |
+  > 'replace-only' | 'permanent'` tag; gate Repeal proposals on `repealable`; for replace-only laws
+  > expose a **Replace** action that supersedes (not removes) the prior law; mark statehood (and other
+  > structural one-way bills) `permanent` so no repeal/replace is offered. `pop2012b` POST 687-688.)*
 - **Modern floor scale + signing rules**: floor votes run at **House 572-601 / Senate 106**
   (53 states, [§22.10](#2210-53-state-alt-roster--modern-apportionment)); **veto override
   needs 2/3** (a Soft-Drink-Tax override failed 326-276, post 942); a **Harmonious president
@@ -3372,6 +3457,19 @@ yes = +1 unless noted:
 Winning party-preference contribution = `sign(red_total − blue_total) × 1` toward the
 higher-scoring party.
 
+> **★ #15 CORRECTION CONFIRMED — the age checks + the "Can-be-Independent" tag (MrPotatoTed
+> designer ruling; `pop2012b` POST 190, 198, 192-193).** A GA (Rodja) scored a ticket with **"+1
+> for older than 60"**; **MrPotatoTed (game co-author) point-of-order-corrected it and Rodja
+> re-scored** — there is **NO "+1 for older than 60."** The two age checks are exactly as in the
+> table above (rows 4-5): **+1 if at least one ticket member is OLDER than 50**, and **+1 if at
+> least one is YOUNGER than 60** (NOT older than 60). This is designer-authoritative and
+> reconciles the rubric — the canonical reading is "younger than 60," which the §15.3.4 and §25.2.1
+> tables already encode. Separately, **"Can-be-Independent" is a real, discrete pol TAG** a
+> politician either has or does not (it drives row 7's "independent / outsider" check): **Ron Paul
+> does NOT have it** despite his 1988 Libertarian run, so he could not satisfy the outsider check
+> by that route. Build note: row 7 reads the explicit `canBeIndependent` tag — it is **not**
+> inferred from out-of-office status or party history.
+
 #### 15.3.5 Platform scoring — 5 planks + 4-step comparison
 
 Platform is split across **5 planks**: `Domestic / Foreign / Economic / Judicial /
@@ -3442,6 +3540,17 @@ bonuses. Each meter contributes additively (post 266):
 | Party Preference | numeric advantage to the party (already aggregated) |
 
 Each enthusiasm/preference line couples into `calcStateVote` for the upcoming general.
+
+> **★ #18/#51 STRENGTHENED — the 2-layer "State of the Meters" published VERBATIM at a MIDTERM
+> (`pop2012b`, 2nd 2012-start).** The "PRE-MIDTERMS STATE OF METERS" table (`pop2012b` POST 840) is
+> a clean verbatim instance of the **terror2000-settled 2-layer model** (§22.2, §29.3, §28.6), now
+> agreed-on from another start year and confirmed to apply to **down-ballot/midterm** cycles, not
+> just presidentials: **(a) a UNIVERSAL per-ideology modifier from the top meters** [Rev-Budget →
+> Mod +1; QoL → Mod/Cons +1, LW-Pop −1; Planet → Cons +1, Prog −1; EconStab + DomStab →
+> Dem-party −1] **plus (b) a SEPARATE per-ideology Enthusiasm × Blue/Red layer** [LW-Pop Neutral,
+> Progs Dem +1, Libs/Mods Dem +3, Cons/Trads/RW-Pop Red +3]. The full resolved model lives in
+> [§22.2](#222-faction-enthusiasm--party-preference-election-engine--the-score-economy) /
+> [§29.3](#293--the-meterenthusiasmelection-model--51-resolved-drums-4-step--18-resolved-terror2000--vs-2-layer-model-gap-1851); this row is the early forum-design sketch the resolved model supersedes.
 
 #### 15.3.9 Faithless electors
 
@@ -5683,6 +5792,20 @@ bills tied to a court-disabled policy **should** auto-deactivate but **don't** (
 > "historical"; Charles River Bridge 3-3 → split affirms lower court → randomly rolled AYE
 > "ahistorical"). (`dem1820#POST 420-443`.)
 
+> **★ Corroborated (`pop2012b`, 2nd 2012-start): the 4-4-tie → "Shenanigans" → Debater-Chief-
+> Justice-converts-a-vote path, then compel paths.** A clean modern instance of the tie-break
+> sequence: **Obergefell came up 4-4**, and rather than auto-affirming the lower court, the resolver
+> ran **"Shenanigans"** — a **Debater Chief Justice (Roberts) converted a Justice's vote** (Breyer)
+> → Obergefell **passed**; the **Pres / AG compel paths** are checked after the CJ-sway step
+> (`pop2012b` POST 663-664). (Distinct from the §22.7 5-5-affirms-lower-court rule above — that fires
+> only when no sway/compel changes the count.) Also corroborated from this start: **10-yr ideology
+> drift** (Roberts → Lib, Breyer → Mod, POST 1314); **confirmation by ideology-distance + CPU
+> substitution** (low-Jud Freeh → 25% opposition / Freeh 68-32; same-party 3-Jud KBJ → auto-support /
+> KBJ 86-14, POST 836-839); **Manipulative-Pres voluntary-retirement OFFER** (RBG must roll ≥75% to
+> accept retire-and-replace; rolled 65% → rejected, POST 822); and **a Pres may VACATE a Justice by
+> appointing him to another office IF the player accepts** (rule 2.8.4, POST 814 — the §14
+> no-double-dipping consent rule applied to the bench).
+
 #### 22.7.y ★ Ted-RULED CPU Chief-Justice selection ladder (designer-authoritative; `tedchange`)
 
 > **AUTHORITATIVE — Ted's `tedchange#POST 388`, RULED** (rule authored by Ark in POST 388;
@@ -7229,6 +7352,13 @@ score the **ticket** on **8 binary checks**; each yes = **+1**:
 
 **Higher-scoring ticket = Party Pref +1 + dominant-ideology +1.**
 
+> **★ Age-check direction CONFIRMED + the "Can-be-Independent" tag (MrPotatoTed, `pop2012b` POST
+> 190, 198, 192-193).** Rows 4-5 are designer-confirmed against a live mis-scoring: **+1 if one
+> member is OLDER than 50** and **+1 if one is YOUNGER than 60** — there is **NO "+1 for older than
+> 60"** (a GA scored it that way; the designer corrected it). Row 7's "independent / out of office"
+> check reads a **discrete `canBeIndependent` pol tag** (Ron Paul lacks it despite a 1988 third-party
+> run) — it is not inferred from office status. See §15.3.4 for the convention-side statement.
+
 #### 25.2.2 Career-track + ideology-gap rules
 
 - **Career-track gate** (vcczar, POSTS 2227-2234): a VP can be **taken off career-track for
@@ -8113,6 +8243,20 @@ The shape, common to all three:
      hand-populated by GM ad-hoc (POST 38, 50). **Neither is canonical** — the build needs a
      stated rule before any modern scenario ships.
 
+> **★ #90/#43 STRENGTHENED — career-track STARVATION surfaced LIVE in the first post-boot draft
+> (`pop2012b`, 2nd 2012-start).** The empty-career-tracks-at-boot gap (item 3) and the thin
+> real-pol dataset (#90 Rule 3.0.18 / #43) combine into a **live failure** here: the **2013 draft
+> produced only 15 Dem + 14 GOP rookies** (vs. the usual ~100+, `pop2012b` POST 381). Players flagged
+> that **generated pols "should be happening at this time"** and that *"the rules say generating pols
+> starts the era BEFORE the era of future"* (POST 383, 386), and that **5 factions splitting ~15
+> rookies cannot fill seven career tracks** — *"each faction is now tasked with populating seven
+> career tracks with two or three new rookies"* (POST 392); the modern playtest *"every draft has
+> been 1 or 2 short of filling up the track"* (POST 384). This is the **2nd independent corroboration**
+> (after `pop` #90 and `terror2000`) that the build needs **BOTH** procedural-pol-gen gates: a per-era
+> **year-trigger** (2020/era-before-future, #90) **AND** a **dataset-exhaustion fallback** (#43) — and
+> that career-track seeding (DH-25 / #163) must run from the very first post-boot draft, not just at
+> boot. (`pop2012b` POST 381-392; `game-context.md` #90/#43.)
+
 The implication for the build: **build the boot-sheet schema once, instantiate per era.**
 Era identity is **data configuration**, not a code path. A `BootSheet` structure parameter-
 ized by `{era, startYear, factions: FactionSeed[], sittingGovernment: …, stateRoster: …}`
@@ -8286,6 +8430,17 @@ into the bottom band**, GM Rodja announced verbatim:
 1. **Meter threshold:** Planet's Health falling to the **APOCALYPSE / bottom-tier band**
    triggers the clock. (The band name is the meter's bottom-of-ladder label — see
    §22.1's Planet's Health ladder: "Poor → Near Crisis → Crisis → APOCALYPSE".)
+
+> **★ #88 STRENGTHENED — the clock fires at the meter FLOOR, NOT at "Crisis" (`pop2012b`, 2nd
+> 2012-start).** Independent confirmation of the threshold's exact tier: in `pop2012b`, **Planet's
+> Health hit the "Crisis" band** (and Rev/Budget hit "Rev/Budget Crisis") during a Lingering tick —
+> **and NO apocalypse clock fired** (`pop2012b` POST 632). This pins the trigger to the **bottom
+> tier (APOCALYPSE), which sits one band BELOW "Crisis"** on the ladder — reaching "Crisis" alone is
+> NOT enough. The two threads agree from independent boots: `pop` started the clock only when Planet's
+> Health crashed into the **bottom band** (POST 542), and `pop2012b` shows "Crisis" (the band above)
+> does **not** start it. Build implication: the countdown predicate is `meter === floorBand`, not
+> `meter <= crisisBand`. (Same distinction applies to the §26.4 per-event-phase coup rolls below,
+> which gate on the meter at its **lowest level**, e.g. Honest-Gov=floor — not merely "in crisis.")
 2. **Countdown:** a **10-game-year** clock starts (5 half-terms). During the clock, normal
    gameplay continues — bills, elections, events all proceed.
 3. **Recovery:** if Planet's Health **recovers above the threshold** before the clock
@@ -11414,6 +11569,62 @@ more states + a custom-state map drawer; achievements; challenge mode. *(Cite `a
 > recurring **manual-upkeep / GM-burden theme** (DH-36, the `planb` upkeep cluster): the build's
 > always-on in-app rules surface + legal-move enumeration is the direct fix. The thread closed for
 > **lack of momentum** (`modernday#POST 2964`) — the same upkeep-fatigue pattern.
+
+### 30.14 Rulings folded from `pop2012b` (the 2nd 2012-start "Era of Populism" — MrPotatoTed designer-authoritative point-of-order corrections)
+
+> **★ AUTHORITY: GM-run by Rodja (rank-4), BUT MrPotatoTed (`@MrPotatoTed`) plays here as a PLAYER
+> and is a game CO-AUTHOR** — *"helped create and write a good portion of it and have run many games
+> acting as the cpu"* (`pop2012b` POST 13). His in-thread **point-of-order corrections overrule the
+> GA and carry DESIGNER authority** (§30.4 rank-1/2). Rodja's own GA rulings stay rank-4. Each row
+> below is tagged by adjudicator. The thread is **corroboration-heavy** (a 2nd independent 2012-start
+> of the same seed as `pop`) + **two NEW gaps** (#174 committee-packaging, #175 law-repealability).
+> Cite `pop2012b#POST n`.
+
+**Designer rulings (★ = MrPotatoTed, designer-authoritative):**
+
+| # | Topic | Ruling | Adjudicator | Folded into | `pop2012b` POSTs |
+|---|---|---|---|---|---|
+| **★ #15** | **VP-impact age check + Can-be-Independent tag** | CORRECTED a live GA mis-score: there is **NO "+1 for older than 60"** — the rule is **+1 if at least one is OLDER than 50** and **+1 if at least one is YOUNGER than 60**. **"Can-be-Independent" is a discrete pol TAG** (Ron Paul lacks it despite a 1988 third-party run) driving the row-7 outsider check — not inferred from office status. | **MrPotatoTed** (designer) | [§15.3.4](#1534-vp-impact-scoring--10-binary-checks-post-225-250) / [§25.2.1](#2521-the-8-element-vp-assessment-rubric-the-canonical-rubric) | 190, 198, 192-193 |
+| **★ #175** | **Per-law repealability flag + replace-only / permanent law classes** (NEW gap) | *"Every law is marked with whether or not it can be repealed"* (Column P, LegisActive sheet) → a per-row **`repealable` flag** + a **replace-only** class (tax/immigration: supersede, don't repeal) + a **permanent-effect** class (statehood: *"once a state is a state, it's a state"*). The concrete form of the `pop` §5.5 data-tag hole. | **MrPotatoTed** (designer) | [§12.9](#129-forum-design-layer-executive-branch-interference--bill-relationship-graph-modern-designed-not-built) | 687-688 |
+| **★ #124/#25** | **Cabinet accept/decline %s are CPU-ONLY** | The rulebook's per-office accept/decline percentages describe **what the CPU does**; **human players freely accept/decline ANY nomination except VP**. 2nd-source confirmation of `pop` §5.19, attributed cleanly as a designer reading. | **MrPotatoTed** (designer) | [§9.1](#91-231-cabinet--runphase_2_3_1_cabinet-phaserunnersts2158) / [§25.5](#255-cabinet-confirmation--designer-acknowledged-bug-36-of-88-nominees-passed) | 820-821 |
+| **★ #114** | **Solo-app validation (design-intent close)** | Running the game by hand is *"freaking hard … to be the literal computer tracking every rule, every role, every trait, etc."* — corroborates the solo-app thesis (#114) and the GM-burnout/automation theme. | **MrPotatoTed** (designer) | [§28.12](#2812--design-intent-solo-first-the-open-question-and-the-timeline-seam) / GM-burnout cluster | 938 |
+| — | **No-double-dipping-offices rule provenance** | The rule that a Pres can vacate-then-refill an office only with the holder's consent came from the **1960 test** (Reds elected a Speaker → made him UK Ambassador → seated a new Speaker) — *"probably the most important change to come from that test."* | MrPotatoTed (history note) | [§14](#14-executive--court-management-28x) / [§22.7](#227-scotus-subsystem-253--282) (2.8.4) | 817 |
+
+**GA (Rodja) / vcczar rulings:**
+
+| Topic | Ruling | Adjudicator | Folded into | `pop2012b` POSTs |
+|---|---|---|---|---|
+| **#174 packaging** (NEW) | the verbatim committee-packaging ruleset (ranking-member counter-mechanic + chair-add-bill + Puritan voting) — the fullest packaging spec in the KB | GA (Rodja, printed) | [§12.5.1](#1251--174-new-pop2012b--the-full-committee-packaging-spec-ranking-member-counter-mechanic--chair-add-bill-rules--puritan-voting-designer-area-designed-not-built) | 724 |
+| Key Advisor = informal office (double-holdable) | a pol may hold Key Advisor concurrently with a real seat (Will flagged it isn't in the rules; left unresolved) | GA (Rodja) | [§9.3.1](#931-expanded-cabinet-roster) | 591-592 |
+| 2nd-place primary d6 + faction-point split | a 2nd-place primary finisher rolls a d6 + a faction-point split; bad roll = −1 in the *next* presidential primary | GA (Rodja) | [§22.3](#223-presidential-primary-subsystem-291) / [§25.12](#2512-cpu-primary-ai-designer-acknowledged-under-tuned) | 169 |
+| VP-same-state rule | *"a VP nominee cannot come from the same state as the Pres nominee"* (2.9.2) | GA (Rodja, declarative) | [§15.3](#153-convention-machinery-292--full-forum-design-designed-not-built) | 181-183 |
+| Minor-candidate primary-action rule re-added | *"a minor candidate CAN only make a primary action in their home state"* (had been deleted from the rulebook) | **vcczar** (designer) | [§22.3](#223-presidential-primary-subsystem-291) | 91-92 |
+
+**Corroborations (no new rule — 2nd-source field validation; `pop2012b` tags appended to the
+modern cluster):**
+
+| Existing entry | `pop2012b` corroboration | POSTs |
+|---|---|---|
+| **#86** boot model | 2nd 2012-start of the same pre-built sheet (same 10 factions/decks as `pop`); sitting govt + 9 SCOTUS + 50+DC; no leaders at boot → Major falls back to FL criteria w/ the explicit fallback ladder | 1, 16, 20-22, 374 |
+| **#47/#13** primary→convention | full 5-group primary loop end-to-end + DNC incumbent-quash (48% roll) + 75/25 withdraw-and-endorse + minor→Major promotion at top-4 + presidential-promise demands; Ron Paul wins alt-history | 16, 30-166 |
+| **#15/#16/#111** convention/general | item-by-item VP-impact + obscure-VP d6 (Rand Paul rolls 6 → −Obscure +Disharmonious+Controversial); 5-plank platform 3-yes vs 2-yes → +1 Party Pref; keynote by most-governors faction; teammates pick planks for ideology boosts; 3 Pres + 1 VP debate + Oct-Surprise | 170-285 |
+| **#18/#51** 2-layer scorer | the "PRE-MIDTERMS STATE OF METERS" published VERBATIM (universal per-ideology layer + per-ideology Enthusiasm × Blue/Red layer); faction-Score economy awards on every confirm/election/event/SCOTUS/bill (+5000 winner; ±100-300/bill) | 285, 584, 632, 840 |
+| **#50/#67** meter bank | 8-meter Lingering bank ticks (Rev/Budget → "Crisis"; Planet's Health → "Crisis") + per-ideology enthusiasm; war-began → +1 Party Pref ("boost in patriotism") | 632 |
+| **#52** SCOTUS | per-Justice ideology votes + 10-yr drift; 4-4 tie → Shenanigans (Debater CJ converts a vote) → compel paths; confirm-by-distance + CPU sub; Manipulative voluntary-retire OFFER (≥75% roll); vacate-by-appointment-if-accepted (2.8.4) | 663-664, 814, 822, 836-839, 1314 |
+| **#70** leadership | Party-Leader via kingmaker-weighted bloc vote (McCarthy 14 vs Bannon 9) → +1 Command + +3 in any primary while PL; first-elected-president auto-becomes faction + party leader; Speaker/Min-Leader appoint 12/10 + chairs/ranking (need 2 legis) | 332, 390, 503-506 |
+| **#88** apocalypse/coup floor | Planet's Health hit "Crisis" but NO apocalypse fired → the clock/coup gate is the meter **FLOOR**, not "Crisis" (see [§26.4](#264-apocalypse-planet-health-endgame--the-10-year-clock-new-endgame-model)) | 632 |
+| **#90/#43** procedural-pol-gen | LIVE career-track starvation: a thin **15 Dem + 14 GOP** 2013 draft; players flag generated pols "should be happening" + 5 factions can't fill 7 tracks | 381-392 |
+| **#91** 12A-gated VP action | general-action library printed verbatim with *"Send the VP to Shore Up Support (requires 12th Amendment in place)"* | 232 |
+| **#114** GM-burnout/automation | **Rodja resigned as GM** ("I got lost somewhere in [the rules] … so many players left because of my mistakes"); ebrk85 + DJBillyShakes + others left distrusting un-shown results → the 4th+ GM-burnout death in the KB | 932-938 |
+
+> **★ GM-burnout death #N — Rodja resigned over un-shown-work / rules-accuracy distrust.** Append to
+> the GM-burnout cluster (`new1772` / `dem1820` / the Gilded 1884-86 conflict / `modernday`
+> momentum-death). Here players left because the GM could not *show his work* / they distrusted the
+> rules application, and **Rodja resigned mid-2014-midterm-tally** (`pop2012b` POST 932-938). This is
+> now a **long list** of independent burnout deaths and is the strongest cross-cutting evidence for
+> the **DH-36 meta hole**: the automation-reduces-upkeep argument + the **DH-69 in-app-rules-surface
+> need** (a solo digital app that *is* the computer removes both the upkeep burden and the
+> show-your-work trust problem). Cross-ref [§26.4](#264-apocalypse-planet-health-endgame--the-10-year-clock-new-endgame-model) endgame note + §27 burnout cross-refs.
 
 ### 30.4 Authority hierarchy reminder
 
