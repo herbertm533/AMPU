@@ -12,6 +12,75 @@
 > unchanged: **QW0 → K0/K2 → K3/K4 + `scenarioBoot`/`BootSheet` → `scenario1788`
 > (E1)**).
 
+> **★★★★ Batch-28 version — THE PIVOTAL RECONCILE BATCH: FOUR designer META-DOCS, NO era
+> playtest (`to-do` [the authoritative 2021-22 pre-build dev backlog], `fixes` [vcczar's 2022
+> designer-authoritative ACCEPT/REJECT/DEFER fix-queue], `completions` [★ the *done-half* of the
+> 2022 spreadsheet/reference game's backlog], `vic3` [aspirational Victoria-3 borrows, mostly
+> "AMPU 2"]). **This is a DISCUSSION/CATALOG + RECONCILE batch — designer specs verified shipped-vs-
+> designed, NO gap closed, NO new keystone, NO re-sequence, top-of-queue UNCHANGED.** 17 NEW gap rows
+> #189–#205; the `completions` list converted 2022 "done" claims into VERIFIED truth about our `src/`.
+> **★ This is the FIRST batch read through the GM-replacement lens** — its `GM⇒App` items are slotted
+> into the lens (below the keystone overview). **The value:**
+> **(1) ★★★ RECONCILIATION HEADLINE → debt #71 = the election-scorer determinism+tuning QUICK-WIN,
+> the single highest-leverage build move in the batch — it FUSES batch-27's #64/DH-72 sub-fixes + the
+> flagship raw-`Math.random` leak (debt #1/#3) + RESOLVES the D6/D3 fork in ONE patch, and FORMALIZES
+> the existing QW19–QW21 (reconcile, do NOT duplicate).** Of the 2 flagged "CONFIRMED-SHIPPED" claims,
+> exactly ONE holds: **① election die D6 → REFUTED** (the cited `phaseRunners.ts:727` is
+> `factionExpertiseBias`'s unrelated 0–6 clamp; the REAL election randomizer is `(Math.random()-0.5)*8`
+> at `:3711` — raw `Math.random`, NEITHER d6 nor d3, NOT seeded — our build ships NO election die at
+> all, the batch-27 finding stands); **② trait-conflict d6 → CONFIRMED-BUILT and via the RNG seam**
+> (`tryGrantTrait` `traits.ts:53`, `d(6)>=conflictD6Threshold`, `d` from `rng.ts`; threshold is `4` →
+> 1-3 cancel / 4-6 keep, a tuning delta vs the sheet's 1-2/3-6 — mark this item BUILT). The D6/D3 fork
+> is therefore TIED OFF: since the build ships NEITHER die, the fork is the SAME tuning+seeding QW the
+> batch-27 #184/DH-72 finding already framed — narrow the `:3711` jitter to the d3-equivalent band +
+> route through `rng.ts`, then re-check the `baseLean*5` bias term (`:3697`). **QW19–QW21 are the
+> roadmap's name for this; debt #71 is its technical definition — REINFORCE, do NOT add a 4th row.**
+> debt #71; game-mechanics §15.5(a).
+> **(2) ★★ #179 CABINET-METER ENGINE NOW HAS NUMBERS (debt #72; S–M, standalone, ready) → a flagship
+> `GM⇒App` item.** The batch-26 redesign now has the spec: an `Admin→{upOdds,downOdds}` table (Admin5
+> 75%/0% … Admin0 0%/100%) rolled per portfolio-officer + Efficient ±2 + a 25% lobby-dissat hook + a
+> hard JCoS/Senior-General/Admiral exclusion (the #49 fix) → replaces the placeholder `drift()` in
+> `runPhase_2_5_1_Lingering` (`phaseRunners.ts:3260`). Confirmed DESIGNED-not-built (the shipped
+> `drift()` table `:3266-3273` is flat deterministic). Roadmap-ready; folds into E6/E16 (where #179
+> already lives). debt #72; game-mechanics §20.10(g)-(j).
+> **(3) ★★ DOWN-BALLOT MODEL #189–#192 (debt #73; M; builds ON the existing routing — partly-built) →
+> a `GM⇒App` referee item.** `calcStateVote`+`applyTraitElectionBonus` ALREADY route gov/sen/house +
+> apply *some* traits/meters (`phaseRunners.ts:3685,3707-3708`) but only the ~5 presidential traits.
+> The full model: a separate-from-presidential down-ballot trait table (#189) + the expertise/lobby↔
+> leading-industry "Manchin" +2/+1 (#190) + a static per-seat `deviantPartyBias` SET-BY the gerrymander
+> action (#191) + a per-state max-margin → popular-vote-% derivation + PV caps (#192, the design intent
+> behind the §29 landslide misfire). Builds INTO E20b/`calcStateVote`; pairs with #103. debt #73;
+> game-mechanics §15.4.
+> **(4) ★ NINE NOT-IN-OUR-BUILD SUBSYSTEMS — ALL re-confirmed ABSENT (`grep src/` = ZERO each), now
+> spec'd from the 2022 docs → roadmap-ready, ALL `GM⇒App`; LOWER priority.** debt #74: US-Rep
+> Voting-Power #34/#62 (S) / player Generate-a-candidate 3.0.25 (S) / gerrymander gov-action #20 (S —
+> the SETTER for #191's `deviantPartyBias`); debt #75: Acting-Presidency 3.0.33 (S) / Do-Not-Enforce
+> Pres-Actions #23 (S) / Master-Kingmaker promotion #128 (XS-S); debt #76: Secessionist/pardons 3.0.35
+> #121/#122 (M — a `secession-winter` event exists `:2834-3018` but the per-pol ruleset is event-only;
+> pardons ZERO) / rising-sea-level EV #41 (S) / trait-renames #168 (XS). Each binds where its gap row
+> notes; each retires GM hand-adjudication. debt #74-#76; game-mechanics §14.1.2, §24.1, §23.1, §30.18.
+> **(5) ★ NEAR-TERM `GM⇒App` CLUSTER (debt #77): confirmation-rejection trait cascade #199** (rejected
+> nominee → Controversial→Incompetent + re-nomination block, Bookkeeper carve-out; designer-ACCEPTED,
+> S, folds into E16/E9-handler-9d) **+ personnel-effect bills #200** (a `bill.personnelEffect` that
+> EJECTS/disqualifies sitting officeholders, optionally via SCOTUS, with a sunset; S-M, folds into E2/
+> E25) **+ interest-acquisition #193** (interests are born-only today, `types.ts:1282`; +1 ideology-
+> appropriate interest at the 20-yr career-track mark; RESOLVED, S, folds into E13/#163). debt #77.
+> **(6) ★ PARKING-LOT / DECISION-RECORDS (do NOT schedule):** **#205** = Victoria-3 borrows
+> (dynamic IG→party realignment / per-state meters / per-lobby era agendas), designer-tagged "AMPU 2"
+> → parked, NO near-term row; **B2/B3** Vic3 gov-actions (meter-boosting + migration/immigration) are
+> Ted-endorsed for v1 → FOLDED INTO #20, NOT a new row. **#204** (skills stay 0-5; 0-10 → "AMPU 2") is
+> a DECISION RECORD pinning CLAUDE.md's 0-5 as deliberate — no code change. **#203** (wealth) DEFERRED
+> ("post-Early-Release"). **#194/#196/#197/#198/#201** ride their existing epics (mostly Tier-4 OPEN).
+> **#195 records-archive + #202 Campaign-Advisor** are `GM⇒App` onboarding (pair DH-69 + #114).
+> **(7) ★ #183 endorsement-momentum CONFLICT surfaced (still OPEN, NOT closed):** the 2022 sheet says
+> endorsements give 25%/10% momentum (`completions#POST 46`) but `redbutton` found NONE — a frozen-spec
+> reconciliation that rides #185/#66/#67 (batch-27 debt #67), not resolved here.
+> **★ NO gap was closed; NO new keystone, NO re-sequence; top of queue UNCHANGED (QW0 → K0/K2 → K3/K4 +
+> scenarioBoot → E1) — but the election-scorer determinism+tuning QW (debt #71, fusing #64/DH-72 + debt
+> #1) is reinforced as the cheapest high-leverage win, and the down-ballot model (#189-#192) + #179
+> meter engine are now numeric, standalone-buildable specs.** debt #71-#77; technical-guide §9 batch-28
+> lead + §9.6 + §8 debt #71-#77; game-mechanics §15.4, §15.5, §20.10(g)-(j), §14.1.2, §24.1, §23.1, §30.18.
+>
 > **★★★★ Batch-27 version — THE CORPUS'S FIRST COLD-WAR / CIVIL-RIGHTS SOURCE +
 > the FIRST MODERN-ERA scenario boot stress-tested AT SCALE (`8bc0231c` "The Big Red
 > Button: 1960 Playtest"): a ~10-human MP run that **started MID-CYCLE in the 1960
@@ -1764,6 +1833,40 @@ Reverse-chronological. The expertise/abilities/traits/cabinet/lobby epic (PR1–
 is complete; the knowledge-base infra and eight ingestion batches are knowledge
 milestones (no code, but they are what every item below is traced to).
 
+- **Batch-28 ingestion (knowledge milestone — DISCUSSION/CATALOG + RECONCILE, no era playtest).**
+  Absorbed **FOUR designer META-DOCS**: **`to-do`** (`ab93f871`, the authoritative 2021-22 pre-build
+  dev backlog — the literal "intended build list"), **`fixes`** (`a58b90f4`, vcczar's 2022 designer-
+  authoritative ACCEPT/REJECT/DEFER fix-queue — the UPSTREAM ORIGIN of many later rulings),
+  **`completions`** (`64f60bbd`, ★ the *done-half* of the 2022 spreadsheet/reference game's backlog),
+  **`vic3`** (`76d41a08`, aspirational Victoria-3 borrows, mostly designer-tagged "AMPU 2"). **17 NEW
+  gap rows #189–#205** + ~50 existing rows annotated in-place. **★ THE PIVOTAL RECONCILIATION BATCH:**
+  the `completions` list lets us convert 2022 "done" claims into VERIFIED truth about our `src/` (a 2022
+  spreadsheet "completion" is NOT grounds to close a gap — our "Built" = present in our React/TS
+  codebase, a different universe). **NO gap was closed.** **★★ RECONCILIATION HEADLINE → debt #71 =
+  the election-scorer determinism+tuning QUICK-WIN, which FORMALIZES the existing QW19–QW21:** of the 2
+  flagged "CONFIRMED-SHIPPED" claims exactly ONE holds — **election-die-D6 REFUTED** (the cited
+  `phaseRunners.ts:727` is `factionExpertiseBias`'s unrelated 0–6 clamp; the real randomizer is
+  `(Math.random()-0.5)*8` at `:3711`, raw `Math.random`, NEITHER d6 nor d3 — our build ships NO election
+  die, the #184/DH-72 finding stands) and **trait-conflict-d6 CONFIRMED-BUILT via the RNG seam**
+  (`tryGrantTrait` `traits.ts:53`, `d(6)>=threshold`, threshold `4` → 1-3/4-6). The D6/D3 fork is TIED
+  OFF — it is the SAME tuning+seeding QW (debt #71 fuses #64/DH-72 + the flagship `Math.random` leak
+  debt #1/#3 in ONE patch; QW19–QW21 are its roadmap name — REINFORCE, do NOT add a 4th row). **★ #179
+  cabinet-meter engine now has NUMBERS** (debt #72; `Admin→{upOdds,downOdds}` roll + Efficient±2 + 25%
+  lobby-dissat + JCoS carve-out replacing the placeholder `drift()` at `phaseRunners.ts:3260`; S-M,
+  standalone, ready). **★ DOWN-BALLOT model #189–#192** (debt #73; separate-from-presidential trait
+  table + expertise/lobby↔industry "Manchin" +2/+1 + static per-seat `deviantPartyBias` + margin→pop-
+  vote-% + PV-cap; M, builds ON the existing routing — partly-built per `phaseRunners.ts:3685,3707-3708`).
+  **★ NINE NOT-IN-OUR-BUILD subsystems re-confirmed ABSENT, spec'd → roadmap-ready, ALL `GM⇒App`** (debt
+  #74 voting-power/generate/gerrymander; #75 acting-pres/do-not-enforce/master-kingmaker; #76 secession-
+  3.0.35/sea-EV/trait-renames). **★ NEAR-TERM `GM⇒App` cluster** (debt #77: confirmation-cascade #199 /
+  personnel-effect bills #200 / interest-acquisition #193). **★ PARKING-LOT: #205 Vic3 "AMPU 2"
+  borrows** (B1 dynamic IG→party / B4 per-state meters / B5 per-lobby agendas — NO near-term row); **B2/
+  B3 Vic3 gov-actions FOLDED INTO #20**; **#204** = a DECISION RECORD (skills stay 0-5, 0-10 → "AMPU 2");
+  **#203** wealth DEFERRED. **★ #183 endorsement-momentum CONFLICT** surfaced OPEN (2022 25%/10% vs
+  `redbutton` none; rides #185/#66/#67). **★ FIRST batch read through the GM-replacement lens** — the new
+  `GM⇒App` items slotted into it. **NO new keystone, NO re-sequence, top-of-queue UNCHANGED.** debt
+  #71-#77; technical-guide §9 batch-28 lead + §9.6; game-mechanics §15.4, §15.5, §20.10(g)-(j), §14.1.2,
+  §24.1, §23.1, §30.18.
 - **Batch-27 ingestion (knowledge milestone).** Absorbed **ONE playtest**: **`redbutton`**
   (`8bc0231c`, "The Big Red Button: 1960 Playtest", **THE CORPUS'S FIRST Cold-War / Civil-Rights
   source** and the **FIRST MODERN-ERA scenario boot stress-tested AT SCALE** — a ~10-human MP run that
@@ -2774,7 +2877,7 @@ re-sequence — #153 was a 1-source XS quick-win, now it's 3-source canonical). 
 | **QW15** | **★ batch-12 #139 — Pres signature step lives in 2.6 (NOT 2.10) — phase-sequence reorder (`tedchange#POST 126`)** *(NEW, batch 12)* | **XS phase-sequence reorder in `src/phases.ts`** so military bills affect Mil-Prep BEFORE 2.7 Military Action. Ted's `tedchange#POST 124-126` rules: **Pres signature lives in 2.6** (not 2.10) so signed military bills affect Mil-Prep in time. Folds into Phase-1 #2 (bill typing + spending cap) + Phase-1 #14 (legislative micro-mechanics), but the reorder itself is XS and standalone. **RULED by Ted (`tedchange#POST 124-126`).** | — | XS | gap **#139 / `tedchange#POST 124-126`** — NEW | ready |
 | **QW16** | **★ batch-12 #141 — FL trait gain rates 5% positive (per cycle) / 3% negative (first-time-as-FL only)** *(NEW, batch 12)* | **XS — refines the existing FL trait-gain const.** Positives roll **5% per cycle as FL**; negatives roll **3% first-time-as-FL only**. Ted's `tedchange#POST 79` refines `cf82a7d3 §5a #4` (which was "MOSTLY ADOPTED" without rates). Pure const refinement. **RULED by Ted (`tedchange#POST 73-79`; refines `cf82a7d3 §5a #4`).** | — | XS | gap **#141 / `tedchange#POST 73-79`** — NEW | ready |
 | **QW17** | **★ batch-13 #143 — post-election Command decay ("shit or get off the pot") (NEW pass, `oopscpu#POST 224`)** *(NEW, batch 13 — RULED, tested live)* | **XS — one new pass at one known site.** After every presidential cycle closes, **every living politician who did NOT run for President or VP has a 40% chance of −1 Command.** Ted's marquee `oopscpu` proposal (floated POST 1), **RULED + TESTED LIVE** at POST 224 ("Politicians who don't run for President have a 40% chance of losing −1 Command after the Presidential election" — hit Gerry→0, Pinckney→2, Hancock→2). Purpose: stop Command piling up on pols who never contest the presidency, keeping the candidate pool meaningful (pairs with #72 candidate-selection + #136 "Presidents should come from somewhere"). **Binds at `runPhase_2_10_End` (`phaseRunners.ts:4171`), gated on `isPresidentialYear`, AFTER the 2.9.4 ticket roster is known** (so it can exclude Pres/VP candidates); applies via the existing `loseCommand` (`abilities.ts:15`). Pairs with #85/#130 death-schedule discipline (same `runPhase_2_10_End` site). Pin the 40% / −1 rate. No dependency; ship with the QW0 / XS-consistency cluster. **RULED by Ted (`oopscpu#POST 1, 224`).** | — | XS | gap **#143 / `oopscpu#POST 1, 224`** — NEW | ready |
-| **QW19** | **★★ batch-27 DH-72(a) — narrow + SEED the election jitter (d6→d3 via `src/rng.ts`) — ★ HIGHEST-LEVERAGE WIN IN THE BATCH** *(NEW, batch 27 — designer-blessed)* | **XS — replace the raw `Math.random` jitter at `calcStateVote` (`phaseRunners.ts:3709-3711`) with a SEEDED, NARROWER roll.** Shipped scorer re-verified UNCHANGED = `50 + baseLean*5 + partyPref*5 + enthusiasm*2 + pv*0.1 + factionBias + traitBonus + (Math.random()-0.5)*8` — the last term is a **continuous ±4 jitter via raw `Math.random`**, which is BOTH too wide (the d6→d3 "compress the luck band" intent) AND a **determinism leak vs. the `src/rng.ts` rule** (engine must be seeded). Swap it for a seeded d3-style roll routed through `rng.ts`. Designer-blessed (both played + agreed *"platform is way too powerful"*, `redbutton#POST 538-540`); this sub-fix narrows the luck that turned a near-tie into a 492-40 landslide. **★ Folds the debt #1/#3 determinism leak.** Ship in the QUICK-WIN bucket alongside QW3 (±3 cap) + the #18 2-layer scorer. Binds at `phaseRunners.ts:3709-3711`. | — (ships with QW3; the meter→election STATE SCOPE #18 stays the only human pick) | XS | bug **DH-72(a)** (`redbutton#POST 532, 538-540, 587, 603-607`; `phaseRunners.ts:3709-3711` + `src/rng.ts`) — NEW (debt #64) | ready |
+| **QW19** | **★★ batch-27 DH-72(a) — narrow + SEED the election jitter (d6→d3 via `src/rng.ts`) — ★ HIGHEST-LEVERAGE WIN IN THE BATCH** *(NEW, batch 27 — designer-blessed)* | **XS — replace the raw `Math.random` jitter at `calcStateVote` (`phaseRunners.ts:3709-3711`) with a SEEDED, NARROWER roll.** Shipped scorer re-verified UNCHANGED = `50 + baseLean*5 + partyPref*5 + enthusiasm*2 + pv*0.1 + factionBias + traitBonus + (Math.random()-0.5)*8` — the last term is a **continuous ±4 jitter via raw `Math.random`**, which is BOTH too wide (the d6→d3 "compress the luck band" intent) AND a **determinism leak vs. the `src/rng.ts` rule** (engine must be seeded). Swap it for a seeded d3-style roll routed through `rng.ts`. Designer-blessed (both played + agreed *"platform is way too powerful"*, `redbutton#POST 538-540`); this sub-fix narrows the luck that turned a near-tie into a 492-40 landslide. **★ Folds the debt #1/#3 determinism leak.** Ship in the QUICK-WIN bucket alongside QW3 (±3 cap) + the #18 2-layer scorer. Binds at `phaseRunners.ts:3709-3711`. **★★ Batch-28 RECONCILE — debt #71 is the TECHNICAL DEFINITION of this QW19/QW20/QW21 trio (the batch headline, the single highest-leverage build move): the `completions` reconcile REFUTED the "election die D6 CONFIRMED-SHIPPED" claim** (the cited `phaseRunners.ts:727` is `factionExpertiseBias`'s unrelated 0–6 clamp; the real randomizer is `(Math.random()-0.5)*8` at `:3711` — raw `Math.random`, NEITHER d6 nor d3, NOT seeded), so the build ships **NO election die at all** → this exact QW is the target. The **D6-vs-D3 fork is TIED OFF** (not a die-swap — it's this same narrow-the-jitter + route-through-`rng.ts` QW; then re-check the `baseLean*5` bias term `:3697` per QW20). **debt #71 FUSES #64/DH-72 + the flagship `Math.random` leak (debt #1/#3) + the fork in ONE patch — REINFORCE this trio, do NOT add a 4th row.** (Contrast: **trait-conflict-d6 is CONFIRMED-BUILT** via the RNG seam, `tryGrantTrait` `traits.ts:53`, threshold `4` — that one is shipped; THIS one is not.) | — (ships with QW3; the meter→election STATE SCOPE #18 stays the only human pick) | XS | bug **DH-72(a)** (`redbutton#POST 532, 538-540, 587, 603-607`; `phaseRunners.ts:3709-3711` + `src/rng.ts`) — NEW (debt #64) + **★★ batch-28 `completions` RECONCILE: election-die-D6 REFUTED, fork TIED OFF (debt #71); technical-guide §9 batch-28 lead + §8 #71** | ready |
 | **QW20** | **★★ batch-27 DH-72(b) — re-weight `baseLean*5` into the +3/+5 historical-bias band behind a `game.biasMode?` toggle** *(NEW, batch 27 — designer-blessed)* | **XS–S — re-weight the historical state-bias term at `calcStateVote` (`phaseRunners.ts:3709`/`:3697`).** Today `baseLean*5` is the dominant swing; re-band it into the **+3/+5 historical-bias range** behind a `game.biasMode?` toggle (historical-plausible vs the designer's "go-crazy" mode). One of the two terms (with the +3 platform bonus) that drove the 492-40 board-wide blowout; capping its weight returns the recompute to the ~281-129 near-tie. Designer-blessed (`redbutton#POST 538-540, 603-607`). Pin the toggle default + the two bands. Ship in the QUICK-WIN bucket alongside QW19 + QW3. Binds at `phaseRunners.ts:3697/3709-3711`. | — (ships with QW19/QW3) | XS–S | bug **DH-72(b)** (`redbutton#POST 538-540, 603-607`; `phaseRunners.ts:3697/3709-3711`) — NEW (debt #64) | ready |
 | **QW21** | **★★ batch-27 DH-72(c) — HIDE the raw election math in the UI (anti-collusion)** *(NEW, batch 27 — designer-blessed)* | **XS–S — UI surface change: stop exposing the raw `calcStateVote` formula / numeric percentages.** Show only **which ideologies like a position + polls/maps**, never the raw `50 + baseLean*5 + …` math. Anti-collusion (a multiplayer concern surfaced live: players reverse-engineered the scorer to over-optimize); the modern run's hand-driven platform exploit was visible only because the math was legible. Designer-blessed (`redbutton#POST 538-540`). The SAME hide-the-math principle the #184 platform meter-cap builds in from day one (sub-fix B → Phase-1 #10/#181) — here it lands on the SHIPPED election scorer as a presentation-track fix. Ship in the QUICK-WIN bucket alongside QW19/QW20. | — (presentation track; pairs with #184's day-one hide-the-math) | XS–S | bug **DH-72(c)** (`redbutton#POST 538-540`) — NEW (debt #64) | ready |
 | **QW18** | **★ batch-15 #153 — global ×2 Command-gain multiplier (the UNBUILT half of the rookie-Command rule, `terror2000#POST 91`) — ★★ batch-17: NOW 3-SOURCE CANONICAL + LIVE-DEMONSTRATED → build-with-confidence** *(NEW batch 15 — RULED; ★★ batch 17 PROMOTED to canonical)* | **XS–S — one global multiplier on the Command-gain roll path** (a `gainCommand(p, basePct)` helper applying ×2 + the committee/career-track expertise-grant sites). Ted (`terror2000#POST 91-93`) made TWO house-rules official: **(a)** nobody is born with Command — **all rookies enter at 0 Command** (verified SHIPPED via #136, `phaseRunners.ts:216`) **AND every in-game Command-gain % is DOUBLED** to compensate (so Presidents emerge from in-game action, not real-world reputation — the **×2 multiplier is the only UNBUILT piece**); **(b)** rolling an already-held expertise on a grant = **NO new expertise (do NOT re-roll)** — already an invariant in the grant path. Pin the ×2 on every Command-gain % (the success→+1-Command rolls in E11/E13/E18 + the draft-grant + e.g. the Father-of-the-Constitution `command + 1` at `constitutionalConvention.ts:158,168` + the RevWar grants in `revolutionaryWar.ts`), gated nowhere (all eras). **★★ Batch-17 (`ted1772`) PROMOTES this to build-with-confidence / CANONICAL:** a 3rd source applies the rule front-to-back from a 0-Command boot — **3-source canonical (`terror2000` · `tedchange` · `ted1772`)** — and DEMONSTRATES the payoff LIVE: an **emergent 1st President (Arthur St. Clair), a CPU pol who booted at 0-Command / obscure and rose purely through play.** The ×2-Command-gain knob is **load-bearing and keystone-free** (it sits on the draft/command path). Pairs with **QW17** (#143 Command decay) — same Command economy, opposite direction (decay pares the pool, the ×2 lets contenders climb). No dependency; ship with the QW0 / XS-consistency cluster. **RULED by Ted (`terror2000#POST 91-93`; ★★ 3-source canonical via `ted1772` + a live emergent-President audit).** | — | XS–S | gap **#153 / `terror2000#POST 91-93` + ★★ `ted1772` (3-source canonical + St. Clair live demo)** — NEW + PROMOTED (canonical) | **ready (build-with-confidence)** |
@@ -2914,13 +3017,16 @@ engine; the UI shows only player-visible numbers (fog of war).
 
 | GM labor this retires | Grouped gaps | Lives in the roadmap at |
 |---|---|---|
-| Election / platform scoring, the swing die, historical-bias terms | #184, DH-72, #18, #14, QW3, **QW19–QW21** | **Quick-wins** (QW3 ±3 cap, QW19/QW20/QW21 = DH-72(a/b/c) seed+narrow / bias-band / hide-the-math) → **E20** (bill/election scoring) → the #184 platform meter-cap builds INTO **E10/#181** |
+| Election / platform scoring, the swing die, historical-bias terms | #184, DH-72, #18, #14, QW3, **QW19–QW21**, **debt #71** | **Quick-wins** (QW3 ±3 cap, QW19/QW20/QW21 = DH-72(a/b/c) seed+narrow / bias-band / hide-the-math) → **E20** (bill/election scoring) → the #184 platform meter-cap builds INTO **E10/#181**. **★ Batch-28: debt #71 is the TECHNICAL DEFINITION of the QW19–QW21 trio + the batch headline — it fuses the swing-die seed+narrow + the flagship `Math.random` leak (debt #1) + the D6/D3 fork in ONE patch; the election die is REFUTED-as-shipped (`:3711` raw `Math.random`, no die), so this QW IS the work.** |
+| **Down-ballot election scoring: per-office trait stack, expertise/lobby↔industry "Manchin" survival, per-seat gerrymander bias, max-margin→popular-vote-% caps** *(batch-28 — `GM⇒App`)* | **#189, #190, #191, #192** (with #103, #20) | **E20b / `calcStateVote`** — PARTLY-BUILT (the route already applies *some* presidential traits at `:3685,3707-3708`); debt #73, M, builds ON the existing routing. The per-seat `deviantPartyBias` (#191) is SET-BY the gerrymander gov-action (#20, debt #74). |
 | Primary → brokered convention: delegate weights, balloting, walkouts, kingmaker VP | #185, #183, #19, #20 | **E10** (Convention machinery 2.9.2; #185 the biggest election subsystem + #183 endorsement-momentum fold in here) + **E22** (primary) |
 | Scenario boot: year-correct incumbents, seeded delegates, back-dated careers, retro-fatigue (incl. mid-cycle / late-era shape) | #186, #187, #86, #115, #173 | **K4** (the `BootSheet` schema + `scenarioBoot` pipeline; #186 = a 5th `BootSheet` shape, #173 = start-year presets) + the boot validators **QW8/QW9** + #187 pairs with #15 |
-| Cabinet meter rolls / lingering effects | #179 | **E6** (lingering/meter) + **E16** (cabinet) — #179 is split-but-buildable across the two |
+| Cabinet meter rolls / lingering effects | #179 | **E6** (lingering/meter) + **E16** (cabinet) — #179 is split-but-buildable across the two. **★ Batch-28: #179 now has NUMBERS** (debt #72; `Admin→{upOdds,downOdds}` roll + Efficient±2 + 25% lobby-dissat + the JCoS/Senior-Gen/Admiral exclusion [#49] → replaces the placeholder `drift()` at `phaseRunners.ts:3260`; S-M, standalone, READY). |
+| **Confirmation/appointment toxicity + laws that move people, not just numbers** *(batch-28 — `GM⇒App`)* | **#199** (confirmation-rejection → Controversial→Incompetent cascade), **#200** (bills with personnel effects — eject/disqualify officeholders), **#193** (interest-acquisition at the 20-yr career mark) | **E16/E9-handler-9d** (#199, ACCEPTED, S) + **E2/E25** (#200 bill `personnelEffect`, optionally via SCOTUS, S-M) + **E13/#163** (#193, RESOLVED, S) — debt #77; all NOT-built today. |
+| **Subsystems the GM ran by hand that have NO code path at all** *(batch-28 — `GM⇒App`; 9 re-confirmed ABSENT, spec'd, LOWER priority)* | **debt #74** (US-Rep Voting-Power #34/#62, player Generate-a-candidate 3.0.25, gerrymander gov-action #20), **debt #75** (Acting-Presidency 3.0.33, Do-Not-Enforce Pres-Actions #23, Master-Kingmaker promotion #128), **debt #76** (Secessionist/pardons 3.0.35 #121/#122, rising-sea EV #41, trait-renames #168) | Each binds where its gap row notes (E2/E4/E13/E22/E25/E28 + the #20 gov-action umbrella); sizes XS→M. **The B2/B3 Vic3 gov-actions (meter-boost + migration) fold into the #20 gerrymander/gov-action umbrella (debt #74), not a new row.** |
 | Treaty / decision-event / diplomacy adjudication, retry budgets | #177, #178, #107, #162 | **E1** (federalism epic — #177/#178 territory + decision-events) + **E15** (era-event extensions) + **E12** (diplomacy) + **E13** (exec actions) |
 | End-condition tracking (incl. the "big red button" nuclear loss) | #88, #188 | **E6** (meter-floor game-end + endgame/apocalypse clocks; #188 is a configured end-condition ROW on #88, NOT a MAD engine) |
-| Explaining the rules so players don't need a GM to interpret them | DH-69, QW21 | **K4** boot/onboarding surface (DH-69 in-app rules / legal-move surface, CITE-only) + **QW21** hide-the-math (presentation track) |
+| Explaining the rules so players don't need a GM to interpret them | DH-69, QW21, **#195, #202** | **K4** boot/onboarding surface (DH-69 in-app rules / legal-move surface, CITE-only) + **QW21** hide-the-math (presentation track) + **★ batch-28 #195 records-archive** (queryable past elections/administrations/votes/wars + per-pol history tab + end-of-era summary + graveyard — the GM hand-maintained these records) + **#202 Campaign-Advisor / Think Tank** (reuses CPU logic to suggest 1-3 moves to a solo player; pairs with #114 the CPU controller it reuses). |
 
 **② GM as opponent** — the GM also *plays* every non-human faction (in solo runs,
 all 9). The app is a **solo adaptation of a multiplayer game** (#114: built for
@@ -2946,6 +3052,18 @@ to a human — it is an automation requirement. New `GM⇒App` gaps slot into th
 under ① (if they are rules math / machinery) or ② (if they are CPU-opponent
 behavior), then point to whichever keystone / phase / quick-win bucket already
 owns that surface — **adding a lens pointer never re-sequences the backlog.**
+
+> **★ Batch-28 is the FIRST batch read through this lens, and it was a heavy `GM⇒App`
+> harvest** (the `to-do`/`fixes`/`completions` meta-docs are, by definition, "the GM's
+> hand-work the app must own"). The new ① pointers added above: the **down-ballot scorer
+> #189–#192** + the **#199/#200/#193** confirmation/personnel/interest cluster + the **9
+> NOT-IN-OUR-BUILD subsystems** (debt #74–#76) + **#179's now-numeric meter engine** + the
+> in-app **#195 records-archive / #202 Campaign-Advisor**. The lens also REFLECTS the
+> batch's verification verdicts: the cabinet trait-conflict d6 is **CONFIRMED-BUILT** (so it
+> is NOT a `GM⇒App` gap — already retired, `traits.ts:53` via `rng.ts`), while the election
+> die is **REFUTED-as-shipped** (so the swing-die row's debt #71 QW genuinely retires GM
+> die-rolling). **Adding these pointers re-sequenced nothing — top of queue is unchanged
+> (QW0 → K0/K2 → K3/K4 + scenarioBoot → E1).**
 
 ---
 
@@ -3258,6 +3376,92 @@ collusion → unicameral "Super House"; rookie: Senate-appointed-by-Governors + 
 gated WITHIN that work; the rest is corroboration/justification). **No re-sequence; top-of-queue
 UNCHANGED (QW0 → K0/K2 → K3/K4 + scenarioBoot → E1) — but the onboarding/solo-app/CPU-AI cluster
 (E9/K5 + DH-69) now carries the strongest justification in the corpus.**
+**★★ Batch-28 fold-ins (FOUR designer META-DOCS — `to-do` / `fixes` / `completions` / `vic3`; a
+DISCUSSION/CATALOG + RECONCILE batch, no era playtest; the pivotal RECONCILIATION batch — the
+`completions` "done-half-of-the-2022-backlog" list converted into VERIFIED truth about our `src/`. 17
+NEW gap rows #189–#205; NO gap closed; NO new keystone, NO re-sequence, top-of-queue UNCHANGED. Items
+below are dependency-ordered per the tech-lead's binding §9 batch-28 lead + §8 debt #71-#77):**
+**★★★ THE HEADLINE → debt #71 = the ELECTION-SCORER DETERMINISM+TUNING QUICK-WIN; FORMALIZES QW19–QW21;
+the single highest-leverage build move in the batch.** The `completions` list flagged two claims
+"CONFIRMED-SHIPPED"; reconciled at `file:line`, exactly ONE holds. **① Election-die-D6 → REFUTED.** The
+cited `phaseRunners.ts:727` is `factionExpertiseBias`'s `clamp(Math.round(biasedMean),0,6)` (a faction-
+lean clamp, NOT in `calcStateVote`, NOT a die); the REAL election randomizer is **`(Math.random()-0.5)*8`
+at `phaseRunners.ts:3711`** — a continuous **±4 band of raw `Math.random`, NEITHER d6 nor d3, NOT
+seeded**. Our build ships **NO election die at all**; the batch-27 #184/DH-72 finding STANDS. **② Trait-
+conflict-d6 → CONFIRMED-BUILT, and via the RNG seam.** `tryGrantTrait` (`traits.ts:41-59`) resolves a
+held-conflict on `d(6) >= TRAIT_LIFECYCLE_RULES.conflictD6Threshold` (`:53`; `d` from `rng.ts`, imported
+`:3`); the threshold is **`4`** (`types.ts:638` → 1-3 cancel / 4-6 keep, a tuning delta vs the sheet's
+1-2/3-6, not structural) — **MARK trait-conflict-d6 BUILT.** **★ The D6-vs-D3 election-die FORK is TIED
+OFF (the roadmap is no longer ambiguous):** because the build ships NEITHER die, the fork is NOT a
+die-swap — it is the SAME tuning+seeding QW the batch-27 #184/DH-72 finding already framed: **narrow the
+`:3711` jitter to the d3-equivalent compressed band AND route it through `rng.ts` as ONE quick-win, then
+re-check the per-state bias term `baseLean*5` (`:3697`) against the chosen band.** This **fuses the
+flagship `Math.random` determinism leak (debt #1/#3) + the #184/DH-72 sub-fix + the fork in ONE patch.**
+**QW19–QW21 (above) are the roadmap's NAME for this; debt #71 is its TECHNICAL DEFINITION — REINFORCE the
+existing trio, do NOT add a 4th row.** debt #71; game-mechanics §15.5(a).
+**★ #179 CABINET-METER ENGINE NOW HAS NUMBERS → debt #72; S-M, standalone, READY; folds into E6
+(lingering) + E16 (cabinet) where it already lives; a flagship `GM⇒App` item.** The batch-26 redesign of
+the deterministic drift now carries the spec the 2022 to-do demanded ("write up how each meter works +
+when to apply its effects" — the most-repeated unfinished ask in the thread): an `Admin→{upOdds,downOdds}`
+table (Admin5 75%/0% … Admin0 0%/100%) rolled per portfolio-officer + **Efficient ±2** + a **25% lobby-
+dissat hook** + a **hard JCoS/Senior-General/Admiral exclusion (the #49 fix)** → replaces the placeholder
+`drift()` in `runPhase_2_5_1_Lingering`. **★ Shipped-state CONFIRMED DESIGNED-not-built:** the shipped
+`drift()` table (`phaseRunners.ts:3266-3273`) is a flat deterministic skill-keyed delta with NO roll/
+backfire/odds. **Binds at** `runPhase_2_5_1_Lingering` (`:3260`). debt #72; game-mechanics §20.10(g)-(j).
+**★ DOWN-BALLOT MODEL #189–#192 → debt #73; M; builds ON the existing down-ballot routing (PARTLY-BUILT);
+folds into E20b/`calcStateVote`; pairs with #103 (presidential stack); a `GM⇒App` referee item.** **★
+Shipped-state CONFIRMED partly-built:** `calcStateVote`+`applyTraitElectionBonus` ALREADY route gov/sen/
+house and apply *some* traits/meters (`phaseRunners.ts:3685,3707-3708`) — but only the ~5 presidential
+traits; the full down-ballot table + the expertise/lobby↔industry link are absent. The model = a
+**separate-from-presidential down-ballot trait table (#189)** (Likeable/Charismatic ±1, Leadership +1,
+Orator/Debater 50%+1, Propagandist ±1, FL+1/PL+3 in primaries…) + the **expertise/lobby↔leading-industry
+"Manchin" +2/+1 (#190)** (expertise matches the state's #1 industry → +2, matching lobby → +1; +
+crisis-expertise +1) + a **static per-seat `deviantPartyBias` (#191)** that overrides ONLY the party
+component of state bias (SET-BY the #20 gerrymander action below) + a **per-state per-era max-margin →
+popular-vote-% derivation + PV caps (#192)** (the design intent behind the §29 landslide misfire — a
+presentation/realism layer DISTINCT from the swing-die). **Binds at** `calcStateVote` (`:3685-3711`).
+debt #73; game-mechanics §15.4.
+**★ NINE NOT-IN-OUR-BUILD SUBSYSTEMS — ALL re-confirmed ABSENT (`grep src/` = ZERO each), now spec'd from
+the 2022 docs → roadmap-ready, ALL `GM⇒App`; LOWER priority than the above.** Each binds where its gap
+row notes; each retires GM hand-adjudication. **debt #74:** **US-Rep Voting-Power #34/#62** (`votingPower`
+= ZERO, not a `Politician` field; S) · **player Generate-a-candidate 3.0.25** (= ZERO; only filler
+seeding; S) · **gerrymander gov-action #20** (= ZERO; S — this is the SETTER for #191's `deviantPartyBias`,
++ the B2/B3 Vic3 gov-actions fold in here, see parking lot). **debt #75:** **Acting-Presidency 3.0.33**
+(`actingPresident|isActing` = ZERO; S) · **Do-Not-Enforce Pres-Actions #23** (= ZERO; S) · **Master-
+Kingmaker promotion #128** (the kingmaker subsystem EXISTS `phaseRunners.ts:1244-1465` but NOT this
+promotion trigger; XS-S). **debt #76:** **Secessionist/pardons 3.0.35 #121/#122** (a `secession-winter`
+EVENT exists `phaseRunners.ts:2834-3018` but the 3.0.35 per-pol ruleset is event-only NOT a general gate,
+and pardons = ZERO; M) · **rising-sea-level EV #41** (`seaLevel|coastal` = ZERO; S) · **trait-renames
+#168** (string pass not applied; XS). debt #74-#76; game-mechanics §14.1.2, §24.1, §23.1, §30.18.
+**★ NEAR-TERM `GM⇒App` CLUSTER → debt #77; ride existing epics.** **#199 confirmation-rejection trait
+cascade** (a rejected nominee auto-gains Controversial→Incompetent + is blocked from re-nomination, with
+a Bookkeeper carve-out; designer-ACCEPTED `fixes §D POST 434-436`; S; folds into E16/E9-handler-9d;
+**CONFIRMED NOT-built** — confirmation flows return REJECTED but no cascade) + **#200 personnel-effect
+bills** (a `bill.personnelEffect` capability that EJECTS/disqualifies sitting officeholders matching a
+predicate, optionally routed through SCOTUS, with a sunset — the polygamist-ban-removes-Mormon-officers
+case; S-M; folds into E2 bill-typing + E25 SCOTUS) + **#193 interest-acquisition** (interests are born-
+only today, `types.ts:1282`, seeded `[]`; +1 ideology-appropriate interest at the 20-yr career-track mark
++ event grants — RESOLVED design; S; folds into E13/#163 career-track payouts). debt #77; game-mechanics
+§14.1.2.
+**★ ESCALATED / ANNOTATED IN PLACE (no new scope, no re-sequence):** **debt #1** (the flagship raw-
+`Math.random` election leak) is now RE-CONFIRMED as the `:3711` jitter AND fused into the debt #71 headline
+QW; **#103** (presidential modifier stack) gains its down-ballot companion (#189-#192 extend it to Gov/
+Sen/Rep); **#49** (top-military ≥1-Admin) is now the JCoS-exclusion clause of #179; **#185/#66/#67** carry
+the OPEN #183 endorsement-momentum CONFLICT (2022 sheet's 25%/10% momentum, `completions#POST 46`, vs
+`redbutton`'s NONE — a frozen-spec reconciliation, NOT closed here). **★ PARKING-LOT / DECISION-RECORDS:**
+**#205** Vic3 borrows (B1 dynamic IG→party realignment / B4 per-state meters / B5 per-lobby era agendas) =
+designer-tagged "AMPU 2" → parked, NO near-term row; **B2/B3** Vic3 gov-actions (meter-boosting +
+migration/immigration) = Ted-endorsed for v1 → **FOLDED INTO #20** (the gerrymander/gov-action umbrella,
+debt #74), NOT a new row; **#204** (skills stay 0-5; 0-10 → "AMPU 2") = a DECISION RECORD pinning
+CLAUDE.md's 0-5 as deliberate (no code change, guards against a future "just widen the scale"); **#203**
+(wealth) DEFERRED ("post-Early-Release"); **#194/#196/#197/#198/#201** ride their existing epics (mostly
+Tier-4 OPEN); **#195 records-archive + #202 Campaign-Advisor** = `GM⇒App` onboarding, pair DH-69 + #114.
+**Decision-gated RECOUNT: 0** (all OPEN items are designer/content-gated WITHIN their epics). **NO gap
+closed; NO new keystone, NO re-sequence; top-of-queue UNCHANGED (QW0 → K0/K2 → K3/K4 + scenarioBoot →
+E1) — but the election-scorer determinism+tuning QW (debt #71, fusing #64/DH-72 + debt #1) is reinforced
+as the cheapest high-leverage win, and the down-ballot model (#189-#192) + #179 meter engine are now
+numeric, standalone-buildable specs.** debt #71-#77; technical-guide §9 batch-28 lead + §9.6 + §8 #71-#77;
+game-mechanics §15.4, §15.5, §20.10(g)-(j), §14.1.2, §24.1, §23.1, §30.18.
 **★★ Batch-27 fold-ins (`redbutton` — THE CORPUS'S FIRST Cold-War / Civil-Rights source + the FIRST
 MODERN-ERA scenario boot stress-tested AT SCALE [a ~10-human MP run started MID-CYCLE in the 1960
 Elections Phase, ran 1960→1962-64, then paused and never resumed solo]; ONE designer-confirmed election
@@ -4295,6 +4499,32 @@ row (often as an XS-S addition to an existing epic).
   a post-Gilded/post-modern "future era" remains the batch-8 NEGATIVE result (no
   source, do NOT scope). **Quarantine only — batch 20 adds ZERO buildable AMPU-1
   scope from `ampu2wish`.** — `ampu2wish` (`888ba777`); game-mechanics §30.11.5.
+- **★★ #205 Victoria-3 borrows — PARKING-LOT / "AMPU 2" (NEW batch 28; designer-
+  tagged "AMPU 2", do NOT schedule).** Three Vic3-inspired aspirational ideas, all
+  self-deferred by the designers: **(B1)** interest-groups/lobbies (which carry
+  ideology) **dynamically join / form / split parties** over a campaign — breaks the
+  fixed 2-party BLUE/RED model (`types.ts`); **(B4)** **per-state meters** (esp.
+  economy) with national meters becoming the **average** of per-state meters (gives
+  governors a stake in their own state) — a large architectural shift (today
+  `NationalMeters` is national-only, `types.ts:406-407`); **(B5)** each lobby gets an
+  **era-by-era AGENDA** + a completion bonus (a rework of the existing "benchmark"
+  system). **Park; do NOT promote to near-term.** NOTE — the OTHER two Vic3 borrows,
+  **B2 (meter-boosting Gov Actions) + B3 (migration/immigration Gov Actions), are
+  Ted-endorsed for v1 and FOLDED INTO #20** (the gerrymander/gov-action umbrella, debt
+  #74) — they are NOT parked. — `vic3` (`76d41a08`; B1/POST 4-5, B4/POST 45, B5/POST
+  181); game-context gap #205.
+- **★ #204 skill-scale = a DECISION RECORD, not a build item (NEW batch 28).** The
+  community pushed hard for **0-10** skills (a Discord poll went 16-4); the designers
+  (vcczar+Ted) DECIDED to **keep 0-5** — not auto-convertible (would require re-tuning
+  every %-step / prereq / failed-candidate), and put 0-10 "on the table for AMPU 2."
+  **This pins CLAUDE.md's 0-5 as a deliberate, non-trivial-to-change design decision**
+  — recorded here to guard against a well-meaning future "just widen the scale" change.
+  **No code change.** — `to-do` (POST 721-755); game-context gap #204.
+- **#203 extreme-wealth attribute for tycoons — DEFERRED (NEW batch 28).** A `wealth`
+  axis on `Politician` so figures like Carnegie/Bloomberg are mechanically distinct
+  (campaign-finance / lobby implications). vcczar **DEFERRED** ("tedious… post-Early-
+  Release"), not rejected forever — pairs with the #120 dataset pass when revived. Not
+  near-term. — `fixes` (§F POST 152, 162); game-context gap #203.
 - **All-human Convention deadlock handling (DH-39, NEW batch 8 — multiplayer
   convention machinery).** With every faction human-controlled, the Convention
   can deadlock with no CPU compromise/dark-horse path to break it (`new1772`).
@@ -4342,7 +4572,8 @@ row (often as an XS-S addition to an existing epic).
 
 ## Sequencing notes
 
-Why the order is what it is — the tech-lead's binding calls (§9 batch-27 lead +
+Why the order is what it is — the tech-lead's binding calls (§9 batch-28 lead +
+§9.6 batch-28 + §8 debt #71-#77 + §9 batch-27 lead +
 §9.6 batch-27 + §9 batch-26 lead + §9 batch-25 lead + §9 batch-24 lead +
 §9 batch-17 lead +
 §9 batch-16 lead +
@@ -4505,6 +4736,58 @@ then batch-20,
 then batch-19, then batch-18, then batch-17, then batch-16, then
 batch-15, then batch-14, then batch-13, then batch-12, then batch-11, then batch-10, then
 batch-9, then batch-8, then batch-7, then the carried batch-5 leads.
+**The order itself is UNCHANGED — the TOP OF THE QUEUE is QW0 → K0/K2 → K3/K4 +
+`scenarioBoot`/`BootSheet` → `scenario1788` (E1).**
+
+**★★★★ Batch-28 lead — FOUR designer META-DOCS (`to-do` [the authoritative 2021-22 pre-build dev
+backlog] / `fixes` [vcczar's 2022 designer-authoritative ACCEPT/REJECT/DEFER fix-queue] / `completions`
+[★ the *done-half* of the 2022 spreadsheet/reference game's backlog] / `vic3` [aspirational Victoria-3
+borrows, mostly "AMPU 2"]); a DISCUSSION/CATALOG + RECONCILE batch, NO era playtest — the pivotal
+RECONCILIATION batch, the `completions` "done-half" list converted into VERIFIED truth about our `src/`.
+17 NEW gap rows #189–#205; NO gap closed; NO new keystone, NO re-sequence of the top of queue. It does
+NOT move the top-of-queue. Reflect it by: (1) ★★★ REINFORCING THE HEADLINE — debt #71 = the election-
+scorer determinism+tuning QUICK-WIN, which FORMALIZES the existing QW19–QW21 (do NOT add a 4th row): of
+the 2 flagged "CONFIRMED-SHIPPED" claims, exactly ONE holds — the **election die D6 is REFUTED** (the
+cited `phaseRunners.ts:727` is `factionExpertiseBias`'s unrelated 0–6 clamp; the real randomizer is
+`(Math.random()-0.5)*8` at `:3711`, raw `Math.random`, NEITHER d6 nor d3, NOT seeded — our build ships
+NO election die), while **trait-conflict-d6 is CONFIRMED-BUILT via the RNG seam** (`tryGrantTrait`
+`traits.ts:53`, `d(6)>=threshold`, threshold `4`). The **D6-vs-D3 fork is TIED OFF** — since the build
+ships NEITHER die, the fork is the SAME tuning+seeding QW the batch-27 #184/DH-72 finding framed (narrow
+the `:3711` jitter to the d3-equivalent band + route through `rng.ts`, then re-check `baseLean*5` `:3697`)
+— and it FUSES the flagship `Math.random` leak (debt #1/#3) + the #184/DH-72 sub-fix in ONE patch (the
+single highest-value build move the batch points at); (2) ADDING #179's NUMBERS — the cabinet-meter
+engine now has an `Admin→{upOdds,downOdds}` table + Efficient±2 + 25% lobby-dissat + JCoS/Senior-Gen/
+Admiral exclusion (#49) replacing the placeholder `drift()` at `phaseRunners.ts:3260` (debt #72; S-M,
+standalone, READY; folds into E6/E16 where #179 already lives); (3) ADDING the DOWN-BALLOT MODEL #189–
+#192 — a separate-from-presidential trait table (#189) + the expertise/lobby↔leading-industry "Manchin"
++2/+1 (#190) + a static per-seat `deviantPartyBias` SET-BY the gerrymander action (#191) + a margin→pop-
+vote-% + PV-cap layer (#192) → builds ON the existing PARTLY-BUILT routing in `calcStateVote`
+(`phaseRunners.ts:3685,3707-3708`), debt #73, M, into E20b; pairs with #103; (4) ADDING the NINE
+NOT-IN-OUR-BUILD subsystems — ALL re-confirmed ABSENT (`grep src/` = ZERO each), spec'd from the 2022
+docs → roadmap-ready, ALL `GM⇒App`, LOWER priority: debt #74 (US-Rep Voting-Power #34/#62 S / Generate-
+a-candidate 3.0.25 S / gerrymander gov-action #20 S), debt #75 (Acting-Presidency 3.0.33 S / Do-Not-
+Enforce Pres-Actions #23 S / Master-Kingmaker promotion #128 XS-S), debt #76 (Secessionist/pardons 3.0.35
+#121/#122 M / rising-sea EV #41 S / trait-renames #168 XS); (5) ADDING the NEAR-TERM `GM⇒App` cluster
+(debt #77) — confirmation-rejection cascade #199 (ACCEPTED, S → E16/E9-9d) + personnel-effect bills #200
+(S-M → E2/E25) + interest-acquisition #193 (RESOLVED, S → E13/#163); (6) PARKING #205 — the Vic3 borrows
+(B1 dynamic IG→party / B4 per-state meters / B5 per-lobby era agendas) are designer-tagged "AMPU 2",
+parked, NO near-term row, while B2/B3 (Vic3 meter-boost + migration gov-actions) FOLD INTO #20; #204
+(skills stay 0-5, 0-10 → "AMPU 2") is a DECISION RECORD pinning CLAUDE.md (no code), #203 (wealth)
+DEFERRED; (7) ★★ UPDATING THE GM-REPLACEMENT LENS — this is the FIRST batch read through the lens, so the
+new `GM⇒App` items (#179 meter engine, the down-ballot scorer #189–#192, the #199/#200/#193 cluster, the
+9 NOT-IN-OUR-BUILD subsystems, the in-app #195 records-archive / #202 Campaign-Advisor) are slotted under
+① referee/calculator (rules math/machinery) pointing to their existing E-homes — a VIEW, NOT a
+re-sequence; the lens also REFLECTS the verification verdicts (trait-conflict d6 Built ⇒ already retired,
+NOT a `GM⇒App` gap; election die REFUTED ⇒ debt #71 QW genuinely retires GM die-rolling); (8) ★ NOTING
+the OPEN #183 endorsement-momentum CONFLICT (2022 sheet's 25%/10% vs `redbutton`'s none — frozen-spec
+reconciliation, rides #185/#66/#67, NOT closed). NO new keystone, NO re-sequence, NO new author-before-
+build items, Decision-gated RECOUNT 0 (batch 28 nets 0 — all OPEN items are designer/content-gated WITHIN
+their epics; #205/#204/#203 are parking-lot/decision-record/deferred). The TOP OF THE QUEUE is UNCHANGED:
+QW0 → K0/K2 → K3/K4 + `scenarioBoot`/`BootSheet` → `scenario1788` (E1) — but the election-scorer
+determinism+tuning QW (debt #71, fusing #64/DH-72 + debt #1) is reinforced as the cheapest high-leverage
+win, and the down-ballot model (#189-#192) + #179 meter engine are now numeric, standalone-buildable
+specs. game-mechanics §15.4, §15.5, §20.10(g)-(j), §14.1.2, §24.1, §23.1, §30.18 + technical-guide §9
+batch-28 lead + §9.6 + §8 debt #71-#77. debt #71-#77.**
 **The order itself is UNCHANGED — the TOP OF THE QUEUE is QW0 → K0/K2 → K3/K4 +
 `scenarioBoot`/`BootSheet` → `scenario1788` (E1).**
 

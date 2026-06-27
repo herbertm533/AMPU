@@ -534,6 +534,25 @@ The **19 expertise tags** (`types.ts:188`): Agriculture, Business, Economics, Ed
 Energy, Environment, Foreign Affairs, Healthcare, Housing, Justice, Labor, Media, Military,
 Naval, Science, Technology, Trade, Transportation, Welfare.
 
+> **★ #204 — the 0-5 skill scale is a DELIBERATE design decision, NOT an oversight (0-10 DEFERRED to
+> "AMPU 2"; designer-authoritative, `to-do` POST 721-755, vcczar + Ted, batch 28).** The community
+> pushed hard for **0-10 skills** (more variety, more modding headroom; a Discord poll went **16-4** for
+> it). vcczar + Ted RULED to **keep 0-5**: it is **not auto-convertible** — widening the scale would
+> require **re-tuning every %-step, every prereq threshold, and every failed/what-if candidate's stats**
+> — and **5s are already rare**, so the scale already has range at the top. Verdict: *"put it on the
+> table for AMPU 2."* **This pins `CLAUDE.md`'s 0-5 as a non-trivial-to-change decision record** — a
+> future "just widen the scale to 0-10" change is an **AMPU-2 rescale**, not a near-term gap, and would
+> silently break every percentage-keyed rule in this doc. No build change. (`to-do#POST 721-755`; ruling
+> index [§30.18](#3018-rulings-folded-from-the-batch-28-designer-catalogs-to-do--fixes--completions--vic3--a-discussionspec-batch-not-a-playtest).)
+
+> **★ #203 — a "wealth" attribute for tycoons is DEFERRED, not rejected (vcczar, `fixes#§F POST
+> 152/162`, batch 28).** There is no wealth axis on `Politician` today, so extreme-wealth figures
+> (Carnegie, Bloomberg, Vanderbilt) carry **no economic-power distinction** (no campaign-finance / lobby
+> implication). The community asked to **re-add a wealth attribute**; vcczar **DEFERRED** it (*"tedious…
+> post-Early-Release"*) — **not rejected forever**. A possible 5th character axis (`wealth`) for a future
+> release; pairs with the dataset (#120). No build change now. (`fixes#§F POST 152, 162`; ruling index
+> [§30.18](#3018-rulings-folded-from-the-batch-28-designer-catalogs-to-do--fixes--completions--vic3--a-discussionspec-batch-not-a-playtest).)
+
 ### 3.2 Ideology (7-point scale)
 
 `IDEOLOGY_ORDER` (`types.ts:14`), indices 0–6:
@@ -873,6 +892,26 @@ Caps: `CAREER_TRACK_MAX_YEARS = 20`, `CAREER_TRACK_CAP = 5` (per faction per tra
 
 The player sets their own track via `setPlayerCareerTrack` (cap-enforced,
 `phaseRunners.ts:495`).
+
+### 5.3 ★ #193 — interest-ACQUISITION at the 20-year career mark (interests are born-only today; RESOLVED design) (`to-do`, batch 28; DESIGNED)
+
+> **★ Interests (Civil Rights, Expansionist, Theocrat, …) are BORN-ONLY in the build — no acquisition
+> path — which the designers flagged as inconsistent with the rest of the game (raised 3×). RESOLVED in
+> the to-do (Ted + vcczar + OrangeP47, `to-do#POST 58-61, 672, 817, 775`).** The **only** way a
+> politician gains an interest after birth: **each of the 7 career tracks grants +1 random
+> ideology-appropriate interest at the 20-year mark** (the track-graduation point), plus some via
+> events. This sits on the **same 20-year graduation trigger** the shipped engine already fires
+> ([§5.2](#52-order-of-operations): `careerTrackYears` hits 20 → exit + grant exit expertise; also the
+> kingmaker [§6.5 graduation at 20-year tenure](#6-politician-churn-213217)) — so the hook point exists;
+> what's missing is the **interest grant** alongside the exit-expertise grant. The granted interest is
+> **ideology-appropriate** (a Conservative pol can't suddenly gain Civil-Rights), aligning interests
+> with the PR7 lobby→expertise→industry→ideology chain ([§18](#18-system-interactions)) — interests, like
+> expertise, become an *earned* attribute that feeds faction ideology and the election-bias card stack.
+> Terminology note: this is the **"Interests"** vocabulary the #168 authoring pass standardized (the
+> interest-card axis, distinct from `traits[]`). Pairs with #163 (career-track payout reform). *(designed,
+> not built — at the 20-yr career-track graduation, grant **+1 random ideology-appropriate interest**
+> (in addition to the exit expertise), once per track; allow event grants. Cite `to-do#POST 58-61, 672,
+> 775, 817`. Ruling index [§30.18](#3018-rulings-folded-from-the-batch-28-designer-catalogs-to-do--fixes--completions--vic3--a-discussionspec-batch-not-a-playtest).)*
 
 ---
 
@@ -1808,6 +1847,23 @@ nomination pickers; encode the 60%-of-states CC-era confirmation gate. Cite `ted
 > the **"Compel cabinet member to resign" exec action** rework (expiration era removed; Pres
 > requirement changed to "does NOT have Passive," POST 84-85 — fixes the lifetime-cabinet lock; cross-
 > ref §21.4 firing-precedent).
+
+> **★ #199 — the confirmation-REJECTION trait cascade (a rejected nominee becomes toxic; Ted ACCEPTED,
+> `fixes#§D POST 434-436`, batch 28). DESIGNED for our build (marked "already implemented" in the 2022
+> forum game; NOT-IN-OUR-BUILD — `phaseRunners.ts` has no trait cascade on a rejected appointment).**
+> A nominee **rejected at confirmation AUTOMATICALLY gains `Controversial`, then (on a further/second
+> rejection) `Incompetent`** — becoming **toxic / untouchable** — and is **BLOCKED from re-nomination**.
+> The cascade is **automatic UNLESS a blocking trait applies** (e.g. `Bookkeeper` shields the pol).
+> This is the **demand side** of the confirmation system: it complements the §9.3.8(1) `fixes2022`
+> confirmation-INFLATION fix (which made `Integrity`/`Controversial` rarer on the *Senator* side) by
+> pinning what happens to the *nominee* — a failed confirmation now has a durable, escalating cost
+> instead of a free retry. Couples to [§9.3.8](#938--ted-ruled-nomination-filters-designer-authoritative-tedchange)
+> (the Integrity→cannot-nominate-Controversial precondition: a once-rejected pol who gained
+> `Controversial` then can't even be picked by an Integrity nominator) and the §25.5 confirmation
+> pathology. *(designed, not built — on a failed cabinet/SCOTUS/ambassador confirmation, grant
+> `Controversial` (then `Incompetent` on a repeat), set a `cannotBeRenominated` flag, gated by a
+> blocking-trait carve-out (Bookkeeper). Cite `fixes#§D POST 434-436`. Ruling index
+> [§30.18](#3018-rulings-folded-from-the-batch-28-designer-catalogs-to-do--fixes--completions--vic3--a-discussionspec-batch-not-a-playtest).)*
 
 #### 9.3.9 ★ Ted-RULED Era-of-Terror cabinet FAIRNESS + DIVERSITY penalties (#151) (designer-authoritative; `terror2000`)
 
@@ -2891,6 +2947,21 @@ faction's ideology**.)*
   > 'replace-only' | 'permanent'` tag; gate Repeal proposals on `repealable`; for replace-only laws
   > expose a **Replace** action that supersedes (not removes) the prior law; mark statehood (and other
   > structural one-way bills) `permanent` so no repeal/replace is offered. `pop2012b` POST 687-688.)*
+  >
+  > **★ #200 — bills that EJECT officeholders / impose PERSONNEL effects (not just numeric score)
+  > (Will, OPEN; `fixes#§H POST 131-132, 175`, batch 28). DESIGNED, not built.** Today bills only apply
+  > meter/point/ideology effects; **none REMOVES a sitting officeholder.** The motivating case: a **"Ban
+  > polygamists"** bill should **remove sitting Mormon officeholders** (e.g. Joseph Smith as Governor of
+  > IL) — **optionally routed through SCOTUS** — and the disqualification should **sunset** (until repeal,
+  > or until 1890 historically). So there is a **class of laws with personnel effects** (eject /
+  > disqualify officeholders matching a predicate), orthogonal to the repeal/replace graph above: a bill
+  > can carry `repealable` *and* a personnel effect. This generalizes the §23.4 Reconstruction
+  > strip-leaders bill (which already ejects/relocates seceded-state officeholders) into a reusable bill
+  > capability. *(designed, not built — add a `Bill.personnelEffect?` capability: remove/disqualify
+  > officeholders matching a predicate (trait/religion/region/ideology), **optionally gated through a
+  > SCOTUS challenge**, with a **sunset** (repeal or a year). Pairs with the bill-typing graph above
+  > (#42) and SCOTUS (#52). Cite `fixes#§H POST 131-132, 175`. Ruling index
+  > [§30.18](#3018-rulings-folded-from-the-batch-28-designer-catalogs-to-do--fixes--completions--vic3--a-discussionspec-batch-not-a-playtest).)*
 - **Modern floor scale + signing rules**: floor votes run at **House 572-601 / Senate 106**
   (53 states, [§22.10](#2210-53-state-alt-roster--modern-apportionment)); **veto override
   needs 2/3** (a Soft-Drink-Tax override failed 326-276, post 942); a **Harmonious president
@@ -3193,6 +3264,36 @@ The full library is broader (the GM references a sheet not visible in this threa
 *(designed, not built — add `game.activeExecutiveActions: ActiveAction[]` persistent state,
 an action library with per-action effects + activation/deactivation rules, and an action
 budget gated on president traits.)*
+
+#### 14.1.2 ★ The "Do Not Enforce …" Presidential-Actions NULLIFICATION axis (#23; `completions`, batch 28; NOT-IN-OUR-BUILD)
+
+> **★ A whole class of Presidential Actions that lets the federal government DECLINE TO ENFORCE a
+> standing federal law — the state-contradicts-federal axis (designer-authoritative, `completions` POST
+> 43/74, vcczar, Aug 2022). NOT-IN-OUR-BUILD — no "do-not-enforce" Pres Actions in `src/`.** The 2022
+> reference game added **10 "Do Not Enforce …" Presidential Actions** that **suspend enforcement of a
+> federal law without repealing it**, letting **states contradict federal law** (a modelling of
+> nullification / selective-enforcement politics):
+>
+> | The 10 "Do Not Enforce …" actions (what they suspend) |
+> |---|
+> | minimum-wage floor · slavery ban · desegregation · public-schools ban · evolution-teaching ban · LGBT protections · marijuana laws · hard-drug laws · gay-marriage protections · poll-tax ban |
+>
+> **Key constraints (the axis's rules, `completions#POST 43, 74`):**
+> - A Do-Not-Enforce action can suspend **ordinary federal laws** but **NOT Amendments or Constitutional
+>   Planks** (constitutional law is immune to non-enforcement).
+> - When a Do-Not-Enforce action is active, a **Governor Action that CONTRADICTS the (now-unenforced)
+>   federal law earns DOUBLE points but has HALF effect** — i.e. states can lean into the gap, scoring
+>   politically while the practical impact is muted. This is the **state-vs-federal contradiction lever**
+>   #20/#21/#23 call for: it couples a Presidential Action to the Governors' Actions library
+>   ([§11.3](#113-governors-actions-library-designed-not-built)).
+>
+> This is distinct from a **repeal** (the law stays on the books; enforcement is paused and can resume
+> under a later President) and from the **bill-relationship graph** (§12.9): non-enforcement is an
+> *executive* nullification axis, not a legislative one. Maps to #20/#21/#23. *(designed, not built —
+> add a **`game.unenforcedLaws: LawId[]`** state toggled by a family of **"Do Not Enforce X"
+> Presidential Actions** (excluded for Amendment/Plank-tier laws), and a **Governor-Action contradiction
+> rule (double points / half effect)** keyed to whether the contradicted law is currently unenforced.
+> Cite `completions#POST 43, 74`. Ruling index [§30.18](#3018-rulings-folded-from-the-batch-28-designer-catalogs-to-do--fixes--completions--vic3--a-discussionspec-batch-not-a-playtest).)*
 
 #### 14.1.z ★ Ted-RULED post-election Command decay — "shit or get off the pot" (designer-authoritative; `oopscpu`)
 
@@ -3676,6 +3777,133 @@ roll.)*
 *(designed, not built — 2.9.2 needs to be rewritten from "log ratification" into a
 multi-screen convention loop with ballots, inter-ballot actions, VP scoring, platform
 scoring, scandal rolls, and meter-to-bonus conversion.)*
+
+### 15.4 ★ The down-ballot (Gov/Sen/Rep) election model (#189–#192, designer-authoritative, `to-do` + `fixes`, batch 28; mostly DESIGNED)
+
+> **★ The presidential modifier stack ([§21.9 #103](#219-presidential-vote-modifier-stack--era-stamped-popularunpopular-issue-list-designed-not-built))
+> is PRESIDENTIAL-ONLY; the designers intend a SEPARATE, RICHER modifier stack for the down-ballot
+> races (Governor / Senate / House).** The batch-28 catalogs supply four cooperating layers — a full
+> trait table (#189), an expertise/lobby-matches-industry "Manchin" modifier (#190), a per-seat
+> "deviant bias" district model (#191), and a per-state max-margin → popular-vote-% derivation with PV
+> caps (#192). These layer onto the shipped `calcStateVote` ([§15.1](#151-calcstatevote--the-core-resolver-phaserunnersts3685)),
+> which already routes `governor`/`senatePre17`/`house` contexts. **Build status (verified vs `src/`):
+> PARTLY SHIPPED** — `calcStateVote` + `applyTraitElectionBonus` already apply *some* traits + the
+> enthusiasm/party-pref meters to gov/sen/house, but **only the ~5 presidential traits**, and the
+> lobby/expertise→industry link is absent (`fixes` verifies the partial shipping at
+> `phaseRunners.ts:3685,3707`). The full down-ballot table below is **DESIGNED, not built**.
+
+**(a) ★ #189 — the full down-ballot TRAIT stack.** Today (per design) only Celebrity / Military-Leader
+/ Provincial / Controversial / Integrity affect non-presidential races. The intended full table for
+Gov/Sen/Rep (`to-do#POST 977, 979, 982, 991`; `fixes#§A POST 6`) — *"in play, never written into the
+rules"*:
+
+| Trait | Down-ballot effect |
+|---|---|
+| **Likeable / Unlikable** | **±1** |
+| **Charismatic / Uncharismatic** | **±1** |
+| **Leadership** | **+1** |
+| **Orator / Debater** | **50% → +1** (a roll, not flat) |
+| **Propagandist** | **±1** |
+| **Puritan** | **±1 on ideology-match** (helps when the candidate's ideology matches the state, hurts otherwise) |
+| **Not-Obscure** (lacks the Obscure trait) | **50% → +1** |
+| **Lowbrow / Egghead** | situational ± (region/era-keyed) |
+| **Faction Leader** | **+1 in primaries** |
+| **Party Leader** | **+3 in primaries** |
+
+**(b) ★ #190 — expertise / lobby matches the state's leading industry (the "Manchin rule").** A
+candidate whose **expertise matches the state's #1 industry → +2**, and a **matching lobby card → +1**,
+applied to Gov/Sen/Rep (**stronger than in presidential races**) so a popular cross-lean incumbent
+(Manchin / Baker / Scott) survives a hostile partisan lean (`to-do#POST 977, 982, 991, 1004`). `fixes`
+adds **crisis-expertise +1** to the same down-ballot stack (`fixes#§A POST 6`). This is the
+down-ballot payoff of the industry-leadership system ([§11.x #35](#11-governance-25x) /
+[§22.10](#2210-53-state-alt-roster--modern-apportionment)): the leading-industry → expertise link that
+the existing doc has on the *legislative* side ([§12](#12-legislation-26x), "Gov/Sen/Reps from the
+state leading in that industry") now also becomes a **per-state election bonus**.
+
+**(c) ★ #191 — seat-level "deviant bias" for House districts (the gerrymander/safe-seat model).** A
+specific House seat can carry a **deviant party bias that OVERRIDES ONLY the party component of the
+state bias** — the **ideology and religion biases of the state still apply** — so a safe R seat in a
+blue state, or a gerrymandered map, is modelled (`to-do#POST 994-1003, 1008-1012`). Each seat also
+carries its own **vote weight**. vcczar ruled the deviant bias stays **STATIC** (verbatim *"Fuck no"*
+to letting a seat float within a range). This is distinct from #20/#21 (which are *state*-level) and
+from the `dem1820` focus-Rep abstraction ([§29.5 #55](#295-the-focus-rep-house-abstraction-gap-55),
+which has no per-seat partisan lean). It pairs with the **gerrymander gov-action** the 2022 reference
+game built (§15.5(d) below / [§30.18](#3018-rulings-folded-from-the-batch-28-designer-catalogs-to-do--fixes--completions--vic3--a-discussionspec-batch-not-a-playtest)).
+
+**(d) ★ #192 — per-state max-margin table + popular-vote-% derivation + PV caps.** A presentation/realism
+layer **distinct from the swing-die** (#184/#18, §15.3.5): a per-era **"Max Margin per state"** table
+(e.g. AL Blue 20–65% / Red 35–80% + a 3rd-party band) caps how lopsided a state can go; the **winner's
+die-EXCESS maps to a %-bracket within that band, lightly randomized**; and **PV caps stop unrealistic
+totals** — vcczar verbatim: *"Reagan can win every state but not 90% popular vote"* (`to-do#POST 211,
+213, 216, 218, 365-367, 374`). So the **displayed popular-vote-% is DERIVED FROM the +N die margin**,
+not read off raw PV. This is the **design intent behind the §29 "landslide-margin-model misfire"**
+(digest hole #8: max-margin caps keyed to historical lean produced absurdities — won Idaho by 50,
+capped at +10 in tossup NH; [§29-1948-arc](#29-the-1820-era-of-democracy-start--scenario-boot-the-full-18201840-arc-ga-rulings--forks-mostly-designedruled)),
+i.e. the misfire was *this very layer* mis-tuned — the spec exists, the per-state/per-era caps need
+the right numbers.
+
+*(designed, not built — extend `calcStateVote` with a **down-ballot-only trait table** (the #189 rows
+above, separate from the presidential `applyTraitElectionBonus` stack), an **expertise↔leading-industry
++2 / lobby-card +1 / crisis-expertise +1** modifier (#190), a per-House-seat **`deviantPartyBias`**
+that supersedes *only* the party term of state bias + per-seat vote weights, **static** (#191), and a
+per-state per-era **max-margin table + margin→popular-vote-% derivation + PV caps** (#192) layered on
+the scorer's output. Cite `to-do#POST 977-1012, 211-374`; `fixes#§A POST 6`. Ruling index
+[§30.18](#3018-rulings-folded-from-the-batch-28-designer-catalogs-to-do--fixes--completions--vic3--a-discussionspec-batch-not-a-playtest).)*
+
+### 15.5 ★ Election-system specs absent from our build (the 2022 reference-game "completions") + the live D6/D3 fork (`completions` + `fixes`, batch 28; NOT-IN-OUR-BUILD)
+
+> **The 2022 reference (spreadsheet) game considered several election/voting subsystems DONE that are
+> NOT in our `src/` codebase.** Documented here as authoritative DESIGNED specs (tags per the
+> `completions` reconciliation: **CONFIRMED-SHIPPED** / **NOT-IN-OUR-BUILD**). A 2022 spreadsheet
+> "completion" is **not** grounds to close a gap — these predate our React/TS build by years.
+
+**(a) ★★ THE LIVE D6 vs D3 ELECTION-DIE FORK (the scorer must pick ONE — annotated, not duplicated).**
+The end-of-election **state-win swing die** has **two conflicting designer-blessed settings in the
+corpus**, and they cannot both hold:
+
+| Fork side | Setting | Source / rationale | Tag |
+|---|---|---|---|
+| **D6** | swing die = **d6** (state biases were retuned to **±5** assuming a d6; *"d3 breaks fluidity, no upsets"*) | `completions#POST 123-125, 142, 146, 153` (Sept 2022 — reverted **D3→D6**, the LATER 2022 decision) | **CONFIRMED-SHIPPED** — our `calcStateVote` resolves on a 0–6-biased scale (`phaseRunners.ts:727`), consistent with the d6 era |
+| **D3** | swing die = **d3** (compress the luck band so outcomes lean on structure, not a single high roll) | `redbutton`'s designer-blessed nerf (`8bc0231c#POST 598-600`); `fixes#§J POST 276` re-floats it | **DESIGNED** (re-opened by `redbutton`, batch 27) |
+
+> **★ Resolution status: OPEN FORK.** The 2022 sheet **settled D6** (and the to-do/fixes threads of the
+> SAME 2022 window still debated D3→D6→D3, never fully closing it — `to-do#POST 892, 901-913, 920`).
+> Then in 2024-25 `redbutton` re-floated **D3** as part of the #184 platform-nerf package (cap meter-
+> moves +2/+1/−1, **roll d6→d3**, raise historical bias +3/+5). **The two are genuinely in tension:**
+> the D6-revert was made *because* biases had been retuned to ±5 for a d6, while the D3-nerf wants the
+> *same +3/+5 bias* with a *tighter* die — so adopting D3 means the bias table needs re-checking against
+> the D6 retune. **The election scorer must pick one (and re-tune the per-state bias table to match);
+> this annotates the existing §15.3.5 nerf spec and the §29.3 election model — it does NOT replace
+> them.** See [§15.3.5](#1535-platform-scoring--5-planks--4-step-comparison) (the #184/DH-72 nerf, which
+> carries the D3 side) and [§30.17](#3017-rulings-folded-from-8bc0231c-the-big-red-button-1960-playtest-the-first-cold-warcivil-rights-source).
+
+**(b) US-Rep Voting Power (NOT-IN-OUR-BUILD).** The 2022 game simplified **US Representative Voting
+Power to a per-delegation %** — a state's House seats are vote-weighted by delegation, **remainder
+goes to the highest Legislative-Power member**, and **committee votes do NOT use Voting Power** (only
+floor votes do) (`completions#POST 69-70, 84-85`). **Absent from `src/`** — our reps are not
+vote-weighted this way (no `votingPower` field). Maps to #34/#62. (NB this is the *floor-vote weight*;
+the per-state **focus-Rep** abstraction the playtests used is the [§29.5](#295-the-focus-rep-house-abstraction-gap-55) model.)
+
+**(c) Player "Generate-a-candidate" flow (rule 3.0.25; NOT-IN-OUR-BUILD).** If a player lacks an
+eligible pol for a primary office, they may **generate one**: **obscure / pliable / passive / lackey**,
+**−1 election penalty, bare-minimum stats, the party-leader's ideology + expertise, age 40–60, random
+demographics**, **CANNOT generate a President**, and the generated pol **won't auto-resign**
+(`completions#POST 88, 93, 103, 176`). **Absent from `src/`** — only filler-pol seeding for staffing
+exists, not a player-facing generate-for-primary flow. Maps to #115/#90/#43.
+
+**(d) Gerrymander gov-action (NOT-IN-OUR-BUILD).** Reworked for the new House-seats model: a
+gerrymander **shifts a state's house-deviation bias +1 toward the Governor's party (except +5 the
+other way), once per 10 years per state**, available **only the gov-action right after a census** (2×
+difficulty if attempted mid-decade) (`completions#POST 145`; `fixes#§G POST 281-282`). **Absent from
+`src/`** — no gerrymander action exists. This is the gov-action that *sets* the #191 per-seat deviant
+bias. Maps to #20/#34.
+
+> *(designed, not built — these four are election/voting subsystems the 2022 reference game had but our
+> build lacks: pick the **D6-vs-D3 swing die** (and re-tune the bias table to match); add **per-
+> delegation Rep voting-power** for floor votes only; add a **player Generate-a-candidate** flow for
+> empty primaries (3.0.25 stats, no-President carve-out); add a **post-census gerrymander gov-action**
+> that nudges the #191 seat deviant bias. Cite `completions#POST 69-176, 145`; `fixes#§G/§J POST
+> 276-282`. Ruling index [§30.18](#3018-rulings-folded-from-the-batch-28-designer-catalogs-to-do--fixes--completions--vic3--a-discussionspec-batch-not-a-playtest).)*
 
 ---
 
@@ -5292,6 +5520,67 @@ Key Advisor→foreign relations). Worked examples from the run:
 | **(e)** | **Regional-representation meter rule** | **DomStab FELL because there was no Deep-South cabinet member** — a cabinet **regional-balance** meter penalty. **Open Q:** do the President/VP count toward regional representation? (cf. #31 cabinet-region-snub, [§30.15](#3015-rulings-folded-from-principle1772-the-7th-1772-thread--designer-gmed-1-human-vs-9-cpu)) | ch75 POST 310 |
 | **(f)** | **Executive actions IMPLEMENTED by cabinet, with BLUNDER rolls** | The President's executive actions (§20.11) are **carried out by the relevant cabinet member, who can BLUNDER**: Pres Lee's Pro-States-Rights / Fugitive-Slave / NW-troop-surge actions → **SecWar + SecState + AG all blundered** (Monroe gained **"Easily Overwhelmed"**). The #22/#126 implementation-blunder layer in a cabinet context. | ch43 POST 3720; ch95:159 |
 
+> **★★ #179 — THE AUTHORITATIVE METER-ENGINE SPEC (the Admin→meter odds table + the JCoS-excluded
+> carve-out; designer-authoritative, `to-do` + `fixes`, batch 28). DESIGNED, not built.** `summer2021`
+> above proved the engine exists *and is hand-rolled*; the **to-do backlog and the fixes-queue supply
+> the actual numbers**. This is the single most-repeated unfinished `GM⇒App` ask in the whole corpus —
+> *"write up how each meter works and exactly when to apply its effects"* (`to-do#POST 7, 222, 308, 523`).
+> The build should encode **all of the following** as the lingering-phase cabinet-meter engine. (Pairs
+> with the shipped lingering ordering [§11.1.y #134](#111y--ted-ruled-lingering-7-step-strict-ordering-designer-authoritative-tedchange);
+> the #179 roll is the cabinet *input* that ordering then resolves.)
+>
+> **(g) ★ The Admin→meter odds table (the core dice the engine rolls each lingering phase).** Per
+> cabinet officer, **Admin determines the per-phase chance the portfolio meter moves UP vs DOWN**
+> (`to-do#POST 479-480, 494-502`). vcczar-tuned values:
+>
+> | Officer Admin | Chance meter moves **UP** (+1) | Chance meter moves **DOWN** (−1, the backfire) |
+> |---|---|---|
+> | **Admin 5** | **75%** | **0%** (a 5-Admin officer never backfires) |
+> | Admin 4 | 60% | 5% |
+> | Admin 3 | 45% | 15% |
+> | Admin 2 | 30% | 25% |
+> | Admin 1 | 15% | 40% |
+> | **Admin 0** | **0%** | **100%** (a 0-Admin officer *always* harms the meter — the rule behind the §9.2 "0-Admin CJCS crushed Mil-Prep" exploit, #49) |
+>
+> *(Exact intermediate rows are the designer's to finalize; the pinned endpoints are **Admin5 = 75%/0%**
+> and **Admin0 = 0%/100%**, with the up-chance falling and the down-chance rising monotonically between.
+> The roll is **portfolio-keyed** by office: Treasury→EconStab/Revenue-Budget, War/Navy→MilPrep,
+> State/Key-Advisor/Ministers→the relevant foreign-relations meter, Interior→Planet's Health, AG→Honest-
+> Gov't, PMG→party-pref/Honest, per §9.3.1.1 + the `summer2021` portfolio map above.)*
+>
+> **(h) ★ Efficient moves the meter by 2 (confirms §20.10(a) with the numeric source).** The roll only
+> decides **whether** the meter moves; if it does, an **Efficient** officer moves it **±2** instead of
+> ±1 (`to-do#POST 494-502`; verbatim-confirmed by vcczar in `summer2021` §20.10(a)). So Efficient is a
+> *magnitude* multiplier on top of the Admin *probability* — it does NOT change the up/down odds.
+>
+> **(i) ★ Lobby-decrease chance dropped to 25% (the lobby-appeasement minigame).** The to-do reframes
+> the whole cabinet phase as a **lobby/interest-appeasement minigame** (`to-do#POST 479-480, 854-855`):
+> each cabinet pick must **keep the lobbies/interests happy or take a faction-enthusiasm hit** while
+> still finding competent (high-Admin) people — the two pressures trade off. The **per-cabinet-pick
+> lobby-DISsatisfaction chance was tuned DOWN to 25%** (from a harsher prior value) so a single
+> imperfect pick doesn't reliably anger a lobby. **Key Advisor is the prize seat** — *"every lobby
+> wants it"* — so it carries the strongest appeasement weight (ties §28.7's Key-Advisor handling +
+> the [§22.2](#222-faction-enthusiasm--party-preference-election-engine--the-score-economy) enthusiasm
+> engine: an angered lobby's faction loses enthusiasm, which drags party-preference at the next election).
+>
+> **(j) ★★ JCoS / top-military officers are EXCLUDED FROM LINGERING (the carve-out — `fixes` §I, vcczar
+> RULED).** The complement to (g): a **Senior General, Senior Admiral, and the JCoS / Chairman do NOT
+> roll on the lingering meters at all** (`fixes#POST 2, 80, 90`). vcczar ruled this LIVE to fix the
+> 1960 "0-Admin Twining JCoS tanks Mil-Prep every phase" pathology (#49): rather than re-rate every
+> general's Admin or switch the roll to the Military skill, the top-military seats are simply **removed
+> from the lingering-meter engine**. So **Mil-Prep is moved by the Sec of War/Navy/Defense (who DO roll
+> per (g)), NOT by the uniformed chiefs.** (The uniformed chiefs still matter for *war* resolution and
+> the [§9.2](#92-232-military--runphase_2_3_2_military-phaserunnersts2246) command grant — they are
+> excluded only from the *between-turns meter roll*.) This is a hard carve-out the engine must encode,
+> not a tuning value.
+>
+> *(designed, not built — the §20.10 build-out now has concrete numbers: an **Admin→{upOdds, downOdds}
+> table** (endpoints Admin5 75%/0%, Admin0 0%/100%) rolled per portfolio-keyed officer each lingering
+> phase; **Efficient = ±2 magnitude** on a successful move; a **25% per-pick lobby-dissatisfaction
+> chance** feeding faction enthusiasm (the cabinet-as-lobby-appeasement minigame, Key-Advisor weighted
+> highest); and a **hard exclusion of Senior General / Senior Admiral / JCoS from the lingering roll**.
+> Cite `to-do#POST 479-480, 494-502, 854-855`; `fixes#POST 2, 80, 90`. Ruling index [§30.18](#3018-rulings-folded-from-the-batch-28-designer-catalogs-to-do--fixes--completions--vic3--a-discussionspec-batch-not-a-playtest).)*
+
 > **System interaction (the cascade chain this exposes):** cabinet lingering rolls →
 > **EconStab/MilPrep/relation meters** → (EconStab cascade, #116/#160: 2 industries −1 nationwide
 > → EV reflow + meter-gating of other meters in crisis) → **election party-preference drag** ([§22.2](#222-faction-enthusiasm--party-preference-election-engine--the-score-economy)).
@@ -6823,14 +7112,67 @@ The antebellum pressure pays off as a **scripted Era-Event chain**, not a passiv
 > `Union Loyalist` labeling was already understood to be the gate. Confirms #121/DH-64 are
 > **designer-acknowledged build needs**, not playtest-only noise. (`fixes2022#POST 641-644`.)
 
+> **★★ #121 / #122 — THE AUTHORITATIVE 3.0.35 "Secessionist Politicians" RULESET (the source spec for
+> the secession stay-roll + the Union-Loyalist trait + pardon-restores-eligibility; designer-
+> authoritative, `completions` POST 174/177-178, vcczar, Sept 9 2022). DESIGNED, not built — replaces
+> the older "Southern Unionist" framing.** The playtests above showed the gate keying on a `Southern
+> Unionist` flag and a flat per-pol secession roll; the **completions list is the authoritative source
+> for the actual numbers**. Rule **3.0.35** (which **replaces** the old "Southern Unionist" rule)
+> specifies a **per-ideology, per-region, per-office probability that a Southern-state pol STAYS WITH
+> THE UNION** rather than seceding (`completions#POST 174, 177-178`):
+>
+> | Stay-with-Union % | Who (ideology / demographic) |
+> |---|---|
+> | **99%** | **Black politicians** (essentially never secede) |
+> | **90%** | **Liberal / Progressive / LW-Populist** pols |
+> | (descending) | Moderate → Conservative → Traditionalist → RW-Populist (lower the more right-wing; exact tiers per the 3.0.35 sheet) |
+>
+> **Office modifiers (applied on top of the ideology %):**
+>
+> | Office held | Stay-% modifier |
+> |---|---|
+> | **Supreme Court Justice** | **−25%** (Justices are much likelier to secede with their state) |
+> | **General / Admiral**, or **the sitting President** | **−10%** |
+>
+> **(a) The "Union Loyalist" trait (the reward for a Southern pol who stays).** A Southern-state pol who
+> rolls to **stay with the Union earns the `Union Loyalist` trait**, which gives **+1 ticket-preference
+> during the Civil War + Reconstruction** (loyalty is rewarded while the war is live) but **−1 in-state
+> after** (their own seceded-state electorate resents them once the war ends). So Union-Loyalist is a
+> *time-windowed* election modifier, not a permanent buff — it flips sign at the war's end. (This is the
+> trait the §23.1 gate and the DH-64 dataset audit are really about: the build's secession gate should
+> *award* `Union Loyalist` from the stay-roll, not require it pre-labeled — though the dataset still
+> needs the seed labels for boot-time correctness.)
+>
+> **(b) ★ Secessionists are temporarily UNAVAILABLE until PARDONED (the #122 resolution).** Pols who
+> secede are **moved to the inactive "Secessionist" bucket and CANNOT hold office or be drafted/run**
+> until a **pardon restores their eligibility** (`completions#POST 178`). This is the **authoritative
+> answer to #122** (pardons were previously "unspecified"): a pardon is the mechanism that **returns a
+> secessionist pol to the active pool** (it does not by itself grant office — it removes the
+> disqualification). Couples directly to the §23.4 Reconstruction pardon-tier exec/legislative actions
+> ([§23.4.1](#2341--hd1--reconstruction-played-by-humans-on-both-sides--vcczars-authoritative-rewrite-156-the-canonical-reconstruction-design):
+> strip-leaders vs pardon-others vs Mass-Trials) — those bills are the *vehicles* that issue the
+> pardons this rule requires, and the "strip Confederate leaders" path is the case where a pardon is
+> **withheld** (leaders stay disqualified).
+>
+> **Our-build tag: NOT-IN-OUR-BUILD** for the traits/state — `types.ts` has no `Secessionist` /
+> `Union Loyalist` / `Southern Unionist` trait and no `allegiance` state; our Secession-Winter loyalty
+> behavior exists only as event logic. The 3.0.35 ruleset is the spec the build should encode for both
+> #121 (the secession stay-roll + Union-Loyalist trait) and #122 (pardon-restores-eligibility). Ruling
+> index [§30.18](#3018-rulings-folded-from-the-batch-28-designer-catalogs-to-do--fixes--completions--vic3--a-discussionspec-batch-not-a-playtest).
+> (`completions#POST 174, 177-178`.)
+
 *(designed, not built — a `Politician.allegiance: 'union' | 'secessionist'` state + a
 "Secessionists" inactive bucket; a secession era-event chain gated on a blundered presidential
 decision (**Judicial-skill roll for the President; a Pres blunder alone fires it**); the per-pol
-secession roll keyed on `Southern Unionist`/`Nationalist` traits + state region; one-way relocation
-out of rebel states; **a CSA-government seeding spec beyond 3 offices** (full cabinet + multiple
-generals/admirals from the seceded Command/Military pool — #157); **random CSA Pres/VP among seceded
-Command-holders, Comm-Gen = sole seceded Military-Leader**; and a **dataset audit of the
-`Southern Unionist` trait** on the draft classes — #158/DH-64.)*
+secession stay-roll keyed on the **3.0.35 per-ideology/region % table** (Black 99% / Lib-Prog-LWPop
+90% … descending to RW-Pop, with **Justice −25% / General-Admiral-President −10%** office modifiers)
+— **stay → award the `Union Loyalist` trait** (+1 ticket-pref during CW/Reconstruction, −1 in-state
+after); secessionists go to the inactive bucket and are **ineligible until a PARDON restores them**
+(#122); one-way relocation out of rebel states; **a CSA-government seeding spec beyond 3 offices**
+(full cabinet + multiple generals/admirals from the seceded Command/Military pool — #157); **random
+CSA Pres/VP among seceded Command-holders, Comm-Gen = sole seceded Military-Leader**; and a **dataset
+audit of the `Southern Unionist` / `Union Loyalist` seed labels** on the draft classes — #158/DH-64.
+Source spec: `completions#POST 174, 177-178`.)*
 
 ### 23.2 (#59) Free/Slave sectional-balance crisis scoring (the slavery-era crisis engine)
 
@@ -7482,6 +7824,35 @@ for a Canada-unpopular candidate, −1 for a no-Canadian cabinet).)*
   0-Command holder → "acting" with Command-gated / trait-diverted action ability** (the older read,
   retained only for those cases). Flag this split in any succession implementation. (`oopscpu#POST
   324–329`.)
+
+> **★★ THE AUTHORITATIVE Acting-Presidency RULESET (rule 3.0.33; designer-authoritative, `completions`
+> POST 97/105/141, vcczar, Aug–Sep 2022). NOT-IN-OUR-BUILD — no "acting"/Acting-Pres logic in `src/`;
+> our succession is simpler.** The playtests above derived the acting-president *behavior* live; the
+> completions list is the **authoritative source for the formal rule**. It is built around a
+> **precedent**: until a President formally claims the title, a non-VP successor is only "Acting":
+>
+> | 3.0.33 rule | Detail | Cite |
+> |---|---|---|
+> | **VP can REFUSE the Acting-Pres precedent** | via a **Presidential Action** the VP can decline to set the "VP-becomes-full-President" precedent (the Tyler-precedent toggle) | `completions#POST 97, 141` |
+> | **Trait gating of the refuse choice** | **Pliable / Passive auto-ACCEPT** the precedent; **Iron-Fist auto-REFUSE** it | `completions#POST 105` |
+> | **Powers of an Acting Pres BEFORE the precedent is set** | **no own cabinet** (keeps predecessor's), **only 1 Presidential Action**, **no veto**, **no incumbency** (can't claim re-election as an incumbent) | `completions#POST 97, 141` |
+> | **3rd-in-line is ALWAYS Acting** | a successor who reaches the office **via the 3rd-in-line slot** (Speaker/PPT, not the VP) is **always merely Acting** — never auto-full | `completions#POST 105` |
+> | **CPU behavior** | a **CPU refuses** the Acting precedent **75%** (→ **100%** if **Puritan / Disharmonious / Iron-Fist**) | `completions#POST 141` |
+> | **Acting Pres is NOT auto party-leader** | the rule keys on an *elected* president; an Acting Pres does not auto-become Party Leader (corroborates the `fixes#§J POST 268/275` "elected president" ruling) | `completions#POST 141`; `fixes#§J POST 275` |
+>
+> **★ Reconciliation with the Ted death-succession ruling above:** these are **two faces of the same
+> precedent**. Ted's `oopscpu#POST 327` ruling (**VP-inherits-on-DEATH = FULL President**) is the
+> *outcome once the precedent is SET / the VP claims the title* (Adams refusing "Acting"); 3.0.33 is
+> the *machinery before/around that choice* — the VP's option to **refuse** (and the 3rd-in-line who is
+> **always** Acting). So the build needs **both**: the death-succession produces a full President **if
+> the VP accepts the title** (Pliable/Passive auto-accept; Iron-Fist auto-refuse), while an Acting Pres
+> who has not set the precedent (or who came via the 3rd-in-line) runs at the reduced power-set above
+> (no own cabinet / 1 action / no veto / no incumbency), which **dovetails with the §24.1 Command-gated
+> inert-acting read** for the 0-Command / ineligible-substitute cases. Maps to #61/#112/#105. *(designed,
+> not built — encode the 3.0.33 precedent: a VP "refuse Acting-Pres precedent" Pres Action (Pliable/
+> Passive auto-accept, Iron-Fist auto-refuse, CPU refuse 75%/100%), the reduced Acting power-set, and
+> the "3rd-in-line is always Acting" rule. Cite `completions#POST 97, 105, 141`. Ruling index
+> [§30.18](#3018-rulings-folded-from-the-batch-28-designer-catalogs-to-do--fixes--completions--vic3--a-discussionspec-batch-not-a-playtest).)*
 
 *(designed, not built — a **configurable line of succession** (bill-mutable order); **native-born
 vs foreign-born eligibility** gating the presidency (relaxable per [§23.5](#235-60-canada-conquest--era-gated-territorystatehood--canadian-draft)); the
@@ -12731,6 +13102,117 @@ seeded LBJ's party-leader on-election rolls (`POST 931-938`); used 1961 DC EVs (
 | **#86 / #115 / E1** scenario boot | mid-cycle 1960 boot improvised live — the cautionary NON-boundary-start counterexample (→ #186) | POST 64, 73, 543-560, 645 |
 | **#114 / DH-36** MP GM workload | 10-human MP at full 50-state / 10-faction / ~25-subphase scale → enormous manual GM burden; the run **died of workload, not a game-end** (AP: *"this lingering phase is gonna suck"*; *"cabinet impacts on meters (kill me)"*; solo-resume stalled *"going thru 50 states for all 10 factions might take awhile"*) | POST 1688, 1691, 1726 |
 | **#173** era-boundary-aligned starts | this run is the cautionary counterexample — a NON-boundary mid-cycle start that needed mass live patching | POST 548-549 |
+
+### 30.18 Rulings folded from the batch-28 DESIGNER CATALOGS (`to-do` / `fixes` / `completions` / `vic3`) — a DISCUSSION/SPEC batch, NOT a playtest
+
+> **★ DESIGNER-AUTHORITATIVE pre-build SPECS (NOT a playtest).** Batch 28 is the designers' own four
+> meta-docs, not a campaign: **`to-do`** (`ab93f871`, the authoritative dev backlog + rules-finalization
+> log, Dec 2021 → Jul 2022 — the literal "intended build list" + the ORIGIN discussion for many gaps),
+> **`fixes`** (`a58b90f4`, vcczar's structured bug/fix TICKET QUEUE with accept/reject/defer
+> dispositions, ~Jun → Sep 2022), **`completions`** (`64f60bbd`, the *done-half* of the backlog — what
+> the **2022 reference/spreadsheet game** considered DONE, the highest-value RECONCILIATION source),
+> and **`vic3`** (`76d41a08`, aspirational Victoria-3 borrows, mostly "AMPU 2" parking-lot). **These
+> threads PREDATE our `src/` build** — a 2022 spreadsheet "completion" is **NOT** grounds to close any
+> gap (our "Built" = present in our React/TS code, a *different universe*; tags below: **CONFIRMED-
+> SHIPPED** / **DESIGNER-DONE-UNVERIFIED** / **NOT-IN-OUR-BUILD**). Tier-1 = @vcczar + @MrPotatoTed.
+> Cite `to-do#POST n`, `fixes#§X POST n`, `completions#POST n`, `vic3#POST n`.
+>
+> **★ The single most-repeated unfinished `GM⇒App` ask in the whole corpus** is *"write up how each
+> meter works and exactly when to apply its effects"* — the **#179 meter-engine spec**, now answered
+> with concrete numbers (the Admin→meter odds table + the JCoS-excluded carve-out, §20.10(g)–(j)).
+
+**A. NEW/sharpened mechanic specs folded into topical sections (DESIGNED unless tagged):**
+
+| Spec | Ruling | Folded into | Cite |
+|---|---|---|---|
+| **★★ #179 meter-engine — the Admin→meter odds table + JCoS carve-out** | per-officer Admin→{up,down} odds (Admin5 **75%/0%**, Admin0 **0%/100%**) rolled per portfolio each lingering phase; **Efficient = ±2** magnitude; **lobby-dissatisfaction 25%** (cabinet-as-lobby-appeasement minigame, Key-Advisor weighted); **Senior General/Admiral/JCoS EXCLUDED from the lingering roll** (vcczar RULED, the #49 fix) | [§20.10(g)–(j)](#2010--179-new-summer2021--the-cabinet-lingering-roll-meter-engine-designed-hand-rolled) | `to-do#POST 479-480, 494-502, 854-855`; `fixes#§I POST 2, 80, 90` |
+| **★★ #121/#122 Secessionist/pardons — the 3.0.35 ruleset** | per-ideology/region **stay-with-Union %** (Black 99% / Lib-Prog-LWPop 90% … descending; **Justice −25% / Gen-Adm-Pres −10%**); stay → **`Union Loyalist`** trait (+1 ticket-pref in CW/Recon, −1 in-state after); **pardon restores eligibility** (the #122 answer) | [§23.1 #121/#122 block](#231-58-secession--southern-unionist--secessionist-trait-gating-the-antebellum-payoff) | `completions#POST 174, 177-178` |
+| **★ #189 down-ballot trait stack** | full Gov/Sen/Rep trait table (Likeable/Charismatic ±1, Leadership +1, Orator/Debater 50%+1, Propagandist ±1, Puritan match ±1, Not-Obscure 50%+1, Lowbrow/Egghead; **FL +1 / PL +3 in primaries**) — separate from the §21.9/#103 presidential stack; **PARTLY SHIPPED** (some traits already applied, `phaseRunners.ts:3685,3707`) | [§15.4(a)](#154--the-down-ballot-govsenrep-election-model-189192-designer-authoritative-to-do--fixes-batch-28-mostly-designed) | `to-do#POST 977, 979, 982, 991`; `fixes#§A POST 6` |
+| **★ #190 expertise/lobby-matches-industry ("Manchin")** | expertise = state's #1 industry → **+2**; matching lobby → **+1**; crisis-expertise +1 — down-ballot only, stronger than presidential | [§15.4(b)](#154--the-down-ballot-govsenrep-election-model-189192-designer-authoritative-to-do--fixes-batch-28-mostly-designed) | `to-do#POST 977, 982, 991, 1004`; `fixes#§A POST 6` |
+| **★ #191 seat-level deviant bias (districts)** | per-House-seat `deviantPartyBias` overrides **only** the party term of state bias (ideology/religion still apply) + per-seat vote weight; vcczar ruled **STATIC** (no floating) | [§15.4(c)](#154--the-down-ballot-govsenrep-election-model-189192-designer-authoritative-to-do--fixes-batch-28-mostly-designed) | `to-do#POST 994-1003, 1008-1012` |
+| **★ #192 max-margin + popular-vote-% + PV caps** | per-era per-state **max-margin table**; die-excess → %-bracket (lightly random); **PV caps** ("win every state, not 90% PV"); displayed PV-% **derived from** the +N die margin | [§15.4(d)](#154--the-down-ballot-govsenrep-election-model-189192-designer-authoritative-to-do--fixes-batch-28-mostly-designed) | `to-do#POST 211, 213, 216, 218, 365-367, 374` |
+| **★ #193 interest-ACQUISITION** | interests are born-only today; **+1 random ideology-appropriate interest at the 20-yr career-track graduation** (+ event grants) — the only acquisition path | [§5.3](#53--193--interest-acquisition-at-the-20-year-career-mark-interests-are-born-only-today-resolved-design-to-do-batch-28-designed) | `to-do#POST 58-61, 672, 775, 817` |
+| **★ #199 confirmation-rejection trait cascade** | rejected nominee → **Controversial**, then **Incompetent** (toxic) + **re-nomination block**; automatic unless Bookkeeper. Ted ACCEPTED ("already implemented" in 2022 forum) | [§9.3.8 #199 block](#938--ted-ruled-nomination-filters-designer-authoritative-tedchange) | `fixes#§D POST 434-436` |
+| **★ #200 bills that EJECT officeholders** | a `Bill.personnelEffect` class (remove/disqualify by predicate, optionally via SCOTUS, with sunset) — the "Ban polygamists removes Mormon officeholders" case. OPEN (Will) | [§12.9 #200 block](#129-forum-design-layer-executive-branch-interference--bill-relationship-graph-modern-designed-not-built) | `fixes#§H POST 131-132, 175` |
+
+**B. The NOT-IN-OUR-BUILD 2022 reference-game subsystems (authoritative DESIGNED specs, absent from `src/`):**
+
+| Subsystem | Spec summary | Folded into | Cite |
+|---|---|---|---|
+| **Acting-Presidency (3.0.33)** | VP can REFUSE the Acting precedent via Pres Action (Pliable/Passive auto-accept, **Iron-Fist auto-refuse**); Acting Pres before precedent = no own cabinet / 1 action / no veto / no incumbency; **3rd-in-line always Acting**; CPU refuses 75% (100% if Puritan/Disharmonious/Iron-Fist); not auto party-leader. Reconciles with the Ted death-succession ruling (two faces of one precedent) | [§24.1 Acting-Pres block](#241-61-succession--eligibility--the-acting-president-state) | `completions#POST 97, 105, 141` |
+| **"Do Not Enforce …" Pres Actions (#23)** | 10 actions suspend enforcement of a federal law (not Amendments/Planks) → states may contradict it; **contradicting Gov Action = double points / half effect** | [§14.1.2](#1412--the-do-not-enforce--presidential-actions-nullification-axis-23-completions-batch-28-not-in-our-build) | `completions#POST 43, 74` |
+| **Generate-a-candidate (3.0.25)** | empty-primary fallback: obscure/pliable/passive/lackey, −1 penalty, min stats, PL ideology+expertise, 40-60, random demographics, **CANNOT generate a President**, no auto-resign | [§15.5(c)](#155--election-system-specs-absent-from-our-build-the-2022-reference-game-completions--the-live-d6d3-fork-completions--fixes-batch-28-not-in-our-build) | `completions#POST 88, 93, 103, 176` |
+| **US-Rep Voting Power** | per-delegation %; remainder → highest Legis-Power; **committee votes do NOT use it** (floor only) | [§15.5(b)](#155--election-system-specs-absent-from-our-build-the-2022-reference-game-completions--the-live-d6d3-fork-completions--fixes-batch-28-not-in-our-build) | `completions#POST 69-70, 84-85` |
+| **Gerrymander gov-action** | post-census only (2× difficulty mid-decade), once/10-yr/state; shifts house-deviation bias +1 to Gov's party (except +5 the other way) — *sets* the #191 seat bias | [§15.5(d)](#155--election-system-specs-absent-from-our-build-the-2022-reference-game-completions--the-live-d6d3-fork-completions--fixes-batch-28-not-in-our-build) | `completions#POST 145`; `fixes#§G POST 281-282` |
+
+**C. ★ The live D6-vs-D3 election-die FORK (annotated, not duplicated):** the 2022 sheet **settled D6**
+(`completions#POST 123-125, 142, 146, 153` — biases retuned to ±5 for a d6, *"d3 breaks fluidity"*) =
+**CONFIRMED-SHIPPED** (`phaseRunners.ts:727`); `redbutton`'s designer-blessed #184 nerf re-floats **D3**
+(`8bc0231c#POST 598-600`; `fixes#§J POST 276`). **The scorer must pick ONE and re-tune the bias table
+to match.** Documented as an OPEN fork in [§15.5(a)](#155--election-system-specs-absent-from-our-build-the-2022-reference-game-completions--the-live-d6d3-fork-completions--fixes-batch-28-not-in-our-build),
+cross-referencing the existing [§15.3.5 #184 nerf](#1535-platform-scoring--5-planks--4-step-comparison)
++ [§30.17](#3017-rulings-folded-from-8bc0231c-the-big-red-button-1960-playtest-the-first-cold-warcivil-rights-source).
+
+**D. Data-model / deferred decision records (no build change — guardrails):**
+
+| Record | Decision | Folded into | Cite |
+|---|---|---|---|
+| **★ #204 skill scale 0-5** | KEEP 0-5; **0-10 DEFERRED to "AMPU 2"** (not auto-convertible — would re-tune every %-step/prereq/what-if-stat; 5s already rare). Pins `CLAUDE.md`'s 0-5 as a deliberate decision | [§3.1](#31-the-four-character-axes) | `to-do#POST 721-755` |
+| **#203 wealth attribute** | DEFERRED (vcczar: *"tedious… post-Early-Release"*) — not rejected; a possible 5th axis for tycoons | [§3.1](#31-the-four-character-axes) | `fixes#§F POST 152, 162` |
+
+**E. NEW designed mechanics WITHOUT a separate topical subsection (compact specs — folded here):**
+
+- **★ #194 — Dynasty / lineage (generational) system (NEW, deliberately LIMITED; Ted+vcczar, `to-do#POST
+  800-808, 824`).** There is **no dynasty/lineage/generational model** in the build (only *party*
+  lineage is noted). Bounded rules: **(1)** a next-gen politician **auto-loses `Obscure` if an elder in
+  their line reaches the Presidency**; **(2)** if a **dynasty parent dies BEFORE the offspring's
+  historical birth year, the offspring (and their whole downstream line) are NEVER BORN** (removed from
+  the future draft pool — a what-if branch off a death); **(3)** **ahistorical-dynasty creation is
+  REJECTED** by vcczar **except possibly for generated pols in the Era-of-Future** (where the dataset
+  exhausts into pure procedural-gen, §28.11). *(designed, not built — add `Politician.parentId?` /
+  lineage links; shed `Obscure` on an elder's Presidency; extinguish a line if the parent predeceases
+  the heir's birth year; allow ahistorical dynasties **only** for Era-of-Future generated pols.)*
+- **#202 — In-app "Campaign Advisor / Think Tank" suggestion helper (`GM⇒App` + onboarding; Vols21 OPEN,
+  `fixes#§J POST 9`).** Reuse the (unbuilt, #114) CPU decision logic to **suggest 1-3 moves to a SOLO
+  player each phase** — a built-in advisor that lowers the rules-mastery wall (a human GM informally
+  advises new players today). *(designed, not built — a phase advisor that surfaces 1-3 CPU-logic-derived
+  suggested actions; depends on the #114 CpuController it reuses; pairs with onboarding DH-69.)*
+- **#197 — split-government "blame-assignment roll" (Ted/Will OPEN, `fixes#§A POST 257-260`).** When the
+  Presidency and Congress are **controlled by different parties**, "incumbent party" is undefined →
+  penalize incumbent **candidates** (all offices), not a party, **and** add a **blame-roll**: the
+  President may try to blame the opposite-party Congress for a crisis (**5-6 succeeds / 3-4 nothing / 1-2
+  backlash**). Distinct from #11's crisis-bill collective-accountability. *(designed, not built — feed a
+  split-government Pres-counter-blame roll into the incumbent-candidate election penalty; pairs with
+  §21.9/#103.)*
+- **#198 — endorsement-refusal-by-trait (Murrman OPEN, `fixes#§C POST 238`).** Mods / Mavericks /
+  Integrity pols should **refuse to endorse a populist** (especially when a moderate is also running);
+  disharmonious extremists refuse the establishment candidate. A trait-gate on the primary
+  withdraw-and-endorse logic — **distinct from #183** (which is about endorsement *momentum value*, not
+  *who refuses*). *(designed, not built — add a trait-gated endorsement-refusal filter to the
+  primary/withdraw-endorse step; pairs with #47/#183.)*
+- **#201 — voluntary "bench / disgrace a politician" action + rogue primary challenge (CE2 OPEN,
+  `fixes#§J POST 376, 390`).** No way today for a player/faction to **bench** (don't-run / force-resign)
+  one of its own pols; benched pols can't go rogue. New feature: a **bench/disgrace action**, with a
+  **chance the benched pol launches a ROGUE PRIMARY CHALLENGE against you**. *(designed, not built — a
+  benching/disgrace action + a rogue-run-on-bench chance; pairs with the §22.3 primary subsystem / #47.)*
+
+**F. ★ PARKING-LOT "AMPU 2" (do NOT schedule):** **#205** Vic3 borrows — **(B1)** interest-groups/lobbies
+dynamically **join/form/split parties** (breaks the fixed 2-party model); **(B4)** **per-state meters**
+(national meter = average of per-state, gives governors a stake); **(B5)** per-lobby **era-by-era
+agendas** + a completion bonus (reworks the "benchmark" system). All **designer-tagged "AMPU 2" / too
+complex** (`vic3#POST 4, 5, 45, 181`). The other two Vic3 borrows (**B2** meter-boosting + **B3**
+migration/immigration Gov Actions) are **Ted-endorsed for v1** and were folded into **gap #20** (Gov
+Actions library, [§11.3](#113-governors-actions-library-designed-not-built)), **not** parked.
+
+**G. Reconciliation annotations (NO gap closed; for the tech-lead to verify against `file:line`):**
+the `completions` list reconciled ~50 existing rows — **2 CONFIRMED-SHIPPED** flagged for `file:line`
+verification (election die **D6** #18 → `phaseRunners.ts:727`; trait-conflict **d6** #138 →
+`phaseRunners.ts:345,374,1450,2684`), **~9 NOT-IN-OUR-BUILD** (the §30.18.B subsystems + trait renames
+#168, Master-Kingmaker promotion trigger #128, rising-sea-level EV #41), and **~37
+DESIGNER-DONE-UNVERIFIED** ("designer marked complete 2022, UNVERIFIED in our code"). The
+**#183 endorsement-momentum CONFLICT is surfaced explicitly** as an OPEN frozen-spec reconciliation
+(2022 sheet: **25%/10%** momentum, `completions#POST 46`; vs `redbutton`: **none**) — see
+[§28.6](#286-the-modern-election-machine--1948-era-refinements) / [§30.17 #183](#3017-rulings-folded-from-8bc0231c-the-big-red-button-1960-playtest-the-first-cold-warcivil-rights-source).
 
 ### 30.4 Authority hierarchy reminder
 
