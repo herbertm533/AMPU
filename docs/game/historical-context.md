@@ -341,6 +341,55 @@ era," post 136) — strong support for an era-specific drafting profile (gap-log
   Whiskey Rebellion, Jay Treaty) track history; the *who/when* do not. Polarity =
   original founding alignment (BLUE = Dem-Reps, RED = Federalists), NOT the 1856
   flip. **[consensus]**
+- **Batch-26 (`fe15db25` "Summer 2021 Playtest") — the first source to PLAY
+  federalism forward (1774→~1810), and it produces a fully alternate presidential
+  line.** This ~10-human GM run (MrPotatoTed) is the KB's richest federalism-
+  *gameplay* source. Its succession diverges hard from Washington→Adams→Jefferson:
+  first elected President is **Benedict Arnold** (RED) — the real-life traitor, here
+  a respected war-hero president who even gets the capital named "Arnold D.C."
+  (chunk-088 post 7977); then **Francis Lightfoot Lee** (BLUE) w/ VP Daniel Hiester
+  (chunk-038); **Pierce Butler** (RED, elected 1796, chunk-049 post 4370); a long
+  **Hiester** presidency ("six-term," chunk-086 post 7797); and **Samuel Osgood**
+  (RED) winning the **1808** election 189–3 over James Madison (chunk-095 post 8632).
+  Real anchor: Washington (1789–97) → Adams (1797–1801) → Jefferson (1801–09) →
+  Madison (1809) ([archives.gov](https://www.archives.gov/milestone-documents/bill-of-rights)).
+  Game-master: treat ALL named federalism-era officeholders here as this campaign's
+  own timeline; only the era *issues* track real history. **[consensus on real line]**
+- **Washington is VP (not President) and dies in office; VP-inheritance chain is
+  live.** In this run George Washington serves as **Vice President** and dies in
+  office (chunk-073: "VP Washington is dead"), triggering GM rules debate over
+  whether the **President Pro Tempore inherits** and whether he needs a pre-emptive
+  command point. This is the same VP-succession-on-death mechanic exercised in the
+  batch-13 all-CPU run (gap #61), now with a marquee figure in the "wrong" office.
+  Real history: Washington was the two-term first President, never VP. **[consensus]**
+- **Bank of the United States: established early under Pres. Arnold, later
+  repealed, and repurposed as an internal-improvements fund — a divergent
+  trajectory.** The game charters a "National Bank / Bank of the United States"
+  (chunk-036; credited to Treasury Sec. Edmund Randolph, NOT Hamilton) that lifts
+  the Revenue-Budget meter and ends the in-game "Great Recession." Later it is
+  put up for **repeal ("Repeal Bank of the United States — CANNOT BE REPLACED,"**
+  chunk-088 post 7971) and, in the ~1808–10 session, a bill to "**allow the Bank of
+  the United States to collect revenue and interest for an internal improvements
+  fund**" passes committee (chunk-099) — i.e. the Bank becomes an
+  internal-improvements vehicle. Real history: Hamilton's First Bank was chartered
+  **Feb 25, 1791** for a fixed 20-yr term and its recharter **failed in 1811** by one
+  vote (VP George Clinton broke the Senate tie against it); internal improvements
+  were a *separate, contested* question (Madison vetoed the Bonus Bill in 1817)
+  ([Fed Reserve History](https://www.federalreservehistory.org/essays/first-bank-of-the-us)). The game compresses and recombines these. **[consensus]**
+- **The amendment slate is alt-history, including a recurring "English as the
+  Official Language" measure.** Across the run players repeatedly propose/vote
+  amendments that don't match the real Bill of Rights, e.g. an **English-as-
+  Official-Language Amendment** (chunk-070; failed again as a bill in chunk-099,
+  16–26) and a (failed in committee) "Christianity as the official language"
+  proposal (chunk-036). Real history: Congress proposed **12** amendments in Sept
+  1789; **10** were ratified Dec 15, 1791 as the Bill of Rights (the two that
+  failed were congressional apportionment and the compensation clause that became
+  the 27th Amendment in 1992) — there was never a national official-language
+  amendment ([archives.gov](https://www.archives.gov/milestone-documents/bill-of-rights),
+  [senate.gov](https://www.senate.gov/about/origins-foundations/senate-and-constitution/congress-submits-first-amendments-to-states.htm)).
+  Note the run also exercises real **veto + congressional override** mechanics
+  (Pres. Lee's veto of Package 7 overridden in both houses, chunk-043; Pres. Osgood
+  signs/vetoes by package, chunks-098/099) — mechanically apt for the period. **[consensus]**
 
 ---
 

@@ -5119,6 +5119,324 @@ ratified"** — BUG-2). Justices **ideology-shift after 10y tenure** and face **
 resignation after ~12y / age 75** (`fed` 56). *(designed, not built — add a federalism
 SCOTUS case data file with per-case gates.)*
 
+### 20.9 ★ Federalism PLAYED FORWARD (1789→~1810) — the live federalism turn structure (`summer2021`, batch 26 — DESIGNED, hand-adjudicated)
+
+> **★ THE HEADLINE OF BATCH 26.** `summer2021` (`fe15db25`, "Summer 2021 AMPU Playtest", the
+> **largest source in the KB — 9012 posts / 99 chunks**) is the **FIRST source in the KB to play
+> federalism gameplay FORWARD end-to-end** (founding 1774-88 → ratification → federalism 1789→~1810).
+> It is a **GM-run ~10-human multiplayer campaign** (GM = vcczar the designer → MrPotatoTed → Rezi,
+> a 3-GM relay over ~14 real-time months). Because the entire federalism president/cabinet/diplomacy/
+> decision-event spine is **hard-walled out of the shipped era graph** (`eraGraph.ts:154` throws on
+> `chartIndex >= 49`; `eraGraph.ts:147-152` forbids `president`/`cabinet` deciders pre-1789 —
+> codebase-verified), **everything in §20.9-§20.15 was hand-adjudicated by the GM**. This is therefore
+> a **live executable spec for the unbuilt federalism mechanics** ([§20.3.1 #177](#2031--177-new-principle1772-batch-25--the-federalism-foreign-affairs-decision-event-spine--the-eragraphts154-scope-wall-to-lift-designed-hard-walled-out-of-the-build),
+> [§17.6.1 #178](#1761--178-new-principle1772-batch-25--treaty-grants-territory--the-bounded-3-strikes-retry-budget-designed),
+> and the four NEW gaps #179/#180/#181/#182). Cite `summer2021#POST n` (+ `chN` for chunk refs).
+> Polarity = the original founding alignment (**BLUE = Patriots/Anti-Federalist/agrarian; RED =
+> Federalist**).
+
+**Alt-history presidential line (this campaign's own timeline; only the era *issues* track real
+history — see `historical-context.md` §2).** Treat the officeholders below as canonical for
+provenance, NOT as fidelity claims:
+
+| # | President (this run) | Party | VP | Real anchor |
+|---|---|---|---|---|
+| 1 | **Benedict Arnold** (RW Populist; "unlikable" → Red party-pref −1; capital named **Arnold D.C.**) — elected, then **re-elected** | RED | **George Washington** (Moderate) — confirms Washington-as-VP | Washington |
+| 2 | **Francis Lightfoot Lee** (Key Advisor = Madison) | BLUE | — | Adams |
+| 3 | **Pierce Butler** (elected 1796) — **VP George Washington dies in office** | RED | Washington (dies) | Jefferson |
+| 4 | **Daniel Hiester** ("six-term") | — | — | (long tenure) |
+| 5 | **Samuel Osgood** (wins **1808** over James Madison; 4 command) | RED | — | Madison (real 1809) |
+
+**The federalism turn/phase loop as PLAYED (vs the [§2.2](#22-phase_sequence-in-order) shipped
+sequence).** Federalism **activates the phases the Era of Independence skips** ([§9](#9-cabinet--military-appointments-23x)
+cabinet, [§8.4](#84-224-party-leaders--runphase_2_2_4_partyleaders-phaserunnersts2130) Party
+Leaders, [§13.1](#131-271-diplomacy--runphase_2_7_1_diplomacy-phaserunnersts3585) diplomacy,
+[§14](#14-executive--court-management-28x) executive actions, [§11.1](#111-251-lingering-meters--runphase_2_5_1_lingering-phaserunnersts3260)
+the cabinet-driven lingering). The observed federalism half-term order, reconstructed from the run:
+
+1. **Leadership** — Congressional leadership (Speaker / Senate Majority Leader / PPT), **Party
+   Leaders** (now active; **Daniel Hiester = 1st Blue Party Leader**, Kingmaker-weighted state
+   vote, POST 2525), Faction Leaders.
+2. **Cabinet appointment / confirmation** — President nominates; **ideology-gated confirmation**
+   (§20.10); a **Pliable** Pres has Speaker+PPT recommend first (§20.10).
+3. **Era / decision events** — French Revolution neutrality fork, Wilkinson Affair, Cotton-Gin
+   industry-shift, Louisiana-Purchase-as-random-event (§20.13; corroborates #177).
+4. **Lingering** — **the cabinet lingering-roll meter engine** (§20.10): each cabinet member rolls
+   to move their portfolio meter ±.
+5. **Diplomacy** — SecState directs Ambassadors UK/France/Spain ([§13.1](#131-271-diplomacy--runphase_2_7_1_diplomacy-phaserunnersts3585)).
+6. **Legislation** — proposals → committee → **impeachment resolves here** (§20.12) → floor votes
+   (per-package, with sway) → **sign / veto, then congressional override** (§20.11).
+7. **Presidential Action** — the President spends his **command-budget** of executive actions
+   (§20.11); **SCOTUS replacement is nominated HERE on purpose** (§20.11).
+
+> **Negative result confirmed:** the run **ends by trailing off** mid-1808-10 floor vote (Sept
+> 2022) — it **never reaches a clean conclusion or a later era**, corroborating that NO captured
+> thread reaches a "future" era (cf. #92). The federalism→nationalism transition (§20.7) was not
+> exercised here.
+
+### 20.10 ★ #179 (NEW, `summer2021`) — the cabinet LINGERING-ROLL meter engine (DESIGNED, hand-rolled)
+
+> **★ NEW gap #179 — the concrete face of how a federalism cabinet drives the meters between turns.**
+> Entirely hand-rolled by the GM (no cabinet-driven meter mechanic in `src/`; `Meter.tsx` is a generic
+> UI shell; a cabinet `Politician` has no per-phase meter-effect roll, no Efficient/Pliable/regional
+> hooks — codebase-verified). This is the federalism counterpart to [§11.1](#111-251-lingering-meters--runphase_2_5_1_lingering-phaserunnersts3260)
+> (shipped lingering), [§67 #67](#247-69-lingering--the-16-meter-homeostasis-engine-era-gated-foreign-meters)
+> (meter ladders), and [§10.4.1 / #22/#126](#1041-multi-decider-events) (implementation blunder).
+
+**The core rule.** Each **lingering phase**, **every cabinet member rolls to move a meter tied to
+their portfolio by ±1** — and **it can BACKFIRE** (a bad roll moves the meter the wrong way). The
+meter is the one the office governs (Treasury→EconStab/Revenue-Budget; War/Navy→MilPrep; State /
+Key Advisor→foreign relations). Worked examples from the run:
+
+| Event | Cabinet member | Roll outcome | Source |
+|---|---|---|---|
+| SecTreasury rolled **badly** → **EconStab dropped to Great Recession** (the EconStab cascade, #116/#160) | SecTreasury | backfire | ch36 POST 3011 |
+| **SecWar + SecNavy** both succeed in one phase → **MilPrep pushed to MAX** | War/Navy | double success | ch76 POST 6840 |
+| **Key Advisor "Spencer"** repeatedly **lowers EconStab + France relations** (an actively-harmful advisor) | Key Advisor | recurring backfire | ch76 POST 6840 |
+
+**The sub-rules surfaced (all designer-clarified live):**
+
+| # | Sub-rule | Statement | Source |
+|---|---|---|---|
+| **(a)** | **★ Efficient = auto-+2-if-it-moves** | The roll only decides **whether** the meter moves; if it does, an **Efficient** cabinet member moves it **+2 automatically** (not +1). vcczar verbatim: *"I actually intended it to be an automatic 'if it moves one square then it moves two squares.' The 'potentially' was because you still roll to see if it moves at all."* (the rulebook had said "can potentially move a meter two spots in either direction" — clarified to auto-+2). | ch99 POST 8949 (verbatim ch99:118/123) |
+| **(b)** | **Pliable Pres → advisor/Speaker/PPT decider override** | A **Pliable** President → **Speaker + PPT each recommend a cabinet member before he nominates**; AND a Pliable Pres's **Key Advisor makes the SCOTUS nomination instead of the Pres**. Trait-driven decider override (the federalism face of the [§24.1 #61](#241-61-succession--eligibility--the-acting-president-state) Pliable-decider read). | ch30 POST 2536; ch43 POST 3733 |
+| **(c)** | **Cabinet-bill double-points coupling** | A cabinet member may **propose a bill in his portfolio's expertise**; if a congressman carries it to law → **DOUBLE points for both**; if **no congressman picks it up → the SecXX takes −50 pts**. Couples the cabinet to the legislature. | ch36 POST 3047 |
+| **(d)** | **Cabinet ideology gate at confirmation** | Confirmation has an **ideology gate**: a **RW-Populist SecWar was rejected** — must be **Mod / Cons / Lib** (extends the [§9.3.8](#938--ted-ruled-nomination-filters-designer-authoritative-tedchange) nomination filters with an ideology constraint by office). | ch30 POST 912 |
+| **(e)** | **Regional-representation meter rule** | **DomStab FELL because there was no Deep-South cabinet member** — a cabinet **regional-balance** meter penalty. **Open Q:** do the President/VP count toward regional representation? (cf. #31 cabinet-region-snub, [§30.15](#3015-rulings-folded-from-principle1772-the-7th-1772-thread--designer-gmed-1-human-vs-9-cpu)) | ch75 POST 310 |
+| **(f)** | **Executive actions IMPLEMENTED by cabinet, with BLUNDER rolls** | The President's executive actions (§20.11) are **carried out by the relevant cabinet member, who can BLUNDER**: Pres Lee's Pro-States-Rights / Fugitive-Slave / NW-troop-surge actions → **SecWar + SecState + AG all blundered** (Monroe gained **"Easily Overwhelmed"**). The #22/#126 implementation-blunder layer in a cabinet context. | ch43 POST 3720; ch95:159 |
+
+> **System interaction (the cascade chain this exposes):** cabinet lingering rolls →
+> **EconStab/MilPrep/relation meters** → (EconStab cascade, #116/#160: 2 industries −1 nationwide
+> → EV reflow + meter-gating of other meters in crisis) → **election party-preference drag** ([§22.2](#222-faction-enthusiasm--party-preference-election-engine--the-score-economy)).
+> The Bank-of-the-US bill (§20.13) is the lever that **reverses** a Treasury-induced Great
+> Recession (EconStab Great-Recession → Recession). So the cabinet engine is the per-turn *input*
+> to the economy that bills/events then correct.
+
+*(designed, not built — build the cabinet lingering-roll engine: per-cabinet-member portfolio→meter
+roll (±, can backfire) each lingering phase; Efficient = auto-+2-if-moves; Pliable = advisor/
+Speaker/PPT decider override incl. SCOTUS nomination; cabinet-bill double-points coupling; ideology-
+gated confirmation by office; regional-representation meter rule; executive-actions-implemented-by-
+cabinet-with-blunders. Confirm scoping with the human — #179 bundles ≥6 sub-rules that may be ≥2
+systems.)*
+
+### 20.11 ★ The federalism presidency: veto/override, command-as-action-budget (#182), SCOTUS timing (`summer2021`, DESIGNED)
+
+> **The president's powers as PLAYED forward.** Couples to [§14](#14-executive--court-management-28x)
+> (executive actions, designed), [§12.3](#123-263-floor-votes--runphase_2_6_3_floor-phaserunnersts3498)
+> (floor votes, shipped), and [§22.7 / §11.6](#227-scotus-subsystem-253--282) (SCOTUS).
+
+**(1) Presidential VETO + congressional OVERRIDE (live).** The President **signs / vetoes
+legislation by PACKAGE** (bills are batched into numbered packages, [§12.5](#125-forum-design-layer-bill-packaging-designed-not-built)):
+
+- Pres **Lee vetoed Package 7** (Cotton Tax + US Mint); **Congress overrode in BOTH houses**
+  (House then Senate, **2/3 thresholds** each). Osgood later signs/vetoes by package the same way.
+- **★ Override scoring nuance (load-bearing, verbatim ch43:553):** on an **overridden** package,
+  *"overriding the veto means **only the Speaker and Senate Maj Leader get the gains/losses**. So
+  the veto at least saved most of the blue party, and also stopped red from getting points."* I.e. a
+  veto that is overridden **absorbs the package's point swing onto just the Speaker + SenMajLdr** —
+  so a doomed veto still **insulates the rest of the party** from the package's losses. (For the
+  failed veto here: WVPCPU −100 + party-pref −1 toward Red; Speaker Rezi +100 for "blocking the
+  veto.")
+- A bill/vote-related **Disharmonious** penalty is **roll-avoidable**: a Disharmonious rep who
+  *"rolls a 4 so avoids Disharmonious"* dodges the cross-vote penalty that turn (the Disharmonious
+  trait is a probabilistic, not deterministic, defection). Source: ch43 POST 451-558.
+
+**(2) ★ #182 (NEW) — Command = the President's per-turn EXECUTIVE-ACTION BUDGET.** A use of the
+`command` stat the build doesn't model. Verbatim (ch95:159): *"Osgood can do **up to 4 actions each
+turn because he has 4 command**."* So **a President's `command` value = his number of executive
+actions per Presidential-Action phase** (more command = more actions). This **generalizes the
+[§24.1 #61](#241-61-succession--eligibility--the-acting-president-state) succession rule** (a
+0-command *acting* president is inert / can take **no** actions) into a positive budget: 0 command
+= inert, N command = N actions/turn. Each action is then **implemented by the relevant cabinet
+member with a blunder roll** (§20.10(f)). *(NEW gap #182 — make a President's `command` drive his
+per-turn executive-action count; confirm whether the same budget applies to governors/other offices.)*
+
+**(3) SCOTUS replacement timing — at the PRESIDENTIAL-ACTION phase ON PURPOSE.** A replacement
+justice is nominated at the **Presidential-Action phase deliberately** — GM: *"to replicate
+real-world empty-seat periods; nominating isn't overnight"* (ch43 POST 3718) — refining
+[§22.7 #52](#227-scotus-subsystem-253--282) (SCOTUS timing). Confirm = **Senators only** (16 votes);
+a **low-judicial nominee → −200 pts** (ch43 POST 3742). **Defect observed:** a justice who died in
+Random Deaths had **no replacement ever prompted** until a player noticed — a phase-ordering gap
+(the nomination is *intended* for the Presidential-Action phase but is easy to skip; ch43 POST
+3685/3718; see Bugs below).
+
+### 20.12 ★ Succession concretized (#61) + the LIVE impeachment subsystem (`summer2021`, DESIGNED)
+
+> **Extends [§24.1 #61](#241-61-succession--eligibility--the-acting-president-state)** (succession /
+> the acting-president state) and **[§24.1.1](#2411--impeachment-subsystem--broken-as-is-voided-mid-run-dh-66--corroborates-dh-33-now-3-thread-ideo1928)**
+> (the impeachment-subsystem gap) with a CONCRETE federalism ruling and a live impeachment that
+> actually resolved.
+
+**(1) ★ #61 — the non-VP-successor "inherit 1 command" ruling (vcczar, designer-authoritative).**
+**VP Washington dies in office** under Pres Butler. The GM flagged the gap (ch73:194/208,
+verbatim): *"If Butler gets himself impeached/convicted or killed, the **President Pro Tempore will
+inherit** -- but he doesn't have any command points. Does he automatically get a command point if
+he becomes President? If not, can he run for re-election despite not being eligible? Should we grant
+a pre-emptive command point to anyone who becomes PPT?"* — **vcczar RULED (ch73:212, verbatim):
+*"He would inherit 1 command when taking office, if he hasn't command."*** So a **non-VP successor
+(the President Pro Tempore) inherits 1 command on taking office IF he has none** — making him a
+functional (not inert) president and re-election-eligible. This is the **concrete positive
+counterpart** to the [§24.1](#241-61-succession--eligibility--the-acting-president-state) "0-command
+acting president is inert" read (the `hd` Paris-Gibson case): the founding/federalism rule is to
+**grant the floor of 1 command** rather than leave the office inert. *(designer-authoritative; folded
+to §30.16.)*
+
+**(2) The LIVE impeachment subsystem (it actually resolved this run — contrast #DH-66's voided
+run).** Unlike `ideo1928` (where the GA *voided* the impeachment episode, [§24.1.1](#2411--impeachment-subsystem--broken-as-is-voided-mid-run-dh-66--corroborates-dh-33-now-3-thread-ideo1928)),
+`summer2021` ran impeachment to conclusion:
+
+- **Flow:** **House impeaches** (near-unanimous) → **Senate convicts** (supermajority). Applied to a
+  **Supreme Court Justice (Crafts)** and **threatened against Pres Butler** (ch72/73 POST 6551-6552).
+- **Phase placement:** impeachment **resolves in the legislative phase**, **before** sign/veto /
+  judicial / executive actions (§20.9 step 6).
+- **★ Why impeaching an incumbent LATE-TERM still matters** (ch73:672, the strategic payoff): it
+  produces **(a)** a party-preference swing, **(b)** makes the **PPT the INCUMBENT** with all
+  incumbency bonuses/powers heading into the next Presidential election, and **(c)** **blocks a 3rd
+  term**. So impeachment is an election lever, not just a removal mechanism.
+
+### 20.13 ★ Amendments, Bank-of-the-US trajectory & statehood as PLAYED forward (`summer2021`, DESIGNED)
+
+> **Extends [§21.3](#213-amendments-as-durable-separately-ratified-state)** (amendments as durable
+> ratified state), [§29.8](#298--new--the-constitutional-amendment-lifecycle-propose--committee--floor--governor-ratify--activeblocking-gap-119)
+> (the amendment lifecycle), [§20.4](#204-the-hamiltonian-financial-program-as-bills-fed-38-250)
+> (the Hamiltonian bill cluster), and [§21.5 #101](#215-bill-driven-statehood--auto-generated-officials)
+> (statehood-by-bill).
+
+**(1) Constitutional-amendment proposal → ratification (live).** Amendments are voted in **Senate
+(16) + House (16)** then **GOVERNORS ratify (9 of 13 states)** — corroborates [§24.4 #64](#244-64-amendment-ratification-by-34-of-state-governors--era-keyed-then-tunable)
+(the era-keyed governor-ratify threshold; the founding/federalism threshold is **9/13**, not 3/4).
+
+- **★ ALT-HISTORY Bill of Rights:** Amendments 1-10 were voted, but **the 1st, 8th, and 9th
+  Amendments FAILED ratification; the 3rd was killed in committee** — **only the 2/4/5/6/7/10
+  pass**. Effects flow as meter shifts: **2nd Amdt → DomStab up; jury-trial amdt → Honest-Govt up**
+  (ch41 POST 3670-3694). Confirms #159's "decision/roll-driven → ahistorical outcomes are normal."
+- **Alt federalism amendment/bill slate** (recurring at the floor): Equal Voting Rights for Women
+  Amendment (passed earlier), **English-as-Official-Language** (recurring; the bill passes Senate
+  Domestic 8-2, ch99), **Christianity as Official Religion**, Require Pres to Fill VP Vacancy, Set
+  SCOTUS to 7, One-term-limit-for-Presidents, **Ban Slavery north of 36-30** (a Missouri-Compromise
+  analog), **Abolish Slavery Amendment (fails 1-7)**, Indian Removal, Bureau of Indian Affairs, B&O
+  Railroad subsidy, Standing Navy of six frigates, US Mint, Cotton Tax (POST 6257, ch88, ch99).
+
+**(2) Crisis/war-gated legislation eligibility (corroborates #11).** "Allow Pres to deport
+immigrants" is **auto-shot-down unless at war**; "request funding from states" **requires a war**
+(ch20 POST 1656; ch99:383) — bill eligibility gated on game state, [§12.7](#127-forum-design-layer-crisis-bill-tag-designed-not-built).
+
+**(3) ★ Bank of the United States — full charter→repeal→repurpose trajectory** (matches
+`historical-context.md` §2; corroborates #177 institutions-created↔killed↔recreated-by-law):
+
+1. **CHARTERED** early under Pres **Arnold**, proposed by **Treasury Sec Edmund Randolph** (NOT
+   Hamilton — **Hamilton died in a DUEL** over a non-unanimous confirmation). The Bank grants
+   **+1 Revenue-Budget** and **ends the in-game Great Recession** (EconStab Great-Recession →
+   Recession) — the Bank is the lever that reverses the §20.10 cabinet-induced recession (POST 2578,
+   3047; ch36:1227).
+2. **REPEAL attempted** ("Repeal Bank of the US — CANNOT BE REPLACED") — **fails in committee 2/8**
+   (ch88:530).
+3. **REPURPOSED (~1808-10):** "Allow the Bank of the US to collect revenue and interest for an
+   **internal-improvements fund**" — **passes committee 8-1** (ch99:357). A repurpose-by-bill, not a
+   re-charter.
+
+**(4) Statehood by bill (federalism).** Vermont (14th), Tennessee, Indiana, Maine, **Illinois**,
+Alabama territory — admitted by bill ([§21.5 #43](#215-bill-driven-statehood--auto-generated-officials)).
+**★ Partisan statehood-gating dynamic:** the **Red party blocked statehood for a decade** and the
+eventual states **RESENT it** — a partisan statehood-gate the new states remember (POST 3744;
+ch73:225). Plus **"Create the District of Columbia (Arnold D.C.) (CANNOT BE REMOVED)"** — the
+capital named for the alt-history hero-Arnold (ch88:25; a permanent, non-repealable flag, #175).
+
+**(5) Treaty → territory (corroborates #178).** The **war-version Treaty of Paris is AUTO-PROPOSED
+once the RevWar ends**; passing it **organizes Mississippi + NW(Ohio) Territory** — territory by
+**TREATY**, not bill/war. **Ohio = "Indian country, needs war OR diplomacy first."** Treaty rules
+**UNDOCUMENTED** (Ted: "no idea what happens if it fails/isn't ratified"). The **NW Indian War /
+Huron Confederacy** fires 1786-88: win 5 land battles in 5 attempts (10 yrs) **or permanently CEDE
+OHIO** as sovereign Indian land — the same bounded-retry budget as [§17.6.1 #178](#1761--178-new-principle1772-batch-25--treaty-grants-territory--the-bounded-3-strikes-retry-budget-designed)
+/ DH-61 (POST 1665-1669, 2189, 719).
+
+### 20.14 ★ #181 platform-promise convention + #180 monument/legacy-trait layer (`summer2021`, NEW, DESIGNED)
+
+> **Two NEW gaps surfaced consistently across the run** — both legacy/binding-commitment layers not
+> in any shipped system. Couple to [§15.3](#153-convention-machinery-292--full-forum-design-designed-not-built)
+> (convention machinery) and the [§3](#3-politicians--stats) trait system.
+
+**(1) ★ #181 — Presidential PLATFORM-PROMISE system at the nominating convention.** The full
+nominating machinery ran: **primary → convention → multiple ballots → nominee**. On winning, the
+**nominee must build a PLATFORM** = pick:
+
+| Plank | Slot |
+|---|---|
+| 1 **economic** legislation he promises | binding |
+| 1 **domestic** legislation he promises | binding |
+| 1 **judicial** legislation he promises | binding |
+| 1 **foreign/military** legislation he promises | binding |
+| 1 **presidential-action** promise | binding |
+| **+ a promise to resolve any ongoing CRISIS** | binding |
+
+(ch95 POST 8582.) **Companion — deal-making presidential promises:** the nominee promises **cabinet
+/ VP posts to allies or rivals** to secure endorsements (e.g. promise **John Marshall SecState/VP**,
+ch95:172). Brokered conventions are real ("**Backstab convention of 1804**" — Madison got 7th on the
+1st ballot, ch95:40). The platform is a **binding commitment object** presumably feeding scoring /
+enthusiasm if kept/broken. *(NEW gap #181 — model a presidential platform object (5 promised bills/
+action + crisis-resolution pledge) generated at the convention + deal-making office-promises for
+endorsements; tie kept/broken promises to enthusiasm/points. Part of the #19/#20 convention cluster.)*
+
+**(2) ★ #180 — the monument / legacy-trait achievement layer.** The founding era awards **named
+historical-legacy traits** to the politician who performs each in-game FIRST — a who-did-what-first
+achievement layer (`traits[]` is freeform in `src/` but there is no first-achievement awarding logic):
+
+| Monument trait | Awarded to (the first to…) |
+|---|---|
+| **Atlas of the Revolution** | nominate the first Senior General |
+| **Author of the Declaration** | draft the Declaration (also grants **Celebrity**) |
+| **Famous Signature** | be CC President when the Declaration was signed |
+| **Architect of the French Alliance** | be Ambassador when the French alliance was won |
+| **Traitor of the Revolution** | (the betrayer) |
+| **"Have Not Yet Begun to Fight"** | win the first naval victory |
+| **Father of the Country** | score the final RevWar victory |
+| **Authors of the Federalist Papers** | author the Federalist Papers (**rule INCOMPLETE — the event had no rule to identify the authors**, a hole the GM flagged) |
+
+(ch25 POST 2194.) *(NEW gap #180 — add a legacy/achievement-trait system that awards named monument
+traits to whoever performs each historical first; the Federalist-Papers-author awarding rule is a
+documented hole. Lower priority than #177-#179 but consistent.)*
+
+### 20.15 ★ CPU mechanical weakness at moving meters + the GM-workload signal (`summer2021`, corroborates #114/E9/K5, DH-36)
+
+> **A multiplayer-GM-run contrast to the solo runs** — bears on #114 (solo-app is the target mode)
+> and CPU-AI tuning. Couples to [§17.7 #114](#177-forum-design-layer--the-multiplayer-1772-confirmation-designed-not-built)
+> and [§25.15](#2515-critical-missing-cpu-logic-architectural-gaps).
+
+- **CPU runs only 1 faction per party at START**, then **expands to fill EVERY vacated human
+  faction** — by federalism the GM is **manually simming up to 5 CPU factions per party**,
+  repeatedly described as painful ("Federalist/Anti-Fed papers freaking complicated when controlling
+  5 factions," POST 2146). **The per-faction CPU fallback the app must own is exactly this.**
+- **★ CPU-governor meta-math (Ted, POST 2671):** with **all-CPU governors, ~50 governors each doing
+  ~3 actions at ~20% success only move a crisis meter ~1-2 spaces** — "much less with fewer states or
+  multiple simultaneous crises." **Human-controlled governors change the math.** → **the CPU is
+  mechanically WEAK at fixing meters; a solo human carries the load.** This is the quantitative root
+  of the #114 "solo human is the design target" finding + a CPU-AI tuning constraint: a crisis the
+  CPU can't dent must be soluble by a single engaged human.
+- **3-GM relay** (vcczar → Ted → Rezi) over 14 months with persistent burnout-adjacent delays —
+  reconfirms **DH-36** (GM-workload is the real constraint) WITHOUT a clean burnout-quit (it just
+  trails off). GM workload concentrated on: simming 5 CPU factions/party, per-package multi-chamber
+  votes with sway, the Constitutional-Convention per-article machine, the cabinet lingering rolls
+  (§20.10), and the federalism decision/diplomacy spine.
+- **Live rule-authoring was constant** — the 3-inconclusive-votes→CPU-historical rule (#159), the
+  non-VP-succession command rule (§20.12), the Efficient-cabinet-+2 rule (§20.10), the faction-
+  leader-not-on-career-track rule — all **written/patched MID-RUN**: federalism rules were **NOT
+  finalized** when the app would need them.
+
+#### 20.15.1 ★ DH-71 (NEW, `summer2021`) — faction-handover DUPLICATE-politician data-integrity defect + ledger artifacts
+
+> **NEW bug DH-71 — the build's owned-state model must enforce single-ownership on transfer.**
+
+- **DH-71:** a mid-thread faction "**steal**" moved **David Brearley** to Cal's faction **WITHOUT
+  deleting the original** from SilentCPU's faction → **two identical "David Brearley" records** (same
+  name/state/age) in two factions; a later governor-nomination **pulled the WRONG one** (career-track
+  flag mismatch → "shows he's on the career track but not on my sheet"). A handover/transfer
+  data-integrity defect: **a transfer must MOVE, not COPY** — politician identity must be unique
+  (ch43 POST 3766). For the build, the **faction-handover support (#1)** must enforce single-ownership.
+- **Companion ledger artifacts** (the manual-spreadsheet defects the build's owned state removes,
+  DH-36): an **ideology-tally MISCOUNT** (RedCPU moderate-ideology counts wrong — "said 20, were 17";
+  ch2 POST 129/132 → the ideology aggregation must be audited) and a **crisis flag stuck "on"** after
+  the crisis ended (manual toggle required; ch4 POST 286-287 → the crisis-state computed-flag defect).
+
 ---
 
 ## 21. Cross-era mechanics revealed by batch 2 (designed, not built)
@@ -12056,6 +12374,61 @@ modern cluster):**
 | **#92** founding subsystem-gating | no CC until 1774; no leaders/conversions/cabinet/Lingering/presidential-Senate-House elections in the Era of Independence — phases SKIPPED, all turn ON at 1788. | ch1 30, ch2 38-40, ch6 388 |
 | **DH-61** "3 chances" rule | the NW-Indian-War "repeat 3× before gone for good" rule generalized into the #178 per-event retry budget (treaty + war + event territory gates). | ch21 207 |
 | **#31** cabinet-region-snub | Jay-Treaty event landed Marshall near-last partly from "lack of southerners in the cabinet" + an SC slave rebellion; cabinet meter impact net ±1-capped (corroborates the ±1/±3 swing cap, #80). | ch25 1802, ch26 1809 |
+
+### 30.16 Rulings folded from `summer2021` (the ~10-human MP campaign that FIRST played federalism FORWARD — designer-authoritative, 3-GM relay)
+
+> **★ DESIGNER-AUTHORITATIVE.** `summer2021` (`fe15db25`, "Summer 2021 AMPU Playtest," batch 26) is the
+> **largest source in the KB (9012 posts / 99 chunks)** and the **FIRST source to play FEDERALISM gameplay
+> FORWARD (in-game 1789→~1810)**. GMed by a **3-GM relay — @vcczar (V, lead designer, early founding +
+> rules) → @MrPotatoTed (Ted, bulk founding + federalism, runs 1 CPU faction/party) → @Rezi (final, ~1808)**
+> — so rulings here are **V/Ted tier 1-2** (designer authority class). Because the federalism president/
+> cabinet/diplomacy/decision spine is hard-walled out of the shipped era graph (`eraGraph.ts:154`), the
+> entire federalism layer was **hand-adjudicated** → this thread is the **live spec for federalism mechanics**.
+> Load-bearing NEW value: **4 new gaps (#179 cabinet lingering-roll engine, #180 monument/legacy traits,
+> #181 platform-promise convention, #182 command=action-budget) + 1 new bug (DH-71 faction-handover
+> duplicate)**, the concrete **#61 inherit-1-command** ruling, and the **first forward federalism turn
+> structure** ([§20.9-§20.15](#209--federalism-played-forward-178910--the-live-federalism-turn-structure-summer2021-batch-26--designed-hand-adjudicated)).
+> Cite `summer2021#POST n` (+ `chN`). Polarity = founding alignment (BLUE = Patriots/Anti-Fed; RED = Federalist).
+
+**★ V/Ted (designer) live-rulings — tier 1-2:**
+
+| Topic | Ruling | Folded into | `summer2021` POSTs |
+|---|---|---|---|
+| **★ Efficient cabinet = auto-+2-if-it-moves (#179)** | vcczar clarified the Efficient rule LIVE: the roll only decides *whether* a meter moves; if it does, an Efficient cabinet member moves it **+2 automatically** (verbatim: "I actually intended it to be an automatic 'if it moves one square then it moves two squares'") | [§20.10(a)](#2010--179-new-summer2021--the-cabinet-lingering-roll-meter-engine-designed-hand-rolled) | ch99 POST 8949 (ch99:118/123) |
+| **★ Non-VP successor inherits 1 command (#61)** | vcczar RULED: a President Pro Tempore (non-VP successor) **"would inherit 1 command when taking office, if he hasn't command"** — making him a functional, re-election-eligible president rather than inert | [§20.12(1)](#2012--succession-concretized-61--the-live-impeachment-subsystem-summer2021-designed) + [§24.1 #61](#241-61-succession--eligibility--the-acting-president-state) | ch73 POST 212 (Q at 194/208) |
+| **★ Command = per-turn action budget (#182)** | "Osgood can do **up to 4 actions each turn because he has 4 command**" — a President's command value = his executive-action count per turn | [§20.11(2) #182](#2011--the-federalism-presidency-vetooverride-command-as-action-budget-182-scotus-timing-summer2021-designed) | ch95 POST 159 |
+| **★ Veto-override scoring isolates Speaker+SenMajLdr** | on an overridden package, **only the Speaker + Senate Maj Leader absorb the gains/losses** — a doomed veto still insulates the rest of the party | [§20.11(1)](#2011--the-federalism-presidency-vetooverride-command-as-action-budget-182-scotus-timing-summer2021-designed) | ch43 POST 553-558 |
+| **★ "After 3 inconclusive votes, CPU votes HISTORICAL" (#159)** | vcczar added LIVE at the Constitutional Convention: after 3 inconclusive per-article votes, CPUs vote for the historical option to keep the game moving | [§30.15 #159](#3015-rulings-folded-from-principle1772-the-7th-1772-thread--designer-gmed-1-human-vs-9-cpu) / #159 | ch26 POST 2232 |
+| **Cabinet-bill double-points coupling (#179)** | a cabinet member proposes a bill in his expertise → carried to law = double pts for both; not picked up = SecXX −50 pts | [§20.10(c)](#2010--179-new-summer2021--the-cabinet-lingering-roll-meter-engine-designed-hand-rolled) | ch36 POST 3047 |
+| **Cabinet ideology gate at confirmation (#179)** | RW-Populist SecWar rejected — cabinet must be Mod/Cons/Lib (ideology constraint by office, extends §9.3.8) | [§20.10(d)](#2010--179-new-summer2021--the-cabinet-lingering-roll-meter-engine-designed-hand-rolled) | ch30 POST 912 |
+| **Pliable Pres → advisor/Speaker/PPT decider override (#179)** | Speaker+PPT recommend a cabinet member before a Pliable Pres nominates; a Pliable Pres's Key Advisor makes the SCOTUS nomination | [§20.10(b)](#2010--179-new-summer2021--the-cabinet-lingering-roll-meter-engine-designed-hand-rolled) | ch30 POST 2536; ch43 POST 3733 |
+| **SCOTUS replacement at the Presidential-Action phase ON PURPOSE (#52)** | "to replicate real-world empty-seat periods; nominating isn't overnight"; confirm = Senators only (16); low-judicial nominee −200 pts | [§20.11(3)](#2011--the-federalism-presidency-vetooverride-command-as-action-budget-182-scotus-timing-summer2021-designed) / #52 | ch43 POST 3718/3742 |
+| **Repealed Bank → repurposed by bill** | the US Bank, charter-then-repeal-attempt, is **repurposed** ("collect revenue/interest for an internal-improvements fund") — confirms institutions mutated by law | [§20.13(3)](#2013--amendments-bank-of-the-us-trajectory--statehood-as-played-forward-summer2021-designed) | ch99 POST 357; ch88 POST 530 |
+| **CPU-governor meta-math (CPU weak at meters)** | ~50 all-CPU governors × ~3 actions × ~20% only move a crisis meter ~1-2 spaces — the CPU is mechanically weak at fixing meters; a solo human carries the load | [§20.15](#2015--cpu-mechanical-weakness-at-moving-meters--the-gm-workload-signal-summer2021-corroborates-114e9k5-dh-36) + [§17.7 #114](#177-forum-design-layer--the-multiplayer-1772-confirmation-designed-not-built) | ch32 POST 2671 |
+
+**NEW gaps & bug logged this batch:** **#179** ([§20.10](#2010--179-new-summer2021--the-cabinet-lingering-roll-meter-engine-designed-hand-rolled)),
+**#180** + **#181** ([§20.14](#2014--181-platform-promise-convention--180-monumentlegacy-trait-layer-summer2021-new-designed)),
+**#182** ([§20.11(2)](#2011--the-federalism-presidency-vetooverride-command-as-action-budget-182-scotus-timing-summer2021-designed)),
+**DH-71** ([§20.15.1](#20151--dh-71-new-summer2021--faction-handover-duplicate-politician-data-integrity-defect--ledger-artifacts)).
+
+**Corroborations field-validated from the FIRST-federalism-forward angle (no new rule — strengthen existing entries):**
+
+| Existing entry | `summer2021` corroboration | POSTs |
+|---|---|---|
+| **★ #177** federalism foreign-affairs spine | **2nd source + first MP run to PLAY it forward**: French Revolution neutrality decision-event under Arnold; native diplomacy phase (SecState directs Ambassadors UK/France/Spain, admin-modified rolls, per-nation relation meters ±1 incl. half-steps); Wilkinson Affair, Cotton-Gin industry-shift, **Louisiana Purchase as a random France-relations-gated event** (didn't fire); "Emulate the French Revolution" as a real Misc generic-civil-war option | ch35 3001, ch32 2672-2675, ch76 6840-6842, ch92 629 |
+| **★ #178** treaty→territory + retry budget | both halves: war-Treaty-of-Paris auto-proposed → organizes Mississippi+Ohio Territory (Ohio = Indian country, treaty rules undocumented); NW Indian War = win 5 land battles in 5 attempts or permanently cede Ohio | ch20 1665-1669, ch25 2189/719 |
+| **★ #159** Constitutional Convention | **5th trace + cleanest CPU-keeps-historical rule**: per-article propose→vote (1 state=1 vote) over 7 articles; required = Art 1/2/3 + Slave-Compromise + Amendment-process; the 3-inconclusive-votes→historical rule added live; near-historical outcome | ch26 2218-2232 |
+| **★ #114/E9/K5** solo-app + CPU | CPU runs 1 faction/party then fills every vacated human faction → GM manually sims up to 5 CPU factions/party by federalism; CPU weak at meters; GM-workload painful | ch26 2146, ch32 2671 |
+| **★ #61** succession | VP Washington dies in office under Pres Butler → the concrete inherit-1-command ruling (above) | ch73 192-212/672 |
+| **★ #116/#160** EconStab + Great-Recession + cascade | EconStab is an ACTIVE founding meter (4 at boot); a bad SecTreasury lingering roll → Great Recession; the Bank-of-US bill reverses it (Great-Recession→Recession) | ch1 7, ch36 3011/1227 |
+| **#176** founding war-bills must move meters | GM initially deferred ALL law effects until war's end → Ted flagged founding war-bills pointless → vcczar reversed live (immediate effects + lingering returns) | ch3 167/255/285 |
+| **#52** SCOTUS timing/legislated count | replacement nominated at Presidential-Action phase on purpose; Set-SCOTUS-to-7 amendment in the slate; confirm = Senators only | ch43 3718/3742, ch99 |
+| **#22/#126** implementation-blunder by cabinet | Lee's 3 exec actions → SecWar+SecState+AG blunder (Monroe gains Easily-Overwhelmed) | ch43 3720 |
+| **#11** crisis/war-gated bill eligibility | "deport immigrants" shot down unless at war; "request funding from states" requires a war | ch20 1656, ch99 383 |
+| **#64** amendment ratification by Governors | Bill of Rights: Senate(16)+House(16) then Governors ratify 9/13; alt-history failures (1st/8th/9th fail, 3rd killed in committee) | ch41 3670-3694 |
+| **#43/#101** statehood-by-bill / offices-by-law | Vermont/Tennessee/Indiana/Maine/Illinois/Alabama by bill; partisan statehood-gate (Red blocked a decade → states resent it); Arnold D.C. as a permanent flag | ch72 3744, ch73 225, ch88 25 |
+| **#18/#51** enthusiasm engine | authored live alongside the other federalism rules; party-pref swings on overrides/impeachments | ch43 519, ch73 672 |
+| **DH-36** GM-workload | 3-GM relay over 14 months, persistent burnout-adjacent delays, trails off (no clean burnout-quit) | thread-wide |
 
 ### 30.4 Authority hierarchy reminder
 

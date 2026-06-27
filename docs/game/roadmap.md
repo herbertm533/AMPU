@@ -1,5 +1,93 @@
 # AMPU — Roadmap
 
+> **★★★★★ Batch-26 version — THE CORPUS'S LARGEST SOURCE (`fe15db25` "Summer 2021 AMPU
+> Playtest") + the FIRST run to PLAY FEDERALISM FORWARD (1789→~1810, the whole president/cabinet/
+> diplomacy TURN LOOP run end-to-end, NOT just designed-and-walled); a 3-GM relay over ~14 months;
+> FOUR net-new ENGINE gaps [#179, #182, #181, #180] + ONE net-new data-integrity bug [DH-71]; NO new
+> keystone, NO re-sequence, NO keystone moves, top-of-queue UNCHANGED. ★ The marquee is the
+> HIGHEST-CONFIDENCE federalism-is-the-next-era signal in the corpus: everything in the federalism
+> spine had to be HAND-ROLLED because the build deliberately refuses to run it — so #177/#178 escalate
+> to the KB's richest, most-forward-played next-era target, and the four new gaps are all federalism
+> turn-loop subsystems.** `summer2021` (`fe15db25`, "Summer 2021 AMPU Playtest"; GA-run [3-GM relay
+> over ~14 months — trails off, NOT a clean burnout quit] but the marquee rulings are designer-blessed
+> in-thread [@vcczar/@MrPotatoTed adjudicate]; 1772→~1810, the first source to run the federalism turn
+> loop forward). **The value:**
+> **(1) ★ #179 CABINET LINGERING-ROLL METER ENGINE → A REDESIGN of the shipped deterministic drift +
+> ≥5 sub-systems. FOLDS INTO E6 (Lingering) + E16 (cabinet) + the §10.4.1 blunder layer. Size L; ★
+> SPLIT IT.** The federalism counterpart to the shipped §11.1 lingering: each lingering phase EVERY
+> cabinet member ROLLS to move their portfolio meter ±1, and it can BACKFIRE (Treasury rolled badly →
+> EconStab → Great Recession; War+Navy both succeeded → MilPrep maxed). **★ Shipped-state CONFIRMED
+> unbuilt-as-designed:** `runPhase_2_5_1_Lingering` (`phaseRunners.ts:3260`) is a DETERMINISTIC
+> skill-keyed DRIFT (`drift(skill)` `:3266-3273`, fixed ±delta, NO roll/backfire/trait hook); the
+> cabinet pick `runPhase_2_3_1_Cabinet` (`:2158-2224`) is a flat score-sort with NO ideology gate, NO
+> Speaker/PPT/advisor decider override, NO bill-coupling. So #179 is a REDESIGN of the deterministic
+> drift into a roll engine PLUS ≥6 sub-rules spanning ≥2 systems: (a) per-portfolio ±roll w/ backfire +
+> Efficient=auto-+2-if-it-moves; (b) Pliable-Pres → Speaker/PPT/Key-Advisor decider override incl.
+> SCOTUS nom; (c) cabinet-bill double-points coupling; (d) ideology-gated confirmation by office; (e)
+> regional-representation meter penalty; (f) executive-actions-implemented-by-cabinet-with-BLUNDER
+> rolls. **★ SPLIT (tech-lead): (i)+(f) meter/blunder engine · (b)+(d) appointment/confirmation · (c)
+> bill-coupling · (e) election-feedback** — different dependencies. **Gated on #177 (federalism era
+> existing) + the diplomacy/EconStab meters it moves; couples to #67 meter ladders + #116/#160 EconStab
+> cascade.** debt #59; game-mechanics §20.10; technical-guide §9 batch-26 lead (b) + §9.6.
+> **(2) ★ #182 command = the President's PER-TURN EXECUTIVE-ACTION BUDGET → FOLDS INTO the §14
+> executive-action build (K2 ActionRegistry) + #179. Size S once the exec system is real.** Verbatim:
+> "Osgood can do up to 4 actions each turn because he has 4 command" — a President's `command` = his
+> executive-action count/turn (0 = inert, N = N actions), each implemented by the relevant cabinet
+> member with a blunder roll (#179(f)). **★ Shipped-state CONFIRMED unbuilt:** `command` today is ONLY
+> a PV input (`pv.ts:74`), kingmaker reward, grant, decay stat, and candidacy gate — NEVER an
+> action-count budget; `runPhase_2_8_1_Executive` (`:3632`) takes EXACTLY ONE flat `chance(0.5)`
+> action, command-independent. The fix is small in shape (loop the exec phase `command`-many times) but
+> **GATED on the §14 executive-action system becoming a real K2 ActionRegistry chooser** (today a
+> placeholder). **Open Q (designer): does the same budget apply to governors/other offices?** debt #62;
+> game-mechanics §20.11(2).
+> **(3) ★ #181 PRESIDENTIAL PLATFORM-PROMISE CONVENTION SYSTEM → PART OF the #19/#20 convention cluster;
+> DO NOT build standalone. Size M.** On winning the nomination, the nominee builds a BINDING PLATFORM (1
+> econ + 1 domestic + 1 judicial + 1 foreign/military bill promise + 1 presidential-action promise + a
+> promise to resolve any ongoing CRISIS) PLUS deal-making office-promises (cabinet/VP posts to allies
+> for endorsements), wired kept/broken → §22.2 enthusiasm/points. **★ Shipped-state CONFIRMED unbuilt:**
+> no platform object exists (`grep platform|promiseBill|conventionPlatform in src/` = ZERO; convention
+> machinery itself is designed-not-built, §15.3 / #19/#20). **Rides the #19/#20 convention epic; gated
+> on conventions existing.** debt #61; game-mechanics §20.14(1).
+> **(4) ★ #180 MONUMENT / LEGACY-TRAIT ACHIEVEMENT LAYER → RIDES the federalism/founding era-content
+> build. Size S–M, LOWER PRIORITY than #177-#179.** The founding era awards named historical-legacy
+> traits to whoever performs each in-game FIRST ("Atlas of the Revolution" = 1st Senior General;
+> "Author of the Declaration" + Celebrity; "Father of the Country" = final RevWar victory; etc.). **★
+> Shipped-state CONFIRMED unbuilt:** `traits[]` is freeform, granted only by `addTrait`/era-event/draft;
+> NO first-achievement-detection / award-once-on-event layer (`grep firstAchievement|legacyTrait|
+> monument in src/` = ZERO). The Fed-Papers authoring rule was a DOCUMENTED HOLE (no rule to identify
+> the authors) — needs authoring first. **Rides the era-content build; gated on #177.** debt #60;
+> game-mechanics §20.14(2).
+> **(5) ★ DH-71 FACTION-HANDOVER DUPLICATE-POLITICIAN → a SINGLE-OWNERSHIP CONSTRAINT on the (unbuilt)
+> #1 faction-handover, NOT a shipped regression. Size XS.** A mid-thread faction "steal" moved David
+> Brearley to a new faction WITHOUT deleting the original → two identical records → a later
+> governor-nomination pulled the WRONG one. A transfer must MOVE, not COPY. **★ Shipped-state CONFIRMED
+> — the faction-handover feature is itself UNBUILT:** `grep handover|transfer|steal|reassign in src/` =
+> ZERO transfer code path; `partyId`/`factionId` are read-only filters, never re-assigned. So DH-71 is a
+> FORWARD-LOOKING CONSTRAINT: the transfer function (#1) must mutate the SINGLE politician's `factionId`
+> (a MOVE), never clone — and the owned-state model removes the manual-ledger drift this run exposed.
+> **Folds into #1 faction-handover.** debt #63; game-mechanics §20.15.1.
+> **(6) ★★ #177/#178/#114 ESCALATED IN PLACE (justification, NOT new scope, NOT a re-sequence):** **#177
+> is now DESIGNED-AND-PLAYED-FORWARD, not just designed-and-walled** — `summer2021` is the FIRST source
+> to run the whole federalism turn loop forward (cabinet appointment → era/decision events →
+> cabinet-driven lingering → diplomacy → legislation+veto+override → presidential action, §20.9),
+> proving the walled content is the *actual gameplay* of the next era; the TWO `eraGraph.ts` walls
+> (`:153-155` chartIndex≥49 + `:150-152` pre-1789 president/cabinet decider ban → gate on `year >= 1789`)
+> + per-power diplomacy-relation meters are CONFIRMED unchanged; **the highest-confidence "federalism is
+> the next-era build" signal in the corpus.** **#178** now has LIVE FORWARD-PLAY evidence — the Treaty
+> of Paris is AUTO-PROPOSED once the RevWar ends and passing it organizes Mississippi + NW(Ohio)
+> Territory (territory by TREATY); the NW Indian War = win 5 land battles in 5 attempts OR permanently
+> CEDE OHIO (the same bounded-retry budget as #178/DH-61, §20.13(5)). **#114/E9/K5/DH-36 re-confirmed
+> from the MULTIPLAYER end:** the CPU is mechanically WEAK at moving meters (Ted's meta-math, POST 2671:
+> ~50 all-CPU governors × ~3 actions × ~20% only move a crisis meter ~1-2 spaces), so a crisis the CPU
+> can't dent must be soluble by a single engaged human → the quantitative root of "solo human is the
+> design target"; the 3-GM relay over 14 months re-confirms DH-36 (GM-workload is the constraint)
+> WITHOUT a clean burnout quit (it trails off). Raise confidence; do NOT move them.
+> **Decision-gated / parking-lot RECOUNT: 0** (the #179-split, #181-rides-convention, #178 ≤3-fires
+> canonicity, #182-applies-to-governors are gated WITHIN their own work, not new top-level decisions).
+> **NO new keystone, NO re-sequence; top of queue UNCHANGED (QW0 → K0/K2 → K3/K4 + scenarioBoot → E1) —
+> but the federalism era-content cluster (#177/#178 + the four new #179/#180/#181/#182) is now the KB's
+> richest, most-forward-played next-era build target.**
+>
 > **★★★★★ Batch-25 version — ONE DESIGNER-GMed SINGLE-PLAYER FOUNDING→FEDERALISM RUN
 > (`principle1772`, the 7th captured 1772 thread + the cleanest, most designer-authoritative
 > 1-human-vs-9-CPU run in the KB), CORROBORATION-HEAVY, TWO net-new FEDERALISM-ERA gaps [#177,
@@ -1563,6 +1651,54 @@ Reverse-chronological. The expertise/abilities/traits/cabinet/lobby epic (PR1–
 is complete; the knowledge-base infra and eight ingestion batches are knowledge
 milestones (no code, but they are what every item below is traced to).
 
+- **Batch-26 ingestion (knowledge milestone).** Absorbed **ONE playtest**: **`summer2021`**
+  (`fe15db25`, "Summer 2021 AMPU Playtest", **THE CORPUS'S LARGEST SOURCE** and the **FIRST run to
+  PLAY FEDERALISM FORWARD** [1772→~1810, the whole president/cabinet/diplomacy TURN LOOP run end-to-end,
+  NOT just designed-and-walled]; a **3-GM relay over ~14 months** — GA-run, trails off NOT a clean
+  burnout quit, but the marquee rulings are designer-blessed in-thread [@vcczar/@MrPotatoTed
+  adjudicate]). **CORROBORATION-HEAVY** + **FOUR net-new ENGINE gaps [#179, #182, #181, #180]** + **ONE
+  net-new data-integrity bug [DH-71]** + the **highest-confidence federalism-is-next-era signal in the
+  corpus.** **★ #179 cabinet LINGERING-ROLL meter engine** → **REDESIGN** of the shipped deterministic
+  drift (`runPhase_2_5_1_Lingering` `phaseRunners.ts:3260` = `drift(skill)`-keyed, NO roll/backfire)
+  into a ROLL engine + ≥6 sub-rules across ≥2 systems (per-portfolio ±roll w/ backfire + Efficient
+  auto-+2; Pliable-Pres decider override; cabinet-bill double-points; ideology-gated confirmation;
+  regional-rep penalty; exec-action blunder rolls); folds into **E6 (Lingering) + E16 (cabinet) +
+  §10.4.1 blunder layer**, L, **★ SPLIT into (i)+(f) meter/blunder engine · (b)+(d) appointment/
+  confirmation · (c) bill-coupling · (e) election-feedback** (per tech-lead); **gated on #177 + the
+  diplomacy/EconStab meters it moves; couples to #67 + #116/#160**. CONFIRMED unbuilt-as-designed (the
+  shipped drift has no roll/decider-override/bill-coupling). debt #59; game-mechanics §20.10. **★ #182
+  command = the President's PER-TURN EXECUTIVE-ACTION BUDGET** ("Osgood can do up to 4 actions… he has 4
+  command") → folds into **the §14 executive-action build (K2 ActionRegistry) + #179**, S once the exec
+  system is real; **gated on `runPhase_2_8_1_Executive` (`:3632`, today ONE flat `chance(0.5)` action)
+  becoming a real K2 ActionRegistry chooser**. CONFIRMED unbuilt (`command` is only PV/reward/grant/
+  decay/candidacy, NEVER an action-count). Open Q (designer): applies to governors too? debt #62;
+  game-mechanics §20.11(2). **★ #181 presidential PLATFORM-PROMISE convention system** (binding platform
+  = 1 econ + 1 domestic + 1 judicial + 1 foreign bill + 1 action promise + a crisis-resolution promise,
+  PLUS deal-making office-promises, kept/broken → §22.2 enthusiasm) → **PART OF the #19/#20 convention
+  cluster — DO NOT build standalone**, M; rides the convention epic; gated on conventions existing.
+  CONFIRMED unbuilt (`grep platform|conventionPlatform in src/` = ZERO). debt #61; game-mechanics
+  §20.14(1). **★ #180 monument / legacy-trait achievement layer** (named historical-legacy traits to
+  whoever performs each in-game FIRST — "Atlas of the Revolution", "Author of the Declaration",
+  "Father of the Country") → **rides the federalism/founding era-content build**, S–M, LOWER PRIORITY
+  than #177-#179; gated on #177; the Fed-Papers authoring rule is a documented hole, needs authoring
+  first. CONFIRMED unbuilt (NO first-achievement-detection layer; `grep firstAchievement|legacyTrait|
+  monument in src/` = ZERO). debt #60; game-mechanics §20.14(2). **★ DH-71 faction-handover
+  DUPLICATE-politician** → a **SINGLE-OWNERSHIP CONSTRAINT on the unbuilt #1 faction-handover, NOT a
+  shipped regression**, XS: a "steal" cloned David Brearley into two factions → a later gov-nomination
+  pulled the WRONG one; the (new) transfer fn must MOVE not COPY (mutate the SINGLE `factionId`).
+  CONFIRMED — the handover feature is itself unbuilt (`grep handover|transfer|steal|reassign in src/` =
+  ZERO). Folds into #1. debt #63; game-mechanics §20.15.1. **★★ #177/#178/#114 ESCALATED IN PLACE
+  (justification, NOT new scope, NOT a re-sequence):** #177 is now DESIGNED-AND-PLAYED-FORWARD (first
+  source to run the federalism turn loop forward, §20.9) → highest-confidence next-era signal, the TWO
+  `eraGraph.ts` walls confirmed unchanged; #178 now has LIVE forward-play evidence (Treaty of Paris
+  auto-proposed at RevWar's end organizes Mississippi + NW/Ohio Territory; NW Indian War = win 5/5 land
+  battles OR permanently cede Ohio, §20.13(5)); #114/E9/K5/DH-36 re-confirmed from the MULTIPLAYER end
+  (Ted's meta-math POST 2671: ~50 CPU govs × ~3 actions × ~20% only move a crisis meter ~1-2 spaces →
+  solo human is the design target; the 3-GM relay re-confirms DH-36 without a clean burnout quit).
+  **No new keystone, no re-sequence, batch 26 nets 0; top-of-queue UNCHANGED — but the federalism
+  era-content cluster (#177/#178 + #179/#180/#181/#182) is the KB's richest forward-played next-era
+  target.**
+
 - **Batch-25 ingestion (knowledge milestone).** Absorbed **ONE playtest**: **`principle1772`**
   (`049ce855`, a **1825-post DESIGNER-GMed SINGLE-PLAYER founding→federalism run** "Always stand on
   principle… even if you stand alone. A Single-Player 1772 Adventure"; **★ @MrPotatoTed [game
@@ -2883,6 +3019,113 @@ collusion → unicameral "Super House"; rookie: Senate-appointed-by-Governors + 
 gated WITHIN that work; the rest is corroboration/justification). **No re-sequence; top-of-queue
 UNCHANGED (QW0 → K0/K2 → K3/K4 + scenarioBoot → E1) — but the onboarding/solo-app/CPU-AI cluster
 (E9/K5 + DH-69) now carries the strongest justification in the corpus.**
+**★★ Batch-26 fold-ins (`summer2021` — THE CORPUS'S LARGEST SOURCE + the FIRST run to PLAY FEDERALISM
+FORWARD [1772→~1810, the whole president/cabinet/diplomacy turn loop end-to-end], a 3-GM relay over ~14
+months; FOUR net-new ENGINE gaps [#179, #182, #181, #180] + ONE bug [DH-71]; #177/#178/#114 ESCALATED
+IN PLACE; NO new keystone, NO re-order, NO keystone moves):**
+**★ #179 CABINET LINGERING-ROLL METER ENGINE → A REDESIGN of the shipped deterministic drift + ≥5
+sub-systems; FOLDS INTO E6 (Lingering) + E16 (cabinet) + the §10.4.1 blunder layer; L; ★ SPLIT IT.**
+The federalism counterpart to the shipped §11.1 lingering: each lingering phase EVERY cabinet member
+ROLLS to move their portfolio meter ±1, and it can BACKFIRE (Treasury rolled badly → EconStab → Great
+Recession; War+Navy both succeeded → MilPrep maxed). **★ Shipped-state CONFIRMED unbuilt-as-designed:**
+`runPhase_2_5_1_Lingering` (`phaseRunners.ts:3260`) is a DETERMINISTIC skill-keyed DRIFT (`drift(skill)`
+`:3266-3273` — fixed ±delta, NO roll, NO backfire, NO Efficient/Pliable/regional hook); the cabinet
+pick `runPhase_2_3_1_Cabinet` (`:2158-2224`) is a flat score-sort with NO ideology gate, NO
+Speaker/PPT/advisor decider override, NO bill-coupling. So #179 is a **REDESIGN of the deterministic
+drift into a roll-based engine** PLUS ≥6 sub-rules across ≥2 systems: (a) per-portfolio ±roll w/
+backfire + Efficient=auto-+2-if-it-moves; (b) Pliable-Pres → Speaker/PPT/Key-Advisor decider override
+incl. SCOTUS nom; (c) cabinet-bill double-points coupling (propose-in-portfolio → carried to law = 2×,
+dropped = SecXX −50); (d) ideology-gated confirmation by office (RW-Populist SecWar rejected); (e)
+regional-representation meter penalty (DomStab fell — no Deep-South Sec); (f) executive-actions-
+implemented-by-cabinet-with-BLUNDER rolls (the §10.4.1/#22/#126 layer in a cabinet context). **★ SPLIT
+(tech-lead): (i)+(f) = the meter/blunder roll engine · (b)+(d) = the appointment/confirmation layer ·
+(c) = bill-coupling · (e) = election-feedback input** — they have different dependencies. **Binds at**
+`runPhase_2_5_1_Lingering` (`:3260`, the roll engine) + `runPhase_2_3_1_Cabinet` (`:2158`, the
+gate+decider-override) + the §10.4.1 blunder layer + the bill-scoring path (`:3508`-area double-points)
++ the §22.2 enthusiasm input. **Gated on #177 (federalism era existing) + the diplomacy/EconStab meters
+it moves; couples to #67 meter ladders + #116/#160 EconStab cascade.** debt #59; game-mechanics §20.10.
+**★ #182 command = the President's PER-TURN EXECUTIVE-ACTION BUDGET → FOLDS INTO the §14
+executive-action build (K2 ActionRegistry) + #179; S once the exec system is real.** Verbatim: "Osgood
+can do up to 4 actions each turn because he has 4 command" — a President's `command` = his
+executive-action count per Presidential-Action phase (0 = inert, N = N actions/turn), each implemented
+by the relevant cabinet member with a blunder roll (#179(f)); generalizes the §24.1/#61 "0-command
+acting president is inert" read into a positive budget. **★ Shipped-state CONFIRMED unbuilt:** `command`
+today is ONLY a PV input (`pv.ts:74`, `total += p.command * 10`), a kingmaker-graduation reward
+(`phaseRunners.ts:1441/1465`), a grant (`addCommandPoint`, `abilities.ts:33`), a decay stat
+(`:2398/2409`), and a candidacy gate (`:1386`/`:3729`) — NEVER an action-count budget; the executive
+phase `runPhase_2_8_1_Executive` (`:3632`) takes EXACTLY ONE flat `chance(0.5)` action,
+command-independent, with no cabinet implementation. The fix is small in shape (loop the exec phase
+`command`-many times) but **GATED on the §14 executive-action system becoming a real K2 ActionRegistry
+chooser** (today a placeholder) + couples to #179(f) blunder. **Binds at** `runPhase_2_8_1_Executive`
+(`:3632`) — turn the single placeholder into a `command`-budgeted loop over a real ActionRegistry (K2).
+**★ Open Q (designer-gated): does the same budget apply to governors/other offices?** debt #62;
+game-mechanics §20.11(2).
+**★ #181 PRESIDENTIAL PLATFORM-PROMISE CONVENTION SYSTEM → PART OF the #19/#20 convention cluster; DO
+NOT build standalone; M.** On winning the nomination (primary → convention → multiple ballots →
+nominee), the nominee builds a **BINDING PLATFORM** = 1 economic + 1 domestic + 1 judicial + 1
+foreign/military legislation promise + 1 presidential-action promise + a promise to resolve any ongoing
+CRISIS, PLUS deal-making office-promises (cabinet/VP posts to allies for endorsements — "promise John
+Marshall SecState/VP"); a binding commitment object feeding kept/broken → enthusiasm/points. **★
+Shipped-state CONFIRMED unbuilt:** no convention/platform object exists (`grep platform|promiseBill|
+conventionPlatform in src/` = ZERO; the convention machinery itself is designed-not-built, §15.3 /
+#19/#20). **Binds at** the (unbuilt) convention subsystem — a `PresidentialPlatform` object generated
+at the convention + a kept/broken evaluator wired to the §22.2 enthusiasm engine + the office-promise
+deal layer. **Rides the #19/#20 convention epic; gated on conventions existing — DO NOT build
+standalone.** debt #61; game-mechanics §20.14(1).
+**★ #180 MONUMENT / LEGACY-TRAIT ACHIEVEMENT LAYER → RIDES the federalism/founding era-content build;
+S–M, LOWER PRIORITY than #177-#179.** The founding era awards **named historical-legacy traits to
+whoever performs each in-game FIRST** ("Atlas of the Revolution" = nominate the 1st Senior General;
+"Author of the Declaration" + Celebrity; "Father of the Country" = score the final RevWar victory;
+"Architect of the French Alliance"; etc.). **★ Shipped-state CONFIRMED unbuilt:** `traits[]` is a
+freeform `string[]` granted only by `addTrait`/era-event/draft — NO first-achievement-detection /
+award-once-on-event layer (`grep firstAchievement|legacyTrait|monument in src/` = ZERO); the
+Federalist-Papers authoring rule was a DOCUMENTED HOLE (no rule to identify the authors). **Binds at**
+an "on first occurrence of event X, award trait Y to the actor" hook in the era-event/decision-event
+resolution path + the `addTrait` idiom. **Rides the era-content build; gated on #177; the Fed-Papers
+rule needs authoring first.** debt #60; game-mechanics §20.14(2).
+**★ DH-71 FACTION-HANDOVER DUPLICATE-POLITICIAN → a SINGLE-OWNERSHIP CONSTRAINT on the (unbuilt) #1
+faction-handover, NOT a shipped regression; XS.** A mid-thread faction "steal" moved David Brearley to
+a new faction WITHOUT deleting the original → two identical records in two factions → a later
+governor-nomination pulled the WRONG one (career-track flag mismatch). A transfer must MOVE, not COPY.
+**★ Shipped-state CONFIRMED — the faction-handover feature is itself UNBUILT:** `grep handover|transfer|
+steal|reassign in src/` = ZERO transfer code path; `partyId`/`factionId` are read-only filters across
+`src/pages/*` and `eraGraph.ts:42`, never re-assigned by an ownership-transfer function. So DH-71 is a
+**FORWARD-LOOKING CONSTRAINT on the (designed) faction-handover feature (#1)**, not a regression:
+whatever transfer function we build must mutate the SINGLE politician's `factionId` (a MOVE), never
+clone the record — and the build's owned-state model removes the manual-spreadsheet ledger drift this
+run also exposed (an ideology-tally miscount; a crisis flag stuck "on"). **Binds at** the (new)
+faction-transfer function (#1) — enforce single-ownership. **Folds into #1 faction-handover.** debt
+#63; game-mechanics §20.15.1.
+**★★ #177/#178/#114 ESCALATED IN PLACE (justification, NOT new scope, NOT a re-sequence):** **#177 is
+now DESIGNED-AND-PLAYED-FORWARD, not just designed-and-walled** — `summer2021` is the FIRST source to
+run the whole federalism TURN LOOP forward (cabinet appointment → era/decision events → cabinet-driven
+lingering → diplomacy → legislation+veto+override → presidential action; §20.9), proving the walled
+content is the *actual gameplay* of the next era; `eraGraph.ts::validate()` still throws via the same
+TWO guards (`:153-155` `chartIndex >= 49` + `:150-152` the pre-1789 president/cabinet decider ban →
+gate on `year >= 1789`), and the per-power diplomacy-relation meter is confirmed missing (the shipped
+`snap.game.diplomacy` is a flat 8-power score map mutated only by §11.1 lingering drift, not a
+relation-event meter) — **the highest-confidence "federalism is the next-era build" signal in the
+corpus.** **#178** now has LIVE FORWARD-PLAY evidence — the war-version **Treaty of Paris is
+AUTO-PROPOSED once the RevWar ends**, and passing it **organizes Mississippi + NW(Ohio) Territory**
+(territory by TREATY, not bill/war); Ohio = "Indian country, needs war OR diplomacy first"; the **NW
+Indian War** = win 5 land battles in 5 attempts (10 yrs) OR permanently CEDE OHIO — the same
+bounded-retry budget as #178/DH-61 (§20.13(5)); `admitState` (`territories.ts:8-23`) still admits ONLY
+from the static registry. **#114/E9/K5/DH-36 re-confirmed from the MULTIPLAYER end:** the CPU is
+mechanically WEAK at moving meters (Ted's meta-math, POST 2671: ~50 all-CPU governors × ~3 actions ×
+~20% only move a crisis meter ~1-2 spaces), so a crisis the CPU can't dent must be soluble by a single
+engaged human → the quantitative root of "solo human is the design target"; the 3-GM relay over 14
+months re-confirms DH-36 (GM-workload is the constraint) WITHOUT a clean burnout quit (it trails off).
+**★ Raise priority/confidence; do NOT re-sequence, do NOT add scope.** **★ Corroborations (tags, not
+rows):** the **non-VP successor "inherit 1 command" ruling** concretizes #61 (the positive counterpart
+to "0-command acting pres is inert"); the **LIVE impeachment subsystem** ran to conclusion (House
+impeaches → Senate convicts a SCOTUS Justice; contrast the VOIDED `ideo1928`, DH-66); **veto-override
+scoring isolates Speaker+SenMajLdr**; **SCOTUS replacement nominated at the Presidential-Action phase ON
+PURPOSE** (#52); the **Bank-of-the-US charter→repeal-attempt→repurpose-by-bill** trajectory (#177
+institutions created↔killed↔recreated by law). **Decision-gated RECOUNT: 0** (the #179-split,
+#181-rides-convention, #178 ≤3-fires canonicity, #182-applies-to-governors are gated WITHIN their own
+work). **No re-sequence; top-of-queue UNCHANGED (QW0 → K0/K2 → K3/K4 + scenarioBoot → E1) — but the
+federalism era-content cluster (#177/#178 + the four new #179/#180/#181/#182) is now the KB's richest,
+most-forward-played next-era build target.**
 **★★ Batch-25 fold-ins (ONE DESIGNER-GMed single-player run — `principle1772`, the 7th captured 1772
 source + the cleanest 1-human-vs-9-CPU run in the KB; TWO net-new federalism-era gaps [#177, #178],
 the strongest #114/E9/K5 escalation in the corpus, corroboration — NO new keystone, NO re-order, NO
@@ -3926,6 +4169,51 @@ then batch-20,
 then batch-19, then batch-18, then batch-17, then batch-16, then
 batch-15, then batch-14, then batch-13, then batch-12, then batch-11, then batch-10, then
 batch-9, then batch-8, then batch-7, then the carried batch-5 leads.
+**The order itself is UNCHANGED — the TOP OF THE QUEUE is QW0 → K0/K2 → K3/K4 +
+`scenarioBoot`/`BootSheet` → `scenario1788` (E1).**
+
+**★★★★★ Batch-26 lead — `summer2021` (THE CORPUS'S LARGEST SOURCE + the FIRST run to PLAY FEDERALISM
+FORWARD [1772→~1810, the whole president/cabinet/diplomacy TURN LOOP run end-to-end, NOT just
+designed-and-walled]; a 3-GM relay over ~14 months, GA-run but designer-blessed rulings in-thread).
+CORROBORATION-HEAVY + FOUR net-new ENGINE gaps [#179, #182, #181, #180] + ONE bug [DH-71]; #177/#178/
+#114 ESCALATED IN PLACE with live forward-play evidence. It does NOT move the top-of-queue. Reflect it
+by: (1) ADDING #179 — the cabinet LINGERING-ROLL meter engine, a REDESIGN of the shipped deterministic
+drift (`runPhase_2_5_1_Lingering` `phaseRunners.ts:3260` = `drift(skill)`-keyed, NO roll/backfire) into
+a roll engine + ≥6 sub-rules across ≥2 systems (per-portfolio ±roll w/ backfire + Efficient auto-+2;
+Pliable-Pres decider override; cabinet-bill double-points; ideology-gated confirmation; regional-rep
+penalty; exec-action blunder rolls) → folds into E6 (Lingering) + E16 (cabinet) + §10.4.1 blunder
+layer, L, ★ SPLIT into (i)+(f) meter/blunder engine · (b)+(d) appointment/confirmation · (c)
+bill-coupling · (e) election-feedback (different deps); GATED on #177 (federalism era existing) + the
+diplomacy/EconStab meters it moves, couples to #67 + #116/#160 — Open Q (designer): how to split;
+(2) ADDING #182 — `command` = the President's PER-TURN EXECUTIVE-ACTION BUDGET ("Osgood can do up to 4
+actions… he has 4 command"; each action implemented by a cabinet member with a blunder roll) → folds
+into the §14 executive-action build (K2 ActionRegistry) + #179, S once the exec system is real; GATED
+on `runPhase_2_8_1_Executive` (`:3632`, today ONE flat `chance(0.5)` action) becoming a real K2
+ActionRegistry chooser — Open Q (designer): applies to governors too?; (3) ADDING #181 — the
+presidential PLATFORM-PROMISE convention system (binding platform = 1 econ + 1 domestic + 1 judicial +
+1 foreign bill + 1 action promise + a crisis-resolution promise, PLUS deal-making office-promises,
+kept/broken → §22.2 enthusiasm) → PART OF the #19/#20 convention cluster, M, DO NOT build standalone —
+it rides the convention epic, gated on conventions existing; (4) ADDING #180 — the monument/legacy-trait
+achievement layer (named historical-legacy traits to whoever performs each in-game FIRST) → rides the
+federalism/founding era-content build, S–M, LOWER PRIORITY than #177-#179, gated on #177, Fed-Papers
+authoring rule needed first; (5) ADDING DH-71 — faction-handover DUPLICATE-politician = a single-
+ownership CONSTRAINT on the unbuilt #1 faction-handover (the transfer fn must MOVE not COPY — mutate
+the SINGLE `factionId`), XS, NOT a shipped regression (the handover feature is itself unbuilt), folds
+into #1; (6) ★★ ESCALATING IN PLACE — NO new scope, NO re-sequence — #177/#178/#114: #177 is now
+DESIGNED-AND-PLAYED-FORWARD (first source to run the federalism turn loop forward, §20.9) → the
+highest-confidence next-era signal, the TWO `eraGraph.ts` walls confirmed unchanged; #178 has LIVE
+forward-play evidence (Treaty of Paris auto-proposed at RevWar's end organizes Mississippi + NW/Ohio
+Territory; NW Indian War = win 5/5 land battles OR permanently cede Ohio); #114/E9/K5/DH-36 re-confirmed
+from the MULTIPLAYER end (Ted's meta-math POST 2671: ~50 CPU govs × ~3 actions × ~20% only move a crisis
+meter ~1-2 spaces → solo human is the design target; the 3-GM relay re-confirms DH-36 without a clean
+burnout quit); raise confidence, do NOT move them. NO new keystone, NO re-sequence, NO new
+author-before-build or Decision-gated items (batch 26 nets 0 — #179 is split-but-buildable in E6/E16;
+#181 rides #19/#20; #180/DH-71 ride the era-content/handover builds; #182 is gated on K2; the
+#179-split, #178 ≤3-fires, #182-governors questions are designer-gated WITHIN their own work). The TOP
+OF THE QUEUE is UNCHANGED: QW0 → K0/K2 → K3/K4 + `scenarioBoot`/`BootSheet` → `scenario1788` (E1) — but
+the federalism era-content cluster (#177/#178 + the four new #179/#180/#181/#182) is now the KB's
+richest, most-forward-played next-era build target. game-mechanics §20.9-§20.15.1, §30.16 + technical-
+guide §9 batch-26 lead + §9.6. debt #57/#58 + #59-#63.**
 **The order itself is UNCHANGED — the TOP OF THE QUEUE is QW0 → K0/K2 → K3/K4 +
 `scenarioBoot`/`BootSheet` → `scenario1788` (E1).**
 
