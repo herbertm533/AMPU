@@ -372,6 +372,7 @@
     - [30.34 Rulings folded from batch 44 — Ted's ACTUAL "Change Log of Doom" (the AUTHORITATIVE rules-doc edits, WITH NUMBERS) + the Appointments-2.3 maintenance pass + the Kagan content backlog + the Canada alt-states retrofit (★★ the cabinet 20/10/5% + the full era retirement/death charts + the event→enthusiasm formula + the Pres-implementation 2-step table + 3 USER-CONFIRM reconciliations) (`4747b09f-teds-change-log-of-doom` / `5d225e8a-pol-lounge2` / `f64a522c-...kagans-foreign-policy...` / `250bd843-canada-alt-states` / `e07f0cc1-ampu-related-passion-projects`)](#3034-rulings-folded-from-batch-44--teds-actual-change-log-of-doom-the-authoritative-rules-doc-edits-with-numbers--the-appointments-23-maintenance-pass--the-kagan-content-backlog--the-canada-alt-states-retrofit--the-cabinet-20105--the-full-era-retirementdeath-charts--the-evententhusiasm-formula--the-pres-implementation-2-step-table--3-user-confirm-reconciliations-4747b09f-teds-change-log-of-doom--5d225e8a-pol-lounge2--f64a522c-kagans-foreign-policy--250bd843-canada-alt-states--e07f0cc1-ampu-related-passion-projects)
     - [30.35 Rulings folded from batch 45 — the FIVE playtest highlight-reels / discussion / data threads (★★ the CC/EV cross-batch CORRECTION + #280 alt-state EV-mutation + #281 statehood-eligibility + #247 time-indexed bias + #270/#273 judicial-misconduct charge-roll + #126 botched-major-action resignation + #282-#285 + the #12/#40 BALANCE gaps) (`78e0d55b-alt-states-ev-project` / `5e195107-electoral-trends-1840-playtest-discussion-post` / `0b896cf9-june-2023-ampu-playtest-updates` / `38cedf29-april-2023-playtest-best-moments` / `9acfc425-may-2023-ampu-playtest-updates`)](#3035-rulings-folded-from-batch-45--the-five-playtest-highlight-reels--discussion--data-threads--the-ccev-cross-batch-correction--280-alt-state-ev-mutation--281-statehood-eligibility--247-time-indexed-bias--270273-judicial-misconduct-charge-roll--126-botched-major-action-resignation--282-285--the-1240-balance-gaps-78e0d55b-alt-states-ev-project--5e195107-electoral-trends-1840-playtest-discussion-post--0b896cf9-june-2023-ampu-playtest-updates--38cedf29-april-2023-playtest-best-moments--9acfc425-may-2023-ampu-playtest-updates)
     - [30.36 Rulings folded from batch 46 — the FIVE gov-action / House-incumbency / Environment / playtest-reel threads (★★ Civil-War PARTIALLY-shipped 4-defection abstraction vs designed territorial DEPTH + #258 the governor-predicate Gov-Action archetype + #286 pres fall/scandal event-rate + #287 the +2 House-incumbency bonus + the contingent-House election + the Environment policy genre) (`a938ac91-gov-actions-scripted-events` / `b7acabd2-house-incumbency` / `9f2ab25f-environment` / `215f0676-july-2023-updates` / `243dc711-september-update`)](#3036-rulings-folded-from-batch-46--the-five-gov-action--house-incumbency--environment--playtest-reel-threads--civil-war-partially-shipped-4-defection-abstraction-vs-designed-territorial-depth--258-the-governor-predicate-gov-action-archetype--286-pres-fallscandal-event-rate--287-the-2-house-incumbency-bonus--the-contingent-house-election--the-environment-policy-genre-a938ac91-gov-actions-scripted-events--b7acabd2-house-incumbency--9f2ab25f-environment--215f0676-july-2023-updates--243dc711-september-update)
+    - [30.37 Rulings folded from batch 47 — FOUR policy-genre drops (Currency / Taxation / Slavery / Infrastructure) + the Northern-secession Civil-War extension (★ the Currency prereq-tree as the #258/#237 content-engine REFERENCE SHAPE + the 7 predicate classes + #288 slavery-flag↔secession-eligibility coupling + Northern/New-England secession & non-playable rumps + the Southern-led Reconstruction branch + #262 cross-genre repeal-only-RW gap) (`de64de1a-currency` / `1bf19872-taxation` / `5d7c29ee-slavery` / `9c383f22-northern-secession` / `d62ea397-infrastructure`)](#3037-rulings-folded-from-batch-47--four-policy-genre-drops-currency--taxation--slavery--infrastructure--the-northern-secession-civil-war-extension--the-currency-prereq-tree-as-the-258237-content-engine-reference-shape--the-7-predicate-classes--288-slavery-flagsecession-eligibility-coupling--northernnew-england-secession--non-playable-rumps--the-southern-led-reconstruction-branch--262-cross-genre-repeal-only-rw-gap-de64de1a-currency--1bf19872-taxation--5d7c29ee-slavery--9c383f22-northern-secession--d62ea397-infrastructure)
     - [30.4 Authority hierarchy reminder](#304-authority-hierarchy-reminder)
 31. [Gilded-Age era systems (designed, not built)](#31-gilded-age-era-systems-designed-not-built)
     - [31.1 (#147) Tariff-as-national-%-rate + the mutually-exclusive MonetaryRegime](#311-147-tariff-as-national-rate--the-mutually-exclusive-monetaryregime-designed)
@@ -21040,6 +21041,175 @@ into the #194 lineage system. Cite `histpres#POST 1, 3, 7, 13, 19, 28, 34, 36, 3
 > standalone build. Cross-ref `game-context.md` rows **#258/#221/#237/#248/#262/#66/#206/#270/#273/#277/
 > #34/#58/#157/#191/#250/#62/#20 (updated)** and **NEW #286 (pres fall/scandal event-rate) / #287 (+2
 > House incumbency bonus)**.
+
+### 30.37 Rulings folded from batch 47 — FOUR policy-genre drops (Currency / Taxation / Slavery / Infrastructure) + the Northern-secession Civil-War extension (★ the Currency prereq-tree as the #258/#237 content-engine REFERENCE SHAPE + the 7 predicate classes + #288 slavery-flag↔secession-eligibility coupling + Northern/New-England secession & non-playable rumps + the Southern-led Reconstruction branch + #262 cross-genre repeal-only-RW gap) (`de64de1a-currency` / `1bf19872-taxation` / `5d7c29ee-slavery` / `9c383f22-northern-secession` / `d62ea397-infrastructure`)
+
+> **★ Batch 47 = a CODE-VERIFIED, mostly-DESIGNED batch with one new headline shape.** Five sources:
+> FOUR content-authoring **policy-genre drops** (Currency, Taxation, Slavery, Infrastructure — all
+> `vcczar`-authored, all UNTAGGED 3-partition lists, NONE a playthrough) + ONE short **design Q&A**
+> that EXTENDS the Civil-War / secession subsystem (`9c383f22`, Northern secession). Two findings are
+> load-bearing:
+> 1. **★ The Currency tree is the single purest worked example in the corpus of the #258 predicate-
+>    gated content engine + the #237 policy-genre framework** — a catalog organized BY PREREQUISITE,
+>    every row carrying an `{action-type, era/ideology tag, precondition, effects}` shape. It is the
+>    **REFERENCE SHAPE** the generic policy/legislation system must support, and it names **7 distinct
+>    predicate CLASSES** (§30.37.1 below). Preserve the prereq→content structure faithfully; *that
+>    structure is the requirement.*
+> 2. **★ #288 — slavery-flag ↔ secession coupling.** The Slavery genre is the *content layer of the
+>    secession trigger*: the per-state slavery flag should be (a) **mutable by policy** (a new
+>    flag-write effect channel) and (b) the **secession-eligibility input** (only slavery-enabled
+>    states join a Southern rebellion). The build half-ships the flag (`isSlaveState`) but secession
+>    reads `state.region`, and there are **three disconnected slavery representations** — see
+>    §30.37.2. This fixes the reported **"Alternate Tennessee"** anomaly (an abolished-slavery state
+>    still seceding). The Northern-secession thread (`9c383f22`) extends the same subsystem with
+>    **Northern/New-England secession, non-playable rump states, a Southern-led Reconstruction
+>    branch, and a dynamic event-driven secession set** (§30.37.3).
+>
+> **Authority:** `vcczar` (tier-1 designer) authors all four genres + the two slavery rulings
+> (`5d7c29ee` POST 3 CA-split = 36°30′ line; POST 5 Crittenden "in the game" at spreadsheet level) +
+> the currency per-state-minting ruling (`de64de1a` POST 5) + the border-state-event statement
+> (`9c383f22` POST 10); `MrPotatoTed`/`themiddlepolitical`/`theFreezerFlame`/Arkansas Progressive
+> supply the Northern-secession rules (`9c383f22` POST 2-16). All spot-checked against `src/` by the
+> digests — this is **corroboration / shipped-vs-designed class, NOT new shipped rules.** The whole
+> policy-genre framework (#221/#237/#248/#258/#262/#206/#66) remains **0% shipped**; the Civil-War
+> extensions are **designed depth absent from the shipped 4-defection-plus-`startWar` abstraction**.
+> The sources:
+> - **`de64de1a-ampu-currency`** (topic 1183, 8 posts / 1 chunk; CONTENT-AUTHORING, near-ratified —
+>   POST 1 the full tree, POST 2 "Yep looks good"). The Currency tree (transcribed §30.37.1) + five
+>   community add-ons (POST 3-8), of which **per-state minting is ruled OUT** (POST 5: already the
+>   1772 default, one-way transition once the USD exists). Cite `de64de1a#POST n`.
+> - **`1bf19872-ampu-taxation`** (topic 1199, 5 posts / 1 chunk; CONTENT-AUTHORING) — the **Taxation**
+>   genre (L≈37 / P=2 / G=3 + ~12 add-ons), UNTAGGED. ★ Carries the **#262 repeal-only-RW gap a
+>   SECOND time** (verbatim the b46 Environment ask). Cite `1bf19872#POST n`.
+> - **`5d7c29ee-ampu-slavery`** (5 posts / 1 chunk; CONTENT-AUTHORING) — the **Slavery** genre (L≈24 /
+>   P=3 / G=2), the most subsystem-COUPLED genre in the KB (#288). Cite `5d7c29ee#POST n`.
+> - **`d62ea397-ampu-infrastructure`** (8 posts / 1 chunk; CONTENT-AUTHORING) — the **Infrastructure**
+>   genre (L≈28 / P=1 / G=4 + ~12 add-ons), UNTAGGED; the genre with the **longest era reach** and the
+>   canonical **chained/sequential-build** prereq pattern (National-Road extensions; HSR NYC→Boston).
+>   Cite `d62ea397#POST n`.
+> - **`9c383f22-can-a-northern-secession-happen-for-the-civil-war`** (topic 4470, 16 posts / 1 chunk;
+>   DESIGN Q&A, NOT a playthrough) — Northern/New-England secession, non-playable rumps, Southern-led
+>   Reconstruction branch, slavery-flag-gated CSA membership, dynamic event-driven secession set.
+>   Cite `9c383f22#POST n`.
+
+#### 30.37.1 ★ The Currency policy tree = the #258/#237 content-engine REFERENCE SHAPE (designed, not built)
+
+> **Source: `de64de1a` POST 1 (verbatim structure), near-ratified (POST 2).** This is the canonical
+> worked example for **#258** (predicate-gated content) + **#237** (policy-genre framework). It
+> sharpens — does not replace — the prior policy-genre rows (Environment [§30.36](#3036-rulings-folded-from-batch-46--the-five-gov-action--house-incumbency--environment--playtest-reel-threads--civil-war-partially-shipped-4-defection-abstraction-vs-designed-territorial-depth--258-the-governor-predicate-gov-action-archetype--286-pres-fallscandal-event-rate--287-the-2-house-incumbency-bonus--the-contingent-house-election--the-environment-policy-genre-a938ac91-gov-actions-scripted-events--b7acabd2-house-incumbency--9f2ab25f-environment--215f0676-july-2023-updates--243dc711-september-update); Regulations/Banking [§30.32](#3032-rulings-folded-from-batch-42--two-policy-genre-drops-regulations--banking--two-design-origin-threads-benchmarks--sc-case-generator--the-what-if-entry-mechanic--the-12-genre-milestone-correction)) and the banking/Gilded
+> monetary substrate ([§31.1](#311-147-tariff-as-national-rate--the-mutually-exclusive-monetaryregime-designed)). **Designed, not built — there is NO currency / banking / Mint / Fed /
+> monetary-standard / generic-legislation-content system in `src/`** (digest grep returns only
+> era-event flavor + committee labels).**
+
+**The data-model shape every row carries** (decoded from the `X-Yyy` tag): `{ actionType: L (Legislative bill) | P (Presidential/Gov action), era/ideology tag, precondition: Predicate, effects }`. The tree is grouped **BY PRECONDITION** — that grouping *is* the spec. **Worked example, transcribed** (`de64de1a` POST 1):
+
+| Precondition group | Policies (action-type · era-tag) |
+|---|---|
+| **No preqs** (always available) | Coinage Act of 1857 (L·Man) · Ban Bitcoin & other Cyber Currencies (L·Fut) · Digital Currency Standard (L·Fut) |
+| **No US Currency active** *(the 1772 DEFAULT)* | Rely on Spanish Dollar + State Scrip as primary currencies (L·Ind, the explicit default) |
+| **Bank of the US active** | Establish US Mint (L·Fed) |
+| **Crypto Currency Advocated** | Crypto Currency Standard (L·Fut) |
+| **Bank of North America active & not privatized** | Establish Continental Currency (L·Ind) |
+| **US Mint active** (the standard-selection fork) | Bimetallic Standard (L·Fed) · Gold Standard (L·Nat) · Silver Standard (L·Gild) · Fiat Standard (L·Neo) |
+| **Major War OR Economic Meter at Panic-or-worse OR Reconstruction active** | Print Greenbacks (L·Nat) |
+| **Economic Meter at Depression-or-worse AND Gold Standard active** | Temporarily suspend Gold Standard for Fiat during crisis (L·Ide) |
+| **Rev War active** | Ban the British Pound as Legal Currency (L·Ind) |
+| **Federal Reserve active AND economic meter at Panic-or-worse** | Allow Fed Reserve to Print Currency during crisis (L·Prog) |
+| **Bimetalism Standard active** | Silver Purchase Act (L·Gild) · Unlimited Coinage of Silver (L·Gild) · Specie Circular (**P**·Dem) |
+| **"Many preqs"** (vcczar's literal placeholder — chain not yet enumerated) | Bretton-Woods (**P**·Ide) · Fiat Standard–Nixon Shock (**P**·Ide) |
+
+**The implicit chain (read off the tree):** `Bank of the US` → `US Mint` → {Bimetallic | Gold | Silver | Fiat} → (Bimetallic) → {Silver Purchase / Unlimited Coinage / Specie Circular}; plus the crisis branch {Gold Standard active} → suspend-for-Fiat. So **an enacted policy installs standing institution/standard STATE (Bank, Mint, Fed, "Gold Standard active", "Bimetalism active") that LATER policies read as a precondition** — the core stateful "enacted policy becomes a predicate" loop.
+
+**★ The 7 predicate CLASSES the tree requires** (none expressible by the shipped era-event-only `Predicate` union, `types.ts:1487-1504`):
+
+| # | Predicate class | Examples in the tree | Shipped status (`types.ts`) |
+|---|---|---|---|
+| **(a)** | **Active-institution / active-policy** (and "not privatized") | Bank-of-US · US Mint · Fed Reserve · Bank-of-North-America-active-&-not-privatized · Gold/Bimetal-Standard-active · "No US Currency active" | **None.** Closest = bespoke boolean game-state `flag` / `eventChose` leaves; **no generic "is policy/institution X active"**, no privatized/repealable concept. **Biggest single requirement** — enacted policies must write durable, queryable state. |
+| **(b)** | **Economic-meter BAND** | Panic-or-worse · Depression-or-worse | `meterAtMost`/`meterAtLeast` exist but `economic` is a **raw `number`** with **NO named bands** (no Panic/Recession/Depression thresholds anywhere). |
+| **(c)** | **Active-war / era** | Major War · Rev War active · Reconstruction active | `warActive` exists but is **hardwired to `revolutionaryWar` only** (comment, `types.ts:1499`); no generic major-war / per-war predicate; **Reconstruction has no representation** (the `nationalism` era exists, Reconstruction-as-substate does not). |
+| **(d)** | **Program-state** (institution/program exists) | income-tax-active · IRS-exists · Soc-Sec-exists · sea-colony-exists (from Taxation) | **None** — same gap as (a). |
+| **(e)** | **Per-state slavery flag** (from Slavery genre) | "slavery enabled in state X" | `isSlaveState` ships but is policy-immutable & not a predicate (§30.37.2). |
+| **(f)** | **Policy-CHAIN** (prior policy active) | sub-36°30′ pop-sovereignty only **after** Missouri-Compromise-permanent (Slavery) · Currency's "Many preqs" Bretton-Woods→Nixon-Shock | **None** — falls out of (a)/(d) once enacted policies write state. |
+| **(g)** | **Sequential / segment-built** ("prior segment built") | National-Road → extensions · HSR-NYC → HSR-Boston ("like the national road is handled") · turnpike→McAdam→modern-road→1916-act→Highway-Act (Infrastructure) | **None** — `stateAdmitted` tests one state's presence, not a build-segment chain. |
+
+**Plus two structural requirements the tree exposes:**
+- **One-way (monotonic) transitions** — `de64de1a` POST 5 (vcczar): *"0% chance it would ever go back to [per-state scrip] once the US Dollar is made."* The `No US Currency active` branch becomes **permanently unreachable**; a `not` over an active-institution predicate (class a) expresses this for free.
+- **L vs P (enacting-office) gating** — bills (L) vs executive/Gov actions (P: Specie Circular, Bretton-Woods, Nixon Shock — historically a Jackson EO / a 1971 presidential act). Plus a **level-of-government gate** (POST 6: Governors "probably couldn't authorize" coin programs → Congress vs President vs Governor tag). Shipped `Legislation` is congressional-only; no executive-action policy path.
+
+**Community add-ons (`de64de1a` POST 3-8, backlog — not in the tree):** (1) **Currency-PEGGING** for a small/non-superpower US — two tiers (peg → fully adopt UK/Spain/France/Germany), short-term econ hit for later investment-unlock + diplomacy boost, gated on a **# states controlled / "is the US a superpower" predicate that does NOT exist** (feeds #221/#248); a **deferred-effect** policy the flat `EraEventResponseEffect` cannot express. (2) **Amero / North American Currency Union** (Future event, #206). (3) **Per-state dollar minting — RULED OUT** (POST 5, = the 1772 default, one-way). (4) **Currency-FACE picker** (image on a bill, Mt.-Rushmore-style; "Benedict Arnold dollars" callback). (5) **National symbols** (flag, eagle-vs-turkey, Statue of Liberty) — vcczar unsure if currency-genre. → #66 (Mint/Fed/Bank-of-US/Bank-of-North-America/Continental Currency as law-created repealable institutions) + #206 (Future band).
+
+#### 30.37.2 ★ #288 — Slavery genre ↔ secession coupling: unify the 3 reps, add a flag-write effect, make the flag the secession-eligibility input (designed, not built)
+
+> **Source: `5d7c29ee` POST 1 (genre) + `9c383f22` POST 11-14 (the rule) + codebase.** Extends the
+> early-republic slavery substrate ([§27.4](#274-slavery-as-state-flag--the-cohens-v-virginia-amendment-only-abolition-substrate)) and the antebellum secession design ([§23.1](#231-58-secession--southern-unionist--secessionist-trait-gating-the-antebellum-payoff)) forward into the 1856 build, and is the
+> headline coupling behind **gap #288** (slavery-flag unification + flag-write effect + secession-
+> eligibility input). **Designed, not built.**
+
+**The Slavery genre (UNTAGGED, `5d7c29ee` POST 1):** ~24 Legis Props + 3 Pres Actions + 2 Gov Actions. The genre is the **most subsystem-COUPLED in the KB**: unlike welfare/healthcare (which set national meters), the Slavery Gov-Action **"Abolish slavery"** and the territorial/abolition Legis-Props are meant to **flip a per-state slavery flag**, and **that flag is the input to the secession/CSA subsystem**. Notable structure (enriches #248):
+- **Fully symmetric opposed pair** — gag rule against pro-slavery debate ↔ gag rule against abolition debate (the cleanest two-sided #248 in the corpus).
+- **Cross-PRIMITIVE opposed set** — the Fugitive Slave Act spans all three primitives at once: base law + Stricter-FSA (Legis), enforce ↔ don't-enforce (Pres), rigorously-comply (Gov) → #248 tagging must be **multi-primitive**, not per-genre-flat.
+- **Territory-scoped option-set** — Popular Sovereignty in {all Territories / Kansas-Nebraska / Mexican-Cession / California}: same lever gated by a **territory-in-play predicate** (#258 class g-adjacent / territory gate).
+- **Policy-chain** — sub-36°30′ pop-sovereignty unlocks **only after** "Make Missouri Compromise permanent" passes (#258 class f).
+- **Future mirror (#206)** — Ban robot slavery (Legis) + Abolish robot slavery in fed gov (Pres); rhymes with businesslabor + SCOTUS-future robot-personhood → a cross-genre Future THEME, not a slavery-only row.
+- **GM rulings:** the existing **"California can be split into 2 states" legislation IS the 36°30′-line statehood split** (`5d7c29ee` POST 3 — so admit/split-state mechanics change the free/slave balance and feed secession eligibility); **Crittenden Compromise is "in the game"** at the spreadsheet level (POST 5) but ships only as a `Crittenden Republicans` faction (`factions1856.ts:12`) + a "new Missouri Compromise" event response (`eraEvents1856.ts:118`) — **no Crittenden Legis-Prop in `src/`**.
+
+**★ Shipped reality — THREE disconnected slavery representations, none policy-mutable** (verified this batch):
+
+| Representation | Where | Role today | Policy-mutable? |
+|---|---|---|---|
+| `State.isSlaveState: boolean` | `types.ts:1329`; set per-row `states1856.ts:5-35` (TN=`true` `states1856.ts:26`); displayed `StatesPage.tsx:20` | the canonical "slave state" flag | **No** — only write is territory admission (`phaseRunners.ts:3175`, `t.region === 'South' || 'Border'`); **no policy flips it** |
+| `SLAVE_STATES_1856` (abbr list) | `types.ts:1152` | **John-Brown event proxy ONLY**; comment (`types.ts:1151`) states **"Secession Winter loyalty decay reads `state.region` directly, not this set"** | **No** (a static const) |
+| `state.region` (`South`/`Border`/…) | `states1856.ts` | **the actual secession driver** — `runSecessionWinterDefections` (`phaseRunners.ts:3028-3053`) decays cabinet loyalty by `LOYALTY_REGION_BASE[region]` × ideology (`types.ts:1162`) | **No** |
+
+**The shipped Civil War is a cabinet-loyalty model, NOT a slavery-state-membership model:** civil war fires when ≥2 cabinet members defect (`phaseRunners.ts:2976`); "Confederate States" is a **`startWar` opponent string** (`phaseRunners.ts:2980-2982`), not a set of states leaving the Union. **No effect channel can set a state flag** — `EraEventResponseEffect` (`types.ts:1448-1457`) touches only meters/partyPreference/enthusiasm/interestGroups/domesticStability/diplomacy/startWar/text, and `Legislation.effects` is that same type (`types.ts:1515`). So the existing legislation pipeline **cannot express any slavery prop as written.**
+
+**★ The designed rule (#288) — three parts:**
+1. **Unify the three reps** into one mutable per-state slavery flag (the successor to `isSlaveState`).
+2. **Add a flag-write effect channel** (a "set state flag" effect — the same missing-state-write class as #221's program-state and #258's predicate engine), so "Abolish slavery" (Gov) + the territorial/abolition Legis-Props can flip it.
+3. **Make the flag the secession-eligibility input** — *"If TN has slavery enabled, then they may secede; if not then they won't unless another event enables slavery and they join the confederacy"* (`9c383f22` POST 14). This **replaces the `state.region` proxy** and fixes the reported **"Alternate Tennessee"** anomaly (`9c383f22` POST 11-13: a CW playtest where TN had abolished slavery yet still seceded — *"Why would a state that had abolished slavery join the Confederacy?"*). The TN bug is literally the static row `tn … isSlaveState: true` (`states1856.ts:26`) with no logic to flip it on abolition and no gate that reads it for secession.
+
+**Open (for the human):** flag granularity — is "slavery-enabled" a single per-state boolean, or do the four pop-sovereignty rows imply a **per-territory tri-state** (free / slave / pop-sovereignty-undecided) the binary `isSlaveState` cannot represent? And: does abolition retroactively pull a state out of CSA-eligibility, or only gate it at the secession moment (read-once vs continuous)? (`5d7c29ee` Open Qs 1-2.)
+
+#### 30.37.3 Civil-War subsystem extensions — Northern/New-England secession, non-playable rumps, Southern-led Reconstruction, dynamic secession set (designed, not built)
+
+> **Source: `9c383f22` POST 2-16 (design Q&A — devs + lead playtesters).** Extends the Civil-War /
+> secession subsystem ([§23](#23-civil-war--reconstruction-1856-arc-designed-not-built)) and the b46 4-defection-plus-`startWar` abstraction
+> ([§30.36](#3036-rulings-folded-from-batch-46--the-five-gov-action--house-incumbency--environment--playtest-reel-threads--civil-war-partially-shipped-4-defection-abstraction-vs-designed-territorial-depth--258-the-governor-predicate-gov-action-archetype--286-pres-fallscandal-event-rate--287-the-2-house-incumbency-bonus--the-contingent-house-election--the-environment-policy-genre-a938ac91-gov-actions-scripted-events--b7acabd2-house-incumbency--9f2ab25f-environment--215f0676-july-2023-updates--243dc711-september-update)). Five designed extensions, **all absent from `src/`:**
+
+1. **★ Northern / New-England secession CAN happen** (POST 2-6). Secession is **bidirectional** — New England is a secession-capable bloc, not just the South. *"Yep! - it can"* (themiddlepolitical, POST 2).
+2. **Playable core can shrink; non-playable rumps exist** (POST 4-6). The **smallest USA the human can play = PA / DE / MD / NJ** (MrPotatoTed: *"New England can secede, but PA/DE/MD/NJ cannot"* — "Easy to forget Jersey"). The human **cannot play New England or the CSA** — they exist as **non-playable rump states/factions**. (Open: is PA/DE/MD/NJ the exact invariant minimum or the example floor?)
+3. **★ Slavery-flag-gated CSA membership** (POST 7-14) — baseline CSA = the historical 11-state set *if those states exist* (Arkansas Progressive, POST 8), but a state joins a Southern rebellion **only if its per-state slavery flag is enabled** (POST 14). This is the #288 rule (§30.37.2) applied to membership; the Upper South should get its own secession rules (POST 9).
+4. **★ Southern-led Reconstruction branch** (POST 3) — Reconstruction is **outcome-branched**: the South-wins inverse of Northern Reconstruction flips legislation to **the most racist form** and **EXPELS `CivilRights`-card factions from government**. The faction issue cards `CivilRights` / `SlaveryRights` / `StatesRights` / `Abolition` / `Antislavery` are real tags in `eraEvents1856.ts:325-361` the branch could key on, but the **expulsion-from-government mechanic is not in the build** (xref #57/#156/#284).
+5. **★ Event-driven, dynamic secession set** (POST 10, 12, 15-16) — border states are decided by a dedicated scripted event **"Secession Fervor Reaching Border States"** covering **MD / DE / MO / KY** (vcczar, POST 10; the shipped Border set matches `states1856.ts`, but the event does not exist), and a family of CW events **mutates who initially secedes and whether new states join later**. The CSA roster is a **starting baseline**, not a fixed `startWar` opponent. (Dating caveat: this per-state event system is newer than the playtest that produced the TN anomaly — older exports show pre-fix behavior.)
+
+**Open (for the human):** what *triggers* Northern secession (a South-dominates branch? a distinct era event?) is unspecified — only that it is possible and yields a non-playable New England bloc (`9c383f22` POST 2-6).
+
+#### 30.37.4 The four genres + the cross-genre balance/routing findings (#221/#237/#248/#258/#262/#66/#206)
+
+> **Source: all four genre digests + codebase.** Each is an UNTAGGED 3-partition `vcczar` drop;
+> **content primitives are 0% shipped** (`Legislation`, `types.ts:1506-1520`, has only a 4-value
+> `committee` and **no `subtype`/`policyGenre`/`prereq`/effect-catalog**; no `presAction`/`govAction`
+> tokens in `src/`). These EXTEND the open-ended genre sweep — **NOT complete at N** ([§30.32](#3032-rulings-folded-from-batch-42--two-policy-genre-drops-regulations--banking--two-design-origin-threads-benchmarks--sc-case-generator--the-what-if-entry-mechanic--the-12-genre-milestone-correction) milestone correction).
+
+| Delta (batch 47) | Detail | Shipped status | Maps to / cite |
+|---|---|---|---|
+| **★ Currency genre — the REFERENCE SHAPE** | prereq-structured catalog; the `{actionType, era-tag, precondition, effects}` row shape + 7 predicate classes (§30.37.1). | 0% shipped; **no currency/banking/Mint/Fed/monetary system** | #258 + #237; `de64de1a#POST 1-8`; `types.ts:1487-1504` |
+| **★ Taxation genre** (L≈37 / P=2 / G=3) | opposed pairs (Raise↔Lower Gov; Expand↔Close loopholes Legis; No-New-Tax-Promise Pres); the 3-tax create→raise/lower ladder; whole-regime swaps (flat tax; land-value + repeal-all-but-LVT; abolish-all-taxes); IRS + 16th Amendment (#66); Future = sea-colony + genetic/cyber-mod tax (#206). | 0% shipped; whole bill library = 8 generic `BILL_TEMPLATES` (`phaseRunners.ts:3420-3429`), only `Tariff Increase`/`Tariff Reduction` touch revenue | #221/#237/#248/#258/#262/#66/#206; `1bf19872#POST 1-5` |
+| **★ #262 confirmed a SECOND time = a CROSS-GENRE requirement** | Taxation's #262 ask (*more affirmative right-leaning options that aren't repeals*) is **verbatim the b46 Environment ask** → the left-skew / repeal-only-for-the-right gap is **cross-genre coverage**, not per-genre. RW side is dominated by repeals/denials (No Federal Direct/Excise/Income Tax, Abolish-Excise/Direct-Tax amendments, leave-to-states, abolish-all). Community START: flat tax, make-state-a-tax-haven, harsher non-payment penalties — thin/unratified. | N/A (content-coverage) | #262; `1bf19872#POST 1, 2, 4` (= `9f2ab25f#POST 1`) |
+| **★ Slavery genre** (L≈24 / P=3 / G=2) | the secession-engine content layer; symmetric gag-rule pair; cross-primitive Fugitive-Slave-Act set; territory-scoped pop-sovereignty; robot-slavery Future mirror (§30.37.2). | 0% shipped | #288 + #221/#237/#248/#258/#206; `5d7c29ee#POST 1-5` |
+| **★ Infrastructure genre** (L≈28 / P=1 / G=4) | longest era reach (turnpike→Maysville→National Road→…→broadband→Moon-Amtrak); **the canonical chained/sequential-build prereq** (National-Road extensions; HSR NYC→Boston "like the national road is handled" — #258 class g); federal↔leave-to-states axis; law-created institutions TVA/Hoover/Newlands (#66); Future = sea-colonies/Philippines-islands/hyperloop/Moon (#206). P=1 is the **thinnest primitive partition in the sweep**. | 0% shipped (see hand-card migration below) | #221/#237/#248/#258/#262/#66/#206; `d62ea397#POST 1-8` |
+| **Recurring thin Pres/Gov-Action primitives** | every genre under-authors P & G (Infra P=1/G=4; Tax P=2/G=3; Slavery P=3/G=2; vcczar repeatedly asks for more). **Pres/Gov-Action content primitives do not exist in the build at all.** | 0% shipped | #262 / #221-P / #221-G |
+| **Static flavor cards already in the build (content-migration targets, NOT the genre)** | Infrastructure: **Internal Improvements** (`phaseRunners.ts:3424`) + **Pacific Railroad Bill** (`phaseRunners.ts:3428`) + **Public Works Program** era-event (`eraEvents1856.ts:72`). Slavery-flavor bills: **Fugitive Slave Act Strengthening** + **Personal Liberty Law** (`phaseRunners.ts:3426-3427`). Currency: **none** (no shipped analog at all). | static one-off cards w/ fixed meter effects — **not** stateful, era-spanning, or prereq-gated | fold into the genre library once #221/#237 ship; `d62ea397#POST 1` |
+| **Cross-genre overlaps to ROUTE, not duplicate** | farm-equipment tax → **Agriculture**; payroll → **Welfare/Soc-Sec**; energy/crude/gas taxes → **Environment/Energy**; financial/corporate/cap-gains/Wall-St taxes → **Banking/Currency**; ZIP codes ("Administrative Infrastructure") → **Civil-Service**; grid/nuclear → **Energy**; Bank-of-US infra fund → **Banking**; coastal defenses → **Military**. | N/A | #248 multi-category tagging; `1bf19872#POST 1,5`, `d62ea397#POST 1,3,6` |
+
+**Roadmap takeaway (for the tech-lead + roadmap-planner).** Batch-47 is overwhelmingly **content-design provenance** (4 genres) plus one subsystem-extension Q&A, ranked:
+> (1) **★ The Currency tree is the build target for #258/#237** — implement the catalog as `{actionType, era-tag, precondition: Predicate, effects}` rows grouped by precondition, and extend the `Predicate` union (the `eraGraph.ts evalPredicate` interpreter is the reuse target) with the **7 predicate classes** (§30.37.1): the keystone is **(a) active-institution/policy** — enacted policies must write durable queryable state (which also delivers classes d/f for free). Add **(b) named economic bands** (Panic/Depression thresholds on the raw `economic` meter), **(c) generic/per-war + Reconstruction-substate war predicates**, and **(g) sequential segment-build**. Plus **one-way transitions** (a `not` over class-a) and **L/P/Governor enacting-office gating** + an **executive-action policy path** (shipped `Legislation` is congressional-only).
+> (2) **★ #288 slavery-flag ↔ secession** is a discrete, well-specified unit: (a) unify the three reps into one mutable per-state flag, (b) add a **flag-write effect channel** to `EraEventResponseEffect` (the missing state-write class), (c) make the flag the **secession-eligibility gate**, replacing the `state.region` proxy in `runSecessionWinterDefections` (`phaseRunners.ts:3028-3053`). Fixes the "Alternate Tennessee" anomaly. Resolve flag granularity (boolean vs per-territory tri-state) before build.
+> (3) **★ Civil-War territorial layer** (§30.37.3) — Northern/New-England secession, non-playable rump blocs (smallest playable = PA/DE/MD/NJ), the Southern-led Reconstruction branch (most-racist legislation + CivilRights-faction expulsion), and the **event-driven dynamic secession set** ("Secession Fervor Reaching Border States" for MD/DE/MO/KY) — all extend the shipped `startWar`-opponent abstraction into actual state-flips; bundle with [§23](#23-civil-war--reconstruction-1856-arc-designed-not-built). The Northern-secession *trigger* needs a designer ruling.
+> (4) **★ #262 is now a CROSS-GENRE coverage requirement** (confirmed twice: Environment + Taxation) — right-leaning factions need affirmative (non-repeal) options across **all** genres; treat as a content-authoring acceptance bar, not a per-genre fix.
+> (5) **#66 institutions** (US Mint, Federal Reserve, Bank of US, Bank of North America, Continental Currency, IRS, 16th Amendment, TVA) are law-created, some repealable/privatizable — **no institution layer ships**; this is the substrate predicate-class (a) reads.
+> (6) **#206 Future band** content harvested (robot slavery, genetic/cyber-mod tax, sea colonies, hyperloop/Moon-Amtrak, Amero, crypto/digital-currency standards, Fiat-Nixon-Shock) — feeds the Future backlog, doubly-unbuilt.
+> (7) **Content-migration**: fold the shipped hand-cards (Internal Improvements / Pacific Railroad Bill / Public Works Program; Fugitive Slave Act Strengthening / Personal Liberty Law) into the genre library once #221/#237 land. Cross-ref `game-context.md` rows **#258/#237/#221/#248/#262/#206/#66/#56/#57/#58/#156/#284 (updated)** and **NEW #288 (slavery-flag unification + flag-write effect + secession-eligibility input)**.
 
 ### 30.4 Authority hierarchy reminder
 
