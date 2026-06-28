@@ -12,6 +12,72 @@
 > unchanged: **QW0 → K0/K2 → K3/K4 + `scenarioBoot`/`BootSheet` → `scenario1788`
 > (E1)**).
 
+> **★★★★ Batch-36 version — FIVE threads, NO playtest (a DESIGN/DATA batch — 1 JUDICIARY-OVERHAUL design thread + 1
+> terminology/design thread + 2 dataset-authoring rosters + 1 content-authoring crowdsource): `judiciaryidea`
+> (fd4c3c4e, "A More Perfect Judiciary" — the JUDICIARY OVERHAUL = NEW **#251**, the SCOTUS-cluster DESIGN ORIGIN;
+> Judicial Philosophy axis + Focus Courts, MOSTLY AMPU-2) + `terminology` (b474593e, the term-rename poll — the SOURCE
+> ruling behind the **#216** Army/Everyman renames + the ORIGIN of NEW **#252**) + `failednoms` (55c18fde, ~36 failed-
+> nominee statlines → **#240** + ★ the vcczar PV-revamp-DONE confirmation) + `histspeakers` (29c2fd13, the historic-
+> Speaker roster → **#240/#221**) + `space` (5da48f61, the Space policy-GENRE call → **#237/#248** + a 2nd **#20**
+> proof). **NO new keystone, NO re-sequence, top-of-queue UNCHANGED (QW0 → K0/K2 → K3/K4 + scenarioBoot → E1).** 2 NEW
+> gap rows #251/#252, NO new bug (max gap #252, max bug DH-80 unchanged). **NO cheap-fixes-lane delta beyond FIRMING
+> #216** (the renames are now SOURCE-ruled, so QW22 is safe to implement). **The two headlines are a design-confirmation
+> and a deferred-epic origin. The value:**
+> **(1) ★★★ HEADLINE A → THE PV REVAMP IS DESIGNER-CONFIRMED-DONE (debt #85; `GM⇒App`; REINFORCES the existing
+> QW22→#214/#215 path — NO re-sequence).** `failednoms` POST 14 is **vcczar stating the SHIPPED RESULT** of the PV
+> overhaul in his own voice: *"a 0-100 scale… Clay 98, TR 100… I made Command worth more points… created a bunch of new
+> traits."* So **#220 (0–100, can-exceed) + #215 (Command re-weight) + #214 (per-trait tiers) are ALL DESIGN-CONFIRMED**
+> — the spec the build targets is no longer inferred, it is the designer's stated outcome. `pv.ts` is STILL fully
+> pre-revamp (`:70-79`, `:88`), and the epic has **NO open design fork left except the carried office-magnitude↔0-100
+> reconcile.** **→ Annotate the PV epic + QW22/QW23/QW24 as DESIGNER-CONFIRMED-DONE; the path already exists — ship
+> #216 remap (QW22, BLOCKING) FIRST, then #214 tiers + #215 curve + #220 + remove `pv*0.1`. DO NOT re-sequence.**
+> game-mechanics §3.4.1.
+> **(2) ★★ HEADLINE B → #251 JUDICIARY OVERHAUL = the SCOTUS-CLUSTER DESIGN ORIGIN; MOSTLY AMPU-2, a DEFERRED L-XL
+> EPIC + ONE small near-term sub-item (debt #113; `GM⇒App`).** `judiciaryidea` (Cal-proposed, vcczar+CE2 PUNTED both
+> big systems to AMPU 2/DLC) is the **design ORIGIN of #52/#218/#249/#25** (it predates `scotusfuture` ~6 wks). Two big
+> systems: **Judicial Philosophy** (Judicial Ideology [Cons/Swing/Liberal] + Judicial Doctrine, hidden-until-revealed)
+> + **Focus Courts** (4 regional appellate courts + Original/Appellate jurisdiction + **Rule-of-Four cert** + affirm/
+> reverse + deny-cert-on-Landmark → SC loses points) — **MOSTLY AMPU-2** (VERIFIED: no `judicialIdeology`/`focusCourt`/
+> `ruleOfFour` types in `src/`, and `resolveIdeologyShift` 2.1.5 `phaseRunners.ts:767` is the faction-conversion
+> engine, NOT justice drift; an L-XL epic gated BEHIND the SCOTUS docket #25/E25). **★ Its ONE near-term option = the
+> XS-S forum-AMPU-1 10% confirmation ideology-drift** (a confirmed justice 10% immediate ±1 shift + per-10-yr further
+> shifts + 5% leftward) — **MUST RECONCILE against #52's existing 10-yr drift so they DON'T DOUBLE-FIRE.** **→ Record
+> #251 as a DEFERRED AMPU-2 epic (parking/AMPU-2 quarantine) + the 10% drift as a small near-term sub-item (reconcile
+> vs #52); annotate #25/#52/#218/#249 as design-originated in #251.** Shipped court = a coin-flip on 4 strings
+> (`phaseRunners.ts:3397`). game-mechanics §22.7.v.
+> **(3) ★ #252 COMMITTEE→EXPERTISE TOO COARSE = small / designer-DEFERRED (debt #114; `GM⇒App`).** `terminology`: the
+> judicial-committee grant gives only the single **"Justice"** expertise — players want judicial SUB-expertises, and
+> the designer CONCEDES the coarseness but **WONTFIX-es them as separate experiences (interest≠experience).**
+> `COMMITTEE_EXPERTISE` (`types.ts:1237`) is a fixed 4→1 map (Justice→Justice). **→ Record #252 in the small/deferred
+> bucket; no near-term scope.** game-mechanics §8.2.
+> **(4) ★ #216 RENAMES NOW SOURCE-RULED → firm QW22 (safe to implement).** `terminology` is the AUTHORITATIVE source:
+> Expertise **"Military"→"Army"** (vcczar AGREED; keep the Navy/Army split — the union `types.ts:182-191` has Military
+> +Naval, NOT Army) + Trait **"Low Brow"→"Everyman"** (consensus; a forward-add — neither is in the `Trait` union yet).
+> **→ Annotate the cheap-fixes/QW22 area; the renames are safe to implement.** game-mechanics §30.26.
+> **(5) ★ SPACE → folds into #237/#221 + a 2nd #20 "Gov actions can't be flat" proof.** `space` crowdsources the Space
+> policy GENRE (NASA / Moon+Mars / Space Force / privatize↔nationalize) = a #237-shaped stateful genre (own `*-Default`
+> + L/P/G menu) + the **#248** "Space" subtype; ★ the **geography-gated launch-site Gov action** (per-state success-
+> odds, equator/Deep-South favored + adjacency agency-merge + first-gov-wins funding race) is a **2nd concrete #20 "Gov
+> actions can't be flat" proof** (alongside DH-53 Jim-Crow). Content frozen at Biden/2022 → #206/#92. **→ Annotate
+> #237/#221 + #20; no new scope.** game-mechanics §11.3.
+> **(6) ★ #240 GROWS — two more rosters (debt #100/#106/#108; the DATA half).** `failednoms` adds ~36 failed-presi-
+> dential-nominee statlines (Pinckney → Hillary) at **FULL strength** → the **#246/N1 full-strength tension applies**
+> (sub-floor rule is wired only to `ERA_ROWS`/`ERA_FIGURES`); `histspeakers` adds the Speaker-of-the-House roster. Both
+> → `CURATED_ROWS` via `scripts/seedDataset.mjs`; **apply the #216 remap (QW22) BEFORE transcribing** (the rosters
+> carry Army expertise + novel traits), then regenerate. **→ Annotate #240/#246; the standalone author/DATA task.**
+> **(7) ★ GM-REPLACEMENT LENS addition (a VIEW, no re-sequence).** ① referee gains the **judiciary/court half**
+> (#251/#252 — the Judicial-Philosophy/Focus-Courts adjudication + the per-committee judicial-expertise call the GM
+> would hand-rule) AS the court complement to the already-present #249 SCOTUS docket/tier; it stays a VIEW pointing at
+> the deferred AMPU-2 epic + the small near-term drift sub-item. Adding the pointer re-sequenced nothing.
+> **(8) ★ HYGIENE.** NO playtest this batch (5 design/data threads); **NO corpus-coverage delta** (the un-ingested set
+> is unchanged: 1840-start + matthewyoung123-1772, + the carried 1868-Bushwa/2016-confirm candidates). **NO gap closed
+> (2 NEW gaps #251/#252, 0 closed), NO new keystone, NO re-sequence, top-of-queue UNCHANGED (QW0 → K0/K2 → K3/K4 +
+> scenarioBoot → E1) — the ONLY cheap-fixes-lane delta is FIRMING #216 (now source-ruled). Within-batch order: firm
+> #216 (cheap-fixes) → #240 two-roster expand (data) → #251 10% drift sub-item (reconcile vs #52; the big #251 epic is
+> deferred AMPU-2) → #252 (small/deferred). The PV-revamp confirmation REINFORCES the existing QW22→#214/#215 path.**
+> debt #113-#114; technical-guide §9 batch-36 lead + §9.6 + §8 debt #113-#114; game-mechanics §22.7.v, §8.2, §11.3,
+> §3.4.1, §30.26.
+>
 > **★★★★ Batch-35 version — FIVE threads (1 PLAYTEST + 4 design/content/data; a CONTENT/DESIGN batch — 1 state-lean-
 > realignment brainstorm + 1 Future/Independence content call + 1 SCOTUS-docket content survey + 1 election-rules
 > review + 1 1960 playtest RESTART): `statelean` (fc461242, the event-driven state party-lean realignment brainstorm —
@@ -2538,6 +2604,45 @@ Reverse-chronological. The expertise/abilities/traits/cabinet/lobby epic (PR1–
 is complete; the knowledge-base infra and eight ingestion batches are knowledge
 milestones (no code, but they are what every item below is traced to).
 
+- **Batch-36 ingestion (knowledge milestone — FIVE threads, NO playtest; a DESIGN/DATA batch).** Absorbed
+  **`judiciaryidea`** (fd4c3c4e, "A More Perfect Judiciary" — the JUDICIARY OVERHAUL = **ORIGIN of NEW #251**, the
+  SCOTUS-cluster DESIGN ORIGIN; Judicial Philosophy axis + Focus Courts, MOSTLY AMPU-2; the design-ORIGIN of
+  #52/#218/#249/#25), **`terminology`** (b474593e, the term-rename poll — the AUTHORITATIVE SOURCE for the **#216**
+  Army/Everyman renames + **ORIGIN of NEW #252** committee→expertise too coarse), **`failednoms`** (55c18fde, ~36
+  failed-presidential-nominee statlines → **#240** + ★ the vcczar PV-revamp-DONE confirmation), **`histspeakers`**
+  (29c2fd13, the historic-Speaker roster + per-tenure bill record → **#240/#221**), **`space`** (5da48f61, the Space
+  policy-GENRE crowdsource → **#237/#248** + a 2nd **#20** proof). **2 NEW gap rows #251/#252, NO new bug** (max gap
+  #252, max bug DH-80 unchanged). **★★★ HEADLINE A → THE PV REVAMP IS DESIGNER-CONFIRMED-DONE (debt #85; `GM⇒App`;
+  REINFORCES the existing QW22→#214/#215 path — NO re-sequence).** `failednoms` POST 14 is vcczar stating the SHIPPED
+  RESULT in his own voice: *"a 0-100 scale… Clay 98, TR 100… I made Command worth more points… created a bunch of new
+  traits"* → **#220 (0–100, can-exceed) + #215 (Command re-weight) + #214 (per-trait tiers) are ALL DESIGN-CONFIRMED**;
+  `pv.ts` is STILL fully pre-revamp (`:70-79`, `:88`); the epic has NO open design fork left except the carried office-
+  magnitude↔0-100 reconcile. **Ship #216 remap (QW22, BLOCKING) FIRST, then #214/#215/#220 + remove `pv*0.1`; DO NOT
+  re-sequence — the path already exists.** **★★ HEADLINE B → #251 JUDICIARY OVERHAUL = the SCOTUS-CLUSTER DESIGN ORIGIN;
+  MOSTLY AMPU-2, a DEFERRED L-XL EPIC + ONE small near-term sub-item (debt #113; `GM⇒App`).** Two big systems both
+  PUNTED to AMPU 2/DLC by vcczar+CE2 — **Judicial Philosophy** (Judicial Ideology + Doctrine, hidden-until-revealed) +
+  **Focus Courts** (4 regional appellate courts + Rule-of-Four cert + affirm/reverse + deny-cert-on-Landmark → SC loses
+  points); VERIFIED no `judicialIdeology`/`focusCourt`/`ruleOfFour` in `src/` (`resolveIdeologyShift` 2.1.5 is faction-
+  conversion, NOT justice drift). **★ Its ONE near-term option = the XS-S forum-AMPU-1 10% confirmation ideology-drift**
+  (10% immediate ±1 + per-10-yr further + 5% leftward) — **MUST RECONCILE against #52's existing 10-yr drift so they
+  DON'T DOUBLE-FIRE.** Recorded as a DEFERRED AMPU-2 epic + the small near-term drift sub-item; #25/#52/#218/#249
+  annotated as design-originated here. **★ #252 COMMITTEE→EXPERTISE TOO COARSE = small / designer-DEFERRED** (debt
+  #114): the judicial-committee grant gives only "Justice"; players want sub-expertises; the designer CONCEDES but
+  WONTFIX-es them (interest≠experience); `COMMITTEE_EXPERTISE` (`types.ts:1237`) is a fixed 4→1 map. **★ #216 RENAMES
+  NOW SOURCE-RULED** (safe to implement, firm QW22): Expertise "Military"→"Army" (keep the Navy/Army split) + Trait
+  "Low Brow"→"Everyman" (a forward-add). **★ SPACE → #237/#221 + a 2nd #20 "Gov actions can't be flat" proof** (the
+  geography-gated launch-site Gov action, equator/Deep-South favored + adjacency merge + first-gov-wins funding race,
+  alongside DH-53 Jim-Crow) + the #248 "Space" subtype. **★ #240 GROWS** — ~36 full-strength failed nominees (#246/N1
+  tension applies) + the Speaker roster → `CURATED_ROWS`; apply the #216 remap BEFORE transcribing, then regenerate.
+  **★ GM-REPLACEMENT LENS addition** (a VIEW, no re-sequence): ① referee gains the **judiciary/court half** (#251/#252
+  — the Judicial-Philosophy/Focus-Courts adjudication + the per-committee judicial-expertise call) as the court
+  complement to the already-present #249 SCOTUS docket/tier; a VIEW pointing at the deferred AMPU-2 epic + the small
+  near-term drift sub-item. **★ NO playtest, NO corpus-coverage delta** (un-ingested set unchanged: 1840-start +
+  matthewyoung123-1772, + carried 1868-Bushwa/2016-confirm). **NO gap closed (2 NEW gaps, 0 closed), NO new keystone,
+  NO re-sequence, top-of-queue UNCHANGED (QW0 → K0/K2 → K3/K4 + scenarioBoot → E1) — the ONLY cheap-fixes delta is
+  FIRMING #216 (now source-ruled). Within-batch order: firm #216 (cheap-fixes) → #240 two-roster expand (data) → #251
+  10% drift sub-item (reconcile vs #52; the big #251 epic is deferred AMPU-2) → #252 (small/deferred).** debt #113-#114;
+  technical-guide §9 batch-36 lead + §9.6 + §8 debt #113-#114; game-mechanics §22.7.v, §8.2, §11.3, §3.4.1, §30.26.
 - **Batch-35 ingestion (knowledge milestone — FIVE threads, 1 PLAYTEST + 4 design/content/data; a CONTENT/DESIGN
   batch).** Absorbed **`statelean`** (fc461242, the event-driven state party-lean realignment brainstorm — #92's TWIN;
   **ORIGIN of NEW #247**, folds into K3 with #92/#241), **`futureideas`** (eaf5cc51, the Era-of-Future + Era-of-
@@ -3918,6 +4023,18 @@ away. **XS, RevWar-scoped, standalone (no dependency); ship in the cheap-fixes l
 war change** — the full #45 War-Score redesign is a DEFERRED POST-LAUNCH epic (the GM RULED war is "a side show,"
 `rethinkwar` POST 26 → it folds into the generic-`War` engine E3 / debt #16/#29/#152, NOT a near-term row).
 **RULED-as-bug by code-verification (`revolutionaryWar.ts:254-264` vs `:202`); the slice is `rethinkwar`-aligned.**
+**★★ Batch-36 adds NO new quick-win — it FIRMS QW22 (the #216 remap) with the `terminology` SOURCE rulings (safe to
+implement) AND annotates the whole PV quick-win family (QW22/QW23/QW24) as DESIGNER-CONFIRMED-DONE.** **(1) #216 is
+now SOURCE-RULED:** `terminology` (vcczar+Ted) is the authoritative source for **Expertise "Military"→"Army"** (vcczar
+AGREED; **keep the Navy/Army split** — the union `types.ts:182-191` carries Military+Naval, NOT Army; this RECONFIRMS
+the batch-34 #216 Army-rename + the batch-20 `dbomit` corroboration) and **Trait "Low Brow"→"Everyman"** (consensus; a
+forward-ADD — neither name is in the `Trait` union yet, so it joins the ~15-absent remap set). So QW22's old→new map is
+no longer inferred — the two named renames are settled and **safe to implement** (Charisma→Charismatic / the `histpres`
+mismatches carry over from earlier batches). **(2) The PV revamp is DESIGNER-CONFIRMED-DONE** (`failednoms` POST 14,
+vcczar: *"a 0-100 scale… Clay 98, TR 100… Command worth more… new traits"*) — so the entire PV quick-win front-half
+(QW22 #216 remap + QW23 DH-77 floor-offset + QW24 remove `pv*0.1`) and the back-half balance epic (#214/#215/#220) all
+target the **designer's STATED outcome, not an inferred spec.** **No re-sequence: QW22 still DO-FIRST, then #214/#215.**
+debt #85/#113; game-mechanics §30.26, §3.4.1.
 
 | # | Item | Scope | Depends on | Size | Source | Status |
 |---|---|---|---|---|---|---|
@@ -3943,7 +4060,7 @@ war change** — the full #45 War-Score redesign is a DEFERRED POST-LAUNCH epic 
 | **QW20** | **★★ batch-27 DH-72(b) — re-weight `baseLean*5` into the +3/+5 historical-bias band behind a `game.biasMode?` toggle** *(NEW, batch 27 — designer-blessed)* | **XS–S — re-weight the historical state-bias term at `calcStateVote` (`phaseRunners.ts:3709`/`:3697`).** Today `baseLean*5` is the dominant swing; re-band it into the **+3/+5 historical-bias range** behind a `game.biasMode?` toggle (historical-plausible vs the designer's "go-crazy" mode). One of the two terms (with the +3 platform bonus) that drove the 492-40 board-wide blowout; capping its weight returns the recompute to the ~281-129 near-tie. Designer-blessed (`redbutton#POST 538-540, 603-607`). Pin the toggle default + the two bands. Ship in the QUICK-WIN bucket alongside QW19 + QW3. Binds at `phaseRunners.ts:3697/3709-3711`. | — (ships with QW19/QW3) | XS–S | bug **DH-72(b)** (`redbutton#POST 538-540, 603-607`; `phaseRunners.ts:3697/3709-3711`) — NEW (debt #64) | ready |
 | **QW21** | **★★ batch-27 DH-72(c) — HIDE the raw election math in the UI (anti-collusion)** *(NEW, batch 27 — designer-blessed)* | **XS–S — UI surface change: stop exposing the raw `calcStateVote` formula / numeric percentages.** Show only **which ideologies like a position + polls/maps**, never the raw `50 + baseLean*5 + …` math. Anti-collusion (a multiplayer concern surfaced live: players reverse-engineered the scorer to over-optimize); the modern run's hand-driven platform exploit was visible only because the math was legible. Designer-blessed (`redbutton#POST 538-540`). The SAME hide-the-math principle the #184 platform meter-cap builds in from day one (sub-fix B → Phase-1 #10/#181) — here it lands on the SHIPPED election scorer as a presentation-track fix. Ship in the QUICK-WIN bucket alongside QW19/QW20. | — (presentation track; pairs with #184's day-one hide-the-math) | XS–S | bug **DH-72(c)** (`redbutton#POST 538-540`) — NEW (debt #64) | ready |
 | **QW18** | **★ batch-15 #153 — global ×2 Command-gain multiplier (the UNBUILT half of the rookie-Command rule, `terror2000#POST 91`) — ★★ batch-17: NOW 3-SOURCE CANONICAL + LIVE-DEMONSTRATED → build-with-confidence** *(NEW batch 15 — RULED; ★★ batch 17 PROMOTED to canonical)* | **XS–S — one global multiplier on the Command-gain roll path** (a `gainCommand(p, basePct)` helper applying ×2 + the committee/career-track expertise-grant sites). Ted (`terror2000#POST 91-93`) made TWO house-rules official: **(a)** nobody is born with Command — **all rookies enter at 0 Command** (verified SHIPPED via #136, `phaseRunners.ts:216`) **AND every in-game Command-gain % is DOUBLED** to compensate (so Presidents emerge from in-game action, not real-world reputation — the **×2 multiplier is the only UNBUILT piece**); **(b)** rolling an already-held expertise on a grant = **NO new expertise (do NOT re-roll)** — already an invariant in the grant path. Pin the ×2 on every Command-gain % (the success→+1-Command rolls in E11/E13/E18 + the draft-grant + e.g. the Father-of-the-Constitution `command + 1` at `constitutionalConvention.ts:158,168` + the RevWar grants in `revolutionaryWar.ts`), gated nowhere (all eras). **★★ Batch-17 (`ted1772`) PROMOTES this to build-with-confidence / CANONICAL:** a 3rd source applies the rule front-to-back from a 0-Command boot — **3-source canonical (`terror2000` · `tedchange` · `ted1772`)** — and DEMONSTRATES the payoff LIVE: an **emergent 1st President (Arthur St. Clair), a CPU pol who booted at 0-Command / obscure and rose purely through play.** The ×2-Command-gain knob is **load-bearing and keystone-free** (it sits on the draft/command path). Pairs with **QW17** (#143 Command decay) — same Command economy, opposite direction (decay pares the pool, the ×2 lets contenders climb). No dependency; ship with the QW0 / XS-consistency cluster. **RULED by Ted (`terror2000#POST 91-93`; ★★ 3-source canonical via `ted1772` + a live emergent-President audit).** | — | XS–S | gap **#153 / `terror2000#POST 91-93` + ★★ `ted1772` (3-source canonical + St. Clair live demo)** — NEW + PROMOTED (canonical) | **ready (build-with-confidence)** |
-| **QW22** | **★★ batch-30 #216 — PV trait-name remap (forum→shipped `Trait` union) — the BLOCKING PREREQUISITE of the PV overhaul (debt #85)** *(NEW, batch 30 — the front-half of the PV overhaul; DO FIRST of the two PV QWs)* | **S — produce an explicit forum-trait → shipped-`Trait`-union map**, then apply #214's tiers through it. The 2023 `revampPV` trait vocabulary ≠ the current `Trait` union (`types.ts:62-117`): of the ~57 traits in vcczar's POST-33 tier list, **~15 are ABSENT** from the shipped union (Teflon, Military Leader, Bookkeeper, Geostrategist, Everyman, Lawful/Cop, Jurisprudence, Union Loyalist, Disharmonious, Lackey, Late Bloomer, Illicit, Pliable, Incoherent, Easily Overwhelmed), **2 are pure RENAMES** (`Flipflopper`→`Flip-Flopper`, `Two-faced`→`Two-Faced`), and **12+ SHIPPED traits were NEVER valued in 2023** (Nationalist/Globalist/Reformist/Loyal/Ambitious/Opportunist/Impressionable/Scandalous/Corrupt/Traitor/Outsider/Ideologue) — so **~17 of ~57 line-items (~30%) mis-key or DROP without the remap.** A literal transcription is wrong; the table is **tiers to RE-MAP, not literal keys.** Independently useful (clarifies the trait vocabulary) and **UNBLOCKS #214** — without it the per-trait tier table is un-applyable. **Pairs with #168** (the `planb` terminology audit) + the existing trait-rename tracking. No dependency; ship in the cheap-fixes lane. | — | S | gap **#216 / `revampPV` §6 D8 / POST 33; codebase-verified `types.ts:62-117` trait union vs the 2023 forum vocabulary** — NEW (debt #85) | ready (DO FIRST of the PV pair) |
+| **QW22** | **★★ batch-30 #216 — PV trait-name remap (forum→shipped `Trait` union) — the BLOCKING PREREQUISITE of the PV overhaul (debt #85)** *(NEW, batch 30 — the front-half of the PV overhaul; DO FIRST of the two PV QWs)* | **S — produce an explicit forum-trait → shipped-`Trait`-union map**, then apply #214's tiers through it. The 2023 `revampPV` trait vocabulary ≠ the current `Trait` union (`types.ts:62-117`): of the ~57 traits in vcczar's POST-33 tier list, **~15 are ABSENT** from the shipped union (Teflon, Military Leader, Bookkeeper, Geostrategist, Everyman, Lawful/Cop, Jurisprudence, Union Loyalist, Disharmonious, Lackey, Late Bloomer, Illicit, Pliable, Incoherent, Easily Overwhelmed), **2 are pure RENAMES** (`Flipflopper`→`Flip-Flopper`, `Two-faced`→`Two-Faced`), and **12+ SHIPPED traits were NEVER valued in 2023** (Nationalist/Globalist/Reformist/Loyal/Ambitious/Opportunist/Impressionable/Scandalous/Corrupt/Traitor/Outsider/Ideologue) — so **~17 of ~57 line-items (~30%) mis-key or DROP without the remap.** A literal transcription is wrong; the table is **tiers to RE-MAP, not literal keys.** Independently useful (clarifies the trait vocabulary) and **UNBLOCKS #214** — without it the per-trait tier table is un-applyable. **Pairs with #168** (the `planb` terminology audit) + the existing trait-rename tracking. **★★ Batch-36 FIRMS the renames with `terminology` SOURCE rulings (safe to implement):** Expertise **"Military"→"Army"** (vcczar AGREED — keep the Navy/Army split; the union `types.ts:182-191` has Military+Naval, NOT Army) + Trait **"Low Brow"→"Everyman"** (consensus forward-add) — both settled, no longer inferred; PLUS the whole PV family is now DESIGNER-CONFIRMED-DONE (`failednoms` POST 14). No dependency; ship in the cheap-fixes lane. | — | S | gap **#216 / `revampPV` §6 D8 / POST 33; codebase-verified `types.ts:62-117` trait union vs the 2023 forum vocabulary; ★★ batch-36 `terminology` SOURCE-RULES Military→Army + Low Brow→Everyman** — NEW (debt #85) + SOURCE-RULED | ready (DO FIRST of the PV pair) |
 | **QW23** | **★★ batch-30 DH-77 — PV floor-OFFSET clamp fix (replace `Math.max(0,…)` at `pv.ts:88`) (debt #85) — ★ batch-33 RE-SCOPED (worst trait = Incompetent −20, not the `lackey −53` typo)** *(NEW, batch 30 — standalone XS; the rest of the PV overhaul is a balance epic)* | **XS — replace the `Math.max(0, Math.round(total))` clamp at `pv.ts:88` with a constant floor-OFFSET** so sub-zero Politician-Values keep their ORDERING for the CPU's draft/leadership heuristic. The clamp is the most clearly *wrong* line today: it floors every negative PV to 0, collapsing the ordering of below-average pols that the CPU still needs to rank (it can't tell JFK Jr −5 from John Payne Todd −34 — both become 0). Ted's one hard demand in `revampPV` was *"no negative numbers"* for human display, satisfiable via a flat offset, NOT a destructive clamp. **Independently shippable** — does NOT require the #214/#215 reweight (the remaining PV sites `pv.ts:70-79` are the balance epic). Pairs with #214/#215/#216/#220 (all rebuild `pv.ts:70-88`). **★ Batch-33 RE-SCOPE (`groupthinkpv`):** the spreadsheet `lackey −53` was a TYPO (ruled −5, already correct in `pv.ts`); the genuine worst trait = **Incompetent −20** — the floor-OFFSET fix stands, just at the corrected magnitude. No dependency; ship in the cheap-fixes lane. | — | XS | bug **DH-77** (codebase `pv.ts:88` `Math.max(0,…)` clamp; superseded by `revampPV` #220; **★ batch-33 `groupthinkpv` RE-SCOPE: worst = Incompetent −20, `lackey −53` was a typo**) — NEW (debt #85) + RE-SCOPED | ready |
 | **QW24** | **★★ batch-33 REMOVE `pv*0.1` FROM ELECTIONS — delete the PV→election double-count (debt #85; the single highest-leverage line in batch 33) — SUPERSEDES the batch-30/31 "re-tune `pv*0.1`" note** *(NEW, batch 33 — designer-RULED; pairs with QW19 at the SAME line)* | **XS — delete the `+ pv * 0.1` term from `calcStateVote`'s general-election scorer at `phaseRunners.ts:3709`** (`pv = c.pvCache` `:3699`). The designer + room RULED **PV must NOT feed elections** — pricing PV into the vote DOUBLE-COUNTS the traits/abilities already present in BOTH PV and the election roll (`groupthinkpv` POST 36-38; a highest-PV election-bonus proposal was REJECTED). This is **not a re-tune** (the batch-30/31 note) — **the term should not exist.** **★ High-leverage twice over: (a)** it PAIRS WITH QW19's election-determinism work at the SAME line (route the `:3711` `Math.random` jitter through `rng.ts` in one touch — debt #1/#71); **(b)** it DECOUPLES the #214 PV reweight from elections so the now-unblocked PV epic can re-fit freely without distorting margins. **★ KEEP the 2.9.1 PRIMARY scorer's raw `pvCache` at `:3733`** — the primary is candidate *selection* (the CPU picking its nominee = the AI-utility use the ruling ENDORSES); remove ONLY `:3709`. No dependency; ship in the cheap-fixes lane alongside QW19/QW22/QW23. **RULED by the designer + room (`groupthinkpv` POST 36-38).** | — (ships with QW19 at the same line) | XS | gap **debt #85 / `groupthinkpv` POST 36-38** (codebase `phaseRunners.ts:3709` `+ pv*0.1`; `:3733` primary `pvCache` KEPT) — NEW; SUPERSEDES the batch-30/31 "re-tune `pv*0.1`" note | ready |
 | **QW25** | **★★ batch-34 FIX THE DH-79 NAVAL BUG — wire naval WIN/LOSS into the RevWar resolution (the #45-aligned naval slice; debt #104; `GM⇒App`)** *(NEW, batch 34 — code-verified bug; the ONLY pre-launch war change)* | **XS — make the RevWar win-check consult naval results.** Today `revolutionaryWar.ts:254-264` resolves the war WITHOUT ever reading `navalWins/navalLosses` (recorded at `:202`), so naval combat is **purely cosmetic** (the "one naval win ends naval forever" defect, confirmed in code). The fix is the **#45-aligned slice** vcczar sketched: a naval **WIN** → the next ground general gets **+1 Mil at 75%**, a naval **LOSS** → **−1 Mil**, both routed into the `:212-214` baseTarget so they shift the ground odds. This is deliberately the SAME shape the eventual #45 War-Score engine will consume (naval = a land-DIFFICULTY modifier), so the slice is **forward-compatible**, not throwaway. **★ This is the ONLY pre-launch war change** — the full #45 War-Score redesign is a DEFERRED POST-LAUNCH epic (the GM RULED war is "a side show," `rethinkwar` POST 26). RevWar-scoped, standalone (no dependency); ship in the cheap-fixes lane. **Code-verified bug (`revolutionaryWar.ts:254-264` vs `:202`); the slice is `rethinkwar`-aligned.** | — | XS | bug **DH-79** (codebase `revolutionaryWar.ts:254-264` ignores `navalWins/navalLosses` recorded `:202`; `rethinkwar` naval-as-land-difficulty origin) — NEW (debt #104) | ready |
@@ -4131,7 +4248,8 @@ engine; the UI shows only player-visible numbers (fog of war).
 | GM labor this retires | Grouped gaps | Lives in the roadmap at |
 |---|---|---|
 | Election / platform scoring, the swing die, historical-bias terms, **the third-party SPOILER vote-drain + the swing-state/safe-state cap** *(batch-31)* | #184, DH-72, #18, #14, QW3, **QW19–QW21**, **debt #71**, **#228**, **#230**, **#231** | **Quick-wins** (QW3 ±3 cap, QW19/QW20/QW21 = DH-72(a/b/c) seed+narrow / bias-band / hide-the-math) → **E20** (bill/election scoring) → the #184 platform meter-cap builds INTO **E10/#181**. **★ Batch-28: debt #71 is the TECHNICAL DEFINITION of the QW19–QW21 trio + the batch headline — it fuses the swing-die seed+narrow + the flagship `Math.random` leak (debt #1) + the D6/D3 fork in ONE patch; the election die is REFUTED-as-shipped (`:3711` raw `Math.random`, no die), so this QW IS the work.** **★ Batch-31: #228** the third-party VOTE-DRAIN ruleset (party-of-origin + shared-ideology + incumbency + the Charisma region→nationwide escalation; wholly unbuilt, no `spoiler`/`thirdParty` drain in `src/`; M; `GM⇒App` → E20, pairs #48/#214) + **#230** the swing-state/safe-state CAP (only party-pref ≤1 states flip; safe states draw a bounded margin) — **#230 PAIRS WITH QW19 at the SAME `calcStateVote` `:3711` jitter** (seed it via `rng.ts`, then gate it behind the swing-state set; S-M) + **#231** the modern-Moderate over-performance balance REGRESSION CASE (re-tune when #18/#51 land — not a new system). |
-| **★ PV-electability / PV-AS-AI-UTILITY — the per-trait + per-ability Politician-Value math that decides "who's electable" (the CPU's draft/steal/persuasion/leadership/primary-selection heuristic; ★ batch-33: NOT an election input)** *(batch-30; ★ batch-33 RE-FRAMED — `GM⇒App`)* | **#214** (per-trait tier table), **#215** (per-ability curve + Command re-weight), **#216** (trait-name remap — BLOCKING), **DH-77** (floor-offset clamp), **★ QW24** (remove `pv*0.1`) | **Quick-wins** for the front half (**QW22 #216** remap + **QW23 DH-77** clamp + **★ batch-33 QW24** remove `pv*0.1` — the cheap, no-balance-risk part) → a **Phase-1 BALANCE EPIC** for #214/#215 + the 0%-built trait-EFFECTS-in-PV layer (debt #85; `pv.ts:70-88` is a flat ±4/−5 + flat skill/command formula today). **★★ BATCH-33 RE-FRAME (`groupthinkpv` POST 36-38):** the designer + room RULED **PV must NOT feed elections** — so the prior "PV is ALSO a direct election input … the reweight MUST re-tune `pv*0.1` in the same PR" framing is SUPERSEDED: PV is the ② GM-as-opponent's draft / steal / persuasion / leadership / primary-selection AI-utility metric ONLY, and `pv*0.1` is **REMOVED outright from `calcStateVote`** (QW24, `phaseRunners.ts:3709`) — the 2.9.1 PRIMARY scorer's raw `pvCache` (`:3733`) is the endorsed AI-utility use and is **KEPT**. **★ The "GATED on the un-ingested 'Groupthinking the Political Value' thread" call is LIFTED — that thread is now INGESTED (`groupthinkpv`); the epic moves gated → READY-AFTER-#216** (curve RULED: Command×15 · Legis/Gov/Admin×10 · Mil/Jud×5 per level + expertise +5; display 0–100/50-avg, so #220 is off Decision-gated; only open human-call = office-magnitude ↔ 0–100 scale). |
+| **★ PV-electability / PV-AS-AI-UTILITY — the per-trait + per-ability Politician-Value math that decides "who's electable" (the CPU's draft/steal/persuasion/leadership/primary-selection heuristic; ★ batch-33: NOT an election input)** *(batch-30; ★ batch-33 RE-FRAMED — `GM⇒App`)* | **#214** (per-trait tier table), **#215** (per-ability curve + Command re-weight), **#216** (trait-name remap — BLOCKING), **DH-77** (floor-offset clamp), **★ QW24** (remove `pv*0.1`) | **Quick-wins** for the front half (**QW22 #216** remap + **QW23 DH-77** clamp + **★ batch-33 QW24** remove `pv*0.1` — the cheap, no-balance-risk part) → a **Phase-1 BALANCE EPIC** for #214/#215 + the 0%-built trait-EFFECTS-in-PV layer (debt #85; `pv.ts:70-88` is a flat ±4/−5 + flat skill/command formula today). **★★ BATCH-33 RE-FRAME (`groupthinkpv` POST 36-38):** the designer + room RULED **PV must NOT feed elections** — so the prior "PV is ALSO a direct election input … the reweight MUST re-tune `pv*0.1` in the same PR" framing is SUPERSEDED: PV is the ② GM-as-opponent's draft / steal / persuasion / leadership / primary-selection AI-utility metric ONLY, and `pv*0.1` is **REMOVED outright from `calcStateVote`** (QW24, `phaseRunners.ts:3709`) — the 2.9.1 PRIMARY scorer's raw `pvCache` (`:3733`) is the endorsed AI-utility use and is **KEPT**. **★ The "GATED on the un-ingested 'Groupthinking the Political Value' thread" call is LIFTED — that thread is now INGESTED (`groupthinkpv`); the epic moves gated → READY-AFTER-#216** (curve RULED: Command×15 · Legis/Gov/Admin×10 · Mil/Jud×5 per level + expertise +5; display 0–100/50-avg, so #220 is off Decision-gated; only open human-call = office-magnitude ↔ 0–100 scale). **★★ BATCH-36: the PV revamp is now DESIGNER-CONFIRMED-DONE** — `failednoms` POST 14 is vcczar stating the SHIPPED RESULT (*"a 0-100 scale… Clay 98, TR 100… Command worth more… new traits"*), so #220/#215/#214 are all DESIGN-CONFIRMED (not inferred); the path is unchanged (QW22 FIRST → #214/#215), `pv.ts` is STILL pre-revamp, NO re-sequence. |
+| **★ Judiciary / court adjudication — the SCOTUS docket/tier + the COURT-FORM axis (Judicial Philosophy + Focus Courts) + per-committee judicial-expertise the GM would hand-rule** *(batch-35/36 — `GM⇒App`; the court complement to the election/regime referee rows)* | **#249** (the per-case Landmark tier + SCOTUS docket), **#251** (Judicial Philosophy axis [Judicial Ideology/Doctrine] + Focus Courts [4 regional appellate courts + Rule-of-Four cert + affirm/reverse + deny-cert-on-Landmark] — MOSTLY AMPU-2 + the 10% confirmation drift sub-item), **#252** (committee→expertise too coarse — judicial sub-expertises), with **#25/#52/#218** | **The SCOTUS-docket epic (Phase-2 #25/E25)** for #249 + #218 (Rule-of-Four CJ refusal) — the per-term docket the GM hand-curated; **#251 = a DEFERRED AMPU-2 epic** (Judicial Philosophy + Focus Courts, gated behind #25/E25; the SCOTUS-cluster design ORIGIN of #52/#218/#249/#25) recorded in the parking/AMPU-2 quarantine, with its ONE near-term option = the **XS-S 10% confirmation ideology-drift** (reconcile vs #52's 10-yr drift so they don't double-fire); **#252 = small/designer-deferred** (WONTFIX-as-experiences, `COMMITTEE_EXPERTISE` `types.ts:1237` fixed 4→1). The GM hand-adjudicated every court ruling / per-case significance / judicial-expertise grant → this is the REFEREE's COURT-HALF (the docket/tier is near-term in E25; the philosophy/courts axis is the deferred AMPU-2 epic). Shipped court = a coin-flip on 4 strings (`phaseRunners.ts:3397`), 0% built. **This is a VIEW — adding it re-sequenced nothing.** debt #111/#113/#114; game-mechanics §22.7.w, §22.7.v, §8.2. |
 | **★ Regime adjudication + active-policy tracking — the GOVERNMENT-FORM AXIS + the STATEFUL POLICY-GENRE FRAMEWORK the GM would hand-adjudicate / hand-track** *(batch-32 — `GM⇒App`)* | **#236** (the alternate-government-form scenario axis: Fascist/Communist/Theocratic regime transition + the cross-form authoritarian kit + Theocracy ×5 by denomination), **#237** (the stateful policy-genre framework: Business/Labor + Currency + Copyright genres, `*-Default` baselines, `L/P/G/S` prefixes, `Preq:` chains reading/feeding the SHIPPED `economic` meter) | **The era-content / #221 content-primitive area** (both ride the unbuilt #221 per-administration Pres-Action/Legis-Prop/Gov-Action/Scripted-Event registry — `grep -iE 'presAction\|legisProp\|govAction\|scriptedEvent' src/` = ZERO, so neither lands before #221). **#236** is **L**, additionally GATED on the **#239 religion field** (Theocracy) + §24 amendments (empower-executive primitive); its transition TRIGGER + win/loss/branch END-STATE are a HUMAN ruling (ties #88/#188 — Decision-gated). **#237** is **M-L**, couples to the SHIPPED EconStab economic engine (§29.7); its "no policy" default is a HUMAN ruling (Decision-gated). Both are the REFEREE half (the GM hand-adjudicated a regime transition / hand-tracked which policies were active + their meter effects). DISTINCT from #6/#354 movement-factions (those are lobbies) and from interest-cards/lobbies (those nudge state industries). debt #97/#98; game-mechanics §30.22.A, §30.22.B. |
 | **★ Curated DATA-MODEL + DATASET — the demographic/relationship/override fields + the president statlines the GM hand-tracked / hand-computed (FOUNDATIONAL: the schema + data the systems above read)** *(batch-32 — `GM⇒App`)* | **#238/#239/#194** (gender + suffrage gate + spousal Key-Advisor; the `southernUnionist`/`canBeIndependent`/`partyFlipBudget`/`canMoveStates` override flags + the race×religion×sex demographics triple; the dynasty/family graph), **#240** (the ~47 president statlines added to the `ROWS` source array → `CURATED_ROWS`) | **The dataset/roster work** (#238/#239/#194 = the SCHEMA half, **M**, a save-migration; #240 = the DATA half, **S-M**, a STANDALONE author task OFF the engine track, GATED on the #216 remap = QW22). The **OPPONENT/referee boundary** for #239 (the GM hand-decided who may go Independent / flip parties / stay Unionist → data-driven gates the CPU + engine read) + the **referee** content-authoring for #240 (removes statline math from the GM). FOUNDATIONAL: the **#239 religion field gates #236-Theocracy**, and the #99 cluster is the schema half that #240's Misc/Demographics statline lines wait on. HUMAN-CALL on #240: trust the 2021-vintage raw skills vs re-derive under the #214/#215 curve (Author-before-build). debt #99/#100; game-mechanics §30.22.C, §30.18.E. |
 | **★ Presidential/cabinet IMPLEMENTATION + governing engine — the post-legislation success→Blunder pass + ~30 governing traits the GM resolved by hand** *(batch-30 — `GM⇒App`)* | **#217** (implementation sub-engine: expertise-gated genre traits + Delegator/Micromanager + Crisis-{Manager,Admin,Gov} + Passive/Predictable + Passive+Pliable PUPPET + Magician) | **E16** (cabinet) + **E6** (lingering/blunder) — an **L system layer** riding #179's roll engine (`phaseRunners.ts:3260`) + #182's action budget (`:3632`) + §14.1.y; gated on federalism existing. De-dup vs Efficient/Egghead/Easily-Overwhelmed first; these traits also need PV values (#214) + the remap (#216). debt #86. |
@@ -5421,6 +5539,70 @@ and #177/#178 are the federalism-era next-build content.**
 > debt #104-#108; technical-guide §9 batch-34 lead + §9.6 + §8 debt #104-#108; game-mechanics §30.24.A, §30.24.B,
 > §30.24.C.
 
+> **★★ Batch-36 Phase-1 FOLD-INS (`judiciaryidea`/`terminology`/`failednoms`/`histspeakers`/`space`; debt #113-#114;
+> a DESIGN/DATA batch whose deltas FOLD into existing epics/clusters or are recorded deferrals — NO new keystone, NO
+> re-sequence, top-of-queue UNCHANGED).** **The within-batch order is binding: firm #216 (cheap-fixes, now) → #240
+> two-roster expand (data) → the #251 10% confirmation-drift sub-item (reconcile vs #52, inside E25/the SCOTUS docket)
+> → #252 (small/deferred) → the big #251 Judicial-Philosophy/Focus-Courts epic (DEFERRED AMPU-2).**
+> **★★★ THE PV-REWEIGHT BALANCE EPIC IS NOW DESIGNER-CONFIRMED-DONE (debt #85; `pv.ts:70-88` + the 0%-built trait-
+> EFFECTS layer; the batch-33 block UNBLOCKED it, batch-36 CONFIRMS the target spec).** `failednoms` POST 14 is vcczar
+> stating the SHIPPED RESULT of the overhaul in his own voice: *"a 0-100 scale… Clay 98, TR 100… I made Command worth
+> more points… created a bunch of new traits."* So the build no longer targets an inferred spec — **#220 (0–100, can-
+> exceed; Clay 98 / TR 100 are the canonical exhibits), #215 (Command re-weighted UP), and #214 (per-trait tiers with
+> the new-trait additions) are ALL DESIGN-CONFIRMED.** `pv.ts` is STILL fully pre-revamp (`:70-79` flat skill/command;
+> `:88` `Math.max(0,…)` clamp), so the epic is unchanged in shape and order: **#216 remap (QW22, now SOURCE-RULED for
+> the Army/Everyman renames) FIRST → #214 tiers + #215 curve + #220 + remove `pv*0.1` (QW24) + BUILD the trait-EFFECTS-
+> in-PV layer.** The ONLY open human-call across the whole epic is STILL the office-magnitude ↔ 0–100 scale reconcile.
+> **★ DO NOT re-sequence — the confirmation REINFORCES the existing path; it does not move anything.** debt #85/#113.
+> **★ #251 JUDICIARY OVERHAUL = the SCOTUS-CLUSTER DESIGN ORIGIN; MOSTLY AMPU-2 (a DEFERRED L-XL EPIC) + ONE small
+> near-term sub-item → folds into the SCOTUS-docket epic (Phase-2 #25/E25) + the parking/AMPU-2 quarantine (debt #113;
+> `GM⇒App`).** `judiciaryidea` is the design ORIGIN of #52/#218/#249/#25 (it predates `scotusfuture` ~6 wks). Its two
+> big systems — **Judicial Philosophy** (Judicial Ideology [Cons/Swing/Liberal, per-personal-ideology base + trait
+> mods] + Judicial Doctrine [per-case aye/nay mods], hidden-until-revealed) + **Focus Courts** (4 regional appellate
+> courts + Original/Appellate jurisdiction + **Rule-of-Four cert** + affirm/reverse [points unchanged by reverse] +
+> **deny-cert-on-Landmark → SC loses points**) — are **MOSTLY AMPU-2** (vcczar+CE2 PUNTED both to AMPU 2/DLC). VERIFIED
+> 0% shipped: no `judicialIdeology`/`focusCourt`/`ruleOfFour` types in `src/`, and `resolveIdeologyShift` (2.1.5,
+> `phaseRunners.ts:767`) is the faction-conversion engine, NOT justice drift. **★ The ONE near-term option is the XS-S
+> forum-AMPU-1 10% confirmation ideology-drift** (a confirmed justice 10% immediate ±1 shift + per-10-yr further shifts
+> + 5% leftward) — but it **MUST RECONCILE against #52's existing 10-yr drift so the two don't DOUBLE-FIRE** (one drift
+> engine, not two stacked). **★ The big Judicial-Philosophy/Focus-Courts epic is a DEFERRED AMPU-2 epic recorded in the
+> parking/AMPU-2 quarantine, gated BEHIND the SCOTUS docket #25/E25; the 10% drift sub-item is the only near-term work,
+> and it folds into E25/#52.** #25/#52/#218/#249 are annotated as design-originated in #251. Shipped court = a coin-flip
+> on 4 strings (`phaseRunners.ts:3397`). debt #113; game-mechanics §22.7.v.
+> **★ #252 COMMITTEE→EXPERTISE TOO COARSE → small / designer-DEFERRED (debt #114; `GM⇒App`).** `terminology`: the
+> judicial-committee grant gives only the single **"Justice"** expertise; players want judicial SUB-expertises, and the
+> designer CONCEDES the coarseness but **WONTFIX-es them as separate experiences (interest≠experience).**
+> `COMMITTEE_EXPERTISE` (`types.ts:1237`) is a fixed 4→1 map (Justice→Justice). **No near-term scope — recorded in the
+> small/deferred bucket; it does NOT block the engine track.** debt #114; game-mechanics §8.2.
+> **★ #216 "MILITARY"→"ARMY" + "LOW BROW"→"EVERYMAN" NOW SOURCE-RULED → firms QW22 (the cheap-fixes lane; no re-size).**
+> `terminology` (vcczar+Ted) is the AUTHORITATIVE source: keep the Navy/Army split (the union `types.ts:182-191` carries
+> Military+Naval, NOT Army) for the Expertise rename, and add "Everyman" as a forward-trait (neither name is in the
+> `Trait` union yet). Both fold into the existing QW22 #216 remap (RECONFIRMING the batch-34 Army-rename); safe to
+> implement. debt #113; game-mechanics §30.26.
+> **★ #240 GROWS — two more rosters (debt #100/#106/#108; the standalone author/DATA task OFF the engine track,
+> `scripts/seedDataset.mjs`).** `failednoms` adds ~36 FAILED presidential-nominee statlines (Pinckney → Hillary) at
+> **FULL strength** → the **#246/N1 full-strength tension applies to this roster too** (the sub-floor balance rule is
+> wired ONLY to `ERA_ROWS`/`ERA_FIGURES` `seedDataset.mjs:239-242`, so these would enter the draft fully competitive —
+> the tier-model human-call stays in Decision-gated (A)); `histspeakers` adds the Speaker-of-the-House roster (marquee
+> leaders must be in `ROWS`). Both → `CURATED_ROWS`; **HARD PREREQ = the #216 remap (QW22) + the Army-rename** (apply
+> BEFORE transcribing — the rosters carry Army expertise + novel traits), then regenerate. Folds alongside the #120
+> dataset umbrella; does NOT block / get blocked by the engine track. debt #100/#106/#108.
+> **★ SHARPENINGS (annotate in place, no new scope):** **#20** (gerrymander/gov-action umbrella, debt #74) — `space`
+> supplies a 2nd concrete "Gov actions can't be flat" proof = the **geography-gated launch-site Gov action** (per-state
+> success-odds, equator/Deep-South favored + state-adjacency agency-merge + first-gov-wins funding race), ALONGSIDE
+> DH-53 (Jim-Crow) — sharpens #20, no re-size. **#237** (policy-genre framework, debt #98) — `space` adds the Space
+> stateful genre (own "No federal legislation regarding outer space" `*-Default` + L/P/G menu); folds into the era-
+> content/#221 area, no re-size. **#248** (the 33-value `subtype` taxonomy) — `space` adds the "Space" subtype value
+> (genre ⊂ subtype). **#221/#92** (era/administration/Speaker-tenure-keyed legislation pool, 0% built) — `histspeakers`
+> corroborates (the per-Speaker-tenure bill record + the Muhlenberg-weak→Clay-transformed Speaker-power arc → #1005/#28;
+> per-run ~50% historical match → #92). **#225** (Celebrity expiry) — `terminology` rules Celebrity = nationwide-
+> recognition-only, earned-but-disliked (Walker stripped); corroboration. **#194** (dynasty/lineage) — `failednoms`
+> adds 25 marriage-based dynasties (folds into the #194 seed table). **#239** (misc demographic flags) — `failednoms`
+> adds Party-Flip/Independent/Southern-Unionist/can-move-state/Catholic flags (folds into the #239 schema). **NO
+> re-sequence; the top-of-queue is UNCHANGED (QW0 → K0/K2 → K3/K4 + scenarioBoot → E1); the ONLY cheap-fixes-lane delta
+> is FIRMING #216 (source-ruled), and #251's big epic is a recorded DEFERRED AMPU-2 item.** debt #113-#114; technical-
+> guide §9 batch-36 lead + §9.6 + §8 debt #113-#114; game-mechanics §22.7.v, §8.2, §11.3, §3.4.1, §30.26.
+
 ### Presentation track (parallel — separate workstream)
 
 > Almost all of P0–P4 are **read-only views over snapshot data that already
@@ -5592,8 +5774,16 @@ upload needed). **★ matthewyoung123-1772 remains an un-ingested founding-varia
 33). **Batch 34 records NO new author-before-build RULES hole** — its deltas are buildable engine/data work, a
 quick-win (DH-79), a recorded post-launch deferral (#45), or a Decision-gated balance call (#246/N1, recorded in
 Decision-gated (A), not here): #243/#244/#245 fold into existing clusters; #240 is the `scripts/` DATA task; #216
-Army-rename folds into QW22. **Total
-author-before-build RULES items: 13** (UNCHANGED — ★ batch-34 nets 0: a new un-ingested coverage candidate [1868-Bushwa] + a balance Decision-gated item [#246/N1], no new RULES hole; ★ batch-33 nets 0 and UN-GATES the PV epic out of this bucket: one prior coverage gap RESOLVED, no new RULES hole; ★ batch-32 nets 0: one DATA-authoring human-call recorded, no new RULES hole; ★ batch-31 nets 0: 3 RECONCILED, no new hole)
+Army-rename folds into QW22. **★★ BATCH-36 CORPUS-COVERAGE UPDATE — NO new un-ingested candidate, NO delta** (a 5-thread
+DESIGN/DATA batch, NO playtest run to ingest): the still-needed un-ingested set is UNCHANGED — **(1) the 1840-start
+persistent-Whig ~100-yr run** (still highest-value, no 1840 scenario analog ships) **+ (2) matthewyoung123-1772** (the
+rookie founding run) **+ the carried (3) 1868-Bushwa** Gilded-Age candidate + **(4) 2016-start to confirm** (both from
+batch 34). **Batch 36 records NO new author-before-build RULES hole** — its deltas are buildable/data work or recorded
+deferrals: the PV revamp is now DESIGNER-CONFIRMED-DONE (still buildable Phase-1, NOT a rules hole); #251's big Judicial-
+Philosophy/Focus-Courts epic is a DEFERRED AMPU-2 item (parking, not author-before-build) and its near-term 10% drift
+slice reconciles into E25/#52; #252 is a small designer-DEFERRED gap (parking); #216 is SOURCE-RULED (firms QW22, not a
+rules hole); #240/the Speaker+failed-nominee rosters are the `scripts/` DATA task; Space folds into #237/#20/#248. **Total
+author-before-build RULES items: 13** (UNCHANGED — ★ batch-36 nets 0: 2 NEW gaps both fold to parking/data [#251 AMPU-2 epic + 10% drift slice; #252 small/deferred], no new RULES hole, no new coverage candidate; ★ batch-34 nets 0: a new un-ingested coverage candidate [1868-Bushwa] + a balance Decision-gated item [#246/N1], no new RULES hole; ★ batch-33 nets 0 and UN-GATES the PV epic out of this bucket: one prior coverage gap RESOLVED, no new RULES hole; ★ batch-32 nets 0: one DATA-authoring human-call recorded, no new RULES hole; ★ batch-31 nets 0: 3 RECONCILED, no new hole)
 (DH-1, #10/#84, §25.9, DH-12, DH-13, DH-14, DH-15, DH-25, DH-33, DH-41, **DH-49**,
 **DH-54**, **#122 pardon mechanics batch-12**); **PLUS the batch-29 Era-of-the-Future proposal-library
 CONTENT epic (#206), tracked here for visibility, folds into E31 / the era-content authoring.** **Decision-gated category — ★★ batch-15
@@ -6026,8 +6216,14 @@ Distinct from "Roadmap decisions" below, which are tech-lead/planner calls alrea
   is a COIN-FLIP — `phaseRunners.ts:3397,3648` — with no docket and no player surface).
   **So E25 (the SCOTUS docket, → Phase-2 #25) is NOT blocked by this fork — build the
   docket; the player-vs-CPU surface is what waits on the pick.** Verified shipped:
-  `phaseRunners.ts:3397,3648` (coin-flip), no docket. — #52 (`dem1820` delay/dismiss-
-  only live court vs `pop` POST 479-480 disabled; docket → **E25**).
+  `phaseRunners.ts:3397,3648` (coin-flip), no docket. **★ BATCH-36 PROVENANCE: #52 (with #218/#249/#25)
+  is design-ORIGINATED in #251 (`judiciaryidea`, the JUDICIARY OVERHAUL — it predates `scotusfuture`
+  ~6 wks and fully argues this player-vs-CPU fork: CE2's independent-default-with-a-Roe-abuse-vector vs
+  vcczar's keep-player-SC).** The #251 epic ALSO carries the ONE near-term 10% confirmation ideology-
+  drift slice that **MUST RECONCILE with #52's existing 10-yr drift so they don't double-fire** — so
+  when this fork is picked, fold the #251 10% drift into the SAME drift engine (one engine, not two).
+  — #52 (`dem1820` delay/dismiss-only live court vs `pop` POST 479-480 disabled; ★ batch-36 design-
+  origin `judiciaryidea`/#251; docket → **E25**).
 - **★ #207 — TIMELINE-COMPLETION MODEL: year-cap vs open sandbox vs score-out (NEW
   batch 29, debt #79).** The build has NO terminal/completion state — the only terminal
   state is `game.gameEnded` (`types.ts:1635`) at ONE event-driven LOSS site
@@ -6366,6 +6562,37 @@ row (often as an XS-S addition to an existing epic).
   and the group concurred it's playtest-impractical (`apptdeepdive§G N7 POST 6-8, 20, 233,
   251`); pairs with #234 as the scout/vet layer. **Park both; do NOT schedule for AMPU 1.**
   — `apptdeepdive` (`b9028796`); game-context gaps #234/#235.
+- **★ #251 JUDICIARY OVERHAUL (Judicial Philosophy + Focus Courts) — DEFERRED AMPU-2 EPIC (the
+  SCOTUS-cluster DESIGN ORIGIN; NEW batch 36, debt #113; `GM⇒App`; do NOT schedule the big epic for
+  AMPU 1).** `judiciaryidea` (Cal-proposed; vcczar+CE2 PUNTED both big systems to AMPU 2/DLC) is the
+  **design ORIGIN of #52/#218/#249/#25** (it predates `scotusfuture` ~6 wks — every SCOTUS-docket
+  item traces here). Two big AMPU-2 systems: **(1) Judicial Philosophy** — a per-justice **Judicial
+  Ideology** (Cons/Swing/Liberal, per-personal-ideology base + trait mods) + **Judicial Doctrine**
+  (per-case aye/nay mods), **hidden-until-revealed**; **(2) Focus Courts** — 4 regional appellate
+  courts + Original/Appellate jurisdiction + **Rule-of-Four cert** + affirm/reverse (points unchanged
+  by reverse) + **deny-cert-on-a-Landmark → the SC loses points.** VERIFIED 0% shipped: no
+  `judicialIdeology`/`focusCourt`/`ruleOfFour` types in `src/`; `resolveIdeologyShift` (2.1.5,
+  `phaseRunners.ts:767`) is the faction-conversion engine, NOT justice drift; the shipped court is a
+  `chance(0.5)` coin-flip on 4 hardcoded strings (`phaseRunners.ts:3397`). **L-XL, gated BEHIND the
+  SCOTUS docket #25/E25 — record it, do NOT scope the big epic pre-launch (AMPU-2 / DLC).** **★ THE
+  ONE NEAR-TERM SLICE that IS in scope = the XS-S forum-AMPU-1 10% confirmation ideology-drift** (a
+  confirmed justice gets a 10% immediate ±1 ideology shift + per-10-yr further shifts + a 5% leftward
+  bias) — but it **MUST RECONCILE against #52's existing 10-yr SCOTUS drift so the two don't DOUBLE-
+  FIRE** (one drift engine, not two stacked); the slice folds into the SCOTUS docket (E25) / the #52
+  player-vs-CPU fork once #52 is picked, NOT a standalone row. The #52 player-vs-CPU debate
+  (CE2's independent-default-with-a-Roe-abuse-vector vs vcczar's keep-player-SC) is also fully argued
+  here (provenance for the Decision-gated (A) #52 fork). — #251 (`judiciaryidea`; debt #113; the big
+  Philosophy/Focus-Courts epic = AMPU-2 parking; the 10% drift slice → E25/#52; design-ORIGIN of
+  #52/#218/#249/#25; game-mechanics §22.7.v).
+- **★ #252 JUDICIAL COMMITTEE→EXPERTISE TOO COARSE — small / designer-DEFERRED (NEW batch 36, debt
+  #114; `GM⇒App`; WONTFIX-as-experiences, not near-term).** `terminology`: the judicial-committee
+  grant gives only the single **"Justice"** expertise; players want judicial SUB-expertises (e.g. a
+  constitutional-law vs criminal-law distinction), and the designer **CONCEDES the coarseness but
+  declines to model them as separate experiences (interest≠experience — a player's interest in a sub-
+  area is not the same as earned experience in it).** VERIFIED: `COMMITTEE_EXPERTISE` (`types.ts:1237`)
+  is a fixed 4→1 map (Justice→Justice). **A small, designer-deferred gap — recorded so a future
+  contributor doesn't silently "add sub-expertises"; no near-term scope, does NOT block the engine
+  track.** — #252 (`terminology`; debt #114; `types.ts:1237` fixed 4→1 map; game-mechanics §8.2).
 - **★ #204 skill-scale = a DECISION RECORD, not a build item (NEW batch 28).** The
   community pushed hard for **0-10** skills (a Discord poll went 16-4); the designers
   (vcczar+Ted) DECIDED to **keep 0-5** — not auto-convertible (would require re-tuning
@@ -6425,7 +6652,8 @@ row (often as an XS-S addition to an existing epic).
 
 ## Sequencing notes
 
-Why the order is what it is — the tech-lead's binding calls (§9 batch-35 lead +
+Why the order is what it is — the tech-lead's binding calls (§9 batch-36 lead +
+§9.6 batch-36 + §8 debt #113-#114 + §9 batch-35 lead +
 §9.6 batch-35 + §8 debt #109-#112 + §9 batch-34 lead +
 §9.6 batch-34 + §8 debt #104-#108 + §9 batch-33 lead +
 §9.6 batch-33 + §8 debt #101-#103 + updated #85/#87/#73 + §9 batch-32 lead +
@@ -6442,7 +6670,35 @@ Why the order is what it is — the tech-lead's binding calls (§9 batch-35 lead
 §9.1.10 gilded-era content epic + §9 batch-13 lead +
 §6.6.1 batch-13 + §9.6 batch-13 + §9.1.3 methodology + §9 batch-12 lead +
 §9.6 batch-12 + §9 batch-11 lead + §9 batch-10 lead + §9.1.9 + §9 batch-9 lead +
-§9.1.5 + §9.1.8 + §9.1.3 + §9.6 + §9.1.6 + §9.1.7). **★ Batch 35
+§9.1.5 + §9.1.8 + §9.1.3 + §9.6 + §9.1.6 + §9.1.7). **★ Batch 36
+(`judiciaryidea`/`terminology`/`failednoms`/`histspeakers`/`space`) is a DESIGN/DATA batch (NO
+playtest) whose binding sequencing call is a SET OF FOLD-INS + ONE design-confirmation, NOT a
+re-sequence. **★ HEADLINE — the PV REVAMP is DESIGNER-CONFIRMED-DONE** (`failednoms` POST 14, vcczar
+in his own voice: *"a 0-100 scale… Clay 98, TR 100… Command worth more… new traits"*) → #220/#215/#214
+are all DESIGN-CONFIRMED, so the build targets the designer's STATED outcome, not an inferred spec.
+**This REINFORCES the EXISTING path and changes NOTHING about order: ship #216 remap (QW22, BLOCKING,
+now SOURCE-RULED for the Army/Everyman renames) FIRST → then #214 tiers + #215 curve + #220 + remove
+`pv*0.1` (QW24) + the trait-EFFECTS-in-PV layer; the ONLY open human-call is still office-magnitude ↔
+0–100 scale. DO NOT re-sequence — the path already exists.** **#251 Judiciary overhaul is the SCOTUS-
+cluster DESIGN ORIGIN of #52/#218/#249/#25** (it predates `scotusfuture` ~6 wks); its two big systems
+(Judicial Philosophy axis + Focus Courts) are **MOSTLY AMPU-2 — a DEFERRED L-XL epic recorded in the
+parking/AMPU-2 quarantine, gated BEHIND the SCOTUS docket #25/E25** (VERIFIED no `judicialIdeology`/
+`focusCourt`/`ruleOfFour` in `src/`; `resolveIdeologyShift` 2.1.5 is faction-conversion, NOT justice
+drift). Its **ONE near-term sub-item = the XS-S 10% confirmation ideology-drift, which MUST RECONCILE
+against #52's existing 10-yr drift so they don't double-fire** (one drift engine, folds into E25/#52).
+**#252 committee→expertise too coarse = small / designer-DEFERRED** (judicial sub-expertises WONTFIX-ed
+as experiences — interest≠experience; `COMMITTEE_EXPERTISE` `types.ts:1237` fixed 4→1). **#216 renames
+now SOURCE-RULED** (`terminology`: Military→Army keep-the-Navy/Army-split + Low Brow→Everyman forward-
+add → firms QW22, safe to implement). **Space folds into #237** (the Space stateful genre) **+ #248**
+(the "Space" subtype) **+ a 2nd #20 "Gov actions can't be flat" proof** (the geography-gated launch-site
+Gov action, alongside DH-53 Jim-Crow). **#240 grows** with two more rosters (~36 full-strength failed
+nominees — the #246/N1 tension applies — + the Speaker roster → `CURATED_ROWS`; apply #216 BEFORE
+transcribing, then regenerate). **The GM-replacement lens ① referee gains the judiciary/court half**
+(#251/#252 as the court complement to the #249 docket/tier) — a VIEW, no re-sequence. NO gap closed
+(2 NEW gaps #251/#252), NO new keystone, NO re-sequence; top-of-queue UNCHANGED (QW0 → K0/K2 → K3/K4 +
+scenarioBoot → E1). Within-batch order: firm #216 (cheap-fixes, now) → #240 two-roster expand (data) →
+the #251 10% drift sub-item (reconcile vs #52, inside E25) → #252 (small/deferred) → the big #251
+Philosophy/Focus-Courts epic (DEFERRED AMPU-2). debt #113-#114.** **★ Batch 35
 (`statelean`/`futureideas`/`scotusfuture`/`electiondisc`/`redbutton1960`) is a CONTENT/DESIGN
 batch (1 playtest RESTART + 4 design/content/data) whose binding sequencing call is a SET OF
 FOLD-INS, not a re-sequence: the two headlines BOTH fold into existing keystones. **#247 event-

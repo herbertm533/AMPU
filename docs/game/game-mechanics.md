@@ -360,6 +360,7 @@
     - [30.23 Rulings folded from batch 33 — the FIVE design/discussion/build threads (`groupthinkpv` / `legisexecgov` / `ampuelections` / `housepoll` / `excelautomate`)](#3023-rulings-folded-from-batch-33--the-five-designdiscussionbuild-threads-that-delivered-long-flagged-gating-items-groupthinkpv--legisexecgov--ampuelections--housepoll--excelautomate)
     - [30.24 Rulings folded from batch 34 — the FIVE war/data/record threads (the #45 War-Score DESIGN ORIGIN + DH-79) (`rethinkwar` / `kiaofficers` / `strongnevernom` / `majorevents` / `newplaytest`)](#3024-rulings-folded-from-batch-34--the-five-wardatarecord-threads-the-45-war-score-design-origin--dh-79-rethinkwar--kiaofficers--strongnevernom--majorevents--newplaytest)
     - [30.25 Rulings folded from batch 35 — the FIVE content/design/playtest threads (#247 event-state-lean + #248 subtype-taxonomy + the 1960-restart #186 PROOF + #249/#250/DH-80) (`statelean` / `futureideas` / `scotusfuture` / `electiondisc` / `redbutton1960`)](#3025-rulings-folded-from-batch-35--the-five-contentdesignplaytest-threads-247-event-state-lean--248-subtype-taxonomy--the-1960-restart-186-proof--249250dh-80-statelean--futureideas--scotusfuture--electiondisc--redbutton1960)
+    - [30.26 Rulings folded from batch 36 — the FIVE design/data threads (★★ #251 the JUDICIARY OVERHAUL + #252 + the cleanest PV-revamp done-confirmation) (`judiciaryidea` / `failednoms` / `terminology` / `space` / `histspeakers`)](#3026-rulings-folded-from-batch-36--the-five-designdata-threads--251-the-judiciary-overhaul--252--the-cleanest-pv-revamp-done-confirmation-judiciaryidea--failednoms--terminology--space--histspeakers)
     - [30.4 Authority hierarchy reminder](#304-authority-hierarchy-reminder)
 31. [Gilded-Age era systems (designed, not built)](#31-gilded-age-era-systems-designed-not-built)
     - [31.1 (#147) Tariff-as-national-%-rate + the mutually-exclusive MonetaryRegime](#311-147-tariff-as-national-rate--the-mutually-exclusive-monetaryregime-designed)
@@ -580,6 +581,45 @@ Naval, Science, Technology, Trade, Transportation, Welfare.
 > needed beyond `Agriculture`, which is also already shipped — so no new tag is required, just confirmation).
 > (`kiaofficers#POST 22`; `strongnevernom#POST 30`; code `types.ts:182-191`, `seedDataset.mjs:30`;
 > `game-context.md` #216.)
+
+> **★ #216 — the AUTHORITATIVE SOURCE for the renames (`terminology`, batch 36).** `terminology` (b474593e,
+> "Terminology Change Poll," Sept 2022) is the **definitive ruling** behind the previously-flagged renames —
+> @vcczar (designer) + @MrPotatoTed drive them; this is the source the batch-34 Army note above points back to:
+>
+> | Rename | Disposition | Source |
+> |---|---|---|
+> | **Expertise "Military" → "Army"** | ★ **AGREED** (Ted proposes, vcczar agrees). Rationale: Navy is also military → **keep the Navy/Army split** so naval officers → Navy and generals → Army; vcczar **refuses** making it random. (Air Force / Marines folding raised, NOT decided.) | `terminology#POST 5, 12, 13, 16, 17, 40, 41` |
+> | **Trait "Low Brow" → "Everyman"** | **CONSENSUS** (ShortKing proposes; Ted, vcczar "Agreed", Lars agree). Other options (Commoner, Uninformed, Simplistic, Shallow, Man-of-the-people) rejected as too negative. | `terminology#POST 4, 20, 22, 23, 37, 38, 39` |
+> | **"anti-wonk" trait word** | **UNRESOLVED** — Skeptic / Outsider / Anti-establishment / Authentic / Instinctual / Anti-intellectual floated; vcczar wants something leaning "anti-intellectual"; "charisma" framing rejected. | `terminology#POST 5-19` |
+>
+> **★ Industry / lobby renames (forward-design over a NOT-YET-SHIPPED modern-era layer — none of these lobbies
+> exist in `LobbyCardId`, `types.ts:316`):** **Oil industry → "Natural Gas"** (already changed in-build per
+> vcczar, POST 2-4); **Agriculture *industry* → "Farming"** but **keep Expertise = "Agriculture"** (broader)
+> + **keep Lobby = "Big Agriculture"** (POST 3, 4, 8); **"Big Business" = "Big Corporations"** — vcczar RULING:
+> NOT Wall Street ("Wall Street stands for the entire financial industry in media lingo"), rejecting Ted's
+> Big-Business→Wall-Street swap (POST 35, 36); **Technology lobby → "Big Tech"?** — OPEN, no ruling (POST 34).
+> **★ Codebase note:** the shipped `Expertise` union ships BOTH `'Military'`/`'Naval'` and `'Technology'`
+> (`types.ts:182-186`); the `Trait` union ships **`Celebrity`** but **NO "Low Brow"/"Everyman"** and **no
+> dedicated anti-wonk trait** (`Outsider` exists, `types.ts:108`, but is a different concept) (`types.ts:62-117`);
+> `LobbyCardId` is the 1772/1856 era set only (`types.ts:316-320`) — **so Military→Army and Low-Brow→Everyman
+> are the only renames acting on shipped tags; the industry/lobby renames are DESIGN-INTENT over an unbuilt
+> modern-era layer.** `Everyman` is the same name `revampPV`/`histpres` already used for "Low Brow"
+> ([§3.4.1(c)](#341--the-pv-system-overhaul--per-trait-tiers--non-linear-ability-curve--trait-remap--display-scale-new-revamppv--summer2021-batch-30-designed-the-shipped-pvts-is-at-a-pre-revamp-state--dh-77)) — `terminology` is the **canonical origin** of that name. (`terminology#POST 2, 3, 4, 5, 8, 12, 13,
+> 16, 17, 20, 22, 23, 34, 35, 36, 37, 38, 39, 40, 41`; codebase `types.ts:62-117, 182-186, 316-320`;
+> `game-context.md` #216.)
+
+> **★ #225 — Celebrity definition RULING (`terminology`, batch 36).** vcczar (POST 28, 31) + Ted (POST 32) nail
+> the intended meaning of the **`Celebrity`** trait (the one shipped at `types.ts:74`): **nationwide
+> recognition ONLY; celebrity transcends a field.** War heroes, sports figures, in-field business/legal fame,
+> and state-level fame do **NOT** qualify ("no paparazzi for war heroes"): **Trump / PT Barnum / Beyoncé =
+> celebrity; Steve Largent / John Morgan / Herschel Walker = NOT.** Origin: vcczar **folded the old separate
+> "War Hero" trait INTO Celebrity** (same effect), created mainly for Trump (few other electable traits).
+> **Earned-celebrity is allowed but disliked** (*"I allowed people to earn it even though I personally don't
+> favor that"* — direct corroboration of #225's celebrity-earned/expiry concern, and consistent with the
+> batch-34 `kiaofficers` ruling that Celebrity is **earned in play, never seeded** onto `ROWS`/`ERA_FIGURES`,
+> [§10.1](#101-241-deaths-retirements--decay--runphase_2_4_1_deaths-phaserunnersts2341)). House-rule precedent: Ted **stripped Herschel Walker of Celebrity** in his 2022 playthrough. A
+> state-level "celebrity" tier (Vols21, POST 39) was floated and **not adopted**. (`terminology#POST 27, 28, 31,
+> 32, 39`; codebase `types.ts:74`; `game-context.md` #225.)
 
 > **★ #204 — the 0-5 skill scale is a DELIBERATE design decision, NOT an oversight (0-10 DEFERRED to
 > "AMPU 2"; designer-authoritative, `to-do` POST 721-755, vcczar + Ted, batch 28).** The community
@@ -914,6 +954,39 @@ normalization layer, `Math.max(0,…)`-clamped (`pv.ts:88`, negatives lost). Two
 >   noisy (vcczar POST 3: "Arnold is #5 at best," later conceding #1 once he wins) — the same tension #214/#215
 >   resolve. (`calsleaderboard#POST 1, 3, 13, 14, 19, 20, 27, 42, 56`; `game-context.md` #214/#215; §30.22.D.)
 
+> **★★ #214/#215/#220 — the STRONGEST done-confirmation in the corpus (`failednoms` POST 14, batch 36; vcczar
+> designer-authoritative).** `failednoms` (55c18fde, "AMPU Failed Presidential Nominees," Oct 2021) is a
+> dataset-authoring source, but **POST 14 is the single cleanest designer statement that the PV revamp is
+> DONE in the master spreadsheet** — confirming all four sub-deltas in vcczar's own words:
+> - **#220 display-scale CONFIRMED 0-100 (can exceed):** *"recalculated the political values in the master
+>   spreadsheet to create a **0-100 scale** (although someone can go beyond 100 and below 0)."* → matches the
+>   `groupthinkpv` 50-is-average framing (§30.23) and resolves the §3.4.1(d) raw-vs-normalized fork **toward
+>   a 0-100 scale that is NOT hard-clamped** (over/under allowed — so a floor-offset, not `Math.max(0,…)`).
+> - **Top-end PV anchors:** *"**Clay is a historical 98, while Theodore Roosevelt is a historical 100**."* →
+>   the two strongest *historical* pols (matching the in-thread "Clay + TR most powerful in game," POST 7).
+>   *(NB this is a 0-100 normalized scale; the §3.4.1 P33 RAW sample has Napoleon 341 / Jefferson 201 / Clay
+>   197 / TR 184 — RAW and 0-100-normalized are two views of the same ordering, per #220.)*
+> - **#215 Command re-weight CONFIRMED:** *"I made **Command worth more** points."* → matches `groupthinkpv`
+>   Command×15 vs Legis/Gov/Adm×10 vs Mil/Jud×5 (§3.4.1(b)).
+> - **#214 new-trait tiers CONFIRMED:** *"created a bunch of **new traits**, of which Roosevelt has a few and
+>   Clay has like one. The new traits also **raised Reagan significantly**."* → matches the per-trait tier
+>   expansion (§3.4.1(a)/(c)).
+>
+> **★ The blocking prereq REMAINS #216 (the trait remap).** The 36 failed-nominee statlines themselves use the
+> **un-remapped 2021 trait vocabulary** — `Charisma` (Frémont/McClellan/Bryan; shipped union has
+> `Charismatic`), `Low Brow` (Hancock/Bryan; → `Everyman` per the `terminology` ruling, §3.1), and **`Hale`**
+> (Cass/Hughes/Cox/Landon/Goldwater/McGovern/Mondale/Dukakis/Dole — **NOT in the shipped `Trait` union**, a
+> longevity-mitigation slot tied to #226), plus `Geostrategist`/`Bookkeeper`/`Late Bloomer`/`Teflon`/`Cop`/
+> `Pliable`/`Egghead`/`Delegator`/`Illicit` (union-check needed). So the **#216 old→new map is still the
+> blocking prerequisite** for both applying the #214 PV table AND authoring these rows into `CURATED_ROWS`
+> (§30.22.C / §3.4.1(c)). **★ Electability signal (POST 45-46):** *"every failed nominee from McGovern to
+> Kerry has uncharismatic as a trait"* (McGovern/Mondale/Dukakis/Dole/Gore/Kerry) — CE2: *"their blandness was
+> a huge reason they didn't win."* → the **charisma/warmth axis (`Uncharismatic`/`Likable`, PR4b) is the
+> primary electability lever for the modern era**; the designer treats `Uncharismatic` as the canonical
+> "lost-because-bland" tag. (Open micro-call: Mondale Likable-vs-Uncharismatic, unresolved POST 46.)
+> (`failednoms#POST 14, 45, 46`; codebase `pv.ts:70-88`, `types.ts:62-117`; `game-context.md`
+> #214/#215/#220/#216/#226.)
+
 > **★ #183 RESOLVED (the endorsement/withdraw-MOMENTUM spec EXISTS) — see [§15.5(e)](#155--election-system-specs-absent-from-our-build-the-2022-reference-game-completions--the-live-d6d3-fork-completions--fixes-batch-28-not-in-our-build).** Not a PV
 > mechanic, but `primary2020` is the earliest detailed source and it settles the #183 CONFLICT direction:
 > the momentum spec is specced and the app implements NONE of it (specced-but-unbuilt). Documented at §15.5(e).
@@ -1140,6 +1213,33 @@ one). Pairs with the draft-class authoring playbook + #136. *(dataset/engine bug
 >   cross-roster dynasty link; **marriage-based membership** — Burr's daughter joins another dynasty via
 >   marriage, McAdoo = Wilson's son-in-law — a #194 modeling nuance). (`strongnevernom#POST 1, 10-42`; code
 >   `seedDataset.mjs:239-242`; `game-context.md` #246/N1/#240/#194/#216.)
+
+> **★ #240 / #246-N1 — the THIRD curated marquee roster: ~36 FAILED presidential nominees (`failednoms`, batch
+> 36; vcczar designer-authoritative; same full-strength tension as this section).** `failednoms` (55c18fde,
+> Oct 2021) posts AMPU statlines for **~36 failed major-party presidential nominees** (CC Pinckney → Hillary
+> Clinton) in the **same curated record schema** as `histpres` (#240, 47 presidents, §30.22.C) and
+> `strongnevernom` (#246, ~18 never-nominated, above) — a **third `CURATED_ROWS`/`ROWS`-class marquee roster**.
+> - **★ FULL-strength, NOT sub-floor — the SAME N1 tension as the never-nominees above.** These are statted at
+>   full strength (**Henry Clay = 2 Cmd / 4 Leg, PV 98**; Winfield Scott = 4 Mil; Charles E. Hughes = 3 Jud) —
+>   the sub-floor balance rule (`seedDataset.mjs:239-242`) applies **only to `ERA_FIGURES`**, not to these. So
+>   a full-strength "always-lost" pol's failure must come from **PV / electability** (Uncharismatic, low
+>   Command, regional/Provincial, weak ideology-fit), **not stat suppression** — many notes explicitly frame
+>   them as "electable vs a weak opponent but a bad president" or "keep in Congress/military" (the **designed
+>   office-fit vs. electability split**). Same OPEN question as N1: is there any guard keeping a full-strength
+>   failed-nominee (or never-nominee) from *winning the presidency in-sim*, or is "always-lost" emergent from
+>   the election scorer?
+> - **#194 dynasties:** 25 of 36 rows carry a named dynasty, several **marriage-based** (Greeley's wife,
+>   Frémont's wife = Benton's daughter, Hillary ↔ Bill, Cox's daughter, Dole's wife) — same lineage model as
+>   `strongnevernom`. **#239 Misc-flags** observed (same vocabulary, still no shipped home): **Can Party Flip /
+>   once** (Clay, Frémont, Greeley, Willkie), **Can be Independent** (Frémont, Greeley, Willkie), **Southern
+>   Unionist** (Scott), **can-move-state** (Cass OH→MI, Scott VA→NJ/NY), **Catholic** demographics (Al Smith).
+> - **#216 trait-name reconciliation:** rows use `Charisma` (→ `Charismatic`), `Low Brow` (→ `Everyman`), and
+>   widely `Hale` (NOT in the shipped union, #226) — see the §3.4.1 PV-confirmation block + §3.1 for the remap;
+>   the rename map is the **blocking prereq** before authoring these into `CURATED_ROWS`. (Ideology field is
+>   ABSENT for Bob Dole, POST 37 — import should default/flag; Hillary's `Controversial` was considered then
+>   declined, POST 44.) **★ Codebase reality:** none of these ~36 figures are in the dataset today; on ingest
+>   they go into the `ROWS` source array at full strength (do NOT hand-edit the generated files per `CLAUDE.md`).
+>   (`failednoms#POST 1-46`; code `seedDataset.mjs:239-242`; `game-context.md` #240/#246/N1/#194/#239/#216.)
 
 ### 4.2 Picking — `pickBestForFaction` (`phaseRunners.ts:33`)
 
@@ -1837,6 +1937,32 @@ Four committees, each chaired by the live Congress member with the highest relev
 
 Each chair gets `+1 command`, `+1 legislative`, and the committee expertise
 (`phaseRunners.ts:1921–1931`).
+
+> **★ #252 (NEW, `terminology`, batch 36) — the committee→expertise mapping is too COARSE; the Judicial
+> committee grants only "Justice".** Source: `terminology` (b474593e, "Terminology Change Poll," Sept 2022;
+> a TERMINOLOGY/DESIGN thread, NOT a playthrough). Vols21 (POST 40) + vcczar/Ted (POST 41-42) surface a design
+> hole in this exact `COMMITTEE_EXPERTISE` table (`types.ts:1237`): the **Judicial committee grants only the
+> single `Justice` expertise**, whereas — in the designed/forum richer-committee model (§8.5.1's nine-role
+> congressional leadership) — **other committees offer SEVERAL expertise options**. Players asked for judicial
+> **sub-expertises**: **Civil Rights, Constitution, crime, terrorism, immigration.**
+> - **vcczar/Ted RULING — CONCEDED-but-DEFERRED (effectively WONTFIX as separate experiences).** They will
+>   **NOT** add those five as their own expertises: *"Civil Rights is an **interest**, which is different from
+>   **experience**"* (so it belongs on the `interests[]` axis, not `Expertise[]`), and the other four *"could
+>   be under judicial, military, welfare, etc but don't exist as their own experience thing."* **But the
+>   underlying complaint is explicitly conceded** — vcczar has *"never been happy with how Judicial committee
+>   is just Justice."* ShortKing (POST 42) defends the status quo as **flavor** (a junk Justice-only assignment
+>   simulates an undesirable committee / a punished minority faction).
+> - **Sub-fact (Ted, POST 43):** the **Senate Judicial committee approves Supreme Court nominees** — wiring
+>   this committee to the §22.7 confirmation pipeline (committee-then-floor at 64/60%).
+> - **Codebase anchor:** the shipped `COMMITTEE_EXPERTISE` (`types.ts:1237`) is a flat **`Record<committee,
+>   ONE Expertise>`** — every committee (not just Justice) currently grants exactly one expertise. So today the
+>   coarseness is **uniform**, not Justice-specific; the design ask is to make committees grant a CHOICE of
+>   several, with Judicial the worst offender. **0% of the multi-expertise model is built.** Ties the
+>   expertise axis (§3.1 / §5) and the #216 rename set (`terminology` is the same thread). *(designed,
+>   conceded-but-deferred — the Judicial-committee-only-Justice grant is a known coarseness; the requested
+>   sub-expertises are WONTFIX as separate **experiences** (Civil Rights = an interest; crime/terrorism/
+>   immigration fold under existing experiences). Cite `terminology#POST 40, 41, 42, 43`; codebase
+>   `types.ts:1237`; `game-context.md` #252.)*
 
 ### 8.3 (2.2.3) Faction leaders — `runPhase_2_2_3_FactionLeaders` (`phaseRunners.ts:1940`)
 
@@ -3321,6 +3447,42 @@ Agriculture industry declines by 1" — a *success* with a downside).
 > TOGGLES, not always-on. So **#20's new datum = the flat-vs-per-state axis** (today flat; per-state is the
 > deferred upgrade). (`legisexecgov#POST 2, 5, 8, 15, 31, 37`; `ampuelections#POST 1`; `game-context.md` #20.)
 
+> **★ #20 SHARPENED (`space`, batch 36) — a GEOGRAPHY-GATED Gov action with PER-STATE differential success
+> odds (a 2nd worked example, alongside DH-53 Jim-Crow, of a Gov action that CANNOT be flat).** Source: `space`
+> (5da48f61, "AMPU Space," Apr-Jul 2022; a CONTENT-AUTHORING crowdsourcing thread, NOT a playthrough;
+> content-FROZEN). The headline Gov-action datum is the **"Propose to be the official NASA launch-site state"**
+> action (POST 2, themiddlepolitical): *"(Currently FL). Require leadership, and science or tech interest for
+> governor. (Can default to Florida)."* Players then refine the GATE (POST 3, 4): launch sites must be
+> **equator-favored / extreme-Southern states or acquisitions near the equator** (real-world rationale: closer
+> to the equator = cheaper launch; FL / French-Guiana precedent; coastal for crash-safety, POST 12). The
+> explicit mechanic (POST 4): *"You can make it **easier for deep-south state govs to have a successful action,
+> and harder for it to happen everywhere else**."* → a **per-state success-probability MODIFIER on a single Gov
+> action** (a column of differential success odds keyed to a state's geography/identity). This is a concrete
+> instance of the **flat-vs-per-state Gov-action axis** above: today **every** Gov action uses the same
+> `d100 ≤ 20×Gov` odds for every state ([§11.3](#113-governors-actions-library-designed-not-built)), but this
+> one **requires** a per-state odds column — the SAME shape as the `completions` "double-success-chance column
+> for certain Gov types" (Jim-Crow, DH-53) flagged under #20. Same authoring pattern recurs across other
+> proposed geo-gated Space Gov actions:
+> - **Build a Space Elevator** — requires Panama/Colombia/Venezuela (or good relations) and must sit **exactly
+>   on the equator** (floating ocean platform) → territory + diplomacy prereq'd (POST 3, 4; spans
+>   Infrastructure+Diplomacy #248 subtypes — the multi-tag open Q).
+> - **Astronaut Training Facilities / vie for Mission Control (Houston)** — a per-state Gov action where the
+>   **first successful gov action gets the funding** (POST 9) — a **one-winner race across states** (a novel
+>   per-state Gov-action sub-mechanic).
+> - **State space agency on NASA defunding** (POST 11) — if NASA is defunded, govs spin up a state agency, and
+>   **enough ADJACENT states with agencies can MERGE into a regional one** (e.g. a northern / southern space
+>   agency) — a per-state Gov action with a **state-adjacency aggregation rule** (no analog elsewhere in the
+>   KB; flag as a one-off Future rule if Space is ever built).
+> - **Military launch sites** in Southern CA / NV (Vandenberg AFB) broaden the gate **beyond** the deep-South
+>   (POST 5, 13) — i.e. the gate is a **soft per-state odds column**, not a hard Deep-South-only state list.
+>
+> Open Q: hard state-list vs soft odds-modifier — POST 2 vs POST 4 read it both ways; **likely a soft per-state
+> success-odds column** (resolving toward the flat-vs-per-state-axis upgrade). The Space genre itself is a
+> **#237-shaped policy genre** (its own `*-Default` "No federal legislation regarding outer space" baseline +
+> an L/P/G action menu) — documented at [§30.22.B](#3022b--237--the-stateful-policy-genre-framework-businesslabor--currency--copyright-new-businesslabor--designed-0-shipped) (the genre framework) and as the **#248 "Space" subtype** at [§14.1.3.a](#1413a--248-new-futureideas-batch-35--the-legislative-proposal-subtype-policy-area-taxonomy-a-33-value-enum-on-all-four-primitives-designed-0-shipped).
+> **0% shipped** (verified no Space/NASA/Moon/Mars in `src/`). (`space#POST 2, 3, 4, 5, 9, 11, 12, 13`;
+> `game-context.md` #20/#237/#248.)
+
 | Action | Effect | Prerequisite |
 |---|---|---|
 | Build roads, bridges, canals | +pts; sometimes Agriculture industry −1 as side-effect | — |
@@ -3628,6 +3790,17 @@ end-of-half-term industry-leadership tally tied to `State.industries`.)*
 conservative vs liberal justices; a conservative majority shifts `partyPreference −0.1`
 (toward RED), liberal `+0.1` (toward BLUE), clamped `[−5,5]`.
 
+> **★ This coin-flip is the FLOOR the whole SCOTUS cluster is designed to replace.** The shipped
+> `runPhase_2_5_3_Court` (`phaseRunners.ts:3397-3414`) has **no case identity** (4 hardcoded title strings),
+> **no tier**, **no per-justice drift**, **no confirmation-moment ideology shift**, **no Judicial Philosophy /
+> Focus Courts / cert** — it is `chance(0.5)` + a justice headcount + a `partyPreference ±0.1` nudge. The
+> designed replacement is documented in full under the SCOTUS subsystem
+> ([§22.7](#227-scotus-subsystem-253--282)): the modern named-Justice docket + compel mechanics (§22.7), the
+> CPU CJ-selection ladder (§22.7.y), **Rule of Four / case-refusal #218** (§22.7.z), the **Landmark tier #249**
+> (§22.7.w), and the **★★ Judicial-Philosophy + Focus-Courts overhaul #251** (§22.7.v — the **DESIGN ORIGIN**
+> of the cluster). Even the small **forum-AMPU-1 partial** (a confirmed justice's 10% ±1 / per-10-yr / +5%
+> leftward drift, `judiciaryidea#POST 15/18`) is **absent from this build**.
+
 ---
 
 ## 12. Legislation (2.6.x)
@@ -3647,6 +3820,33 @@ Bill carries a `committee`, `effects`, status `proposed`.
 > authored proposal pool in `src/`. `ampuelections` supplies ~70 election-specific Legis-Props (mostly
 > Amendments + named acts: 12th/17th/22nd/23rd/24th/26th, VRA, McGovern-Fraser, Wyoming Rule) confirming the
 > same catalog axis. (`legisexecgov#POST 1`; `ampuelections#POST 1, 6`; `game-context.md` #221.)
+
+> **★ #221/#92 CORROBORATED — the bill pool is ERA / ADMINISTRATION / SPEAKER-TENURE-keyed (`histspeakers`,
+> batch 36; a RECORD-thread sourcing record for the founding-era pool).** `histspeakers` (29c2fd13, "AMPU
+> Historical Speakers," from the 1840-history forum run) posts the historic **Speaker-of-the-House roster +
+> the major bills passed during each Speaker's tenure**, as a flat table keyed
+> `Speaker | Speaker Party | Year | Pres | Pres Party | Legislation`, closed by per-Speaker `TOTALS | N Major
+> Bills`. This is a **result log**, not new rules — but it is **concrete confirmation** of three #221/#92
+> facts: (1) **each major bill is attributable to (a) the sitting Speaker's tenure + (b) the administration
+> (president + party) it passed under** — the exact era/administration-keying axis #221 describes; (2) **"Major
+> Bills" is a CURATED tier** (minor/flavor laws are not counted — the #221 importance-curation rule); (3) the
+> pool spans **all eras** (the cross-run leaderboard runs founding → Great Society: McCormick 20 / Reed 18 /
+> Rayburn 15 / Clay 12 / Muhlenberg 12 / …). Founding-era bill names enumerated (Judiciary Act, Bill of
+> Rights, the Hamilton I/II/III Tariffs, Funding Act, US Bank, US Mint, Alien & Sedition Acts, Midnight Judges,
+> West Point, Missouri-Compromise-equivalent "Restrict Slavery") are **candidate seed entries** for the
+> founding-era pool. **★ Per-run REGENERATION (#92):** the run's Speaker/bill timeline runs **behind real
+> history** (Missouri-Compromise-equiv lands at in-game 1820 under Monroe) and matches the **real historical
+> Speaker only ~50% of the time** (OrangeP47/vcczar POST 2-3) — the game **regenerates its own leadership +
+> legislative history**, it does **not** replay a fixed script (era = content *band*, not a calendar rail).
+> Parties are recorded as the generic **Red/Blue** duopoly; party-flips tracked (Muhlenberg flips Red→Blue
+> over the US Bank). **★ Shipped-reality (#221 = 0% built):** NONE of these named bills exist as authored,
+> era-keyed legislation content in `src/` (a grep returns only an unrelated 1856 era-event response label) —
+> bills today come from the tiny inline `BILL_TEMPLATES` arrays (§12.1). So `histspeakers` is a **sourcing
+> record for the very founding-era pool #221 says must be authored.** (Also corroborates the Speaker roster
+> feeding **#240** — marquee Speakers must exist in `CURATED_ROWS` for the engine to elect them — and the
+> **#1005/#28 Speaker-power arc**: Muhlenberg "highly successful… personally had very little power" → Clay
+> "transformed the Speakership into an office with actual powers," the narrative behind the asymmetric
+> Speaker-on-win bundle, [§25.x](#2514-long-term-justice-ideology-drift-the-canonical-drift-rule).) (`histspeakers#POST 1, 2, 3, 5, 6, 7-10, 11`; `game-context.md` #221/#92/#240/#1005/#28.)
 
 #### 12.1.1 ★ DH-74 (NEW, `wilsons1916`) — the bill-proposal list MUST be state-validated BEFORE proposal/vote (the Progressive face of DH-60 for LEGISLATION) (designed)
 
@@ -4602,6 +4802,17 @@ volunteer militia, establish state currency, write state constitution, establish
 sharpening #20's flat-vs-per-state axis; **LaFayette / "Petition France" already SHIPPED** incl. LaFayette
 as a playable faction character, `POST 22`; and a **foreign-leadership-change 50/50 better/worse-relations
 scripted event** was ACCEPTED, `POST 17/18`.)
+
+> **★ CORROBORATED (`space`, batch 36) — the "Space" subtype gets fully fleshed out as BOTH a #248 subtype AND
+> a #237 genre.** The `space` content-authoring thread (5da48f61, Apr-Jul 2022) populates the **"Space"** value
+> of this 33-enum with a complete Legis/Pres/Gov action menu (NASA, colonize Moon+Mars, Space Force, manned
+> missions, land grants, privatize↔nationalize) PLUS its own `*-Default` baseline ("No federal legislation
+> regarding outer space") — i.e. **Space is one of the few subtypes that ALSO earns full #237 GENRE treatment**
+> (genre ⊂ subtype, exactly as this section frames it). It also confirms the **multi-tag** open Q (a Space
+> Elevator spans **Infrastructure + Diplomacy**) and the **SC-Case** reach (space-colony citizenship /
+> Moon-Treaty / state-space-agency constitutionality are Space-tagged Future SCOTUS cases, §22.7.w). Documented
+> in full at [§30.22.B](#3022b--237--the-stateful-policy-genre-framework-businesslabor--currency--copyright-new-businesslabor--designed-0-shipped) (the genre) + [§11.3](#113-governors-actions-library-designed-not-built) (the geography-gated launch-site Gov action, #20).
+> (`space#POST 1, 4, 8`; `game-context.md` #248/#237/#20.)
 
 *(designed, 0% shipped — add a **`subtype` (policy-area) field** drawn from the fixed 33-value enum above to
 the #221 primitive record schema on **ALL FOUR primitives** (Legis-Prop / Pres-Action / Gov-Action /
@@ -8789,6 +9000,166 @@ from sustained policy, with significance = f(meter state, ruling direction); and
 Future docket file** with the ~45 content-frozen cases (record = name + constitutional question, era-keyed).
 Cite `scotusfuture#POST 1, 2, 7, 8, 9, 10, 11, 12, 13`; codebase `phaseRunners.ts:3397`; `game-context.md`
 #249; extends #25/E25/#52/#206/#221, ties #218.)*
+
+#### 22.7.v ★★ #251 (NEW, `judiciaryidea`, batch 36) — the JUDICIAL PHILOSOPHY system + FOCUS COURTS: the DESIGN ORIGIN of the whole SCOTUS cluster (DESIGNED, mostly AMPU-2; ONE forum-AMPU-1-only partial, 0% in THIS build)
+
+> **★★ THE HEADLINE OF BATCH 36 — and the DESIGN ORIGIN of the entire SCOTUS cluster.** Source:
+> `judiciaryidea` (fd4c3c4e, "A More Perfect Judiciary," Apr 2022; a JUDICIARY-OVERHAUL **design thread** +
+> a design debate + ONE shipped partial — **NOT a playthrough**). Cal authored this **~6 weeks BEFORE
+> `scotusfuture`** (§22.7.w / batch 35), and it **predates and seeds** the rest of the cluster: it is the
+> DESIGN ORIGIN of **#218** (Rule of Four, §22.7.z), **#249** (Landmark tier, §22.7.w), **#52** (player-vs-CPU
+> court, §29.2), and the **#25/E25** SCOTUS-docket data structure. Cal's two big systems — **Judicial
+> Philosophy** and **Focus Courts** — are **explicitly PUNTED to AMPU 2 / a DLC** by both vcczar (POST 2, 4)
+> and ConservativeElector2 (POST 6). The ONLY thing vcczar shipped (in **forum-era AMPU 1**, POST 15/18) is a
+> small justice ideology-drift rule. **None of it exists in THIS browser build** — the shipped court is the
+> coin-flip on 4 hardcoded title strings ([§11.6](#116-253-supreme-court--runphase_2_5_3_court-phaserunnersts3397), `phaseRunners.ts:3397`).
+
+**(A) ★★ JUDICIAL PHILOSOPHY — a NEW behavior axis SEPARATE from Personal Ideology (AMPU 2).** A justice's
+**how they rule** is a distinct axis from their **personal** 7-point ideology (POST 1, 16). Composed of two
+parts, both **HIDDEN until revealed**:
+
+**(A1) Judicial Ideology — a Conservative / Swing / Liberal scale (POST 1).** A **base %** is derived from
+**Personal Ideology**, then modified by **Interests + Traits**. The per-personal-ideology base table
+(verbatim, POST 1):
+
+| Personal ideology | Conservative | Swing | Liberal |
+|---|---|---|---|
+| RW Populist | 90 | 10 | 0 |
+| Traditionalist | 80 | 20 | 0 |
+| Conservative | 70 | 30 | 0 |
+| Moderate | 15 | 70 | 15 |
+| Liberal | 0 | 30 | 70 |
+| Progressive | 0 | 20 | 80 |
+| LW Populist | 0 | 10 | 90 |
+
+**Trait modifiers** on the base % (POST 1):
+
+| Trait | Modifier |
+|---|---|
+| **LW Activist** | **+25 Liberal** |
+| **RW Activist** | **+25 Conservative** |
+| **Pliable** | **+50 Swing** |
+| **Lackey** | **+50 toward their active Kingmaker's direction** (the Kingmaker steers the lackey-justice) |
+| **Puritan** | **−50 Swing** (a Puritan justice will not split the difference — votes their conviction) |
+
+> Modifiers can push a row's total **off 100%** (Cal hand-waves a CPU re-normalize, flagging it as an **open
+> UX/formula question** — see Open Questions). Note these are the SAME trait names the cluster uses elsewhere
+> (Pliable, Lackey, Puritan, LW/RW-Activist) — many are **NOT in the shipped `Trait` union** (#216), so this
+> system depends on the trait-remap landing first.
+
+**(A2) Judicial Doctrine — per-case aye/nay modifiers (POST 1).** Each justice carries **one or two Judicial
+Doctrines** that add **±% to their aye-vs-nay chance on specific tagged cases**, *independent* of ideology —
+the "Scalia joins the liberals on 4th-Amendment grounds" effect (POST 1, 14). Real-world taxonomy raised for
+flavor (POST 7-9): **Textualism** (Scalia / "literalists"), **Intentionalism** ("finalists" — will of the
+legislator), **Purposivism** ("free interpreters" — adapt law to society); vcczar's *"Judicial Activism = LW
+Activism / Originalism = RW Activism"* framing (POST 2) maps loosely onto these. Designed as the seed for a
+diverging-timeline + flavor-text expansion.
+
+**(A3) HIDDEN until revealed (POST 1).** A justice's Judicial Philosophy is **not known in advance** — it is
+revealed via **one of three paths**:
+1. **Graduating the Judicial Career Track** (Cal proposes renaming the shipped **"State Judicial Career
+   Track" → "Judicial Career Track"** — open rename Q).
+2. **Appointment to a Focus Court** (it gets scrutinized there before any SC elevation).
+3. **A direct SC appointment** — a **gamble** (unscrutinized): you learn the philosophy only after seating
+   them, *but* "the only way you'll reliably get justices under 45 on the court."
+
+**(B) ★★ FOCUS COURTS — a NEW lower-court sub-system (AMPU 2).** Four **regional single-judge appellate
+courts** exist at game start (POST 1): **New England, Mid-Atlantic, Upper South, Deep South**. Each = one
+**Focus Judge**, President-appointed, serving to retirement.
+
+| Element | Rule (POST 1) |
+|---|---|
+| **Confirmation** | like a SC justice, but **opposition rules RELAXED** (lower courts are scrutinized less IRL); a judge confirmed for a Focus Court **can still lose votes when later elevated to SC**. |
+| **On appointment** | a Focus Judge has a **chance to improve Judicial Ability**, and can gain SC-useful traits through interactions. |
+| **Jurisdiction — Original** | cases of **Original Jurisdiction** go **straight to the SC**, never a Focus Court. |
+| **Jurisdiction — Appellate** | **Appellate** cases **usually originate in a Focus Court**, but have a chance to arrive at the SC directly (simulating unrepresented lower courts). |
+| **Independence** | a Focus Court decides **independently of the player** — the Focus Judge's Judicial Philosophy sets its aye/nay odds. |
+
+**(B1) ★ Rule of Four cert (= #218, the ORIGIN of §22.7.z).** After a Focus Court rules, the SC decides
+whether to **grant cert** — requires **≥ 4 of 9 justices**. Since only the most influential cases are modeled,
+**denial is rare but possible**, driven by who appointed each justice + traits + Judicial Philosophy. If cert
+is granted, the SC **affirms or reverses**. *(This is the SAME Rule-of-Four mechanic later authored for
+Gov-Action state cases in `summer2021` (§22.7.z) — `judiciaryidea` is where it first appears.)*
+
+**(B2) ★ The scoring rules (the load-bearing part, POST 1):**
+
+| Outcome | Points / meter effect |
+|---|---|
+| **Affirm vs Reverse** | **NO point/meter difference** — only the **aye-vs-nay** *direction* matters. **Reversing the Focus Court has zero point/meter effect.** |
+| **Cert DENIED** | points/effects are computed **as if the Focus Judge's ruling were the SC's**, EXCEPT the **SC justices get NO points** — the **Focus Judge gets the points** for the case law instead. |
+| **Deny cert on a LANDMARK case** | the **SC LOSES points** (ties #249's Landmark tier, §22.7.w — punishing the court for ducking a landmark). |
+| **Faction backlash** | a Focus Judge whose ruling **deducts the most points from the appointing President's faction** (while that President is in office) triggers a **dice roll for that faction's enthusiasm to DROP** (discontent with the appointment). |
+
+**(B3) Other Focus-Court rules (POST 1):**
+- An **affirmed** Focus Judge has a **small chance to gain Jurisprudence** (the CJ super-ability, §22.7.z).
+- **Manipulative / Iron-Fist / Jurisprudence party leaders** may get a chance to **interfere** with a
+  granted-cert case.
+- Cal **explicitly ignores state-supreme-court jurisdiction** (no statesmen to model it; out of scope).
+
+**(C) ★ What vcczar SHIPPED vs DEFERRED — capture the split precisely.**
+
+**SHIPPED (forum-era AMPU 1 only, POST 15/18 — "partially redone"; the Souter archetype, POST 3):**
+- A **confirmed SC justice has a 10% chance to immediately shift ideology ±1** (one spot left or right) **on
+  confirmation**.
+- **Further shifts only every 10 years served** (via the SC-decision section).
+- **+5% more likely to move leftward than rightward** ("historically justices overwhelmingly move left").
+  Overall shift chance is **very low**.
+
+> **★ Shipped-reality check (THIS repo) — the POST-15 partial is ABSENT.** The forum-AMPU-1 confirmation-shift
+> rule is **NOT in the browser build.** `runPhase_2_5_3_Court` (`phaseRunners.ts:3397-3414`) is a **`chance(0.5)`
+> coin-flip** on **4 hardcoded case strings**, ruling conservative/liberal by a simple justice **headcount** and
+> nudging `partyPreference ±0.1` — **no per-justice ideology drift, no confirmation shift, no Judicial
+> Philosophy/Doctrine, no Focus Courts, no cert.** The build's `resolveIdeologyShift` machinery (phase 2.1.5)
+> is the **general faction-conversion** system over personal ideology — it is **NOT** this SCOTUS-specific
+> drift rule and does not target justices on confirmation. No `judicialIdeology` / `focusCourt` / `ruleOfFour`
+> types exist in `src/types.ts`. **NB the related 10-yr drift rule IS otherwise documented as forum-canon at
+> [§25.14](#2514-long-term-justice-ideology-drift-the-canonical-drift-rule)** (the `drums` 25%-mid/10%-left/5%-right/Puritan-blocks table) and corroborated 1856-native (§22.7) — `judiciaryidea` is the **design ORIGIN**
+> of that leftward-biased drift + the **confirmation-moment ±1 shift** specifically.
+
+**DEFERRED to AMPU 2 / DLC (explicit):**
+- The **entire Judicial Philosophy system** (A1+A2+A3) — vcczar (POST 2), CE2 (POST 6).
+- **Focus Courts** (all of B, incl. Rule-of-Four cert, jurisdiction split, scoring) — CE2 (POST 6:
+  *"Definitely an AMPU 2 thing, if it is added at all"*).
+- Taking the SC **away from the player → CPU-run by default** — vcczar **rejects as the default** (POST 3, 18;
+  see the #52 debate below).
+
+**(D) ★ The #52 debate sharpened — player-controlled vs independent SC (this thread is its ORIGIN).** See the
+full fork at [§29.2](#292--unsettled-fork-a--player-controlled-scotus-gap-52); the new framing here:
+- **CE2's critique (POST 10, 12):** the player-controlled court is **ahistorical** — justices are openly
+  "controlled" by their faction while *legislators* (who at least answer to a leader) defect, backwards from
+  reality where justices have no accountability; the appointee's ideology becomes "pretty much pointless," and
+  even the existing **"Puritans must vote their ideology" rule isn't followed**. Produces "ludicrous results"
+  (Ginsburg voting down gay marriage, Scalia championing big government). **★ The Roe v. Wade abuse-vector
+  (worked example, 1960 game, POST 12):** the **only** point-affected players are the one holding the
+  **Healthcare lobby** (aye) and the one holding the **Theocrat card** (nay) — so **7 of 9 justices have no
+  incentive** to vote either way, and via **wheeling-and-dealing you can have Scalia legalize abortion** in
+  exchange for a party-leadership vote at **no point cost**. → CE2: the **default should be independent
+  courts**.
+- **vcczar (POST 3, 18):** **keep the player-controlled SC**; an all-CPU court is fine **as an option but NOT
+  the default** — the playable judiciary is a selling point (*"could attract law school students… I wanna play
+  the SC even though it's p basic rn"*).
+- **CE2's interim COMPROMISE (POST 14) — the bridge from the coin-flip to full Judicial Philosophy:** when
+  independent, a justice rules a given way by a **percentage from ideology / personal interests** (not faction
+  interest), so Scalia almost always rejects Roe but can still land "liberal-outcome" votes on 4th-Amendment /
+  governmental-overreach cases. This is the **ideology/interest-% independent-voting bridge** — exactly the
+  shape of §22.7's modern by-ideology docket and the A1/A2 Judicial-Philosophy model, sittable in AMPU 1
+  without the full overhaul.
+- **OrangeP47 (POST 16, 17):** likes a CPU-by-default independent SC; notes the court sees far more action in a
+  **1960 scenario** (1960s-70s landmark cases) than a 1772 playtest; cautions the forum is a lawyer-heavy
+  biased sample — don't over-engineer the court for AMPU 1.
+
+*(designed — mostly **AMPU 2**, with ONE forum-AMPU-1-only partial: (i) **AMPU 2** — the Judicial-Philosophy
+axis (Judicial Ideology = the personal-ideology base table + the LW/RW-Activist ±25 / Pliable +50 / Lackey
++50-toward-Kingmaker / Puritan −50 trait mods, **hidden** until revealed via Judicial-Career-Track /
+Focus-Court / direct-SC-appt; + Judicial Doctrine per-case aye/nay mods); **Focus Courts** (4 regional
+single-judge appellate courts, relaxed confirmation, Original/Appellate jurisdiction routing, **Rule-of-Four
+cert** = #218, affirm/reverse with **points-unchanged-by-reverse**, **cert-denied → Focus-Judge-scores /
+SC-doesn't**, **deny-Landmark → SC-loses-points** = #249, Focus-Judge Jurisprudence/Judicial-Ability gains,
+appointing-President faction-enthusiasm-drop dice-roll). (ii) **forum-AMPU-1 partial (NOT in this build)** —
+the confirmed-justice **10% immediate ±1 ideology shift** + **per-10-yr** drift + **+5% leftward**. Cite
+`judiciaryidea#POST 1, 2, 3, 4, 6, 7-9, 10-14, 15, 16, 17, 18`; codebase `phaseRunners.ts:3397-3414`,
+`types.ts` (no judicial-philosophy/focus-court types); `game-context.md` #251; **DESIGN ORIGIN of**
+#218/#249/#25/E25/#52, ties #25/§22.7.w/§22.7.z/§29.2/§25.14.)*
 
 *(designed, not built — a SCOTUS module: a per-term case docket + ideology-vote model; the
 Iron-Fist/Manipulative compel-vote and compel-retire powers (with the 12-year minimum + the
@@ -16303,6 +16674,36 @@ of Business), and the sibling **Currency** + **Copyright** genres. Couples to th
 (§29.7/§29.7.1 / #116/#160) and the era-content registry (#92/#206). Cite `businesslabor#POST 1, 5, 11, 12, 13,
 14, 15, 17, 19, 20, 21, 22, 23`; `game-context.md` #237; codebase `types.ts:188, 421, 1399-1407`.)*
 
+> **★ SPACE = a 4th authored #237 genre (`space`, batch 36) — CORROBORATING the framework on a fresh,
+> Future-era axis.** `space` (5da48f61, "AMPU Space," Apr-Jul 2022; CONTENT-AUTHORING, NOT a playthrough;
+> content-FROZEN POST 14) crowdsources a **Space policy genre** (NASA / colonize Moon+Mars / Space Force /
+> manned missions / land grants / privatize↔nationalize space) that fills the SAME content axis as
+> Business/Labor — one more realization of this exact framework:
+> - **Its own `*-Default` baseline (POST 1):** **"No federal legislation regarding outer space"** — listed
+>   **FIRST** as a Legis option, i.e. **absence-of-policy is itself a selectable state** (the same `*-Default`
+>   pattern as B/L's "Business and Labor Policies Left to the States"). A clean second proof that a **fresh
+>   genre boots from a baseline-default state**.
+> - **The full L/P/G primitive menu (POST 1, 6, 8, 9, 10):** Legis — perm manned presence on Moon/Mars,
+>   subsidize flight/mining, colonize Moon/Mars, **require US authorization to travel between space
+>   territories**, **land grant to encourage colonization**, **apply all US federal laws to US territory in
+>   space**, NASA funding ↑/↓, **Elevate NASA to a Cabinet-Level Dept** (POST 6 — the **Sec-of-* cabinet-seat
+>   pattern**, cf. the Sec-of-Business proposal above), **Create Space Force**, fund the Shuttle/Station,
+>   anti-satellite, **Privatize space** (real OR generated companies, e.g. SpaceX) vs **Nationalize the private
+>   space sector** (the SAME privatize↔nationalize toggle primitive as #236's authoritarian-kit "nationalize
+>   sectors" + B/L's Youngstown branch), fund the fight against orbital debris; Pres — create a Space sub-dept
+>   under each Fed Dept, call for colonization / a Mars or Moon mission; **Gov** — the geography-gated
+>   launch-site action set (the headline #20 datum, [§11.3](#113-governors-actions-library-designed-not-built)).
+> - **Future-era hooks tying to the SCOTUS + voting systems:** space-colony **citizenship/voting** (proxy
+>   voting "a must" for low-gravity-born reps who can't come to Earth) → Future bills **and** SCOTUS cases
+>   (#249/#25, §22.7.w); a **Moon-Treaty-withdrawal Executive Action** as a prereq to legally claim a celestial
+>   body, plus a Future SCOTUS case on it; orbital-debris + state-space-agency-constitutionality as Future
+>   content. **Content FROZEN at Biden/2022** (POST 14: *"I won't be adding any new actions… unless it's
+>   something Biden does before early release"*) — the same #206/#92 content cutoff.
+> - **0% shipped** (the only "colony" in `src/` is the 1774 Continental Congress / 13 colonies). The Space
+>   genre adds **no new architecture** — it is the #237 framework + the #248 "Space" subtype
+>   ([§14.1.3.a](#1413a--248-new-futureideas-batch-35--the-legislative-proposal-subtype-policy-area-taxonomy-a-33-value-enum-on-all-four-primitives-designed-0-shipped)) + the 3 #221 primitives, on a Future axis. (`space#POST 1, 6, 8, 9, 10, 14`; `game-context.md`
+>   #237/#248/#206.)
+
 #### 30.22.C — #240 / #239 / #238 — the data-model extensions (curated-statline schema, demographics/Misc flags, gender) — NEW (`histpres` / `georgemartha`); DESIGNED/DATA, 0% shipped
 
 > **★ Three data-model schema extensions** the curated-authoring threads reveal. All are **annotated into §3.1
@@ -16654,6 +17055,97 @@ into the #194 lineage system. Cite `histpres#POST 1, 3, 7, 13, 19, 28, 34, 36, 3
 > +1-Judicial feeder; and the DH-80 demographic-scorer sign-check (when #238/#239 lands). Cross-ref
 > `game-context.md` rows **#247/#248/#249/#250 + DH-80 (NEW)**, and **#186/#179/#208/#182/#31/#52/#191/#219/
 > DH-53 (sharpened/corroborated)**.
+
+### 30.26 Rulings folded from batch 36 — the FIVE design/data threads (★★ #251 the JUDICIARY OVERHAUL + #252 + the cleanest PV-revamp done-confirmation) (`judiciaryidea` / `failednoms` / `terminology` / `space` / `histspeakers`)
+
+> **★★ Batch 36 = a 5-thread DESIGN/DATA batch (NO playtest, NO historian).** The value is **one NEW
+> architecture-class system** — the **#251 Judicial-Philosophy + Focus-Courts overhaul**, which turns out to be
+> the **DESIGN ORIGIN of the entire SCOTUS cluster** (it predates `scotusfuture` by ~6 weeks and seeds
+> #218/#249/#25/#52) — plus **one NEW gap** (#252 the judicial-committee-expertise coarseness), the
+> **authoritative SOURCE rulings** behind the #216 renames, a fully-fleshed **Space** policy genre, and the
+> **single cleanest designer corroboration that the PV revamp is DONE** (`failednoms` POST 14). Tier-1 designer
+> `@vcczar` authors/rules across all five; `@MrPotatoTed` co-drives the terminology poll; `Cal` authors the
+> judiciary proposal; `ConservativeElector2` drives the #52 court debate. The sources:
+> - **`judiciaryidea`** (fd4c3c4e, "A More Perfect Judiciary," JUDICIARY-OVERHAUL design thread + design debate
+>   + ONE shipped partial, Apr 2022, 18 posts; NOT a playthrough) — **★★ ORIGIN of NEW #251** (Judicial
+>   Philosophy + Focus Courts, **mostly AMPU-2**) + the **DESIGN ORIGIN** of #218/#249/#25/#52. The ONLY thing
+>   shipped (forum-era AMPU 1, NOT this build) = a confirmed-justice 10% ±1 / per-10-yr / +5%-leftward drift.
+>   Folded into [§22.7.v](#227v--251-new-judiciaryidea-batch-36--the-judicial-philosophy-system--focus-courts-the-design-origin-of-the-whole-scotus-cluster-designed-mostly-ampu-2-one-forum-ampu-1-only-partial-0-in-this-build) (full spec) + [§11.6](#116-253-supreme-court--runphase_2_5_3_court-phaserunnersts3397) (the coin-flip-is-the-floor pointer). Cite `judiciaryidea#POST n`.
+> - **`failednoms`** (55c18fde, "AMPU Failed Presidential Nominees," DATASET-AUTHORING, Oct 2021, 46 posts; NOT
+>   a playthrough) — the **3rd `CURATED_ROWS`-class marquee roster** (~36 failed nominees, Pinckney → Hillary,
+>   FULL-strength → #240/#246-N1) + ★ **the cleanest #214/#215/#220 PV-revamp done-confirmation** (POST 14:
+>   0-100 scale can exceed, Clay 98 / TR 100, Command worth more, new traits raised Reagan). Folded into
+>   [§3.4.1](#341--the-pv-system-overhaul--per-trait-tiers--non-linear-ability-curve--trait-remap--display-scale-new-revamppv--summer2021-batch-30-designed-the-shipped-pvts-is-at-a-pre-revamp-state--dh-77) (PV confirmation) + [§4.1.x](#41x--246--n1-new-strongnevernom--strong-never-nominated-candidates-ingest-at-full-rows-strength-the-sub-floor-rule-applies-only-to-era_figures-won-never-is-modeled-by-pvelectability-not-stat-suppression-designeddata) (the roster + N1 tension). Cite `failednoms#POST n`.
+> - **`terminology`** (b474593e, "Terminology Change Poll," TERMINOLOGY/DESIGN, Sept 2022, 43 posts; NOT a
+>   playthrough) — ★ the **AUTHORITATIVE SOURCE** for the #216 renames (Military→Army; Low Brow→Everyman) + the
+>   industry/lobby rename set (Big Business=Big Corporations, Oil=Natural Gas, Farming, Big-Tech?) + the #225
+>   Celebrity ruling + **★ ORIGIN of NEW #252** (judicial-committee-expertise gap). Folded into
+>   [§3.1](#31-the-four-character-axes) (renames + Celebrity) + [§8.2](#82-222-committee-chairs--runphase_2_2_2_committees-phaserunnersts1894) (#252). Cite `terminology#POST n`.
+> - **`space`** (5da48f61, "AMPU Space," CONTENT-AUTHORING, Apr-Jul 2022, 14 posts; content-FROZEN; NOT a
+>   playthrough) — a 4th authored **#237 policy genre** (its own `*-Default` + L/P/G menu) + the **#248 "Space"
+>   subtype** + ★ **sharpens #20** with the geography-gated launch-site Gov action (per-state success odds).
+>   Folded into [§11.3](#113-governors-actions-library-designed-not-built) (#20) + [§30.22.B](#3022b--237--the-stateful-policy-genre-framework-businesslabor--currency--copyright-new-businesslabor--designed-0-shipped) (the genre) + [§14.1.3.a](#1413a--248-new-futureideas-batch-35--the-legislative-proposal-subtype-policy-area-taxonomy-a-33-value-enum-on-all-four-primitives-designed-0-shipped) (#248). Cite `space#POST n`.
+> - **`histspeakers`** (29c2fd13, "AMPU Historical Speakers," RECORD/DATA, 11 posts; NOT a playtest) —
+>   **overwhelmingly CORROBORATING.** The historic Speaker roster + per-tenure bill record confirms the
+>   legislation pool is **era/administration/Speaker-tenure-keyed** (#221/#92), the Speaker roster → #240, and
+>   the Speaker-power arc (Muhlenberg-weak → Clay-transformed) → #1005/#28. Folded into
+>   [§12.1](#121-261-proposals--runphase_2_6_1_proposals-phaserunnersts3431). Cite `histspeakers#POST n`.
+>
+> **The HEADLINE findings (lead with these):**
+> 1. **★★ #251 — the JUDICIAL PHILOSOPHY + FOCUS COURTS overhaul (ORIGIN of the SCOTUS cluster).** A justice's
+>    behavior is a **separate axis from Personal Ideology**: **Judicial Ideology** (Cons/Swing/Liberal — a
+>    per-personal-ideology base % table + trait mods: LW/RW-Activist ±25, Pliable +50 Swing, Lackey +50 toward
+>    Kingmaker, Puritan −50 Swing) + **Judicial Doctrine** (per-case aye/nay mods), **hidden until revealed**
+>    (Judicial-Career-Track / Focus-Court / direct-SC-appt). **Focus Courts** = 4 regional single-judge
+>    appellate courts with Original/Appellate jurisdiction, **Rule-of-Four cert** (= #218), affirm/reverse with
+>    **points unchanged by reverse**, **cert-denied → Focus-Judge scores / SC doesn't**, **deny-cert-on-Landmark
+>    → SC loses points** (= #249), + appointing-President faction-enthusiasm dice-roll. **Mostly AMPU-2.** The
+>    ONLY shipped partial (forum AMPU 1, **NOT this build**) = a confirmed justice's **10% immediate ±1 / per-10
+>    yr / +5% leftward** ideology drift; the browser court is the coin-flip at `phaseRunners.ts:3397`. The #52
+>    debate (CE2's Roe abuse-vector; the ideology/interest-% independent-voting bridge) is fully argued here.
+>    Full spec at [§22.7.v](#227v--251-new-judiciaryidea-batch-36--the-judicial-philosophy-system--focus-courts-the-design-origin-of-the-whole-scotus-cluster-designed-mostly-ampu-2-one-forum-ampu-1-only-partial-0-in-this-build).
+> 2. **★★ The PV revamp is DONE-CONFIRMED (`failednoms` POST 14) — the strongest done-confirmation in the
+>    corpus.** vcczar's own words confirm all four PV sub-deltas: **0-100 scale (can exceed)** [#220], **Clay 98
+>    / TR 100** anchors, **"Command worth more"** [#215], **new traits raised Reagan** [#214]. The **#216 trait
+>    remap remains the blocking prereq** (the rows still use `Charisma`/`Low Brow`/`Hale`). At [§3.4.1](#341--the-pv-system-overhaul--per-trait-tiers--non-linear-ability-curve--trait-remap--display-scale-new-revamppv--summer2021-batch-30-designed-the-shipped-pvts-is-at-a-pre-revamp-state--dh-77).
+> 3. **★ #252 (NEW) — the judicial committee grants only "Justice".** A design hole in the `COMMITTEE_EXPERTISE`
+>    table (`types.ts:1237`): players want judicial sub-expertises (Civil Rights / Constitution / crime /
+>    terrorism / immigration); vcczar concedes the coarseness ("never been happy with how Judicial committee is
+>    just Justice") but **WONTFIX-es them as separate experiences** (Civil Rights = an *interest*; the rest fold
+>    under existing experiences). At [§8.2](#82-222-committee-chairs--runphase_2_2_2_committees-phaserunnersts1894).
+>
+> **★ Designer rulings + new gaps folded (the topical sections carry the detail; this is the index):**
+>
+> | Item | Ruling / spec | Where folded | Cite |
+> |---|---|---|---|
+> | **★★ #251 Judicial Philosophy + Focus Courts (ORIGIN)** | Judicial Ideology (Cons/Swing/Liberal: the 7-row personal-ideology base table + trait mods LW/RW-Activist ±25 / Pliable +50 Swing / Lackey +50-toward-Kingmaker / Puritan −50 Swing) + Judicial Doctrine (per-case aye/nay mods), hidden until revealed (Judicial-Career-Track / Focus-Court / direct-SC-appt); Focus Courts (4 regional single-judge appellate courts, relaxed confirmation, Original/Appellate routing, **Rule-of-Four cert** = #218, affirm/reverse points-unchanged-by-reverse, cert-denied→Focus-Judge-scores, **deny-Landmark→SC-loses-points** = #249, Focus-Judge Jurisprudence/Judicial-Ability gains, appointing-Pres faction-enthusiasm dice-roll); **mostly AMPU-2**; the ONLY forum-AMPU-1 partial (NOT this build) = confirmed-justice 10% ±1 / per-10-yr / +5%-leftward; #52 debate (Roe abuse-vector; ideology/interest-% independent bridge) | [§22.7.v](#227v--251-new-judiciaryidea-batch-36--the-judicial-philosophy-system--focus-courts-the-design-origin-of-the-whole-scotus-cluster-designed-mostly-ampu-2-one-forum-ampu-1-only-partial-0-in-this-build) + [§11.6](#116-253-supreme-court--runphase_2_5_3_court-phaserunnersts3397) | `judiciaryidea#POST 1, 2, 3, 4, 6, 7-9, 10-14, 15, 16, 17, 18`; code `phaseRunners.ts:3397-3414`, `types.ts` (no judicial-philosophy types) |
+> | **★ #252 judicial-committee-expertise coarseness (NEW)** | the `COMMITTEE_EXPERTISE` Judicial committee grants only `Justice`; players want Civil Rights/Constitution/crime/terrorism/immigration; vcczar CONCEDES coarseness but WONTFIX-es as separate *experiences* (interest ≠ experience); other committees designed to grant several; Senate Judicial approves SC nominees | [§8.2](#82-222-committee-chairs--runphase_2_2_2_committees-phaserunnersts1894) | `terminology#POST 40, 41, 42, 43`; code `types.ts:1237` |
+> | **★★ #214/#215/#220 PV revamp DONE-confirmed** | `failednoms` POST 14: 0-100 scale (can exceed 0/100), Clay 98 / TR 100, "Command worth more," new traits raised Reagan; the cleanest designer corroboration in the corpus; **#216 trait remap remains the BLOCKING prereq** (rows use Charisma/Low-Brow/Hale); modern electability lever = the Uncharismatic/warmth axis (McGovern→Kerry all Uncharismatic) | [§3.4.1](#341--the-pv-system-overhaul--per-trait-tiers--non-linear-ability-curve--trait-remap--display-scale-new-revamppv--summer2021-batch-30-designed-the-shipped-pvts-is-at-a-pre-revamp-state--dh-77) | `failednoms#POST 14, 45, 46`; code `pv.ts:70-88`, `types.ts:62-117` |
+> | **★ #216 renames (AUTHORITATIVE SOURCE)** | Expertise **Military→Army** (AGREED; keep Navy/Army split); Trait **Low Brow→Everyman** (CONSENSUS); industry/lobby (forward-design, none shipped): Oil→Natural-Gas, Agriculture-industry→Farming (keep Agriculture expertise + Big-Agriculture lobby), **Big Business=Big Corporations** (NOT Wall Street), Technology→Big-Tech? (OPEN); anti-wonk trait name UNRESOLVED; only Army + Everyman act on shipped tags | [§3.1](#31-the-four-character-axes) | `terminology#POST 2-5, 8, 12, 13, 16, 17, 20, 22, 23, 34, 35, 36, 37, 38, 39, 40, 41`; code `types.ts:62-117, 182-186, 316-320` |
+> | **★ #225 Celebrity definition (SHARPENED)** | nationwide-recognition ONLY; transcends a field; war heroes/sports/in-field/state-fame do NOT qualify (Trump/Barnum/Beyoncé yes; Largent/Morgan/Walker no); old "War Hero" trait folded into Celebrity; earned-but-disliked (corroborates #225 + the `kiaofficers` earned-not-seeded rule); Walker house-rule strip | [§3.1](#31-the-four-character-axes) | `terminology#POST 27, 28, 31, 32, 39`; code `types.ts:74` |
+> | **★ #240 / #246-N1 failed-nominee roster (DATA)** | ~36 failed major-party nominees (Pinckney→Hillary), 3rd `CURATED_ROWS`-class marquee roster, FULL-strength (Clay PV 98, NOT sub-floor) → same N1 won-never-by-PV/electability tension as `strongnevernom`; 25 #194 dynasties (marriage-based); #239 flags (Party-Flip/Independent/Southern-Unionist/can-move-state/Catholic); #216 remap is the prereq; Dole ideology absent (default/flag) | [§4.1.x](#41x--246--n1-new-strongnevernom--strong-never-nominated-candidates-ingest-at-full-rows-strength-the-sub-floor-rule-applies-only-to-era_figures-won-never-is-modeled-by-pvelectability-not-stat-suppression-designeddata) | `failednoms#POST 1-46`; code `seedDataset.mjs:239-242` |
+> | **★ #20 geography-gated launch-site Gov action (SHARPENED)** | NASA-launch-site Gov action with PER-STATE differential success odds (equator/Deep-South favored; "easier for deep-south govs, harder elsewhere") — a 2nd worked example (alongside DH-53 Jim-Crow) of a Gov action that CANNOT be flat; + state-adjacency agency-MERGE rule + first-gov-wins-funding race (novel per-state sub-mechanics); Space-Elevator territory+diplomacy prereq | [§11.3](#113-governors-actions-library-designed-not-built) | `space#POST 2, 3, 4, 5, 9, 11, 12, 13` |
+> | **★ #237/#248 Space genre (CORROBORATED)** | Space = a 4th authored #237 genre (own "No federal legislation regarding outer space" `*-Default` + L/P/G menu, privatize↔nationalize toggle, Elevate-NASA-to-Cabinet seat) AND the #248 "Space" subtype (multi-tag: Space-Elevator = Infrastructure+Diplomacy); Future SCOTUS/voting hooks (colony citizenship/proxy-vote, Moon-Treaty withdrawal); content FROZEN at Biden/2022 | [§30.22.B](#3022b--237--the-stateful-policy-genre-framework-businesslabor--currency--copyright-new-businesslabor--designed-0-shipped) + [§14.1.3.a](#1413a--248-new-futureideas-batch-35--the-legislative-proposal-subtype-policy-area-taxonomy-a-33-value-enum-on-all-four-primitives-designed-0-shipped) | `space#POST 1, 4, 6, 8, 9, 10, 14` |
+> | **★ #221/#92 founding-era bill pool (CORROBORATED)** | bill pool is era/administration/Speaker-tenure-keyed; "Major Bills" = a curated tier; founding-era bill names (Judiciary Act, Bill of Rights, Hamilton tariffs, US Bank, Midnight Judges, Missouri-Compromise-equiv) = candidate seed entries; per-run regeneration (~50% Speaker match); Red/Blue duopoly + party-flips; #221 = 0% built; Speaker roster → #240; Muhlenberg-weak→Clay-transformed power arc → #1005/#28 | [§12.1](#121-261-proposals--runphase_2_6_1_proposals-phaserunnersts3431) | `histspeakers#POST 1, 2, 3, 5, 6, 7-10, 11` |
+> | **Corroborations (no NEW row)** | #25/E25/#52/#218/#249 (SCOTUS cluster — #251 is its ORIGIN); #194/#239/#226 (dataset flags + Hale); #206/#236 (Future content + privatize↔nationalize); #1005/#28 (Speaker power arc) | the topical sections | per-thread |
+>
+> **Roadmap takeaway (for the tech-lead + roadmap-planner).** Batch-36 build surface, ranked:
+> (1) **★★ #251 is the ARCHITECTURAL spine of the whole SCOTUS cluster** — when the court is built beyond the
+> coin-flip, the Judicial-Philosophy axis (Judicial Ideology base-table + trait mods, hidden-until-revealed) +
+> Judicial Doctrine + Focus Courts (Rule-of-Four cert #218, affirm/reverse points-unchanged, cert-denied
+> scoring, deny-Landmark penalty #249) is the **design end-state** (mostly AMPU-2), and the cheap forum-AMPU-1
+> partial (confirmed-justice 10% ±1 / per-10-yr / +5%-leftward drift) is the **near-term shippable** that even
+> the current build lacks. The #52 player-vs-CPU control decision (and CE2's ideology/interest-% independent
+> bridge, the Roe abuse-vector) must be resolved alongside it. (2) **★★ The PV revamp is now done-CONFIRMED**
+> (`failednoms` POST 14) — the only thing between the spreadsheet and the build is the **#216 trait remap**
+> (still the hard blocking prereq for #214 + for authoring all three marquee rosters). (3) **#252** — when the
+> committee model is enriched, give committees a CHOICE of expertises (Judicial is the worst offender), keeping
+> Civil Rights an interest. (4) **Data** — author the 3 marquee rosters (47 presidents + ~18 never-nominated +
+> ~36 failed nominees) into `CURATED_ROWS` at full strength after the #216 remap; seed the founding-era bill
+> pool from the `histspeakers` record (#221). (5) **Content + niche** — the Space genre (#237 + #248 Space
+> subtype) + the geography-gated launch-site Gov action (the 2nd concrete proof #20's flat-vs-per-state axis
+> must allow per-state odds). Cross-ref `game-context.md` rows **#251/#252 (NEW)**, and **#214/#215/#220/#216/
+> #225/#240/#246-N1/#194/#239/#20/#237/#248/#221/#92/#52/#218/#249/#25/#1005/#28 (sharpened/corroborated)**.
 
 ### 30.4 Authority hierarchy reminder
 
