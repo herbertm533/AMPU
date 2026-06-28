@@ -12,8 +12,90 @@
 > unchanged: **QW0 → K0/K2 → K3/K4 + `scenarioBoot`/`BootSheet` → `scenario1788`
 > (E1)**).
 
-> **★★★★ Batch-41 version — FIVE threads, NO playtest, NO historian (a CONTENT/DESIGN batch — the FINAL 2 policy
-> genres [completing the ~12-genre sweep] + 1 SC-case content/generator thread + 2 system-design threads):
+> **★★★★ Batch-42 version — FIVE threads, NO playtest, NO historian (a CONTENT/DESIGN batch — 2 more policy
+> genres [Regulations + Banking] + a Currency subtype + a benchmark-scorer ORIGIN + a SC-case-generator ORIGIN + the
+> what-if-ENTRY mechanic): `d4cd2ee6`-regulations / `beb258f9`-banking+currency / `d474f718`-what-if-politicians /
+> `f012e5cc`-benchmarks-origin [Dec-2021] / `07fa6116`-future-sc-cases-brainstorm [Mar-2022].** **ONE NEW gap row #272
+> (what-if ENTRY); FOUR NEW debt rows #137-#140 (#137=#272 / #138=Regulations+Banking+Currency content-schema /
+> #139=#253 benchmark scorer + rescale decision / #140=#270 generator origin, provenance only); the updated debt #116
+> (a 4th era-table enumeration); plus (b42) folds onto #237/#253/#270/#226/#206/#221/#258.** **NO new keystone, NO
+> re-sequence, TOP-OF-QUEUE UNCHANGED (QW0 → K0/K2 → K3/K4 + scenarioBoot → E1).** **Cheap-fixes-lane delta this batch:
+> NONE — the tech-lead confirms none of these are XS independent quick-wins (they are content/draft-track items, content-
+> engine-track schema folds, an era-end-scoring DECISION+epic, and a SCOTUS-track provenance annotation), so NO new QW
+> number is assigned (max remains QW31).**
+> **★★ THE MILESTONE — CORRECTED (lead with it): the content corpus is NOT complete; the batch-41 "12-genre sweep
+> design-COMPLETE" claim is SOFTENED.** Batch-42 adds **Regulations + Banking genres + a Currency subtype** (`d4cd2ee6` /
+> `beb258f9`), routes a Stock-Market set to a **Trade** genre, and vcczar (`beb258f9` POST 10) calls the genre/subtype
+> taxonomy "more complex than the pokemon type chart" — open-ended. **Restate it: the MAJOR genres are largely captured
+> but the corpus is NOT closed — Regulations, Banking, Currency, Trade, … remain.** **The CONCLUSION is UNCHANGED and
+> STRENGTHENED: the #221/#258 content-engine build (debt #120) is STILL the dominant lever, now even MORE so since more
+> authored content keeps arriving and keeps waiting on it.** (The §9.1 lead-block and the batch-41 milestone above are both
+> softened to match.) game-mechanics §14.1.3.i, §30.32.
+> **(①) ★★ #272 WHAT-IF ENTRY-via-scripted-event (debt #137) = a SMALL data-model add + a #221 CONSUMER + a #258
+> condition-gate (S-M, on the CONTENT/DRAFT track — NOT a standalone epic).** 0% shipped: `ImportedDraftee`
+> (`types.ts:~1780`) has **NO `whatIf` / `playable` / `enterEvent` field** (what-if pols are indistinguishable dataset
+> rows), and no `ScriptedEvent` type/registry exists (draft = `runPhase_2_1_1_Draft`, #221 0% shipped). Build surfaces:
+> a `whatIf`/`enterEvent` marker on `ImportedDraftee`; a DRAFTABLE-BUT-NOT-YET-PLAYABLE state the draft + UI represent;
+> an entry-resolving scripted event (a NEW #221 consumer) — kill-in-battle [MAJORITY, GATED on an ACTIVE war] vs
+> returns-to-politics [minority → playable], resolving IN PLACE (vcczar REJECTED Ted's re-draft-at-correct-age); and
+> condition-gated availability (Castro→Cuba, Tubman→suffrage) REUSING the era-event `Predicate`/`evalPredicate` (#258) on
+> a NEW surface + NEW predicate kinds (suffrage-by-demographic, territory-held). **The Frail DE-TAG is a
+> `scripts/seedDataset.mjs` DATASET RULE** (#226 earlier origin). **Speculative-draft rules are OPEN** (grading / pick-
+> cost / CPU behavior — vcczar's "I need to make draft rules for this," POST 1). Requires #221 to exist first; pairs
+> #115/#240/#263 (the POOL side, distinct) / #258/#238/#260 (condition entry) / #226 (Frail de-tag). game-mechanics §4.4.2.
+> **(②) ★★ REGULATIONS + BANKING + EPA-TIER + CURRENCY (debt #138) = 0%-shipped CONTENT-SCHEMA features the #221 engine
+> must support — FOLD into the content-engine build (#221/#258), NOT separate epics (S-M INSIDE the #221/K4 build).**
+> `Legislation` (`types.ts:1506-1520`) has the 4-value `committee` and **NO `subtype` / prereq / level field**; there is
+> **NO `Level N` graduated-intensity construct, NO banking-institution-state model, NO currency-standard store** in `src/`.
+> Three concrete schema demands the engine must absorb: ① the stateful **Banking institution-LIFECYCLE** (Bank→re-found
+> →Bank-War-kill→Independent-Treasury→National→Fed→Glass-Steagall→repeal-by-GLB — the richest institution ladder in the
+> KB, the bank twin of the Social-Security/Medicare entitlement ladders + the #66 office lifecycle) ⇒ a **program/
+> institution STATE STORE**; ② the **EPA graduated-intensity `Level 1/2/3` TIERS** (a stringency ladder DISTINCT from
+> create→expand→cut scope) ⇒ a **`Level N` INTENSITY field**; ③ the **Currency SUBTYPE** (gold/silver/bimetalism/fiat, a
+> #248 mutually-exclusive set, GM-ruled sibling to Banking) + Stock-Market→Trade routing ⇒ the **#248 subtype TAXONOMY**.
+> Plus **meter-threshold + territory predicates** (#258): the `economic` meter the GLB `Recession`-or-worse prereq reads
+> DOES ship (`NationalMeters.economic`), but nothing wires proposal availability to a named meter tier (Banking = the most
+> explicit `Preq:` evidence yet, ~9 blocks). **FOLD into the engine build, NOT separate epics.** game-mechanics §14.1.3.i.
+> **(③) ★ #253 BENCHMARK ERA-END SCORER + RESCALE (debt #139) = a DECISION-GATED item on the ERA-END-SCORING track — the
+> POINT-VALUE RESCALE must be DECIDED FIRST; the scorer is the K3 #68 per-era banking step, ALSO blocked on the era-table
+> reconcile (debt #116).** 0% built (grep `benchmark` = ZERO engine hits; `game.gameEnded` is a one-shot, not a per-era
+> bank; the K3 #68 banking home is unbuilt). The Dec-2021 `f012e5cc` ORIGIN settled **1,000/faction × 5 factions/party = a
+> ~10,000-pt swing** for **ONE benchmark/party/era**, but 2022 `benchmarkupd` expanded to **~10 benchmarks/era** with
+> weights "TBD" — if each still paid 1,000/faction the per-era swing balloons ~10×, so **the 1,000/faction (Dec-2021) vs
+> ~10-benchmarks/era (2022) rescale must be RECONCILED with vcczar/Ted BEFORE building** (build against the wrong weight =
+> re-tune the whole score economy). Also UNDEFINED: the **"party-leader factions"** that lose when neither party
+> accomplishes its benchmark. The scorer IS the #102 dual-scoring scoreboard, checkpoints AT era boundaries → blocked on
+> the (now 4-way) era-table reconcile (debt #116). The existing KG253 row below the keystone table is the build; this adds
+> the rescale DECISION ahead of it. game-mechanics §27.2.2.
+> **(④) ★ #270 SC-CASE GENERATOR ORIGIN (debt #140) = PROVENANCE ONLY, NO re-sequence — annotate the existing #270 SCOTUS-
+> track entry; stays M-L; needs seeded `rng.ts` (debt #3).** Design-origin pushed BACK to the Mar-2022 `07fa6116`
+> brainstorm (~6 weeks BEFORE the b41 `964b8857` the #270 row cites) — MrPotatoTed originates the description-free `<name>
+> v. <name>` generator (POST 25), vcczar RULES "the same random SC case generator + ~50 SPECIFIC hypothetical cases in
+> combination" (POST 28, fixes the generator-plus-authored-docket architecture + the ~50-case target), and the two case-
+> authoring heuristics (overturn-a-precedent / answer-an-unaddressed-question = #270's `overturns`/`reinstates` links +
+> the yes/no `question` field). The one load-bearing engineering constraint it RE-CONFIRMS: the generator's rolls (name-v-
+> name + the ~5% Landmark roll) **MUST route through seeded `src/rng.ts`** — NOT seeded today (debt #3/K0) — so #270 co-
+> lands with real seeding. **NO scope/size/order change: #270 stays the BIGGEST SCOTUS deliverable (M-L) on the SCOTUS
+> track (debt #135), downstream of the content engine.** game-mechanics §22.7.aa.
+> **(⑤) ★ ERA-TABLE RECONCILE — now a FOURTH (15-era `benchmarks`-origin) enumeration (debt #116 updated); STILL the
+> K3/K4 sequencing blocker, NO re-sequence.** The Dec-2021 `f012e5cc` benchmark ORIGIN is a **15-era** enumeration
+> (Independence + 13 + Future bookends) MATCHING the 15-rulebook label set (NOT the 13-era `benchmarkupd` it later trimmed
+> into). Header-only (NO new boundary dates), but it reaffirms the designer's mental era model is the 15-label set, not the
+> shipped 4-enum — so the era-table reconcile is now the 15-rulebook / 14-half-term / 13-`benchmarkupd` / 15-`benchmarks`-
+> origin tables, a SEQUENCING BLOCKER for K3/K4 that must resolve before the #253 scorer (which checkpoints at those
+> boundaries). The K4 "do NOT add a future era VALUE" rule still holds — bands are DATA (#92), not enum values. (See the
+> updated ERA-TABLE RECONCILE prose in the keystone section.) game-mechanics §27.1.2, §27.2.2.
+> **Within-batch order: MILESTONE correction/softening (top of content-engine track; #258 stays FIRST, with/just-ahead of
+> K4) → REGULATIONS/BANKING/EPA-tier/CURRENCY folded INTO #221/#258 (program/institution state store + `Level N` field +
+> #248 subtype + meter/territory predicates) → #272 what-if ENTRY (S-M, content/draft track; Frail de-tag = seedDataset.mjs
+> rule; speculative-draft rules OPEN) → #253 RESCALE DECISION (decide 1,000/faction vs ~10/era) THEN the KG253 scorer (K3
+> #68 step, blocked on era-table reconcile) → #270 generator-origin annotation (provenance only, stays M-L, seeded rng.ts/
+> debt #3) → era-table reconcile UPDATED to the 4th enumeration (still the K3/K4 blocker).** debt #137-#140 + updated #116;
+> technical-guide §9 batch-42 lead + §8 debt #137-#140; game-mechanics §14.1.3.i, §4.4.2, §22.7.aa, §27.2.2, §30.32.
+>
+> **★★★★ Batch-41 version — FIVE threads, NO playtest, NO historian (a CONTENT/DESIGN batch — 2 more policy
+> genres [then thought to "complete" the ~12-genre sweep — ★ batch-42 CORRECTS this: the corpus is NOT closed,
+> Regulations/Banking/Currency/Trade remain] + 1 SC-case content/generator thread + 2 system-design threads):
 > `964b8857`-future-sc-cases [authoring] / `a863421c`-courts / `2cddc161`-welfare / `4e518e05`-historical-relocation /
 > `8189b724`-faction-ideology-default. **TWO NEW debt rows #135-#136; TWO NEW gap rows #270 (SC-case schema+generator) /
 > #271 (elected judiciary), plus (b41) ENRICH folds onto #4/#171/#38/#76/#263/#52/#221/#258.** **NO new keystone, NO
@@ -21,13 +103,16 @@
 > NONE — every batch-41 delta is content-engine-track (#258/#221), SCOTUS-track (#270 M-L / #271 M), or a data-layer-
 > plus-modes add (#38 S-M / #4 data + toggle); nothing is an XS independent quick-win, so NO new QW number is assigned
 > (max remains QW31).**
-> **★★ THE MILESTONE (lead with it): the 12-genre content-authoring CORPUS is now design-COMPLETE.** `2cddc161` (Welfare)
-> opens *"this is the last policy section"* — Welfare is the 12th-and-last genre (immigration → education → civil-rights →
-> agriculture → civil-service → diplomacy → healthcare → crimes → military → expansionism → courts → welfare). **This
-> REFRAMES the backlog: the remaining judiciary/welfare/etc. work is NOT new content authoring — it is the 0%-shipped
-> CONTENT ENGINE (#221 registry + #258 predicate field) + per-genre tagging/coverage. So the #221/#258 content-engine
-> build is now the DOMINANT remaining lever — everything authored across all twelve genres is waiting on it.** **This
-> annotation belongs at the TOP of the content-engine track; #258 STAYS the track's FIRST item, WITH/just-ahead of K4.**
+> **★★ THE MILESTONE (lead with it) — ★★ CORRECTED by batch-42 (this "design-COMPLETE" claim is SOFTENED; the corpus is NOT
+> closed):** `2cddc161` (Welfare) opened *"this is the last policy section"* and Welfare was the then-12th genre (immigration →
+> education → civil-rights → agriculture → civil-service → diplomacy → healthcare → crimes → military → expansionism →
+> courts → welfare) — BUT batch-42 adds **Regulations + Banking genres + a Currency subtype** (and routes a Stock-Market set to a
+> **Trade** genre; vcczar calls the taxonomy "more complex than the pokemon type chart"). So restate it: **the MAJOR genres are
+> largely captured but the corpus is NOT closed — Regulations, Banking, Currency, Trade, … remain.** **The CONCLUSION is UNCHANGED
+> and STRENGTHENED: the remaining judiciary/welfare/regulations/banking/etc. work is NOT new content authoring infra — it is the
+> 0%-shipped CONTENT ENGINE (#221 registry + #258 predicate field) + per-genre tagging/coverage; the #221/#258 content-engine
+> build is the DOMINANT remaining lever REGARDLESS — now even MORE so, since more authored content keeps arriving and keeps
+> waiting on it.** **This annotation belongs at the TOP of the content-engine track; #258 STAYS the track's FIRST item, WITH/just-ahead of K4.**
 > Courts/Welfare add two NEW predicate KINDS to #258's vocab (debt #120, joins #129/#134): **institution-FLAG**
 > (Judicial-Review in-effect/not-active; Court-Packing active; SCOTUS exists/not) and **territory-ownership /
 > expansion-extent** (US-controls-X; at-MAX-expansion → gate the 21/31 justice counts, tying Courts to the expansion
@@ -4620,23 +4705,28 @@ lab-grown meat / AI-employee restrictions) — reinforcing the batch-29 #206 "Fu
 era-content/#221 area in Phase-1 (game-mechanics §30.22.A, §30.22.B). See the updated K4 #221 annotation.
 **★★★ ERA-TABLE RECONCILE (debt #116 / gap #206) — a hard DESIGN-RULING BLOCKER that sits IMMEDIATELY AHEAD of the
 K3/K4 era-band CONTENT PHASE — a K3/K4 GATE, NOT a queue move, NOT a new keystone, NOT an engineering task, NO
-re-sequence (§9 batch-38 lead ②; debt #116; sharpens #206/#92). ★ BATCH-38 UPDATE → now a THREE-WAY reconcile.** K3
+re-sequence (§9 batch-38 lead ②; debt #116; sharpens #206/#92). ★ BATCH-38 UPDATE → a THREE-WAY reconcile; ★ BATCH-42
+UPDATE → now a FOUR-WAY reconcile (a 4th, 15-era `benchmarks`-ORIGIN enumeration).** K3
 (`advanceEra` + `era.advanceWhen`) and K4 (the era-content registry keyed on `eraBand`) BOTH need ONE canonical
 band-label vocabulary + boundary set as their KEY SPACE; building either against an un-reconciled table means
-**authoring era content TWICE.** The forum now holds **THREE non-identical authoritative era tables**: (a) the batch-31
+**authoring era content TWICE.** The forum now holds **FOUR non-identical authoritative era tables**: (a) the batch-31
 **15-era** `rulebook` §A calendar — the ONLY one with a standalone **Era-of-the-Future** band; (b) ★ the batch-38
 **14-era** `4accc8a8` half-term table — the FIRST with **contiguous per-half-term spans** tiling 1772→present with NO
 gaps and **no standalone Future row** (+ a per-era scripted-event total summing to 1,335), the **MOST
 implementation-ready year-spine** (its half-term boundaries land on the even/odd 2-year-turn pair the engine already
 buckets content by); (c) the batch-37 **13-era** `benchmarkupd` benchmark table (Federalism 1788 → Populism 2012-2024,
-EXCLUDES Independence + Future). They disagree on cardinality (15 vs 14 vs 13) AND boundaries (does Independence start
-1772 [half-term] or label at 1774 [rulebook/benchmark]? is there a standalone Future band [rulebook YES /
-half-term+benchmark NO]?); of the 13 benchmark names **only Federalism + Nationalism map to a shipped enum member**, and
+EXCLUDES Independence + Future); ★ (d) the batch-42 **15-era** `f012e5cc` `benchmarks`-ORIGIN enumeration (Dec-2021 — the
+ORIGIN the batch-37 13-era `benchmarkupd` later TRIMMED from; Independence + 13 + Future bookends, MATCHING the 15-rulebook
+label set, header-only — adds NO new boundary dates but reaffirms the designer's mental model is the 15-label set, NOT the
+shipped 4-enum). They disagree on cardinality (15 vs 14 vs 13 vs 15-again) AND boundaries (does Independence start
+1772 [half-term] or label at 1774 [rulebook/benchmark/benchmarks-origin]? is there a standalone Future band [rulebook +
+benchmarks-origin YES / half-term + benchmarkupd NO]?); of the 13 trimmed-benchmark names **only Federalism + Nationalism map to a shipped enum member**, and
 the 14-era table splits the coarse `nationalism` into Republicanism/Democracy/Manifest-Destiny/Nationalism/Gilded-Age
 (pinning Nationalism to only 1856-1867) — strong evidence the 4-enum over-collapses 1800-1868. This is a
-**DESIGN-RULING prerequisite** — a human/PM reconcile of the **15/14/13 tables + the playtest-observed bands** into ONE
-`EraBand` enum/table (**the 14-era half-term spine is the cleanest partition candidate; the 15-era rulebook is the only
-one with an explicit Future row**) — that GATES the engineering but carries **NO new build surface of its own** (the
+**DESIGN-RULING prerequisite** — a human/PM reconcile of the **15-rulebook / 14-half-term / 13-`benchmarkupd` / 15-`benchmarks`-origin
+tables + the playtest-observed bands** into ONE
+`EraBand` enum/table (**the 14-era half-term spine is the cleanest partition candidate; the two 15-era tables [rulebook +
+benchmarks-origin] are the only ones with an explicit Future row**) — that GATES the engineering but carries **NO new build surface of its own** (the
 engine cost is already inside K3/K4/debt #5, whose "do NOT grow the enum per band → adopt the #92 two-level DATA model"
 direction this corroborates). **It does NOT move K3/K4 in the queue; it is the authority input the K3/K4 content phase
 consumes — RULE IT before era-content authoring begins.** The #253 benchmark scorer (the K-tier-gated epic row below)

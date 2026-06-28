@@ -365,7 +365,8 @@
     - [30.28 Rulings folded from batch 38 — FIVE CONTENT-AUTHORING / DESIGN / EXPLOIT-FIX threads (★★ #258 predicate-gated content + #259 party-transformation + #260/#261/#262 + the war-declaration/exploit-fix cluster) (`parties` / `civilrights` / `fixes2022-exploits` / `halfterm` / `agriculture`)](#3028-rulings-folded-from-batch-38--five-content-authoring--design--exploit-fix-threads--258-predicate-gated-content--259-party-transformation--260261262--the-war-declarationexploit-fix-cluster-parties--civilrights--fixes2022-exploits--halfterm--agriculture)
     - [30.29 Rulings folded from batch 39 — FIVE DESIGN / CONTENT-AUTHORING threads (★★ #264 the COUP/insurrection PROCEDURE subsystem + #263 the game-SETTINGS model + the #182 command-eligibility SETTLED ruling + #219 weighted-House-vote DESIGN-ORIGIN + the Civil-Service/Diplomacy genre drops) (`civil-service` / `rules-update` / `jan6-insurrection` / `us-house-votes` / `diplomacy`)](#3029-rulings-folded-from-batch-39--five-design--content-authoring-threads--264-the-coupinsurrection-procedure-subsystem--263-the-game-settings-model--the-182-command-eligibility-settled-ruling--219-weighted-house-vote-design-origin--the-civil-servicediplomacy-genre-drops-civil-service--rules-update--jan6-insurrection--us-house-votes--diplomacy)
     - [30.30 Rulings folded from batch 40 — FOUR policy-genre drops + ONE war/treaty BALANCE thread (★★ #267 the TREATY/war-END subsystem + #266 meter-at-floor + #265 cabinet-officer agency + #268/#269 territory machine + Healthcare/Crimes/Military/Expansionism enrichments)](#3030-rulings-folded-from-batch-40--four-policy-genre-drops--one-wartreaty-balance-thread--267-the-treatywar-end-subsystem--266-meter-at-floor-no-deterrent--265-cabinet-officer-agency--268269-territory-machine--the-healthcarecrimesmilitaryexpansionism-content-enrichments-65574aaa-healthcare--e456b6b3-crimes-punishments--a2312dd2-foreign-affairstreaty--145db158-military--4e76e6c3-expansionism)
-    - [30.31 Rulings folded from batch 41 — TWO Courts + TWO Welfare/Courts genre drops + ONE SC-case AUTHORING thread + relocation/faction-default design-origins (★★ #270 the SC-CASE schema + procedural GENERATOR + #271 the elected/retention-election judiciary + ★ MILESTONE: the 12-genre content sweep is COMPLETE) (`964b8857-future-sc-cases` / `a863421c-courts` / `2cddc161-welfare` / `4e518e05-historical-relocation` / `8189b724-faction-ideology-default`)](#3031-rulings-folded-from-batch-41--two-courts--two-welfarecourts-genre-drops--one-sc-case-authoring-thread--relocationfaction-default-design-origins--270-the-sc-case-schema--procedural-generator--271-the-electedretention-election-judiciary---milestone-the-12-genre-content-sweep-is-complete-964b8857-future-sc-cases--a863421c-courts--2cddc161-welfare--4e518e05-historical-relocation--8189b724-faction-ideology-default)
+    - [30.31 Rulings folded from batch 41 — TWO Courts + TWO Welfare/Courts genre drops + ONE SC-case AUTHORING thread + relocation/faction-default design-origins (★★ #270 the SC-CASE schema + procedural GENERATOR + #271 the elected/retention-election judiciary + ★ MILESTONE [corrected in §30.32]: the first-pass 12-genre content sweep) (`964b8857-future-sc-cases` / `a863421c-courts` / `2cddc161-welfare` / `4e518e05-historical-relocation` / `8189b724-faction-ideology-default`)](#3031-rulings-folded-from-batch-41--two-courts--two-welfarecourts-genre-drops--one-sc-case-authoring-thread--relocationfaction-default-design-origins--270-the-sc-case-schema--procedural-generator--271-the-electedretention-election-judiciary---milestone-later-corrected-in-3032-the-first-pass-12-genre-content-sweep-964b8857-future-sc-cases--a863421c-courts--2cddc161-welfare--4e518e05-historical-relocation--8189b724-faction-ideology-default)
+    - [30.32 Rulings folded from batch 42 — TWO policy-genre drops (Regulations + Banking) + TWO design-origin threads (Benchmarks + SC-case generator) + the What-If ENTRY mechanic (★★ #272 what-if entry-via-scripted-event + the 12-genre MILESTONE CORRECTION) (`d4cd2ee6-regulations` / `beb258f9-banking` / `f012e5cc-benchmarks` / `d474f718-change-to-whatif-politicians` / `07fa6116-future-supreme-court-cases`)](#3032-rulings-folded-from-batch-42--two-policy-genre-drops-regulations--banking--two-design-origin-threads-benchmarks--sc-case-generator--the-what-if-entry-mechanic--the-12-genre-milestone-correction)
     - [30.4 Authority hierarchy reminder](#304-authority-hierarchy-reminder)
 31. [Gilded-Age era systems (designed, not built)](#31-gilded-age-era-systems-designed-not-built)
     - [31.1 (#147) Tariff-as-national-%-rate + the mutually-exclusive MonetaryRegime](#311-147-tariff-as-national-rate--the-mutually-exclusive-monetaryregime-designed)
@@ -1611,6 +1612,81 @@ sitting President"), too many pols with 2-3 command. (`primary2020#§5 POST 95, 
 > rookie draft (3), folded into the scenario-boot pipeline (#115). Cite `playtestdraft#POST 1, 6, 86, 90,
 > 101-102, 123-125, 132, 196`; `rulebook#§B POST 3`; `primary2020#§5 POST 96, 99-104`. Ruling index
 > [§30.21](#3021-rulings-folded-from-batch-31--the-canonical-rulebook--four-rulesfeedbacktestdata-threads-rulebook--apptdeepdive--primary2020--playtestdraft--bestmoments).)*
+
+#### 4.4.2 ★ #272 (NEW, `d474f718`, May 2022, batch 42) — WHAT-IF (counterfactual) politician ENTRY via scripted event + condition-gated availability (DESIGNED, 0% shipped)
+
+> **★ A NEW gate on counterfactual pols: draftable, but maybe-never-PLAYABLE.** Source: `d474f718` ("Change to
+> What-If Politicians," May 4 2022 core design → Jun 10 2022 community list; tier-1 `@vcczar` + `@MrPotatoTed`/Ted;
+> contributors `@OrangeP47`, `@eveofanticreation`). The corpus already folds the what-if *pool* (the curated
+> draftable-pool toggle) into **#24/#115/#263** — those rows only make a pol *draftable*. The genuinely NEW
+> contribution here is **entry-via-scripted-event + speculative drafting** and the **war-active kill gate**. **0%
+> shipped:** `ImportedDraftee` (`types.ts:1780`) has **no `isWhatIf` / `playable` / `enterEvent` field** — what-if
+> pols are indistinguishable dataset rows today; **scripted events are 0% shipped** (no `ScriptedEvent` in `src/`;
+> the draft is `runPhase_2_1_1_Draft`). This entire entry mechanism is unbuilt.
+
+**(1) ★ Scripted-event-GATED entry (the novel core, POST 1, 8; ties #221).** What-if pols **sit in the draft pool
+like anyone, but a later SCRIPTED EVENT decides if they ever ACTIVATE.** The rules as stated:
+
+| Rule | Spec (`d474f718`) |
+|---|---|
+| **Draftable but conditionally playable** | "all What-if politicians would be draftable, you just don't know if you'll ever get to play them" (POST 1) — a later scripted event resolves entry |
+| **Two-branch resolution** | a **"Killed in Battle"** branch fires *a majority of the time*; a **"Returns from Battle to Enter Politics"** branch (minority) makes the pol **playable** (Joe Kennedy Jr example, POST 1) |
+| **★ Kill branch GATED on an ACTIVE war** | Ted: "Does there need to be an actual war active for him to die in it?" vcczar: "Yeah" (POST 4, 6) — a battle-death what-if **cannot resolve in peacetime** (not a free-floating coin flip) |
+| **★ Resolves IN PLACE — NO re-draft at correct age** | Ted proposed firing the enter-event → the pol re-enters the *following* draft at the right age/stats (POST 2); **vcczar REJECTED this** (POST 3): "it will just be assumed he was a state legislator that served in the war… they'd take a break from politics to fight." The drafted what-if **stays where drafted**; the event resolves in place |
+| **Speculative drafting = intended behavior** | "players will likely draft them towards the end of a draft, even if their overall grade is high" (POST 1) — a late-pick gamble. **Napoleon** is the extreme: "the highest rated politician in all of AMPU, but the chance of ever getting him is very slim, and he'll be a few years from a likely death by the time you get him" (high reward × very-low odds × near-death-on-arrival) |
+| **★ OPEN — draft rules unspecified** | vcczar: "I need to make draft rules for this" (POST 1) — how a draftable-but-maybe-dead high-grade pol is graded / pick-costed / presented, and whether the CPU drafts one, is undefined (feeds #115/#263) |
+
+> This is a **NEW CONSUMER of #221's scripted-event tier** (the entry vehicle) + a **draftability-without-playability**
+> state the draft UI and `runPhase_2_1_1_Draft` must represent + a `whatIf`/`enterEvent` marker on the draftee row
+> (none on `ImportedDraftee`). **New gap #272.**
+
+**(2) ★ Condition-GATED what-ifs — a distinct predicate class (POST 1, 8; corroborates #258, ties #260/#238).** A
+SECOND gate (independent of the §(1) coin flip): some what-ifs need a **game-state CONDITION** to hold before they can
+appear AT ALL. A pol can be BOTH (condition unlocks draftability; the scripted event then gates playability):
+
+| What-if pol | Required game-state condition | Predicate family |
+|---|---|---|
+| **Fidel Castro** | **Cuba taken** (expansion) | territory/expansion-held (#260) |
+| **Harriet Tubman** | votes for **BOTH blacks AND women** (suffrage) | suffrage-by-demographic (#238) |
+| **Tecumseh** | **citizenship for Native Americans** | suffrage/citizenship (#238) |
+| **Susan B Anthony** | **votes for women** (women's suffrage) | suffrage-by-demographic (#238) |
+| **Napoleon** | **"rescued from St. Helena"** | bespoke event precondition (#221) |
+
+> These are #258's predicate interpreter applied to a **NEW surface (draft-pool availability)** + **NEW predicate
+> KINDS: suffrage-by-demographic and territory/expansion-held.** A serializable `Predicate` tree + `evalPredicate`
+> already ship (`types.ts:~1487-1497`) but are wired ONLY to the era-event graph (the #258 gap); there is no
+> suffrage/expansion/citizenship predicate and no draftability gate that consumes one.
+
+**(3) ★ "Frail" de-tagging on non-health early deaths (POST 5–7; the EARLIER design-origin of the #226 scoping).** Ted
+asked whether to remove "Frail" from what-if candidates (the premise is they survived). vcczar (POST 7): *"Yeah, I'll
+have to do that for all politicians that died early from non-health reasons. It was just easier to tag all the people
+that die before the age of 60. Exceptions are people assumed to have had bad health but happened to have been killed
+anyway — Lincoln and JFK."* The ruling: **REMOVE Frail from what-if pols whose canonical early death was NON-health
+(battle/assassination); KEEP it on health-likely-by-60 cases (Lincoln, JFK).** Frail is a real death multiplier
+(`MORTALITY_RULES.frailDeathMult`, `phaseRunners.ts:2362-2364`) and is granted in play by battle wounds
+(`revolutionaryWar.ts:99-117`, Hale resist roll) — so a survived-what-if wrongly carrying Frail dies too often. **This
+thread (May 2022) is the chronologically-earlier design-origin of the exact "natural-lifespan, NOT battle-death"
+scoping #226 already records from the later `kiaofficers` thread (§10.1.y, POST 20-21).** Dataset rule for
+`scripts/seedDataset.mjs` (do NOT hand-edit `defaultDraftClasses.ts` / `standard-draft-classes.json`).
+
+**(4) Roster (content — folds onto #24/#115, dataset-fill).** vcczar's ~24-name canonical what-if list (POST 9/12;
+*excludes* the §(2) condition-gated women/Native/black/ahistorical-state set): JFK Jr, Karl Marx, Marquis de Lafayette,
+Joseph P Kennedy Jr, Winston Churchill, Nathan Hale, Quentin Roosevelt, Philip Hamilton, William Franklin, Boris
+Johnson, Abraham Lincoln II, William B Travis, MLK Jr, Malcolm X, et al. Community RADICAL suggestions (eveofanticreation
+POST 13/14, tagged by ideology, "three possibly four already in game") share a scandal-prone profile (flavor note, not a
+confirmed add). Ahistorical-state pols are SPARSE (~20-25 Canadians, 5-10 Brazilians; volunteer-fill, POST 10-11). All
+route to `seedDataset.mjs` `ROWS`/`ERA_FIGURES` with sub-floor electoral stats — the what-if pool is the alt-history
+extension of the existing `ERA_FIGURES` mechanism (#24/#115/#240/#263).
+
+*(designed, 0% shipped — **NEW gap #272**: add a `whatIf`/`enterEvent` marker on the draftee row (`ImportedDraftee`
+`types.ts:1780` has none); a **scripted-event tier** (#221, 0% shipped) resolving entry (kill-in-battle majority,
+gated on an active war ↔ returns-to-politics minority = playable), resolving **in place** (no re-draft, vcczar POST 3);
+a **draftability-without-playability** state for the draft UI + `runPhase_2_1_1_Draft`; condition-gated availability
+via #258 predicates with NEW KINDS (suffrage-by-demographic #238, territory/expansion-held #260, bespoke St-Helena
+event #221); the Frail de-tag dataset rule (#226). Cite `d474f718#POST 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14`;
+codebase `types.ts:1780` (`ImportedDraftee`, no whatIf field), `types.ts:~1487-1497` (`Predicate`/`evalPredicate`,
+era-events only), `phaseRunners.ts:2362-2364` (Frail death mult), `revolutionaryWar.ts:99-117` (wound-Frail);
+`game-context.md` #272 (NEW); ties #221/#258/#260/#238/#226/#115/#24/#263/#240.)*
 
 ---
 
@@ -5894,7 +5970,15 @@ toggle + prosecutorial discretion + SYG/DTR + state-LE funding. Cite `65574aaa` 
 `phaseRunners.ts:~3397` (coin-flip court), `types.ts:28/36` (single `military` scalar), `territories.ts:8`; `game-context.md`
 #221/#237/#248/#258/#52/#66/#45/#56/#106/#262/#206/#260/#20/#268/#269/#107.)*
 
-#### 14.1.3.h ★ #221/#237/#248 + #258 + #52/#66/#255 (batch 41) — the COURTS + WELFARE policy-genre drops + ★ the 12th-and-LAST genre (the content SWEEP is COMPLETE) (DESIGNED, 0% shipped)
+#### 14.1.3.h ★ #221/#237/#248 + #258 + #52/#66/#255 (batch 41) — the COURTS + WELFARE policy-genre drops + ★ the MAJOR genres largely captured (the corpus is NOT closed — see §14.1.3.i) (DESIGNED, 0% shipped)
+
+> **★★ MILESTONE CORRECTED (batch 42).** This section originally recorded Welfare as the "12th & LAST policy
+> genre; the content sweep is COMPLETE." **That was wrong.** Batch-42 (`d4cd2ee6-regulations` + `beb258f9-banking`)
+> adds **Regulations** + **Banking** genres + a named **Currency subtype** (+ Stock-Market routed to **Trade**) —
+> see [§14.1.3.i](#1413i--221237248--258--6636--batch-42--the-regulations--banking-policy-genre-drops--the-named-currency-subtype--the-12-genre-milestone-correction-designed-0-shipped). The "12 genres" below is a **snapshot of the first authoring pass, NOT the final count**: vcczar (`beb258f9` POST 10) calls the
+> genre/subtype taxonomy *"more complex than the pokemon type chart"* — it is OPEN-ENDED (Currency + Copyright were
+> already named at #237's origin, so a hard "12 and done" was never right). Read every "sweep complete" / "12th-and-
+> last" phrasing in this section as **"major genres largely captured; more remain."**
 
 > **★ The final two single-genre content drops** (the batch-41 siblings of the b37–b40 drops), both
 > CONTENT-AUTHORING idea dumps (NOT playthroughs), both vcczar-opened. **0% shipped** (no `subtype`, no Pres/Gov-Action
@@ -5908,13 +5992,17 @@ toggle + prosecutorial discretion + SYG/DTR + state-LE funding. Cite `65574aaa` 
 > | **Courts / Judiciary** | `a863421c` (Apr 2022, 11 posts) | **FULLY-TAGGED** (L/G/P + era bands + **prereq-PARTITIONED** blocks; `L-Ind-Default` baseline = **"No Supreme Court"**) | court-STRUCTURE genre (size/tenure/Judicial-Review/lower-courts/elected-judges); sibling of #251 `judiciaryidea` |
 > | **Welfare** | `2cddc161` (Apr 2022, 6 posts, ~48 rows) | **UNTAGGED** (3 flat header partitions; no `L/P/G` prefix, no era band, no `Preq:`) | L≈45 / **P=1** / **G=2** — the THINNEST Pres/Gov counts of any genre yet (#262) |
 
-**★★ MILESTONE — Welfare is the 12th & LAST policy-genre drop (`2cddc161` POST 1: "This is the last policy section").**
-With Welfare, the policy-genre content-authoring SWEEP is **COMPLETE**: **immigration → education → civil-rights →
-agriculture → civil-service → diplomacy → healthcare → crimes → military → expansionism → courts → welfare** (12 genres,
-§14.1.3.c–§14.1.3.h). The genre-instance pipeline has now ingested its full first pass; what remains is the per-genre
-**tagging pass** (the UNTAGGED drops — Healthcare/Military/Expansionism/Welfare — still need L/P/G + era + `Preq:`
-schema) + the **#262 Pres/Gov-Action + #206 Future coverage fill**, NOT new genres. (Feeds the tech-lead/roadmap-planner:
-the content corpus is feature-complete at the genre level; the gap is the 0%-shipped engine + the tagging/coverage debt.)
+**★ MILESTONE (CORRECTED in batch 42 — the corpus is NOT closed).** `2cddc161` POST 1 says *"This is the last policy
+section,"* and with Welfare the **first-pass** genre sweep covered 12 genres: **immigration → education → civil-rights →
+agriculture → civil-service → diplomacy → healthcare → crimes → military → expansionism → courts → welfare** (§14.1.3.c–
+§14.1.3.h). **But "12 genres" is a snapshot of that first pass, NOT the final count.** Batch-42 added **Regulations** +
+**Banking** (+ a **Currency** subtype, + Stock-Market → **Trade**) — see §14.1.3.i — and the threads reference still more.
+So the MAJOR policy genres are **largely captured**, but the genre/subtype corpus remains **OPEN** (vcczar: "more complex
+than the pokemon type chart," `beb258f9` POST 10). What remains: more genre INSTANCES (Regulations/Banking/Trade/…), the
+per-genre **tagging pass** (the UNTAGGED drops — Healthcare/Military/Expansionism/Welfare/Regulations still need L/P/G +
+era + `Preq:` schema), and the **#262 Pres/Gov-Action + #206 Future coverage fill**. (Feeds the tech-lead/roadmap-planner:
+the genre FRAMEWORK is well-established and the major genres are largely authored, but the gap is the 0%-shipped engine +
+the tagging/coverage debt + the still-ingesting genre-instance pipeline.)
 
 **(1) ★ #52 COURTS-STRUCTURE — the court-SIZE ladder + court-PACKING cap + tenure rules (the authoring source for #52's
 court dynamics; `a863421c` POST 1).** The genre is **prereq-PARTITIONED** (organized into game-STATE partitions, each
@@ -5998,8 +6086,10 @@ Free-Housing/Transportation-for-All, Maximal-Welfare-for-Seniors; community: uni
 (ban-robots/Human-AI-Augmented-from-juries; community: robot justices, an AI-run SC for AI, Ten-Commandments-as-supreme-
 court-principle). Welfare right-side again skews to cuts/abolitions/privatizations (the same per-ideology skew #262 tracks).
 
-*(designed, 0% shipped — the 11th & 12th #237 GENRES / #248 SUBTYPES populating the #221 registry. ★ MILESTONE: the
-12-genre content-authoring sweep is COMPLETE (Welfare = last). NOVEL enrichments: **#52** court-STRUCTURE (the authoring
+*(designed, 0% shipped — the 11th & 12th #237 GENRES / #248 SUBTYPES of the FIRST authoring pass, populating the #221
+registry. ★ MILESTONE (CORRECTED b42): the 12-genre count is a first-pass SNAPSHOT, NOT the final corpus — Regulations +
+Banking (+ Currency subtype, + Trade) follow in §14.1.3.i; major genres largely captured, more remain. NOVEL enrichments
+from THIS batch: **#52** court-STRUCTURE (the authoring
 source for the court-SIZE ladder 5/6/7/9/10/13 + **21/31 EXPANSION-GATED**, the court-PACKING bill + per-Pres **6-extra**
 cap, the 40/50 min-age & 70/75 retire-age & **8-yr term-limit** tenure rules, Judicial-Review as a togglable institution
 flag, lower-court create/jury-control) — shipped coin-flip court `phaseRunners.ts:~3397` models NONE of it; **#258** two
@@ -6016,6 +6106,103 @@ Future welfare "expands massively by 2100"). The SC-case docket/generator side o
 (#270/#271). Cite `a863421c#POST 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11`; `2cddc161#POST 1, 2, 3, 4, 5, 6`; codebase
 `types.ts:1506-1520` (no subtype/prereq), `phaseRunners.ts:~3397` (coin-flip court); `game-context.md`
 #221/#237/#248/#258/#52/#66/#255/#236/#262/#206/#20/#260/#270/#271.)*
+
+#### 14.1.3.i ★ #221/#237/#248 + #258 + #66/#236 (batch 42) — the REGULATIONS + BANKING policy-genre drops + the named CURRENCY subtype (the 12-genre MILESTONE CORRECTION) (DESIGNED, 0% shipped)
+
+> **★★ THE 12-GENRE MILESTONE CORRECTION.** §14.1.3.h recorded Welfare as the "12th & LAST" genre; this section is the
+> proof it was a first-pass snapshot, not the final count. **Batch-42 adds two MORE genres** — **Regulations** (`d4cd2ee6`,
+> Apr 2022, 2 posts) and **Banking** (`beb258f9`, Apr 2022, 10 posts) — plus a named **Currency SUBTYPE** and a
+> **Stock-Market→Trade** routing. vcczar (`beb258f9` POST 10): the genre/subtype taxonomy is *"more complex than the
+> pokemon type chart"* — explicitly OPEN-ENDED. **0% shipped** (`Legislation`, `types.ts:1506-1520`, still has only the
+> 4-value `committee` — no `subtype`, no prereq/condition field, no level/tier field, no institution-state model). These
+> two drops CORROBORATE the whole framework (#221/#237/#248/#258/#262/#206) and add two genuinely-NEW enrichments: the
+> richest INSTITUTION-LIFECYCLE in the KB (Banking) and a graduated-INTENSITY tier model (Regulations/EPA).
+
+**(1) REGULATIONS genre — UNTAGGED form** (`d4cd2ee6` POST 1, 3 flat header partitions: L≈55 / **P=5** / **G=1** — the
+thin-Gov skew again, #262). Shape (do NOT transcribe): an **antitrust spine** (Sherman / Clayton / ICA / FTC / ICC /
+break-up-Monopolies-Cartels-Trusts) with its OPPOSED pole the **"Protect Monopolies Amendment"** (#248/#236 laissez-faire
+terminal); a recurring **regulate-an-industry axis** (airlines/trucking/railroads/telephone/internet/driverless-cars/
+3-D-printing/data-encryption/meat-sanitation/robots) and **nationalize-an-industry axis** (RR incl. *wartime-temporary*/
+airlines/shipping/banks/police/"all sectors") = the LW-Populist state-control edge (#236); regulatory-agency creations
+(**SEC/FDA/FTC/ICC**, Budget-&-Accounting-Act — #66 institutions); modern named acts (Dodd-Frank/Sarbanes-Oxley); 5
+Pres-Actions incl. the opposed **Pro-Regulation ↔ Pro-Deregulation** lever (the genre's two-pole `*-Default`-flavored
+pair, #248) and **Regulate Cryptocurrency via Fed**.
+
+> **★ NOVEL — the EPA graduated-INTENSITY TIERS** (`d4cd2ee6` POST 2, community): *"Level 1, 2, 3 … so they can be
+> added to be more strict and repealed in stages."* A multi-level **escalate-then-rollback regulatory STRINGENCY
+> ladder** on a single standing regulation (clean air / clean water / wetlands / logging-in-National-Forests).
+> **★ This is a DISTINCT content-schema sub-feature** of the #221 program-state requirement — distinct from both the
+> binary enact/repeal flag AND the program CREATE→EXPAND→CUT scope lifecycle (#66/#221, the Soc-Sec/Medicare ladder):
+> it is graduated INTENSITY (a `Level N` field with step-up / step-down-in-stages transitions on one regulation), not
+> coverage-class scope. A flat one-shot flag cannot model it → a leveled-intensity variant of the stateful-policy
+> primitive (#221). Heavy **Future-band** content (robots/driverless/flying-cars/designer-babies/transhumanism/
+> non-consensual-telepathy/criminalize-misinformation/social-media-sovereign-nations/regulate-crypto) = one of the
+> richest Future genres yet (#206; vcczar POST 1: *"Main area of need is Era of the Future"*).
+
+**(2) BANKING genre — PARTIALLY-TAGGED form** (`beb258f9` POST 1, ~28 rows carrying `L-/P-/G-/S-` mechanism + ideology-band
+tags + ~9 explicit `Preq:` blocks — closer to the `businesslabor` origin form than the untagged siblings). **★ NOVEL #1 —
+the full central-bank INSTITUTION LIFECYCLE** (the richest create→privatize→re-found→weaken→kill→succeed chain in the KB;
+each transition a discrete tagged row with per-stage prereqs):
+
+| Stage | Row (verbatim, POST 1) | Prereq (verbatim) |
+|---|---|---|
+| **CREATE v1** | Bank of North America (L-Ind) | `Independent Treasury is Active`* |
+| **PRIVATIZE** | Privatize Bank of North America (L-Ind) | `Rev War has Occurred and Articles of Confederation Active` |
+| **CREATE v2** | Bank of the United States (L-Fed) | `Bank of North America is privatized or inactive` |
+| **WEAKEN** | Weaken US Bank by Removing Deposits (P-Fed) | `Bank of North America Exists` |
+| **WAR / KILL** | Bank War (S-Dem) | — (the kill event) |
+| **RECHARTER** | Recharter US Bank (S-Fed) | — (the keep-alive event) |
+| **SUCCESSOR (Indep. Treasury)** | Independent Treasury (L-Dem) | — (no-prereq; also gates Bank of NA) |
+| **SUCCESSOR (National)** | National Banking Act (L-Nat) | — |
+| **SUCCESSOR (Fed Reserve)** | Create the Federal Reserve (L-Prog) | `Federal Reserve is Active`* |
+| **Fed POWERS expand** | Monetary Control Act / grant-power-over-non-members / grant-money-supply-mgmt (L-Neo/L-Prog) | — |
+| **Fed CONSTRAINT** | Strictly Regulate and Audit the Fed Res (L-Ter) | `Glass-Steagall is Active` |
+| **REGIME (separate→merge)** | Glass-Steagall (L-Ide) → repealed-by-successor **Gramm-Leach-Bliley** (L-Neo) | GLB: `Economic Meter is at Recession or Worse` |
+
+> *★ DATA-CORRECTNESS open item (tagging pass, NOT a mechanic): a couple of prereqs read circular/inverted — "Create
+> the Federal Reserve `Preq: Federal Reserve is Active`" and "Bank of North America `Preq: Independent Treasury is
+> Active`" while also being what the Treasury succeeds. Flag for the authoring pass.
+
+- ★ This is the **bank/institution twin of the Soc-Sec (#welfare) & Medicare (#healthcare) entitlement ladders** AND of
+  the #66 office-lifecycle (the **Fed-Chair office** is created BY "Create the Federal Reserve") — offices vs programs vs
+  banking-INSTITUTIONS are the same evolvable-stateful pattern (reconcile, §24.6). **Glass-Steagall → Gramm-Leach-Bliley**
+  is a named **repeal-by-successor** supersession at institution scale (#248). A flat one-shot flag models none of it →
+  reinforces #221's program/institution-state requirement.
+
+> **★ NOVEL #2 — the strongest explicit #258 prereq evidence to date.** Banking's ~9 `Preq:` blocks split cleanly into
+> the predicate KINDS #258 posits: **(a) institution/policy-EXISTS** ("Bank of NA exists/privatized/inactive," "Indep.
+> Treasury active," "Fed Reserve active," "Glass-Steagall active," "Rev War occurred + Articles active," "Independence
+> declared"); **(b) meter-THRESHOLD** — "Economic Meter is at Recession or Worse" (a direct read of the shipped
+> `economic` `NationalMeters`, `types.ts:1399-1407`, at a named tier — but NOTHING wires proposal availability to a meter
+> tier today); **(c) territory-possession** — "US has California" (Establish State Bank G-Ind; Wells Fargo S-Man). Still
+> 0% shipped (`Legislation` has no prereq field; `Predicate`/`evalPredicate` ship for the 2.4.3 era-event graph only).
+> The `*-Ind` "Banking Left to the States when there is no federal or central bank active" (POST 3) is the genre's #237
+> `*-Default` baseline (absence-of-policy IS a state, gated on a no-central-bank predicate, #258).
+
+> **★ NOVEL #3 — a named CURRENCY SUBTYPE + a Stock-Market→Trade routing (sharpens the #248 subtype taxonomy).** Two GM
+> taxonomy RULINGS establish Banking as one node in a multi-level genre/subtype tree:
+> - **Currency SUBTYPE** (vcczar RULING, `beb258f9` POST 9, affirmed POST 10): *"That's in the currency subtype"* —
+>   gold-standard / silver-standard / **bimetalism** / **fiat** is its OWN subtype sibling to Banking (a #248
+>   mutually-exclusive option-set: one currency-standard active supersedes the others), **NOT** a Banking row. The
+>   crypto / electronic-USD ("the dreaded chip") / **abolish-cash** Future items belong here too (POST 2, 4, 7).
+> - **Stock-Market → TRADE** (vcczar RULING, `beb258f9` POST 6): *"this is in another category… They might be under
+>   **Trade**."* The proposed Stock-Market set (forbid-in-office-trading, insider-trading trait action, abolish-NYSE,
+>   invest-Treasury-in-NYSE, merge-with-World-Exchange) is a **separate top-level Trade genre**, not Banking.
+> - These two routings + crypto being multi-category (Banking + Regulations) are the canonical case for **multi-category
+>   / subtype tagging** (#248). Banking's Future ASK (vcczar POST 1, the #1 need): **Era-of-Future banking legis-props,
+>   gov-actions, AND pres-actions** (Bank-of-Outer-Space / Interplanetary-Fund / merge-World-Bank→one-world-currency /
+>   abolish-cash-digital-chip — all community-proposed; #206/#262). One-world-currency + abolish-cash touch the #236
+>   monetary-sovereignty / total-state-control edge.
+
+*(designed, 0% shipped — the 13th & 14th #237 GENRES (Regulations, Banking) + the named **Currency** subtype + the
+**Trade** routing, all populating the #221 registry and CORRECTING the §14.1.3.h "12-and-done" snapshot. NOVEL: the
+**Banking central-bank INSTITUTION LIFECYCLE** (#221/#66, richest in the KB) with **repeal-by-successor** supersession
+(#248) and the strongest **#258** prereq evidence (institution-exists + meter-threshold + territory-possession kinds);
+the **EPA graduated-INTENSITY `Level 1/2/3` tier** model (#221, distinct from binary enact/repeal AND from create→expand→
+cut scope); two GM subtype RULINGS (Currency subtype, Stock-Market→Trade, #248); heavy **#206** Future content + the
+explicit Future-banking ASK (#262). Cite `d4cd2ee6#POST 1, 2`; `beb258f9#POST 1, 2, 3, 4, 5, 6, 7, 8, 9, 10`; codebase
+`types.ts:1506-1520` (no subtype/prereq/level), `types.ts:1399-1407` (`economic` meter ships, unwired to proposals),
+`phaseRunners.ts:~3397`; `game-context.md` #237/#221/#248/#258/#262/#206/#236/#66/#226/#206.)*
 
 ### 14.2 Forum design layer: Constitutional Amendments durable state (designed, not built)
 
@@ -10766,14 +10953,40 @@ ruled repeal/statehood bills are NOT eligible targets) and the **Rule-of-Four** 
 Gov-Action-brought cases (#218, §22.7.z). So the intended supply pipeline is: **gov-challenge / hand-authored /
 generated → cert (#218) → decide (#52) → tier (#249)**.
 
+**(6) ★ EARLIER DESIGN ORIGIN — the generator + the two case-authoring heuristics start in `07fa6116` (Mar–Apr 2022,
+batch 42), ~6 weeks BEFORE `964b8857`.** The brainstorm thread "Future Supreme Court Cases for AMPU" is where the
+generator idea and the docket-design patterns are BORN; `964b8857` (above) is where they are EXECUTED in vcczar's
+3-field schema. The three upstream datums this section absorbs:
+
+| Origin datum (`07fa6116`) | Source | How it relates to #270 as built above |
+|---|---|---|
+| **The GENERATOR — bare `<random name> v <random name>`, NO description needed** | MrPotatoTed POST 25: *"create a future Supreme Court case generator. Random name v Random name. Wouldn't even need a case description"* | the EARLIER, looser form of the §(2) generator — name-v-name with **no question/description text**, just a name + an effect; `964b8857` later resolves the two names to **human-name-DB v. state-name-DB** (`X v. State`) |
+| **Direction-keyed ±-EFFECT (aye-helps / nay-hurts)** | POST 25: *"randomly determining that an aye gives points to conservatives and a Nay vote hurts human rights"* | the ORIGIN of the §(1) `effects:{ifYes,ifNo}` payload, conceived here as a **±** (aye HELPS a faction / nay HURTS an interest) — traces the still-OPEN reward-winner-vs-penalize-loser ± question (§(1)) to its source |
+| **★ vcczar's "generator + ~50 SPECIFIC cases IN COMBINATION" ruling** | vcczar POST 28: *"It could just use the same random SC case generator. I'm just looking for 50 specific hypothetical cases that can be in combination with this"* (CE2 POST 26 endorses) | fixes the **GENERATOR-PLUS-AUTHORED-DOCKET architecture** (not generator-only, not authored-only) and pins the authored target at **~50 cases** — the realization is the ~45-case frozen docket §22.7.w lists |
+
+> **★ The TWO CASE-AUTHORING HEURISTICS (the docket-DESIGN method, `07fa6116` POST 11, jvikings1 endorses POST 12).**
+> A man from Colorado: author cases that either **(a) overturn an existing precedent** OR **(b) answer a constitutional
+> question currently left unaddressed.** These are the **origin of #270's two structural elements**: (a) is the source
+> of the §(4) `overturns`/`reinstates` precedent LINK + live precedent-in-force flag (worked instance: overturn
+> *Reynolds v. US* anti-polygamy via the **intent-doctrine** rationale, POST 23 — the SAME reasoning `964b8857`'s
+> *Utah v. Nelson* uses, so this thread is ITS origin too; also overturn *Medellín v. Texas* if Antarctica-treaty
+> exploitation is illegal, POST 24; revisit *Texas v. White* for secession-by-mutual-consent, POSTs 13-16). (b) is the
+> source of the §(1) yes/no `question` field — the binary constitutional question IS the case. Every authored case is
+> one archetype or the other → ties **#258** (precedent-as-gate, §(4)) + **#251** (Judicial-Doctrine, §22.7.v). The
+> brainstorm's ~25 hypothetical cases (robot/AI/alien/clone personhood; airspace/sea-colony jurisdiction; carbon/wealth
+> tax; trans rights; euthanasia; one-child; social-media monopolies; Confederate-veterans) are the **upstream seed**
+> `964b8857`/`aa227625` curate (#206/#25/E25). **OPEN (carry):** several items are self-flagged "could just be a
+> Legis-Prop, not a court case" (POSTs 12, 20) — the case-vs-Legis-Prop content-routing ambiguity (#270/#221).
+
 *(designed, 0% shipped — add a `ScotusCase` record on the docket: **`name` + yes/no `question` +
 `effects:{ifYes:[…], ifNo:[…]}`** direction-keyed faction/interest payload (+only on the winner; penalize-loser
 OPEN); a **procedural case GENERATOR** drawing the #115 human-name DB + a state-name DB → `X v. State` (own-system
 vs #52-sub-mechanic OPEN); a **~5% Landmark roll** on generated cases (#249, flat-5% vs meter-significance OPEN);
 **`overturns`/`reinstates` links + a precedent-in-force flag** + outcome-gated follow-up chains (#258); the
-gov-challenge → docket path (#132/#218). Cite `964b8857#POST 1, 2, 4, 6, 7, 8, 11, 13, 14, 15, 16, 18`; codebase
-`phaseRunners.ts:~3397` (coin-flip court, 4 hardcoded titles); `game-context.md` #270 (NEW); extends #52/#249/#221,
-ties #115/#218/#132/#258/#251/#206.)*
+gov-challenge → docket path (#132/#218). **DESIGN ORIGIN = `07fa6116` (Mar–Apr 2022, batch 42): the generator + the
+two authoring heuristics start there, §(6).** Cite `964b8857#POST 1, 2, 4, 6, 7, 8, 11, 13, 14, 15, 16, 18`;
+`07fa6116#POST 11, 12, 23, 24, 25, 26, 28`; codebase `phaseRunners.ts:~3397` (coin-flip court, 4 hardcoded titles);
+`game-context.md` #270 (NEW); extends #52/#249/#221, ties #115/#218/#132/#258/#251/#206.)*
 
 #### 22.7.bb ★ #271 (NEW, batch 41) — the appointed ↔ elected ↔ retention-election JUDICIARY selection modes (DESIGNED, 0% built)
 
@@ -14461,6 +14674,20 @@ era-content registry), §27.1.1, and `game-context.md` #92/#221.)*
 > "range of 5–15 scripted events per half-term" ([§14.1.3.e](#1413e--221237248--260261-batch-38--the-civil-rights--agriculture-policy-genre-drops--the-event-spread--firing-budget-mechanics-designed-0-shipped), #261) a per-era authored-pool floor/ceiling or a runtime per-turn firing cap?
 > (`halfterm#POST 1-14`; `game-context.md` #206/#92/#261; cross-ref §27.1, §22.11, §14.1.3.e.)
 
+> **★ FOURTH authoring witness — the `f012e5cc` benchmark-ORIGIN 15-era table (NEW, batch 42; #206).** The Dec-2021
+> benchmark-design thread (the §27.2.2(5) design-origin) lists its Red/Blue goals under a **15-era** enumeration
+> (Independence + Federalism · Republicanism · Democracy · Manifest Destiny · Nationalism · Gilded Age · Progressivism
+> · Normalcy · Ideologies · Nuclear Age · Neocons · Terror · Populism + Future). It is **header-only — NO year ranges**
+> — so it adds **no new boundary dates**, but it is an independent datapoint for the cardinality reconcile:
+> - It **MATCHES the rulebook §A 15-label set** (includes BOTH Independence and Future as **no-benchmark bookends**) —
+>   unlike `benchmarkupd`/#253's 13-era list, which omits both. So the SAME designer who later authored the 13-era
+>   `benchmarkupd` table held the **15-label** mental model 5 months earlier — corroborating that the era model is the
+>   15-label set, not the shipped 4-enum, and that `benchmarkupd`'s 13 = "the 15 minus the two no-benchmark bookends."
+> - Era NAMES align exactly with the rulebook 15-era set; the only divergence from §27.2.2's later expansion is the
+>   benchmark COUNT (1-per-party here → ~10/era in `benchmarkupd`), not the era labels. **No new dates; fold into the
+>   #206 cardinality reconcile as confirmation of the 15-label set.** (`f012e5cc#POST 1, 2`; `game-context.md`
+>   #206/#92/#253; cross-ref §27.2.2.)
+
 ### 27.2 Era-boundary machinery (the "End of Historical Era" phase)
 
 > **First explicit capture of the full per-era boundary** (`rep1800` §B POST 6187 / 6201 / 6203).
@@ -14626,15 +14853,82 @@ content.
 > model are reliable; the precise per-era benchmark MEMBERSHIP should be re-sourced from the original sheet
 > before implementation.
 
+**(5) ★ DESIGN ORIGIN — `f012e5cc` (12/1/2021, batch 42): the benchmark system starts as ONE benchmark per party per
+era, and this is where the "End of Term" scoring NUMBERS are settled.** The thread "AMPU Benchmarks" is the EARLIEST
+spec of era benchmarks — it PRE-DATES the batch-37 `benchmarkupd` (#253, above) by ~5 months. vcczar announces the
+system; vcczar + MrPotatoTed (both tier-1) settle the scoring math live. Four load-bearing origin datums #253 absorbs:
+
+- **★ The 1-per-party → ~10/era EVOLUTION (the design fork).** vcczar (POST 1): *"Originally, I was going to have
+  anywhere from 5 to 10 benchmarks per era; however, I thought that would force the game too much. Therefore, I'll just
+  have 1 central issue per party."* So the Dec-2021 origin model is **1 benchmark per party per era** (a Red goal + a
+  Blue goal), deliberately chosen over "5–10/era." `benchmarkupd` (#253) **LATER re-expanded** the SAME system to
+  **~10/era × 13 eras × 2 parties**. Trajectory: **1-per-party (Dec-2021) → ~10/era (2022)**. The scoring SHELL
+  (party-relative, evaluated at era end) is identical across both; only the predicate COUNT grew.
+- **★ The "End of Term" scoring rule — the four cases + the settled point value** (lives in the rulebook "End of Term"
+  section, POST 3). Settled live across POST 3-9:
+
+  | Outcome at era end | Result |
+  |---|---|
+  | **ONLY ONE party accomplishes its benchmark** | that party **GAINS** points AND the other party **LOSES** points |
+  | **BOTH parties accomplish** | **no points** to anyone |
+  | **NEITHER accomplishes** | **only the two party-leader factions LOSE** (each takes the penalty) |
+
+  **Point value settled at ±1,000 PER FACTION** (started at 250/faction POST 3; Ted POST 5: "barely worth chasing over
+  the course of an entire era"; raised to 1,000/faction POST 8, vcczar POST 9: "Ok, updated the rules"). With +1,000 to
+  each winning faction and −1,000 to each losing faction across **5 factions/party**, this is a **~10,000-point party
+  swing** — calibrated to be **bigger than any single law** (POST 7-8: most laws ≈ "a couple hundred pts"; the biggest
+  single play seen ≈ 2,250 pts from jvikings1 self-proposing the "Call Up Militia" act as SecDef + MIC-faction holder).
+- **★ Confirms 5 FACTIONS PER PARTY = 10 total** (corroborates the B1–B5 / R1–R5 slot model, #68/#102). vcczar corrected
+  both his own "four factions" math (POST 4) and Ted's "8 factions each" assumption (POST 6) to the canonical **5/party**.
+- **★ Benchmarks as MULTIPLAYER bargaining chips** (POST 1): *"'I'll support bimetalism, if you vote for the Civil
+  Rights bill.'"* — a party may **deliberately eat a −1,000/faction benchmark hit** to win a vote/reelection, so the
+  era-end scorer must be **known-in-advance and predictable enough to price into a deal** (not just a passive tally).
+
+> **★★ RECONCILE FLAG (carry to the scorer build).** `f012e5cc` SETTLES 1,000/faction (Dec-2021) for the **1-per-party**
+> model; `benchmarkupd`/#253 (2022) expanded to **~10/era** but says weights are still "TBD / only slightly amended."
+> **If ~10 benchmarks/era each paid 1,000/faction, the per-era swing would balloon ~10× (~100,000-pt party gap).** Almost
+> certainly the per-benchmark value was RESCALED when the count grew from 1 to ~10 — **confirm the final per-benchmark
+> weight with vcczar/Ted before implementing.** Also unresolved: "neither accomplishes → only party-leader factions
+> lose" — WHICH factions are "party-leader factions" at era end (highest-PV per party? the faction holding the
+> party-leader office? a fixed slot?) is not disambiguated.
+
+**The 15-era Red/Blue single-issue table (`f012e5cc` POST 1/2 — the SEED content #253 later expands).** This is a
+**15-era** enumeration (Independence + 13 historical + Future), with **Independence and Future as no-benchmark
+bookends** (the player-directed open eras). It MATCHES the rulebook 15-label era set (§27.1.2), unlike `benchmarkupd`'s
+13-era list which omits both bookends — a NEW (4th/5th) era-table cardinality datapoint for the #206 reconcile (see
+§27.1.2; header-only, no new year boundaries). The original single-issue goals, in order:
+
+| Era | Red goal | Blue goal |
+|-----|----------|-----------|
+| Independence | **none** (parties nebulous; goals too shared) | none |
+| Federalism | establish the US Bank | admit **TN + KY** as states |
+| Republicanism | **avoid** war with the UK | **embargo** the UK (may force war) |
+| Democracy | keep the **US Bank active** all era | **kill** the US Bank |
+| Manifest Destiny | **raise** the tariff above the previous era | tariff **lower** |
+| Nationalism | **abolish slavery** | **acquire Cuba** (slave state if legal) |
+| Gilded Age | **Gold Standard** | **Bimetalism** |
+| Progressivism | **acquire Hawaii** | **Banking Reform** |
+| Normalcy | **restrict immigration** | pass an **agriculture bill** |
+| Ideologies | **raise the tariff** (again) | pass **Social Security** |
+| Nuclear Age | **weaken labor unions** | pass **both Medicare AND Medicaid** |
+| Neocons | **deregulate / repeal regulations** | **raise the minimum wage** |
+| Terror | **lower the top tax rate** | pass **Federal Healthcare** |
+| Populism | **2× the SCOTUS justices** of the other party (forces "Merrick Garlanding") | **improve the Planet's Health** (Green New Deal) |
+| Future | **none** (party direction fully player-controlled) | none |
+
+The Red/Blue mirroring (tariff up/down, Bank keep/kill, Gold/Bimetal) is already present here in single-issue form — the
+ORIGIN of the per-party platform content #253 expands to ~10/era.
+
 *(designed, 0% shipped — (a) author the ~260-predicate Red/Blue benchmark dataset as **era-keyed + party-keyed**
 records (re-source the per-era grouping from the original sheet); (b) add an **end-of-era scoring pass** that
 evaluates each predicate with **active-or-issued** semantics and feeds the §27.2 point-banking / §27.2 dual-score
 (weights TBD; KEEP the retained old point system); (c) add a **per-era SNAPSHOT ARCHIVE** of key economic levers
 (tariff / income-tax-bracket / …) so "vs previous era" comparatives evaluate; (d) ensure the named-content
 surface (#221) is addressable for predicate evaluation. **Requires the 13-era band model (#206/#92, §27.1.2) to
-exist first.** Cite `benchmarkupd#POST 1, 2, 3`; codebase (no benchmark/eraScore/winCondition in `src/`;
-`types.ts:1337` 4-value `Era`; `types.ts:1762` per-turn `HalfTermSummary`); `game-context.md` #253; CONSUMES #221;
-extends #68/#102; keys off #206/#92.)*
+exist first.** **DESIGN ORIGIN = `f012e5cc` (Dec-2021, batch 42): the 1-per-party ancestor + the settled ±1,000/faction
+"End of Term" scoring, §(5).** Cite `benchmarkupd#POST 1, 2, 3`; `f012e5cc#POST 1, 2, 3, 4, 5, 6, 7, 8, 9`; codebase
+(no benchmark/eraScore/winCondition in `src/`; `types.ts:1337` 4-value `Era`; `types.ts:1762` per-turn
+`HalfTermSummary`); `game-context.md` #253; CONSUMES #221; extends #68/#102; keys off #206/#92.)*
 
 ### 27.3 The 12th-Amendment before/after state machine (era-specific election mode toggle)
 
@@ -19608,7 +19902,12 @@ into the #194 lineage system. Cite `histpres#POST 1, 3, 7, 13, 19, 28, 34, 36, 3
 > the War→Defense merge (2nd witness). Cross-ref `game-context.md` rows **#265/#266/#267/#268/#269 (NEW)** and
 > **#45/#52/#56/#66/#88/#106/#107/#188/#206/#221/#237/#248/#258/#260/#262/#20/#34/#55/#219/#247 (sharpened/corroborated)**.
 
-### 30.31 Rulings folded from batch 41 — TWO Courts + TWO Welfare/Courts genre drops + ONE SC-case AUTHORING thread + relocation/faction-default design-origins (★★ #270 the SC-CASE schema + procedural GENERATOR + #271 the elected/retention-election judiciary + ★ MILESTONE: the 12-genre content sweep is COMPLETE) (`964b8857-future-sc-cases` / `a863421c-courts` / `2cddc161-welfare` / `4e518e05-historical-relocation` / `8189b724-faction-ideology-default`)
+### 30.31 Rulings folded from batch 41 — TWO Courts + TWO Welfare/Courts genre drops + ONE SC-case AUTHORING thread + relocation/faction-default design-origins (★★ #270 the SC-CASE schema + procedural GENERATOR + #271 the elected/retention-election judiciary + ★ MILESTONE [LATER CORRECTED in §30.32]: the first-pass 12-genre content sweep) (`964b8857-future-sc-cases` / `a863421c-courts` / `2cddc161-welfare` / `4e518e05-historical-relocation` / `8189b724-faction-ideology-default`)
+
+> **★★ NOTE (batch 42 correction):** the "12-genre content sweep is COMPLETE" milestone below is **SUPERSEDED** —
+> batch-42 (§30.32) adds **Regulations** + **Banking** genres + a **Currency subtype** + **Stock-Market→Trade**.
+> Read every "sweep COMPLETE / 12th-&-LAST" phrasing in this §30.31 block as **"first-pass 12 genres; the corpus
+> is NOT closed — more genres/subtypes remain."** See [§30.32](#3032-rulings-folded-from-batch-42--two-policy-genre-drops-regulations--banking--two-design-origin-threads-benchmarks--sc-case-generator--the-what-if-entry-mechanic--the-12-genre-milestone-correction).
 
 > **★ Batch 41 = a 5-thread DESIGN / CONTENT-AUTHORING batch (NO playtest, NO dice, NO historian, NO played-forward
 > year) — two policy-genre drops (Courts, Welfare), one SC-case authoring thread, and two design-origin threads
@@ -19620,8 +19919,9 @@ into the #194 lineage system. Cite `histpres#POST 1, 3, 7, 13, 19, 28, 34, 36, 3
 > case chains), the **★ #271 elected ↔ retention-election judiciary** (a new selection MODE + a new election TYPE), the
 > **★ #52 court-STRUCTURE** authoring source (the size ladder 5/6/7/9/10/13 + **21/31 expansion-gated**, court-packing
 > per-Pres cap, tenure rules, Judicial-Review-as-institution), the **Welfare Social-Security lifecycle** (richest
-> entitlement-program-state case), and — the milestone — **Welfare = the 12th & LAST policy genre; the content sweep is
-> COMPLETE.** Tier-1 designers `@vcczar` + `@MrPotatoTed`/Ted author/rule; **ConservativeElector2 / jvikings1 / Cal /
+> entitlement-program-state case), and — the milestone [CORRECTED §30.32] — **Welfare = the 12th genre of the FIRST
+> authoring PASS** (`2cddc161` called it "the last policy section," but b42 adds Regulations + Banking + a Currency
+> subtype + Trade — the corpus is NOT closed). Tier-1 designers `@vcczar` + `@MrPotatoTed`/Ted author/rule; **ConservativeElector2 / jvikings1 / Cal /
 > Willthescout7 / 0ccultist / Cenzonico** are the densest contributors. The sources:
 > - **`964b8857-ampu-era-of-the-future-supreme-court-cases`** (Apr–May 2022, 18 posts; AUTHORING, content-FROZEN) — the
 >   **SC-CASE FORMAT** (vcczar's 3-field author template) + the **procedural CASE GENERATOR** (MrPotatoTed's idea) + the
@@ -19630,12 +19930,12 @@ into the #194 lineage system. Cite `histpres#POST 1, 3, 7, 13, 19, 28, 34, 36, 3
 > - **`a863421c-ampu-courts`** (Apr 2022, 11 posts; NOT a playthrough) — the **Courts/Judiciary genre FULLY-TAGGED**
 >   (prereq-PARTITIONED; `L-Ind-Default` = "No Supreme Court"): court-SIZE ladder + packing cap + tenure rules +
 >   Judicial-Review institution + lower courts (#52/#258/#255/#221/#66), AND the **elected/retention-election judiciary**
->   (#271). → folded into [§14.1.3.h](#1413h--221237248--258--526655-batch-41--the-courts--welfare-policy-genre-drops--the-12th-and-last-genre-the-content-sweep-is-complete-designed-0-shipped) (structure genre) + [§22.7.bb](#227bb--271-new-batch-41--the-appointed--elected--retention-election-judiciary-selection-modes-designed-0-built) (#271). Cite `a863421c#POST n`.
+>   (#271). → folded into [§14.1.3.h](#1413h--221237248--258--5266255-batch-41--the-courts--welfare-policy-genre-drops---the-major-genres-largely-captured-the-corpus-is-not-closed--see-1413i-designed-0-shipped) (structure genre) + [§22.7.bb](#227bb--271-new-batch-41--the-appointed--elected--retention-election-judiciary-selection-modes-designed-0-built) (#271). Cite `a863421c#POST n`.
 > - **`2cddc161-ampu-welfare`** (Apr 2022, 6 posts, ~48 rows; NOT a playthrough) — the **Welfare genre UNTAGGED**
 >   (L≈45/P=1/G=2 — thinnest P/G yet). NOVEL: the **Social-Security CREATE→EXPAND→raise/lower→partial→full-privatize
 >   lifecycle** (#221, richest entitlement case) + whole-system option-sets w/ a **per-incumbent ("Nixon only") gate**
 >   (#248/#258) + government-form extremes (#236). **★ "This is the last policy section"** → the 12-genre sweep is
->   COMPLETE. → folded into [§14.1.3.h](#1413h--221237248--258--526655-batch-41--the-courts--welfare-policy-genre-drops--the-12th-and-last-genre-the-content-sweep-is-complete-designed-0-shipped). Cite `2cddc161#POST n`.
+>   COMPLETE. → folded into [§14.1.3.h](#1413h--221237248--258--5266255-batch-41--the-courts--welfare-policy-genre-drops---the-major-genres-largely-captured-the-corpus-is-not-closed--see-1413i-designed-0-shipped). Cite `2cddc161#POST n`.
 > - **`4e518e05-ampu-historical-relocation`** (Jun 2021, 10 posts; DESIGN-ORIGIN) — the **historical-relocation-date
 >   DATA layer** + the **auto/manual/random relocation MODES** + the **auto-move officeholder-CONFLICT guard**
 >   (cancel-vs-resign). The DESIGN ORIGIN of #38's alt-state mechanic; predates/seeds #263's relocation toggles. →
@@ -19664,11 +19964,13 @@ into the #194 lineage system. Cite `histpres#POST 1, 3, 7, 13, 19, 28, 34, 36, 3
 > 3. **★ #52 — the court-STRUCTURE authoring source.** The full court-SIZE ladder (5/6/7/9/10/13, with **21 & 31
 >    EXPANSION-GATED**), **court-PACKING + per-Pres 6-extra cap**, tenure rules (40/50 min-age, 70/75 retire-age, 8-yr
 >    term-limit), Judicial-Review as a togglable institution, lower-court create/jury-control — the content #52 referenced
->    but did not enumerate. At [§14.1.3.h](#1413h--221237248--258--526655-batch-41--the-courts--welfare-policy-genre-drops--the-12th-and-last-genre-the-content-sweep-is-complete-designed-0-shipped).
-> 4. **★★ MILESTONE — Welfare is the 12th & LAST policy genre; the content-authoring SWEEP is COMPLETE** (immigration →
->    education → civil-rights → agriculture → civil-service → diplomacy → healthcare → crimes → military → expansionism →
->    courts → welfare). The genre corpus is feature-complete; what remains = the per-genre tagging pass + #262/#206
->    coverage fill, NOT new genres. At [§14.1.3.h](#1413h--221237248--258--526655-batch-41--the-courts--welfare-policy-genre-drops--the-12th-and-last-genre-the-content-sweep-is-complete-designed-0-shipped) + the content-system section.
+>    but did not enumerate. At [§14.1.3.h](#1413h--221237248--258--5266255-batch-41--the-courts--welfare-policy-genre-drops---the-major-genres-largely-captured-the-corpus-is-not-closed--see-1413i-designed-0-shipped).
+> 4. **★ MILESTONE [CORRECTED in §30.32] — the FIRST-PASS 12-genre sweep** (immigration → education → civil-rights →
+>    agriculture → civil-service → diplomacy → healthcare → crimes → military → expansionism → courts → welfare).
+>    `2cddc161` POST 1 called Welfare "the last policy section," but **batch-42 (§30.32) adds Regulations + Banking +
+>    a Currency subtype + Stock-Market→Trade** — so "12" is a first-pass snapshot, NOT the final count; the MAJOR
+>    genres are largely captured but the corpus is **NOT closed**. What remains = more genre instances + the per-genre
+>    tagging pass + #262/#206 coverage fill. At [§14.1.3.h](#1413h--221237248--258--5266255-batch-41--the-courts--welfare-policy-genre-drops---the-major-genres-largely-captured-the-corpus-is-not-closed--see-1413i-designed-0-shipped) + the content-system section.
 >
 > **★ Designer rulings + new gaps folded (the topical sections carry the detail; this is the index):**
 >
@@ -19676,14 +19978,14 @@ into the #194 lineage system. Cite `histpres#POST 1, 3, 7, 13, 19, 28, 34, 36, 3
 > |---|---|---|---|
 > | **★★ #270 SC-CASE schema + GENERATOR (NEW)** | content record = **`name` + yes/no `question` + `effects:{ifYes:[faction/interest+], ifNo:[…]}`** direction-keyed payload (+only in practice; penalize-loser OPEN); procedural **GENERATOR** reuses the #115 human-name DB + a state-name DB → `X v. State`; **~5% Landmark roll** on generated cases (#249; flat-5% vs meter-significance OPEN); **`overturns`/`reinstates` links** + precedent-in-force flag + outcome-gated case CHAINS (#258); govs challenge laws → cases (#132/#218); ★ OPEN: generator own-system vs #52 sub-mechanic | [§22.7.aa](#227aa--270-new-batch-41--the-sc-case-content-schema--the-procedural-case-generator--5-landmark-roll--precedent-overturnreinstate-links-designed-0-shipped) | `964b8857#POST 1, 2, 4, 6, 7, 8, 11, 13, 14, 15, 16, 18`; code `phaseRunners.ts:~3397` |
 > | **★ #271 elected/retention-election judiciary (NEW)** | appointed ↔ **elected** (Gov-Action makes state/local judges + SC Justices elective; no-term-limits = vacancy elections, **8-yr terms = 1/4-of-Court-per-cycle**) ↔ **retention** (lose retention → recall → re-appoint-and-retain or elect); a new ELECTION TYPE; composes with the §14.1.3.h 8-yr-term-limit; design-for-conflict endorsement (POST 4) | [§22.7.bb](#227bb--271-new-batch-41--the-appointed--elected--retention-election-judiciary-selection-modes-designed-0-built) | `a863421c#POST 2, 3, 4, 5`; cross-ref #52/#251/#20 + elections (§15) |
-> | **★★ #52 COURTS-STRUCTURE (ENRICH — authoring source)** | court-SIZE ladder **5/6/7/9/10/13** + **21 (controls Philippines+Brazil+Mexico+Canada) & 31 (max-expansion) EXPANSION-GATED**; court-PACKING bill + per-Pres **6-extra cap**; tenure: **40/50 min-age, 70/75 retire-age, 8-yr term-limit amendment**; **Judicial Review = togglable institution flag** (Establish↔Abolish); lower courts (#66) | [§14.1.3.h](#1413h--221237248--258--526655-batch-41--the-courts--welfare-policy-genre-drops--the-12th-and-last-genre-the-content-sweep-is-complete-designed-0-shipped) | `a863421c#POST 1`; code `phaseRunners.ts:~3397` |
-> | **★★ #258 ENRICH (2 new predicate KINDS)** | NEW KINDS: **institution-flag** (Judicial-Review in-effect/not-active; Court-Packing active; SCOTUS exists/not) + **★ territory-ownership/expansion-extent** (controls-Philippines+… → 21; max-expansion → 31) gating the high justice counts; + Constitutional-Convention-ONLY scope; + **court-precedent-exists** applied to the case docket (overturn/reinstate, outcome-gated chains); + **per-INCUMBENT gate** ("Nixon only" New Federalism) | [§14.1.3.h](#1413h--221237248--258--526655-batch-41--the-courts--welfare-policy-genre-drops--the-12th-and-last-genre-the-content-sweep-is-complete-designed-0-shipped) + [§22.7.aa](#227aa--270-new-batch-41--the-sc-case-content-schema--the-procedural-case-generator--5-landmark-roll--precedent-overturnreinstate-links-designed-0-shipped) | `a863421c#POST 1`; `2cddc161#POST 2`; `964b8857#POST 8, 13` |
-> | **★ #255 ENRICH (2nd settable-cap instance)** | court-SIZE = the SAME settable-integer-cap pattern as variable House size (100/435/500/1000), here with **expansion-gated upper tiers** (21/31) + a per-Pres packing cap | [§14.1.3.h](#1413h--221237248--258--526655-batch-41--the-courts--welfare-policy-genre-drops--the-12th-and-last-genre-the-content-sweep-is-complete-designed-0-shipped) | `a863421c#POST 1` |
-> | **★ #221 ENRICH (Soc-Sec lifecycle + splittable bill)** | the Social-Security **CREATE→EXPAND(child/disabled/unemployed/widows/universal)→raise↔lower-benefit→partial-privatize→trust-in-market→full** lifecycle (richest entitlement-program-state case; benefit-magnitude sub-axis + graded-privatization terminal; twin of the #66 office-lifecycle); the **Judiciary-Act-1789 = splittable multi-provision bill "grouped in committee"** | [§14.1.3.h](#1413h--221237248--258--526655-batch-41--the-courts--welfare-policy-genre-drops--the-12th-and-last-genre-the-content-sweep-is-complete-designed-0-shipped) | `2cddc161#POST 1, 5`; `a863421c#POST 10, 11` |
-> | **★ #248 ENRICH (whole-system sets + granularity Q)** | Welfare whole-system option-sets (federal↔state New-Federalism block-grants; UBI/GMI/Jobs-Guarantee/FAP) + **means-tested-vs-universal granularity OPEN Q** (FAP vs UBI); multi-category tagging (military pensions/HUD/food-stamps/reparations); the Courts/Crimes genre boundary | [§14.1.3.h](#1413h--221237248--258--526655-batch-41--the-courts--welfare-policy-genre-drops--the-12th-and-last-genre-the-content-sweep-is-complete-designed-0-shipped) | `2cddc161#POST 1, 3, 6`; `a863421c#POST 7, 8` |
-> | **★ #237 MILESTONE — Welfare = 12th & LAST genre (content sweep COMPLETE)** | the 12-genre authoring sweep is feature-complete; `L-Ind-Default`="No Supreme Court" baseline (Courts); the per-genre tagging pass + #262/#206 coverage fill remain | [§14.1.3.h](#1413h--221237248--258--526655-batch-41--the-courts--welfare-policy-genre-drops--the-12th-and-last-genre-the-content-sweep-is-complete-designed-0-shipped) | `2cddc161#POST 1`; `a863421c#POST 1` |
-> | **★ #236 ENRICH (gov-form extremes)** | Welfare's two terminal end-states: Abolish-Private-Property (LW/Communist) ↔ abolish-federal-welfare→churches/National-Church (Theocratic) | [§14.1.3.h](#1413h--221237248--258--526655-batch-41--the-courts--welfare-policy-genre-drops--the-12th-and-last-genre-the-content-sweep-is-complete-designed-0-shipped) | `2cddc161#POST 1, 5` |
-> | **★ #66 ENRICH (institution-creations)** | lower-court institutions (Appeals/US-District/Admiralty/Military Courts + Tribunals) + Soc-Sec-Board = office/institution-created-by-law; program-lifecycle = office-lifecycle analogue | [§14.1.3.h](#1413h--221237248--258--526655-batch-41--the-courts--welfare-policy-genre-drops--the-12th-and-last-genre-the-content-sweep-is-complete-designed-0-shipped) | `a863421c#POST 7, 8`; `2cddc161#POST 1` |
+> | **★★ #52 COURTS-STRUCTURE (ENRICH — authoring source)** | court-SIZE ladder **5/6/7/9/10/13** + **21 (controls Philippines+Brazil+Mexico+Canada) & 31 (max-expansion) EXPANSION-GATED**; court-PACKING bill + per-Pres **6-extra cap**; tenure: **40/50 min-age, 70/75 retire-age, 8-yr term-limit amendment**; **Judicial Review = togglable institution flag** (Establish↔Abolish); lower courts (#66) | [§14.1.3.h](#1413h--221237248--258--5266255-batch-41--the-courts--welfare-policy-genre-drops---the-major-genres-largely-captured-the-corpus-is-not-closed--see-1413i-designed-0-shipped) | `a863421c#POST 1`; code `phaseRunners.ts:~3397` |
+> | **★★ #258 ENRICH (2 new predicate KINDS)** | NEW KINDS: **institution-flag** (Judicial-Review in-effect/not-active; Court-Packing active; SCOTUS exists/not) + **★ territory-ownership/expansion-extent** (controls-Philippines+… → 21; max-expansion → 31) gating the high justice counts; + Constitutional-Convention-ONLY scope; + **court-precedent-exists** applied to the case docket (overturn/reinstate, outcome-gated chains); + **per-INCUMBENT gate** ("Nixon only" New Federalism) | [§14.1.3.h](#1413h--221237248--258--5266255-batch-41--the-courts--welfare-policy-genre-drops---the-major-genres-largely-captured-the-corpus-is-not-closed--see-1413i-designed-0-shipped) + [§22.7.aa](#227aa--270-new-batch-41--the-sc-case-content-schema--the-procedural-case-generator--5-landmark-roll--precedent-overturnreinstate-links-designed-0-shipped) | `a863421c#POST 1`; `2cddc161#POST 2`; `964b8857#POST 8, 13` |
+> | **★ #255 ENRICH (2nd settable-cap instance)** | court-SIZE = the SAME settable-integer-cap pattern as variable House size (100/435/500/1000), here with **expansion-gated upper tiers** (21/31) + a per-Pres packing cap | [§14.1.3.h](#1413h--221237248--258--5266255-batch-41--the-courts--welfare-policy-genre-drops---the-major-genres-largely-captured-the-corpus-is-not-closed--see-1413i-designed-0-shipped) | `a863421c#POST 1` |
+> | **★ #221 ENRICH (Soc-Sec lifecycle + splittable bill)** | the Social-Security **CREATE→EXPAND(child/disabled/unemployed/widows/universal)→raise↔lower-benefit→partial-privatize→trust-in-market→full** lifecycle (richest entitlement-program-state case; benefit-magnitude sub-axis + graded-privatization terminal; twin of the #66 office-lifecycle); the **Judiciary-Act-1789 = splittable multi-provision bill "grouped in committee"** | [§14.1.3.h](#1413h--221237248--258--5266255-batch-41--the-courts--welfare-policy-genre-drops---the-major-genres-largely-captured-the-corpus-is-not-closed--see-1413i-designed-0-shipped) | `2cddc161#POST 1, 5`; `a863421c#POST 10, 11` |
+> | **★ #248 ENRICH (whole-system sets + granularity Q)** | Welfare whole-system option-sets (federal↔state New-Federalism block-grants; UBI/GMI/Jobs-Guarantee/FAP) + **means-tested-vs-universal granularity OPEN Q** (FAP vs UBI); multi-category tagging (military pensions/HUD/food-stamps/reparations); the Courts/Crimes genre boundary | [§14.1.3.h](#1413h--221237248--258--5266255-batch-41--the-courts--welfare-policy-genre-drops---the-major-genres-largely-captured-the-corpus-is-not-closed--see-1413i-designed-0-shipped) | `2cddc161#POST 1, 3, 6`; `a863421c#POST 7, 8` |
+> | **★ #237 MILESTONE [CORRECTED §30.32] — Welfare = 12th genre of the FIRST PASS (not the last genre)** | the first-pass 12-genre authoring sweep; `2cddc161` POST 1 said "last policy section" but **b42 adds Regulations + Banking + Currency subtype + Trade** — corpus NOT closed, more genre instances + the per-genre tagging pass + #262/#206 coverage fill remain; `L-Ind-Default`="No Supreme Court" baseline (Courts) | [§14.1.3.h](#1413h--221237248--258--5266255-batch-41--the-courts--welfare-policy-genre-drops---the-major-genres-largely-captured-the-corpus-is-not-closed--see-1413i-designed-0-shipped) + [§30.32](#3032-rulings-folded-from-batch-42--two-policy-genre-drops-regulations--banking--two-design-origin-threads-benchmarks--sc-case-generator--the-what-if-entry-mechanic--the-12-genre-milestone-correction) | `2cddc161#POST 1`; `a863421c#POST 1`; `d4cd2ee6#POST 1`; `beb258f9#POST 1, 10` |
+> | **★ #236 ENRICH (gov-form extremes)** | Welfare's two terminal end-states: Abolish-Private-Property (LW/Communist) ↔ abolish-federal-welfare→churches/National-Church (Theocratic) | [§14.1.3.h](#1413h--221237248--258--5266255-batch-41--the-courts--welfare-policy-genre-drops---the-major-genres-largely-captured-the-corpus-is-not-closed--see-1413i-designed-0-shipped) | `2cddc161#POST 1, 5` |
+> | **★ #66 ENRICH (institution-creations)** | lower-court institutions (Appeals/US-District/Admiralty/Military Courts + Tribunals) + Soc-Sec-Board = office/institution-created-by-law; program-lifecycle = office-lifecycle analogue | [§14.1.3.h](#1413h--221237248--258--5266255-batch-41--the-courts--welfare-policy-genre-drops---the-major-genres-largely-captured-the-corpus-is-not-closed--see-1413i-designed-0-shipped) | `a863421c#POST 7, 8`; `2cddc161#POST 1` |
 > | **★ #38 ENRICH (relocation DATA + MODES + conflict guard)** | DESIGN ORIGIN: historical-relocation-date DATA (pols start in proper state + carry scheduled move dates); **auto-move-at-historical-date MODE** vs manual default + a **random-alt-state-via-event MODE**; the **auto-move officeholder-CONFLICT guard** (holds-not-held-IRL-office → CANCEL the move, leaning; or resign — OPEN; Romney/MA→UT example); Reconstruction/Carpetbagger driver | [§6.2.y](#62y--38-design-origin-4e518e05-jun-2021--historical-relocation-date-data--the-automanualrandom-relocation-modes--the-auto-move-officeholder-conflict-guard-designed-not-built) | `4e518e05#POST 1, 2, 3, 4, 5, 6`; code `phaseRunners.ts:623`, `types.ts:247` |
 > | **★ #4/#171 DESIGN ORIGIN (default mode)** | the per-(faction, era) **priority-pool-first** draft rule + per-era **FactNumber** table (Red1…5/Blue1…5, symmetric, slot-3 drifting Moderate anchor; Populist slots draft both LW+RW-Pop); **default(5/party, restricted) vs alternate(6/party, unrestricted)** MODE toggle (resolves the per-party-cap Q — build is ALREADY 5/party; alternate-6/party toggle missing); mismatched pols LEAVE IN PLACE | [§4.1.v](#41v--4171-design-origin-8189b724-sep-2021--the-default-mode-ruleset-per-slot-priority-ranges--the-per-era-factnumber-table--5-factionsparty--default-vs-alternate-as-a-setting-designed-not-built) | `8189b724#POST 1, 3, 4, 5`; code `factions1772.ts`/`factions1856.ts` (5/party), `phaseRunners.ts:107` |
 > | **★★ #76 ENRICH (Charismatic-leader poach + ideology-circle seed)** | NEW intra-party poach: leader has **Charismatic** → 10% an allied same-party same-ideology pol joins, **max 1/allied-faction/phase**, can't poach a same-ideology faction, never crosses to the opponent; the **"2-ideologies-away easier to convert" seed NOT confirmed shipped**; LW/RW-Populist-overlap = ideology-circle seed | [§4.1.v](#41v--4171-design-origin-8189b724-sep-2021--the-default-mode-ruleset-per-slot-priority-ranges--the-per-era-factnumber-table--5-factionsparty--default-vs-alternate-as-a-setting-designed-not-built) + [§6.4.x](#64x-forum-design-layer-trait-gated-conversion-targeting-designed-not-built) | `8189b724#POST 3, 4, 5, 7`; code `types.ts:208` (bare trait) |
@@ -19702,11 +20004,101 @@ into the #194 lineage system. Cite `histpres#POST 1, 3, 7, 13, 19, 28, 34, 36, 3
 > coin-flip court lacks entirely — pairs with #258's two new predicate KINDS (institution-flag, expansion-extent).
 > (4) **The Welfare/Courts genre drops** extend the 0%-shipped content engine (#221/#237/#248/#258) with the richest
 > entitlement-program lifecycle (Soc-Sec, #221), whole-system option-sets + a per-incumbent gate (#248/#258), and a
-> 2nd settable-cap instance (#255) — and complete the 12-genre sweep (the corpus is now feature-complete; the gap is
-> the engine + the tagging/coverage debt). (5) **The two design-origins** (#38 relocation DATA/modes/conflict-guard;
+> 2nd settable-cap instance (#255) — and round out the FIRST-PASS 12-genre sweep (CORRECTED §30.32: NOT the final
+> count — Regulations/Banking/Currency/Trade follow; major genres largely captured, corpus NOT closed; the gap is
+> the engine + the tagging/coverage debt + the still-ingesting genre-instance pipeline). (5) **The two design-origins** (#38 relocation DATA/modes/conflict-guard;
 > #4/#171 default-mode FactNumber table + the Charismatic-poach #76) are the earliest authoritative sources for
 > already-tracked gaps, plus the per-party-cap resolution (5/party default). Cross-ref `game-context.md` rows
 > **#270/#271 (NEW)** and **#52/#249/#218/#251/#258/#255/#221/#66/#237/#248/#236/#38/#263/#4/#171/#76/#20/#115/#262/#206/#247/#260/#24 (sharpened/corroborated)**.
+
+### 30.32 Rulings folded from batch 42 — TWO policy-genre drops (Regulations + Banking) + TWO design-origin threads (Benchmarks + SC-case generator) + the What-If ENTRY mechanic (★★ #272 what-if entry-via-scripted-event + the 12-genre MILESTONE CORRECTION) (`d4cd2ee6-regulations` / `beb258f9-banking` / `f012e5cc-benchmarks` / `d474f718-change-to-whatif-politicians` / `07fa6116-future-supreme-court-cases`)
+
+> **★ Batch 42 = a 5-thread DESIGN / CONTENT-AUTHORING batch (NO playtest, NO dice, NO historian, NO played-forward
+> year).** Two policy-genre drops (Regulations, Banking + a Currency subtype), one new draft mechanic (What-If entry),
+> and three DESIGN-ORIGIN threads (Benchmarks Dec-2021 origin; SC-case generator Mar-2022 origin). Everything is
+> **designed-only; 0% of any of it ships** beyond the pre-existing primitives it enriches (the 4-value `committee` with
+> no subtype/prereq; the `ImportedDraftee` with no whatIf field; the coin-flip court; no benchmark scorer). The value:
+> the **★★ MILESTONE CORRECTION** (batch-41's "12-genre sweep COMPLETE" was a first-pass snapshot — Regulations +
+> Banking + Currency + Trade are MORE genres; the corpus is NOT closed), the **★★ #272 what-if entry-via-scripted-event
+> mechanic** (the one genuinely-NEW gap), the **Banking central-bank INSTITUTION LIFECYCLE** (richest in the KB) + the
+> **EPA graduated-INTENSITY tiers**, and the pushed-back DESIGN ORIGINS of the **benchmark scoring numbers** (#253) and
+> the **SC-case generator** (#270). Tier-1 designers `@vcczar` + `@MrPotatoTed`/Ted author/rule; community contributors
+> add Future content + the EPA-tier / Currency-subtype / radical-what-if ideas. The sources:
+> - **`d4cd2ee6-ampu-regulations`** (Apr 2022, 2 posts; CONTENT-AUTHORING, UNTAGGED, NOT a playthrough) — the
+>   **Regulations genre** (L≈55/P=5/G=1): antitrust spine + regulate-/nationalize-industry axes + agency creations +
+>   the **★ EPA `Level 1/2/3` graduated-INTENSITY tiers** (a #221 sub-feature) + heavy Future tech. → folded into
+>   [§14.1.3.i](#1413i--221237248--258--6636--batch-42--the-regulations--banking-policy-genre-drops--the-named-currency-subtype--the-12-genre-milestone-correction-designed-0-shipped). Cite `d4cd2ee6#POST 1, 2`.
+> - **`beb258f9-ampu-banking`** (Apr 2022, 10 posts; CONTENT-AUTHORING, PARTIALLY-TAGGED, NOT a playthrough) — the
+>   **Banking genre**: the **★ central-bank INSTITUTION LIFECYCLE** (Bank-of-NA→privatize→Bank-of-US→Bank-War/Recharter/
+>   Weaken→Indep-Treasury→National-Banking→Fed-Reserve→expand-Fed→Glass-Steagall→repeal-by-Gramm-Leach-Bliley) +
+>   the strongest **#258** prereq evidence (~9 `Preq:` blocks) + a named **★ Currency subtype** (gold/silver/bimetalism/
+>   fiat) + **Stock-Market→Trade** routing (two GM rulings, #248). → folded into [§14.1.3.i](#1413i--221237248--258--6636--batch-42--the-regulations--banking-policy-genre-drops--the-named-currency-subtype--the-12-genre-milestone-correction-designed-0-shipped). Cite `beb258f9#POST n`.
+> - **`f012e5cc-ampu-benchmarks`** (12/1/2021, 9 posts; DESIGN-ORIGIN, NOT a playthrough) — the **EARLIEST benchmark
+>   spec**: **1 benchmark per party per era** (later re-expanded to ~10/era by #253), the **"End of Term" scoring**
+>   (±1,000/faction, 4-case rule), **5 factions/party** confirmed, the **15-era Red/Blue single-issue table**, and
+>   benchmarks-as-bargaining-chips. The DESIGN ORIGIN of #253. → folded into [§27.2.2(5)](#2722--253-new-benchmarkupd-batch-37--the-redblue-per-era-benchmark-datasetscorer--the-content-complete-end-of-era-winscore-model-designed-0-shipped) (#253) + [§27.1.2](#2712--the-canonical-15-era-trigger-year-table-92206--the-authoritative-band-label-calendar-new-rulebook-batch-31-the-era-label-spec-the-data-model-decision-needs) (15-era table, #206). Cite `f012e5cc#POST n`.
+> - **`d474f718-ampu-change-to-whatif-politicians`** (May–Jun 2022, 14 posts; DESIGN-ORIGIN, NOT a playthrough) — the
+>   **★★ WHAT-IF ENTRY mechanic (#272)**: what-if pols draftable but maybe-never-PLAYABLE, a **scripted event** resolves
+>   entry (kill-in-battle majority [gated on active war] ↔ returns-to-politics minority = playable), resolves IN PLACE
+>   (no re-draft); condition-gated availability (Castro/Cuba, Tubman/Tecumseh/Anthony suffrage, Napoleon/St-Helena); the
+>   **Frail de-tag** for non-health early deaths (#226 earlier origin). → folded into [§4.4.2](#442--272-new-d474f718-may-2022-batch-42--what-if-counterfactual-politician-entry-via-scripted-event--condition-gated-availability-designed-0-shipped). Cite `d474f718#POST n`.
+> - **`07fa6116-future-supreme-court-cases`** (Mar–May 2022, 28 posts; BRAINSTORM/DESIGN-ORIGIN, NOT a playthrough) —
+>   the **EARLIER DESIGN ORIGIN of the SC-case GENERATOR (#270)**: bare `<random name> v <random name>`, no description,
+>   direction-keyed ±-effect; vcczar's **"generator + ~50 specific cases in combination"** ruling; the **two
+>   case-authoring heuristics** (overturn-precedent / answer-unaddressed-question). → folded into [§22.7.aa(6)](#227aa--270-new-batch-41--the-sc-case-content-schema--the-procedural-case-generator--5-landmark-roll--precedent-overturnreinstate-links-designed-0-shipped) (#270). Cite `07fa6116#POST n`.
+>
+> **The HEADLINE findings (lead with these):**
+> 1. **★★ MILESTONE CORRECTION — the "12-genre sweep COMPLETE" (batch-41 §30.31/§14.1.3.h) was a first-pass snapshot,
+>    NOT the final count.** Batch-42 adds **Regulations + Banking** genres + a **Currency** subtype + **Stock-Market→
+>    Trade**; vcczar (`beb258f9` POST 10): the taxonomy is *"more complex than the pokemon type chart."* The MAJOR
+>    genres are largely captured but the corpus is **OPEN**. Softened across §14.1.3.h, §30.31, and the TOC; the new
+>    genre detail is at [§14.1.3.i](#1413i--221237248--258--6636--batch-42--the-regulations--banking-policy-genre-drops--the-named-currency-subtype--the-12-genre-milestone-correction-designed-0-shipped).
+> 2. **★★ #272 — WHAT-IF ENTRY via scripted event (NEW, 0% shipped).** What-if pols are draftable but PLAYABILITY is
+>    resolved by a later scripted event (kill-in-battle majority, **gated on an active war**, vs returns-to-politics
+>    minority); the drafted pol resolves **IN PLACE** (no re-draft — vcczar rejected that). Needs a `whatIf`/`enterEvent`
+>    marker (none on `ImportedDraftee` `types.ts:1780`) + the 0%-shipped scripted-event tier (#221) + a
+>    draftability-without-playability draft state. Plus condition-gated availability (#258 + new predicate kinds) and the
+>    Frail de-tag (#226). At [§4.4.2](#442--272-new-d474f718-may-2022-batch-42--what-if-counterfactual-politician-entry-via-scripted-event--condition-gated-availability-designed-0-shipped).
+> 3. **★ Banking INSTITUTION LIFECYCLE + EPA graduated-INTENSITY tiers — the two content-system enrichments.** The
+>    central-bank create→privatize→re-found→weaken→kill→succeed chain (richest #221/#66 institution ladder in the KB,
+>    with repeal-by-successor supersession #248 and the strongest #258 prereq evidence) and the EPA `Level 1/2/3`
+>    escalate-then-repeal-in-stages stringency tiers (a #221 sub-feature distinct from binary enact/repeal AND from
+>    create→expand→cut scope). At [§14.1.3.i](#1413i--221237248--258--6636--batch-42--the-regulations--banking-policy-genre-drops--the-named-currency-subtype--the-12-genre-milestone-correction-designed-0-shipped).
+> 4. **★ Pushed-back DESIGN ORIGINS — benchmarks (#253) + the SC-case generator (#270).** Benchmarks START at 1-per-
+>    party (Dec-2021) with settled ±1,000/faction "End of Term" scoring → re-expanded to ~10/era by #253 (★ rescale
+>    reconcile flag). The SC-case generator + the two authoring heuristics START in `07fa6116` (Mar-2022) ~6 weeks before
+>    the b41 authoring thread. At [§27.2.2(5)](#2722--253-new-benchmarkupd-batch-37--the-redblue-per-era-benchmark-datasetscorer--the-content-complete-end-of-era-winscore-model-designed-0-shipped) + [§22.7.aa(6)](#227aa--270-new-batch-41--the-sc-case-content-schema--the-procedural-case-generator--5-landmark-roll--precedent-overturnreinstate-links-designed-0-shipped).
+>
+> **★ Designer rulings + gaps folded (the topical sections carry the detail; this is the index):**
+>
+> | Item | Ruling / spec | Where folded | Cite |
+> |---|---|---|---|
+> | **★★ MILESTONE CORRECTION (#237)** | "12-genre sweep COMPLETE" was a first-pass snapshot — **Regulations + Banking + Currency subtype + Stock-Market→Trade** are MORE genres; corpus OPEN (vcczar: "more complex than the pokemon type chart") | [§14.1.3.i](#1413i--221237248--258--6636--batch-42--the-regulations--banking-policy-genre-drops--the-named-currency-subtype--the-12-genre-milestone-correction-designed-0-shipped) + §14.1.3.h/§30.31/TOC (softened) | `d4cd2ee6#POST 1`; `beb258f9#POST 1, 10` |
+> | **★★ #272 what-if entry-via-scripted-event (NEW)** | draftable-but-maybe-never-playable; scripted event resolves entry (kill-in-battle majority **gated on active war** ↔ returns-to-politics = playable); resolves IN PLACE (no re-draft, vcczar rejected); needs `whatIf`/`enterEvent` marker (`ImportedDraftee` has none) + scripted-event tier (#221) + draftability-without-playability state; ★ OPEN draft rules ("I need to make draft rules for this") | [§4.4.2](#442--272-new-d474f718-may-2022-batch-42--what-if-counterfactual-politician-entry-via-scripted-event--condition-gated-availability-designed-0-shipped) | `d474f718#POST 1, 2, 3, 4, 6, 8`; code `types.ts:1780` |
+> | **★ #258 ENRICH (2 new predicate KINDS + strongest evidence)** | NEW KINDS: **suffrage-by-demographic** (Tubman/Anthony/Tecumseh) + **territory/expansion-held** (Castro/Cuba) gating draft-pool availability — a NEW predicate SURFACE; AND Banking's ~9 `Preq:` blocks = strongest evidence yet (institution-exists + meter-threshold "Economic Meter at Recession or Worse" + territory "US has California") | [§4.4.2](#442--272-new-d474f718-may-2022-batch-42--what-if-counterfactual-politician-entry-via-scripted-event--condition-gated-availability-designed-0-shipped) + [§14.1.3.i](#1413i--221237248--258--6636--batch-42--the-regulations--banking-policy-genre-drops--the-named-currency-subtype--the-12-genre-milestone-correction-designed-0-shipped) | `d474f718#POST 1, 8`; `beb258f9#POST 1, 3` |
+> | **★ #221 ENRICH (institution-lifecycle + graduated-intensity tiers + scripted-event new consumers)** | the Banking central-bank **create→privatize→re-found→weaken→Bank-War-kill→Indep-Treasury→National→Fed-Reserve→expand→Glass-Steagall→repeal-by-GLB** lifecycle (richest in KB; twin of #66 office-lifecycle); the **EPA `Level 1/2/3` graduated-INTENSITY** tier (distinct from binary enact/repeal AND from create→expand→cut scope); +2 NEW scripted-event consumers (Banking S-tier events; what-if entry events) | [§14.1.3.i](#1413i--221237248--258--6636--batch-42--the-regulations--banking-policy-genre-drops--the-named-currency-subtype--the-12-genre-milestone-correction-designed-0-shipped) + [§4.4.2](#442--272-new-d474f718-may-2022-batch-42--what-if-counterfactual-politician-entry-via-scripted-event--condition-gated-availability-designed-0-shipped) | `beb258f9#POST 1`; `d4cd2ee6#POST 2`; `d474f718#POST 1` |
+> | **★ #248 ENRICH (Currency subtype + Stock-Market→Trade + repeal-by-successor)** | named **Currency subtype** (gold/silver/bimetalism/fiat; +crypto/electronic-USD/abolish-cash) GM-ruled a distinct subtype sibling to Banking (POST 9-10); **Stock-Market** GM-ruled into the **Trade** genre (POST 6); Glass-Steagall→Gramm-Leach-Bliley supersession; Pro-Regulation↔Pro-Deregulation + anti-monopoly↔Protect-Monopolies opposed pairs; crypto = multi-category | [§14.1.3.i](#1413i--221237248--258--6636--batch-42--the-regulations--banking-policy-genre-drops--the-named-currency-subtype--the-12-genre-milestone-correction-designed-0-shipped) | `beb258f9#POST 5, 6, 8, 9, 10`; `d4cd2ee6#POST 1` |
+> | **★★ #253 DESIGN ORIGIN (benchmark scoring numbers)** | EARLIEST spec: **1 benchmark per party per era** (→ re-expanded to ~10/era by `benchmarkupd`); **"End of Term" scoring ±1,000/faction** (from 250), 4-case rule (one→swing / both→0 / neither→party-leader-factions-lose); **5 factions/party** confirmed; the 15-era Red/Blue single-issue table; bargaining-chips; ★ RESCALE flag (1,000×~10 = ~10× balloon — confirm per-benchmark weight) | [§27.2.2(5)](#2722--253-new-benchmarkupd-batch-37--the-redblue-per-era-benchmark-datasetscorer--the-content-complete-end-of-era-winscore-model-designed-0-shipped) | `f012e5cc#POST 1, 2, 3, 4, 5, 6, 7, 8, 9` |
+> | **★ #270 DESIGN ORIGIN (SC-case generator)** | EARLIER origin (~6 wks before b41): bare `<random name> v <random name>`, **no description**, direction-keyed **±-effect** (aye-helps-faction / nay-hurts-interest); vcczar's **"generator + ~50 SPECIFIC cases in combination"** ruling (fixes the gen-plus-authored architecture + ~50-case target); the **two authoring heuristics** (overturn-precedent → `overturns`/`reinstates` link; answer-unaddressed-question → yes/no `question` field); intent-doctrine overturn origin | [§22.7.aa(6)](#227aa--270-new-batch-41--the-sc-case-content-schema--the-procedural-case-generator--5-landmark-roll--precedent-overturnreinstate-links-designed-0-shipped) | `07fa6116#POST 11, 12, 23, 24, 25, 26, 28` |
+> | **★ #206 ENRICH (15-era 4th witness + Future content)** | `f012e5cc` 15-era benchmark enumeration (header-only, no dates) **MATCHES the rulebook 15-label set** (Independence + 13 + Future bookends) — confirms `benchmarkupd`'s 13 = "15 minus the two no-benchmark bookends"; + Regulations/Banking are among the richest Future-content genres (transhumanism/telepathy/robots/Bank-of-Outer-Space/abolish-cash) | [§27.1.2](#2712--the-canonical-15-era-trigger-year-table-92206--the-authoritative-band-label-calendar-new-rulebook-batch-31-the-era-label-spec-the-data-model-decision-needs) + [§14.1.3.i](#1413i--221237248--258--6636--batch-42--the-regulations--banking-policy-genre-drops--the-named-currency-subtype--the-12-genre-milestone-correction-designed-0-shipped) | `f012e5cc#POST 1, 2`; `d4cd2ee6#POST 1`; `beb258f9#POST 1, 4` |
+> | **★ #226 ENRICH (earlier Frail-detag origin)** | `d474f718` (May 2022) is the chronologically-EARLIER design-origin of the "Frail keys on NATURAL lifespan, NOT battle-death" scoping #226 records from the later `kiaofficers`: remove Frail from non-health early deaths (battle/assassination survivors); KEEP on health-likely-by-60 (Lincoln, JFK) | [§4.4.2](#442--272-new-d474f718-may-2022-batch-42--what-if-counterfactual-politician-entry-via-scripted-event--condition-gated-availability-designed-0-shipped) | `d474f718#POST 5, 6, 7`; code `phaseRunners.ts:2362-2364` |
+> | **★ #66 + #236 ENRICH (agency creations + gov-form edges)** | agency creations by law (SEC/FDA/FTC/ICC/Fed-Chair — the Fed-Chair office created BY "Create the Federal Reserve"); nationalize-sector / one-world-currency / abolish-cash = #236 alternate-government-form / monetary-sovereignty edges; Protect-Monopolies = laissez-faire opposed pole | [§14.1.3.i](#1413i--221237248--258--6636--batch-42--the-regulations--banking-policy-genre-drops--the-named-currency-subtype--the-12-genre-milestone-correction-designed-0-shipped) | `d4cd2ee6#POST 1`; `beb258f9#POST 1, 4, 5` |
+> | **Corroborations (no NEW row)** | #262 (per-primitive coverage skew: P=5/G=1 Regulations; Future-banking the #1 ASK) + #115/#24/#263/#240 (what-if pool = alt-history `ERA_FIGURES` extension; the pool/toggle side, vs #272's entry side) + #102/#68 (the era-scoring pipeline #253 feeds) + #52/#249/#218/#251/#25 (SC-case docket/Landmark/cert/doctrine corroborated by `07fa6116`) + #20/#107 (per-state/recognition edges) | the topical sections | per-thread |
+>
+> **Roadmap takeaway (for the tech-lead + roadmap-planner).** Batch-42 is design/content/origin, ranked:
+> (1) **★★ MILESTONE CORRECTION** — the content corpus is **NOT** feature-complete at 12 genres; the genre-instance
+> pipeline is still ingesting (Regulations/Banking/Trade authored; more referenced). The roadmap framing of "content
+> sweep done" must be revised to "framework + major genres done; instance + tagging + coverage debt ongoing."
+> (2) **★★ #272 (what-if entry-via-scripted-event)** is a NEW gap that **depends on the 0%-shipped scripted-event tier
+> (#221)** — it is a new CONSUMER of that tier plus a new draftability-without-playability draft state and a
+> `whatIf`/`enterEvent` field on `ImportedDraftee`; the speculative-draft rules are OPEN (vcczar: "I need to make draft
+> rules for this"). (3) **The Banking institution-lifecycle** is the single best argument for the #221 program/
+> institution-STATE store (richest ladder in the KB) and the **strongest #258 prereq evidence** (institution-exists +
+> meter-threshold + territory predicate kinds, ~9 `Preq:` blocks) — and the **EPA graduated-intensity tier** adds a
+> distinct `Level N` content-schema sub-feature. (4) **The two pushed-back DESIGN ORIGINS** (#253 benchmark scoring
+> numbers; #270 SC-case generator) settle long-open numbers — but the **#253 rescale reconcile** (1,000/faction × ~10
+> benchmarks ≈ 10× balloon) MUST be confirmed with vcczar/Ted before the era-end scorer is built. Cross-ref
+> `game-context.md` row **#272 (NEW)** and **#237/#221/#248/#258/#253/#270/#206/#226/#66/#236/#262/#115/#24/#263/#240/#68/#102/#52/#249/#218/#251 (sharpened/corroborated)**, with **#237 the MILESTONE CORRECTION**.
 
 ### 30.4 Authority hierarchy reminder
 
