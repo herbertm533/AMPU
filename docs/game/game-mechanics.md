@@ -365,6 +365,7 @@
     - [30.28 Rulings folded from batch 38 — FIVE CONTENT-AUTHORING / DESIGN / EXPLOIT-FIX threads (★★ #258 predicate-gated content + #259 party-transformation + #260/#261/#262 + the war-declaration/exploit-fix cluster) (`parties` / `civilrights` / `fixes2022-exploits` / `halfterm` / `agriculture`)](#3028-rulings-folded-from-batch-38--five-content-authoring--design--exploit-fix-threads--258-predicate-gated-content--259-party-transformation--260261262--the-war-declarationexploit-fix-cluster-parties--civilrights--fixes2022-exploits--halfterm--agriculture)
     - [30.29 Rulings folded from batch 39 — FIVE DESIGN / CONTENT-AUTHORING threads (★★ #264 the COUP/insurrection PROCEDURE subsystem + #263 the game-SETTINGS model + the #182 command-eligibility SETTLED ruling + #219 weighted-House-vote DESIGN-ORIGIN + the Civil-Service/Diplomacy genre drops) (`civil-service` / `rules-update` / `jan6-insurrection` / `us-house-votes` / `diplomacy`)](#3029-rulings-folded-from-batch-39--five-design--content-authoring-threads--264-the-coupinsurrection-procedure-subsystem--263-the-game-settings-model--the-182-command-eligibility-settled-ruling--219-weighted-house-vote-design-origin--the-civil-servicediplomacy-genre-drops-civil-service--rules-update--jan6-insurrection--us-house-votes--diplomacy)
     - [30.30 Rulings folded from batch 40 — FOUR policy-genre drops + ONE war/treaty BALANCE thread (★★ #267 the TREATY/war-END subsystem + #266 meter-at-floor + #265 cabinet-officer agency + #268/#269 territory machine + Healthcare/Crimes/Military/Expansionism enrichments)](#3030-rulings-folded-from-batch-40--four-policy-genre-drops--one-wartreaty-balance-thread--267-the-treatywar-end-subsystem--266-meter-at-floor-no-deterrent--265-cabinet-officer-agency--268269-territory-machine--the-healthcarecrimesmilitaryexpansionism-content-enrichments-65574aaa-healthcare--e456b6b3-crimes-punishments--a2312dd2-foreign-affairstreaty--145db158-military--4e76e6c3-expansionism)
+    - [30.31 Rulings folded from batch 41 — TWO Courts + TWO Welfare/Courts genre drops + ONE SC-case AUTHORING thread + relocation/faction-default design-origins (★★ #270 the SC-CASE schema + procedural GENERATOR + #271 the elected/retention-election judiciary + ★ MILESTONE: the 12-genre content sweep is COMPLETE) (`964b8857-future-sc-cases` / `a863421c-courts` / `2cddc161-welfare` / `4e518e05-historical-relocation` / `8189b724-faction-ideology-default`)](#3031-rulings-folded-from-batch-41--two-courts--two-welfarecourts-genre-drops--one-sc-case-authoring-thread--relocationfaction-default-design-origins--270-the-sc-case-schema--procedural-generator--271-the-electedretention-election-judiciary---milestone-the-12-genre-content-sweep-is-complete-964b8857-future-sc-cases--a863421c-courts--2cddc161-welfare--4e518e05-historical-relocation--8189b724-faction-ideology-default)
     - [30.4 Authority hierarchy reminder](#304-authority-hierarchy-reminder)
 31. [Gilded-Age era systems (designed, not built)](#31-gilded-age-era-systems-designed-not-built)
     - [31.1 (#147) Tariff-as-national-%-rate + the mutually-exclusive MonetaryRegime](#311-147-tariff-as-national-rate--the-mutually-exclusive-monetaryregime-designed)
@@ -1275,6 +1276,98 @@ Ted now confirms 3/3 is the canonical going-forward value.)*
 > timelines"; likely keyed to the §28.4/#108 realignment completing, ~1990s/modern). *(designed — add
 > the era-keyed toggle; index in [§30.12](#3012-rulings-folded-from-trump2024-ted-run-2024jan-2025-start-modern-campaign--setup-only).)*
 
+### 4.1.v ★ #4/#171 (DESIGN ORIGIN, `8189b724`, Sep 2021) — the "default mode" ruleset: per-slot priority ranges + the per-era "FactNumber" table + 5-factions/party + default-vs-alternate as a SETTING (DESIGNED, not built)
+
+> **★ The DESIGN ORIGIN of "default mode"** — the realistic, ideology-restricted faction/draft ruleset that
+> #4 (per-(faction, era) draft profile) and #171 (the restriction toggle) describe. Source: `8189b724`
+> ("Faction Ideology Default," 9/23/2021 — among the EARLIEST design-origin threads in the corpus; predates
+> every restriction-citing *playtest* (`fed`/`rep1800`/`nixon1972`/`modernday`/`trump2024`) that corroborates
+> #4/#171 from gameplay). Tier-1 = `@vcczar` (designs it + adds the poach rule) + `@MrPotatoTed`/Ted (clarifying
+> Qs); contributors jvikings1/DakotaHale/CE2/Cal/Rodja/Rezi/Hestia. **DESIGNED, not built** — `Faction`
+> (`types.ts:1293`) has NO draft-priority-ideology field (`grep draftIdeolog|priorityIdeolog|factNumber` → 0);
+> the draft (`runPhase_2_1_1_Draft`, `phaseRunners.ts:107`) has no ideology gate.
+
+**(1) ★ The per-faction ideology PRIORITY draft range — a TWO-TIER priority, not a hard wall (POST 1).** vcczar:
+*"This default mode attempts to create realistic playthrough by restricting the priority range a faction can
+draft… [a faction] must draft Progressives, Populists, or Liberals from his party FIRST. Once they are all off
+the board, he can draft Moderates, Conservatives, and Traditionalists."* → draft from the PRIORITY set FIRST;
+only **once the priority pool is off the board** may a faction draft outside its range. **This is the EARLIEST
+statement of #4's mechanic** (= #4's "off-profile picks at reduced odds / adjacent ideologies open once the
+profile pool is exhausted," §4.1.w/§4.2).
+
+- **Era-keyed via a "FactNumber" spreadsheet tab** keyed by faction slot — each party's 5 slots are **Red1…Red5 /
+  Blue1…Blue5**, ranges **shift across eras**. The canonical per-slot priority ranges (POST 1 excerpt):
+
+  | Slot | Independence (1774–88) | Federalism (1788–1800) |
+  |---|---|---|
+  | **Red1 / Blue1** | Progressive / Populists / Liberals | Progressive / Populists / Liberals |
+  | **Red2 / Blue2** | Liberals / Moderates | Liberals / Moderates |
+  | **Red3 / Blue3** | **Moderates** | **Moderates / Conservatives** ← the drifting anchor |
+  | **Red4 / Blue4** | Conservatives / Moderates | Conservatives / Moderates |
+  | **Red5 / Blue5** | Traditionalists / Populist / Conservatives | Traditionalists / Populist / Conservatives |
+
+  - **Symmetric across parties** (Red_N priority == Blue_N priority) in these eras — ideology *slots* are
+    mirrored; party identity (which coalition holds the LW vs RW end) is layered separately (cf. #108 realignment).
+  - **Slot 3 (the Moderate anchor) DRIFTS** Independence→Federalism (Moderates → Moderates/Conservatives) —
+    concrete proof the ranges are era-keyed and shift, not static.
+  - **Populist priority slots draft BOTH LW-Populist AND RW-Populist** (POST 3, vcczar): *"There aren't many
+    populists and for a lot of history LW and RW Populists had a lot of overlap. It will naturally divide them
+    when we get closer to contemporary times"* — an **early seed of the ideology-as-CIRCLE rule** (#76/#99,
+    §6.3.y), via the historical-overlap justification before the circle was formalized.
+
+**(2) ★ Five factions per party — RESOLVES the per-party-cap open Q (POST 1).** **REDCPU and BLUECPU are REMOVED**
+(the catch-all CPU factions), dropping each party **6 → 5 factions**. On removal: the faction's **points divide
+EVENLY among remaining allies**; its **pols divide evenly but PRIORITIZED to the faction best matching the pol's
+ideology**. → **default mode = 5/party; alternate (original) mode = 6/party with the REDCPU/BLUECPU catch-alls.**
+So 6/party is NOT a contradiction — it's the alternate-mode count. **★ The build ALREADY lives in default mode:**
+both scenarios ship exactly **10 factions = 5/party** (`factions1772.ts`/`factions1856.ts`, 10 `fact_` ids each),
+no catch-all faction. The COUNT delta is resolved; what's missing is the **toggle** to re-introduce 6/party (#263).
+
+**(3) ★ Default vs. alternate = a SETTING the player picks (POST 1).** *"I'm okay with switching back to the
+original (now **alternate**) drafting rules at some point."* **Default** = ideology-restricted (this thread);
+**alternate** = the original UNRESTRICTED (any-ideology) drafting + the 6/party catch-all structure. This is the
+**earliest design-origin** of #263's canonical option **#5** ("factions divided by party vs draft-anyone," §29.1)
+and the conceptual seed of #171's restriction-ON-vs-OFF toggle (here a *global mode*, not yet era-keyed-automatic —
+#171 later makes it era-keyed-automatic, §4.1.w).
+
+**(4) ★ Mismatched-pol handling on a mode-switch = LEAVE IN PLACE (POST 3–5).** Pols who don't fit a faction's new
+ideology (e.g. WVPCPU holds Progressives) **STAY put unless converted** — NO automatic redistribution beyond the
+one-time REDCPU/BLUECPU split. vcczar **speculated** a rule that pols *~two ideologies away* are *easier to convert*
+but was unsure it existed; **Ted (POST 4) could NOT confirm it**; vcczar (POST 5) admitted he "got confused with
+the low-enthusiasm rule that sees an exodus." → **the "2-ideologies-away easier to convert" idea is NOT confirmed
+shipped** as of this thread (it anticipates #76's same-OR-adjacent conversion gating, §6.4.y; the **low-enthusiasm
+exodus** is referenced as a real rule — cf. #224 satisfaction-driven auto-flip, §6.4.x).
+
+**(5) ★★ NEW RULE added in-thread — Charismatic-leader intra-party faction POACHING (POST 5, 7).** vcczar added a
+**new faction-switch pathway** distinct from CPU conversion (#76):
+
+| Element | Spec (POST 5, 7) |
+|---|---|
+| **Trigger** | a faction LEADER has the **Charismatic** trait |
+| **Effect** | each **allied** (same-party) faction's pols whose ideology **==** the charismatic leader's ideology have a **10% chance** to JOIN that leader's faction, evaluated when this phase is reached |
+| **Cap** | **at most 1 pol per allied faction per phase** may switch in |
+| **Immunity 1** | **cannot steal from a faction of the SAME ideology** as the charismatic leader (POST 7) |
+| **Immunity 2 / scope** | **same-party (allied) only — charisma does NOT poach across to the opponent party** (POST 7); "Charisma won't play a role for the opponent" |
+
+- → A **leader-TRAIT-driven, intra-party, ideology-matched, capped** migration with its own immunity list — rides
+  on the **faction-leader + enthusiasm/migration** machinery (cf. the low-enthusiasm exodus), NOT the conversion
+  %-table. **0% built** (Charismatic is a bare trait string, `types.ts:208`; no poach logic). Cross-ref the
+  conversion cluster (§6.4 / #76/#78); likely folds as a named sub-rule under #76. ★ **OPEN:** exact phase &
+  ordering ("each time this phase is reached" — which phase; before/after CPU conversion?); tie-break if multiple
+  allied factions have a same-ideology Charismatic leader.
+
+*(designed, not built — #4/#171 DESIGN ORIGIN: implement the per-(faction, era) **priority-pool-first** draft rule
+(draft the slot's priority ideologies first; fall outside the range only once the pool is off the board) keyed by a
+per-era **FactNumber** table (Red1…5/Blue1…5, symmetric, slot-3 the drifting Moderate anchor; Populist slots draft
+BOTH LW+RW-Pop, diverging near the present); add the **default(5/party, restricted) vs alternate(6/party,
+unrestricted)** MODE toggle (#263 option #5 — the COUNT is already 5/party; the alternate-6/party toggle is what's
+missing); mismatched pols on a mode-switch LEAVE IN PLACE (no redistribution); add the **Charismatic-leader
+intra-party poach** (leader has Charismatic → 10% an allied same-party same-ideology pol joins, max 1/allied-faction/
+phase, can't poach a same-ideology faction, never crosses to the opponent — 0% built). The "2-ideologies-away easier
+to convert" idea is NOT confirmed shipped. Cite `8189b724#POST 1, 3, 4, 5, 6, 7`; codebase `types.ts:1293` (no
+draft-priority field), `phaseRunners.ts:107` (no ideology gate), `factions1772.ts`/`factions1856.ts` (5/party),
+`types.ts:208` (Charismatic = bare trait); `game-context.md` #4/#171/#76/#263.)*
+
 ### 4.1.z ★ DH-65 (NEW, `ted1772`) — founding-era dataset bugs: wrong-century collisions + Cosmopolitan⊕Provincial
 
 > **The founding-era (1768-1776) draft pool is riddled with same-name-WRONG-CENTURY entries, and pols
@@ -1666,6 +1759,59 @@ on top.
   **deterministically** to anyone moving to their seeded `altState`. *(design divergence —
   shipped `CARPETBAGGER_LADDER` rolls; forum auto-grants)*
 
+#### 6.2.y ★ #38 (DESIGN ORIGIN, `4e518e05`, Jun 2021) — historical-relocation-date DATA + the auto/manual/random relocation MODES + the auto-move officeholder-CONFLICT guard (DESIGNED, not built)
+
+> **★ The DESIGN ORIGIN (Jun 2021) of the historical-relocation-date system #38's alt-state mechanic implements.**
+> Source: `4e518e05` ("AMPU Historical Relocation," politicslounge, 10 posts). vcczar is adding **historical
+> relocation DATES per politician** + the **MODES** by which a pol moves from its start state to an alternate
+> state. The shipped turn loop **already has** the Relocate sub-phase (2.1.4, §6.2), an alt-state concept, and
+> the cap rule — so the **manual default mode broadly ships**; this thread is the design origin of the **DATA
+> layer**, the **auto/random MODES**, and the **officeholder-conflict guard**, NONE of which ship. Tier-1 =
+> `@vcczar` + `@MrPotatoTed`/Ted; contributors `@ConservativeElector2` (conflict rule), `@Cenzonico` (realism
+> setting), `@Patine`. Mostly light what-if banter (Boris Johnson / de Valera as NYC-born) — the MECHANIC is the signal.
+
+**(1) ★ The historical-relocation-date DATA layer (POST 1).** Two facts not in #38's row:
+- **Pols START in their PROPER state at each scenario start date** (1772, 1856, …) — not just their birth state.
+- Pols **carry scheduled historical MOVE DATES** (an alt-state add → a date the move would historically occur).
+- **Strategic drivers (vcczar's rationale):** (a) **new-state head-start** — drafting mediocre pols carrying an
+  alt-state to be FIRST in a newly-admitted state ("first 100 years of the game"); (b) **Reconstruction /
+  Carpetbagger** — Northerners relocate South, "in many cases the only 'Red Party' politicians in the South"
+  (the in-fiction driver behind #38's Carpetbagger trait); (c) **escape crowded / single-ideology states** for
+  one where the pol has a shot at office.
+
+**(2) ★ The four relocation MODES + the DEFAULT (POST 1–6).** "How relocation is triggered":
+
+| Mode | Trigger | Status |
+|---|---|---|
+| **(a) AUTO-move at historical move dates** | pols automatically move at their scheduled historical date | **NEW mode**, an OPTION (not default); unbuilt (no move-date DATA, no scheduler) |
+| **(b) MANUAL** | player relocates a pol when they wish, provided it has an alt-state | **★ THE DEFAULT** — the mode the shipped 2.1.4 phase most resembles |
+| **(c) RANDOM alt-state via a GENERAL EVENT** | a small # of pols get a random alt-state each turn / a low chance to START in the alt-state (POST 3/5; vcczar "I might just make random alternate state coming from a general event") | designed; unbuilt — pairs with #263's "randomize start dates"; cross-ref the event registry (#221) |
+| **(d) ANY politician may relocate ("Risk-like")** | considered but "feared too unrealistic"; **resolution (POST 6): gate behind a REALISM SETTING** (on = realism precedence / off = wacky-zany) | = **#263's** "(2) allow politicians to move to ANY state" + the realism toggle — **this thread (Jun 2021) PREDATES & SEEDS** `f735601c` (Aug 2021) |
+
+**(3) ★ The auto-move officeholder-CONFLICT guard (POST 2–4) — capture this exception.** Under auto-move mode, if
+a pol **holds an in-game office it did NOT hold IRL at that date**, auto-moving would yank a sitting officeholder.
+Resolution **leans CANCEL**: vcczar's worked example (POST 4) — *"If Romney had been Senator of MA, I don't see
+him moving to UT"* — an in-game office the pol didn't hold IRL **suppresses** the scheduled historical move. The
+alternative (the pol **resigns the seat**, vcczar POST 3) was left **OPEN** ("I'm not sure which way it will go.
+Maybe cancelling will make more sense"). → **Auto-mode needs an officeholder-conflict guard: pol holds a
+not-held-IRL game office at that date → scheduled move is CANCELLED (leaning) or resign.**
+
+> **Couplings:** relocation **mutates WHERE pols are**, so it couples to **#247** (event-driven state lean) +
+> **#260** (event→population shift) — same population-geography family, but the lever here is pol RELOCATION, not
+> bias scalars (a coupling, not a merge). The realism + any-pol-relocate + random-event toggles fold to **#263**
+> (the settings umbrella, §29.1); the DATA + manual/auto modes + conflict guard fold to **#38**. Boris-Johnson /
+> de Valera as NYC-born what-ifs corroborate **#24/#115** (alt-state/what-if start-state is mutable pol data).
+
+★ **OPEN:** auto-conflict cancel-vs-resign (vcczar left open); random-alt-state timing per-TURN (POST 3) vs at-DRAFT
+(POST 5); whether any-pol-relocate (realism OFF) ignores the §6.2.x cap.
+
+*(designed, not built — #38 origin: (i) a historical-relocation-date DATA layer (pols start in proper state per
+scenario start date + carry scheduled move dates); (ii) an AUTO-move-at-historical-date MODE (vs the shipped manual
+default) + its officeholder-CONFLICT guard (holds-not-held-IRL-office → CANCEL the scheduled move, leaning; or
+resign — OPEN); (iii) a random-alt-state-via-general-event MODE (#263/#221). The Risk-like any-pol-relocate +
+realism on/off are #263 toggles. Cite `4e518e05#POST 1, 2, 3, 4, 5, 6`; codebase `phaseRunners.ts:623` (2.1.4
+Relocate), `types.ts:247` (`RELOCATION_ATTEMPTS_PER_TURN`); `game-context.md` #38 + #263; cross-ref #247/#260/#24/#115.)*
+
 ### 6.3 (2.1.5) Ideology shifts
 
 `runPhase_2_1_5_Ideology` (`phaseRunners.ts:823`). Constants `IDEOLOGY_SHIFT_ODDS`
@@ -1795,6 +1941,15 @@ trait-gated targeting+success table.)*
 > realignment levers (#108, [§28.4](#284--the-realignment--mechanically-but-gradually-enforced-not-a-single-scripted-flip)). Author-side
 > design data. *(designed — add a per-cycle 25% auto-flip roll on flippable pols whose faction's
 > ideology-satisfaction meter is bottomed, no conversion attempt required. `game-context.md` #224.)*
+
+> **★ Charismatic-leader intra-party POACH (NEW, `8189b724`, batch 41) — a SIBLING faction-switch pathway, fully
+> specced at [§4.1.v(5)](#41v--4171-design-origin-8189b724-sep-2021--the-default-mode-ruleset-per-slot-priority-ranges--the-per-era-factnumber-table--5-factionsparty--default-vs-alternate-as-a-setting-designed-not-built).** Distinct from ALL conversion kinds above (which need a leader's explicit attempt): if a faction
+> LEADER has **Charismatic**, each **allied (same-party)** faction's pols whose ideology **==** the leader's
+> ideology have a **10% chance** to JOIN that leader's faction (evaluated when this phase is reached), **capped at
+> 1 pol per allied faction per phase**, with two immunities — **can't poach a faction of the SAME ideology**, and
+> **never crosses to the opponent party** (`8189b724#POST 5, 7`). Leader-TRAIT-driven, intra-party, ideology-matched
+> — rides on the faction-leader/enthusiasm-migration machinery (#76/#78), NOT the conversion %-table; **0% built**
+> (Charismatic is a bare trait, `types.ts:208`). Folds as a named sub-rule under #76.
 
 #### 6.4.y ★ Ted-RULED conversion-rate schedule (designer-authoritative; `tedchange`)
 
@@ -5738,6 +5893,129 @@ toggle + prosecutorial discretion + SYG/DTR + state-LE funding. Cite `65574aaa` 
 8, 9, 10, 11, 13; `145db158` POST 1, 2, 3; `4e76e6c3` POST 1, 3, 4, 5, 6; code `types.ts:1506-1514` (no subtype/prereq),
 `phaseRunners.ts:~3397` (coin-flip court), `types.ts:28/36` (single `military` scalar), `territories.ts:8`; `game-context.md`
 #221/#237/#248/#258/#52/#66/#45/#56/#106/#262/#206/#260/#20/#268/#269/#107.)*
+
+#### 14.1.3.h ★ #221/#237/#248 + #258 + #52/#66/#255 (batch 41) — the COURTS + WELFARE policy-genre drops + ★ the 12th-and-LAST genre (the content SWEEP is COMPLETE) (DESIGNED, 0% shipped)
+
+> **★ The final two single-genre content drops** (the batch-41 siblings of the b37–b40 drops), both
+> CONTENT-AUTHORING idea dumps (NOT playthroughs), both vcczar-opened. **0% shipped** (no `subtype`, no Pres/Gov-Action
+> primitives, no prereq field — `Legislation` has only the 4-value `committee`, `types.ts:1506-1520`). Their
+> corroboration of the framework is routine; this section captures only the **NOVEL enrichments** and the
+> ★ **MILESTONE**. The SC-case docket/generator side of Courts (`964b8857`) lives at §22.7.aa/§22.7.bb (#270/#271) —
+> THIS section owns the Courts STRUCTURE genre + Welfare. The two sources:
+>
+> | Source | Slug | Shape | Notes |
+> |---|---|---|---|
+> | **Courts / Judiciary** | `a863421c` (Apr 2022, 11 posts) | **FULLY-TAGGED** (L/G/P + era bands + **prereq-PARTITIONED** blocks; `L-Ind-Default` baseline = **"No Supreme Court"**) | court-STRUCTURE genre (size/tenure/Judicial-Review/lower-courts/elected-judges); sibling of #251 `judiciaryidea` |
+> | **Welfare** | `2cddc161` (Apr 2022, 6 posts, ~48 rows) | **UNTAGGED** (3 flat header partitions; no `L/P/G` prefix, no era band, no `Preq:`) | L≈45 / **P=1** / **G=2** — the THINNEST Pres/Gov counts of any genre yet (#262) |
+
+**★★ MILESTONE — Welfare is the 12th & LAST policy-genre drop (`2cddc161` POST 1: "This is the last policy section").**
+With Welfare, the policy-genre content-authoring SWEEP is **COMPLETE**: **immigration → education → civil-rights →
+agriculture → civil-service → diplomacy → healthcare → crimes → military → expansionism → courts → welfare** (12 genres,
+§14.1.3.c–§14.1.3.h). The genre-instance pipeline has now ingested its full first pass; what remains is the per-genre
+**tagging pass** (the UNTAGGED drops — Healthcare/Military/Expansionism/Welfare — still need L/P/G + era + `Preq:`
+schema) + the **#262 Pres/Gov-Action + #206 Future coverage fill**, NOT new genres. (Feeds the tech-lead/roadmap-planner:
+the content corpus is feature-complete at the genre level; the gap is the 0%-shipped engine + the tagging/coverage debt.)
+
+**(1) ★ #52 COURTS-STRUCTURE — the court-SIZE ladder + court-PACKING cap + tenure rules (the authoring source for #52's
+court dynamics; `a863421c` POST 1).** The genre is **prereq-PARTITIONED** (organized into game-STATE partitions, each
+gating content — direct #258 corroboration that gates are predicates, NOT calendar years):
+
+| Sub-mechanic | Spec (POST 1) | Cross-ref |
+|---|---|---|
+| **★ Court-SIZE = settable, expansion-GATED variable** | Set No. of Justices to **5 / 6 / 7 / 9 / 10 / 13** by ordinary Legis-Prop (per-value era-band flavor: 5=Fed, 7=Rep, 9=Dem, 10=Nat, 13=Pop), with **21 GATED behind "US controls Philippines+Brazil+Mexico+Canada"** and **31 GATED behind "US at MAX expansion of territory"** | same settable-integer-CAP pattern as **#255** (variable House size 100/435/500/1000) — 2nd instance, here with **expansion-gated upper tiers**; ties expansion system #268 |
+| **★ Court-PACKING + per-Pres CAP** | Court Packing is its own Legis-Prop (L-Ide); once active, a self-limiting governor — **"Limit Court Packing to only 6 Extra Justices Per Pres"** | sharpens #52's "court legislated down to 5 while holding 9-10" + "Set SC to 31" platform plank |
+| **★ TENURE rules (opposed-value option-sets)** | **40-yr & 50-yr minimum age** (L-Fed); **70-yr & 75-yr mandatory retirement age** (L-Prog); **8-Year Term-Limit for SC Justices Amendment** (L-Prog — converts life tenure to fixed terms) | the 8-yr term-limit is the HINGE the elected-judiciary mode (#271, §22.7.bb) composes on; ties #52's 12-yr-min-service + age-70 compelled-retirement (§22.7) and #251 (§22.7.v) |
+| **★ Judicial Review as a togglable INSTITUTION FLAG** | mirror-image amendments gated on opposite states: **Establish Judicial Review** (when "not yet Active") ↔ **Abolish Judicial Review** (when "in effect") | the shipped coin-flip court ASSUMES strike-laws power; this makes that capability an on/off, abolishable institution — #52's ruling→law-deactivation hook would be GATED on this flag (#258 predicate) |
+| **★ LOWER-COURT structure (#66)** | create **Appeals / US District / Admiralty (wartime) / Military (wartime) Courts + Military Tribunals** as institutions; **Increase/Decrease # of Lower Court Justices** (gated "Judiciary Act is active"); jury control as opposed pairs (always-jury ↔ judge-only ↔ Abolish Juries; Future: Ban Robots / Ban Human-AI-Augmented from juries) | lower courts = **office/institution-created-by-law (#66)**; the count-modifier + ban/mandate-jury = #221/#248 modifier-verb/opposed-pair primitives |
+
+- **★ #258 — two genuinely NEW predicate KINDS** the prior taxonomy (§14.1.3.d/.g) did not isolate: **institution-flag**
+  (Judicial-Review in-effect / not-active; Court-Packing active; SCOTUS exists/not) and **★ territory-ownership /
+  expansion-extent** (controls-Philippines+Brazil+Mexico+Canada → unlock 21 Justices; at-MAX-expansion → unlock 31) —
+  the latter ties the court genre to the **expansion system (#268)**. Plus the **Constitutional-Convention-ONLY** scope
+  (one-time founding window: Establish Federal Judicial Branch ↔ Establish Ban on Federal SC) + prior-policy chains
+  (Judiciary-Act-active → lower-court bills; Court-Packing-active → the cap).
+- **★ #221 — the Judiciary Act of 1789 = a SPLITTABLE multi-provision bill "grouped in committee"** (Cal POST 10/11):
+  one historical act decomposes into several atomic Legis-Props sharing a **committee-grouping key** — same multi-bill
+  PACKAGE/LADDER pattern as Green-New-Deal → atomic bills (§14.1.3.c family). The flat "Judiciary (L-Fed)" item is
+  shorthand for a decomposable package.
+- **★ `L-Ind-Default` baseline = "No Supreme Court"** — this genre's absence-of-institution state, so its prereq
+  partitions key off SCOTUS existence (corroborates #237's missing-baseline / negation-axis pattern).
+- **Genre BOUNDARY (#248):** death-penalty / Jim-Crow-jury / sentencing content in POSTs 6–9 belongs to the **Crimes**
+  genre (§14.1.3.g), NOT Courts — vcczar's own 33-enum lists them separately (POST 7/8 author-acknowledges the boundary).
+
+**(2) ★ #221 WELFARE — the Social-Security CREATE→EXPAND→raise/lower→partial-privatize→privatize LIFECYCLE (the richest
+entitlement-program-state case yet; `2cddc161` POST 1, 5).** The clearest instance of the staged entitlement-program
+ladder (same pattern as Healthcare's Medicare Create→Expand→Cut, §14.1.3.g — but richer):
+
+| Stage | Rows (verbatim, POST 1/5) |
+|---|---|
+| **CREATE** | Create Soc Sec; Create Soc Sec Board (a #66-style institution-creation); Employers-Tax-to-pay-for-Soc-Sec |
+| **EXPAND (coverage classes)** | Expand to include **Child Welfare · Disabled Persons · Unemployed · widows & children of premature death · make it universal** |
+| **★ BENEFIT-magnitude sub-axis (repeatable in/decrement)** | Increase welfare benefits ↔ Cuts to welfare benefits; Raise benefits of social security |
+| **★ GRADED privatization terminal** | Partially privatize → (POST 5) allow trust to be invested in market mutual funds → full privatize |
+| **ELIGIBILITY tightening** | (POST 5) pay-out only to those who paid in (+survivor spouse); Increase retirement age to 75 |
+
+- ★ **Richer than the Medicare ladder** because it adds a **benefit-magnitude sub-axis** (raise↔lower as a repeatable
+  increment, the #221 increase/decrease/repeal modifier-verb pattern) AND a **graded privatization terminal**
+  (partial → trust-in-market → full). A flat one-shot flag cannot model it → reinforces #221's program-state model +
+  #258 per-stage prereqs (Expand presupposes Create), and is the **entitlement-PROGRAM twin of the #66 office-lifecycle**
+  (offices vs programs as evolvable stateful institutions — reconcile, §24.6). A parallel mini-ladder: public-housing
+  (Housing-Act-1937 → slum-clearance subsidies → Privatize Public Housing; HUD increase↔decrease funding = #66 dept
+  mini-ladder, though HUD-funding routes to Civil-Service #66).
+
+**(3) ★ #248 WELFARE — whole-system option-sets + a per-incumbent gate (`2cddc161` POST 1, 2, 3).** Two
+mutually-exclusive option-sets (one supersedes the rest, #258):
+- **(a) Federal-vs-State AUTHORITY axis** — "Give states full authority over welfare" vs federal administration. ★ vcczar
+  RULING (POST 2): this is the **Nixon "New Federalism"** lever — full state authority via **block grants** — and
+  *"could be a potential choice for **him only** perhaps"* → a **#258 specific-INCUMBENT gate** ("Nixon only"; same
+  per-incumbent predicate class as Crimes' convicted-during-incumbency, §14.1.3.g). The 2 Gov-Actions ("Establish State
+  Welfare System" / "Progressive State Welfare System") are the per-state arm (#20).
+- **(b) GUARANTEED-INCOME architecture set** (pick one → supersedes) — Guaranteed Min Income · supplementary
+  low-income/elderly · AFDC (needy families w/ dependent children) · Wealth redistribution. ★ POST 3 (jvikings1)
+  proposes finer splits — a **Jobs Guarantee** (standing Democratic proposal), and **Nixon's FAP** (means-tested) split
+  OFF from a flat **UBI** (universal) — flagging an **OPEN granularity question** (means-tested vs universal = one toggle
+  or two?), a textbook #248 subtype-granularity decision.
+
+**(4) ★ #236 WELFARE — government-FORM extremes (the two terminal end-states; `2cddc161` POST 1, 5).** Welfare pushes
+past ordinary policy into the **alternate-government-form / authoritarian-kit** axis (#236):
+- **LW/Communist edge:** "Abolish Private Property Amendment" + "Wealth redistribution" (the nationalize-sector end).
+- **Theocratic / faith-based edge:** "abolish all federal welfare → route tax credits/funding to local churches" +
+  "Fund creation of National Church" (the RW-Populist/Traditionalist welfare-via-church mirror).
+- → Both are #248 terminal option-set members on the #236 government-form axis (do NOT double-count as new mechanics).
+
+**(5) Cross-genre overlaps (#248 multi-category tagging — route to the OWNING genre, do NOT double-count).** Welfare-list
+rows belonging elsewhere: **military pensions / veteran benefits → Military (#221)**; **HUD funding → Civil-Service (#66)**;
+**food stamps → Agriculture (#221)**; **Native reparations → Civil-Rights/Expansionism (#258/#260)**; **subsidize-local-LE
+→ Crimes (#20)**. ★ **OPEN routing Q (POST 6, GM-UNANSWERED):** "Would the reparations for slavery go here?" — per the
+`civilrights` boundary ruling (slavery is a sibling top-level genre), likely routes to a Slavery/Civil-Rights genre, NOT
+Welfare. The canonical case for **multi-category tagging**.
+
+**(6) ★ #262/#206 coverage + Future content.** Welfare ASK (POST 1): more Pres-Actions (only 1 — the thinnest count of
+ANY genre), more Gov-Actions (only 2), more Era-of-Future ("welfare will expand massively… by 2100" — a strong
+under-content'd-at-source datapoint). Courts ASK (POST 1): more Era-of-Future court content + **more Gov-Actions** +
+possibly more Pres-Actions (the exact #262 dimensions). Future-band rows present in both: Welfare (Affordable-Genetic-Baby,
+Free-Housing/Transportation-for-All, Maximal-Welfare-for-Seniors; community: universal childcare/internet); Courts
+(ban-robots/Human-AI-Augmented-from-juries; community: robot justices, an AI-run SC for AI, Ten-Commandments-as-supreme-
+court-principle). Welfare right-side again skews to cuts/abolitions/privatizations (the same per-ideology skew #262 tracks).
+
+*(designed, 0% shipped — the 11th & 12th #237 GENRES / #248 SUBTYPES populating the #221 registry. ★ MILESTONE: the
+12-genre content-authoring sweep is COMPLETE (Welfare = last). NOVEL enrichments: **#52** court-STRUCTURE (the authoring
+source for the court-SIZE ladder 5/6/7/9/10/13 + **21/31 EXPANSION-GATED**, the court-PACKING bill + per-Pres **6-extra**
+cap, the 40/50 min-age & 70/75 retire-age & **8-yr term-limit** tenure rules, Judicial-Review as a togglable institution
+flag, lower-court create/jury-control) — shipped coin-flip court `phaseRunners.ts:~3397` models NONE of it; **#258** two
+new predicate KINDS (institution-flag; territory-ownership/expansion-extent gating the 21/31 counts) + Constitutional-
+Convention-only scope + per-INCUMBENT gate ("Nixon only" New Federalism); **#255** court-size = a 2nd settable-integer-cap
+instance (after House size) with expansion tiers; **#221** the Judiciary-Act-1789 = splittable multi-provision bill
+grouped in committee + the Social-Security CREATE→EXPAND(coverage classes)→raise/lower-benefit→partial-privatize→full
+lifecycle (richest entitlement-program-state case, twin of #66 office-lifecycle); **#248** whole-system option-sets
+(federal↔state New-Federalism; UBI/GMI/Jobs-Guarantee/FAP) + multi-category tagging + means-tested-vs-universal
+granularity Q; **#236** government-form extremes (Abolish-Private-Property ↔ abolish-federal-welfare→churches/National-
+Church); **#66** lower-court + Soc-Sec-Board institution-creations; **#237** `L-Ind-Default`="No Supreme Court" baseline +
+Courts/Crimes genre boundary; **#262/#206** coverage asks (thinnest P/G counts in Welfare; more Gov-Actions in Courts;
+Future welfare "expands massively by 2100"). The SC-case docket/generator side of Courts is at §22.7.aa/§22.7.bb
+(#270/#271). Cite `a863421c#POST 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11`; `2cddc161#POST 1, 2, 3, 4, 5, 6`; codebase
+`types.ts:1506-1520` (no subtype/prereq), `phaseRunners.ts:~3397` (coin-flip court); `game-context.md`
+#221/#237/#248/#258/#52/#66/#255/#236/#262/#206/#20/#260/#270/#271.)*
 
 ### 14.2 Forum design layer: Constitutional Amendments durable state (designed, not built)
 
@@ -10409,6 +10687,124 @@ the confirmed-justice **10% immediate ±1 ideology shift** + **per-10-yr** drift
 `judiciaryidea#POST 1, 2, 3, 4, 6, 7-9, 10-14, 15, 16, 17, 18`; codebase `phaseRunners.ts:3397-3414`,
 `types.ts` (no judicial-philosophy/focus-court types); `game-context.md` #251; **DESIGN ORIGIN of**
 #218/#249/#25/E25/#52, ties #25/§22.7.w/§22.7.z/§29.2/§25.14.)*
+
+#### 22.7.aa ★★ #270 (NEW, batch 41) — the SC-CASE content SCHEMA + the procedural CASE GENERATOR + 5% Landmark roll + precedent overturn/reinstate links (DESIGNED, 0% shipped)
+
+> **★★ THE BATCH-41 SCOTUS HEADLINE — the case CONTENT-RECORD design + a procedural generator.** Two sibling
+> authoring threads pin this down: **`964b8857`** ("Era of the Future SC Cases," Apr–May 2022, 18 posts; the
+> AUTHORING thread that pins the FORMAT — content-FROZEN at the end) and **`a863421c`** ("AMPU Courts," the
+> STRUCTURE thread, §22.7.bb / §14.1.3.h). `964b8857` is the **AUTHORING-provenance** for the same ~45-case
+> docket §22.7.w (`scotusfuture`/#249) lists in full — but where §22.7.w captured only **name + question**,
+> this thread adds the **direction-keyed faction-EFFECT PAYLOAD** as a required third field, plus the
+> **case GENERATOR** sub-mechanic and the **5% Landmark roll**. Tier-1 = `@vcczar` + `@MrPotatoTed` (Ted, whose
+> idea the generator is); contributors = `@ConservativeElector2`, `@jvikings1`, `@Cal`, `@Willthescout7`,
+> `@0ccultist`. **0% shipped** — the shipped court is a `chance(0.5)` coin-flip on **4 hardcoded title strings**
+> ([§11.6](#116-253-supreme-court--runphase_2_5_3_court-phaserunnersts3397), `phaseRunners.ts:~3397`) with no
+> `ScotusCase` type, no docket, no case identity, no effect payload, no generator, no tier, no precedent links.
+
+**(1) ★ The canonical SC-CASE FORMAT/SCHEMA (vcczar's copy-paste author template, `964b8857` POST 1).** The
+author supplies exactly **three fields** ("Just three things. I'll fill in everything else" — the GM stamps era
+key / ordering on transfer):
+
+| Field | Shape | Example |
+|---|---|---|
+| **`name`** | string, `Plaintiff v. Defendant` | *Advanced Robot Inc. v. California* |
+| **`question`** | a **one-sentence YES/NO constitutional question** — the ruling is a **binary yes/no**, NOT free-text | *"Do constitutional rights apply to robots and other objects guided by AI?"* |
+| **★ `effects`** | a **direction-keyed payload** `{ ifYes: [faction/interest +], ifNo: [faction/interest +] }` — the ruling DIRECTION maps to interest-group / faction bonuses; **every case names winners on BOTH sides** | *if yes → Big Technology+, Civil Rights+; if no → Traditionalists+, Big Business+* |
+
+- **`effects` is the NEW required column the shipped court has no analog for** — a ruling direction (yes/no) →
+  interest-group/faction bonuses. The payload vocabulary draws from the **interest-group / ideology / lobby card
+  taxonomy** (#50/#51): Big Business, Big Technology, Big Agriculture, Big Military, Globalists/Free-Trade,
+  Protectionists/Isolationists, Transportation, Honest Government, Progressives/Liberals/Conservatives/
+  Traditionalists, Theocrats, Civil Rights, Law and Order, Environmentalists, LW/RW Activists, Expansionists.
+- **Effect is +only in practice** (the losing side simply doesn't gain), though the field was conceived as ±
+  (CE2 POST 11: "re-think the + and − section"). ★ **OPEN:** reward-the-winner-only vs penalize-the-loser is
+  unresolved in-thread.
+- **★ Direction-correctness is a content-QA concern** — the payload is strictly keyed to ruling direction and is
+  easy to author backwards (POST 7: 0ccultist wrote *Bender*'s yes/no effects reversed; jvikings1 corrected —
+  "if the state CAN ban robot marriage, the Traditionalists get the positive bonus"). Names need normalization
+  at transfer (spelling drift `Woordworks`/`Woodworks`).
+- Candidate to register as a **SCOTUS-case content-primitive in #221** (alongside Legis-Prop / Pres-Action /
+  Gov-Action / Scripted-Event).
+
+**(2) ★★ The procedural CASE GENERATOR (MrPotatoTed's idea, vcczar-endorsed, `964b8857` POST 1, 2, 11).** The
+docket is NOT only the ~30 hand-authored cases — a **generator synthesizes additional cases at runtime** so the
+~88-year Era of the Future isn't exhausted by a fixed set. **Inputs = two name DBs** (CE2 POST 2 spelling out
+Ted's idea):
+
+- **A human-name DB** = the SAME **#115 name database** the candidate generator already specs (gender-tagged
+  given names, race/religion-tagged surnames, ~6,600 names) — this is a **NEW CONSUMER** of that DB, not a new DB.
+- **A state-name DB** = the 50/53-state roster the scenarios already hold (trivially available).
+- → The generator composes `<human-name> v. <state-name>` (and `<state> v. <human-name>` — both forms appear in
+  the authored set), e.g. `X v. State`. ★ **OPEN:** is the generator a **#52 docket-supply sub-mechanic** or its
+  own system? It crosses #52 (docket) + #115 (name source) + #249 (the 5% roll below).
+
+**(3) ★ 5% Landmark roll on a GENERATED case (vcczar, `964b8857` POST 11).** A procedurally-generated case rolls
+a flat **~5% chance to be promoted to Landmark** (the movement-spawn-capable tier from #249, §22.7.w), the other
+~95% being ordinary cases. This is the **generator-side counterpart** to §22.7.w's hand-curated Landmark scoring
+(there, designers HAND-pick Landmarks; here a GENERATED case gets the flat roll). ★ **OPEN/TENSION:** the flat
+5% is the **v1-simple** version of the **AMPU-2 meter-computed context-dependent significance** model (§22.7.w(2),
+`scotusfuture` POST 8) — does the flat roll survive once opinion meters exist?
+
+**(4) ★ Precedent overturn/reinstate LINKS + conditional follow-up CHAINS (corroborates #258 + §22.7.w).** A case
+record carries a relationship to PRIOR case law, not just a standalone yes/no:
+
+- **`overturns` / `reinstates` link to a prior case** + a live **precedent-in-force flag** the engine tracks:
+  *California v. Robertson* overturns the *NRA v. Bruening* concealed-carry ruling; *Utah v. Nelson* overturns
+  the polygamy ban via an **intent-doctrine** rationale ("current legal thinking includes intent" — ties #251's
+  Judicial Doctrine, §22.7.v); **Roe is a bidirectional overturn-OR-reinstate pair** (POST 14/15: "overturn Roe"
+  → vcczar "Or reinstates?") — precedent state is **re-litigable**.
+- **Conditional follow-up case CHAIN:** *Quackenbush v. <IRS head>* (can the state TAX the uploaded?) fires only
+  **"if *Jones v. Alabama* (right to upload consciousness) = yes"** — an outcome-gated case that one ruling
+  unlocks. This is the **court-precedent-exists** predicate KIND (#258, the b40 obscenity Hicklin→Roth→Miller
+  chain, §14.1.3.g) applied to the case docket.
+
+**(5) Govs CHALLENGE laws / bring cases (case SUPPLY, corroborates #132 + #218).** vcczar (POST 1): "Gov's will
+be able to challenge laws too" — governors are a case-bringing agency feeding the docket (a gov challenges a law →
+that challenge becomes a SCOTUS case). Matches the **Gov Challenge-Legislation** Gov-Action (#132, §21.3 — Ted
+ruled repeal/statehood bills are NOT eligible targets) and the **Rule-of-Four** cert step that governs
+Gov-Action-brought cases (#218, §22.7.z). So the intended supply pipeline is: **gov-challenge / hand-authored /
+generated → cert (#218) → decide (#52) → tier (#249)**.
+
+*(designed, 0% shipped — add a `ScotusCase` record on the docket: **`name` + yes/no `question` +
+`effects:{ifYes:[…], ifNo:[…]}`** direction-keyed faction/interest payload (+only on the winner; penalize-loser
+OPEN); a **procedural case GENERATOR** drawing the #115 human-name DB + a state-name DB → `X v. State` (own-system
+vs #52-sub-mechanic OPEN); a **~5% Landmark roll** on generated cases (#249, flat-5% vs meter-significance OPEN);
+**`overturns`/`reinstates` links + a precedent-in-force flag** + outcome-gated follow-up chains (#258); the
+gov-challenge → docket path (#132/#218). Cite `964b8857#POST 1, 2, 4, 6, 7, 8, 11, 13, 14, 15, 16, 18`; codebase
+`phaseRunners.ts:~3397` (coin-flip court, 4 hardcoded titles); `game-context.md` #270 (NEW); extends #52/#249/#221,
+ties #115/#218/#132/#258/#251/#206.)*
+
+#### 22.7.bb ★ #271 (NEW, batch 41) — the appointed ↔ elected ↔ retention-election JUDICIARY selection modes (DESIGNED, 0% built)
+
+> **★ A NEW selection MODE for the judiciary — and a new ELECTION TYPE.** Source: `a863421c` ("AMPU Courts,"
+> POSTs 2–5; the thread's most-discussed novel idea). Today justices arrive only via **appoint-then-confirm**
+> (§22.7); this thread makes **how a judge ARRIVES** itself a settable mode (appointed ↔ elected ↔ retention),
+> with explicit **design-for-conflict** endorsement (POST 4, by a member who personally opposes electing judges:
+> *"I very much endorse having the option in there so people can fight over it"*). Tier-1 = `@vcczar`; the concrete
+> mechanic = jvikings1 (POST 5). **0% built** — no elected-judge path, no retention-election type
+> (`phaseRunners.ts:~3397` is the coin-flip court; the elections engine §15/§22.x has no retention ballot).
+
+| Mode | Mechanic (POST 2–5) |
+|---|---|
+| **Appointed** (baseline) | the shipped path — President appoints, Senate/committee confirms (§22.7); matthewyoung's **"Fill State Judges with Loyalists"** (a Gov-Action, §14.1.3.h) is the appointed-counterpart |
+| **Elected** | a **Gov-Action** makes **state and/or local judges** elected officials (POST 2); **elected Supreme Court Justices** also floated (POST 3). **If NO term limits → justices are elected whenever a vacancy opens.** **If 8-year terms (the term-limit amendment, §14.1.3.h) → 1/4 of the Court is elected every election cycle** (a staggered Court) |
+| **Retention** | **RETENTION elections distinct from normal ones** (POST 5): a sitting justice faces a yes/no retain ballot — **lose retention → recalled from office → another justice appointed-and-retained OR outright elected** |
+
+- **★ It COMPOSES with the 8-yr term-limit item (§14.1.3.h(#52)):** life tenure → 8-yr terms → a **staggered
+  1/4-of-the-Court-elected-per-cycle** body. So the elected-judiciary mode is **downstream of the tenure rules**.
+- **★ Introduces a new ELECTION TYPE** (the retention ballot) the elections engine doesn't model — ties the
+  elections system (§15 `calcStateVote`, §22.x) and #20 (the state/local-judge-election Gov-Action is a per-state
+  officer action). Composes with the #52 court-size/tenure ladder (§14.1.3.h) and #251's judiciary overhaul (§22.7.v).
+- **Arbitration aside (POST 7, not specced):** "Ask Court to settle dispute (if all parties agree)… the judgeCPU
+  will make a decision" — a CPU-adjudicated arbitration action (a thought, no mechanic).
+
+*(designed, 0% built — model a judge SELECTION-MODE axis: appointed (shipped) ↔ elected (Gov-Action makes
+state/local judges + SC Justices elective; no-term-limits = vacancy elections, 8-yr-terms = 1/4-of-Court-per-cycle)
+↔ retention (a new election TYPE: lose retention → recall → re-appoint-and-retain or elect). Composes with the
+§14.1.3.h tenure/term-limit ladder; needs a retention-ballot path in the elections engine. Cite `a863421c#POST 2,
+3, 4, 5`; codebase `phaseRunners.ts:~3397`, `types.ts` (no elected-judge/retention type); `game-context.md` #271
+(NEW); ties #52/#251/#20 + the elections system (§15).)*
 
 *(designed, not built — a SCOTUS module: a per-term case docket + ideology-vote model; the
 Iron-Fist/Manipulative compel-vote and compel-retire powers (with the 12-year minimum + the
@@ -19211,6 +19607,106 @@ into the #194 lineage system. Cite `histpres#POST 1, 3, 7, 13, 19, 28, 34, 36, 3
 > subtype), **3 new #258 predicate KINDS**, the **obscenity SCOTUS doctrine** (#52+#258), and **#66** office-creations +
 > the War→Defense merge (2nd witness). Cross-ref `game-context.md` rows **#265/#266/#267/#268/#269 (NEW)** and
 > **#45/#52/#56/#66/#88/#106/#107/#188/#206/#221/#237/#248/#258/#260/#262/#20/#34/#55/#219/#247 (sharpened/corroborated)**.
+
+### 30.31 Rulings folded from batch 41 — TWO Courts + TWO Welfare/Courts genre drops + ONE SC-case AUTHORING thread + relocation/faction-default design-origins (★★ #270 the SC-CASE schema + procedural GENERATOR + #271 the elected/retention-election judiciary + ★ MILESTONE: the 12-genre content sweep is COMPLETE) (`964b8857-future-sc-cases` / `a863421c-courts` / `2cddc161-welfare` / `4e518e05-historical-relocation` / `8189b724-faction-ideology-default`)
+
+> **★ Batch 41 = a 5-thread DESIGN / CONTENT-AUTHORING batch (NO playtest, NO dice, NO historian, NO played-forward
+> year) — two policy-genre drops (Courts, Welfare), one SC-case authoring thread, and two design-origin threads
+> (historical relocation, faction default mode).** Everything is **designed-only**; **0% of any of it ships** beyond
+> the pre-existing primitives it enriches (the coin-flip court `phaseRunners.ts:~3397`; the 2.1.4 Relocate phase; the
+> 5/party faction count). The value: the **★★ #270 SC-CASE content SCHEMA + procedural CASE GENERATOR** (the headline —
+> `name` + yes/no `question` + a direction-keyed `{ifYes,ifNo}` faction-effect payload; a generator reusing the #115
+> name DB + a state-name DB → `X v. State`; a ~5% Landmark roll; precedent overturn/reinstate links + outcome-gated
+> case chains), the **★ #271 elected ↔ retention-election judiciary** (a new selection MODE + a new election TYPE), the
+> **★ #52 court-STRUCTURE** authoring source (the size ladder 5/6/7/9/10/13 + **21/31 expansion-gated**, court-packing
+> per-Pres cap, tenure rules, Judicial-Review-as-institution), the **Welfare Social-Security lifecycle** (richest
+> entitlement-program-state case), and — the milestone — **Welfare = the 12th & LAST policy genre; the content sweep is
+> COMPLETE.** Tier-1 designers `@vcczar` + `@MrPotatoTed`/Ted author/rule; **ConservativeElector2 / jvikings1 / Cal /
+> Willthescout7 / 0ccultist / Cenzonico** are the densest contributors. The sources:
+> - **`964b8857-ampu-era-of-the-future-supreme-court-cases`** (Apr–May 2022, 18 posts; AUTHORING, content-FROZEN) — the
+>   **SC-CASE FORMAT** (vcczar's 3-field author template) + the **procedural CASE GENERATOR** (MrPotatoTed's idea) + the
+>   **5% Landmark roll** + precedent overturn/reinstate links + outcome-gated chains + gov-challenge case supply. →
+>   #270 (NEW). Folded into [§22.7.aa](#227aa--270-new-batch-41--the-sc-case-content-schema--the-procedural-case-generator--5-landmark-roll--precedent-overturnreinstate-links-designed-0-shipped). Cite `964b8857#POST n`.
+> - **`a863421c-ampu-courts`** (Apr 2022, 11 posts; NOT a playthrough) — the **Courts/Judiciary genre FULLY-TAGGED**
+>   (prereq-PARTITIONED; `L-Ind-Default` = "No Supreme Court"): court-SIZE ladder + packing cap + tenure rules +
+>   Judicial-Review institution + lower courts (#52/#258/#255/#221/#66), AND the **elected/retention-election judiciary**
+>   (#271). → folded into [§14.1.3.h](#1413h--221237248--258--526655-batch-41--the-courts--welfare-policy-genre-drops--the-12th-and-last-genre-the-content-sweep-is-complete-designed-0-shipped) (structure genre) + [§22.7.bb](#227bb--271-new-batch-41--the-appointed--elected--retention-election-judiciary-selection-modes-designed-0-built) (#271). Cite `a863421c#POST n`.
+> - **`2cddc161-ampu-welfare`** (Apr 2022, 6 posts, ~48 rows; NOT a playthrough) — the **Welfare genre UNTAGGED**
+>   (L≈45/P=1/G=2 — thinnest P/G yet). NOVEL: the **Social-Security CREATE→EXPAND→raise/lower→partial→full-privatize
+>   lifecycle** (#221, richest entitlement case) + whole-system option-sets w/ a **per-incumbent ("Nixon only") gate**
+>   (#248/#258) + government-form extremes (#236). **★ "This is the last policy section"** → the 12-genre sweep is
+>   COMPLETE. → folded into [§14.1.3.h](#1413h--221237248--258--526655-batch-41--the-courts--welfare-policy-genre-drops--the-12th-and-last-genre-the-content-sweep-is-complete-designed-0-shipped). Cite `2cddc161#POST n`.
+> - **`4e518e05-ampu-historical-relocation`** (Jun 2021, 10 posts; DESIGN-ORIGIN) — the **historical-relocation-date
+>   DATA layer** + the **auto/manual/random relocation MODES** + the **auto-move officeholder-CONFLICT guard**
+>   (cancel-vs-resign). The DESIGN ORIGIN of #38's alt-state mechanic; predates/seeds #263's relocation toggles. →
+>   folded into [§6.2.y](#62y--38-design-origin-4e518e05-jun-2021--historical-relocation-date-data--the-automanualrandom-relocation-modes--the-auto-move-officeholder-conflict-guard-designed-not-built) (#38). Cite `4e518e05#POST n`.
+> - **`8189b724-faction-ideology-default`** (Sep 2021, 7 posts; DESIGN-ORIGIN) — the **"default mode" ruleset**: the
+>   per-slot priority ranges + the per-era **FactNumber** table + **5-factions/party** (resolves the per-party-cap Q) +
+>   default-vs-alternate as a SETTING + the **★ Charismatic-leader intra-party POACH** rule. The DESIGN ORIGIN of #4 +
+>   #171. → folded into [§4.1.v](#41v--4171-design-origin-8189b724-sep-2021--the-default-mode-ruleset-per-slot-priority-ranges--the-per-era-factnumber-table--5-factionsparty--default-vs-alternate-as-a-setting-designed-not-built) (#4/#171) + [§6.4.x](#64x-forum-design-layer-trait-gated-conversion-targeting-designed-not-built) (poach cross-ref, #76). Cite `8189b724#POST n`.
+>
+> **The HEADLINE findings (lead with these):**
+> 1. **★★ #270 — the SC-CASE content SCHEMA + procedural CASE GENERATOR (NEW, 0% shipped).** The case content record =
+>    **`name` (`X v. Y`) + yes/no `question` (binary ruling) + `effects:{ifYes:[faction/interest+], ifNo:[…]}`** — a
+>    direction-keyed payload (every case names winners on both sides; +only in practice, penalize-loser OPEN). A
+>    **procedural GENERATOR** (MrPotatoTed's idea) synthesizes `<human-name> v. <state-name>` from the **#115 name DB
+>    (NEW consumer) + a state-name DB** so the 88-yr Future docket isn't exhausted by ~30 hand-authored cases. A
+>    GENERATED case rolls **~5% to be Landmark** (#249; flat-5% vs AMPU-2 meter-significance OPEN). Cases carry
+>    **`overturns`/`reinstates` links** (Roe = bidirectional pair; Utah v. Nelson via intent-doctrine) + a
+>    precedent-in-force flag + **outcome-gated follow-up chains** (Quackenbush fires only if Jones=yes — #258). Govs
+>    challenge laws to bring cases (#132/#218). Shipped = coin-flip on 4 hardcoded titles. At
+>    [§22.7.aa](#227aa--270-new-batch-41--the-sc-case-content-schema--the-procedural-case-generator--5-landmark-roll--precedent-overturnreinstate-links-designed-0-shipped).
+> 2. **★ #271 — the elected ↔ retention-election judiciary (NEW, 0% built).** A judge SELECTION-MODE axis: appointed
+>    (shipped) ↔ **elected** (a Gov-Action makes state/local judges + SC Justices elective; no-term-limits = vacancy
+>    elections, **8-yr terms → 1/4-of-Court-per-cycle**) ↔ **retention** (a new election TYPE: lose retention → recall →
+>    re-appoint-and-retain or elect). Composes with the §14.1.3.h tenure/term-limit ladder; needs a retention-ballot
+>    path in the elections engine. At [§22.7.bb](#227bb--271-new-batch-41--the-appointed--elected--retention-election-judiciary-selection-modes-designed-0-built).
+> 3. **★ #52 — the court-STRUCTURE authoring source.** The full court-SIZE ladder (5/6/7/9/10/13, with **21 & 31
+>    EXPANSION-GATED**), **court-PACKING + per-Pres 6-extra cap**, tenure rules (40/50 min-age, 70/75 retire-age, 8-yr
+>    term-limit), Judicial-Review as a togglable institution, lower-court create/jury-control — the content #52 referenced
+>    but did not enumerate. At [§14.1.3.h](#1413h--221237248--258--526655-batch-41--the-courts--welfare-policy-genre-drops--the-12th-and-last-genre-the-content-sweep-is-complete-designed-0-shipped).
+> 4. **★★ MILESTONE — Welfare is the 12th & LAST policy genre; the content-authoring SWEEP is COMPLETE** (immigration →
+>    education → civil-rights → agriculture → civil-service → diplomacy → healthcare → crimes → military → expansionism →
+>    courts → welfare). The genre corpus is feature-complete; what remains = the per-genre tagging pass + #262/#206
+>    coverage fill, NOT new genres. At [§14.1.3.h](#1413h--221237248--258--526655-batch-41--the-courts--welfare-policy-genre-drops--the-12th-and-last-genre-the-content-sweep-is-complete-designed-0-shipped) + the content-system section.
+>
+> **★ Designer rulings + new gaps folded (the topical sections carry the detail; this is the index):**
+>
+> | Item | Ruling / spec | Where folded | Cite |
+> |---|---|---|---|
+> | **★★ #270 SC-CASE schema + GENERATOR (NEW)** | content record = **`name` + yes/no `question` + `effects:{ifYes:[faction/interest+], ifNo:[…]}`** direction-keyed payload (+only in practice; penalize-loser OPEN); procedural **GENERATOR** reuses the #115 human-name DB + a state-name DB → `X v. State`; **~5% Landmark roll** on generated cases (#249; flat-5% vs meter-significance OPEN); **`overturns`/`reinstates` links** + precedent-in-force flag + outcome-gated case CHAINS (#258); govs challenge laws → cases (#132/#218); ★ OPEN: generator own-system vs #52 sub-mechanic | [§22.7.aa](#227aa--270-new-batch-41--the-sc-case-content-schema--the-procedural-case-generator--5-landmark-roll--precedent-overturnreinstate-links-designed-0-shipped) | `964b8857#POST 1, 2, 4, 6, 7, 8, 11, 13, 14, 15, 16, 18`; code `phaseRunners.ts:~3397` |
+> | **★ #271 elected/retention-election judiciary (NEW)** | appointed ↔ **elected** (Gov-Action makes state/local judges + SC Justices elective; no-term-limits = vacancy elections, **8-yr terms = 1/4-of-Court-per-cycle**) ↔ **retention** (lose retention → recall → re-appoint-and-retain or elect); a new ELECTION TYPE; composes with the §14.1.3.h 8-yr-term-limit; design-for-conflict endorsement (POST 4) | [§22.7.bb](#227bb--271-new-batch-41--the-appointed--elected--retention-election-judiciary-selection-modes-designed-0-built) | `a863421c#POST 2, 3, 4, 5`; cross-ref #52/#251/#20 + elections (§15) |
+> | **★★ #52 COURTS-STRUCTURE (ENRICH — authoring source)** | court-SIZE ladder **5/6/7/9/10/13** + **21 (controls Philippines+Brazil+Mexico+Canada) & 31 (max-expansion) EXPANSION-GATED**; court-PACKING bill + per-Pres **6-extra cap**; tenure: **40/50 min-age, 70/75 retire-age, 8-yr term-limit amendment**; **Judicial Review = togglable institution flag** (Establish↔Abolish); lower courts (#66) | [§14.1.3.h](#1413h--221237248--258--526655-batch-41--the-courts--welfare-policy-genre-drops--the-12th-and-last-genre-the-content-sweep-is-complete-designed-0-shipped) | `a863421c#POST 1`; code `phaseRunners.ts:~3397` |
+> | **★★ #258 ENRICH (2 new predicate KINDS)** | NEW KINDS: **institution-flag** (Judicial-Review in-effect/not-active; Court-Packing active; SCOTUS exists/not) + **★ territory-ownership/expansion-extent** (controls-Philippines+… → 21; max-expansion → 31) gating the high justice counts; + Constitutional-Convention-ONLY scope; + **court-precedent-exists** applied to the case docket (overturn/reinstate, outcome-gated chains); + **per-INCUMBENT gate** ("Nixon only" New Federalism) | [§14.1.3.h](#1413h--221237248--258--526655-batch-41--the-courts--welfare-policy-genre-drops--the-12th-and-last-genre-the-content-sweep-is-complete-designed-0-shipped) + [§22.7.aa](#227aa--270-new-batch-41--the-sc-case-content-schema--the-procedural-case-generator--5-landmark-roll--precedent-overturnreinstate-links-designed-0-shipped) | `a863421c#POST 1`; `2cddc161#POST 2`; `964b8857#POST 8, 13` |
+> | **★ #255 ENRICH (2nd settable-cap instance)** | court-SIZE = the SAME settable-integer-cap pattern as variable House size (100/435/500/1000), here with **expansion-gated upper tiers** (21/31) + a per-Pres packing cap | [§14.1.3.h](#1413h--221237248--258--526655-batch-41--the-courts--welfare-policy-genre-drops--the-12th-and-last-genre-the-content-sweep-is-complete-designed-0-shipped) | `a863421c#POST 1` |
+> | **★ #221 ENRICH (Soc-Sec lifecycle + splittable bill)** | the Social-Security **CREATE→EXPAND(child/disabled/unemployed/widows/universal)→raise↔lower-benefit→partial-privatize→trust-in-market→full** lifecycle (richest entitlement-program-state case; benefit-magnitude sub-axis + graded-privatization terminal; twin of the #66 office-lifecycle); the **Judiciary-Act-1789 = splittable multi-provision bill "grouped in committee"** | [§14.1.3.h](#1413h--221237248--258--526655-batch-41--the-courts--welfare-policy-genre-drops--the-12th-and-last-genre-the-content-sweep-is-complete-designed-0-shipped) | `2cddc161#POST 1, 5`; `a863421c#POST 10, 11` |
+> | **★ #248 ENRICH (whole-system sets + granularity Q)** | Welfare whole-system option-sets (federal↔state New-Federalism block-grants; UBI/GMI/Jobs-Guarantee/FAP) + **means-tested-vs-universal granularity OPEN Q** (FAP vs UBI); multi-category tagging (military pensions/HUD/food-stamps/reparations); the Courts/Crimes genre boundary | [§14.1.3.h](#1413h--221237248--258--526655-batch-41--the-courts--welfare-policy-genre-drops--the-12th-and-last-genre-the-content-sweep-is-complete-designed-0-shipped) | `2cddc161#POST 1, 3, 6`; `a863421c#POST 7, 8` |
+> | **★ #237 MILESTONE — Welfare = 12th & LAST genre (content sweep COMPLETE)** | the 12-genre authoring sweep is feature-complete; `L-Ind-Default`="No Supreme Court" baseline (Courts); the per-genre tagging pass + #262/#206 coverage fill remain | [§14.1.3.h](#1413h--221237248--258--526655-batch-41--the-courts--welfare-policy-genre-drops--the-12th-and-last-genre-the-content-sweep-is-complete-designed-0-shipped) | `2cddc161#POST 1`; `a863421c#POST 1` |
+> | **★ #236 ENRICH (gov-form extremes)** | Welfare's two terminal end-states: Abolish-Private-Property (LW/Communist) ↔ abolish-federal-welfare→churches/National-Church (Theocratic) | [§14.1.3.h](#1413h--221237248--258--526655-batch-41--the-courts--welfare-policy-genre-drops--the-12th-and-last-genre-the-content-sweep-is-complete-designed-0-shipped) | `2cddc161#POST 1, 5` |
+> | **★ #66 ENRICH (institution-creations)** | lower-court institutions (Appeals/US-District/Admiralty/Military Courts + Tribunals) + Soc-Sec-Board = office/institution-created-by-law; program-lifecycle = office-lifecycle analogue | [§14.1.3.h](#1413h--221237248--258--526655-batch-41--the-courts--welfare-policy-genre-drops--the-12th-and-last-genre-the-content-sweep-is-complete-designed-0-shipped) | `a863421c#POST 7, 8`; `2cddc161#POST 1` |
+> | **★ #38 ENRICH (relocation DATA + MODES + conflict guard)** | DESIGN ORIGIN: historical-relocation-date DATA (pols start in proper state + carry scheduled move dates); **auto-move-at-historical-date MODE** vs manual default + a **random-alt-state-via-event MODE**; the **auto-move officeholder-CONFLICT guard** (holds-not-held-IRL-office → CANCEL the move, leaning; or resign — OPEN; Romney/MA→UT example); Reconstruction/Carpetbagger driver | [§6.2.y](#62y--38-design-origin-4e518e05-jun-2021--historical-relocation-date-data--the-automanualrandom-relocation-modes--the-auto-move-officeholder-conflict-guard-designed-not-built) | `4e518e05#POST 1, 2, 3, 4, 5, 6`; code `phaseRunners.ts:623`, `types.ts:247` |
+> | **★ #4/#171 DESIGN ORIGIN (default mode)** | the per-(faction, era) **priority-pool-first** draft rule + per-era **FactNumber** table (Red1…5/Blue1…5, symmetric, slot-3 drifting Moderate anchor; Populist slots draft both LW+RW-Pop); **default(5/party, restricted) vs alternate(6/party, unrestricted)** MODE toggle (resolves the per-party-cap Q — build is ALREADY 5/party; alternate-6/party toggle missing); mismatched pols LEAVE IN PLACE | [§4.1.v](#41v--4171-design-origin-8189b724-sep-2021--the-default-mode-ruleset-per-slot-priority-ranges--the-per-era-factnumber-table--5-factionsparty--default-vs-alternate-as-a-setting-designed-not-built) | `8189b724#POST 1, 3, 4, 5`; code `factions1772.ts`/`factions1856.ts` (5/party), `phaseRunners.ts:107` |
+> | **★★ #76 ENRICH (Charismatic-leader poach + ideology-circle seed)** | NEW intra-party poach: leader has **Charismatic** → 10% an allied same-party same-ideology pol joins, **max 1/allied-faction/phase**, can't poach a same-ideology faction, never crosses to the opponent; the **"2-ideologies-away easier to convert" seed NOT confirmed shipped**; LW/RW-Populist-overlap = ideology-circle seed | [§4.1.v](#41v--4171-design-origin-8189b724-sep-2021--the-default-mode-ruleset-per-slot-priority-ranges--the-per-era-factnumber-table--5-factionsparty--default-vs-alternate-as-a-setting-designed-not-built) + [§6.4.x](#64x-forum-design-layer-trait-gated-conversion-targeting-designed-not-built) | `8189b724#POST 3, 4, 5, 7`; code `types.ts:208` (bare trait) |
+> | **★ #263 ENRICH/PRE-DATE (settings toggles)** | `4e518e05` (Jun 2021) + `8189b724` (Sep 2021) PREDATE & SEED #263's relocation toggles (any-pol-relocate + realism on/off + random-alt-state-via-event) and option #5 (factions-by-party vs draft-anyone = default-vs-alternate) | [§6.2.y](#62y--38-design-origin-4e518e05-jun-2021--historical-relocation-date-data--the-automanualrandom-relocation-modes--the-auto-move-officeholder-conflict-guard-designed-not-built) + [§4.1.v](#41v--4171-design-origin-8189b724-sep-2021--the-default-mode-ruleset-per-slot-priority-ranges--the-per-era-factnumber-table--5-factionsparty--default-vs-alternate-as-a-setting-designed-not-built) | `4e518e05#POST 1, 6`; `8189b724#POST 1` |
+> | **Corroborations (no NEW row)** | #249 (Landmark tier — the 5% generator-roll counterpart) + #218 (Rule-of-Four governs gov-brought cases) + #251 (judiciary overhaul sibling) + #115 (name DB new consumer) + #248/#262/#206 (genre/coverage routine); #247/#260/#24 (relocation couplings) | the topical sections | per-thread |
+>
+> **Roadmap takeaway (for the tech-lead + roadmap-planner).** Batch-41 is design/content/origin, ranked:
+> (1) **★★ #270 (SC-case schema + generator)** is the single biggest SCOTUS-content deliverable — it makes the
+> coin-flip court replaceable with a real docket: a `ScotusCase` record (name + yes/no question + direction-keyed
+> faction-effect payload), a generator reusing the #115 name DB + a state-name DB, the 5% Landmark roll (#249), and
+> precedent overturn/reinstate links + outcome-gated chains (#258). **Decide the OPEN calls first** (generator
+> own-system vs #52 sub-mechanic; reward-winner-only vs penalize-loser; flat-5% vs the AMPU-2 meter-significance
+> model). (2) **★ #271 (elected/retention judiciary)** adds a new selection MODE + a new election TYPE; it rides on
+> the elections engine (§15) and composes with the #52 8-yr-term-limit. (3) **★ #52 court-STRUCTURE** (size ladder
+> + expansion-gated 21/31 + packing cap + tenure + Judicial-Review institution) is the structural genre the shipped
+> coin-flip court lacks entirely — pairs with #258's two new predicate KINDS (institution-flag, expansion-extent).
+> (4) **The Welfare/Courts genre drops** extend the 0%-shipped content engine (#221/#237/#248/#258) with the richest
+> entitlement-program lifecycle (Soc-Sec, #221), whole-system option-sets + a per-incumbent gate (#248/#258), and a
+> 2nd settable-cap instance (#255) — and complete the 12-genre sweep (the corpus is now feature-complete; the gap is
+> the engine + the tagging/coverage debt). (5) **The two design-origins** (#38 relocation DATA/modes/conflict-guard;
+> #4/#171 default-mode FactNumber table + the Charismatic-poach #76) are the earliest authoritative sources for
+> already-tracked gaps, plus the per-party-cap resolution (5/party default). Cross-ref `game-context.md` rows
+> **#270/#271 (NEW)** and **#52/#249/#218/#251/#258/#255/#221/#66/#237/#248/#236/#38/#263/#4/#171/#76/#20/#115/#262/#206/#247/#260/#24 (sharpened/corroborated)**.
 
 ### 30.4 Authority hierarchy reminder
 

@@ -12,6 +12,77 @@
 > unchanged: **QW0 → K0/K2 → K3/K4 + `scenarioBoot`/`BootSheet` → `scenario1788`
 > (E1)**).
 
+> **★★★★ Batch-41 version — FIVE threads, NO playtest, NO historian (a CONTENT/DESIGN batch — the FINAL 2 policy
+> genres [completing the ~12-genre sweep] + 1 SC-case content/generator thread + 2 system-design threads):
+> `964b8857`-future-sc-cases [authoring] / `a863421c`-courts / `2cddc161`-welfare / `4e518e05`-historical-relocation /
+> `8189b724`-faction-ideology-default. **TWO NEW debt rows #135-#136; TWO NEW gap rows #270 (SC-case schema+generator) /
+> #271 (elected judiciary), plus (b41) ENRICH folds onto #4/#171/#38/#76/#263/#52/#221/#258.** **NO new keystone, NO
+> re-sequence, TOP-OF-QUEUE UNCHANGED (QW0 → K0/K2 → K3/K4 + scenarioBoot → E1).** **Cheap-fixes-lane delta this batch:
+> NONE — every batch-41 delta is content-engine-track (#258/#221), SCOTUS-track (#270 M-L / #271 M), or a data-layer-
+> plus-modes add (#38 S-M / #4 data + toggle); nothing is an XS independent quick-win, so NO new QW number is assigned
+> (max remains QW31).**
+> **★★ THE MILESTONE (lead with it): the 12-genre content-authoring CORPUS is now design-COMPLETE.** `2cddc161` (Welfare)
+> opens *"this is the last policy section"* — Welfare is the 12th-and-last genre (immigration → education → civil-rights →
+> agriculture → civil-service → diplomacy → healthcare → crimes → military → expansionism → courts → welfare). **This
+> REFRAMES the backlog: the remaining judiciary/welfare/etc. work is NOT new content authoring — it is the 0%-shipped
+> CONTENT ENGINE (#221 registry + #258 predicate field) + per-genre tagging/coverage. So the #221/#258 content-engine
+> build is now the DOMINANT remaining lever — everything authored across all twelve genres is waiting on it.** **This
+> annotation belongs at the TOP of the content-engine track; #258 STAYS the track's FIRST item, WITH/just-ahead of K4.**
+> Courts/Welfare add two NEW predicate KINDS to #258's vocab (debt #120, joins #129/#134): **institution-FLAG**
+> (Judicial-Review in-effect/not-active; Court-Packing active; SCOTUS exists/not) and **territory-ownership /
+> expansion-extent** (US-controls-X; at-MAX-expansion → gate the 21/31 justice counts, tying Courts to the expansion
+> system #268). The FIELD-add is unchanged. game-mechanics §14.1.3.h.
+> **(①) ★ #270 SC-case schema + generator (debt #135) = the BIGGEST SCOTUS deliverable (M-L) — added to the SCOTUS track
+> (with #52/#249/#218/#251; annotates the E25 SCOTUS-docket epic).** Replaces today's coin-flip (`runPhase_2_5_3_Court`
+> `phaseRunners.ts:3397-3415` = `chance(0.5)` → 4 hardcoded strings → headcount ruling → `partyPreference ±0.1`) with a
+> real docket. 0% shipped: NO `ScotusCase` type, NO yes/no `question`, NO `{ifYes,ifNo}` direction-keyed faction/interest
+> effect payload, NO generator, NO Landmark/tier field, NO precedent links — BUT the dead `pendingCourtCases:
+> SupremeCourtCase[]` field already EXISTS (`types.ts:1587`, never written/read) and the #115 name DB it reuses DOES ship
+> (`public/standard-draft-classes.json` via `loadStandardDraftClasses`). **★ Its rolls MUST route through seeded
+> `src/rng.ts` (NOT seeded today, debt #3) — CO-LAND with real seeding.** Build order inside the track: `ScotusCase` type +
+> live docket (finally use the dead `pendingCourtCases`) → yes/no ruling → direction-keyed effect onto the interest/faction
+> layer (#50/#51) → generator (#115 name DB + state-name list → `X v. State`) → 5% Landmark + tier field (#249) →
+> precedent overturn/reinstate links + in-force flag (#258 precedent KIND). Sibling to #271; pairs #52/#249/#218/#251.
+> game-mechanics §22.7.aa.
+> **(②) ★ #271 elected/retention judiciary (debt #136) = M, on the ELECTIONS track, DOWNSTREAM of the elections engine +
+> #251.** 0% shipped — adds a genuinely NEW election TYPE: no elected-judge / vacancy-election / retention-ballot path
+> exists (justices are appointed+confirmed only); `ElectionResult.type` is the closed union `'presidential' | 'senate' |
+> 'house' | 'governor'` (`types.ts:1525`), and a retention ballot is a single-candidate up/down tally distinct from the
+> multi-candidate margin model (`calcStateVote` needs it). It COMPOSES with the 8-yr term-limit amendment (1-of-4-of-Court-
+> per-cycle staggered election) and RIDES #20 (the elected-judge selector is a per-state Gov-Action). Court SIZE is fixed
+> (`supremeCourtIds`, no packing variable) and `OfficeType` is a CLOSED union (lower courts would extend it, #66). Sibling
+> to #270; structural sibling of `judiciaryidea`/#251. game-mechanics §22.7.bb.
+> **(③) ★ #38 relocation (ENRICH) = S-M, a data-layer + modes ADD on top of the SHIPPED Relocate phase (2.1.4).** The
+> Relocate phase ships (`runPhase_2_1_4_Relocations` `phaseRunners.ts:623-679`: seed-altState pass, manual
+> `attemptPlayerRelocation` `:614`, CPU pass, the cap `RELOCATION_ATTEMPTS_PER_TURN`/`RELOCATIONS_CAP`, the Carpetbagger
+> ladder, `altState`/`altStateSeeded` on `Politician`). **NOT shipped — build:** the historical-relocation-date DATA layer
+> on pols, an auto-move-at-date SCHEDULER + its officeholder-CONFLICT guard (the resolver simply skips pols with
+> `currentOffice` `:571` today — cancel-vs-resign-on-conflict is an OPEN human ruling), and the random-alt-state-via-event
+> MODE; the any-pol-relocate + realism toggles are #263. Cross-ref #247/#260 (state lean/pop). Design origin: `4e518e05`
+> (Reconstruction/Carpetbagger driver). game-mechanics §6.2.y.
+> **(④) ★ #4/#171 faction-default (ENRICH) — PARTIALLY BUILT, GENERALIZE (NOT build-from-scratch). ★★ DIGEST CORRECTION
+> (codebase-verified, overrides the `8189b724` "no ideology gate / grep → ZERO" claim, which is WRONG).** A SOFT,
+> scenario-LIMITED per-faction ideology-priority draft restriction ACTUALLY SHIPS: `eligibleIdeologies: Ideology[]` is
+> typed LOCALLY in `factions1772.ts:7` (NOT on the `Faction` interface, `types.ts:1293`), populated for all 10 1772
+> factions, ZERO in `factions1856.ts`; the draft CONSUMES it in `pickBestForFaction` (`phaseRunners.ts:33-53`) ONLY when
+> `scenarioId==='1772' && year===startYear` (the inaugural draft), as a SOFT two-tier preference (`strict = eligible.filter
+> (in eligIdeos); pool = strict.length>0 ? strict : eligible`) + a `+50` score nudge — i.e. EXACTLY #4's "priority pool
+> first, fall back when exhausted" shape, just 1772-inaugural-ONLY. **What #4/#171 still need (so the roadmap entry reads
+> "partially built — generalize"):** lift `eligibleIdeologies` onto the `Faction` interface + populate it per-era (the
+> per-era "FactNumber" draft-profile DATA, incl. 1856/all eras) + apply it on EVERY draft (not just 1772-inaugural) + the
+> era-keyed ON/OFF toggle (#171) + the 6-party-alternate-mode TOGGLE (#263). **Faction COUNT already resolved: 5/party
+> ships** (both scenarios ship exactly 10 factions = 5 per party; no REDCPU/BLUECPU catch-all, no 6-party alternate mode).
+> game-mechanics §4.1.v.
+> **(⑤) ★ #76 charismatic-leader poach = a SMALL conversion SUB-RULE (not built; joins the #76 conversion cluster).**
+> `Charismatic` is a bare trait (`types.ts:208`) with no poach logic. Add: a leader-trait-triggered, 10%, intra-party,
+> same-ideology conversion, capped 1-per-allied-faction, with its immunity list. Cross-ref the #76 conversion cluster
+> (#29/#30 Kingmaker, the conversion handler 9f).
+> **Within-batch order: MILESTONE annotation (top of content-engine track; #258 stays FIRST, with/just-ahead of K4) →
+> #270 (M-L, SCOTUS track, CO-LAND seeded `rng.ts`/debt #3) → #271 (M, elections track, downstream of the elections
+> engine + #251) → #38 (S-M, data-layer + modes on the shipped Relocate phase) → #4/#171 (data + toggle, generalize the
+> partially-built `eligibleIdeologies`) → #76 (small conversion sub-rule).** debt #135-#136; technical-guide §9 batch-41
+> lead + §8 debt #135-#136; game-mechanics §14.1.3.h, §22.7.aa, §22.7.bb, §6.2.y, §4.1.v, §30.31.
+>
 > **★★★★ Batch-40 version — THREE threads, NO playtest, NO historian (a CONTENT/DESIGN batch — 1 Crimes genre +
 > 1 War/Treaty design-spec + 1 Expansionism genre): `e456b6b3`-crimes + `a2312dd2`-foreign-affairs/treaty +
 > `4e76e6c3`-expansionism. **FIVE NEW debt rows #130-#134; FIVE NEW gap rows #265-#269; NO new bug (max gap #269, max
