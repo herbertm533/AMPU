@@ -371,6 +371,7 @@
     - [30.33 Rulings folded from batch 43 — the IMPEACHMENT design-spec + the Lars-Ark 1772 playtest + the Flavor-event poll + the Playtester survey (★★ #273 the IMPEACHMENT subsystem [DESIGN-INTENT, vcczar DEFERRED] + #274 skill-gain accessibility + DH-81 war-end-per-battle BUG + DH-82 officer-cap clamp) (`ae435b5f-fourteen-points-on-impeachment` / `06fbb2e5-lars-and-ark` / `b73925a4-flavor-event-poll` / `ddd179cb-questions-for-playtesters`)](#3033-rulings-folded-from-batch-43--the-impeachment-design-spec--the-lars-ark-1772-playtest--the-flavor-event-poll--the-playtester-survey--273-the-impeachment-subsystem-design-intent-vcczar-deferred--274-skill-gain-accessibility--dh-81-war-end-per-battle-bug--dh-82-officer-cap-clamp-ae435b5f-fourteen-points-on-impeachment--06fbb2e5-lars-and-ark--b73925a4-flavor-event-poll--ddd179cb-questions-for-playtesters)
     - [30.34 Rulings folded from batch 44 — Ted's ACTUAL "Change Log of Doom" (the AUTHORITATIVE rules-doc edits, WITH NUMBERS) + the Appointments-2.3 maintenance pass + the Kagan content backlog + the Canada alt-states retrofit (★★ the cabinet 20/10/5% + the full era retirement/death charts + the event→enthusiasm formula + the Pres-implementation 2-step table + 3 USER-CONFIRM reconciliations) (`4747b09f-teds-change-log-of-doom` / `5d225e8a-pol-lounge2` / `f64a522c-...kagans-foreign-policy...` / `250bd843-canada-alt-states` / `e07f0cc1-ampu-related-passion-projects`)](#3034-rulings-folded-from-batch-44--teds-actual-change-log-of-doom-the-authoritative-rules-doc-edits-with-numbers--the-appointments-23-maintenance-pass--the-kagan-content-backlog--the-canada-alt-states-retrofit--the-cabinet-20105--the-full-era-retirementdeath-charts--the-evententhusiasm-formula--the-pres-implementation-2-step-table--3-user-confirm-reconciliations-4747b09f-teds-change-log-of-doom--5d225e8a-pol-lounge2--f64a522c-kagans-foreign-policy--250bd843-canada-alt-states--e07f0cc1-ampu-related-passion-projects)
     - [30.35 Rulings folded from batch 45 — the FIVE playtest highlight-reels / discussion / data threads (★★ the CC/EV cross-batch CORRECTION + #280 alt-state EV-mutation + #281 statehood-eligibility + #247 time-indexed bias + #270/#273 judicial-misconduct charge-roll + #126 botched-major-action resignation + #282-#285 + the #12/#40 BALANCE gaps) (`78e0d55b-alt-states-ev-project` / `5e195107-electoral-trends-1840-playtest-discussion-post` / `0b896cf9-june-2023-ampu-playtest-updates` / `38cedf29-april-2023-playtest-best-moments` / `9acfc425-may-2023-ampu-playtest-updates`)](#3035-rulings-folded-from-batch-45--the-five-playtest-highlight-reels--discussion--data-threads--the-ccev-cross-batch-correction--280-alt-state-ev-mutation--281-statehood-eligibility--247-time-indexed-bias--270273-judicial-misconduct-charge-roll--126-botched-major-action-resignation--282-285--the-1240-balance-gaps-78e0d55b-alt-states-ev-project--5e195107-electoral-trends-1840-playtest-discussion-post--0b896cf9-june-2023-ampu-playtest-updates--38cedf29-april-2023-playtest-best-moments--9acfc425-may-2023-ampu-playtest-updates)
+    - [30.36 Rulings folded from batch 46 — the FIVE gov-action / House-incumbency / Environment / playtest-reel threads (★★ Civil-War PARTIALLY-shipped 4-defection abstraction vs designed territorial DEPTH + #258 the governor-predicate Gov-Action archetype + #286 pres fall/scandal event-rate + #287 the +2 House-incumbency bonus + the contingent-House election + the Environment policy genre) (`a938ac91-gov-actions-scripted-events` / `b7acabd2-house-incumbency` / `9f2ab25f-environment` / `215f0676-july-2023-updates` / `243dc711-september-update`)](#3036-rulings-folded-from-batch-46--the-five-gov-action--house-incumbency--environment--playtest-reel-threads--civil-war-partially-shipped-4-defection-abstraction-vs-designed-territorial-depth--258-the-governor-predicate-gov-action-archetype--286-pres-fallscandal-event-rate--287-the-2-house-incumbency-bonus--the-contingent-house-election--the-environment-policy-genre-a938ac91-gov-actions-scripted-events--b7acabd2-house-incumbency--9f2ab25f-environment--215f0676-july-2023-updates--243dc711-september-update)
     - [30.4 Authority hierarchy reminder](#304-authority-hierarchy-reminder)
 31. [Gilded-Age era systems (designed, not built)](#31-gilded-age-era-systems-designed-not-built)
     - [31.1 (#147) Tariff-as-national-%-rate + the mutually-exclusive MonetaryRegime](#311-147-tariff-as-national-rate--the-mutually-exclusive-monetaryregime-designed)
@@ -20858,6 +20859,187 @@ into the #194 lineage system. Cite `histpres#POST 1, 3, 7, 13, 19, 28, 34, 36, 3
 > OPEN senior-general battle-death drift to verify (`revolutionaryWar.ts:87` death-protects commanders).
 > Cross-ref `game-context.md` rows **#12/#40/#61/#124/#126/#247/#270/#273/#277 (updated)**, **DH-25
 > (updated)**, and **NEW #280-#285 / DH-83**.
+
+### 30.36 Rulings folded from batch 46 — the FIVE gov-action / House-incumbency / Environment / playtest-reel threads (★★ Civil-War PARTIALLY-shipped 4-defection abstraction vs designed territorial DEPTH + #258 the governor-predicate Gov-Action archetype + #286 pres fall/scandal event-rate + #287 the +2 House-incumbency bonus + the contingent-House election + the Environment policy genre) (`a938ac91-gov-actions-scripted-events` / `b7acabd2-house-incumbency` / `9f2ab25f-environment` / `215f0676-july-2023-updates` / `243dc711-september-update`)
+
+> **★★ Batch 46 = a CODE-VERIFIED SHIPPED-vs-DESIGNED batch with one PARTIALLY-shipped headline.**
+> Five mixed sources — TWO design-ruling threads (gov-actions-as-scripted-events; House-incumbency
+> bonus), ONE content-authoring genre drop (Environment), and TWO backer-email **playtest
+> highlight-reels** (July 2023; Sept→Oct 2023). The HEADLINE is the **Civil War / secession subsystem
+> being *partially* shipped** — the engine ships the era-events + a **4-cabinet-seat-defection
+> abstraction**, but the *territorial / institutional* layer (state-by-state cascade, a formed CSA
+> entity, mass migration, representation loss) is **designed-but-unbuilt**. Other strong deltas: the
+> **#258 governor-predicate Gov-Action archetype** (Jim-Crow-on-friendly-governor), the **contingent
+> (House) presidential election** subsystem (absent from code), the **+2 House-incumbency bonus**
+> (#287) and the **House district-abstraction model**, the **presidential fall/scandal/illness
+> event-rate balance gap** (#286), the **legislative-misconduct → expulsion** flow, and the
+> **Environment policy genre** (#221/#237). **Authority:** designer quotes (`vcczar`/`MrPotatoTed` on
+> gov-actions and the district model) + GA/playtester observations, all spot-checked against `src/` by
+> the digests — corroboration / shipped-vs-designed class, **not** new rules-doc text. The sources:
+> - **`a938ac91-ampu-should-some-gov-actions-be-scripted-events`** (topic 1595, 14 posts / 1 chunk;
+>   DESIGN DISCUSSION, opened by `vcczar`, NOT a playthrough) — proposes converting select **Gov
+>   Actions → Scripted Events** (keep BOTH: auto scripted-event backstop + manual Gov-Action
+>   early/override) and gives the **archetype for predicate-gated content** (Jim-Crow-on-installation-
+>   of-a-friendly-governor) + a **CPU Gov-action rework** (trait/ideology/card/experience driven).
+>   **Status: designer-intent, NOT ratified, NOT built.** → folded into the #258 + gov-action rows
+>   below. Cite `a938ac91#POST n`.
+> - **`b7acabd2-discussion-house-incumbency-bonus`** (topic 4467, 20 posts / 1 chunk; DESIGN-RULING
+>   discussion vs the **2.95** rules-text, NOT a playthrough) — defines the **House-district MODEL**
+>   (districts as abstraction) + the **incumbency / redistricting RULING** (incumbents locked to their
+>   won district number; lose-a-seat exception). → folded into [§22.2](#222-faction-enthusiasm--party-preference-election-engine--the-score-economy)/the House-election rows below. Cite `b7acabd2#POST n`.
+> - **`9f2ab25f-ampu-environment`** (topic, 7 posts / 1 chunk; CONTENT-AUTHORING / crowdsourcing,
+>   `vcczar` opens, NOT a playthrough) — the **Environment** policy genre (L≈32 / P=3 / G=3 + ~35
+>   community add-ons), UNTAGGED 3-partition form; corroborates the #221/#237/#248/#258/#262/#206
+>   framework. **0% shipped** (Environment exists in `src/` only as an `Expertise` tag). → folded into
+>   the Environment genre row below. Cite `9f2ab25f#POST n`.
+> - **`215f0676-july-2023-ampu-playtest-updates`** (topic 4507, 25 posts / 1 chunk; cross-era
+>   HIGHLIGHT-REEL, anecdotal) — 1868 / 1948 / 1840 / 1800 runs. HEADLINE = the **presidential
+>   fall/scandal/illness rate balance crisis** (#286). Also: legislative-misconduct → expulsion;
+>   decisive House (+ gubernatorial) incumbency; Speaker-vote faction split; war→territory; scripted
+>   economic crisis; monetary-policy-as-lever; Senate-class decoupling; VP succession. → folded into
+>   the rows below. Cite `215f0676#POST n`.
+> - **`243dc711-september-update-thread-for-update-we-will-receive-in-late-october`** (topic 4561, 30
+>   posts / 1 chunk; cross-era HIGHLIGHT-REEL, anecdotal) — 1856 / 1868 / 1948 / 1840 runs. HEADLINE =
+>   the **first reported full Civil-War secession in a playtest** (1856 run) — the territorial/CSA
+>   layer that exposes the shipped-vs-designed Civil-War split. Also: contingent (House) presidential
+>   election (3 trigger paths); era-gated legislation under-enforcement; presidential
+>   mortality/incapacity; charisma-as-ballot-factor. → folded into the rows below. Cite `243dc711#POST n`.
+>
+> **The HEADLINE findings (lead with these):**
+> 1. **★★ Civil War / secession is PARTIALLY shipped — abstraction ships, territorial DEPTH does not
+>    (`243dc711` POST 3, 27; cross-ref `historical-context.md` ~874-884).** **SHIPPED:**
+>    `eraEvents1856.ts` ships **"John Brown's Raid on Harpers Ferry"** (~84-85), **"Southern Secession
+>    Threat"** (`templateId:'southern-secession-threat'`, ~107-123), and **"Secession Winter"**
+>    (`templateId:'secession-winter'`, ~129-166). `phaseRunners.ts` models secession as
+>    `runSecessionWinterDefections` (:3028) iterating the **four cabinet seats** {Treasury, War,
+>    Interior, State}, applying a region×ideology **loyalty decay**, and **defecting** any secretary
+>    whose post-decay loyalty < threshold (seat→null, `currentOffice`→null, **'Traitor' trait**,
+>    `secessionDefectionCount` stored); `secessionWinterBand` (:3001) turns N + response into a
+>    **0.3–2.0 meter multiplier**; and **civil war is FORCED when N ≥ 2** defections
+>    (`if (N >= 2 && !out.startWar) out.startWar = {name:'American Civil War', against:'Confederate States'}`,
+>    :2980). **DESIGNED-BUT-UNBUILT (the territorial/institutional layer):** (a) a **state-by-state
+>    secession cascade in two waves** — Deep South first (LA→SC/AL/FL/MS→GA), then Upper South/SW
+>    (TX→AR/TN/VA/NC); (b) **border-state secession conventions that vote to STAY** (MO + KY held
+>    conventions but remained "...for now"); (c) **the CSA as a formed entity** (Milledgeville
+>    convention; **CSA constitution = single SIX-YEAR presidential term + line-item veto**; CSA
+>    President / VP / Commanding-General — Johnson/Roberts/Lee this run, Seward-era/Quitman in another,
+>    so the CSA cast/year/officers are **run-specific narration**); (d) **mass politician migration
+>    ~360 (260 Blue / 100 Red)** vs only the **4 secretaries** that can defect today; (e) **seceded
+>    states lose ALL Congressional representation** (no seat-stripping in code). **Net: the shipped
+>    subsystem is a cabinet-loyalty + meter-modulation abstraction that ends in a `startWar` flag; the
+>    forum's lived Civil War is a territorial/institutional event.** Folded into [§23](#23-civil-war--reconstruction-1856-arc-designed-not-built) (cross-ref [§10](#10-events-24x) Secession-Winter).
+> 2. **★★ Contingent (House) presidential election — ABSENT from code, well-exercised in play
+>    (`243dc711` POST 18-19).** `grep contingent|faithless` in `src/` → **nothing.** Designed = a
+>    contingent-election subsystem with **three distinct trigger paths**: (a) a **3rd party keeps
+>    everyone under 50%** of the EC; (b) **faithless electors drop an otherwise-winner under 50%**;
+>    (c) a **true EC tie** (faithless electors present, but the tie existed **pre-defection**) — plus a
+>    **House-decides resolution**. The 1840 run had its **6th** contingent election (3 in-playtest,
+>    each a different cause). **The elector LAYER already surfaces in output** (POST 19: a 1860 ticket
+>    "just over 50%" vs a 3rd-party Everett/Julian ticket with **"5 faithless electors"** tallied), so
+>    3rd-party EC fragmentation + faithless-elector counts are modeled even when no contingent
+>    election results — but the **contingent FALLBACK / House-decides resolver does not exist.**
+>    (Cross-ref [§24.2](#242-62-contingent-house-election--tied-chamber-inverse-control), where `drums` recorded the rules doc has no contingent rules — the GM invented 5
+>    rulesets mid-thread.) Folded into [§24.2](#242-62-contingent-house-election--tied-chamber-inverse-control).
+> 3. **★ #287 +2 House-incumbency bonus + the House DISTRICT-ABSTRACTION model — UNBUILT
+>    (`b7acabd2` POST 1, 6, 8, 11, 16-18; corroborated `215f0676` POST 9-11).** Designed model:
+>    districts are an **ABSTRACTION**, not literal seats — a state has N total Reps but only a handful
+>    are **named** (worked example: "PA has 30 Reps, **7** are named"; "PA-1" = one of the 7 most
+>    important PA Reps). Named seats carry **their own party lean distinct from the state's** (the
+>    **"Kevin McCarthy" red-district-in-a-blue-state** case; "largest states get a seat or two with a
+>    strong minority-party lean"). **Incumbency = +2** in a House race — **decisive: it beats a typical
+>    ±1 district lean** (live proof `215f0676` POST 9-11: Speaker Blaine held **deep-red Maine by 1
+>    point**, "without incumbency the Dems flip it"). Rule A — incumbents are **"assigned" to their won
+>    district NUMBER and must re-run there** (no district-hopping = anti-gaming; move only AFTER
+>    losing). Rule B (lose-a-seat exception, census/EV drop) — for **that one election only**: waive
+>    primary + **ideology** rules so two same-ideology incumbents can fight ("a mod can run against a
+>    mod"), **remove the highest district number** (largest n, as IRL reapportionment), AI tiebreak
+>    **seniority → random**. **Caveat: Rule B "isn't in 2.95," "went in for the CPU logic" only, and
+>    still needs writing into the official rules** (possibly CPU-only). Literal districts are
+>    **deferred to "AMPU 3"** (needs 10,000+ obscure Reps). **⚠ SHIPPED reality: `calcStateVote(...
+>    'house')` has NO incumbency term at all** (see the ⚠ caveat below). Folded into the House-election
+>    rows below + [§22.2](#222-faction-enthusiasm--party-preference-election-engine--the-score-economy).
+> 4. **★ #286 presidential fall / scandal / illness event-rate is a BALANCE crisis (`215f0676` POST
+>    18-25; `243dc711` POST 10-14, 17, 22).** Playtesters report presidents **almost never finish
+>    terms intact** in **1948** ("three straight Presidents resign in their second terms"; "guaranteed
+>    a nasty fall and if you survive that a major scandal will take you down") and **1868** ("not 1
+>    president do a full 1 or 2 terms without falling"). Even a **Teflon**-trait JFK took **two
+>    scandals + an illness** (POST 25: "Teflon my ass"). **★ Likely era / RNG-scaled, NOT universal:**
+>    counter-evidence — the **1840** run had **Polk 2 terms, Cobb 2 terms, Granger 3 terms**, and the
+>    **1800** run had **Jefferson a 3rd term (1808, unanimous EC)**. Possible **human-vs-CPU
+>    asymmetry** (POST 19: "Human players are just a losing proposition" — the survivors are CPU
+>    presidents). This is an **EVENT-RATE tuning gap distinct from the natural-death/retirement charts**
+>    (the b44 #130 tables), about the *fall/scandal/illness compounding* in the *post-1856* event
+>    pools. Folded into [§10](#10-events-24x).
+> 5. **★ Legislative (Speaker / member) misconduct → expulsion — sibling of #270/#273 (`215f0676`
+>    POST 14).** Speaker **James G. Blaine** faced a hearing → committee **convicted on Contempt of
+>    Congress, Bribery, and Public Indecency** → **removed from the Speakership but KEPT his seat** —
+>    a distinct **graduated-penalty tier** (lose the leadership office, keep the chamber) from full
+>    expulsion or a justice's resignation. The legislative analogue of the judicial-misconduct
+>    charge-roll (#270) and the impeachment cluster (#273); the trial half is as un-codified here as in
+>    #273. Folded into [§8](#8-leadership-selection-22x) (cross-ref [§30.35](#3035-rulings-folded-from-batch-45--the-five-playtest-highlight-reels--discussion--data-threads--the-ccev-cross-batch-correction--280-alt-state-ev-mutation--281-statehood-eligibility--247-time-indexed-bias--270273-judicial-misconduct-charge-roll--126-botched-major-action-resignation--282-285--the-1240-balance-gaps-78e0d55b-alt-states-ev-project--5e195107-electoral-trends-1840-playtest-discussion-post--0b896cf9-june-2023-ampu-playtest-updates--38cedf29-april-2023-playtest-best-moments--9acfc425-may-2023-ampu-playtest-updates) #270/#273).
+> 6. **★ #258 governor-predicate Gov-Action archetype — the canonical pattern (`a938ac91` POST 4).**
+>    The Jim-Crow-on-installation-of-a-friendly-governor event: `{state}.gov.ideology ∈ {Trad, RW-Pop}
+>    → do Jim Crow`, evaluated **PER STATE, not a global tick**. This is the canonical #258 hard-gate,
+>    and it requires a **NEW governor-identity/ideology/trait `Predicate` clause** — the shipped
+>    `Predicate` union has **no governor clause** (see below). Dual-track: auto scripted-event backstop
+>    + manual Gov-Action early/override (authored **case-by-case per action**, not a blanket switch).
+>    Optional `'governor'` sign/veto decider (veto penalty). Folded into the gov-action + #258 rows below.
+>
+> **★ Designer rulings + gaps folded (the topical sections carry the detail; this is the index):**
+>
+> | Item | Ruling / spec (★ = shipped-vs-designed pin) | Authority | Where folded | Cite |
+> |---|---|---|---|---|
+> | **★★ Civil War — SHIPPED 4-defection abstraction** | `eraEvents1856.ts` John-Brown's-Raid + Southern-Secession-Threat (`southern-secession-threat`) + Secession-Winter (`secession-winter`). `phaseRunners.ts`: `runSecessionWinterDefections` (:3028) = 4 cabinet seats {Treasury/War/Interior/State}, region×ideology loyalty decay, defect if < threshold (→ null seat, 'Traitor' trait, `secessionDefectionCount`); `secessionWinterBand` (:3001) → 0.3–2.0 meter multiplier; **war FORCED at N ≥ 2** (:2980, `startWar('Confederate States')`). `War` entities exist (`types.ts wars:War[]`); 1856 war label = "The Civil War is being fought." (`labels.ts:143`). | **code-verified** | [§23](#23-civil-war--reconstruction-1856-arc-designed-not-built) (cross-ref [§10](#10-events-24x)) | `243dc711#POST 27`; engine `phaseRunners.ts:2980, 3001, 3028`, `eraEvents1856.ts:84-166`, `types.ts:1481` |
+> | **★★ Civil War — DESIGNED territorial/institutional DEPTH (UNBUILT)** | state-by-state secession cascade in TWO waves (Deep South LA/SC/AL/FL/MS/GA → Upper-South/SW TX/AR/TN/VA/NC); **border-state conventions that vote to STAY** (MO/KY); **CSA as a formed entity** (Milledgeville convention; **CSA constitution = single 6-yr presidential term + line-item veto**; CSA Pres/VP/Commanding-General; cast/year run-specific); **mass politician migration ~360 (260 Blue / 100 Red)** vs only 4 secretaries; **seceded states lose ALL Congressional representation**; an **earlier CW trigger via nullification crisis** (pre-1856 balance concern). NONE shipped — secession is modeled only as cabinet defection + meter multiplier + a war boolean. | GM narration (`matthewyoung123`) + `Bushwa777` ruling | [§23](#23-civil-war--reconstruction-1856-arc-designed-not-built) | `243dc711#POST 3, 26, 27`; `historical-context.md` ~840-843, 874-884 |
+> | **★★ Contingent (House) presidential election — DESIGNED, ABSENT from code** | `grep contingent\|faithless` in `src/` → nothing. THREE trigger paths: (a) 3rd party keeps all under 50% EC; (b) faithless electors drop the winner under 50%; (c) true EC tie (pre-defection) → House-decides resolution. The **elector layer DOES surface** (faithless counts + 3rd-party EC splits in output, POST 19 "5 faithless electors") but the contingent fallback/resolver does NOT exist. | GA observation; code-verified absence | [§24.2](#242-62-contingent-house-election--tied-chamber-inverse-control) | `243dc711#POST 18, 19` |
+> | **★ #287 +2 House-incumbency bonus — DESIGNED, UNBUILT** | incumbency = **+2** in a House race, enough to beat a typical ±1 district lean (live: Blaine held deep-red Maine by 1pt — incumbency saved it). ⚠ **SHIPPED `calcStateVote('house')` has NO incumbency term** (`phaseRunners.ts:3685-3723`: `score = 50 + baseLean*5 + partyPref*5 + enthusiasm*2 + pv*0.1 + factionBias + traitBonus + ±4`). The build's `incumbencyAdvantage` (`types.ts:462-479`) is the UNRELATED faction-leader-challenge config (used at `phaseRunners.ts:2070`) — **do NOT conflate.** | designer ruling (`MrPotatoTed`/`vcczar`) + GA proof; code-verified | House-election rows; [§22.2](#222-faction-enthusiasm--party-preference-election-engine--the-score-economy) | `b7acabd2#POST 16, 18`; `215f0676#POST 9-11`; engine `phaseRunners.ts:3685-3723` |
+> | **★ House DISTRICT-ABSTRACTION model — DESIGNED, UNBUILT** | districts = abstraction; state has N Reps, only a handful **named** ("PA 30 total / 7 named"; "PA-1" = one of the 7 most important PA Reps); **per-district party lean distinct from the state** ("Kevin McCarthy" red-district-in-blue-state; largest states get a seat or two of minority lean). Rule A: incumbents **assigned to their won district number, must re-run there** (anti-gaming; move only after losing). Rule B (lose-a-seat / census-EV-drop, that election only): waive primary + **ideology** rules ("mod vs mod"), **remove highest district number**, AI tiebreak **seniority → random** — "isn't in 2.95 / CPU-only / unwritten". Literal districts **deferred to AMPU 3**. ⚠ SHIPPED: flat `State.representativeIds` + single `state.bias`; no district entity, no census/reapportionment (`electoralVotes` fixed for the run); every seat re-contested from scratch each cycle. | designer ruling + GA consensus; code-verified | House-election rows; [§22.2](#222-faction-enthusiasm--party-preference-election-engine--the-score-economy) | `b7acabd2#POST 1, 2-4, 6, 8, 11, 12-17` |
+> | **★ #286 presidential fall/scandal/illness EVENT-RATE balance gap** | presidents almost never finish terms in 1948/1868 ("three straight resigned in 2nd terms"; "guaranteed a nasty fall then a scandal"); even Teflon JFK took 2 scandals + an illness. Likely era/RNG-scaled (1840: Polk/Cobb 2 terms, Granger 3; 1800: Jefferson 3rd term) and possibly human-vs-CPU asymmetric. **Distinct from the b44 #130 natural-death/retirement charts** — this is the *fall/scandal/illness* event-pool rate in post-1856 eras. | GA observation (balance signal) | [§10](#10-events-24x) | `215f0676#POST 18-25`; `243dc711#POST 10-14, 17, 22` |
+> | **★ Legislative-misconduct → expulsion (sibling of #270/#273)** | Speaker Blaine: committee hearing → convicted of **Contempt of Congress, Bribery, Public Indecency** → **removed from the Speakership but kept his seat** (graduated-penalty tier: lose office, keep chamber). Legislative analogue of the judicial-misconduct charge-roll; trial half un-codified (same open Q as #273). | GA observation | [§8](#8-leadership-selection-22x) | `215f0676#POST 14` |
+> | **★ #258 governor-predicate Gov-Action archetype (Jim Crow) — DESIGNED, needs a NEW Predicate clause** | `{state}.gov.ideology ∈ {Trad, RW-Pop} → do Jim Crow`, evaluated **per state, not a global tick**. Dual-track: auto scripted-event backstop + manual Gov-Action early/override (authored case-by-case per action). Optional `'governor'` decider with sign/veto + **veto penalty**. ⚠ SHIPPED `Predicate` union (`types.ts:1487-1504`) has **no governor-ideology/identity/trait clause** (and no diplomatic/trade-relationship clause); `EraEvent.decider` (`types.ts:1473`) = `'president'\|'congress'\|'cabinet'\|'cc-president'\|'auto'` — **no `'governor'`**. The `eraGraph.ts evalPredicate` interpreter is the reuse target (era-events only today). | designer-intent (`vcczar`/`OrangeP47`), NOT ratified | [§30.28](#3028-rulings-folded-from-batch-38--five-content-authoring--design--exploit-fix-threads--258-predicate-gated-content--259-party-transformation--260261262--the-war-declarationexploit-fix-cluster-parties--civilrights--fixes2022-exploits--halfterm--agriculture) (#258) | `a938ac91#POST 1, 3, 4, 5`; engine `types.ts:1473, 1487-1504` |
+> | **★ Era-gated legislation under-enforcement (ties #258)** | Reconstruction laws should be **unavailable once the era advances to Progressive** (GM ruling), but a Senator successfully "reinstated Reconstruction in SC" ~50 yrs late → needs **era-predicate gating on legislation availability**. SHIPPED `Legislation` (`types.ts:1506-1520`) has only a 4-value `committee` field, **no subtype/prereq/era-condition** — so no availability gating exists. | GM ruling (`Bushwa777`) | [§30.28](#3028-rulings-folded-from-batch-38--five-content-authoring--design--exploit-fix-threads--258-predicate-gated-content--259-party-transformation--260261262--the-war-declarationexploit-fix-cluster-parties--civilrights--fixes2022-exploits--halfterm--agriculture) (#258) + legislation | `243dc711#POST 24-26` |
+> | **★ CPU Gov-action rework + industry-boost experience-gate — DESIGNED, UNBUILT** | CPU governors should pick Gov actions weighted by **trait / ideology / lobby-card / experience**, not random; gate **industry boost on the governor's relevant gov-experience** (only an Agriculture-experienced gov boosts Ag/plantation), not mere faction-card possession; a NEW Gov-action that **rolls random expertise** to unlock industry-boost. ⚠ SHIPPED: the industry boost (`phaseRunners.ts:1638`) bumps an industry +1 whenever a **faction** holds the matching lobby card and has a living resident member — **the governor is IGNORED** (matches the "current practice", not the intended experience-gate). No Gov-action system exists at all (`GovernorsPage.tsx` is a read-only roster). | designer-intent (`vcczar`/`MrPotatoTed`), NOT ratified | gov-action rows; [§22](#22-modern-era-systems-designed-not-built) governors | `a938ac91#POST 6, 11-13`; engine `phaseRunners.ts:1638-1656` |
+> | **★ Environment policy genre (#221/#237/#248/#258/#262/#206) — CORROBORATE, 0% shipped** | a NEW un-captured genre: **L≈32 / P=3 / G=3** (POST 1) + ~35 community add-ons; UNTAGGED 3-partition form. **Left-skewed** — designer's explicit ASK is **net-new affirmative right-leaning options "other than repealing these"** (#262). Clean #221 create→loophole→penalty ladder (Clean Air/Water); **Environment↔Regulations overlap** (vcczar's own multi-category flag, #248); option-sets (carbon tax↔cap-trade↔gradual; offshore allow↔ban) + federal↔state axis (#248); Future-era Mars/Moon conservation + AI-vs-climate (#206); law-created institutions EPA/NPS/NFS/SPR (#66); inline predicate gates (Amazon→Brazilian statehood; Canada→Gulf pipeline→Canada-is-US-or-trade-partner — needs a **diplomatic/trade-relationship Predicate class**; NPS→Wilson-era, NFS→Teddy-era; Great-Plains-park→future depopulation) (#258). SHIPPED: "Environment"/"Energy" are only `Expertise` tags (`types.ts:182-192`); no policy-genre store/prereq engine exists. | content-authoring snapshot (`vcczar` + community), UNRATIFIED | [§30.27](#3027-rulings-folded-from-batch-37--the-five-content-authoring--design-threads-253-the-redblue-per-era-benchmark-win-model--254-257--the-immigrationeducation-genre-supply-benchmarkupd--legisprops2028--yearname--immigration--education)/[§30.30](#3030-rulings-folded-from-batch-40--four-policy-genre-drops--one-wartreaty-balance-thread--267-the-treatywar-end-subsystem--266-meter-at-floor-no-deterrent--265-cabinet-officer-agency--268269-territory-machine--the-healthcarecrimesmilitaryexpansionism-content-enrichments-65574aaa-healthcare--e456b6b3-crimes-punishments--a2312dd2-foreign-affairstreaty--145db158-military--4e76e6c3-expansionism) (policy genres) | `9f2ab25f#POST 1-7`; engine `types.ts:182-192, 1506-1520` |
+> | **Speaker vote is faction-resolved (can split a winning party) — corroboration** | Dems won the House majority but an intra-party faction split re-elected the **opposing party's incumbent** Speaker (Blaine). Speakership ≠ automatic to the majority party. | GA observation | [§8](#8-leadership-selection-22x) | `215f0676#POST 13` |
+> | **War→territory acquisition; scripted economic crisis; monetary-policy lever; Senate-class decoupling — corroborations** | US beat the German Confederation for **Samoa** (#277, no war→admit wiring in `src/`); **Panic of 1877** → mood swing + **Senate R→D defections** + House blowout (scripted economic event with teeth); **bimetallism** crashed the 1840 economy a term later (delayed monetary lever; blame lands on the *current* officeholder); a Dem wave still let Whigs *gain* Senate seats via the unfavorable **Class I** map (Senate-class scheduling can decouple from a national wave). | GA observation | [§17.5](#176-territories-territoriests) / [§10](#10-events-24x) / [§22](#22-modern-era-systems-designed-not-built) (cross-ref) | `215f0676#POST 3, 7, 8, 15` |
+> | **Presidential mortality/incapacity + succession — corroboration** | assassination (Buchanan → VP Breckinridge succeeds, `243dc711` POST 17); **fall → forced RESIGNATION** (Washburn) with later re-entry at a lower office + leadership climb (POST 22); modern fall → acting-Pres handoff (JFK→Douglas); random non-illness mortality can strike a sitting **Speaker** (freight wagon, POST 23). **Successor gets little public-approval credit** (`215f0676` POST 15). Both **elected-VP-ticket** and **appointed-VP** paths coexist (`243dc711` POST 9). | GA observation | [§24.1](#241-61-succession--eligibility--the-acting-president-state) / [§10](#10-events-24x) | `243dc711#POST 9, 17, 22, 23`; `215f0676#POST 15, 17` |
+> | **Per-candidate charisma/command as a distinct ballot factor — corroboration** | first election where **both VP noms were more charismatic than the pres noms** (`243dc711` POST 28-29) implies command/charisma is evaluated per-candidate; war outcomes + incumbent fatigue swing presidential results (POST 16); a recession can fire right after a victory (POST 15). | GA observation | [§21.2](#212-per-state-presidential-election-method) (cross-ref) | `243dc711#POST 15, 16, 28-29` |
+>
+> **Roadmap takeaway (for the tech-lead + roadmap-planner).** Batch-46 is **shipped-vs-designed
+> mapping** of long-flagged subsystems, ranked:
+> (1) **★★ The Civil-War split is the load-bearing finding** — the engine SHIPS the secession
+> *abstraction* (4-cabinet-defection + meter multiplier + `startWar` at N≥2, `phaseRunners.ts:2980-3054`)
+> but NOT the *territorial/institutional* layer (state-flip cascade, CSA entity + 6-yr/line-item-veto
+> constitution + CSA officers, ~360-pol migration, representation loss). Treat the territorial layer as
+> a discrete unit of work for [§23](#23-civil-war--reconstruction-1856-arc-designed-not-built); the CSA cast/year is historically GM-narrated (run-specific), so
+> a mechanical implementation is a genuine design decision, not just a port.
+> (2) **★★ Contingent (House) presidential election** — a fully designed-but-unbuilt resolver with
+> THREE triggers (sub-50% via 3rd party, sub-50% via faithless electors, true EC tie) + a House-decides
+> step. The **elector layer already surfaces** (faithless counts, 3rd-party EC splits), so the missing
+> piece is the **fallback/resolver**, not the elector model. The rules doc itself lacks contingent rules
+> ([§24.2](#242-62-contingent-house-election--tied-chamber-inverse-control)) — this needs a designer-ratified ruleset before build.
+> (3) **★ #287 +2 House-incumbency + the district-abstraction model** — `calcStateVote('house')` has NO
+> incumbency term today; adding a **+2 incumbent bonus** (and, longer-term, named seats with per-district
+> lean + the district-lock + lose-a-seat exception) is the designed shape. **Do NOT reuse the unrelated
+> `incumbencyAdvantage` faction-leader config.** Literal districts are explicitly AMPU-3 scope.
+> (4) **★ #286 fall/scandal/illness event-rate** — an EVENT-RATE tuning gap (post-1856 pools too
+> punishing; compounding fall→scandal), **distinct from the b44 #130 natural-death/retirement charts**;
+> likely era/RNG-scaled and possibly human-vs-CPU asymmetric. A balance pass, not new structure.
+> (5) **★ #258 governor-predicate Gov-Action archetype** — needs a **NEW governor-identity/ideology/trait
+> `Predicate` clause** (plus a diplomatic/trade-relationship clause for the Environment Canada-pipeline
+> gate); the `eraGraph.ts evalPredicate` interpreter is the reuse target. Greenfield gov-action system +
+> dual-track (auto scripted-event backstop + manual override) + optional `'governor'` decider. Also: the
+> CPU gov-action rework (trait/ideology/card/experience) and the industry-boost **experience-gate**
+> (today's boost ignores the governor, `phaseRunners.ts:1638`).
+> (6) **★ Legislative-misconduct → expulsion** (graduated penalty: lose Speakership, keep seat) is a
+> sibling of #270/#273; the trial half is un-codified — bundle with the judicial-misconduct / impeachment
+> cluster (impeachment stays **vcczar-DEFERRED**).
+> (7) **★ Environment policy genre** is a further #221/#237 genre instance (still **0% shipped**),
+> left-skewed (needs affirmative right-leaning content, #262), with Environment↔Regulations overlap and
+> Future-era content — feeds the policy-genre + predicate-prereq + diplomatic-relation backlog, not a
+> standalone build. Cross-ref `game-context.md` rows **#258/#221/#237/#248/#262/#66/#206/#270/#273/#277/
+> #34/#58/#157/#191/#250/#62/#20 (updated)** and **NEW #286 (pres fall/scandal event-rate) / #287 (+2
+> House incumbency bonus)**.
 
 ### 30.4 Authority hierarchy reminder
 

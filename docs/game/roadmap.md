@@ -4668,6 +4668,19 @@ scoped; the apportionment half of #160 (3/5-refusal → Southern EV depletion) i
 explicit judgment: it is a pure-DATA balance retune decided jointly with #124 + the ±3 clamp, not an XS one-liner).
 **No re-sequence: QW40/QW41 are the cheap-fixes-lane delta; top-of-queue UNCHANGED (QW0 → K0/K2 → K3/K4 + scenarioBoot →
 E1).** debt #151-#161; technical-guide §9 batch-45 lead + §8 debt #151-#161; game-mechanics §30.35.
+**★ Batch-46 adds ONE new small quick-win (QW42 #287 +2 House incumbency) — the cheap-fixes-lane delta this batch (debt
+#162-#170 cluster; `GM⇒App`).** Only #286/#287 are net-new this batch; the rest are UPDATES to existing gaps/items. **QW42
+#163 (#287 +2 House incumbency, S):** `calcStateVote` (`phaseRunners.ts:3709-3711`) has NO incumbency term — add a `+2`
+(forum value) when the candidate currently holds the seat being contested, gated on `ctx === 'house'`; the House race
+runner must pass/flag the sitting Rep so the term can apply (a const + a flag-through). **★ It is the near-term,
+no-dependency SLICE of the much larger House-district model (#167/E28) — ship it independently.** ⚠ DO-NOT-CONFLATE with
+the faction-leader `LEADERSHIP_RULES.incumbencyAdvantage` (`types.ts:462-479`) — a different mechanism. **★ #162 (#258
+governor-identity/ideology/trait + bilateral trade `Predicate` clause) is the HIGHEST-LEVERAGE item this batch but is M,
+NOT a QW** — it lands in the content-engine track (CE258 keystone-adjacent lane), NOT the cheap-fixes lane (see Sequencing
+notes). **★ #164 (#286 pres fall/scandal/illness event-rate, M) is a DATA-TUNING pass on `ANYTIME_EVENTS_RULES.eraConfig`
+— it lands in the Balance dials lane (with a possible human-vs-CPU asymmetry knob), NOT a QW.** **No re-sequence: QW42 is
+the only new cheap-fixes-lane delta; top-of-queue UNCHANGED (QW0 → K0/K2 → K3/K4 + scenarioBoot → E1).** debt #162-#170;
+technical-guide §9 batch-46 lead + §8 debt #162-#170; game-mechanics §30.36.
 
 | # | Item | Scope | Depends on | Size | Source | Status |
 |---|---|---|---|---|---|---|
@@ -4714,6 +4727,7 @@ E1).** debt #151-#161; technical-guide §9 batch-45 lead + §8 debt #151-#161; g
 | **(war track, NOT a QW)** | **★ batch-43 DH-81 — war WIN-MODEL fix (replace the STALE count-threshold win/loss with the war-score+momentum chart; `GM⇒App`)** *(NEW, batch 43 — code-verified bug, S; rides the war track / cheap-fixes lane if scoped tight; the FIRST step of the M post-launch §21.1.A model — NOT given a QW number)* | **S — swap the count-threshold WIN/LOSS conditions at `revolutionaryWar.ts:254-264` (the 7-wins / 16-losses model, `:16-18`) for the war-score+momentum chart + DELETE the stale count columns.** **★ CORRECTED FRAMING (override the digest's "fires-per-battle / instant game-over" cadence claim): the SHIPPED cadence is ALREADY per-term** — `runRevWarBattles` (`revolutionaryWar.ts:175`) runs ONCE per Military Phase 2.7 (`phaseRunners.ts:3593-3596`), the win/loss check is evaluated ONCE AFTER the battle loop (not inside it), the per-battle do-while (`:211-236`, `d100()<=66`) only increments tallies, and `revolutionaryWar.ts` never sets `gameEnded`/`triggersGameEnd` (grep=0); the `06fbb2e5#POST 75` "failed after Trenton" was the MANUAL Google-Sheets sim (VOIDED live). **So this is a win-MODEL fix (S), NOT a cadence rewrite** — the ~66% "another battle?" continuation at `:236` is a tuning delta. **★ The full §21.1.A war-score model (asymmetric battle points + the `|raw-score|×10%-per-phase` roll) is the larger (M) POST-LAUNCH piece DH-81 is the first step of — it folds into the generic-`War` engine (E3) alongside #45 (debt #105); see the war epic.** **★ Determinism: `revolutionaryWar.ts:89,97` use `Math.random` (casualty-victim selection), a SECOND leak distinct from debt #1 — route through seeded `src/rng.ts` (debt #3/K0) before any DH-81 work needing reproducibility.** **★ Must KEEP the 1772 RevWar floor playable** (#155: Navy ~0 wins, momentum −7/−9 in the `06fbb2e5` run — brutally, repeatedly losable by design). RevWar-scoped; no keystone dependency (the seeded-RNG co-land is a determinism note, not a build gate). **Code-verified bug (`revolutionaryWar.ts:254-264` stale 7/16 count-threshold vs the designer's war-score+momentum chart, §21.1.A).** | — (seeded `src/rng.ts` / debt #3 co-lands for reproducibility) | S (the slice) / M (full §21.1.A model, post-launch) | bug **DH-81** (codebase `revolutionaryWar.ts:254-264` + `:16-18` stale count-threshold; `06fbb2e5#POST 73-75` MANUAL-sim framing CORRECTED; `rethinkwar`/#45 §21.1.A model) — NEW (debt #141) | ready (the S win-model slice) |
 | **QW40** | **★ batch-45 #157 — convention KEYNOTE-SPEAKER payoff (command +1 + +1 next primary) + sitting-justice eligibility as a COSTLY action; `GM⇒App`** *(NEW, batch 45 — 0% shipped under those names)* | **S — build the keynote payoff + a costly sitting-justice gate.** grep of `src/` for `keynote`/`nextPrimary`/`primaryBonus` returns NOTHING — the convention Keynote Speaker payoff (**command +1 AND +1 to the next presidential primary**, `38cedf29` POST 3; corroborated `0b896cf9` POST 24, "+1 in the next national election cycle") is unbuilt under those names. Add the grant on the convention path (the `command` stat + `addCommandPoint`/`loseCommand` `abilities.ts:32-37` already ship). **★ FEEDS #153's ×2-Command-gain rule (QW18)** — one more `gainCommand(p, basePct)` call the multiplier applies to — and pairs **QW29** (the other keynote-grant strand). PLUS the designer rule-idea (Ted, `38cedf29` POST 4-6): bar sitting SCOTUS justices from keynoting, **ideally as a POLITICALLY COSTLY action** (triggers impeachment/recusal pressure) rather than a silent hard block. **★ The hard-block-vs-costly call is a one-line tuning the helper isolates** (treat as OPEN); the payoff itself is buildable now. No keystone dependency. **RULED/designed (`38cedf29` POST 3-7; `0b896cf9` POST 24).** | — (rides the convention; pairs QW18/QW29; sitting-justice-cost couples #273) | S | gap **#157 / #282 / `38cedf29` POST 3-7; `0b896cf9` POST 24** (grep-verified no keynote/nextPrimary/primaryBonus in `src/`; `addCommandPoint`/`loseCommand` `abilities.ts:32-37`) — NEW (debt cluster #151-#161) | ready |
 | **QW41** | **★ batch-45 #160-slice — CC-ratification PER-DELEGATE ~25% PERSUADE roll (replace the governor `chance(0.5)` bias-proxy; `GM⇒App`)** *(NEW, batch 45 — code-verified; the persuade HALF of #160; the apportionment half is a Phase-1 row)* | **S — replace the governor BIAS-PROXY with a per-delegate/per-governor persuade roll.** Today CC ratification is decided by `govApproves = gov.partyId === 'RED' || chance(0.5)` (`constitutionalConvention.ts:189`), `ratified = approve >= 9` (`:192`) — a coin-flip-by-party proxy, NOT the forum's per-delegate roll. Swap `:189` for a **per-delegate/per-governor ~25% persuade roll** (the "random Georgia delegate succeeded on a 25% chance to convince his Governor to sign" clutch, `38cedf29` POST 26; `9acfc425` POST 3 corroborates the persuade flow), **KEEPING the ≥9-governor ratify threshold at `:192` (already correct).** Pure-engine, RevWar/founding-boot scoped. **★ DISTINCT from the apportionment half of #160** (3/5-refusal → Southern EV/Rep depletion, which TOUCHES `constitutionalConvention.ts:210` EV-set and rides the schema/founding row in Phase-1). No dependency; ship in the cheap-fixes lane. **Code-verified (`constitutionalConvention.ts:189` bias-proxy vs `:192` correct threshold).** | — (the apportionment half rides the Phase-1 CC-apportionment row) | S | gap **#285 / `38cedf29` POST 26; `9acfc425` POST 3** (codebase `constitutionalConvention.ts:189` `chance(0.5)` proxy; `:192` ≥9 ✔) — NEW (debt cluster #151-#161) | ready |
+| **QW42** | **★ batch-46 #287 — +2 HOUSE-INCUMBENCY bonus at `calcStateVote` (the near-term, no-dependency SLICE of the full House-district model; `GM⇒App`)** *(NEW, batch 46 — code-verified gap, 0% built; the cheap-fixes-lane delta this batch)* | **S — add an incumbency term to `calcStateVote` gated on `ctx === 'house'`.** Today the score `phaseRunners.ts:3709-3711` (`50 + baseLean*5 + partyPref*5 + enthusiasm*2 + pv*0.1 + factionBias + traitBonus + jitter`) has **NO incumbency term**. Add **`+2`** (forum value) when the candidate currently holds the seat being contested. **★ The caller does the work:** `calcStateVote('house')` just scores a candidate field — the House race runner must PASS/FLAG which candidate is the sitting Rep for that seat so the term applies (a const + a flag-through). **★ DO-NOT-CONFLATE with the faction-leader `LEADERSHIP_RULES.incumbencyAdvantage` (`types.ts:462-479`)** — a different mechanism. **★ It is the near-term slice of the much larger House-district model (#167/E28) — ship it independently of the full per-district model.** No decision gate; no dependency; ship in the cheap-fixes lane. **Code-verified gap (`calcStateVote` `:3709-3711` has no incumbency term; `ctx:'house'` is the only house-vs-pres discriminator).** | — (the full per-district model is #167/E28; this is its no-dep slice) | S | gap **#287 / `30.36`** (codebase `calcStateVote` `phaseRunners.ts:3709-3711` no incumbency term; ⚠ NOT `LEADERSHIP_RULES.incumbencyAdvantage` `types.ts:462-479`) — NEW (debt #163) | ready |
 
 ---
 
@@ -7701,8 +7715,67 @@ Why the order is what it is — the tech-lead's binding calls (§9 batch-43 lead
 §9.1.10 gilded-era content epic + §9 batch-13 lead +
 §6.6.1 batch-13 + §9.6 batch-13 + §9.1.3 methodology + §9 batch-12 lead +
 §9.6 batch-12 + §9 batch-11 lead + §9 batch-10 lead + §9.1.9 + §9 batch-9 lead +
+§9 batch-46 lead + §8 debt #162-#170 +
 §9 batch-45 lead + §8 debt #151-#161 +
-§9.1.5 + §9.1.8 + §9.1.3 + §9.6 + §9.1.6 + §9.1.7). **★★ Batch 45 (`78e0d55b` Alt-States-EV-Project + `38cedf29`
+§9.1.5 + §9.1.8 + §9.1.3 + §9.6 + §9.1.6 + §9.1.7).
+**★★ Batch 46 (5-digest batch; §30.36; the tech-lead code-verified each pinned claim against `src/` HEAD 2026-06-28; NINE
+new debt rows #162-#170; TWO net-new gaps #286 (pres fall/scandal/illness event-rate) + #287 (+2 House incumbency), the
+rest UPDATES to existing gaps #258/#221/#237/#262/#270/#273/#277/#34/#58/#157/#191/#250/#62/#20/#284) is a
+DESIGN/CONTENT/BALANCE batch whose binding sequencing call is a SET OF LANE-PLACEMENTS — ONE buildable-now keystone-leverage
+item + ONE near-term QW + ONE balance pass + large era/schema/greenfield rows folded onto existing epics + ONE content-gated
+genre — NOT a re-sequence and NO new keystone. The tech-lead's calls, bound (technical-guide §9 batch-46 lead + §8 debt
+#162-#170):**
+**(a) ★ TOP-OF-QUEUE UNCHANGED — QW0 → K0/K2 → K3/K4 + scenarioBoot → E1.** No new keystone, no re-sequence; every batch-46
+delta slots into an EXISTING lane.
+**(b) ★★ HIGHEST-LEVERAGE, BUILDABLE NOW (content-engine-adjacent, NOT a QW): #162 (#258 governor-identity/ideology/trait
+Predicate clause + a bilateral trade/relationship clause).** A CONTAINED extension of the SHIPPED `Predicate` union
+(`types.ts:1487-1504`) + `evalPredicate` (`eraGraph.ts:12-47`) — **no schema, no migration, no RNG, no decision gate** (the
+clause SHAPES are an authoring call; the mechanism is additive). It is **M (not a QW)**, runs **in parallel with K0**, and
+is the single primitive that UNBLOCKS BOTH (i) the Jim-Crow-style scripted **Gov-Action archetype (#169/E11)** AND (ii)
+**era-gated legislation (#284 — the "Reconstruction law becomes illegal after Progressive" gate)**. **Placed at the TOP of
+the content-engine track (CE258 keystone-adjacent lane), with/just-ahead of K4 — the keystone-leverage move even though it
+is not itself a keystone.**
+**(c) ★ NEAR-TERM QW: #163 (#287 +2 House incumbency, S) → QW42.** An incumbency term in `calcStateVote` gated on
+`ctx==='house'`, flagged through from the house runner; ship INDEPENDENT of the full House-district model (#167). ⚠ NOT the
+faction-leader `incumbencyAdvantage`. **(b46 ended the prior batch at QW41 → this continues QW42.)**
+**(d) BALANCE / DATA-TUNING lane: #164 (#286 pres fall/scandal/illness event-rate, M).** A tuning pass on
+`ANYTIME_EVENTS_RULES.eraConfig` (`types.ts:1073-1095`); the rate knobs exist, the NEW dimension is a possible
+human-vs-CPU ASYMMETRY (no such knob today → a new field + a player-faction gate at the fire site). **Tune in concert with
+#130 (the `MORTALITY_RULES` natural-death tables) so "Presidents die" isn't double-counted; sequence AFTER K0 if the rates
+feed any reproducibility target. Placed in the Balance dials lane (NOT a QW).**
+**(e) LARGE ERA / SCHEMA / GREENFIELD (post-foundation; several behind b45 #153 `State.population`) — folded onto EXISTING
+epics, NOT new rows:** **#165 Civil-War designed DEPTH (L, era-scoped)** — two-wave state cascade (6 Deep-South wave-1 +
+TX/AR/TN/VA/NC wave-2), MO/KY stay-conventions, a CSA entity with a single-6yr-term/line-item-veto constitution variant +
+officers, ~360-pol migration (~260 Blue/100 Red vs 4 secretaries today), seceded states LOSE all Congressional
+representation; builds ON the shipped 4-defection abstraction (extend, don't replace) → **annotates E3b** (pairs #284
+Reconstruction, b45 #159; after K0 for the deterministic cascade/migration). **#167 House DISTRICT model (L, partly
+"AMPU 3")** — named/numbered seats + per-district lean (#191) + district-lock + lose-a-seat redistricting; its
+redistricting half DEPENDS on #168, and the b45 #250 per-seat/free-for-all/multi-member fork gates the full model →
+**annotates E28** (EXTRACT QW42's +2 slice for the near term; defer the rest). **#168 census/EV REAPPORTIONMENT (M-L,
+schema)** — re-allocates per-state `electoralVotes`/House seats off a population model; **depends on b45 #153
+(`State.population`)**; precondition for #167's lose-a-seat redistricting; adjacent to b45 #152 (census-sheet hard-blocked)
+→ **the apportionment/census cluster (#34/#55/#219)**. **#169 GOV-ACTION system (L, greenfield)** — CPU governor-action
+selection by trait/ideology/held-card/experience + an experience-gated industry boost + a roll-random-expertise action +
+a `GovernorsPage` write surface; **pairs with #162** (the governor-Predicate clause lets a scripted event TARGET a
+governor; the gov-action system is what a governor DOES — the Jim-Crow archetype wants both); rolls route through seeded
+`src/rng.ts` (debt #3) → **annotates E11/#20** (after K0 and after #162).
+**(f) CONTINGENT-HOUSE RESOLVER: #166 (#62, M)** — the elector layer needs 3rd-party + faithless EC OUTPUT (which do NOT
+exist yet — today the resolver is a strict 2-candidate blue/red EV tally, `phaseRunners.ts:3755-3814`), THEN the
+House-decides state-delegation fallback + the 3 trigger paths (no-majority-via-3rd-party / no-majority-via-faithless / true
+EC tie). The narrated "5 faithless electors" is SIM-color, NOT shipped — the 3rd-party/faithless modeling is part of THIS
+build. Sequence AFTER K0 (faithless/tie rolls deterministic) → **annotates E10b** (already the #62 contingent-House home).
+**(g) CONTENT-GATED (downstream of the content engine): #170 Environment policy GENRE (L, CONTENT not engine).** An
+Environment genre (conservation/pollution/land) authored ATOP the (unbuilt) #221 content-primitive registry + #237
+stateful-genre treatment + #248 subtype taxonomy (the K4 era-content registry); needs affirmative right-leaning fill so the
+genre is not one-sided. **Authoring work AFTER the content engine — do not start before the primitives exist** → the
+content-engine/genre lane (#221/#237/#248).
+**Within-batch order: #162 (#258 governor/trade Predicate clause — top of the content-engine track, parallel to K0, the
+keystone-leverage move) → QW42/#163 (+2 House incumbency, cheap-fixes lane, now) → #164/#286 event-rate (Balance dials,
+with #130, after K0 if reproducibility-bound) → #168 reapportionment (after b45 #153 `population`) → #167 House-district
+model (after #168; the b45 #250 fork gates it) → #165 Civil-War depth (E3b, after K0, with #284) → #169 gov-action (E11,
+after K0 + #162) → #166 contingent-House resolver (E10b, after K0) → #170 Environment genre (content-gated on the K4
+#221/#248 registry).** debt #162-#170; game-mechanics §30.36.
+**★★ Batch 45 (`78e0d55b` Alt-States-EV-Project + `38cedf29`
 April-2023 + `0b896cf9` June-2023 1868-run + `9acfc425` May-2023 + `5e195107` 1840-run, the 5 digests) is a
 WORLDBUILDING/DESIGN/PLAYTEST batch whose binding sequencing call is a SET OF LANE-PLACEMENTS — ONE buildable-now balance
 item + a deliberate SCHEMA-MIGRATION pair + era-scoped rows + a hard-blocked park + decision-gated coupling — NOT a
