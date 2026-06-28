@@ -12,6 +12,83 @@
 > unchanged: **QW0 → K0/K2 → K3/K4 + `scenarioBoot`/`BootSheet` → `scenario1788`
 > (E1)**).
 
+> **★★★★ Batch-43 version — FOUR threads (1 GENUINE 1772 era-PLAYTEST [`06fbb2e5`-lars-and-ark, the first real
+> era-run in many batches] + 1 impeachment DESIGN-SPEC [`ae435b5f`] + 1 flavor-event POLL [`b73925a4`] + 1 playtester
+> SURVEY [`ddd179cb`]; a 5th upload was a byte-identical DUPLICATE): TWO NEW gap rows #273 (impeachment) / #274
+> (skill-gain accessibility); TWO NEW bugs DH-81 (war win-MODEL) / DH-82 (officer clamp); FIVE NEW debt rows #141-#145
+> (#141=DH-81 / #142=DH-82 / #143=#273 / #144=#274 / #145=flavor); plus (b43) folds onto #155/#176/#114/#262/#175/#132
+> /#107/#267/#23/#20/#251/#183/#45.** **NO new keystone, NO re-sequence, TOP-OF-QUEUE UNCHANGED (QW0 → K0/K2 → K3/K4 +
+> scenarioBoot → E1).** **Cheap-fixes-lane delta this batch: ONE new XS quick-win — DH-82 the doubled-officer Planning
+> clamp = QW32; PLUS DH-81's count-threshold-removal slice (S) joins the war track / cheap-fixes lane (scoped tight,
+> NOT given a QW number — it is the S first-step of a war-model item, not an XS one-liner).**
+> **★★ THE WAR FINDING — LEAD WITH IT, and CORRECT the digest framing (codebase-verified `src/` HEAD 2026-06-28).**
+> **DH-81 is NOT a "fires-per-battle / instant game-over" cadence bug** — that was the MANUAL Google-Sheets sim
+> (`06fbb2e5#POST 75` "United States has failed… after Trenton," VOIDED live). The SHIPPED engine already resolves
+> war-end **once per term**: `runRevWarBattles` (`revolutionaryWar.ts:175`) runs ONCE per Military Phase 2.7
+> (`phaseRunners.ts:3593-3596`); the win/loss check (`revolutionaryWar.ts:254-264`) is evaluated ONCE after the battle
+> loop (NOT inside it); the per-battle do-while (`:211-236`, `d100()<=66` continuation) only increments tallies; and
+> `revolutionaryWar.ts` never sets `gameEnded`/`triggersGameEnd` (grep=0). **The REAL shipped bug is the STALE
+> count-threshold win-path** (7 wins / 16 losses, `:16-18,254-264`) — the per-battle-COUNT model Ted says was REPLACED
+> by the war-score+momentum chart (game-mechanics §21.1.A). **Record DH-81 with this accurate framing (win-MODEL fix,
+> S), not the per-battle-cadence framing.**
+> **(①) ★★ DH-81 WAR WIN-MODEL (debt #141) = S, war track / cheap-fixes lane (scoped tight) — the FIRST STEP of a
+> larger (M) POST-LAUNCH §21.1.A war-score model.** Fix = swap the count-threshold WIN/LOSS conditions
+> (`revolutionaryWar.ts:254-264`) for the war-score+momentum chart + DELETE the stale 7/16 count columns (the per-term
+> cadence is already correct; the ~66% "another battle?" continuation at `:236` is a tuning delta, not a rewrite). The
+> full §21.1.A war-score model (asymmetric battle points + the `|raw-score|×10%-per-phase` roll) is the larger (M)
+> post-launch piece DH-81 is the first step of — it folds into the generic-`War` engine (E3) alongside #45 (debt #105).
+> **★ Determinism: `revolutionaryWar.ts:89,97` use `Math.random` (casualty-victim selection) — a SECOND determinism
+> leak distinct from debt #1's `calcStateVote`; route both through seeded `src/rng.ts` (debt #3/K0) BEFORE any DH-81
+> war-model work needing reproducibility.** game-mechanics §21.1.A.
+> **(②) ★ DH-82 OFFICER CLAMP (debt #142) = XS cheap-fixes QUICK-WIN → QW32.** No-SecWar "Planning" =
+> `general.skills.military * 2` (`revolutionaryWar.ts:212`) feeds the d100 target UNCLAMPED → reads 6 with a 3-Mil
+> officer (`06fbb2e5#POST 73-74`); the naval sum at `:187` is similarly unclamped. The PERSISTED 0–5 skills ARE clamped
+> (`abilities.ts:6-30`) — so this is a derived combat coefficient over-buffing the no-cabinet case, NOT a corrupted
+> stat. Fix = wrap in `Math.min(5,…)` (+ a one-line design call: does the no-SecWar fallback INTEND to exceed 5?). No
+> dependency; cheap-fixes lane. game-mechanics §21.1.A.
+> **(③) ★★ #273 IMPEACHMENT (debt #143) = a LARGE, DECISION-GATED subsystem — vcczar must RATIFY first (he DEFERRED);
+> NOT near-term (L, post-keystone + decision-gated).** `impeach` (case-insensitive) = 0 occurrences in `src/`: no
+> proposal-to-impeach, no Judicial-Committee article step, no House/Senate trial pipeline, no resign-at-any-stage, no
+> Controversial gate, no `game.impeachment` state. vcczar DEFERRED the entire `ae435b5f` thread (POST 47/48: *"I'm not
+> going to have time. Remind me when Anthony gets closer"*) → the spec is DESIGN-INTENT-IN-PROGRESS, **NOT canon — DO
+> NOT build before ratification.** ★ THE DEPENDENCY EDGE: #273 is the plumbing **#264 (coup→treason-trials) reuses** and
+> the system **#112 (modern institutional layer) instantiates** — so #273 GATES both; it also rides #221 (event
+> auto-fire) + #258 (trait/precedent gates). The broken-impeachment flags **DH-33 / DH-54 / DH-66** (§24.1.1) now
+> CONSOLIDATE under it as symptoms of the same null subsystem. **→ Recorded as Decision-gated (B) Designer-gated (B13);
+> NOT on the near-term queue.** game-mechanics §24.1.1a, §20.12.
+> **(④) ★ #274 SKILL-GAIN ACCESSIBILITY (debt #144) = a BALANCE lever (M) on the career-track/skill economy — land
+> WITH/after the content engine (the new grants = authored data).** The career-track skill ROLL is a FLAT
+> `chance(CAREER_ODDS.skill)=0.5` (`phaseRunners.ts:299-318`, `types.ts:229-234`) — NOT stat-gated; the TRAP is the
+> SEAT-gated paths around it (CPU `bestAvailableTrack` shunts a floor-stat pol to its least-bad skill `:392-399`; tracks
+> cap at 5/faction `CAREER_TRACK_CAP` `types.ts:237`; the committee/cabinet skill-ups `OFFICE_ADMIN_GRANT`
+> `types.ts:597-605` need a WON seat PV gates behind the missing skills → ShortKing/Euri's chicken-and-egg). There is NO
+> non-electoral, non-track Admin/Legis growth source for sub-floor pols. Fix = a **stat-floor-keyed non-electoral
+> growth source** (random-event grants / a low-office apprenticeship) that does NOT flatten the ladder. **DISTINCT from
+> #163 (caps the TOP), #190 (election modifier), #252 (committee granularity), #163-pre-placement (seeds the start
+> cohort).** game-mechanics §5.5.
+> **(⑤) ★ FLAVOR TIER (#221/#261, debt #145) = POST-LAUNCH (S), rides #221 — the lowest-priority content tier.**
+> `EraEvent` (`types.ts:1466-1482`) has NO `isFlavor` flag and NO per-event fire-probability; the only firing constant
+> is the graph-wide `ERA_GRAPH_RULES.fireChance=0.85` (`types.ts:1104`). The flavor on/off toggle + the ≤40%/phase cap
+> + the `isFlavor` boolean are TRIVIAL INSIDE #221's event registry/scheduler, MEANINGLESS before it (the `b73925a4`
+> poll DEADLOCKED 10-10 and DEFERRED; bank ≈ 2,484 events / 1,355 already flavor). **→ Folds into the #221 content
+> engine; lowest-priority content tier.** game-mechanics §27.1.1, §14.1.3.e.
+> **(⑥) ★ PLAYTESTER SIGNAL (the `06fbb2e5` 1772 run + the `ddd179cb` survey) — corroboration, NO re-sequence.** The
+> 1772 run is fresh 3rd-source proof of **#155** (the 1772 RevWar is brutally, repeatedly losable — Navy ~0 wins,
+> momentum −7/−9 — so any war-hardening must KEEP the 1772 floor playable) and **#176** (MilPrep stuck at 2 the whole
+> war despite the Army+Navy bills passing). The survey REAFFIRMS the dominant direction without re-ordering keystones:
+> **#114 — the Lingering manual-bookkeeping phase IS the "make it a computer game" PORT THESIS (the whole browser
+> build's reason for being)** + #262 (Trad/repeal/Moderate balance), #175/#132 (repeal illegibility), #107/#267/#23/#20
+> /#251/#183 tuning asks. **★ Q9 CROWN-JEWELS CONSTRAINT (load-bearing for the port): the legislative/Congress pipeline
+> + primaries + elections are the CROWN JEWELS — the port must PRESERVE their depth/legibility, NOT automate them away
+> (don't fold them into the bookkeeping the port removes).** **→ Annotate the relevant entries; NO re-sequence.**
+> game-mechanics §30.33.
+> **Within-batch order: WAR FINDING/correction (lead) → DH-82 clamp QW32 (cheap-fixes, anytime) → DH-81 win-model S
+> slice (war track / cheap-fixes lane, scoped tight; the full §21.1.A model is the M post-launch follow-on) → #273
+> impeachment Decision-gated (B13, vcczar ratify, L, GATES #264/#112) → #274 skill-gain accessibility (balance lever,
+> M, WITH/after the content engine) → flavor tier (S, inside #221, post-launch) → playtester-signal folds (annotation
+> only, NO re-sequence — port thesis #114 + Q9 crown-jewels constraint).** debt #141-#145; technical-guide §9 batch-43
+> lead + §8 debt #141-#145; game-mechanics §21.1.A, §24.1.1a, §5.5, §27.1.1, §30.33.
+>
 > **★★★★ Batch-42 version — FIVE threads, NO playtest, NO historian (a CONTENT/DESIGN batch — 2 more policy
 > genres [Regulations + Banking] + a Currency subtype + a benchmark-scorer ORIGIN + a SC-case-generator ORIGIN + the
 > what-if-ENTRY mechanic): `d4cd2ee6`-regulations / `beb258f9`-banking+currency / `d474f718`-what-if-politicians /
@@ -4522,6 +4599,28 @@ agency (M, content-engine track); #268/#269 expansionism core (M each, downstrea
 vocab-widening (annotates the CE258 keystone — 3 new predicate KINDS); #221 RNG/precedent/program-lifecycle extensions
 (inside #221/K4, RNG needs seeded `rng.ts`/debt #3 first). **No re-sequence: QW31 is the only new cheap-fixes-lane delta;
 top-of-queue UNCHANGED.** debt #130; game-mechanics §18.x.266.
+**★ Batch-43 adds ONE new XS quick-win (QW32 #DH-82 doubled-officer Planning clamp) — the cheap-fixes-lane delta this
+batch (debt #142; `GM⇒App`).** No-SecWar "Planning" = `general.skills.military * 2` (`revolutionaryWar.ts:212`) feeds
+the d100 battle target UNCLAMPED → reads 6 with a 3-Mil officer (`06fbb2e5#POST 73-74`); the naval sum at `:187` is
+similarly unclamped. The PERSISTED 0–5 skills ARE clamped (`abilities.ts:6-30`) — so this is a DERIVED combat
+coefficient over-buffing the no-cabinet case, NOT a corrupted stat. **Fix = wrap in `Math.min(5,…)`** (+ a one-line
+design call: does the no-SecWar fallback INTEND to exceed 5?). No dependency; ship in the cheap-fixes lane.
+**★ ALSO on the war track / cheap-fixes lane (NOT a QW number — it is the S first-step of a war-model item, not an XS
+one-liner): DH-81 the war WIN-MODEL fix (debt #141)** — swap the STALE count-threshold WIN/LOSS conditions
+(`revolutionaryWar.ts:254-264`, the 7-wins/16-losses model) for the war-score+momentum chart + DELETE the stale count
+columns. **★ CORRECTED FRAMING (override the digest's "fires-per-battle / instant game-over"): the SHIPPED cadence is
+ALREADY per-term** — `runRevWarBattles` (`revolutionaryWar.ts:175`) runs ONCE per Military Phase 2.7
+(`phaseRunners.ts:3593-3596`), the loss-check is evaluated ONCE after the battle loop, and `revolutionaryWar.ts` never
+sets `gameEnded` (grep=0); the `06fbb2e5#POST 75` "failed after Trenton" was the MANUAL Google-Sheets sim, VOIDED live.
+So DH-81 is a win-MODEL fix (S), the FIRST step of the larger (M) POST-LAUNCH §21.1.A war-score model (annotates the
+E3/#45 war epic, debt #105); the ~66% "another battle?" continuation at `:236` is a tuning delta, not a rewrite. **★
+Determinism: `revolutionaryWar.ts:89,97` use `Math.random` (casualty-victim selection), a SECOND leak distinct from
+debt #1 — route through seeded `src/rng.ts` (debt #3/K0) before any DH-81 work needing reproducibility.** **★ The rest
+of batch-43 is bigger or NOT this lane:** #273 impeachment (L, Decision-gated (B13) — vcczar must ratify, GATES
+#264/#112); #274 skill-gain accessibility (M, balance lever, WITH/after the content engine); the flavor tier (S, inside
+#221, post-launch); the playtester signal is annotation-only (port thesis #114 + Q9 crown-jewels). **No re-sequence:
+QW32 is the only new cheap-fixes-lane delta (DH-81's S slice rides the war track); top-of-queue UNCHANGED.** debt
+#141/#142; game-mechanics §21.1.A.
 
 | # | Item | Scope | Depends on | Size | Source | Status |
 |---|---|---|---|---|---|---|
@@ -4557,6 +4656,8 @@ top-of-queue UNCHANGED.** debt #130; game-mechanics §18.x.266.
 | **QW29** | **★ batch-39 #153 — Convention KEYNOTE-SPEAKER +1-Command path (a NEW command-GAIN source, anyone — even 0 command; `GM⇒App`)** *(NEW, batch 39 — DESIGNED, 0% shipped; the 1st of the two command-gain adds)* | **S — add a Keynote-Speaker +1-Command grant on the nominating-convention path.** `f735601c` POST 20 (AMPU Rules Update): the convention's Keynote Speaker GAINS +1 Command — a path open to ANYONE (even a 0-command pol), so a fresh figure can begin climbing toward presidential eligibility purely through play. The `command` stat + the gain/lose helpers already ship (`addCommandPoint`/`loseCommand` `abilities.ts:32-37`); command bumps already fire on convention/CC-chair/meter-bill-passage — this ADDS the Keynote-Speaker grant site on the convention. **★ FEEDS #153's global ×2-Command-gain rule (QW18)** — the new grant is one more `gainCommand(p, basePct)` call that the ×2 multiplier applies to. **★ Pairs with QW30** (the career-track % command-gain) — both are the two small command-gain ADD sites `f735601c` names; **distinct from QW18** (the ×2 *multiplier* on existing gains). Lands when the convention work is touched; no keystone dependency. **RULED by vcczar (`f735601c` POST 20).** | — (rides the convention; pairs QW18/QW30) | S | gap **#153 / `f735601c` POST 20** (codebase `addCommandPoint`/`loseCommand` `abilities.ts:32-37`; convention command-bump path) — NEW (debt #129) | ready |
 | **QW30** | **★ batch-39 #163 — tiny PER-CAREER-TRACK % Command-GAIN (level-contingent; "won't help Benedict Arnold"; `GM⇒App`)** *(NEW, batch 39 — DESIGNED, 0% shipped; the 2nd of the two command-gain adds; DISTINCT from QW28's career-track SKILL ceiling)* | **S — give certain career tracks a tiny % chance to grant +1 Command per cycle, level-contingent.** `f735601c` POST 20: specific career tracks now carry a small per-cycle chance of +1 Command ("won't help Benedict Arnold" — track-specific, so off-track / unsuitable figures gain nothing). Add a `CAREER_ODDS.command`-style level-contingent roll on the track-advance path (`phaseRunners.ts:305-318`). **★ DISTINCT from QW28 (#163 career-track SKILL ceiling) — same gap #163 number, DIFFERENT mechanic:** QW28 CAPS skill gains at 4 via tracks; THIS adds a Command-gain roll to tracks. **★ FEEDS #153's global ×2 rule (QW18)** + pairs QW29 (the Keynote-Speaker grant) — the two command-gain ADD sites. Lands when career-track work is touched; no keystone dependency. **RULED by vcczar (`f735601c` POST 20).** | — (rides the career-track path; pairs QW18/QW29) | S | gap **#163 / `f735601c` POST 20** (codebase career-track odds `CAREER_ODDS` `types.ts:230`; track-advance path `phaseRunners.ts:305-318`; DISTINCT from QW28's skill ceiling, same #163) — NEW (debt #129) | ready |
 | **QW31** | **★ batch-40 #266 — METER-AT-FLOOR SPILL-OVER (a penalty against an already-floored score redistributes into OTHER scores; the GAME-WIDE root cause behind the ignore-losing-treaty exploit; debt #130; `GM⇒App`)** *(NEW, batch 40 — DESIGNED, 0% shipped; SPILL-OVER variant; the countdown-shorten variant is BLOCKED on the unbuilt #88 clock / debt #28)* | **QW–S — add a "floor-penalty still bites" SPILL-OVER at the ~4 meter-clamp call-sites.** Confirmed no-op-at-floor in code: all 7 `NationalMeters` (`types.ts:1399-1407`) clamp, so a penalty against an already-floored meter (DomStab / party-preference / any score) registers NOTHING — once a meter sits at minimum the incumbent has nothing left to lose → reckless play (Largo833 systemic reframing, `a2312dd2` POST 16, Ted-concurred POST 1). **Fix = SPILL-OVER:** when a score would drop but is already at minimum, redistribute the penalty into OTHER scores, so there's always something left to lose. Localized change at the ~4 clamp sites; needs NO unbuilt system. **★ CODEBASE CORRECTION (override the digest/game-master claim): the OTHER floated variant — a floored-meter % chance to shorten the game-over countdown (DomStab=1 → 50% 8yr→6yr) — is NOT deployable today: there is NO meter-driven game-over countdown clock in `src/` (game-over is a one-shot flag; the #88 meter-loss clock is UNBUILT, debt #28). Ship SPILL-OVER only; the countdown variant is blocked on #88/debt-#28.** High systemic-balance value — closes the root cause behind the ignore-the-losing-treaty exploit, GAME-WIDE not treaty-specific (the #267 confirm-or-renew vote attacks the same exploit by construction). DISTINCT from #88 (the end-condition rolls) + #188 (the floored-meter loss path). No dependency; ship in the cheap-fixes lane. **OPEN (human/tech-lead): is this one gap or a sub-row of #88 — but the SPILL-OVER variant is buildable NOW with no human pick.** | — | QW–S | gap **#266 / `a2312dd2` POST 1, 16** (codebase-verified `NationalMeters` clamp at floor with NO spill/countdown mechanism, `types.ts:1399-1407`; **★ NO meter-driven game-over clock in `src/` — countdown-shorten variant blocked on #88/debt-#28**) — NEW (debt #130) | ready (SPILL-OVER variant) |
+| **QW32** | **★ batch-43 DH-82 — doubled-officer "Planning" CLAMP (a one-line `Math.min(5,…)` on the no-SecWar battle-target coefficient; `GM⇒App`)** *(NEW, batch 43 — code-verified bug, 0% clamped; the cheap-fixes-lane delta this batch)* | **XS — wrap the no-SecWar "Planning" coefficient in `Math.min(5,…)`.** When there is no Secretary of War the Planning value = `general.skills.military * 2` (`revolutionaryWar.ts:212`) and feeds the d100 battle target UNCLAMPED → reads **6 with a 3-Mil officer** (`06fbb2e5#POST 73-74`); the naval sum at `:187` is similarly unclamped. **★ This is a DERIVED combat coefficient over-buffing the no-cabinet case, NOT a corrupted stat** — the PERSISTED 0–5 skills ARE clamped (`abilities.ts:6-30`). Fix = `Math.min(5, general.skills.military * 2)` at `:212` (+ mirror at `:187`) **plus a one-line DESIGN call: does the no-SecWar fallback INTEND to exceed 5?** (a tunable, not a rewrite). No dependency; ship in the cheap-fixes lane. **Code-verified bug (`revolutionaryWar.ts:212`/`:187` unclamped vs the `abilities.ts:6-30` skill clamp).** | — | XS | bug **DH-82** (codebase `revolutionaryWar.ts:212` `general.skills.military*2` unclamped d100 target; naval `:187`; `06fbb2e5#POST 73-74`) — NEW (debt #142) | ready |
+| **(war track, NOT a QW)** | **★ batch-43 DH-81 — war WIN-MODEL fix (replace the STALE count-threshold win/loss with the war-score+momentum chart; `GM⇒App`)** *(NEW, batch 43 — code-verified bug, S; rides the war track / cheap-fixes lane if scoped tight; the FIRST step of the M post-launch §21.1.A model — NOT given a QW number)* | **S — swap the count-threshold WIN/LOSS conditions at `revolutionaryWar.ts:254-264` (the 7-wins / 16-losses model, `:16-18`) for the war-score+momentum chart + DELETE the stale count columns.** **★ CORRECTED FRAMING (override the digest's "fires-per-battle / instant game-over" cadence claim): the SHIPPED cadence is ALREADY per-term** — `runRevWarBattles` (`revolutionaryWar.ts:175`) runs ONCE per Military Phase 2.7 (`phaseRunners.ts:3593-3596`), the win/loss check is evaluated ONCE AFTER the battle loop (not inside it), the per-battle do-while (`:211-236`, `d100()<=66`) only increments tallies, and `revolutionaryWar.ts` never sets `gameEnded`/`triggersGameEnd` (grep=0); the `06fbb2e5#POST 75` "failed after Trenton" was the MANUAL Google-Sheets sim (VOIDED live). **So this is a win-MODEL fix (S), NOT a cadence rewrite** — the ~66% "another battle?" continuation at `:236` is a tuning delta. **★ The full §21.1.A war-score model (asymmetric battle points + the `|raw-score|×10%-per-phase` roll) is the larger (M) POST-LAUNCH piece DH-81 is the first step of — it folds into the generic-`War` engine (E3) alongside #45 (debt #105); see the war epic.** **★ Determinism: `revolutionaryWar.ts:89,97` use `Math.random` (casualty-victim selection), a SECOND leak distinct from debt #1 — route through seeded `src/rng.ts` (debt #3/K0) before any DH-81 work needing reproducibility.** **★ Must KEEP the 1772 RevWar floor playable** (#155: Navy ~0 wins, momentum −7/−9 in the `06fbb2e5` run — brutally, repeatedly losable by design). RevWar-scoped; no keystone dependency (the seeded-RNG co-land is a determinism note, not a build gate). **Code-verified bug (`revolutionaryWar.ts:254-264` stale 7/16 count-threshold vs the designer's war-score+momentum chart, §21.1.A).** | — (seeded `src/rng.ts` / debt #3 co-lands for reproducibility) | S (the slice) / M (full §21.1.A model, post-launch) | bug **DH-81** (codebase `revolutionaryWar.ts:254-264` + `:16-18` stale count-threshold; `06fbb2e5#POST 73-75` MANUAL-sim framing CORRECTED; `rethinkwar`/#45 §21.1.A model) — NEW (debt #141) | ready (the S win-model slice) |
 
 ---
 
@@ -7146,6 +7247,23 @@ row (often as an XS-S addition to an existing epic).
   exist; folds into the office/appointment epic alongside #45/#56's military-office work.**
   Pairs #66/#170/#172/#199. → folds into the offices/appointment cluster when the holdover
   offices land. — #66/#170 (`a852d451` POST n; codebase `types.ts:1111`/`:1196-1208`).
+- **(B13) ★★ #273 IMPEACHMENT subsystem (designer-gated + LARGE — vcczar must RATIFY first;
+  NEW batch-43; debt #143; `GM⇒App`).** `ae435b5f` ("Fourteen Points on Impeachment") is the
+  authoritative consolidated DESIGN-SPEC for the **0%-built impeachment subsystem** (MrPotatoTed
+  authored the consensus rewrite POST 4/6) — a proposal-to-impeach → Judicial-Committee article
+  step → House/Senate trial pipeline → resign-at-any-stage → Controversial gate → `game.impeachment`
+  state. **★ BUT IT IS NOT CANON:** `impeach` (case-insensitive) = **0 occurrences in `src/`** (no
+  proposal, no article step, no trial pipeline, no resign path, no state), and **vcczar DEFERRED the
+  entire thread** (POST 47/48: *"I'm not going to have time. Remind me when Anthony gets closer"*) —
+  so the spec is DESIGN-INTENT-IN-PROGRESS, **NOT canon; DO NOT build before ratification.** **★ THE
+  DEPENDENCY EDGE (why it matters for ordering): #273 is the plumbing #264 (coup→treason-trials)
+  REUSES + the system #112 (modern institutional layer) INSTANTIATES — so #273 GATES both**; it also
+  rides #221 (event auto-fire) + #258 (trait/precedent gates). **The broken-impeachment flags
+  DH-33 / DH-54 / DH-66 (§24.1.1) now CONSOLIDATE under it** as symptoms of the same null subsystem.
+  **L, post-keystone + decision-gated — NOT on the near-term queue.** → when vcczar ratifies, it
+  becomes a LARGE subsystem build (downstream of #221/#258) that UNBLOCKS #264 + #112. — #273
+  (`ae435b5f` POST 4/6/47/48; codebase `impeach`=0 in `src/`; consolidates DH-33/DH-54/DH-66; gates
+  #264/#112); game-mechanics §24.1.1a, §20.12.
 
 ### Roadmap decisions (a planner CALL, not an author task)
 
@@ -7191,6 +7309,34 @@ row (often as an XS-S addition to an existing epic).
   dataset-regeneration scripts** at `scripts/legislatorsToDataset.mjs` (or
   a sibling validator) — a CI/dataset-time validator at the existing
   pipeline. Not a standalone build item. → **dataset pipeline (§7)**.
+- **★★ #274 — skill-gain ACCESSIBILITY / anti-floor-trap (NEW batch-43; debt #144; `GM⇒App`;
+  the top playtester-survey Q10 ask).** A BALANCE lever (M) on the career-track/skill economy —
+  **distinct from the other dials here in that it IS a standalone M build, not a const re-tune.**
+  The career-track skill ROLL is a FLAT `chance(CAREER_ODDS.skill)=0.5` (`phaseRunners.ts:299-318`,
+  `types.ts:229-234`) — NOT stat-gated; the TRAP is the SEAT-gated paths AROUND it: CPU track
+  assignment shunts a floor-stat pol to its least-bad skill (`bestAvailableTrack`, `:392-399`),
+  tracks cap at 5/faction (`CAREER_TRACK_CAP`, `types.ts:237`) so good tracks fill, and the
+  committee/cabinet skill-ups (`OFFICE_ADMIN_GRANT`, `types.ts:597-605`) need a WON seat that PV
+  gates behind the missing skills → ShortKing/Euri's chicken-and-egg. **There is NO non-electoral,
+  non-track Admin/Legis growth source for sub-floor pols.** Fix = a **stat-floor-keyed non-electoral
+  growth source** (random-event grants / a low-office apprenticeship) that does NOT flatten the
+  ladder. **★ LAND IT WITH / AFTER the content engine** (#221/#258) — the new grants are AUTHORED
+  data (events/apprenticeships), so they want the content-engine plumbing to exist. **DISTINCT from
+  #163 (caps the TOP — QW28/QW30), #190 (election modifier), #252 (committee granularity),
+  #163-pre-placement (seeds the start cohort).** → an M build on the balance/skill-economy track,
+  WITH/after the content engine. — #274 (`ddd179cb` Q10; codebase `phaseRunners.ts:299-318`,
+  `types.ts:229-234`/`:237`/`:597-605`); game-mechanics §5.5.
+- **★ FLAVOR TIER (#221/#261 — NEW batch-43; debt #145; `GM⇒App`) → folds into the #221 content
+  engine; the lowest-priority content tier (S), POST-LAUNCH.** `EraEvent` (`types.ts:1466-1482`)
+  has NO `isFlavor` flag and NO per-event fire-probability; the only firing constant is the
+  graph-wide `ERA_GRAPH_RULES.fireChance=0.85` (`types.ts:1104`). The **flavor on/off toggle + the
+  ≤40%/phase cap + the `isFlavor` boolean** are TRIVIAL INSIDE #221's event registry/scheduler and
+  MEANINGLESS before it (the `b73925a4` poll DEADLOCKED 10-10 and was DEFERRED; Ted ruled on the
+  toggle POST 38; bank ≈ 2,484 events / 1,355 already flavor). OPEN: real-brand IP/trademark concern
+  (flag to human). **Not a standalone build — it ships as a content-tier within #221** (#261 = the
+  per-event fire-probability + ≤40%/phase runtime budget). → folds into **#221 (content engine)**;
+  lowest-priority content tier, post-launch. — #221/#261 (`b73925a4` POST 37/38; codebase
+  `types.ts:1466-1482`/`:1104`); game-mechanics §27.1.1, §14.1.3.e.
 - (DH-3 / DH-5 / #85 were cheap enough to promote to quick-wins QW5/QW6/QW7;
   DH-24 / DH-27 promoted to QW8/QW9 batch 6; **DH-30 promoted to QW10 batch 7**.
   DH-31 → E2 [bill-typing]; DH-32 → E25 [SCOTUS docket]; DH-35 → E11/E13/E24
@@ -7355,7 +7501,9 @@ row (often as an XS-S addition to an existing epic).
 
 ## Sequencing notes
 
-Why the order is what it is — the tech-lead's binding calls (§9 batch-40 lead +
+Why the order is what it is — the tech-lead's binding calls (§9 batch-43 lead +
+§8 debt #141-#145 + §9 batch-42 lead + §8 debt #137-#140 + §9 batch-41 lead +
+§8 debt #135-#136 + §9 batch-40 lead +
 §8 debt #130-#134 + §9 batch-39 lead + §8 debt #125-#129 + §9 batch-38 lead +
 §8 debt #120-#124 + §9 batch-37 lead +
 §9.6 batch-37 + §8 debt #115-#119 + §9 batch-36 lead +

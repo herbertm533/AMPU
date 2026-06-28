@@ -266,6 +266,7 @@
 24. [Other 1856-arc systems revealed by `house-divided` (designed, not built)](#24-other-1856-arc-systems-revealed-by-house-divided-designed-not-built)
     - [24.1 Succession / eligibility / the acting-president state](#241-61-succession--eligibility--the-acting-president-state)
     - [24.1.1 ★ Impeachment subsystem — broken/VOIDED (DH-66 → corroborates DH-33, 3-thread; `ideo1928`)](#2411--impeachment-subsystem--broken-as-is-voided-mid-run-dh-66--corroborates-dh-33-now-3-thread-ideo1928)
+    - [24.1.1a ★ #273 — the IMPEACHMENT subsystem design-spec (Legislative-proposal → House Judicial Committee → full House → Senate 2/3 trial; DESIGN-INTENT, vcczar DEFERRED; `ae435b5f`)](#2411a--273-new-batch-43-ae435b5f--the-impeachment-subsystem-design-spec-legislative-proposal--house-judicial-committee--full-house--senate-23-trial-design-intent-vcczar-deferred-0-built)
     - [24.1.2 ★ #167 — no-eligible-successor presidential constitutional-crisis subsystem (`fixes2022`)](#2412--167-new-fixes2022--the-no-eligible-successor-presidential-constitutional-crisis-subsystem-designed-not-built)
     - [24.2 Contingent House election + tied-chamber inverse control](#242-62-contingent-house-election--tied-chamber-inverse-control)
     - [24.3 Primary Era — state-opt-in primaries → Groups 1–5](#243-63-primary-era--state-opt-in-primaries--presidential-primary-groups-15)
@@ -367,6 +368,7 @@
     - [30.30 Rulings folded from batch 40 — FOUR policy-genre drops + ONE war/treaty BALANCE thread (★★ #267 the TREATY/war-END subsystem + #266 meter-at-floor + #265 cabinet-officer agency + #268/#269 territory machine + Healthcare/Crimes/Military/Expansionism enrichments)](#3030-rulings-folded-from-batch-40--four-policy-genre-drops--one-wartreaty-balance-thread--267-the-treatywar-end-subsystem--266-meter-at-floor-no-deterrent--265-cabinet-officer-agency--268269-territory-machine--the-healthcarecrimesmilitaryexpansionism-content-enrichments-65574aaa-healthcare--e456b6b3-crimes-punishments--a2312dd2-foreign-affairstreaty--145db158-military--4e76e6c3-expansionism)
     - [30.31 Rulings folded from batch 41 — TWO Courts + TWO Welfare/Courts genre drops + ONE SC-case AUTHORING thread + relocation/faction-default design-origins (★★ #270 the SC-CASE schema + procedural GENERATOR + #271 the elected/retention-election judiciary + ★ MILESTONE [corrected in §30.32]: the first-pass 12-genre content sweep) (`964b8857-future-sc-cases` / `a863421c-courts` / `2cddc161-welfare` / `4e518e05-historical-relocation` / `8189b724-faction-ideology-default`)](#3031-rulings-folded-from-batch-41--two-courts--two-welfarecourts-genre-drops--one-sc-case-authoring-thread--relocationfaction-default-design-origins--270-the-sc-case-schema--procedural-generator--271-the-electedretention-election-judiciary---milestone-later-corrected-in-3032-the-first-pass-12-genre-content-sweep-964b8857-future-sc-cases--a863421c-courts--2cddc161-welfare--4e518e05-historical-relocation--8189b724-faction-ideology-default)
     - [30.32 Rulings folded from batch 42 — TWO policy-genre drops (Regulations + Banking) + TWO design-origin threads (Benchmarks + SC-case generator) + the What-If ENTRY mechanic (★★ #272 what-if entry-via-scripted-event + the 12-genre MILESTONE CORRECTION) (`d4cd2ee6-regulations` / `beb258f9-banking` / `f012e5cc-benchmarks` / `d474f718-change-to-whatif-politicians` / `07fa6116-future-supreme-court-cases`)](#3032-rulings-folded-from-batch-42--two-policy-genre-drops-regulations--banking--two-design-origin-threads-benchmarks--sc-case-generator--the-what-if-entry-mechanic--the-12-genre-milestone-correction)
+    - [30.33 Rulings folded from batch 43 — the IMPEACHMENT design-spec + the Lars-Ark 1772 playtest + the Flavor-event poll + the Playtester survey (★★ #273 the IMPEACHMENT subsystem [DESIGN-INTENT, vcczar DEFERRED] + #274 skill-gain accessibility + DH-81 war-end-per-battle BUG + DH-82 officer-cap clamp) (`ae435b5f-fourteen-points-on-impeachment` / `06fbb2e5-lars-and-ark` / `b73925a4-flavor-event-poll` / `ddd179cb-questions-for-playtesters`)](#3033-rulings-folded-from-batch-43--the-impeachment-design-spec--the-lars-ark-1772-playtest--the-flavor-event-poll--the-playtester-survey--273-the-impeachment-subsystem-design-intent-vcczar-deferred--274-skill-gain-accessibility--dh-81-war-end-per-battle-bug--dh-82-officer-cap-clamp-ae435b5f-fourteen-points-on-impeachment--06fbb2e5-lars-and-ark--b73925a4-flavor-event-poll--ddd179cb-questions-for-playtesters)
     - [30.4 Authority hierarchy reminder](#304-authority-hierarchy-reminder)
 31. [Gilded-Age era systems (designed, not built)](#31-gilded-age-era-systems-designed-not-built)
     - [31.1 (#147) Tariff-as-national-%-rate + the mutually-exclusive MonetaryRegime](#311-147-tariff-as-national-rate--the-mutually-exclusive-monetaryregime-designed)
@@ -1780,6 +1782,41 @@ The player sets their own track via `setPlayerCareerTrack` (cap-enforced,
 > exists is unverified** — tech-lead to confirm; documented here as the designed balance rule. *(designed —
 > cap track-driven skill gains below 5 and make per-track gain-chance a decreasing function of current skill level.
 > Cite `fixes2022`(a852d451)`#POST 11, 12, 13`; `game-context.md` #163, cross-ref #86/DH-25/DH-56.)*
+
+### 5.5 ★ #274 (NEW, batch 43, `ddd179cb`) — skill-gain ACCESSIBILITY / the anti-floor-TRAP lever (the INVERSE of §5.4's ceiling; DESIGNED)
+
+> **★ #274 — the most-requested Q10 change in the Aug-2024 playtester survey** (two independent votes:
+> ShortKing POST 2, Euri POST 9; tier-4). The complaint is the **inverse** of §5.4's ceiling: low-stat
+> pols are **trapped at the floor** because the path to *earn* skill is itself **stat-gated**.
+>
+> - **The trap (ShortKing, POST 2):** *"So many pols end up useless because admin/judicial/military is
+>   too low to do anything, the career track to develop them is filled up, and they languish — can't even
+>   run for anything to earn ability increases through committee assignments."* You need a seat to earn
+>   committee skill-ups, but you can't win a seat with floor stats → a chicken-and-egg dead end.
+> - **Admin is the chokepoint (Euri, POST 9):** *"Admin is the most important skill and it's hard to have
+>   enough competent pols in it. Making it easier to gain Admin via random events or another mechanism
+>   would alleviate that and reduce the number of pols stuck on 1 Admin with nowhere to go."*
+> - **The DESIGNED tension (the flip side, the designer's own pride).** Ted (POST 14, Q9) is proud that
+>   *"there isn't a safe place to dump Representatives or Senators where they'll be out of the way"* — the
+>   career ladder works for the **able** and **traps the unable** by design. #274 asks for a relief valve
+>   that does NOT flatten that ladder.
+>
+> **★ A DISTINCT lever from the existing career-track rows** (it owns the **skill-gain-economy
+> accessibility**, which none of these does):
+>
+> | Adjacent gap | What it owns | Why #274 is distinct |
+> |---|---|---|
+> | **#163 (§5.4)** | career-track skill **CEILING** + diminishing returns (kill the super-commander) | #163 caps the TOP; #274 unblocks the FLOOR |
+> | **#190** | expertise/lobby-matches-industry as an **election modifier** (the "Manchin rule") | #190 is an election bonus, not a skill-growth source |
+> | **#252 (§9.x)** | committee→expertise mapping is too **COARSE** | #252 refines what a committee seat grants; #274 is about pols who can't GET a seat |
+> | **#163 career-track pre-placement (§26.1 batch-18)** | seed floor-stat generational pols onto tracks at game start | seeding helps the cohort start; #274 is the in-play growth path for those still stuck |
+>
+> *(designed, not built — add a **skill-gain accessibility / anti-floor-trap** lever: an alternative
+> Admin/Legislative growth source for low-stat pols that does NOT require first winning a seat — e.g.
+> random-event skill grants, a low-office apprenticeship that earns skill without an election, or an
+> easier committee-assignment path for sub-floor pols — distinct from the §5.4 ceiling (#163), the #190
+> election modifier, and the #252 committee-coarseness. Couples to §5.2 (career-track skill rolls), §26.1
+> (#163 pre-placement), and the legislative committee pipeline (§9). Logged as #274 in `game-context.md`.)*
 
 ---
 
@@ -5698,6 +5735,29 @@ a budget bug. **★ OPEN Q (carry to human, #261):** is "5–15 per half-term" a
 or a **runtime per-turn cap the engine randomizes within**? POST 1 is ambiguous. DISTINCT from #221's authoring-side
 density-calibration (size the authored pool to a target); this is the runtime firing budget that fires within it.
 
+> **★ #261 ENRICH (batch 43, `b73925a4` flavor-event poll) — RESOLVES the OPEN Q for the FLAVOR tier
+> (the runtime-cap reading is the live one).** The flavor poll asks the exact #261 firing-budget question
+> applied to flavor, and the community + vcczar converge on a **runtime random-subset-per-playthrough
+> budget** (NOT all-fire, NOT "author fewer"):
+> - **Shipped/current rule that BLOCKS it (vcczar, POST 10):** *"all events are required to fire at some
+>   point in their era"* — so a random-subset design needs a **NEW mechanism**: a **per-event,
+>   per-half-term fire-probability field** (vcczar: *"make a new column in the spreadsheet"*). He confirms
+>   the existing tuning band — *"most things are set for 5% to 25% on any given half-term … some at 50% or
+>   100%"* — i.e. a **per-event fire-% already exists for non-flavor events**; flavor events would get a
+>   low one (he muses 1% or 5%). **★ This is the runtime per-turn-cap reading of #261, confirmed for the
+>   flavor tier.**
+> - **The popular community design (ShortKing POST 2, +many):** keep the whole bank but fire only a
+>   **limited random subset per playthrough, split by era** (*"one playthrough you get Arby's + Tesla, the
+>   next Amazon + SpaceX"*) — explicitly a **replayability** mechanic.
+> - **★ The concrete cap (Saucialiste, POST 29): "no more than 40% flavor event per phase."** So the
+>   flavor firing budget = a **per-event fire-probability field + a ≤40%-flavor-per-phase cap.**
+> - **Fallback if the mechanism is too costly (POST 13/22/23):** author **far fewer, higher-quality**
+>   events instead — i.e. #261's budget is the lever that lets the big bank exist at all.
+>
+> Net: for the flavor tier, #261 is a **runtime firing budget** (probability field + per-phase cap), not a
+> static authored-pool bound. (`b73925a4#POST 2, 4, 10, 19, 22, 23, 29`; cross-ref the tier-flag fold at
+> [§27.1.1](#2711--221-new-ampudata-batch-30--the-era-content-registry-schema-per-administration-payload--scripted-vs-flavor-tier--per-category-era-activation-designed-two-schema-fields).)
+
 **(7) ★ Coverage / balance ASKs (#262).** Both genres surface the recurring per-ideology / per-primitive coverage
 hole: vcczar wants **more Traditionalist / RW-Populist / Conservative civil-rights content that is NOT merely a
 repeal** of a progressive item (the conservative side is currently mostly negations), names **Era-of-Future**
@@ -7657,6 +7717,33 @@ the #260 action twin). Cite `4e76e6c3` POST 1, 4, 5, 6; code `territories.ts:8` 
   **"all-hands-on-deck" military rule** (all pols with a military skill join land battles unless on a
   non-military career track or holding elected office) was the rookie run's stated test target and V
   changed/expanded the war rules during it (`rookie1772#POST 1444`).
+- **★ Lars-Ark 1772 playtest (`06fbb2e5`, batch 43) — the war-end-per-battle BUG + fresh corroboration.**
+  A genuine 1772 era-run (2 humans-v-8-CPU; both humans **Populists inside BLUE** — Ark LW-Pop, Lars
+  RW-Pop). Its load-bearing finding is **DH-81** (the war-end roll fires per-battle, not once-per-term →
+  instant game-over after Trenton; GM+designer CONFIRMED) — full coverage at [§21.1.A](#211-generic-cross-era-war-system), where it is the
+  authoritative home. It also **confirms DH-82** live (doubled-officer Planning = 6, the `rookie1772`
+  clamp edge above). Fresh corroboration of existing gaps:
+  - **#155 (3rd-source counter-constraint):** the RevWar was near-**un-winnable** — Navy ~0 wins, land
+    a long losing streak, momentum −7/−9, *"a bit annoying to repeatedly lose the game through no fault
+    of your own"* (POST 84). Proof any #45/#56/#155 hardening must keep the 1772 floor playable.
+  - **#176 (3rd-source confirm):** **MilPrep stuck at 2 the entire war** despite Continental Army + Navy
+    bills passing → forced war bills are dead rolls + a permanent military crisis (POST 73-83).
+  - **#4/#171 (draft-ideology restrictions CONFIRMED ON in 1772):** Lars *"John Taylor (the only pol
+    I'm eligible for)"* (POST 122); players **poach moderates** because they can't draft freely (POST 8).
+    Plus **Populist-in-major-party disadvantage** data (a truce not to steal each other's Populists; thin
+    pools; Ark finished dead-last in points) — live evidence for the ideology-disadvantage tuning question.
+  - **★ #74 (CPU AYE-only stalled a PLOT-CRITICAL bill — candidate foundational-bill requirement):** the
+    **Declaration of Independence repeatedly FAILED** (stalls 3-5, dies 7-3, *"CPU fails to support the
+    declaration"*) because no CPU faction held the matching expertise cards; it passed only on the **3rd**
+    session (POST 47, 67, 76, 106-107). Ark's diagnosis (designer-flagged good, POST 80): the Declaration
+    *"needs to be foundational (so we trigger the 75% chance of support)"* or appeal beyond nationalists/
+    pacifists. **Candidate requirement: mark independence-chain bills foundational (~75% support, can't
+    perma-stall)** so the war-trigger isn't gated on a random draft (the #155 `ted1772` POST-638 floor).
+  - **#76 (conversions confirmed):** rolled same-faction ideology shifts "toward highest enthusiasm,"
+    frequent failures, a **failed shift grants flip-flopper** (Hugh Mercer, POST 12).
+  - **#114/DH-36 (CPU-bookkeeping burden):** the manual sim mis-ran proposer order (CPU-random instead of
+    descending-Legis, POST 33/36), picked ineligible <1-Legis proposers (POST 64), and hit a transient
+    stalled CPU 2.1.5 relocate (POST 20) — the work the app's CPU-AI must own. (`06fbb2e5#POST n`.)
 
 *(designed, not built — model the **Inaugural+Rookie two-draft** founding open; the Convention's
 **five-required-items + trait-gated add-ons + 9-states-per-item + ≥9-Gov ratification + Convention-
@@ -9458,6 +9545,33 @@ econ, budget, party pref) and **grants/denies territory** (Canada/Quebec on a Wa
 >
 > A **failed roll** (e.g. roll 70 with only 30% win odds) → **the war simply continues.** **Close wars drag;
 > curbstomps end fast.** (This linear `|score| × 10%` table is verbatim the table logged as frozen spec in #45.)
+>
+> > **★ DH-81 (NEW, batch 43; shipped BUG — GM+DESIGNER CONFIRMED) — the war-end roll fires PER-BATTLE,
+> > not once-per-term.** The `06fbb2e5` Lars-Ark 1772 playtest rolled this **"do we lose the war?"** check
+> > **after EVERY individual battle** instead of **once after the Military Phase (= term end)**, producing an
+> > **instant game-over after a single lost battle** — Trenton lost (momentum −4 → 40% lose-roll → rolled 60
+> > → *"The United States has failed in its bid for independence!"*) on **turn ~3 of the whole game**, through
+> > no player fault (`06fbb2e5#POST 75`; the runner VOIDED the loss to keep the run alive, POST 78/94/118).
+> > **ebrk85 (POST 83):** *"I don't believe you are supposed to roll … after each battle. Just at the end of
+> > all the battles for that phase."* **Ted (designer, POST 85): "This is correct" → "Ah. That is a mistake"
+> > (POST 86).** The CORRECT cadence (matches §(2) above): wars resolve on the **war-score + momentum chart
+> > at TERM END**, and **per-battle there is only a 50/50 roll for whether ANOTHER battle happens that
+> > half-term** (POST 88-89). **Root cause (POST 88-89):** the war doc still carries **stale per-battle
+> > win/loss-THRESHOLD columns** from the pre-redesign era — *"Wars are no longer won by winning or losing a
+> > certain number of battles but by using the war score and momentum chart after each term"*; ebrk85:
+> > *"War Charts gotta remove those columns."* This is the shipped `warscore × multiplier → % to lose`
+> > roll (§(2)) firing at the **wrong cadence**. **Build action:** audit the shipped war loop so the
+> > war-end/surrender roll fires **once per Military Phase**, not per `Battle`; delete any stale per-battle
+> > loss-threshold columns the engine reads. Cross-ref **#45/#56** (the redesign this enforces) + **#155**
+> > (the 1772-floor counter-constraint — this run is fresh 3rd-source proof the 1772 RevWar is brutally,
+> > repeatedly losable: Navy ~0 wins, land a losing streak, momentum −7/−9; so the per-term cadence + any
+> > #155 hardening must keep the 1772 floor playable). ★ TECH-LEAD b43 AUDIT RESULT: the SHIPPED engine ALREADY fires the war-end check ONCE PER TERM (`runRevWarBattles` runs once per 2.7 Military Phase; the win/loss check is evaluated once after the battle loop at `revolutionaryWar.ts:254-264`; `revolutionaryWar.ts` never sets `gameEnded`) — **the per-battle / instant-game-over symptom was the MANUAL Google-Sheets sim, NOT the build.** The REAL shipped bug = the win-path uses the **stale COUNT-THRESHOLD model** (`currentGroundWins>=7` / `currentGroundLosses>=16`, `:16-18, 254-264`); the fix is to swap those threshold conditions for the war-score+momentum chart (the per-term cadence is already correct; the ~66% "another battle?" continuation at `:236` is a tuning delta). **So DH-81 is a win-MODEL bug, not a cadence bug** (technical-guide debt #141). Logged as **DH-81** in `game-context.md`.
+> >
+> > **★ DH-82 (NEW, batch 43; shipped edge) — doubled-officer "Planning" can exceed the 0–5 ability cap.**
+> > When no Secretary of War exists, Planning = **highest-officer Mil ×2** (§(5) below) — with a 3-Mil senior
+> > officer this yields **6**, above the 0–5 skill cap (`06fbb2e5#POST 73-74`: John Paul Jones Mil 3 ×2 = 6;
+> > Israel Putnam 2 ×2 = 4). The **same clamp issue Ted flagged in `rookie1772`** — the doubled value needs a
+> > `min(…, 5)` clamp (or the design must intend Planning to exceed 5). Logged as **DH-82**.
 >
 > **(3) Momentum (matthewyoung123's "momentum meter," POST 4/5/11/12, folded by vcczar as a swing bonus).**
 > If the war was active last term, compare this half-term's raw points to last term's: if **same-or-more**,
@@ -12226,8 +12340,142 @@ authoritative spec — pending** (not yet captured).
 the triggering event / pol traits), an explicit trial-trigger gate, a chamber trial vote at a stated
 threshold, and removal/acquittal outcomes with DomStab/Honest-Gov meter effects; resolve the
 Integrity-pol-accused-of-bribery nonsense by gating article generation on trait plausibility.
-Couples to §24.1 succession, §9.3.8 nomination filters, §22.7 SCOTUS, §10.2 anytime events. Await
-Ted's rewrite for the authoritative ruleset.)*
+Couples to §24.1 succession, §9.3.8 nomination filters, §22.7 SCOTUS, §10.2 anytime events. **The
+authoritative rewrite Ted drafted is now captured at [§24.1.1a](#2411a--273-new-batch-43-ae435b5f--the-impeachment-subsystem-design-spec-legislative-proposal--house-judicial-committee--full-house--senate-23-trial-design-intent-vcczar-deferred-0-built) below (#273) — but vcczar DEFERRED ratifying it, so it
+is design-intent, not canon.**)*
+
+#### 24.1.1a ★ #273 (NEW, batch 43, `ae435b5f`) — the IMPEACHMENT subsystem design-spec: Legislative-proposal → House Judicial Committee → full House → Senate 2/3 trial (DESIGN-INTENT, vcczar DEFERRED; 0% built)
+
+> **★★ #273 — the consolidated, end-to-end IMPEACHMENT design.** This is the rewrite §24.1.1 said was
+> "pending (Ted's authoritative spec)": the **design-spec follow-up to the DH-66 `ideo1928` Justice-
+> Sanford episode** (the OP, `10centjimmy`, is the same GA) and the **design ORIGIN of the #112
+> modern-layer pipeline** (which the KB previously attributed only to in-play `nuke`/`modernday`
+> observation; the playthroughs are *corroboration*, not origin). It **consolidates** the scattered
+> broken-flag rows DH-33 (`rep1800`) / DH-54 (`nuke`) / DH-66 (`ideo1928`) and is the **plumbing the
+> coup treason-trial #264 depends on** (the remove-from-game-and-replace outcome on non-Presidential
+> targets is exactly the treason-trial shape).
+>
+> **★★ CRITICAL CAVEAT — DESIGN-INTENT, NOT designer-ratified.** **vcczar (Anthony, tier-1 ruleset
+> owner) DEFERRED the entire thread** — *"I'm not going to have time. Remind me when Anthony gets
+> closer to where these rules are relevant"* (`ae435b5f#POST 47`, confirmed 48). He gave a blanket
+> *"I'm fine with this"* to **Ted (`MrPotatoTed`, tier-1)** taking the lead (POST 5) but **never read
+> or ratified the detail**. So every number below is **Ted-led consensus + GA/playtester agreement —
+> NOT canon.** **DO NOT BUILD before ratification.** (Engine reality: `impeach` is **absent from
+> `src/`** — the subsystem is **0% built**, established by the b39 tech-lead pass; nothing here ships.)
+>
+> **Why a rewrite was needed (the diagnosis, POST 1-2).** The current rule 3.05 **predates the
+> 3→25-member House-committee revamp**: it says *"every member of the [Judicial] committee picks a
+> qualifying offense,"* which with today's 25-member committee yields **~25 articles of impeachment**
+> ("excessive, and unlikely"); "qualifying offense" is undefined; and it conflicts with current
+> events. Ted (POST 2): *"It used to be that each committee only had 3 members… that's why it says
+> 'every member' — it used to only be 3 people, not 25."* Will (POST 36): a rewrite is low-risk —
+> impeachment is *"filling a void, not messing with the load-bearing beams."*
+
+**★ The consensus model (Ted, POST 4 + 6) — the four pillars:**
+
+1. **ELIMINATE the Special Committee (2.2.2) entirely** (POST 4) — *"an unnecessary complication;
+   we'll leave any special-committee duties to the Judicial committee, which is currently
+   underutilized."* **The House Judicial Committee is the front-end; no Special Committee.** *(This
+   DIRECTLY CONTRADICTS the OP's elaborate proposal, which wanted the Special Committee as the
+   investigation front-end — an OPEN call, below.)*
+2. **Impeachment is a LEGISLATIVE PROPOSAL** — a proposal to impeach a named office-holder.
+3. **A trait-based voting guide** drives CPU votes; humans decide for themselves (their pols may
+   defect like on any legislative proposal).
+4. **Outcome rules** for impeached-not-convicted / convicted / not-impeached / resigned.
+
+**Who can be impeached (★ non-Presidential scope is explicit):** sitting **President, VP, US Senator,
+Representative, Cabinet member (incl. cabinet-level), or Supreme Court Justice.** **Governors,
+military leaders, and ambassadors CANNOT be impeached.** *(The `ideo1928` trigger was a Justice; this
+is the scope #264's treason-trial reuses.)*
+
+**Who can propose + eligibility gates** (proposer must be a **US House member**):
+
+| Gate | Rule |
+|---|---|
+| **Proposer trait** | proposer **cannot be Harmonious** |
+| **Meter gate** | **Domestic Stability must be below level 5** |
+| **★ One-of-four condition** | target has **Controversial** / target has **Unlikable** / target is **≥4 ideologies from the proposer** (pure ideological impeachment — a LW-Populist may impeach a Traditionalist for no other reason; a Moderate can't qualify on this alone) / **proposer is Disharmonious** (may impeach anyone) |
+| **Illicit add (POST 8-9, UNRATIFIED)** | add **Illicit** as an impeachable trait; **Lawful pols are FORCED to vote to impeach an Illicit target** (Ted defers to vcczar on what Illicit/Lawful represent — so this addition is unratified) |
+
+**The pipeline (POST 6, simplified by POST 31-34):**
+
+1. Proposal → **House Judicial Committee** (chair may block/replace per committee rules, **but cannot
+   replace an unrelated bill *with* an impeachment**, and an impeachment may only be packaged with
+   other impeachments) → **50%+1** to advance.
+2. → **full House** vote (**50%+1** = impeached).
+3. **★ Senate trial — DROP the Senate Judicial Committee vote** (ebrk85 proposed POST 31-34, Ted +
+   others AGREED): go **straight from the full House to the full Senate** (matches real impeachment —
+   no second committee; Chief Justice presides ceremonially; senators are the jury). **The Senate
+   at-large requires 2/3 to convict.**
+4. **★ Impeachment manager** (Will POST 11/13, Ted AGREED): if the impeachment passes the House, the
+   **proposer gains +1 Command and becomes the "impeachment manager"** (the Adam-Schiff role), with a
+   **vote-sway opportunity during the Senate trial.**
+
+**★ The trait-priority VOTING CASCADE (POST 6)** — applies to BOTH the committee and the at-large
+votes (CPU + a default for human pols):
+
+| Order | Trait | Vote |
+|---|---|---|
+| 1 | **Integrity** | AYE if target is Controversial, NAY if not |
+| 2 | **Disharmonious** / **Harmonious** | Disharmonious → always AYE; Harmonious → always NAY (unless step 1 decided) |
+| 3 | **Puritan** | AYE for different-ideology targets, NAY for same-ideology (unless 1-2 decided) — *POST 6's "Puritan" is the ideological-zealot gate, DISTINCT from the OP's "Lawful"; reconcile the trait vocabulary* |
+| 4 | **everyone else** | follows the faction vote (human decides; CPU: proposer's faction leader always AYE, target's faction leader always NAY; else **75% AYE if target is opposite party, 25% if same party**) |
+
+**★ The three terminal states + resignation (POST 6) — the meter+point packages:**
+
+| Outcome | Target | Proposer | Faction | Meters |
+|---|---|---|---|---|
+| **CONVICTED** (Senate hits 2/3) | removed from game immediately; seat refilled by succession (Presidency→succession; cabinet→nomination; Senator→Governor appointee) | gains **Integrity** + **faction +1,000 pts** | target's faction **−1,000 pts** | **DomStab −1 AND Honest-Gov −1** ("witch-hunt perception") |
+| **DEFEATED** (at any stage — committee, at-large, or chair-blocked) | stays in office | failed proposer gains **Controversial** + **faction −1,000 pts** | target's faction **+1,000 pts** | **DomStab −1 AND Honest-Gov −1** ("got away with it") |
+| **RESIGNS** (allowed any time **before the Senate at-large vote**) | removed from office, **stays in the game**; gains **Controversial** + **permanent −3 to all future elections** + **cannot be appointed to any position** | no gain | resigner's faction **−500 pts** | **DomStab +1 AND Honest-Gov +1** ("the right thing was done") |
+
+**★ CPU rules (drafted, unratified):**
+- **CPU PROPOSES (POST 22, 28):** a CPU faction with a **Disharmonious + Debater/Orator** statesman
+  proposes impeachment **only if their party holds the House majority (50%+1 seats), 25% of the
+  time**, when the eligibility gates are met (Ted: *"especially rare from the CPU, but not
+  impossible"*).
+- **CPU RESIGNS vs FIGHTS (POST 29-30):** if the **opposite party controls the Senate AND conviction
+  looks likely**, CPU **resigns 75% / fights 25%**; if survival looks likely, **fights 75% / resigns
+  25%** (lean harder to resign if the opposition holds **60%+** of the Senate — CPU is point-driven,
+  won't risk −1,000).
+
+**★ The General/Scripted-event auto-fire timing problem (the #221 surface).** In `ideo1928` the
+**General Event "Improper SC Justice" fired, and because General-Event actions fire AUTOMATICALLY,
+the game dove straight into an impeachment trial *before* the Scripted-Events phase — skipping the
+Special Committee (2.2.2) investigation entirely** and landing on a 2-Judicial justice (Sanford) the
+Controversial-required eligibility rule says shouldn't be there. **Any built impeachment must decide
+WHEN an event-triggered impeachment runs** (Ted/OP: process it immediately, like other gen-events) —
+this is the #221 scripted/general-event-payload decision.
+
+**★ The unresolved DESIGN DEBATES (the OPEN levers a builder must resolve — vcczar adjudicated NONE):**
+
+| # | Open lever | Detail |
+|---|---|---|
+| **A** | **Meter swing: automatic or a public-opinion ROLL?** | The convicted/defeated/resigned meter moves are **assured (no roll)**, which lets players **weaponize impeachment/resignation to pump DomStab/Honest-Gov** (ShortKing's 1948 exploit: resign 3 Unlikable GOP officeholders for +3 meters in one turn; corroborated live POST 35 — resigning beat fighting even on acquittal). **AGREED IN PRINCIPLE (POST 38-43): replace the auto-swing with a public-opinion DICE ROLL** (like the October Surprise) — Jimmy's draft: 1-2 DomStab drop / 3 DomStab rise / 4-5 Honest-Gov drop / 6 Honest-Gov rise. **Exact weights + scope (Presidential-only vs all offices) OPEN.** Ted wants it weighted resign=good-for-country / fight=bad, but agrees fighting can have benefits (the **Clinton precedent** — the impeaching party gets hit for overreach). |
+| **B** | **Pardons — entirely unspecced** | Does a presidential pardon void the resignation election-penalties / appointment ban? Ted (POST 40): *"we gotta figure out what a pardon means — at least it can be a free executive action."* The **Ford-pardons-Nixon** motive is discussed as flavor. **No rule reached.** |
+| **C** | **Eligibility gates: 1-of-4, 2-of-4, or 3-of-4?** | Will (POST 11) wanted **2-of-4 or 3-of-4** conditions to keep impeachment rare; **Ted DECLINED** (POST 13: conviction is already hard and the proposer risks −1,000, so it self-limits). A live balance lever for impeachment frequency. |
+| **D** | **Special Committee (2.2.2): delete or keep?** | Ted's model **deletes** it (POST 4); the OP's whole front-end (point 1) **depends** on it. Decide before building (affects #221). |
+| **E** | **Trait vocabulary reconcile** | Lawful (OP) vs Puritan (Ted) for the ideological-zealot vote; add Illicit as impeachable + Lawful-forced-vote (POST 8-9); the OP's Teflon-on-resignation trait. Settle the canonical trait set. |
+| **F** | **Article model** | the OP's elaborate **13-named-offense + Chair/Ranking-Member dice-confirmation** machinery (trait-gated: Leadership/Lawful/Integrity add slots; Disharmonious/Illicit/Controversial block; dice 4-6/5-6/6 confirm by role; NOT all 25 members) vs Ted's **single-proposal** abstraction. Affects whether the 13 qualifying offenses need authoring as content (the OP names only 12 — Public Indecency, Perjury, Unethical Private Behavior, Corruption, Contempt of Congress, Unlawful decision-making, Tax Evasion, Obstruction of Justice, Bribery, Abuse of Power, Inciting Violence, Unethical Political bias — **the 13th is unspecified in-thread**). |
+
+> **★ KB cross-link / provenance dating.** The OP's points (12)/(13) (Presidential-acquittal party-pref
+> 25/25/25/25 split; same-party-Pres/VP impeachers' 25/50/25 trait roll + primary penalty) are the
+> **SAME concrete numbers #112/DH-54 already record from `fixes` §J POST 393** — this **Apr-2023 thread
+> is plausibly the ORIGIN** of those numbers (they appear here as the OP's proposal, then were
+> ratified/implemented in the later `fixes` thread). And the OP's elaborate "Articles built by
+> Chair+Ranking Member, NOT all 25" fix (POST 1.3a-d) is the **alternative Article model (lever F)**.
+
+*(designed, not built — and **NOT designer-ratified** (vcczar deferred POST 47/48). A `game.impeachment`
+flow built as a **legislative-proposal subtype**: proposer-eligibility gates (not Harmonious /
+DomStab<5 / one-of-Controversial-Unlikable-≥4-ideologies-Disharmonious) → House Judicial Committee
+(50%+1, package-only-with-impeachments) → full House (50%+1) → full Senate (2/3, no Senate committee)
+→ convicted/defeated/resigned packages; a trait-priority voting cascade; the impeachment-manager +1
+Command grant; CPU propose/resign odds; resolve the meter-swing-as-roll (lever A), eligibility-gate
+count (C), Special-Committee delete/keep (D), trait vocabulary (E), and Article model (F) before
+building. **This is the impeachment plumbing the coup treason-trial #264 reuses and the design origin
+of #112.** Consolidates DH-33/DH-54/DH-66; logged as #273 in `game-context.md`. Couples to §24.1
+succession, §24.1.2 (#167 empty-line crisis), §9.3.8 nomination filters, §22.7 SCOTUS, §10.2/§14.1.3
+events (#221 auto-fire timing).)*
 
 #### 24.1.2 ★ #167 (NEW, `fixes2022`) — the no-eligible-successor presidential constitutional-crisis subsystem (DESIGNED, not built)
 
@@ -14501,6 +14749,32 @@ coverage holes — the authoring mirror of the §27.1 content-band model:
   **scripted (modeled)** events are tracked; **flavor / 2nd-3rd-tier events are narration-only and
   post-launch scope** — vcczar repeatedly DECLINES flavor-event suggestions (`ampuData#POST 4, 41`). Every
   event needs a **tier flag** (flavor = deferred).
+  > **★ #221 ENRICH (batch 43, `b73925a4` flavor-event poll) — the flavor tier's concrete shape (DEFERRED
+  > post-launch).** The flavor-event poll pins this tier flag **from the flavor side** and gives it a
+  > concrete shape (still **0% built**):
+  > - **★ Definition (Ted's tier-1 ruling, POST 38; echoing vcczar):** a **flavor event** = a low-stakes,
+  >   atmospheric scripted-event tied to a **named business / brand / cultural institution** (a company
+  >   founding, a product launch, a cultural moment), with **NO choices / NO point impact** — pure era
+  >   ambiance. So "flavor" is the **cosmetic/narration sub-category** of the scripted-event content system.
+  > - **★ An explicit `isFlavor` flag / flavor category (not merely "empty responses").** Ted's tier-1
+  >   ruling: *"I like the idea of having an on/off switch for flavor events that have no choices or impact
+  >   on points"* (POST 38) — a **player on/off toggle** (first floated by Saucialiste, POST 24: a "skip
+  >   other flavor events" box in the pop-up corner) presupposes the engine can **query** which events are
+  >   flavor. Log it as an **explicit content tag** (so the firing-budget rule, below, can *select on it*
+  >   independent of effects), not a derived "no `EraEventResponseEffect`" property. (The shipped `EraEvent`
+  >   `types.ts:1466` has **NO `isFlavor`/tier flag** and **NO on/off toggle**.)
+  > - **The numbers (POST 23, vcczar):** the authored bank is **2,484 events, of which 1,355 are ALREADY
+  >   flavor** (~55%); a proposed brand bank (~4,300 more) is why the all-fire design is unworkable
+  >   (*"90%+ of players would just click OK to get through them"*).
+  > - **★ Content sub-kind steer (POST 18, 20, 21, 39):** prefer **multi-beat cultural/industry NARRATIVE
+  >   arcs** (film→Hays Code→*Gone with the Wind*; the 1980s video-game crash) over flat "company X was
+  >   founded" one-liners — overlaps the §14.1.3 prereq-CHAIN shape but at the flavor/narration tier
+  >   (vcczar: *"I have those too,"* POST 20).
+  > - **Delivery & status:** flavor rides the **existing Event phase** (no new phase; POST 24); the
+  >   **firing budget** is folded at [§14.1.3.e](#1413e--221237248--260261-batch-38--the-civil-rights--agriculture-policy-genre-drops--the-event-spread--firing-budget-mechanics-designed-0-shipped) (#261). **OPEN:** real-brand IP (named brands are real; no trademark
+  >   concern raised in-thread — a human call before shipping). Thread DEADLOCKED 10–10 and **DEFERRED**
+  >   (*"wait until Anthony has coded more,"* POST 37) — **do NOT treat the brand bank as committed scope.**
+  >   (`b73925a4#POST 1, 18, 20, 21, 23, 24, 37, 38, 39`.)
 - **Per-category era-ACTIVATION metadata.** Pres Actions / SC Cases / Gov Actions are explicitly *"Not
   functional"* pre-1789 (`ampuData#POST 1, 2, 5`). The registry must model each content category as
   **era-gated on/off with explicit first-active-era metadata**, NOT a flat uniform schema across all bands
@@ -20099,6 +20373,108 @@ into the #194 lineage system. Cite `histpres#POST 1, 3, 7, 13, 19, 28, 34, 36, 3
 > numbers; #270 SC-case generator) settle long-open numbers — but the **#253 rescale reconcile** (1,000/faction × ~10
 > benchmarks ≈ 10× balloon) MUST be confirmed with vcczar/Ted before the era-end scorer is built. Cross-ref
 > `game-context.md` row **#272 (NEW)** and **#237/#221/#248/#258/#253/#270/#206/#226/#66/#236/#262/#115/#24/#263/#240/#68/#102/#52/#249/#218/#251 (sharpened/corroborated)**, with **#237 the MILESTONE CORRECTION**.
+
+### 30.33 Rulings folded from batch 43 — the IMPEACHMENT design-spec + the Lars-Ark 1772 playtest + the Flavor-event poll + the Playtester survey (★★ #273 the IMPEACHMENT subsystem [DESIGN-INTENT, vcczar DEFERRED] + #274 skill-gain accessibility + DH-81 war-end-per-battle BUG + DH-82 officer-cap clamp) (`ae435b5f-fourteen-points-on-impeachment` / `06fbb2e5-lars-and-ark` / `b73925a4-flavor-event-poll` / `ddd179cb-questions-for-playtesters`)
+
+> **★ Batch 43 = a MIXED 4-thread batch:** ONE canonical DESIGN-SPEC thread (impeachment), ONE genuine
+> ERA-PLAYTEST (the first real era-run in many batches), ONE poll/brainstorm (flavor events), ONE
+> playtester FEEDBACK SURVEY. The HEADLINE is **★★ #273 — the full IMPEACHMENT subsystem** (the
+> consolidated end-to-end spec for a cluster the KB tracked only as scattered broken flags
+> DH-33/DH-54/DH-66 + a partial build-req #112 + a dependency #264). The playtest supplies a
+> **GM+designer-CONFIRMED war bug (DH-81)**, a 3rd-source #176 confirm, and the cleanest #4/#171 +
+> #74 data yet. The poll sharpens the flavor tier (#221/#261). The survey is the **single best direct
+> UX/balance/fun signal on the real build** (the #274 skill-gain ask, the Q9 crown-jewels, the
+> port thesis). **★ A note on a sibling upload:** `754a0a4c-group-discussion-2-3-appointments` is a
+> **byte-identical duplicate** of the survey thread — ignore it; **the 2.3 Appointments phase it
+> names is still NOT separately documented** (Appointments-still-owed flag). The sources:
+> - **`ae435b5f-fourteen-points-on-impeachment`** (Apr 2 – May 4 2023, 48 posts / 2 chunks; DESIGN-SPEC,
+>   NOT a playthrough) — the **authoritative consolidated impeachment design**: the OP's elaborate
+>   "Fourteen Points" (`10centjimmy`, tier-4, the `ideo1928` GA — mostly NOT adopted) vs **Ted's
+>   simpler legislative-proposal counter-proposal (POST 4, 6) which BECAME the consensus** and is the
+>   **design ORIGIN of #112's modern-layer pipeline**. → folded into [§24.1.1a](#2411a--273-new-batch-43-ae435b5f--the-impeachment-subsystem-design-spec-legislative-proposal--house-judicial-committee--full-house--senate-23-trial-design-intent-vcczar-deferred-0-built) (#273, the headline). Cite `ae435b5f#POST n`.
+> - **`06fbb2e5-lars-and-ark`** ("All Teahaters are created equally", May–Jun 2023, 125 posts / 2 chunks;
+>   GENUINE 1772 ERA-PLAYTEST, 2 humans-v-8-CPU, both humans POPULISTS inside BLUE) — the first real
+>   era-run in many batches. Delivers **DH-81** (the war-end-per-battle bug, GM+designer CONFIRMED),
+>   **DH-82** (the doubled-officer Planning clamp), a 3rd-source #176/#155 confirm, and the cleanest
+>   #4/#171 + #74 + #76 data. → folded into [§17.4](#174-revolutionary-war) + [§21.1.A](#211-generic-cross-era-war-system) (DH-81/DH-82) + the corroboration table below. Cite `06fbb2e5#POST n`.
+> - **`b73925a4-flavor-event-poll`** (Apr 10–11 2025, 39 posts / 1 chunk; POLL + DESIGN BRAINSTORM,
+>   NOT a playthrough) — the **canonical flavor-event source**: defines flavor = brand/cultural-
+>   institution-tied, NO choices / NO point impact (Ted's tier-1 ruling, POST 38) + an `isFlavor`
+>   flag/category + a player on/off toggle + a per-event fire-probability field + a ≤40%-per-phase
+>   cap. Thread DEADLOCKED 10–10 and DEFERRED. → folded into [§27.1.1](#2711--221-new-ampudata-batch-30--the-era-content-registry-schema-per-administration-payload--scripted-vs-flavor-tier--per-category-era-activation-designed-two-schema-fields) (#221 tier) + [§14.1.3.e](#1413e--221237248--260261-batch-38--the-civil-rights--agriculture-policy-genre-drops--the-event-spread--firing-budget-mechanics-designed-0-shipped) (#261 budget). Cite `b73925a4#POST n`.
+> - **`ddd179cb-questions-for-playtesters`** (Aug 6–26 2024, 22 posts / 1 chunk; PLAYTESTER FEEDBACK
+>   SURVEY, NOT a playthrough) — the best direct UX/balance/fun signal on the real build: the #274
+>   skill-gain ask, the Q9 strengths (what NOT to break), the Q8 pains, the Trad/repeal balance
+>   hypothesis (#262/#175), and the "make it a computer game" port thesis (#114). → folded into the
+>   balance/UX rows below + a #274 cross-ref at [§5](#5-career-tracks--the-expertise-pipeline-212). Cite `ddd179cb#POST n`.
+>
+> **The HEADLINE findings (lead with these):**
+> 1. **★★ #273 — the IMPEACHMENT subsystem (NEW, 0% built; the consolidated design home).** A full
+>    pipeline: **event/legislative-proposal trigger → House Judicial Committee Articles of Impeachment
+>    → full-House vote → Senate 2/3 conviction trial**, with **resign-at-any-stage** and
+>    **convicted/defeated/resigned meter+point packages**. **Non-Presidential scope is explicit**
+>    (Justices/cabinet/Senators/Reps — the `ideo1928` trigger was a Justice). **★ CRITICAL CAVEAT:
+>    DESIGN-INTENT, NOT designer-ratified — vcczar DEFERRED the entire thread (POST 47/48); the
+>    consensus is Ted-led only.** This is the plumbing the coup treason-trial (#264) depends on;
+>    consolidates DH-33/DH-54/DH-66; design-origin of #112. At [§24.1.1a](#2411a--273-new-batch-43-ae435b5f--the-impeachment-subsystem-design-spec-legislative-proposal--house-judicial-committee--full-house--senate-23-trial-design-intent-vcczar-deferred-0-built).
+> 2. **★ DH-81 — the war-end/surrender roll fires PER-BATTLE, not once-per-term (shipped BUG,
+>    GM+designer CONFIRMED).** In the Lars-Ark 1772 run the "do we lose the war?" check rolled after
+>    **each individual battle** → an instant game-over after a single lost battle (Trenton, turn ~3).
+>    Should resolve on the **war-score + momentum chart at TERM END**, with only a **50/50
+>    "another battle?" roll per battle**. The stale per-battle loss-threshold columns in the war doc
+>    are the root cause. Plus **DH-82**: doubled-officer "Planning" (= top-officer Mil ×2 with no
+>    SecWar) can exceed the 0–5 ability cap (→6) — a clamp edge. At [§21.1.A](#211-generic-cross-era-war-system).
+> 3. **★ #274 — skill-gain accessibility / anti-floor-trap (NEW lever, the top Q10 ask).** Low-Admin /
+>    low-Legis pols languish because the skill-earning career path is itself **stat-gated** (you can't
+>    win a seat to earn committee skill-ups if your stats are too low) — a chicken-and-egg dead end.
+>    A distinct lever from the career-ceiling (#163) / floor-stat (#190) / committee-expertise (#252)
+>    rows. At [§5](#5-career-tracks--the-expertise-pipeline-212).
+> 4. **★ Flavor-event tier — an `isFlavor` flag + a player on/off toggle + a runtime firing budget
+>    (folds #221/#261; DEFERRED post-launch).** Ted's tier-1 ruling: flavor = brand/cultural-
+>    institution-tied, **NO choices / NO point impact**; 2,484 events authored, 1,355 already flavor.
+>    Firing = a **per-event fire-probability field + a ≤40%-flavor-per-phase cap** (resolves #261's
+>    runtime-cap reading). Prefer multi-beat cultural NARRATIVE arcs. OPEN: real-brand IP. At
+>    [§27.1.1](#2711--221-new-ampudata-batch-30--the-era-content-registry-schema-per-administration-payload--scripted-vs-flavor-tier--per-category-era-activation-designed-two-schema-fields) + [§14.1.3.e](#1413e--221237248--260261-batch-38--the-civil-rights--agriculture-policy-genre-drops--the-event-spread--firing-budget-mechanics-designed-0-shipped).
+> 5. **★ Q9 STRENGTH — what NOT to break (record once).** Playtesters' near-unanimous crown jewels =
+>    the **legislative/Congress phase + primaries + (legible) elections**. The browser port must
+>    **preserve their depth/legibility, not automate them away.** The Q3 "Henry-Clay-like" outsized
+>    Senate/Speaker archetype (LBJ, Grant) is the SAME engine working as intended.
+>
+> **★ Designer rulings + gaps folded (the topical sections carry the detail; this is the index):**
+>
+> | Item | Ruling / spec | Authority | Where folded | Cite |
+> |---|---|---|---|---|
+> | **★★ #273 IMPEACHMENT subsystem (NEW)** | Legislative-proposal → House Judicial Committee Articles → full House (50%+1) → Senate 2/3 trial; resign-at-any-stage; non-Presidential scope (Justices/cabinet/Senators/Reps; NOT Governors/military/ambassadors); convicted/defeated/resigned meter+point packages; trait-priority voting cascade; impeachment-manager +1 Command; CPU propose/resign odds; the General/Scripted-event auto-fire-into-trial timing problem (#221). **★ DESIGN-INTENT, NOT ratified — vcczar DEFERRED (POST 47/48); Ted-led consensus only.** | Ted/vcczar tier-1 (vcczar **deferred**); jimmy/ShortKing/Will/ebrk85/matthewyoung123 tier-4 | [§24.1.1a](#2411a--273-new-batch-43-ae435b5f--the-impeachment-subsystem-design-spec-legislative-proposal--house-judicial-committee--full-house--senate-23-trial-design-intent-vcczar-deferred-0-built) (consolidates [§24.1.1](#2411--impeachment-subsystem--broken-as-is-voided-mid-run-dh-66--corroborates-dh-33-now-3-thread-ideo1928)) | `ae435b5f#POST 1, 2, 4, 5, 6, 8, 9, 11, 13, 31-34, 47, 48` |
+> | **★ DH-81 war-end-per-battle BUG (shipped)** | the war-end/surrender roll fires per-battle, not once-per-term → instant game-over after one lost battle; should resolve on the war-score+momentum chart at TERM END, only a 50/50 "another battle?" roll per battle; stale per-battle loss-threshold columns are the root cause | **ebrk85 + Ted designer-CONFIRMED** | [§21.1.A](#211-generic-cross-era-war-system) (cross-ref #45/#56/#155) | `06fbb2e5#POST 83, 85, 86, 88, 89` |
+> | **★ DH-82 officer-cap clamp (shipped edge)** | doubled-officer "Planning" = top-officer Mil ×2 (no SecWar) can exceed the 0–5 ability cap (=6 with a 3-Mil officer); the same clamp Ted flagged in `rookie1772` | GM-observed; Ted-corroborated | [§21.1.A](#211-generic-cross-era-war-system) | `06fbb2e5#POST 73, 74` |
+> | **★ #274 skill-gain accessibility (NEW lever)** | low-Admin/low-Legis pols languish — the skill-earning career path is itself stat-gated (can't win a seat to earn committee skill-ups); make Admin/Legis easier to grow via random events or another mechanism; distinct from #163/#190/#252 | tier-4 consensus (ShortKing+Euri, top Q10 ask) | [§5](#5-career-tracks--the-expertise-pipeline-212) | `ddd179cb#POST 2, 9` |
+> | **★ #221 ENRICH (flavor tier flag + toggle)** | flavor = brand/cultural-institution-tied, NO choices/NO point impact; an explicit `isFlavor` flag/category (so the engine can select on it) + a **player on/off toggle**; 2,484 events / 1,355 already flavor; prefer multi-beat cultural NARRATIVE arcs over "company X founded"; rides the existing Event phase (no new phase) | **Ted tier-1 ruling (POST 38)**; vcczar tier-1 (counts) | [§27.1.1](#2711--221-new-ampudata-batch-30--the-era-content-registry-schema-per-administration-payload--scripted-vs-flavor-tier--per-category-era-activation-designed-two-schema-fields) | `b73925a4#POST 1, 18, 20, 21, 23, 24, 38, 39` |
+> | **★ #261 ENRICH (flavor firing budget — RESOLVES the runtime-cap reading)** | flavor fires as a **runtime random subset per playthrough**, NOT all-fire — a **per-event fire-probability field** (existing non-flavor events use 5–25% / 50% / 100% per-half-term) + a **≤40%-flavor-per-phase cap**; fallback if too costly: author far fewer/higher-quality events | vcczar tier-1 (per-event %); Saucialiste tier-4 (40% cap) | [§14.1.3.e](#1413e--221237248--260261-batch-38--the-civil-rights--agriculture-policy-genre-drops--the-event-spread--firing-budget-mechanics-designed-0-shipped) | `b73925a4#POST 2, 4, 10, 19, 22, 23, 29` |
+> | **★ #262 BALANCE (Trad/extreme disadvantage = mostly INTENDED)** | the LW-Pop/RW-Pop/Prog/Trad disadvantage is mostly **period-accurate, keep it** (NOT broken); faction/era-specific (Red-1 worst seat, RW-Trad strong post-1980); the real fixables = repeal-incentive **invisible in sheets** (#175/#132 legibility) + **too few Moderate-point bills** (vcczar deferred, won't-fix-yet w/ a measurable trigger) | vcczar tier-1 hypothesis + deferral; tier-4 consensus | the balance fold below | `ddd179cb#POST 1, 11, 12, 13, 20, 21, 22` |
+> | **★ #114/DH-36/#179 (the port thesis)** | the Lingering phase is the #1 boring time-sink ("Processing Lingering! the most time-consuming, boring portion of being a GA") → the **"make it a computer game" port thesis** (Ted's Q10: "so I didn't have to CPU all the time") | tier-1 (Ted) + tier-4 | the balance fold below (cross-ref [§31.6 GM-burnout meta](#316-gilded-content-cluster--meta-corroborations-b14)) | `ddd179cb#POST 11, 14, 20` |
+> | **Other balance/UX folds (no NEW row)** | #107/#267 ambassador any-Admin + NATO/Art-5 auto-meter + treaty review; #23 Exec-Actions too hard/blunder-prone; #20 Governor phase dead-air → DLC randomized regional events (vcczar concurs); #251/#252 SCOTUS overhaul (randomized cert/docket, cross-ref #270 generator); #183 momentum works for insurgents; #175 per-law repealability (line-item-veto + term-limit-repeal exploit confirmed patched) | tier-4 asks + vcczar concurrence (#20) | the balance fold below | `ddd179cb#POST 9, 11, 13, 14, 21, 22` |
+> | **Lars-Ark 1772 corroborations (no NEW row)** | #4/#171 draft-ideology restrictions CONFIRMED ON in 1772 ("the only pol I'm eligible for") + Populist-in-major-party disadvantage; #74 CPU AYE-only stalled the Declaration of Independence 3× → candidate **foundational-bill (~75%, can't-perma-stall) requirement**; #76 conversions roll/fail→flip-flopper; #176 MilPrep stuck at 2 (3rd source); #155 1772 RevWar near-un-winnable (counter-constraint data) | GM tier-4 (Ark/Lars); designer-flagged-good-feedback (POST 80) | [§17.4](#174-revolutionary-war) + the corroboration table below | `06fbb2e5#POST 8, 12, 47, 67, 73, 76, 77, 80, 106-107, 122` |
+>
+> **Roadmap takeaway (for the tech-lead + roadmap-planner).** Batch-43 is one big NEW subsystem + one
+> confirmed shipped bug + a pile of corroboration, ranked:
+> (1) **★★ #273 (impeachment)** is the consolidated end-to-end SPEC for a 0%-built subsystem that
+> **#264 (coup treason-trials) depends on** and that **#112 (modern-layer removal) is the instance
+> of** — but it is **DESIGN-INTENT, NOT designer-ratified** (vcczar deferred POST 47/48). **Do NOT
+> build before ratification.** Carry the OPEN levers (meter-swing auto-vs-roll; 1-vs-2-of-4 eligibility
+> gates; pardons unspecced; trait-vocab reconcile Lawful/Puritan/Illicit/Teflon; Special-Committee
+> delete-vs-keep; the OP's 13-named-offense machinery vs Ted's single-proposal abstraction).
+> (2) **★ DH-81** is a concrete shipped-cadence bug to AUDIT (the war-end roll must fire once-per-term
+> on the war-score+momentum chart, not per-battle; verify the stale per-battle loss-threshold columns
+> are gone) — plus the **DH-82** 0–5 clamp on doubled-officer Planning. Both pair with the #45/#56
+> War-Score redesign and the #155 1772-floor counter-constraint (now 3rd-source confirmed).
+> (3) **★ #274 (skill-gain accessibility)** is a NEW balance lever distinct from the career-track
+> rows — the asked-for fix is to make low-Admin/low-Legis pols growable.
+> (4) **The flavor tier (#221/#261)** is DEFERRED post-launch but now has a concrete shape (an
+> `isFlavor` flag + on/off toggle + per-event fire-% + a ≤40%/phase cap) — it sharpens, not adds,
+> architecture. (5) **The survey's Q9 STRENGTH** is a design constraint on the whole port: the
+> legislative phase + primaries + legible elections are the crown jewels — **preserve depth/legibility,
+> do not trade it for automation convenience.** Cross-ref `game-context.md` rows **#273/#274 (NEW)**,
+> bugs **DH-81/DH-82 (NEW)**, and **#45/#56/#155/#176/#112/#264/#221/#261/#262/#175/#132/#114/#179/#107/#267/#23/#20/#251/#252/#183/#4/#171/#74/#76 (sharpened/corroborated)**.
 
 ### 30.4 Authority hierarchy reminder
 
