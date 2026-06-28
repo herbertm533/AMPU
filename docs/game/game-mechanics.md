@@ -361,6 +361,7 @@
     - [30.24 Rulings folded from batch 34 — the FIVE war/data/record threads (the #45 War-Score DESIGN ORIGIN + DH-79) (`rethinkwar` / `kiaofficers` / `strongnevernom` / `majorevents` / `newplaytest`)](#3024-rulings-folded-from-batch-34--the-five-wardatarecord-threads-the-45-war-score-design-origin--dh-79-rethinkwar--kiaofficers--strongnevernom--majorevents--newplaytest)
     - [30.25 Rulings folded from batch 35 — the FIVE content/design/playtest threads (#247 event-state-lean + #248 subtype-taxonomy + the 1960-restart #186 PROOF + #249/#250/DH-80) (`statelean` / `futureideas` / `scotusfuture` / `electiondisc` / `redbutton1960`)](#3025-rulings-folded-from-batch-35--the-five-contentdesignplaytest-threads-247-event-state-lean--248-subtype-taxonomy--the-1960-restart-186-proof--249250dh-80-statelean--futureideas--scotusfuture--electiondisc--redbutton1960)
     - [30.26 Rulings folded from batch 36 — the FIVE design/data threads (★★ #251 the JUDICIARY OVERHAUL + #252 + the cleanest PV-revamp done-confirmation) (`judiciaryidea` / `failednoms` / `terminology` / `space` / `histspeakers`)](#3026-rulings-folded-from-batch-36--the-five-designdata-threads--251-the-judiciary-overhaul--252--the-cleanest-pv-revamp-done-confirmation-judiciaryidea--failednoms--terminology--space--histspeakers)
+    - [30.27 Rulings folded from batch 37 — the FIVE CONTENT-AUTHORING / DESIGN threads (#253 the Red/Blue per-era BENCHMARK win-model + #254-#257 + the Immigration/Education genre supply) (`benchmarkupd` / `legisprops2028` / `yearname` / `immigration` / `education`)](#3027-rulings-folded-from-batch-37--the-five-content-authoring--design-threads-253-the-redblue-per-era-benchmark-win-model--254-257--the-immigrationeducation-genre-supply-benchmarkupd--legisprops2028--yearname--immigration--education)
     - [30.4 Authority hierarchy reminder](#304-authority-hierarchy-reminder)
 31. [Gilded-Age era systems (designed, not built)](#31-gilded-age-era-systems-designed-not-built)
     - [31.1 (#147) Tariff-as-national-%-rate + the mutually-exclusive MonetaryRegime](#311-147-tariff-as-national-rate--the-mutually-exclusive-monetaryregime-designed)
@@ -607,6 +608,110 @@ Naval, Science, Technology, Trade, Transportation, Welfare.
 > ([§3.4.1(c)](#341--the-pv-system-overhaul--per-trait-tiers--non-linear-ability-curve--trait-remap--display-scale-new-revamppv--summer2021-batch-30-designed-the-shipped-pvts-is-at-a-pre-revamp-state--dh-77)) — `terminology` is the **canonical origin** of that name. (`terminology#POST 2, 3, 4, 5, 8, 12, 13,
 > 16, 17, 20, 22, 23, 34, 35, 36, 37, 38, 39, 40, 41`; codebase `types.ts:62-117, 182-186, 316-320`;
 > `game-context.md` #216.)
+
+> **★★ #216 — the DESIGN SOURCE/AUTHORITY for the whole term-taxonomy remap (`yearname`, batch 37 — the
+> ORIGINATING ruling).** `yearname` (b08204e7, "Year Name for AMPU Poll," Sept 2022) is where vcczar FIRST states
+> the canonical attribute-category split that #216 must implement. The doctrinal ruling, **verbatim** (vcczar
+> `yearname#POST 11 pt.3`, repeated POST 13):
+>
+> > *"Command, Legis, Military, Admin, etc. should be called **Skill**. Economics, Welfare, Trade should be
+> > called **Expertise**. Civil Rights, RW Activists, etc. Should be called **Interests**. Charisma, Egghead,
+> > Magician, should be called **Traits**. Native American, Woman, LGBT should be called **Demographics**."*
+>
+> So the **FIVE canonical attribute categories** (one canonical word per axis) are:
+>
+> | Category | Members (as stated) | Maps to (shipped) |
+> |---|---|---|
+> | **Skill** | Command, Legislative, Military, Admin (+ Judicial, Governing, POST 8) | the `Skills` 0-5 axis + `command` (§3.1 row 1-2) |
+> | **Expertise** | Economics, Welfare, Trade, … (the **industry/sector** axis) | the `Expertise[]` tag axis (§3.1 row 3) |
+> | **Interests** | Civil Rights, RW-Activists, … (the **lobby/activist-leaning** axis) | the lobby/interest layer (`LobbyCardId`, modern-era) |
+> | **Traits** | Charisma, Egghead, Magician, … (born or earned) | the `Trait[]` axis (§3.1 row 4) |
+> | **Demographics** | Native-American, Woman, LGBT, … | the #238/#239 demographics flags ([§30.22.C](#3022c--240--239--238--the-data-model-extensions-curated-statline-schema-demographicsmisc-flags-gender-new-histpres--georgemartha--designeddata-0-shipped), designed) |
+>
+> **Why the rename exists (POST 8, 11):** the game currently uses **interchangeable terms for the same axis** —
+> Command/Judicial/Legislative/Governing/Admin is variously called "skill," "expertise," OR "experience," AND the
+> Agriculture/Business/Economics axis is *also* called "expertise" or "experience." The ruling fixes **one
+> canonical word per axis** (vcczar owns the inconsistency: *"the flaw is my own… I use interchangeable terms…
+> I'm not really a terminology person"*). A companion **doctrinal-terms principle** (Willthescout7 POST 5, vcczar
+> agrees POST 6): EVERY action word (cancel / gain / roll / block-vs-cancel) must mean exactly ONE thing (board
+> game *Oath* as the model). Process: Willthescout7 was granted rules-edit access (POST 15-19); the rename is a
+> **careful find-and-replace** (Ted POST 12), but **NOT a blind global replace** (vcczar POST 14 — the same word
+> shouldn't be replaced in all contexts). Scale: touches "many thousands of events, actions, proposals and rules"
+> (POST 9).
+>
+> **Trait renames this thread originates (feed #216):**
+> | Rename | Disposition | Note |
+> |---|---|---|
+> | **"Cop" → Righteous / Virtuous** | RENAME agreed (10centjimmy POST 3, 7; vcczar POST 4); **final word not explicitly locked** (Righteous vs Virtuous both on record) | "Cop" was a filler word modeled on RFK (Gore Vidal called RFK "a cop"); **definition PRESERVED** — "Cop" = uniquely natural as Attorney General even if mediocre at admin (vs **Efficient** = routinely good at everything; vs **Illicit** = a disaster specifically at AG). vcczar keeps ALL overlapping traits — *"only the names of the terms"* change |
+> | **"Lowbrow" → Everyman / Commoner** | too-negative → rename (POST 8, 11 pt.6); vcczar later settles **Everyman** (corroborates the `terminology` ruling above) | — |
+> | **"Egghead" → Wonk** | floated, vcczar happy to change (filler, from Adlai Stevenson II), will poll (POST 8, 11 pt.6) | shipped union still has `Egghead`, no `Wonk` |
+> | **Expertise "Military" → "Army"** | corroborated here (Military listed under BOTH Skill and Expertise overlaps); the authoritative Army ruling is in the sibling `terminology` thread above | — |
+>
+> **vcczar REFUSES several merges (POST 11 pts.4-5, pure intentional flavor):** keeps **Illicit AND
+> Controversial**; **Cop AND Efficient AND Integrity**; **Decisive General** separate (battlefield-only; Efficient
+> = politics-only — he won't make Efficient drive the battlefield). **Lobby/Interest-axis nuance (POST 11 pt.7-8):**
+> **Human Rights ≠ Civil Rights** — Civil Rights is **exclusively about Black Americans**; **LGBT + women's rights
+> live under LW Activists**; **Human Rights = non-citizen / international** (Native tribes, anti-immigrant actions,
+> sanctuary cities); **Big Agriculture** = the **mega-farm/plantation** lobby (rural Big Corporations), NOT
+> small/family farmers.
+>
+> **★ #216 is the QW22 BLOCKING PREREQ for the (designer-confirmed-DONE) PV revamp** — the marquee PV/roster work
+> (#214/#215/#220, [§3.4.1](#341--the-pv-system-overhaul--per-trait-tiers--non-linear-ability-curve--trait-remap--display-scale-new-revamppv--summer2021-batch-30-designed-the-shipped-pvts-is-at-a-pre-revamp-state--dh-77)) cannot ship until this rename lands (the PV table + all three marquee `CURATED_ROWS`
+> rosters still use the old vocabulary). `yearname` is its design AUTHORITY; the `terminology` thread (batch 36)
+> is the parallel poll that locked Military→Army + Lowbrow→Everyman. **Shipped reality:** the rename is
+> DESIGNED-only — shipped `Trait` has no `Cop`/`Righteous`/`Virtuous`/`Wonk`/`Everyman` (`types.ts:62-117`), and
+> the `Expertise` union still says `Military`/`Naval` (`types.ts:182-186`); only Military→Army + Lowbrow→Everyman
+> act on shipped tags. (`yearname#POST 3, 4, 5, 6, 7, 8, 11, 13, 15`; codebase `types.ts:62-117, 182-186`;
+> `game-context.md` #216.)
+
+#### 3.1.1 ★ #254/#257 (NEW, `yearname`, batch 37) — the year/turn LABEL rename (single year → term SPAN) + the age-tick off-by-one (DESIGNED, 0% shipped)
+
+> **★ Two display/derivation findings from the year-name poll (strand A), distinct from the #216 term-taxonomy
+> remap (strand B, §3.1 above).** Both are **display-side**, NOT a cadence change.
+
+**(A) ★ #254 — the year/turn LABEL rename (single year → term SPAN).** The title ruling of the poll:
+- **Problem (vcczar POST 1):** turns are labelled by the **election year that BEGINS a term** — Washington's
+  first term shows as **"1788"** (Biden's as **"2020"**) — but the winner doesn't take office until **1789**, so
+  the label mismatches the term it represents.
+- **Player complaint that motivates it (ShortKing POST 2, +10centjimmy POST 10):** *"if I start on the turn
+  labelled 2020, I'd expect to influence the 2020 election"* — a single-year label implies you play THAT
+  election, but you don't.
+- **Ruling:** relabel every term to a **SPAN** — `1788` → **`1789–1791`** (the term, inauguration-anchored;
+  i.e. inauguration year → next election year), `2020` → **`2021–2023`**.
+- **Boundary convention NOT settled in-thread** (three variants → deferred to a second 2-option poll):
+  | Variant | Format | Source |
+  |---|---|---|
+  | inauguration-anchored span | `1789–1791` (inauguration → next election) | vcczar POST 1 |
+  | even-year span | `1788–1790` (election-year → next-election-year) | Ted POST 8 (likes even numbers; concedes the off-by-one) |
+  | inauguration-anchored era start | start each era in **January of the odd year** (e.g. 1801) | ConservativeElector2 POST 20 |
+  → **OPEN: which boundary format did the project adopt** (affects the rendered label).
+- **Engine-coupling (codebase-verified):** this is fundamentally a **UI relabel** — the shipped `year` is an
+  integer turn counter displayed directly, and cadence predicates key off it (`isElectionYear = year % 2`,
+  `isPresidentialYear`/`isDraftYear = year % 4`, `phases.ts:49-58`). The label change couples to **every site
+  that parses/renders `year`** (turn header, election prompts, age calc), but the underlying integer `year` +
+  `%2`/`%4` cadence stays **UNCHANGED** (display-only). DISTINCT from #216 (different strand, different surface).
+
+**(B) ★ #257 — the politician age-tick off-by-one.** A small age-model bug surfaced in the same discussion (Ted
+`yearname#POST 8`): *"why is somebody still their 2022 age in 2023 and at least part of 2024?"* — because the
+**biannual (2-year) turn holds one age value for both calendar years**, a pol's displayed age **lags the in-game
+date by up to ~2 years**. The fix is to **tick age WITHIN the 2-year turn** (or derive age from the in-game date,
+not once-per-turn) — the SMALL display/derivation fix, likely folded into #254's year-display work. Pairs with the
+age/death-roll cluster (#36/#37).
+
+> **★ Biannual → annual (yearly) turn cadence is AMPU-2 / DEFERRED — do NOT confuse with #257.** Ted floats
+> (POST 8): *"Ideally we'd change rounds to be yearly instead of bi-annual. But then we'd have to change
+> everything in the entire game."* vcczar rules (POST 11 pt.2): **"Maybe annual for AMPU 2."** Biannual is
+> **deliberate** to speed the game up (a 500-hour game won't keep most players; if midterms didn't exist he'd use
+> a 4-year turn). He frames AMPU-1 as *"a solid draft for AMPU 2."* So the **deep cadence change is AMPU-2 /
+> deferred-post-launch**; #257 is only the SMALL within-turn age-tick fix, NOT the cadence change.
+
+*(designed, 0% shipped — #254: render the turn as a term SPAN instead of the bare election year across the turn
+header / election prompts / any year-display surface; resolve the boundary convention (inauguration-anchored
+`1789–1791` vs even-year `1788–1790` — deferred to a poll, treat as OPEN); keep the underlying integer `year` +
+`%2`/`%4` cadence UNCHANGED. #257: tick politician age within the 2-year turn (or derive from the in-game date)
+so displayed age does not lag; likely implement alongside #254. Do NOT change the biannual cadence (AMPU-2). Cite
+`yearname#POST 1, 2, 8, 10, 11, 20`; codebase `phases.ts:49-58` (integer `year`, `%2`/`%4` predicates);
+`game-context.md` #254/#257; pairs #216 (sibling strand) / #36/#37 (age-death).)*
 
 > **★ #225 — Celebrity definition RULING (`terminology`, batch 36).** vcczar (POST 28, 31) + Ted (POST 32) nail
 > the intended meaning of the **`Celebrity`** trait (the one shipped at `types.ts:74`): **nationwide
@@ -4814,6 +4919,25 @@ scripted event** was ACCEPTED, `POST 17/18`.)
 > in full at [§30.22.B](#3022b--237--the-stateful-policy-genre-framework-businesslabor--currency--copyright-new-businesslabor--designed-0-shipped) (the genre) + [§11.3](#113-governors-actions-library-designed-not-built) (the geography-gated launch-site Gov action, #20).
 > (`space#POST 1, 4, 8`; `game-context.md` #248/#237/#20.)
 
+> **★ STRESS-TESTED + multi-category-tag confirmed (batch 37) — three threads exercise the 33-value taxonomy.**
+> - **`immigration`** (8f3fb48a) implies the **Immigration** subtype value (~100 props span open /
+>   path-to-citizenship / restrict-quota-cap / exclusion-ban / border; named acts Naturalization-1870 /
+>   Page-1875 / Know-Nothing); **`education`** (4fe0c4c0) implies the **Education** value. Both are concrete
+>   genre/subtype instances (genre content at [§14.1.3.c](#1413c--221237248-batch-37--the-immigration--education-policy-genre-content-drops--the-fluff-curation-rule-restated--historical-density-calibration-designed-0-shipped)).
+> - **★ The strongest MULTI-CATEGORY-tagging evidence yet** comes from `education#POST 1`: vcczar — *"I'll
+>   probably redo all the policy categorizing at some point, allowing things to be in **multiple categories**."*
+>   The worked example is the **DC memorials parked under Education only for lack of a home** (→ NEW #256
+>   National Projects, [§14.1.3.b](#1413b--255256-new-batch-37--two-structural-content-deltas-the-variable-house-size-cap--the-national-projectsmonuments-content-shape-designed-0-shipped)) — content is homeless precisely because single-bucket filing fails it.
+>   This corroborates the open single-vs-MULTI-valued Q (with `space`'s Infrastructure+Diplomacy elevator) → the
+>   axis is **multi-valued**.
+> - **★ `legisprops2028`** (665d7f33) STRESS-TESTED the 33-value enum with a large Future-band proposal pool
+>   (~12 genre clusters + two ~50-item ChatGPT lists, POST 26-27) and forced **NO new subtype** — every proposal
+>   mapped to an existing value (tech, energy/climate, social, economy, space…). The **weakest-covered clusters**
+>   to review against the taxonomy = **public utilities** and **water/resource scarcity** (also flagged as
+>   candidate under-covered #237 genres). A clean validation that the 33-value enum is broad enough.
+> (`immigration#POST 1, 4`; `education#POST 1`; `legisprops2028#POST 5, 6, 17, 26-27`; `game-context.md`
+> #248/#256/#221/#237.)
+
 *(designed, 0% shipped — add a **`subtype` (policy-area) field** drawn from the fixed 33-value enum above to
 the #221 primitive record schema on **ALL FOUR primitives** (Legis-Prop / Pres-Action / Gov-Action /
 SC-Case); likely **multi-valued** and **atop** (not replacing) the 4-value `committee`; cross-link #237
@@ -4827,6 +4951,158 @@ SC-Case); likely **multi-valued** and **atop** (not replacing) the 4-value `comm
 > branching primitives + prereq-chained ladders**; and the **#248 33-value `subtype` policy-area tag** on
 > every primitive (§14.1.3.a). Cite `legisexecgov#POST 1, 2, 5-8, 13, 15, 16, 18, 20,
 > 23-38`; `ampuelections#POST 1, 6`; `futureideas#POST 1`; `game-context.md` #221 / #20 / #236 / #237 / #206 / #248.)*
+
+> **★ (batch 37, `legisprops2028`/`education`) — content-AUTHORING refinements to the #221 model (general
+> design law, not era-specific).** Three sharpenings of HOW the catalog is curated and shaped:
+> 1. **Multi-bill PACKAGE / LADDER pattern reconfirmed.** A single marquee Act decomposes into many atomic
+>    enforceable bills — vcczar's worked example is the **Green New Deal split into ~20–30 separate enforceable
+>    bills** (`legisprops2028#POST 14-15`), i.e. **one act → 20–30 chained #221 entries**. This is the same
+>    escalating-ladder / prereq-chain shape already in §14.1.3 attribute (4) and the `518fb253` Prohibition/
+>    coverture/National-Road ladders — a **content-authoring pattern**, NOT a new primitive type. Open (carry
+>    forward): is a package represented as a tagged BUNDLE, a prereq-CHAIN, or independent entries?
+> 2. **★ AI/ChatGPT-generated lists are the canonical fluff-risk vector — they need a HUMAN VETTING gate.** The
+>    `legisprops2028` thread imports **two ~50-item ChatGPT-generated proposal lists** (POST 26-27, a "liberal"
+>    set + a "conservative/GOP" set). Both tier-1 designers caveat them hard: vcczar — ChatGPT *"is no real
+>    intelligence… grabs at information, making factual errors often,"* useful only *"for gaining simple ideas…
+>    or just for fun,"* NOT fact-based research (POST 30); Ted endorses it **for brainstorming ONLY** (POST 29,
+>    33). vcczar's **vetting gate** = *"compile only items not already in the game, flag uncertains for me to
+>    double-check"* (POST 31). This ties directly to the established §14.1.3 attribute (2) curation rule (fluff
+>    dilutes the CPU's selection pool): **AI-generated proposals are exactly the fluff-risk that rule guards
+>    against**, so any Future-band content traced to this thread carries an **AI-generated provenance flag** and
+>    must clear the importance/realism bar before catalog entry.
+> 3. **★ NEW datum — HISTORICAL-DENSITY CALIBRATION (a concrete content-density / CPU-rate tuning method).**
+>    vcczar (`education#POST 7`): *"Really what I should do is see how many laws were historically passed that
+>    are in the game for each two-year period… Same with Pres Actions."* → size each **2-year catalog** to the
+>    **real laws-passed count** for that period, tuning both **content density** AND the **CPU proposal rate**
+>    against real legislative throughput. A measurable calibration target for the #221 catalog + the #70-#78 CPU
+>    selection model. (`legisprops2028#POST 14-15, 29, 30, 31`; `education#POST 7`; `game-context.md` #221.)
+
+#### 14.1.3.b ★ #255/#256 (NEW, batch 37) — two structural content deltas: the variable HOUSE-SIZE CAP + the NATIONAL-PROJECTS/MONUMENTS content shape (DESIGNED, 0% shipped)
+
+**(A) ★ #255 — the variable House-size CAP** (`legisprops2028#POST 34, 35`). theFreezerFlame proposes a **REAL
+House Act equivalent (+150 House members)** (POST 34); a GA replies that the forum game already supports a MENU
+of selectable chamber-size caps that can trigger *"at pretty much any time"*: **100 / 435 / 500 / 1000 /
+uncapped** (POST 35) — i.e. an **event/legislation-driven chamber RESIZE**, not a fixed constant.
+
+- **Shipped reality (codebase-verified):** **NO chamber-size variable exists at all.** The shipped House is the
+  **focus-rep abstraction** (`State.representativeIds: string[]`, `types.ts:1327`) — per-state rep lists with NO
+  total House-size constant, NO cap, and NO resize mechanism (the only `uncapped` hit in `src/`,
+  `phaseRunners.ts:389`, is an unrelated "best-uncapped" committee-chair skill rule).
+- **DISTINCT from the resolved focus-rep SIZING question.** #219 (the `housepoll` decision, [§28.9-adjacent])
+  RESOLVED to **KEEP the focus-rep abstraction** (modeling every real ~435 seat was REJECTED → parked as "AMPU
+  2") and adopted an EV-derived 1-10 ladder for **how many focus-reps a state gets**. #255 is a **different
+  sub-question**: whether a **TOTAL chamber-size cap** exists and can be **changed in play**. Keep distinct from
+  #219 (focus-rep sizing), #34 (census/EV machinery), #55 (focus-rep abstraction).
+- **The "REAL House Act (+150 seats)" is a #221 resize Legis-Prop content instance** — one concrete entry in the
+  resize-legislation family this cap would respond to.
+- *(designed, 0% shipped — decide whether to introduce a total-chamber-size variable + a cap-options menu
+  (100/435/500/1000/uncapped) settable by event/legislation, and reconcile it with the focus-rep model the
+  housepoll kept (#219) — OR confirm the focus-rep model makes a global cap moot. If adopted: add a House-size
+  state field + an event/legislation hook to change it. Cite `legisprops2028#POST 34, 35`; code `types.ts:1327`,
+  `phaseRunners.ts:389`; `game-context.md` #255; pairs #219/#34/#55/#221/#250.)*
+
+**(B) ★ #256 — the National-Projects / Monuments content shape** (`education#POST 1, 4, 5`). A large fraction of
+the Education Legis-Prop list is actually **monument & federal-building authorizations** vcczar parked under
+Education **ONLY because they fit no other category** (POST 1: *"the Washington DC memorials are all in here…
+they don't fit another category. I'll probably redo all the policy categorizing… allowing things to be in
+multiple categories"*). These are **prestige / vanity-infrastructure** content with soft-power / QOL-flavor
+payoffs, NOT Education semantically:
+
+| Sub-shape | Examples |
+|---|---|
+| **Memorials / monuments** | Jefferson, Lincoln (+ Reflecting Pool), Washington Monument, FDR, MLK, Eisenhower, TR Island, LBJ Memorial Grove |
+| **Federal-building authorizations** | Robert C. Weaver, Herbert Hoover, Hubert Humphrey, J. Edgar Hoover, Harry S. Truman, RFK, Frances Perkins buildings |
+| **Renaming actions** | rename Supreme Court / White House / Treasury / Pentagon / US Capitol buildings; name reflecting pools |
+| **Player extensions** | a named **warship / aircraft carrier** (after an admiral/president, POST 5); statues (cf. Statuary Hall); a **Neil Armstrong monument ON THE MOON** (POST 4 — an Era-of-Future national project tying monuments to the space band) |
+
+- **Two readings (no existing gap maps cleanly):** (1) a **DISTINCT new policy GENRE** ("National Projects /
+  Monuments"); (2) the **canonical worked example for #248 MULTI-CATEGORY tagging** — it is homeless precisely
+  because single-bucket filing fails it (the DC-memorials-parked-under-Education case is vcczar's own motivating
+  example for *"allowing things to be in multiple categories"*).
+- *(designed, 0% shipped — no monuments/national-projects content or content type exists in `src/`; with no
+  `subtype` field on `Legislation` (`types.ts:1513`) and no policy-genre field (#237), this content has nowhere
+  to live. Decide: own genre (#237) OR absorbed by #248 multi-category tagging; either way author the content
+  with a home category. Cite `education#POST 1, 4, 5`; code `types.ts:1513`; `game-context.md` #256; pairs
+  #237/#248/#221/#206.)*
+
+#### 14.1.3.c ★ #221/#237/#248 (batch 37) — the Immigration + Education policy-genre content drops + the fluff-curation rule restated + historical-density calibration (DESIGNED, 0% shipped)
+
+> **★ Two concrete single-genre content drops** populate the #221 three-primitive system / #237 genre framework /
+> #248 subtype taxonomy. Both are **CONTENT-AUTHORING idea dumps** (NOT playthroughs): `immigration` (8f3fb48a,
+> Apr 2022, 4 posts) and `education` (4fe0c4c0, Apr 2022, 11 posts), both vcczar-authored with GA additions.
+> **0% shipped** (no `subtype` field, no Pres/Gov-Action primitives — §14.1.3 above).
+
+**(1) Immigration genre — RAW/UNTAGGED form** (`immigration#POST 1, 4`). The earliest, rawest draft of the genre
+shape: vcczar dumps it as three flat bullet lists under the #221 primitive headers, but — UNLIKE the later
+Business/Labor (`dc0316f0`) and master-primitive (`518fb253`) threads — these are **un-coded**: **no `L/P/G/S`
+prefixes, no era tags, no `*-Default` baseline, no `Preq:` chains.** Evidence the genre L/P/G/era-tag schema
+(§30.22.B) was applied LATER. Shape/counts (NOT transcribed in full):
+
+| Primitive | ~Count | Spans |
+|---|---|---|
+| **Legis Prop** | **~95 + 5** | the full open↔restrict axis: open/expand (open borders, abolish quota system, diversity-visa, STEM/family visas, refugee admission), path-to-citizenship (legalize 5+yr residents, military/college undocumented), restrict/quota/cap (numeric caps, 2-3% national-origin quotas, head-tax, literacy test, points system), exclusion bans (race/origin/religion/class/health/ideology — historically-flavored broad set), border/infrastructure (Canada/Mexico walls, more agents, "robot guards at the borders" = Future flavor); **named acts** Naturalization-1870 / Page-1875 / Know-Nothing-21-yr (implies era-keyed though no tags written) |
+| **Pres Actions** | **10** | a **strict-vs-lenient STANCE toggle** + enforcement/non-enforcement of deportation, family-separation, sanctuary-city ban, temporary "African/Muslim ban," use-defense-funds-for-wall, encourage Mexican immigration — corroborates the Pres-Action-as-stance pattern |
+| **Gov Actions** | **1 + 1** | "Allow Sanctuary Cities" + the **district-flip** (below) |
+
+> **★ The district-flip Gov action = the DESIGN ORIGIN of the demographic→state-lean lever (#247).** `immigration#POST
+> 2` (vcczar): *"Promote immigration to your state as a Gov action to possibly snatch another congressional
+> district."* A governor spends a Gov-Action to grow population / shift composition and **flip or gain a House
+> district** — a **demographic→apportionment→state-lean lever delivered as a Gov-Action primitive** (#221) that
+> mutates state composition. ConservativeElector2 (POST 3) ties it to an **"EV swing system"** he's unsure ships.
+> Same idea accepted in `518fb253` POST 5; **this thread is its origin/expansion**. Couples the Immigration genre
+> into the event/action-driven state-lean realignment cluster (#247, [§30.25](#3025-rulings-folded-from-batch-35--the-five-contentdesignplaytest-threads-247-event-state-lean--248-subtype-taxonomy--the-1960-restart-186-proof--249250dh-80-statelean--futureideas--scotusfuture--electiondisc--redbutton1960)). **OPEN Q (tech-lead):** does the district-flip drive
+> **APPORTIONMENT** (seat count) or only **district LEAN**? Unresolved in-thread.
+
+**(2) Education genre — fully-worked** (`education#POST 1, 3, 6, 10, 11`). The most complete single-genre spec:
+
+| Primitive | ~Count | Spans |
+|---|---|---|
+| **Legis Props** | **~70+** | founding/19c institution-building (National University, Smithsonian, Library of Congress, build West Point/Naval Academy + their **negations** "No Military/Naval Academy"; the Morrill-style land-grant ladder incl. Black colleges in the South); Reconstruction/Progressive (federal aid to Southern schools); modern named statutes (ESEA, Higher Education Act, ESSA, GI Bill, special-ed access); **increase/decrease meter-tradeoff pairs** (Arts & Sciences funding ±, Education-Dept funding ±); contemporary culture-war toggles (abolish student-loan debt, free college, universal pre-K/lunch, privatize education, ban homeschooling vs homeschool tax breaks, ban/mandate creationism & evolution, require "American Exceptionalism"/"Anti-Racism") — strongly ideology-coded, left/right variants PAIRED |
+| **Pres Actions** | **2** | Pro-Public-School Policy; Pro-School-Voucher Policy (vcczar flags Pres Actions as a NEED area) |
+| **Gov Actions** | **7** | Build State University; Build Military Academy; Emphasize Public Schooling; Ban Teaching of Evolution; Free Community College; Create Traditional-Values Textbooks — flat/state-agnostic (#20). **Player wish (POST 8): a per-state MAP showing each state's active Gov actions** (reinforces the deferred per-state gov-action upgrade) |
+
+**(3) Three recurring content-primitive option-set SHAPES the Education genre crystallizes** (all reusable across
+genres):
+
+| Shape | What it is | Example |
+|---|---|---|
+| **ban / legalize / require TRIAD** | a 3-way option-set primitive (not just yes/no) | ban/legalize/**require** Sex Education; ban/legalize/require teaching of religion; ban/legalize/require LGBT history (`education#POST 10`) |
+| **enact / negate toggle pair** | a policy and its explicit negation BOTH exist as entries | "Build Naval Academy" ↔ "No Naval Academy" — pairs with the #237 `*-Default` baseline pattern |
+| **increase / decrease pair** | a meter-tradeoff dial as two paired entries | Arts & Sciences funding ± ; Education-Dept funding ± |
+
+> **★ Genres are the ORG unit; create/abolish Dept-of-Education ROUTES to the Civil-Service genre (#237).**
+> vcczar rules that **creating or abolishing the Department of Education lives under the Civil Service genre, NOT
+> Education** (`education#POST 2, 3, 6`) — confirming genres are the organizing unit and a "create a department"
+> action is filed under **Civil Service** regardless of which department. This sharpens #237 (Education = a
+> concrete genre alongside Business/Labor, Currency, Copyright, Space, Civil Service).
+
+> **★ SCOTUS-case-as-Scripted-event hook (the Scopes "Monkey Trial").** `education#POST 11` ties a **Scopes
+> Monkey-Trial Supreme Court SCRIPTED EVENT** to the "Ban Teaching of Evolution" branch — corroborating the
+> SCOTUS-case-as-content / S-event hook (cf. the `518fb253` Murphy-v-NCAA + Business/Labor S-events with attached
+> Pres-Action reaction nodes, §30.22.B). A bill branch firing a scripted court case is a reusable content hook.
+
+**(4) Subtype / under-covered-genre notes (→ #248/#237).** Immigration implies an **Immigration** subtype value
+(its ~100 props span open / path-to-citizenship / restrict-quota-cap / exclusion-ban / border); Education implies
+an **Education** value. `legisprops2028` STRESS-TESTED the 33-value subtype taxonomy with a large Future-band pool
+and forced **NO new subtype** — all proposals mapped to existing values (tech, energy/climate, social, economy,
+space…); the **weakest-covered clusters = public utilities and water/resource scarcity** (review against the
+taxonomy — candidate under-covered GENRES too). The `education` "redo all the policy categorizing… allowing things
+to be in **multiple categories**" remark (POST 1) is the strongest **MULTI-CATEGORY-tagging** evidence yet (the
+DC-memorials homeless-content case → #256, §14.1.3.b).
+
+> **★ Fluff-curation rule RESTATED + historical-density calibration (general design law).** `education#POST 7`
+> restates the §14.1.3 curation rule — *"one issue I'm trying to avoid is having too many fluff proposals. If we
+> have too many of those then the CPU will propose fluff too often rather than substantial things"* — and adds
+> the **historical-density-calibration** method (size each 2-year catalog to real laws-passed counts; see the
+> §14.1.3 batch-37 refinements block above). Both general, not Education-specific.
+
+*(designed, 0% shipped — Immigration + Education are two concrete #237 GENRES / #248 SUBTYPES populating the #221
+3-primitive registry; Immigration is in pre-schema RAW form (no `L/P/G/S`/`*-Default`/`Preq:`); Education adds the
+ban/legalize/require triad, enact/negate + increase/decrease pairs, the Scopes S-event hook, and the
+Dept-of-Education→Civil-Service routing. The Immigration district-flip Gov action is the DESIGN ORIGIN of the #247
+demographic→state-lean lever. Cite `immigration#POST 1, 2, 3, 4`; `education#POST 1, 2, 3, 6, 7, 8, 10, 11`;
+`legisprops2028#POST 5, 6, 17`; code `types.ts:1513` (no subtype/genre/Pres-Gov-Action); `game-context.md`
+#221/#237/#248/#20/#247/#256.)*
 
 ### 14.2 Forum design layer: Constitutional Amendments durable state (designed, not built)
 
@@ -12586,6 +12862,46 @@ era-content registry), §27.1.1, and `game-context.md` #92/#221.)*
 > census level-(b) mechanic (§28.9). (`rulebook#§A POST 2`; `game-context.md` #92/#206/#2; cross-ref
 > §22.11, §27.1, §27.1.1, §30.21.)
 
+> **★ SECOND authoritative era-table — the `benchmarkupd` 13-ERA trigger-year table (NEW, batch 37) — which must
+> be RECONCILED with the 15-era table above.** The Red/Blue benchmark headers (`benchmarkupd#POST 1, 2`,
+> identical in both party posts) print a full era trigger-year table that is a **4th authoring-side witness** for
+> the era-band DATA model (after `rulebook` §A, the `modernday` 14-band map, and the per-administration
+> `ampuData` walk). It is the **most complete era trigger-year table seen in any thread**, but it **DIFFERS** from
+> the 15-era rulebook table:
+>
+> | # | Era | Years (benchmarkupd) | Shipped `Era` bucket |
+> |---|-----|------|------|
+> | 1 | Federalism | **1788–1800** | `federalism` |
+> | 2 | Republicanism | **1800–1820** | sub-band of `nationalism` |
+> | 3 | Democracy | **1820–1840** | sub-band of `nationalism` |
+> | 4 | Manifest Destiny | **1840–1856** | sub-band of `nationalism` |
+> | 5 | Nationalism | **1856–1868** | **`nationalism`** |
+> | 6 | The Gilded Age | **1868–1892** | (no enum — §31) |
+> | 7 | Progressivism | **1892–1916** | (no enum) |
+> | 8 | Normalcy | **1916–1928** | (no enum) |
+> | 9 | Ideologies | **1928–1948** | (no enum) |
+> | 10 | The Nuclear Age | **1948–1972** | `modern` |
+> | 11 | The Neocons | **1972–2000** | `modern` |
+> | 12 | Terror | **2000–2012** | `modern` |
+> | 13 | Populism | **2012–2024** | `modern` (no enum member) |
+>
+> **Two differences from the 15-era rulebook table (RECONCILE before implementation):**
+> 1. **The benchmark table is the "main historical run," NOT the full scenario set** — it has **13 eras** because
+>    it **EXCLUDES pre-1788 Era-of-Independence AND post-2024 Era-of-the-Future** (both authored elsewhere,
+>    `eaf5cc51`/`aa227625`/`welcome2future`; the rulebook table includes both for a 15-era total). So the benchmark
+>    win-model (§27.2.2) does NOT score Independence or Future — those bands have no benchmark set in this dataset.
+> 2. **Boundary years differ** — the benchmark table uses **end-of-era boundaries** (Era N ends where Era N+1
+>    begins) and folds some spans differently: e.g. it ends the **Gilded Age at 1892** (rolling Progressivism's
+>    1892 trigger into the Gilded boundary) rather than treating 1892 as a separate Progressivism trigger; it pairs
+>    Nuclear-Age 1948–1972 / Neocons 1972–2000 (28-yr Neocons band) vs the rulebook's 1948/1972/2000 triggers.
+>
+> **Only 2 of the 13 names** (Federalism, Nationalism) map to the shipped 4-value `Era` enum; **11 have no enum
+> representation** — concrete evidence (a 4th independent witness) that the 4-band enum is a coarse approximation
+> and the real design needs the era-band DATA model (§27.1) over a growing hardcoded enum. **Build note:** the two
+> authoritative tables (rulebook 15-era §A vs benchmarkupd 13-era) must be reconciled into one canonical
+> band-label + trigger-year spec before the era system OR the §27.2.2 benchmark scorer is built. (`benchmarkupd#POST
+> 1, 2`; `game-context.md` #206/#92/#253; cross-ref §27.2.2, §22.11.)
+
 ### 27.2 Era-boundary machinery (the "End of Historical Era" phase)
 
 > **First explicit capture of the full per-era boundary** (`rep1800` §B POST 6187 / 6201 / 6203).
@@ -12681,6 +12997,85 @@ keyed to B#/R# slots (batch 8). Bank-points persist to end-game; everything else
   draft (draft order = just-completed-era points only): *"for being in 8th place, BrunnellCPU 1st
   pick gets +1 Judicial"* (`modernday#POST 1930`); 7th place → +1 Legislative (the §27.2 step-5
   draft-order rule, with the order-by-last-era-points consequence made concrete).
+
+#### 27.2.2 ★★ #253 (NEW, `benchmarkupd`, batch 37) — the Red/Blue per-era BENCHMARK dataset+scorer = the CONTENT-COMPLETE end-of-era WIN/SCORE model (DESIGNED, 0% shipped)
+
+> **★★ The win/score model from #68/#102 is now CONTENT-COMPLETE as a dataset.** vcczar (tier-1, sole author)
+> posts the FINISHED **Red-Party** and **Blue-Party** per-era BENCHMARK lists — *"I've finished the Red Party
+> benchmarks… They will all require that these are active (or issued if they don't linger) at the end of the
+> era… **10 Benchmarks for every era.** This sort of make winning the election right before an era change really
+> important"* (`benchmarkupd#POST 1`). This is the authored **end-of-era checkpoint content** the #68/#102 gaps
+> describe; it **SUPPLEMENTS, does not replace, the §27.2 point-banking pipeline**. Source: `benchmarkupd`
+> (217d1977, CSV-sourced, 3 posts; NOT a playthrough; vcczar sole poster).
+
+**Shipped status (codebase-verified).** **0% shipped.** No benchmark or end-of-era scoring code exists in `src/`
+(`grep -niE "benchmark|endOfEra|eraScore|winCondition"` → no matches). The shipped `Era` enum is **4 values**
+(`types.ts:1337`), so there is no 13-era boundary to score at; `HalfTermSummary` is **per-turn only**
+(`types.ts:1762`) — there is **no per-era policy SNAPSHOT archive**, which the comparative benchmark class
+requires. The entire model here — benchmarks, era-end checkpoint, active/issued semantics, previous-era
+comparatives — is **designed-only**.
+
+**(1) The scoring model** (`benchmarkupd#POST 1, 3`):
+
+| Element | Rule |
+|---|---|
+| **Volume** | ~**10 benchmarks per era × 13 eras × 2 parties ≈ 260** authored, **party-specific** state PREDICATES (authored content, not procedural) |
+| **When evaluated** | **at END OF ERA** — the era-boundary checkpoint (§27.2). The era trigger-year table (§27.1.2) is therefore **load-bearing for the scorer**, not just flavor |
+| **Active-or-issued semantics** | a benchmark passes if it is **active at era end** (for lingering policies / states) **OR was "issued" during the era** (for one-shot actions that don't linger). Two satisfaction modes per predicate |
+| **Weights** | **TBD** — vcczar: *"yet to determine how much these will score/penalize"* / *"I'll craft rules for these later"* (POST 1, 2); benchmarks "subject to change." The CONTENT is settled; the scoring FORMULA is not yet authored |
+| **OLD point system retained** | *"I'm keeping the old benchmark point system. I only slightly amended it"* (POST 3) → this per-era list **layers ON** the existing §27.2 banking, it does not replace the win-condition framework |
+| **Party-relative** | the dual Red/Blue mirrored sets make the scoring layer **party-relative** (each faction is scored against ITS party's per-era win-state, not a single shared target) |
+
+**(2) Predicate classes observed** (each benchmark is a predicate over game state at era end):
+
+| Class | Example |
+|---|---|
+| **Policy-active check** | "US Bank active," "Pro-Business-Over-Labor Policy is active/inactive" (reads the #237 stateful-policy store) |
+| **Action-issued check** | a one-shot Pres-Action / Legis-Prop was issued during the era (the "issued if they don't linger" mode) |
+| **Per-nation relations threshold** | UK / France / Russia / China relations meter at a threshold (reads the per-power relation bank, §29.x / #67) |
+| **War-state flag** | French-Revolution / Napoleonic-Wars / Cold-War / War-on-Terror flag set or cleared (e.g. Red: "stay out of the French Revolution") |
+| **Count** | "3 states" red/blue, "two chairmen," etc. |
+| **Identity / office record** | a black president, a woman president, a woman Speaker, a black woman in Congress, an LGBT officeholder (Blue representation milestones) |
+| **★ Era-relative COMPARATIVE** | "Tariff is **higher than the previous era**" (Red) / "lower than previous era" (Blue); "Income-tax bracket is lower/higher than the previous era" |
+
+> **★ THE LOAD-BEARING SUB-REQUIREMENT — the comparative class forces a per-era SNAPSHOT ARCHIVE.** Benchmarks
+> like "Tariff higher/lower than the previous era" and "Income-tax bracket higher/lower than the previous era"
+> mean the scorer **cannot read only current state** — it must **archive key economic levers (tariff,
+> income-tax bracket, …) at each era boundary** and compare era-N to era-(N−1). The shipped `HalfTermSummary`
+> (`types.ts:1762`) is per-turn only, so this per-era economic-snapshot store is **net-new state** the scorer
+> needs (pairs with #68's banking, which already archives per-era POINTS — this extends the archive to economic
+> levers).
+
+**(3) The dual partisan (Red/Blue) win-state encoding** (`benchmarkupd#POST 1, 2`) — two mirrored era skeletons
+with opposite policy goals define each party's ideological "victory conditions" per era:
+
+| Party | Rewards (across the 13 eras) |
+|---|---|
+| **Red** | pro-British trade/foreign-policy; US Bank active; high/rising tariffs; lower income-tax brackets; strict immigration; pro-business-over-labor; pro-gun-rights; military/navy buildup; staying out of the French Revolution / Napoleonic Wars; slavery contained (early) → later abolished; anti-expansion in some eras (no Louisiana Purchase / no Florida); abortion restrictions; RW-activist justices; keeping specific states red (e.g. South Carolina = Red Gov + 1 Red Sen) |
+| **Blue** | pro-states-rights (early); pro-labor-over-business; pro-civil-rights; popular-vote expansion; internationalism (League of Nations / World Court); welfare (minimum wage / Social Security / national healthcare / TVA / food stamps / public housing); LW-activist justices; environment-over-energy; representation milestones (black/woman president, woman Speaker, black woman in Congress, LGBT officeholder); lower tariffs; higher income-tax brackets; keeping NY blue (1 Blue Gov + 1 Blue Sen) |
+
+**(4) Benchmarks are a CONSUMER of the #221 content surface.** Evaluation requires a **large named-content
+surface** to be addressable game objects: specific Legis-Props / Pres-Actions / policies (US Bank, Independent
+Treasury, Homestead Act, Civil Rights Act of 1964, TVA, Fugitive Slave Act, Budget & Accounting Act…), policy
+toggles (#237), per-nation relations meters, war-state flags, and identity/office records. This is the same
+content-primitive surface (#221, §14.1.3) but **referenced by the scoring layer** — a new consumer, not new
+content.
+
+> **DATA-FIDELITY FLAG (re-source before build).** The CSV/preprocessor **FLATTENED the per-era grouping**: POST
+> 1/2 render the 13 era headers FIRST, then a flat run of benchmark lines, so the exact **era↔benchmark
+> assignment is NOT 1:1 recoverable** from this export. The COUNTS (10/era), the timeline (§27.1.2), and the
+> model are reliable; the precise per-era benchmark MEMBERSHIP should be re-sourced from the original sheet
+> before implementation.
+
+*(designed, 0% shipped — (a) author the ~260-predicate Red/Blue benchmark dataset as **era-keyed + party-keyed**
+records (re-source the per-era grouping from the original sheet); (b) add an **end-of-era scoring pass** that
+evaluates each predicate with **active-or-issued** semantics and feeds the §27.2 point-banking / §27.2 dual-score
+(weights TBD; KEEP the retained old point system); (c) add a **per-era SNAPSHOT ARCHIVE** of key economic levers
+(tariff / income-tax-bracket / …) so "vs previous era" comparatives evaluate; (d) ensure the named-content
+surface (#221) is addressable for predicate evaluation. **Requires the 13-era band model (#206/#92, §27.1.2) to
+exist first.** Cite `benchmarkupd#POST 1, 2, 3`; codebase (no benchmark/eraScore/winCondition in `src/`;
+`types.ts:1337` 4-value `Era`; `types.ts:1762` per-turn `HalfTermSummary`); `game-context.md` #253; CONSUMES #221;
+extends #68/#102; keys off #206/#92.)*
 
 ### 27.3 The 12th-Amendment before/after state machine (era-specific election mode toggle)
 
@@ -17146,6 +17541,112 @@ into the #194 lineage system. Cite `histpres#POST 1, 3, 7, 13, 19, 28, 34, 36, 3
 > subtype) + the geography-gated launch-site Gov action (the 2nd concrete proof #20's flat-vs-per-state axis
 > must allow per-state odds). Cross-ref `game-context.md` rows **#251/#252 (NEW)**, and **#214/#215/#220/#216/
 > #225/#240/#246-N1/#194/#239/#20/#237/#248/#221/#92/#52/#218/#249/#25/#1005/#28 (sharpened/corroborated)**.
+
+### 30.27 Rulings folded from batch 37 — the FIVE CONTENT-AUTHORING / DESIGN threads (#253 the Red/Blue per-era BENCHMARK win-model + #254-#257 + the Immigration/Education genre supply) (`benchmarkupd` / `legisprops2028` / `yearname` / `immigration` / `education`)
+
+> **★ Batch 37 = a 5-thread CONTENT-AUTHORING / DESIGN batch (NO playtest, NO dice, NO historian, NO state).**
+> Almost everything here is **designed-only / 0% shipped** — the value is **the end-of-era WIN/SCORE model now
+> CONTENT-COMPLETE** (the ~260-predicate Red/Blue per-era benchmark dataset, #253, the concrete deliverable under
+> the long-standing #68/#102 era-scoring gaps), the **authoritative 13-era trigger-year table** (a 4th
+> authoring-side witness for the era-band DATA model, #206/#92), **two new structural gaps** (#255 the variable
+> House-size CAP, #256 the National-Projects/Monuments content shape), the **DESIGN SOURCE/AUTHORITY for #216**
+> (the canonical Skill/Expertise/Interests/Traits/Demographics axis split + the Cop/Lowbrow/Egghead renames), a
+> **year/turn LABEL rename** (#254) + an **age-tick off-by-one** (#257), and two fully-worked **policy-genre
+> content drops** (Immigration + Education) that enrich the #221 / #237 / #248 content model. Tier-1 designer
+> `@vcczar` authors/rules across all five; `@MrPotatoTed` (=Ted) co-drives the year-name + future-Legis-Props
+> threads; the rest are tier-4 GAs supplying proposals. The sources:
+> - **`benchmarkupd`** (217d1977, "AMPU Benchmark Update," CONTENT-AUTHORING/DESIGN, 3 posts / 1 chunk, CSV
+>   source; NOT a playthrough) — **★★ the FINISHED Red-Party + Blue-Party per-era BENCHMARK lists** (~10/era × 13
+>   eras × 2 parties ≈ **260** authored state PREDICATES), scored **at era-end** with **active-or-issued**
+>   semantics; weights TBD; the **OLD benchmark point system is RETAINED** ("only slightly amended," POST 3).
+>   Also the **most complete 13-era trigger-year table** seen in any thread. → **NEW #253** (the dataset+scorer
+>   deliverable under #68/#102); enriches #68/#102/#206/#92/#221. Folded into [§27.2.2](#2722--253-new-benchmarkupd-batch-37--the-redblue-per-era-benchmark-datasetscorer--the-content-complete-end-of-era-winscore-model-designed-0-shipped) (the full spec) + [§27.1.2](#2712--the-canonical-15-era-trigger-year-table-92206--the-authoritative-band-label-calendar-new-rulebook-batch-31-the-era-label-spec-the-data-model-decision-needs) (the 13-era table reconcile). Cite `benchmarkupd#POST n`.
+> - **`legisprops2028`** (665d7f33, "Legis Props for years 2028–2048," CONTENT-AUTHORING/brainstorm, 35 posts / 1
+>   chunk; NOT a playthrough) — a primary **Era-of-Future Legis-Prop content source** (2027–2048, ask extended to
+>   2050–2090): ~12 genre clusters + **two ~50-item ChatGPT-generated lists** (POST 26-27) with a strong
+>   human-curation caveat. Surfaces the **variable House-size CAP** datum (100/435/500/1000/uncapped, POST 35). →
+>   **NEW #255** (House-size cap); enriches #221/#206/#248/#237/#92. Folded into [§14.1.3.b](#1413b--255256-new-batch-37--two-structural-content-deltas-the-variable-house-size-cap--the-national-projectsmonuments-content-shape-designed-0-shipped) (#255 + content-curation
+>   refinements) + [§14.1.3](#1413--221--the-three-content-primitive-system-legis-prop--pres-action--gov-action--scripted-events--new-legisexecgov--ampuelections-batch-33-designed-0-shipped) (the package/ladder + ChatGPT-curation notes). Cite `legisprops2028#POST n`.
+> - **`yearname`** (b08204e7, "Year Name for AMPU Poll," TERMINOLOGY/DESIGN, 20 posts / 1 chunk; NOT a
+>   playthrough) — two strands: **(A)** rename the turn LABEL single-year→**term-span** (#254; boundary
+>   convention deferred to a 2nd poll) + the **age-tick off-by-one** (#257); **(B)** the **canonical
+>   term-taxonomy ruling** (Skill/Expertise/Interests/Traits/Demographics) + Cop→Righteous/Virtuous,
+>   Lowbrow→Everyman/Commoner, Egghead→Wonk, Military→Army — **the DESIGN SOURCE/AUTHORITY for #216**; biannual→
+>   annual cadence **deferred to AMPU-2**. → **NEW #254** + **NEW #257**; sharpens #216. Folded into [§3.1](#31-the-four-character-axes)
+>   (the 5-axis split + #216 source) + [§3.1.1](#311--254257-new-yearname-batch-37--the-yearturn-label-rename-single-year--term-span--the-age-tick-off-by-one-designed-0-shipped) (the year-label + age-tick spec). Cite `yearname#POST n`.
+> - **`immigration`** (8f3fb48a, "AMPU Immigration," CONTENT-AUTHORING, 4 posts / 1 chunk; NOT a playthrough) —
+>   the **Immigration policy genre in RAW/UNTAGGED form** (~100 Legis-Props + 10 Pres-Actions + 2 Gov-Actions),
+>   incl. the load-bearing **district-flip Gov action** ("promote immigration to snatch a district"). → **DESIGN
+>   ORIGIN** of the demographic→state-lean Gov-Action lever (#247); enriches #221/#237/#248/#20/#206. Folded into
+>   [§14.1.3.c](#1413c--221237248-batch-37--the-immigration--education-policy-genre-content-drops--the-fluff-curation-rule-restated--historical-density-calibration-designed-0-shipped) (the genre drop) + #247 cross-ref ([§30.25](#3025-rulings-folded-from-batch-35--the-five-contentdesignplaytest-threads-247-event-state-lean--248-subtype-taxonomy--the-1960-restart-186-proof--249250dh-80-statelean--futureideas--scotusfuture--electiondisc--redbutton1960)). Cite `immigration#POST n`.
+> - **`education`** (4fe0c4c0, "AMPU Education," CONTENT-AUTHORING/crowdsourcing, 11 posts / 1 chunk; NOT a
+>   playthrough) — a fully-worked **Education genre** (~70+ Legis-Props + 2 Pres-Actions + 7 Gov-Actions; the
+>   **ban/legalize/require option-set TRIAD**, the **enact/negate + increase/decrease toggle pairs**, the **Scopes
+>   "Monkey Trial" SCOTUS-case-as-S-event hook**). Restates the **fluff-curation rule** + the **NEW
+>   historical-density-calibration** datum; reveals the homeless **DC-memorials / National-Projects** content
+>   shape. → **NEW #256** (National Projects / Monuments); enriches #221/#237/#248/#20/#206. Folded into
+>   [§14.1.3.b](#1413b--255256-new-batch-37--two-structural-content-deltas-the-variable-house-size-cap--the-national-projectsmonuments-content-shape-designed-0-shipped) (#256) + [§14.1.3.c](#1413c--221237248-batch-37--the-immigration--education-policy-genre-content-drops--the-fluff-curation-rule-restated--historical-density-calibration-designed-0-shipped) (the genre drop + curation rules). Cite `education#POST n`.
+>
+> **The HEADLINE findings (lead with these):**
+> 1. **★★ #253 — the end-of-era WIN/SCORE model is now CONTENT-COMPLETE as a dataset.** vcczar (tier-1, sole
+>    author) posts the finished **Red + Blue per-era BENCHMARK lists**: ~**10 benchmarks/era × 13 eras × 2
+>    parties ≈ 260** authored, **party-specific** state PREDICATES, evaluated **at END OF ERA** with
+>    **active-or-issued** semantics (a benchmark must be **active at era end** for lingering policies/states, **OR
+>    "issued" during the era** for one-shot actions that don't linger). vcczar's design emphasis: this "makes
+>    winning the election right before an era change really important." **Score/penalty WEIGHTS are TBD**; the
+>    **OLD benchmark point system is RETAINED** (supplements, does not replace, the #68 banking). The **DUAL
+>    PARTISAN (Red/Blue) mirrored sets** encode each party's per-era ideological win-state. **★ Sub-requirement:**
+>    "vs previous era" COMPARATIVE benchmarks (tariff / income-tax bracket higher-or-lower) force a **per-era
+>    SNAPSHOT ARCHIVE** of key economic levers. **0% shipped** (no benchmark / end-of-era scorer in `src/`; 4-value
+>    `Era` enum; `HalfTermSummary` per-turn only). At [§27.2.2](#2722--253-new-benchmarkupd-batch-37--the-redblue-per-era-benchmark-datasetscorer--the-content-complete-end-of-era-winscore-model-designed-0-shipped).
+> 2. **★ The 13-era trigger-year table — a 4th authoring-side witness for the era-band DATA model.** The benchmark
+>    headers print Federalism 1788 → Populism 2012–2024; only **2 of 13** (Federalism, Nationalism) map to the
+>    shipped 4-value `Era` enum. It EXCLUDES pre-1788 Independence AND post-2024 Future (the "main historical
+>    run," not the full scenario set), and its boundaries DIFFER from the rulebook §A 15-era table (e.g.
+>    benchmarkupd folds the Gilded Age end at 1892 vs the rulebook's separate Progressivism 1892 trigger) — the
+>    two authoritative tables must be **reconciled before implementation**. At [§27.1.2](#2712--the-canonical-15-era-trigger-year-table-92206--the-authoritative-band-label-calendar-new-rulebook-batch-31-the-era-label-spec-the-data-model-decision-needs).
+> 3. **★ #216 design SOURCE/AUTHORITY (`yearname` strand B).** The canonical **five-axis attribute split**
+>    (verbatim, vcczar POST 11/13): **Skill** (Command/Legislative/Military/Admin/Judicial/Governing) · **Expertise**
+>    (Economics/Welfare/Trade — the industry/sector axis) · **Interests** (Civil Rights/RW-Activists — the
+>    lobby/activist axis) · **Traits** (Charisma/Egghead/Magician) · **Demographics** (Native-American/Woman/LGBT)
+>    — one canonical word per axis, killing the skill/expertise/experience interchangeability. Plus the renames
+>    **Cop→Righteous/Virtuous** (final word unlocked), **Lowbrow→Everyman/Commoner**, **Egghead→Wonk**,
+>    **Military→Army**. This is the **QW22 blocking prereq** for the designer-confirmed-DONE PV revamp. At [§3.1](#31-the-four-character-axes).
+>
+> **★ Designer rulings + new gaps folded (the topical sections carry the detail; this is the index):**
+>
+> | Item | Ruling / spec | Where folded | Cite |
+> |---|---|---|---|
+> | **★★ #253 Red/Blue per-era benchmark dataset + era-end scorer (NEW)** | ~10/era × 13 eras × 2 parties ≈ 260 party-specific state PREDICATES, evaluated at END-OF-ERA with **active-or-issued** semantics; party-relative scoring layer; weights TBD; **OLD benchmark point system RETAINED** (supplements #68, not replaces); predicate classes = policy-active / action-issued / per-nation relations thresholds / war-state flags / counts / identity-office records / **era-relative COMPARATIVES** → the comparative class forces a **per-era SNAPSHOT ARCHIVE** of key economic levers (tariff/income-tax-bracket); benchmarks are a CONSUMER of the #221 named-content surface; CSV export FLATTENED per-era grouping (re-source before build) | [§27.2.2](#2722--253-new-benchmarkupd-batch-37--the-redblue-per-era-benchmark-datasetscorer--the-content-complete-end-of-era-winscore-model-designed-0-shipped) | `benchmarkupd#POST 1, 2, 3`; code (no benchmark/eraScore/winCondition in `src/`; `types.ts:1337`; `types.ts:1762`) |
+> | **★ 13-era trigger-year table (#206/#92 4th witness)** | Federalism 1788–1800 · Republicanism 1800–1820 · Democracy 1820–1840 · Manifest-Destiny 1840–1856 · Nationalism 1856–1868 · Gilded-Age 1868–1892 · Progressivism 1892–1916 · Normalcy 1916–1928 · Ideologies 1928–1948 · Nuclear-Age 1948–1972 · Neocons 1972–2000 · Terror 2000–2012 · Populism 2012–2024; excludes pre-1788 Independence + post-2024 Future; only 2/13 map to the shipped enum; **reconcile vs the rulebook §A 15-era table** (boundaries differ) | [§27.1.2](#2712--the-canonical-15-era-trigger-year-table-92206--the-authoritative-band-label-calendar-new-rulebook-batch-31-the-era-label-spec-the-data-model-decision-needs) | `benchmarkupd#POST 1, 2`; code `types.ts:1337` |
+> | **★ #216 five-axis split + renames (DESIGN SOURCE/AUTHORITY)** | the canonical axis split **Skill / Expertise / Interests / Traits / Demographics** (one word per axis, kills skill/expertise/experience interchangeability); renames Cop→**Righteous/Virtuous**, Lowbrow→**Everyman/Commoner**, Egghead→**Wonk**, Military→**Army**; "Cop" def preserved (uniquely-natural-at-AG; vs Efficient = good-at-everything; vs Illicit = disaster-at-AG); vcczar keeps ALL overlapping traits — only NAMES change; lobby-axis nuance (Civil-Rights = Black-Americans-only; LGBT+women = LW-Activists; Human-Rights = non-citizen/international; Big-Agriculture = mega-farm/plantation); **QW22 blocking prereq for the DONE PV revamp** | [§3.1](#31-the-four-character-axes) | `yearname#POST 3, 4, 5, 6, 7, 8, 11, 13, 15`; code `types.ts:62-117, 182-186` |
+> | **★ #254 year/turn LABEL rename → term SPAN (NEW)** | display turn label single-year→span (`1788`→`1789–1791` inauguration-anchored OR `1788–1790` even-year — boundary deferred to a 2nd poll); motivated by "label 2020 should let me play the 2020 election"; **display/UI relabel only** (keep the integer `year` + `%2`/`%4` cadence); couples to every year-render site (turn header, election prompts, age calc) | [§3.1.1](#311--254257-new-yearname-batch-37--the-yearturn-label-rename-single-year--term-span--the-age-tick-off-by-one-designed-0-shipped) | `yearname#POST 1, 2, 8, 10, 20`; code `phases.ts:49-58` |
+> | **★ #257 age-tick off-by-one (NEW)** | a pol keeps its start-of-turn age across the whole 2-year (biannual) turn → displayed age lags the in-game date by up to ~2 yrs (Ted: "why is somebody still their 2022 age in 2023 and at least part of 2024?"); the SMALL display/derivation fix (tick age within the turn), NOT the cadence change; **biannual→annual cadence is AMPU-2 / deferred**; likely folds into #254's year-display work | [§3.1.1](#311--254257-new-yearname-batch-37--the-yearturn-label-rename-single-year--term-span--the-age-tick-off-by-one-designed-0-shipped) | `yearname#POST 8, 11` |
+> | **★ #255 variable House-size CAP (NEW)** | a MENU of selectable chamber-size caps (100/435/500/1000/uncapped) triggerable by event/legislation "at pretty much any time"; the build has **NO chamber-size variable at all** (flat per-state `representativeIds`); DISTINCT from the resolved focus-rep SIZING ladder (#219, housepoll KEPT focus-reps) and the census/EV machinery (#34); "REAL House Act (+150 seats)" is a #221 resize Legis-Prop instance | [§14.1.3.b](#1413b--255256-new-batch-37--two-structural-content-deltas-the-variable-house-size-cap--the-national-projectsmonuments-content-shape-designed-0-shipped) | `legisprops2028#POST 34, 35`; code `types.ts:1327`, `phaseRunners.ts:389` (unrelated `uncapped`) |
+> | **★ #256 National Projects / Monuments content shape (NEW)** | a homeless prestige / vanity-infrastructure content type (DC memorials, federal-building authorizations, renamings, named warships/statues, a Neil-Armstrong moon monument) vcczar parked under Education only for lack of a home; soft-power/QOL-flavor payoffs; two readings — a DISTINCT new genre (#237) OR the canonical worked example for #248 MULTI-CATEGORY tagging (homeless precisely because single-bucket filing fails it) | [§14.1.3.b](#1413b--255256-new-batch-37--two-structural-content-deltas-the-variable-house-size-cap--the-national-projectsmonuments-content-shape-designed-0-shipped) | `education#POST 1, 4, 5`; code `types.ts:1513` (no subtype/genre/monuments) |
+> | **★ #221/#237/#248 Immigration + Education genre drops (ENRICH)** | two concrete policy GENRES populating the 3-primitive system: Immigration (~100 Legis-Props open↔restrict + named acts Naturalization-1870/Page-1875/Know-Nothing; 10 Pres-Actions = strict-vs-lenient STANCE toggle + enforcement/ban; 2 Gov-Actions incl. the district-flip) in RAW/UNTAGGED form (no `L/P/G/S`/`*-Default`/`Preq:`); Education (~70+ Legis-Props; the **ban/legalize/require TRIAD**; **enact/negate + increase/decrease** toggle pairs; Scopes SCOTUS-case-as-S-event; create/abolish Dept-of-Education ROUTES to the Civil-Service genre); subtype stress-test forced NO new value; utilities + water/resource-scarcity flagged as under-covered candidate genres | [§14.1.3.c](#1413c--221237248-batch-37--the-immigration--education-policy-genre-content-drops--the-fluff-curation-rule-restated--historical-density-calibration-designed-0-shipped) + [§14.1.3.a](#1413a--248-new-futureideas-batch-35--the-legislative-proposal-subtype-policy-area-taxonomy-a-33-value-enum-on-all-four-primitives-designed-0-shipped) | `immigration#POST 1, 2, 4`; `education#POST 1, 3, 6, 10, 11`; code `types.ts:1513` |
+> | **★ #221 content-curation refinements (general design law)** | "too many fluff proposals → the CPU proposes fluff over substance" RESTATED (education POST 7) + extended to **AI/ChatGPT-generated lists** which need HUMAN VETTING before catalog entry (vcczar's gate = "compile only items not already in + I'll double-check," legisprops2028 POST 30-31); **NEW datum — HISTORICAL-DENSITY CALIBRATION**: size each 2-year catalog to real laws-passed counts to tune content density + CPU proposal rate (education POST 7); multi-bill PACKAGE/LADDER reconfirmed (Green New Deal → ~20-30 atomic bills, legisprops2028 POST 14-15) | [§14.1.3](#1413--221--the-three-content-primitive-system-legis-prop--pres-action--gov-action--scripted-events--new-legisexecgov--ampuelections-batch-33-designed-0-shipped) + [§14.1.3.c](#1413c--221237248-batch-37--the-immigration--education-policy-genre-content-drops--the-fluff-curation-rule-restated--historical-density-calibration-designed-0-shipped) | `education#POST 7`; `legisprops2028#POST 14-15, 30-31` |
+> | **★ #247 demographic→state-lean Gov-Action lever (DESIGN ORIGIN)** | the district-flip Gov action ("promote immigration to your state as a Gov action to possibly snatch another congressional district," immigration POST 2) = a demographic→apportionment→state-lean lever delivered as a Gov-Action primitive (#221); OPEN Q (tech-lead): drives APPORTIONMENT seat-count or only district LEAN? (coupled to the "EV swing system" a GA was unsure ships, POST 3) | [§30.25](#3025-rulings-folded-from-batch-35--the-five-contentdesignplaytest-threads-247-event-state-lean--248-subtype-taxonomy--the-1960-restart-186-proof--249250dh-80-statelean--futureideas--scotusfuture--electiondisc--redbutton1960) (#247 cross-ref) + [§14.1.3.c](#1413c--221237248-batch-37--the-immigration--education-policy-genre-content-drops--the-fluff-curation-rule-restated--historical-density-calibration-designed-0-shipped) | `immigration#POST 2, 3` |
+> | **★ #20 Governor Actions (CORROBORATE)** | Education supplies a 7-entry flat/state-agnostic Gov-Action list (Build State University, Build Military Academy, Emphasize Public Schooling, Ban Teaching of Evolution, Free Community College, Create Traditional-Values Textbooks…); player wish (POST 8) = a **per-state MAP of active Gov actions** — reinforces the deferred per-state gov-action upgrade | [§11.3](#113-governors-actions-library-designed-not-built) (#20 cross-ref) + [§14.1.3.c](#1413c--221237248-batch-37--the-immigration--education-policy-genre-content-drops--the-fluff-curation-rule-restated--historical-density-calibration-designed-0-shipped) | `education#POST 1, 8` |
+> | **Corroborations (no NEW row)** | #68/#102 (the era-scoring pipeline #253 is the content+engine for); #206/#92 (the 13-era table + Future-band content hole); #237 (Immigration/Education as concrete genres; Dept-of-Ed routes to Civil-Service genre; utilities/water under-covered); #248 (Immigration/Education subtype values + multi-category tagging; stress-test forced no new value) | the topical sections | per-thread |
+>
+> **Roadmap takeaway (for the tech-lead + roadmap-planner).** Batch-37 is content/design, so the build surface is
+> mostly *data authoring + two schema fields*, ranked:
+> (1) **★★ #253 is the END-OF-ERA WIN/SCORE model, now content-complete** — when era-scoring is built (it
+> requires the 13-era band model #206/#92 to EXIST first), author the ~260-predicate Red/Blue benchmark dataset
+> as era-keyed + party-keyed records (re-source the per-era grouping from the original sheet — the CSV export
+> flattened it), add an end-of-era scoring pass with **active-or-issued** semantics feeding the #68 banking /
+> #102 dual-score (weights TBD; KEEP the retained old point system), and add a **per-era SNAPSHOT ARCHIVE** of
+> key economic levers so "vs previous era" comparatives evaluate. (2) **The 13-era table** must be reconciled
+> with the rulebook §A 15-era table before either becomes the band-label spec. (3) **#216 is STILL the blocking
+> prereq for the DONE PV revamp + for authoring all marquee rosters** — `yearname` is its design authority; the
+> 5-axis rename is a careful (NOT blind-global) find-and-replace. (4) **Content authoring** — the Immigration +
+> Education genres (and the Future-band Legis-Props, human-vetted for the AI-generated origin) feed #221; size
+> each 2-year catalog to real laws-passed counts (historical-density calibration). (5) **Two small structural
+> deltas + two display fixes** — #255 (decide whether a total-chamber-size cap exists atop the kept focus-rep
+> model), #256 (National Projects = own genre or #248 multi-tag), #254 (term-span turn label), #257 (tick age
+> within the turn). Cross-ref `game-context.md` rows **#253/#254/#255/#256/#257 (NEW)**, and
+> **#68/#102/#206/#92/#221/#237/#248/#216/#20/#247 (sharpened/corroborated)**.
 
 ### 30.4 Authority hierarchy reminder
 
