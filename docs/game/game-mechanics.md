@@ -362,6 +362,7 @@
     - [30.25 Rulings folded from batch 35 — the FIVE content/design/playtest threads (#247 event-state-lean + #248 subtype-taxonomy + the 1960-restart #186 PROOF + #249/#250/DH-80) (`statelean` / `futureideas` / `scotusfuture` / `electiondisc` / `redbutton1960`)](#3025-rulings-folded-from-batch-35--the-five-contentdesignplaytest-threads-247-event-state-lean--248-subtype-taxonomy--the-1960-restart-186-proof--249250dh-80-statelean--futureideas--scotusfuture--electiondisc--redbutton1960)
     - [30.26 Rulings folded from batch 36 — the FIVE design/data threads (★★ #251 the JUDICIARY OVERHAUL + #252 + the cleanest PV-revamp done-confirmation) (`judiciaryidea` / `failednoms` / `terminology` / `space` / `histspeakers`)](#3026-rulings-folded-from-batch-36--the-five-designdata-threads--251-the-judiciary-overhaul--252--the-cleanest-pv-revamp-done-confirmation-judiciaryidea--failednoms--terminology--space--histspeakers)
     - [30.27 Rulings folded from batch 37 — the FIVE CONTENT-AUTHORING / DESIGN threads (#253 the Red/Blue per-era BENCHMARK win-model + #254-#257 + the Immigration/Education genre supply) (`benchmarkupd` / `legisprops2028` / `yearname` / `immigration` / `education`)](#3027-rulings-folded-from-batch-37--the-five-content-authoring--design-threads-253-the-redblue-per-era-benchmark-win-model--254-257--the-immigrationeducation-genre-supply-benchmarkupd--legisprops2028--yearname--immigration--education)
+    - [30.28 Rulings folded from batch 38 — FIVE CONTENT-AUTHORING / DESIGN / EXPLOIT-FIX threads (★★ #258 predicate-gated content + #259 party-transformation + #260/#261/#262 + the war-declaration/exploit-fix cluster) (`parties` / `civilrights` / `fixes2022-exploits` / `halfterm` / `agriculture`)](#3028-rulings-folded-from-batch-38--five-content-authoring--design--exploit-fix-threads--258-predicate-gated-content--259-party-transformation--260261262--the-war-declarationexploit-fix-cluster-parties--civilrights--fixes2022-exploits--halfterm--agriculture)
     - [30.4 Authority hierarchy reminder](#304-authority-hierarchy-reminder)
 31. [Gilded-Age era systems (designed, not built)](#31-gilded-age-era-systems-designed-not-built)
     - [31.1 (#147) Tariff-as-national-%-rate + the mutually-exclusive MonetaryRegime](#311-147-tariff-as-national-rate--the-mutually-exclusive-monetaryregime-designed)
@@ -1572,6 +1573,24 @@ The player sets their own track via `setPlayerCareerTrack` (cap-enforced,
 > (in addition to the exit expertise), once per track; allow event grants. Cite `to-do#POST 58-61, 672,
 > 775, 817`. Ruling index [§30.18](#3018-rulings-folded-from-the-batch-28-designer-catalogs-to-do--fixes--completions--vic3--a-discussionspec-batch-not-a-playtest).)*
 
+### 5.4 ★ #163 (batch 38) — career-track skill CEILING + diminishing-returns gain (kill the "super commander"; DESIGNED, 0% confirmed)
+
+> **★ A balance CONSTRAINT on the career-track skill-growth engine (§5.2).** Source: `fixes2022` exploits thread
+> (a852d451, Mar–Apr 2022, POST 11-12; Cal proposes, queued by tier-1 "I'll start working on it Monday," POST 13).
+> Two rules:
+> 1. **No skill can reach the maximum (5) via a career track** — track-driven gains are capped **below 5**.
+> 2. **Gain-chance scales INVERSELY with the pol's current level in that skill** (diminishing returns) — the higher
+>    the current skill, the lower the chance of a further gain on the track.
+>
+> Rationale: stop **"super military commanders"** and the "put a Governing-3 pol on the track → best-possible
+> governor after 20 years of mayor/Lt-Gov" exploit. Scoped to **career tracks** — open Q (carry forward): do
+> war/event/age skill changes also respect the "no 5 from non-track sources" intent, or can a pol still reach 5 via
+> combat/events? (POST 11 addresses only tracks.) **Status:** the shipped engine has career-track skill-gain rolls
+> (§5.2: per-track primary-skill roll, mentor-bonus roll) but **whether any ceiling / level-scaled gain-chance
+> exists is unverified** — tech-lead to confirm; documented here as the designed balance rule. *(designed —
+> cap track-driven skill gains below 5 and make per-track gain-chance a decreasing function of current skill level.
+> Cite `fixes2022`(a852d451)`#POST 11, 12, 13`; `game-context.md` #163, cross-ref #86/DH-25/DH-56.)*
+
 ---
 
 ## 6. Politician churn (2.1.3–2.1.7)
@@ -1846,6 +1865,21 @@ playtests, `tedchange#POST 302-320`.)*
 the trait allowlist/blocklist explicitly in the Kingmaker→Protégé transfer pass. Cite
 `tedchange#POST 201-208, 279-283, 316`.)*
 
+#### 6.5.w ★ #128/#210 (batch 38) — a Kingmaker CANNOT take another Kingmaker as protégé (REVERSES the old chain-reward rule; AGREED)
+
+> **★ A protégé-ELIGIBILITY restriction neither #128 nor #210 records — and a REVERSAL of prior intent.** Source:
+> `fixes2022` exploits thread (a852d451, Mar–Apr 2022, POST 22-26). Cal flagged that nothing stopped a Kingmaker
+> taking another Kingmaker as a protégé (POST 22); Ted noted **"a previous version of rules actually REWARDED
+> creating 'chains' of Kingmakers in this way"** (POST 25) — so this is a reversal. vcczar's final ruling
+> **[AGREED]** (POST 26): **"A kingmaker needs to be in charge. So it wouldn't make sense to have a kingmaker
+> leading a kingmaker… it's best to just restrict it."** → **no Kingmaker → Kingmaker protégé chains.**
+>
+> Side question (OPEN, POST 24): is the **"National Kingmaker"** trait more defined — does it grant *only*
+> cross-state-lines protégé ability, or more? Left unanswered (relates to the §6.5.y Master-Kingmaker = +1-in-every-
+> state ruling, #128). *(designed, RULED — in the Kingmaker→Protégé pass, **reject a protégé who is themselves a
+> Kingmaker (any tier)**; reverses the prior chain-reward. Cite `fixes2022`(a852d451)`#POST 22-26`; `game-context.md`
+> #128/#210.)*
+
 #### 6.5.z ★ Ted-RULED Kingmaker draft-CPU fix (`tedchange`)
 
 > **`tedchange#POST 40-41, 54` RULED.** Sharpens the [§4 Draft](#4-draft-211) +
@@ -2016,6 +2050,68 @@ turn (post 49) and 1870–1872 turn (post 323):
   build has seeded, plus an era after Gilded Age.
 *(designed, not built — extend `Faction.ideologyCards|lobbyCards|interestCards` taxonomy
 to a per-era catalog; extend the seed/draft-ideology-mix to be per-(faction, era).)*
+
+### 7.5 ★★ #259 (NEW, batch 38) — the party-TRANSFORMATION system: per-coalition branch roster + scripted, prereq'd party formation (DESIGNED, 0% shipped)
+
+> **★★ Every party is a BRANCH of one of two fixed coalitions, BLUE or RED, and party identity TRANSFORMS over a
+> campaign through a prereq'd scripted-event graph — not a cosmetic rename.** Source: `parties` (7d0dfeec, "AMPU
+> Political Parties," DESIGN/content-spec, May–Jun 2022, NOT a playthrough; tier-1 `@vcczar` + `@MrPotatoTed`).
+> vcczar (POST 1) states he **added scripted events that CREATE new parties**, and that **"all party formations,
+> aside from the first for each party, has requirements that must be met."** This is the canonical roster +
+> transformation-rules spec behind the era-specific BLUE/RED party names. **0% built** — shipped `Party = { id:
+> PartyId; name: string; leaderId?; color }` (`types.ts:1306`) is a flat 2-value record keyed to exactly two fixed
+> `PartyId`s (`'BLUE'`/`'RED'`, `types.ts:3`); a party can only have its single `name` string changed. `grep` for
+> `partyFormation`/`partyBranch`/`coalition`/`partyTransform` over `src/` → ZERO.
+
+**(1) ★ The two-coalition branch model + rosters.** A campaign moves through a *sequence* of branch identities
+within each coalition, driven by party-formation scripted-event triggers with prereqs:
+
+| Coalition | Branch roster (in-thread, POST 1) |
+|---|---|
+| **BLUE** | Jeffersonian-Republican · Democratic · Labor · Liberal · Liberal-Republican · Populist (1890s) · **Dixiecrat** · Progressive · Democratic-Socialist · American-Socialist · American-Communist · Green |
+| **RED** | Federalist · National-Republican · Whig · Republican · Know-Nothing (= American Party) · Conservative · Bull-Moose · Party-of-Jesus-Christ · American-Fascist · **National-Populist** (MAGA-populist, renamed from "Nationalist Populist") · Libertarian |
+| **Era-of-Future** (cross-coalition — can land BLUE *or* RED, fire very late) | **Technocratic** (←Science) · **Humanitarian** · **Earth-First** (←Earth) · **[Universe-party name UNDECIDED**] |
+
+**(2) ★ KEY MECHANIC — scripted-event party formation with prereqs.** First formation of each party = unconditional;
+**every formation thereafter = gated by REQUIREMENTS** (POST 1). This turns the roster into a **prereq'd
+transformation GRAPH**, not a flat list. The trigger mechanism is a **#221 scripted-event payload TYPE** (party
+formation alongside legis/pres-action/gov-action/SC-case event payloads), and the requirement field is exactly the
+**#258 predicate/prereq field**. Persistence is **tunable per-branch via its prereqs** — vcczar amended the
+requirements so the Federalists and Jeffersonian-Republicans now last much longer (a branch-longevity knob). The
+Future branches are band-gated to fire "very late in the game" (the terminal era, #206).
+
+**(3) ★ The missing DATA model (the gap shape, #259).** (a) a per-coalition branch ROSTER (the lists above + the
+Future cross-coalition set); (b) **party-formation scripted-events with PREREQ/requirement fields** (every formation
+after the first gated — the #258 field); (c) **branch-longevity knobs** (prereq-tunable persistence per branch);
+(d) **branch metadata** — a platform blurb + a BLUE/RED/either coalition assignment per branch.
+
+**(4) ★ Designer rulings (decisive, tier-1).**
+- **"National Populists"**, not Nationalist Populist ("one too many ist's," POST 5/7).
+- **Dixiecrat STAYS** ("staying because of historical reasons," POST 7), over a "Southern Conservatives" rename —
+  and Dixiecrat is a **BLUE** branch (matches the "Dixiecrats start INSIDE Blue" realignment finding).
+- **Socialists trimmed to TWO** — keep American-Socialist + Democratic-Socialist; a third (Social Democrats) floated
+  but the two-party set confirmed final (POST 7/9). American-Communist is separate and stays on BLUE.
+- **Single-issue parties EXCLUDED** — Anti-Masonic rejected ("too single-issue," POST 16-17); Prohibition + other
+  single-issue/frivolous parties out of scope (POST 25). Joke parties out (out-of-scope banter, not cataloged).
+- **Reform Party = could be BLUE *or* RED** ("might consider them," POST 19-20) — a candidate cross-coalition
+  branch, not yet committed.
+- **Open (NOT ruled):** the Era-of-Future "Universe/space-government" party NAME (Solar/Apollo/Astropolitik floated,
+  no pick); POST-30 historical-renaming proposals (Know-Nothing→Native-American Party, American-Fascist→American
+  Nazi Party, National-Populist→Patriot Party); Union-Party (1936) / Share-the-Wealth placement.
+
+> **★ CONTRAST — do NOT merge with the cosmetic faction-rename (#40/#78).** The engine *does* model era-specific
+> party *names* and a deterministic **faction-rename trigger** ([§25.13](#2513-faction-rename-rule--whig-auto-rename-to-conservative-party-deterministic), e.g. Whig→"Conservative Party" gated by leader
+> traits / win-streaks) — but that is **cosmetic relabeling within the two fixed coalitions**, NOT party
+> *formation/transformation* (a new branch identity with its own platform, unlocked by a prereq'd scripted event).
+> #40's rename trigger is a thin shadow of this larger unbuilt system; #259 is the superset. Rides on #221
+> (scripted-event engine, 0% shipped) + #258 (the prereq field) + #92/#206 (the era-band gating).
+
+*(designed, 0% shipped — add a per-coalition branch-roster dataset (full BLUE + RED + Era-of-Future cross-coalition
+lists, each with platform + BLUE/RED/either); model party formation as #221 scripted-event payloads carrying #258
+prereq fields (every formation after the first gated); make branch-longevity prereq-tunable; generalize the flat
+2-value `Party` (`types.ts:1306`) to carry a current-branch identity within its fixed coalition. Cite `parties#POST
+1, 2-3, 5-7, 9, 14-17, 19-20, 27-30`; code `types.ts:1306` (flat `Party`), `types.ts:3` (`PartyId`=BLUE/RED), no
+party-branch/formation/prereq/coalition tokens in `src/`; `game-context.md` #259 (+ #221/#258/#206/#40/#78/#92).)*
 
 ---
 
@@ -2569,6 +2665,15 @@ shipped rule.
 failed-confirmation ban + SML-5-names auto-confirm recovery; the diversity-floor and
 faction-equity scoring dimensions.)*
 
+> **★ #66/#170 (batch 38) — HOLDOVER-OFFICE term lengths + holdover-default + replace-early RISK + no-permanence (AGREED).** Source: `fixes2022` exploits thread (a852d451, Mar–Apr 2022, POST 14-21; ConservativeElector2 raises it, vcczar + Ted RULE). The complaint (POST 14): Fed Chair / FBI Director are **NOT automatically re-appointed** when a new president takes office, yet CPU teams (and players) will **always nominate someone new** — both ahistorical AND an exploit. The resolution (tier-1, **[AGREED]**) sharpens the per-officer tenure rules already noted at §9.3.6 / §9.3.1.1 (#170):
+> | Office | Term | Holdover behavior | Early-removal risk |
+> |---|---|---|---|
+> | **Fed Chair** | **4 years, renewable** | carries over by default (incoming Pres does NOT auto-re-nominate) | remove before term-up → **10% econ-stab** hit |
+> | **FBI Director** | **10 years, renewable** | carries over by default | remove early → **10% dom-stab** hit |
+> | **CIA / Director of National Intelligence** | **indefinite, at the President's pleasure** | carries over by default | remove early → **10% mil-prep** hit |
+>
+> The **J. Edgar Hoover** case (1924→1972) is handled by **renewal** (10-yr renewable, repeatedly renewed), NOT a permanence trait — vcczar **explicitly REFUSES to grant office permanence to any trait**: *"I don't want to award permanence to anyone because then players will just always appoint Iron Fist to the office"* (POST 21 — closes a would-be Iron-Fist-tenure exploit). The risk applies **only if removed before the term is up** (POST 19). These offices "don't do much" today but are valuable for flavor (POST 16-17). **Open Q (carry):** how does a Pres *legitimately* remove a holdover before term-end (the real-world "fire Powell/Wray" case) beyond eating the 10% hit? Not fully specified. This is the **design origin** of the holdover-default + replace-early-risk ruleset for #66 (the Progressive institutional layer, [§24.6](#246-66-the-progressive-era-institutional-layer-offices-created-in-game-by-law)) / #170 (era-keyed offices, §9.3.1.1); distinct from the #153-cluster "Fed-Chair/FBI never-held-office +3-admin" stat-seeding note. Cite `fixes2022`(a852d451)`#POST 14-21`; code `cabinetSeatsForYear` (`types.ts:1196`, year-keyed/fixed — no term/holdover/early-replace-risk logic); `game-context.md` #66/#170.
+
 #### 9.3.7 ★ Ted-RULED cabinet → enthusiasm REWORK (designer-authoritative; `tedchange`)
 
 > **AUTHORITATIVE — Ted's official rework, `tedchange` POSTs 1-4. RULED IN CONCEPT; specific
@@ -2919,6 +3024,17 @@ AND: a nominee who **already had `Controversial`** and is then denied → a **LI
 **(11) ★ PRESIDENTIAL PROMISES (#181) are honored HERE** (`rulebook#POST 15`): promises made during the election **must be honored** at appointment unless (1) the Pres is `disharmonious` AND (2) the only eligible person is gone; a **broken promise → −3 (later −2) faction enthusiasm** for the wronged faction (`apptdeepdive#POST 40/43`).
 
 **(12) ★ SCOTUS confirmation = the SAME machine** (`rulebook#POST 32, 34, 35`): SCOTUS needs **60%** (Nuclear-Option → majority), reuses the cabinet block rules (substitute "inexperienced" = **Judicial ≤ 2**), adds the **"Merrick Garland" delay** (only in a 2nd-term lame-duck OR for an unelected VP-president), and a blocked nominee → Pres picks a moderate/other-party pol, auto-confirmed. The nominee floor is **Judicial ≥ 2** (designer-confirmed, NOT 1, POST 35). Documented at [§22.7](#227-scotus-subsystem-253--282)/[§26.6](#266-modern-scotus-confirmation-rules--refinements).
+
+**(13) ★★ CABINET-CRISIS CONFIRMATION SAFEGUARD (#172/#199 + Iron-Fist #77 carve-out — NEW, batch 38; closes the shipped auto-confirm-WITHOUT-vote loophole).** Source: `fixes2022` exploits thread (a852d451, Mar–Apr 2022, POST 8; Cal proposes, queued by tier-1 POST 13). An **anti-exploit guard** on confirmation: appointing a **low-Administration** cabinet officer (**Admin 1 or Admin 2**) to a **crisis that has a Lingering-Phase effect** is penalized hard, **escalating per repeat offense** (first vs subsequent appointment):
+
+| Tier | Penalty (escalating) |
+|---|---|
+| **Admin-2, 1st** | Pres **−100**; roll 3-6 → −1 party-pref. Integrity senators **+10% oppose**, Harmonious **+10%**, both **+20%** |
+| **Admin-2, subsequent** | roll 2-6 → −1 party-pref; **−1 Ideological Enthusiasm** of Pres's party; 3-6 → add **Controversial** to President; 5-6 → add **Controversial** to appointee; Pres **−500/appointment**. Integrity **+25% / Harmonious +25% / both +50%** |
+| **Admin-1, 1st** | Pres **−100**; roll 2-6 → −1 party-pref. Integrity **+50% / Harmonious +50% / both +100%** |
+| **Admin-1, subsequent** | −1 party-pref (auto); −1 Ideo-Enthusiasm; 2-6 → Controversial on Pres; 3-6 → Controversial on appointee; Pres **−1000/appointment**. Integrity OR Harmonious → **100% oppose**; all others +10% |
+
+Two load-bearing constants throughout: **(a) such appointees are NOT eligible for Iron-Fist presidents to usher through confirmation WITHOUT a vote** (a direct carve-out on the #77 Iron-Fist auto-confirm lever — §9.3.11(2) gate condition 3); **(b) Integrity / Harmonious senators get an ADDITIVE oppose-chance** (maps onto the #199 `apptdeepdive` confirmation-inflation fix). The fixed −300/−100 numbers are FLOATED; the escalating structure is the intent. **★ This is the DESIGN INTENT that closes the shipped auto-confirm-without-vote loophole** already documented at the head of §9.3.11: `runPhase_2_3_1_Cabinet` (`phaseRunners.ts:2158`) auto-picks the top-scored candidate and logs "confirmed" with NO vote — exactly the hole this safeguard (and the whole #172 confirmation subsystem) closes. (Tension to note: this deliberately makes low-Admin crisis appointees HARDER to confirm — the *intended* opposite of the DH-23 accidental over-rejection bug.) Cite `fixes2022`(a852d451)`#POST 8, 13`; code `phaseRunners.ts:2158`; `game-context.md` #172/#199/#77.
 
 > **★ How this reconciles with what's already documented:**
 > - **#172 (§9.3.10)** = the **threshold number** (era-keyed 60% / 50%+1 + the Nuclear-Option boot flag). **This section** = the **gate + control structure** the threshold sits inside (auto-confirm gate → hearing → block/filibuster/cloture/tools → fallout). They compose; neither overturns the other.
@@ -5103,6 +5219,174 @@ Dept-of-Education→Civil-Service routing. The Immigration district-flip Gov act
 demographic→state-lean lever. Cite `immigration#POST 1, 2, 3, 4`; `education#POST 1, 2, 3, 6, 7, 8, 10, 11`;
 `legisprops2028#POST 5, 6, 17`; code `types.ts:1513` (no subtype/genre/Pres-Gov-Action); `game-context.md`
 #221/#237/#248/#20/#247/#256.)*
+
+#### 14.1.3.d ★★ #258 (NEW, batch 38) — the PREREQ / predicate-gated content-availability FIELD on the content primitives (the SINGLE most cross-thread-corroborated b38 finding; DESIGNED, 0% shipped)
+
+> **★★ The HEADLINE batch-38 mechanic: a content primitive's availability (and, for some, its EFFECT) is gated on
+> a game-STATE predicate, NOT the calendar.** Surfaced as the defining mechanic of the Civil-Rights drop
+> (`civilrights` 9bd91ee2 POST 1, 4), corroborated by Agriculture's prereq CHAINS (`agriculture` c33d07b8 POST 1, 4)
+> and by gated party-formation (`parties` 7d0dfeec POST 1 — "every party formation after the first is gated by
+> REQUIREMENTS"). Era abbreviations set only the *band*; a **`Preq:` clause** sets *when within any timeline an item
+> can appear*. This is the schema field that makes #92 (eras-as-game-state-bands) operational on the content
+> primitives themselves. **DISTINCT from #92** (the WHY — content is keyed to game-state) **and from #221** (the
+> primitive registry — this is the gating field ON each record).
+
+**(1) ★ REUSE-AND-EXTEND (the engine bearing, codebase-verified).** A serializable `Predicate` tree + a pure
+`evalPredicate(snap, pred)` interpreter **already ship** (`types.ts:~1487-1497`: `all/any/not`, `yearAtLeast/atMost`,
+`eventCompleted`, `eventChose`, `meterAtLeast/atMost`, `interestAtLeast`) — **but wired ONLY to the 2.4.3 era-event
+graph**, NOT to `Legislation`. The `Legislation` interface (`types.ts:1506-1514`) has the 4-value `committee` field
+and **NO `subtype`, NO prereq/condition field**. So the machinery the prereq system needs *partly exists*; the build
+requirement is (a) attach a predicate/condition field to **every** #221 primitive (Legis-Prop / Pres-Action /
+Gov-Action / Scripted-Event), and (b) **extend** the `Predicate` vocabulary with the classes below (none of which
+the shipped enum can express).
+
+**(2) ★ The PREDICATE TAXONOMY (each row = a distinct kind of game-state query; verbatim `Preq:` examples).** This
+is concrete schema input for #221/#258:
+
+| Predicate class | Representative `Preq:` clauses (verbatim) | Source |
+|---|---|---|
+| **No-policy / baseline** (the `*-Ind-Default` rule, below) | If No Civil Rights Legis Active; If No Bill of Rights Exists; If no Agriculture Legislation is Active | civilrights, agriculture |
+| **Prior-event-occurred** | Civil War occurred and has ended; Civil War occurred w/ South seceded; Indian Removal Has Occurred; BLM/Civil-Rights/Communist/Fascist Movement Has Occurred; Robot Rights Boom Has Occurred; **Industrial Revolution occurred (S-Fed)** | civilrights, agriculture |
+| **State-condition flag** | Slavery is Abolished; Segregation not yet banned nationwide; Gay Marriage not legal nationwide; Women Cannot Vote Nationwide; Jim Crow active in ≥1 state; Affirmative Action is Active; Slavery Legal | civilrights, agriculture |
+| **Institution-exists** | Dept of Justice Exists; Judicial Dept is active; Federal Public Housing Exists; **Postal Department Active**; Agriculture Dept is Cabinet-level | civilrights, agriculture |
+| **Prior-legislation-active (compound AND)** | CRA-1964 **AND** CRA-1965 are active; **Any Anti-Monopoly legislation active** (Capper-Volstead prereq) | civilrights, agriculture |
+| **3rd-party-now-major** | Theocratic 3rd Party is Now Major Party; American-Fascist 3rd Party is Now Major Party | civilrights |
+| **Geographic / per-state / scenario** | CA Has Not Achieved Statehood; Louisiana-Purchase **AND** Mexican-War have occurred; Population Decline in US and Europe | civilrights |
+| **Scenario-mode-only** | **Constitutional Convention Only** (gates the founding "early version" rows) | civilrights |
+| **Tech / future-state** | Human-AI Augmentation Possible; Robot Slavery Banned | civilrights |
+
+**(3) ★ The `*-Ind-Default` BASELINE rule (a selectable "no policy" STATE).** "Nothing active" is itself a tagged,
+selectable state — appearing as `L-Ind-Default` under an `If No … Active` prereq. Examples: "Leave Civil Rights
+Issues to the States" (`Preq: If No Civil Rights Legis Active`); "No Bill of Rights" (`Preq: If No Bill of Rights
+Exists`); "All Agricultural Policies Left to the States" (`L-Ind-Default`). `Ind` = the Independence-era band where
+the default is seeded; this is the SAME baseline-is-a-state design already documented for Business/Labor/Currency
+(#237, §30.22.B). The baseline + its replacements form an **opposed-pair option-set** (the negation axis, §14.1.3.c).
+
+**(4) ★ Prereq CHAINS + cross-genre prereqs + conditional-EFFECT nodes (Agriculture sharpens the taxonomy).** Beyond
+single predicates, Agriculture shows the prereq field supports **dependency TREES**:
+- **Department lifecycle chain** (the canonical org-unit sub-pattern, parallels Dept-of-Ed→Civil-Service):
+  Create Independent Dept of Agriculture (L-Nat) → Elevate to Cabinet-level (L-Gild) → {Increase **either/or**
+  Decrease funding} → downstream relief/program bills (AAA, Rural Electrification, Tenant Farmer, …).
+- **Cross-genre prereq** — a prereq can point at a flag OWNED BY ANOTHER GENRE: Capper-Volstead needs *any
+  Anti-Monopoly legislation active*; Rural Free Delivery needs *Postal Department Active*.
+- **Conditional EFFECT** (not just availability): Cotton Gin (S-Fed) **+ Slavery Legal** ⇒ "Cotton Replaced Tobacco
+  as Chief Cash Crop" — the event's *payoff* is gated on game-state, not just its firing.
+
+**(5) ★ Invention / tech-tree S-chains (a linear scripted-event progression).** A chain of scripted events each
+conditioned on the prior + a world-state flag: **Cotton Gin (S-Fed) → McCormick Reaper (S-Dem) → John Deere Steel
+Plow (S-Dem) → Modern Tractor (S-Norm)**, all gated behind "Industrial Revolution occurred." Reusable tech-tree
+shape for the #221 scripted-event registry.
+
+**(6) ★ Multi-condition SC-CASE S-events (Courts subtype as content, #248/#249).** **Pigford v. Glickman** (a $2B
+class-action settlement vs USDA) fires only when **Agriculture Dept is Cabinet AND its Director is CON-or-further-
+right AND the era is Neocons** — a 3-condition AND across **office-state + appointee-ideology + era**, with a
+**next-term-scheduled fiscal EFFECT** (delayed payoff). **Pigford II** ($1.2B in the next-term Farm Bill) reuses the
+shape gated to Era-of-Terror. Corroborates SC-case-as-content with rich predicates.
+
+*(designed, 0% shipped — add a serializable predicate/condition field to EVERY #221 primitive, evaluated for
+availability AND (for some) effect; EXTEND the shipped `Predicate` tree + `evalPredicate` (`types.ts:~1487-1497`)
+with the no-policy-baseline / state-flag / institution-exists / prior-legislation-active-AND / 3rd-party-status /
+geographic-scenario / scenario-mode / tech-state classes; support compound AND/OR (the tree already does
+`all/any/not`) and cross-genre flag references. Cite `civilrights#POST 1, 4`; `agriculture#POST 1, 4`;
+`parties#POST 1`; code `types.ts:~1487-1497` (era-event-only `Predicate`/`evalPredicate`), `types.ts:1506-1514`
+(`Legislation`, no subtype/prereq); `game-context.md` #258 (+ #221/#92/#241/#247/#248/#256).)*
+
+#### 14.1.3.e ★ #221/#237/#248 + #260/#261 (batch 38) — the Civil-Rights + Agriculture policy-genre drops + the event-SPREAD + firing-budget mechanics (DESIGNED, 0% shipped)
+
+> **★ Two more fully-tagged single-genre content drops** + two NOVEL scripted-event mechanics that stress the
+> #221 model beyond the fire-once `EraEvent`. Both genres are **CONTENT-AUTHORING idea dumps** (NOT playthroughs):
+> `civilrights` (9bd91ee2, Apr 2022, 4 posts, ~80 rows) and `agriculture` (c33d07b8, Apr 2022, 7 posts), both
+> vcczar-authored. **0% shipped** (no `subtype`, no Pres/Gov-Action primitives, no prereq field — §14.1.3 / §14.1.3.d).
+
+**(1) Civil Rights genre — FULLY TAGGED** (`civilrights#POST 1, 4`). Unlike the raw Immigration dump (§14.1.3.c),
+every row carries the full schema: a **mechanism prefix** (`L-`/`G-`/`P-`) + an **era-band abbreviation**, and the
+list is **partitioned into a no-prereq block followed by `Preq:`-gated blocks** (the #258 system above). `S-`
+(scripted) rows are explicitly EXCLUDED ("too many," POST 1). Shape/counts (NOT transcribed):
+
+| Primitive | ~Count | Spans |
+|---|---|---|
+| **Legis Prop** (`L-`) | **~65** | the dominant primitive — incl. the `*-Ind-Default` baselines + the porous-boundary rows (14th/15th Amdt, Reparations, Native-American citizenship — civil-rights once slavery is resolved) |
+| **Gov Action** (`G-`) | **~9** | state-scoped: discriminate vs secessionists, Jim Crow Laws, Make Lynching Illegal, Recognize Gay Marriage, Remove CSA Monuments, Give Women Right to Vote, Civil Rights Protections (#20) |
+| **Pres Action** (`P-`) | **~4** | Desegregate the Military; Use Federal Force to End Jim Crow; + an **opposed STANCE pair** Pro-Civil-Rights-over-Liberties ↔ Pro-Civil-Liberties-over-Rights |
+
+**(2) Agriculture genre — full L/G/S/P** (`agriculture#POST 1, 4`). Adds the 4th primitive (`S-` scripted) and the
+prereq chains documented at §14.1.3.d(4-6): the `L-Ind-Default` baseline ("All Agricultural Policies Left to the
+States"), no-prereq animal-welfare/future props (ban factory farming, subsidize insect protein, GM-crops either/or
+pair), the Dept-of-Ag + Federal-Farm-Board chains, the Cotton-Gin→Modern-Tractor invention tree, SNAP/WIC with
+**Reduce/Increase/Repeal/Enable-Disable modifier verbs**, and the Pigford SC-case S-events. Pres Actions (only ~3 —
+the recurring P-primitive hole, #262): forest-fire burn policy ↔ co-opt Native burning (a stance toggle); invasive-
+species pesticide campaign.
+
+**(3) ★ Genre-BOUNDARY rulings (taxonomy ownership — #237/#248).** The two threads are unusually rich in routing
+calls — concrete evidence the taxonomy needs **clear ownership rules + multi-category tagging**:
+
+| Ruling | Routing | Source |
+|---|---|---|
+| **Slavery / Immigration / Elections are SIBLING top-level genres** — NOT Civil-Rights sub-tags | "A lot of Civil Rights things that are about slavery are NOT here" — Civil Rights / Slavery / Immigration / Elections are sibling genres | civilrights POST 1 |
+| **Ethanol → Oil & Gas, NOT Agriculture** | ethanol is an ag cash crop but its policy lever is energy (blend mandates / refinery waivers) | agriculture POST 2/3 |
+| **Rural broadband → Infrastructure** (Agriculture-adjacent) | "not exactly agriculture," accepted by analogy to Rural Electrification — fuzzy membership, the multi-tag case | agriculture POST 2/3 |
+| **School-nutrition multi-tags Ag / Education / Welfare** | Universal School Breakfast/Lunch span three subtypes | agriculture POST 4 |
+| **Dept create/abolish ROUTES to Civil-Service** (org-unit-as-genre) | the Dept-of-Ag create→elevate→fund chain parallels Dept-of-Ed→Civil-Service (batch-37); the *create/abolish* route is a Civil-Service action while policy content stays in Agriculture (parallel exact, not formally resolved) | agriculture POST 2/3/6 |
+| **Some items are really Trade / Diplomacy** | free trade / China trade-war farm-price effects; Foreign Agricultural Service | agriculture POST 2/3/6 |
+
+**(4) ★ Opposed-pair option-sets (reusable negation axis, #221/#248).** Both genres lean on deliberate mirror pairs
+— the content schema wants an **option-set / negation axis** (cf. §14.1.3.c's ban/legalize/require triad): ban↔
+legalize↔mandate↔negate (Ban Conversion Therapy ↔ Subsidize; Affirmative Action ↔ Ban ↔ Ban-in-Housing; Federal
+Segregation Amdt ↔ Segregation-BAN Amdt; Ban ↔ Allow GM Crops), increase↔decrease (funding dials), enact↔repeal.
+
+**(5) ★★ #260 — event→POPULATION-shift + multi-turn SPATIAL-SPREAD (the build-relevant headline; `agriculture#POST
+5, 6`).** Scripted events that mutate geography and population over MULTIPLE turns, beyond the fire-once `EraEvent`:
+
+- **BOLL WEEVIL = a geographic, multi-turn SPREAD mechanic with per-state state.** Comes from Mexico → infests TX
+  cotton (income↓, dissatisfaction↑) → **spreads to neighboring cotton states every 4 yrs** on a dated propagation
+  table (1896 TX → 1900 AR/LA → 1904 MS/TN → 1908 AL/GA → 1912 FL/SC → 1916 NC/VA). **Variant spread-rates** branch
+  the chain: a *slow/never* variant ("Great Migration never happens") and a *catastrophic/fast* variant (neighbors
+  in **2 yrs not 4**). The spread DRIVES the **Great Migration** (South→North/West **population shift**). A
+  **counter-event** (~1950 DDT) appears and then **EXPIRES** — stops working by **1960** as the weevil develops
+  resistance (a time-boxed counter with an expiry). Secondary effect: crop diversification (peanuts).
+- **POTATO BLIGHT → immigration±.** Ireland→US famine event whose magnitude **modulates immigration inflow** (worse
+  famine ⇒ more immigration; milder ⇒ less) — couples the event system to the demographic/immigration lever.
+- **What this requires (the gap shape, #260):** (a) per-state infestation/effect STATE, (b) spread propagation over
+  turns (variant rates + geography-driven neighbor selection), (c) an event effect that mutates state POPULATION/
+  DEMOGRAPHICS (which feeds apportionment/EV + lean). DISTINCT from #247 (event-driven *lean* — this is population/
+  demographic MAGNITUDE + geography) and from the §10.x Shaw/John-Brown one-shot "demographic-removal" events
+  (fire-once, no spread). Nothing in the build models this; `EraEvent` is fire-once year-windowed and `state.bias`
+  is a static scalar (the only dynamic lever is the #247 ±1 region nudge, `phaseRunners.ts:2608`).
+
+**(6) ★ #261 — per-half-term scripted-event FIRING BUDGET / density band (`halfterm#POST 1`).** vcczar audited
+events-per-half-term as an authoring-balance metric and named a target band: **~6–11 events/half-term** ("the
+average range would be about 6-11 events per half term"), and floated a runtime rule — **"make a range of 5–15 for
+Scripted Events for this era, or something to that effect"** — i.e. the scripted-event count is itself a **BUDGET
+the engine should enforce/randomize within a per-half-term range**, not just a static authored list. The measured
+**14-era half-term table** (§27.1.2; Independence 56 … Gilded-Age 173-max … Terror 50-min; the densest half-term =
+Gilded 1890-91 at **26**, the thinnest recent ones at 2–7) is the literal current pool-size baseline. Recent-era
+thinness (Neocons/Terror/Populism) is a known content-SUPPLY hole ("we don't yet know what'll be famous," #206), NOT
+a budget bug. **★ OPEN Q (carry to human, #261):** is "5–15 per half-term" a **per-era authored-pool floor/ceiling**
+or a **runtime per-turn cap the engine randomizes within**? POST 1 is ambiguous. DISTINCT from #221's authoring-side
+density-calibration (size the authored pool to a target); this is the runtime firing budget that fires within it.
+
+**(7) ★ Coverage / balance ASKs (#262).** Both genres surface the recurring per-ideology / per-primitive coverage
+hole: vcczar wants **more Traditionalist / RW-Populist / Conservative civil-rights content that is NOT merely a
+repeal** of a progressive item (the conservative side is currently mostly negations), names **Era-of-Future**
+content the #1 priority (Future agriculture, Future civil rights), and **more Pres-Actions** the #2 priority.
+Monument/bust authorizations (Booker T. Washington / Carver busts; 3rd-party-gated Christian/fascist/communist
+monuments) arrive as prereq-gated Civil-Rights rows — a **cross-genre overlap with #256** (National Projects /
+Monuments): is "build a monument" a Civil-Rights Legis-Prop or a National-Projects primitive invoked by a
+civil-rights prereq?
+
+> **★ #20 (Governor Actions, light corroboration).** Agriculture's flat/state-agnostic G-entries (Subsidize
+> Agriculture, …) + the ethanol "could be a gov action at the state level" pitch (POST 2/3) reinforce the deferred
+> **per-state Gov-Action upgrade** as the natural home for geography-specific ag actions.
+
+*(designed, 0% shipped — Civil-Rights + Agriculture are two concrete #237 GENRES / #248 SUBTYPES populating the #221
+registry (Civil Rights fully L/G/P-tagged with #258 `Preq:` blocks; Agriculture full L/G/S/P with prereq chains).
+NEW sub-mechanics: **#260** event→population-shift + multi-turn spatial-spread (Boll Weevil per-state infestation +
+variant rates + expiring DDT counter; Potato-Blight→immigration±) and **#261** the per-half-term firing budget
+(~6–11; floated 5–15). Genre-boundary rulings (siblings; ethanol→Oil&Gas; broadband→Infrastructure; school-nutrition
+multi-tag; Dept-create→Civil-Service) feed the #248 multi-category-tagging requirement. Cite `civilrights#POST 1, 4`;
+`agriculture#POST 1, 2, 3, 4, 5, 6, 7`; `halfterm#POST 1, 1-14, 12-14`; code `types.ts:1513` (no subtype/genre),
+`EraEvent` fire-once, `state.bias` static, `phaseRunners.ts:2608` (#247 ±1 lever); `game-context.md`
+#221/#237/#248/#260/#261/#262 (+ #20/#206/#247/#256).)*
 
 ### 14.2 Forum design layer: Constitutional Amendments durable state (designed, not built)
 
@@ -8298,6 +8582,71 @@ resolve in LOSS, not just stall or win (`terror2000#POST 639, 656-662, 816-817, 
 scenario-boot must seed the start-year's historically-active wars** (e.g. 1788 → NW Indian War,
 20%-loss / WS −2) as already-running `War` instances, from an "active wars by start date" table.
 Cite `oopscpu#POST 338-344`.)*
+
+#### 21.1.B ★ #45 (batch 38) — war-DECLARATION penalties + prep-gated war LIMIT keyed to a 9-level Military-Preparedness scale (the EARLIER design-origin of #45's declaration side; DESIGNED, 0% shipped)
+
+> **★ This is the war-DECLARATION / preparedness-consequence side of #45 — and its design origin PREDATES the §21.1.A
+> `rethinkwar` combat redesign by ~5 months.** Source: `fixes2022` exploits thread (a852d451, "Fixes for exploits,
+> loopholes, ranking, etc.," **Mar 24 → Apr 11, 2022**, NOT a playthrough; tier-1 `@vcczar` + `@MrPotatoTed`; Cal
+> (Arkansas Progressive) supplies the dense war spec, ConservativeElector2 the war-limit). §21.1.A is the **combat**
+> model (Sept 2022); §21.1.B is the **declaration** model (Mar–Apr 2022) — together they bracket #45. **0% built** —
+> war declaration carries no party-pref / preparedness consequence in `src/` today; no war-count cap.
+
+**(1) ★ The headline — a sliding-scale party-preference roll keyed to a 9-level Military-Preparedness meter at the
+moment a war is DECLARED.** Three escalating proposals converged on the prep-scaled model:
+- **Major war → −300 instigating president / −100 president's party / +1 opposite-party preference** — **UNLESS
+  America was attacked first** (Spanish-American, WWII post-Pearl-Harbor, War-on-Terror post-9/11 are exempt). **×2
+  all of these if the nation is in a national CRISIS.** (The fixed −300/−100/−200 magnitudes are **FLOATED**; the
+  prep-scaled sliding model below is the **AGREED direction** — vcczar POST 9: party preference *should have a
+  chance to GAIN*, not be an automatic negative.)
+
+**(2) ★ Per-prep-level d6 table (party-preference ±1; MAJOR war).** Roll a d6 per Military-Preparedness band (9
+bands → 5 labels). **Starting a war while well-prepared can BOOST your party** (rally-to-the-flag); only unprepared
+war reliably hurts:
+
+| Prep band | Label | Roll effect (MAJOR war) |
+|---|---|---|
+| (1) | Very Unprepared | −1 party-pref; **roll again**, a 1 → another −1 (stacks to −2) |
+| (2-3) | Slightly Unprepared | roll 2-6 → −1; 1 → no effect |
+| (4-6) | Possibly Prepared | 1-2 → −1, 3-4 → **+1**, 5-6 → no effect |
+| (7-8) | Slightly Prepared | roll 2-6 → **+1**; 1 → no effect |
+| (9) | Very Prepared | +1 party-pref; **roll again**, a 1 → another +1 (stacks to +2) |
+
+(MINOR war = the same shape, milder: (1) 1-2→−1; (2-3) 1→−1; (4-6) no effect; (7-8) 1→+1; (9) 1-2→+1.)
+
+**(3) ★ Multiple-Major-War rule.** Starting a **2nd major war while a 1st is on-going AND prep is below the middle**
+→ roll 1-5 → −1 party-pref (1 = no effect). Pairs with the prep-gated war LIMIT in (5).
+
+**(4) ★ War-Declaring-President FUTURE Penalties (the attribution rule — "Bush's war, not Obama's war").** Backlash
+must land on **whoever STARTED the war**, not whoever holds the bag at its end:
+- The **faction that started a major war loses the SAME point penalty as the president presiding over the war's
+  LOSS**, even if the loss happens **under a later president**.
+- If the major war ends in **game-over**, the original (instigating) president is **BARRED from winning** (caused the
+  nation to fail).
+- **Multiple lost wars → ×2 the penalty** the presiding president(s) take.
+
+**(5) ★ Prep-gated simultaneous-war LIMIT (0/1/2/3) + per-theater officer assignment (AGREED-direction).** Ted's
+simplifying cap on how many wars you can DECLARE (others can still declare on you):
+
+| Prep level | Wars you can declare |
+|---|---|
+| lowest | **0** |
+| 2nd-lowest | **1** (only if not already at war) |
+| middle | **2nd war** (only if not already in two) |
+| max | **3rd war** (only if not already in three) |
+
+Plus a **multi-front-war requirement: assign specific Generals and Admirals to specific theaters** ("it would be
+weird for a General to be fighting in Canada, in the US, and in Brazil all at the same time"). This per-theater
+officer binding cross-refs the multi-front/naval war model (§21.1.A naval-feeds-land), **DH-79** (naval results
+recorded but ignored in the win-check), and the **military-leadership gap #56** (per-theater "War Score").
+
+*(designed, 0% shipped — the war-DECLARATION side of #45: a sliding-scale party-pref roll keyed to the 9-level
+Military-Preparedness meter (per-prep-level d6 table; well-prepared war can BOOST), the Multiple-Major-War penalty,
+the instigator-FACTION future-penalty / barred-on-game-over / ×2-for-multiple-lost-wars attribution layer, a
+prep-gated 0/1/2/3 simultaneous-war cap, and per-theater General/Admiral assignment. Fixed −300/−100 magnitudes
+FLOATED; sliding model AGREED. Mar–Apr 2022 = the earlier design-origin, predating the §21.1.A `rethinkwar` combat
+side by ~5 months. Cite `fixes2022`(a852d451)`#POST 3, 4, 5, 6, 7, 9, 10`; code (no war-declaration party-pref /
+prep-consequence / war-count cap / theater→officer binding in `src/`); `game-context.md` #45 (+ #56/DH-79).)*
 
 ### 21.2 Per-state presidential-election method
 
@@ -12901,6 +13250,56 @@ era-content registry), §27.1.1, and `game-context.md` #92/#221.)*
 > authoritative tables (rulebook 15-era §A vs benchmarkupd 13-era) must be reconciled into one canonical
 > band-label + trigger-year spec before the era system OR the §27.2.2 benchmark scorer is built. (`benchmarkupd#POST
 > 1, 2`; `game-context.md` #206/#92/#253; cross-ref §27.2.2, §22.11.)
+
+> **★ THIRD authoritative era-table — the `halfterm` 14-ERA per-half-term table (NEW, batch 38; #206) — turns the
+> reconcile into a THREE-WAY (15/14/13).** `halfterm` (4accc8a8, "Historical Scripted Events by Half-Term," DATA /
+> BALANCE AUDIT, NOT a playthrough; vcczar tier-1) walks **14 named eras**, each as a list of 2-year **half-terms**
+> with a per-half-term scripted-event count + an era total (the density side of this table is the #261 firing-budget
+> baseline, [§14.1.3.e](#1413e--221237248--260261-batch-38--the-civil-rights--agriculture-policy-genre-drops--the-event-spread--firing-budget-mechanics-designed-0-shipped)). What it uniquely adds to the era reconcile: **contiguous per-half-term year-spans, 1772→present, with NO gaps** — the
+> only one of the three tables that pins concrete half-term boundaries, making it the most implementation-ready
+> **year-spine** candidate:
+>
+> | # | Era (halfterm) | Span | Shipped `Era` bucket |
+> |---|-----|------|------|
+> | 1 | Independence | **1772–1787** | `independence` |
+> | 2 | Federalism | **1788–1799** | `federalism` |
+> | 3 | Republicanism | **1800–1819** | sub-band of `nationalism` |
+> | 4 | Democracy | **1820–1839** | sub-band of `nationalism` |
+> | 5 | Manifest Destiny | **1840–1855** | sub-band of `nationalism` |
+> | 6 | Nationalism | **1856–1867** | **`nationalism`** |
+> | 7 | Gilded Age | **1868–1891** | (no enum — §31) |
+> | 8 | Progressivism | **1892–1915** | (no enum) |
+> | 9 | Normalcy | **1916–1927** | (no enum) |
+> | 10 | Ideologies | **1928–1947** | (no enum) |
+> | 11 | Nuclear Age | **1948–1971** | `modern` |
+> | 12 | Neocons | **1972–1999** | `modern` |
+> | 13 | Terror | **2000–2011** | `modern` |
+> | 14 | Populism | **2012–present** | `modern` (no enum member) |
+>
+> **★ THE THREE-WAY RECONCILE (15 rulebook §A / 14 halfterm / 13 benchmark) — divergences to settle:**
+> 1. **A THIRD cardinality.** 14 eras — between the rulebook §A **15** (which adds a standalone Era-of-the-Future)
+>    and the benchmark **13** (which excludes both pre-1788 Independence AND post-2024 Future). `halfterm` **has NO
+>    standalone Future row** — the timeline ends at **Populism 2012–present** (consistent with "content stops at the
+>    present," #206), but it **DOES** include Independence (the benchmark omits it).
+> 2. **Nationalism is the SHORTEST major band (1856–1867, 6 half-terms).** Strong evidence the shipped 4-enum
+>    **over-collapses 1800–1868**: the enum's `nationalism` bucket spans the whole `rep1800→gilded` arc
+>    (Republicanism + Democracy + Manifest-Destiny + Nationalism), where `halfterm` and benchmark both make those
+>    four DISTINCT bands.
+> 3. **Gilded Age = the LARGEST band** (1868–1891, 12 half-terms, 173 events — the densest era). Ends **1891**, so
+>    Progressivism opens **1892** — matches both the rulebook's separate-1892-trigger read and benchmarkupd's
+>    "Gilded …1892" fold.
+> 4. **Independence pushed back to the 1772 game-start.** `halfterm` opens Independence at **1772** (the inaugural-
+>    draft year) where rulebook §A / benchmark / the line-1398 band-label calendar all label the *named*
+>    Independence/Federalism bands from **1774 / 1788** — `halfterm` adds the extra **1772–1773** half-term the
+>    label-calendars don't index.
+> 5. **Manifest Destiny starts 1840** (1840–1855) — matches benchmarkupd's "Manifest Destiny 1840–1856."
+>
+> **Reconciliation read (unchanged direction):** all three are authoring-side witnesses to the SAME era-band DATA
+> model (#92/#206); none matches the shipped 4-enum (`types.ts:1337`). The human must pick the canonical cardinality
+> — `halfterm`'s 14-era contiguous half-term spine is the most implementation-ready year-spine, but the rulebook §A
+> 15-label set is the only one with an explicit **Future** row. **Open Q (carry to #206 decision):** is the
+> "range of 5–15 scripted events per half-term" ([§14.1.3.e](#1413e--221237248--260261-batch-38--the-civil-rights--agriculture-policy-genre-drops--the-event-spread--firing-budget-mechanics-designed-0-shipped), #261) a per-era authored-pool floor/ceiling or a runtime per-turn firing cap?
+> (`halfterm#POST 1-14`; `game-context.md` #206/#92/#261; cross-ref §27.1, §22.11, §14.1.3.e.)
 
 ### 27.2 Era-boundary machinery (the "End of Historical Era" phase)
 
@@ -17647,6 +18046,98 @@ into the #194 lineage system. Cite `histpres#POST 1, 3, 7, 13, 19, 28, 34, 36, 3
 > model), #256 (National Projects = own genre or #248 multi-tag), #254 (term-span turn label), #257 (tick age
 > within the turn). Cross-ref `game-context.md` rows **#253/#254/#255/#256/#257 (NEW)**, and
 > **#68/#102/#206/#92/#221/#237/#248/#216/#20/#247 (sharpened/corroborated)**.
+
+### 30.28 Rulings folded from batch 38 — FIVE CONTENT-AUTHORING / DESIGN / EXPLOIT-FIX threads (★★ #258 predicate-gated content + #259 party-transformation + #260/#261/#262 + the war-declaration/exploit-fix cluster) (`parties` / `civilrights` / `fixes2022-exploits` / `halfterm` / `agriculture`)
+
+> **★ Batch 38 = a 5-thread DESIGN / CONTENT-AUTHORING / EXPLOIT-FIX batch (NO playtest, NO dice, NO historian, NO
+> state).** Almost everything is **designed-only / 0% shipped** — the lone shipped-code touch is an EXISTING loophole
+> (`runPhase_2_3_1_Cabinet` auto-confirms with no vote, `phaseRunners.ts:2158`) that the cabinet-crisis safeguard
+> closes. The value: the **★★ #258 predicate-gated content-availability FIELD** (the single most cross-thread-
+> corroborated new finding — the headline), the **★★ #259 party-TRANSFORMATION** roster+formation system, two NEW
+> event mechanics (**#260** event→population-shift + spatial-spread; **#261** the per-half-term firing budget), a
+> coverage/balance gap (**#262**), a **3rd authoritative era table** (14-era half-term, feeding #206), the
+> **war-DECLARATION/preparedness side of #45** (an earlier Mar–Apr-2022 origin), and four exploit-GUARDS on existing
+> systems (cabinet-crisis confirmation #172/#77, career-track ceiling #163, holdover offices #66/#170, kingmaker
+> chain #128/#210). Tier-1 designers `@vcczar` + `@MrPotatoTed` author/rule; **Cal (Arkansas Progressive)** supplies
+> the densest exploit-fix content; the rest are tier-4 GAs (proposers). The sources:
+> - **`parties`** (7d0dfeec, "AMPU Political Parties," DESIGN/content-spec, May–Jun 2022, 30 posts; NOT a
+>   playthrough) — **★★ the canonical party-branch ROSTER + prereq'd party-TRANSFORMATION spec** (every party = a
+>   branch of BLUE or RED; scripted events create new parties; every formation after the first is prereq-gated;
+>   Era-of-Future cross-coalition parties). → **NEW #259**; corroborates #221/#258/#206; CONTRAST #40/#78. Folded
+>   into [§7.5](#75--259-new-batch-38--the-party-transformation-system-per-coalition-branch-roster--scripted-prereqd-party-formation-designed-0-shipped). Cite `parties#POST n`.
+> - **`civilrights`** (9bd91ee2, "AMPU Civil Rights," CONTENT-AUTHORING, Apr 2022, 4 posts, ~80 rows; NOT a
+>   playthrough) — the **Civil Rights policy genre in FULLY-TAGGED form** (L/G/P + era bands + `Preq:` blocks) and
+>   the **★★ HEADLINE evidence for #258** (the predicate-gated availability field + the `*-Ind-Default` baseline).
+>   → **NEW #258** (HEADLINE); enriches #237/#248/#221; flags #256 monument overlap + #262 coverage. Folded into
+>   [§14.1.3.d](#1413d--258-new-batch-38--the-prereq--predicate-gated-content-availability-field-on-the-content-primitives-the-single-most-cross-thread-corroborated-b38-finding-designed-0-shipped) (#258) + [§14.1.3.e](#1413e--221237248--260261-batch-38--the-civil-rights--agriculture-policy-genre-drops--the-event-spread--firing-budget-mechanics-designed-0-shipped) (the genre drop). Cite `civilrights#POST n`.
+> - **`fixes2022-exploits`** (a852d451, "Fixes for exploits, loopholes, ranking, etc.," EXPLOIT/BALANCE-FIX, Mar 24
+>   → Apr 11 2022, 26 posts; NOT a playthrough) — the **most bug/balance-dense thread in the batch**: the
+>   war-DECLARATION party-pref roll + prep-gated war limit (#45), the cabinet-crisis confirmation safeguard
+>   (#172/#77), the career-track skill ceiling (#163), holdover-office tenure (#66/#170), the kingmaker chain
+>   restriction (#128/#210). Folded into [§21.1.B](#211b--45-batch-38--war-declaration-penalties--prep-gated-war-limit-keyed-to-a-9-level-military-preparedness-scale-the-earlier-design-origin-of-45s-declaration-side-designed-0-shipped) (#45) + [§9.3.11(13)](#9311--the-canonical-cabinetscotus-confirmation-subsystem-172dh-76--199--the-authoritative-spec-new-rulebook--apptdeepdive-batch-31-designed-not-built) (cabinet safeguard) + [§5.4](#54--163-batch-38--career-track-skill-ceiling--diminishing-returns-gain-kill-the-super-commander-designed-0-confirmed) (#163) + [§9.3.6](#936-modern-cabinet-detail-sharpens-931-933-designed-not-built) (#66/#170 holdover) + [§6.5.w](#65w--128210-batch-38--a-kingmaker-cannot-take-another-kingmaker-as-protégé-reverses-the-old-chain-reward-rule-agreed) (kingmaker chain). Cite `fixes2022`(a852d451)`#POST n`.
+> - **`halfterm`** (4accc8a8, "Historical Scripted Events by Half-Term," DATA/BALANCE AUDIT, posts span to 12/2022,
+>   16 posts; NOT a playthrough) — TWO signals: a **3rd authoritative era vocabulary** (14 eras, contiguous
+>   per-half-term spans 1772→present, the most implementation-ready year-spine, feeding the #206 reconcile) and the
+>   **measured per-half-term scripted-event DENSITY baseline** (target ~6–11; floated "5–15" runtime budget). →
+>   corroborates #206/#92; **NEW #261** (firing budget). Folded into [§27.1.2](#2712--the-canonical-15-era-trigger-year-table-92206--the-authoritative-band-label-calendar-new-rulebook-batch-31-the-era-label-spec-the-data-model-decision-needs) (the 14-era table + 3-way reconcile) + [§14.1.3.e](#1413e--221237248--260261-batch-38--the-civil-rights--agriculture-policy-genre-drops--the-event-spread--firing-budget-mechanics-designed-0-shipped) (#261). Cite `halfterm#POST n`.
+> - **`agriculture`** (c33d07b8, "AMPU Agriculture," CONTENT-AUTHORING, Apr 2022, 7 posts; NOT a playthrough) — the
+>   **Agriculture policy genre (full L/G/S/P)** with prereq CHAINS + cross-genre prereqs + conditional-effect nodes
+>   + the invention/tech-tree S-chain + multi-condition SC-case S-events, AND the **★★ #260** Boll-Weevil
+>   spatial-spread + Potato-Blight→immigration± mechanics. → corroborates #258/#221/#237/#248; **NEW #260**; flags
+>   genre-boundary rulings (ethanol→Oil&Gas; #20 per-state gov-action). Folded into [§14.1.3.d](#1413d--258-new-batch-38--the-prereq--predicate-gated-content-availability-field-on-the-content-primitives-the-single-most-cross-thread-corroborated-b38-finding-designed-0-shipped) (#258 chains) + [§14.1.3.e](#1413e--221237248--260261-batch-38--the-civil-rights--agriculture-policy-genre-drops--the-event-spread--firing-budget-mechanics-designed-0-shipped) (genre + #260). Cite `agriculture#POST n`.
+>
+> **The HEADLINE findings (lead with these):**
+> 1. **★★ #258 — predicate-gated content availability (the SINGLE most cross-thread-corroborated b38 finding).** A
+>    content primitive's availability (and, for some, EFFECT) is gated on a **game-STATE predicate, NOT the
+>    calendar** — era abbreviations set only the *band*; a `Preq:` clause sets *when within any timeline an item can
+>    appear*. Predicate taxonomy: no-policy/baseline (`*-Ind-Default`), prior-event-occurred, state-flag,
+>    institution-exists, prior-legislation-active (compound AND), 3rd-party-now-major, geographic/per-state,
+>    scenario-mode-only, tech-state. **Reuse-and-extend:** a `Predicate` tree + `evalPredicate` ALREADY ship for era
+>    events (`types.ts:~1487-1497`) but aren't on `Legislation` and can't express these classes. **0% on the
+>    content primitives.** At [§14.1.3.d](#1413d--258-new-batch-38--the-prereq--predicate-gated-content-availability-field-on-the-content-primitives-the-single-most-cross-thread-corroborated-b38-finding-designed-0-shipped).
+> 2. **★★ #259 — the party-TRANSFORMATION system.** Every party = a branch of BLUE or RED; scripted events form new
+>    parties; **every formation after the first is prereq-gated** (the #258 field on a party-formation #221
+>    payload). Per-coalition branch rosters + branch-longevity knobs + branch metadata (platform + BLUE/RED/either).
+>    Shipped `Party` is a flat 2-value record with a mutable `name` only (`types.ts:1306`). CONTRAST the cosmetic
+>    faction-rename gap (#40/#78). At [§7.5](#75--259-new-batch-38--the-party-transformation-system-per-coalition-branch-roster--scripted-prereqd-party-formation-designed-0-shipped).
+> 3. **★ The 14-era half-term table — a 3rd authoritative era vocabulary (→ a now-three-way reconcile, #206).**
+>    Independence 1772–87 … Nationalism 1856–67 (shortest) … Gilded 1868–91 (largest) … Populism 2012–present;
+>    contiguous half-term spans, no standalone Future row. Now reconciled against the 15-era rulebook §A and 13-era
+>    benchmark. Shipped `Era` enum is 4-value (over-collapses 1800–1868). At [§27.1.2](#2712--the-canonical-15-era-trigger-year-table-92206--the-authoritative-band-label-calendar-new-rulebook-batch-31-the-era-label-spec-the-data-model-decision-needs).
+>
+> **★ Designer rulings + new gaps folded (the topical sections carry the detail; this is the index):**
+>
+> | Item | Ruling / spec | Where folded | Cite |
+> |---|---|---|---|
+> | **★★ #258 predicate-gated content-availability FIELD (NEW)** | a game-STATE predicate gates a primitive's availability/effect (not the calendar); taxonomy = no-policy-baseline (`*-Ind-Default`) / prior-event / state-flag / institution-exists / prior-legis-active-AND / 3rd-party-major / geographic-per-state / scenario-mode / tech-state; **reuse-and-extend** the shipped era-event `Predicate`+`evalPredicate` (`types.ts:~1487-1497`) onto all 4 primitives; prereq CHAINS + cross-genre prereqs + conditional-effect nodes (Cotton-Gin+Slavery⇒cotton); multi-condition SC-case S-events (Pigford: Dept-cabinet+appointee-ideology+era) | [§14.1.3.d](#1413d--258-new-batch-38--the-prereq--predicate-gated-content-availability-field-on-the-content-primitives-the-single-most-cross-thread-corroborated-b38-finding-designed-0-shipped) | `civilrights#POST 1, 4`; `agriculture#POST 1, 4`; `parties#POST 1`; code `types.ts:~1487-1497, 1506-1514` |
+> | **★★ #259 party-branch roster + party-TRANSFORMATION (NEW)** | every party = a branch of BLUE/RED; scripted events form new parties; every formation after the first prereq-gated; per-coalition rosters (BLUE: Jeffersonian-Rep…Green; RED: Federalist…Libertarian) + Future cross-coalition (Technocratic/Humanitarian/Earth-First/[Universe-TBD]); branch-longevity knobs + metadata; rulings (National-Populists; Dixiecrat stays/BLUE; 2 socialists; exclude single-issue/joke; Reform BLUE-or-RED); CONTRAST #40/#78 | [§7.5](#75--259-new-batch-38--the-party-transformation-system-per-coalition-branch-roster--scripted-prereqd-party-formation-designed-0-shipped) | `parties#POST 1, 2-3, 5-7, 9, 14-17, 19-20, 27-30`; code `types.ts:1306, 3` |
+> | **★★ #260 event→population-shift + spatial-spread (NEW)** | Boll Weevil = per-state infestation state + multi-turn SPREAD (every 4 yrs; variant fast/slow/never) → Great Migration (South→North/West population shift) + expiring DDT counter (resistance by 1960); Potato-Blight→immigration±; needs per-state effect-state + multi-turn propagation + event→population/demographic mutation (feeds apportionment/lean); DISTINCT from #247 (lean) + Shaw/John-Brown one-shots | [§14.1.3.e](#1413e--221237248--260261-batch-38--the-civil-rights--agriculture-policy-genre-drops--the-event-spread--firing-budget-mechanics-designed-0-shipped) | `agriculture#POST 5, 6`; code `EraEvent` fire-once, `phaseRunners.ts:2608` |
+> | **★ #261 per-half-term scripted-event FIRING BUDGET (NEW)** | the 14-era half-term density table is the baseline; target ~6–11 events/half-term (floated "5–15"); engine should enforce/randomize a per-half-term firing budget; OPEN Q = per-era authored-pool bound vs runtime per-turn firing cap | [§14.1.3.e](#1413e--221237248--260261-batch-38--the-civil-rights--agriculture-policy-genre-drops--the-event-spread--firing-budget-mechanics-designed-0-shipped) + [§27.1.2](#2712--the-canonical-15-era-trigger-year-table-92206--the-authoritative-band-label-calendar-new-rulebook-batch-31-the-era-label-spec-the-data-model-decision-needs) | `halfterm#POST 1, 1-14` |
+> | **★ #262 content-COVERAGE / per-ideology + per-primitive balance (NEW)** | net-new (non-repeal) Traditionalist/RW-Pop/Conservative content; Era-of-Future content (Future parties + Future agriculture = #1 priority); more Pres-Actions (each genre ships only ~3); no existing gap owns coverage-completeness as a tracked dimension | [§14.1.3.e](#1413e--221237248--260261-batch-38--the-civil-rights--agriculture-policy-genre-drops--the-event-spread--firing-budget-mechanics-designed-0-shipped) (7) | `civilrights#POST 1`; `agriculture#POST 1`; `parties#POST 1`; `halfterm#POST 12-14` |
+> | **★ 14-era half-term table (#206 3rd witness)** | Independence 1772–87 / Federalism 1788–99 / Republicanism 1800–19 / Democracy 1820–39 / Manifest-Destiny 1840–55 / **Nationalism 1856–67** (shortest) / **Gilded 1868–91** (largest) / Progressivism 1892–1915 / Normalcy 1916–27 / Ideologies 1928–47 / Nuclear-Age 1948–71 / Neocons 1972–99 / Terror 2000–11 / Populism 2012–present; **no standalone Future row**; contiguous spine; now a THREE-WAY reconcile (15 rulebook / 14 halfterm / 13 benchmark); shipped enum over-collapses 1800–1868 | [§27.1.2](#2712--the-canonical-15-era-trigger-year-table-92206--the-authoritative-band-label-calendar-new-rulebook-batch-31-the-era-label-spec-the-data-model-decision-needs) | `halfterm#POST 1-14`; code `types.ts:1337` |
+> | **★ #45 war-DECLARATION penalties + prep-gated war LIMIT (earlier design-origin)** | keyed to a 9-level Military-Preparedness scale: Major war −300 Pres / −100 party / +1 opp-party-pref UNLESS attacked-first / ×2 in crisis; per-prep-level d6 table (well-prepared war can BOOST); Multiple-Major-War rule; War-Declaring-President FUTURE penalties (instigating faction eats loss under a later Pres; barred on game-over; ×2 multiple lost wars); prep-gated 0/1/2/3 simultaneous-war cap + per-theater General/Admiral assignment; Mar–Apr-2022 = ~5 mo BEFORE the `rethinkwar` combat side (§21.1.A) | [§21.1.B](#211b--45-batch-38--war-declaration-penalties--prep-gated-war-limit-keyed-to-a-9-level-military-preparedness-scale-the-earlier-design-origin-of-45s-declaration-side-designed-0-shipped) | `fixes2022`(a852d451)`#POST 3-10`; cross-ref DH-79/#56 |
+> | **★ #172/#199/#77 cabinet-crisis confirmation safeguard (GUARD; closes shipped loophole)** | appointing an Admin-1/Admin-2 officer to a Lingering-Phase crisis → escalating point loss (−100→−1000), party-pref + Ideo-Enthusiasm drops, chance Controversial on Pres & appointee; **NOT Iron-Fist auto-confirmable** (#77 carve-out); Integrity/Harmonious senators get additive oppose-chance (#199); design intent that closes the shipped auto-confirm-without-vote loophole (`phaseRunners.ts:2158`) | [§9.3.11(13)](#9311--the-canonical-cabinetscotus-confirmation-subsystem-172dh-76--199--the-authoritative-spec-new-rulebook--apptdeepdive-batch-31-designed-not-built) | `fixes2022`(a852d451)`#POST 8, 13`; code `phaseRunners.ts:2158` |
+> | **★ #163 career-track skill CEILING + diminishing-returns (GUARD)** | no skill reaches 5 via career tracks; per-track gain-chance scales INVERSELY with current level (diminishing returns) to stop "super commanders"; scoped to tracks (open Q: do war/event/age sources also cap?) | [§5.4](#54--163-batch-38--career-track-skill-ceiling--diminishing-returns-gain-kill-the-super-commander-designed-0-confirmed) | `fixes2022`(a852d451)`#POST 11, 12, 13` |
+> | **★ #66/#170 holdover-office tenure (GUARD; AGREED)** | Fed Chair 4-yr / FBI 10-yr renewable / CIA-DNI indefinite; carry over by default (don't auto-re-nominate); remove early → 10% econ-stab / dom-stab / mil-prep hit respectively; NO trait grants permanence (Hoover via renewal; closes Iron-Fist-tenure exploit) | [§9.3.6](#936-modern-cabinet-detail-sharpens-931-933-designed-not-built) | `fixes2022`(a852d451)`#POST 14-21`; code `types.ts:1196` |
+> | **★ #128/#210 kingmaker chain restriction (GUARD; AGREED)** | a Kingmaker cannot take another Kingmaker as protégé ("a kingmaker needs to be in charge"); REVERSES a prior chain-reward rule | [§6.5.w](#65w--128210-batch-38--a-kingmaker-cannot-take-another-kingmaker-as-protégé-reverses-the-old-chain-reward-rule-agreed) | `fixes2022`(a852d451)`#POST 22-26` |
+> | **★ #20 Governor Actions (CORROBORATE)** | ethanol "could be a gov action at the state level"; flat ag G-actions reinforce the per-state Gov-Action upgrade | [§14.1.3.e](#1413e--221237248--260261-batch-38--the-civil-rights--agriculture-policy-genre-drops--the-event-spread--firing-budget-mechanics-designed-0-shipped) (6) | `agriculture#POST 1, 2, 3` |
+> | **Corroborations (no NEW row)** | #221 (4-primitive registry — Civil-Rights/Agriculture genres + party-formation payload); #237/#248 (genre/subtype + multi-category tagging + genre-boundary rulings); #92/#206 (era-as-content-band + the 14-era table); #247 (event-driven lean — the #260 population twin); #256 (monument/bust overlap as prereq-gated Civil-Rights rows); #56/DH-79 (per-theater officer assignment) | the topical sections | per-thread |
+>
+> **Roadmap takeaway (for the tech-lead + roadmap-planner).** Batch-38 is design/content/exploit-fix, ranked:
+> (1) **★★ #258 is the schema field the whole content engine (#221/#237/#248) needs** — add a predicate/condition
+> field to every content primitive and EXTEND the shipped era-event `Predicate`+`evalPredicate` (`types.ts:~1487-1497`)
+> with the no-policy-baseline / state-flag / institution-exists / prior-legis-active-AND / 3rd-party-status /
+> geographic / scenario-mode / tech-state classes. (2) **★★ #259 (party transformation)** rides on #258 + #221:
+> a per-coalition branch-roster dataset + party-formation scripted-events with prereqs; generalize the flat 2-value
+> `Party` to carry a current-branch identity. (3) **#260 (event spread)** extends the scripted-event model with
+> per-state infestation state + multi-turn spatial spread + event→population/demographic mutation + expiring
+> counter-events. (4) **The era reconcile (#206)** is now THREE-way (15/14/13) — the 14-era half-term spine is the
+> most implementation-ready year-spine; resolve the #261 "5–15 per half-term" question (authored-pool bound vs
+> runtime firing cap) as part of it. (5) **The war-DECLARATION side of #45** (prep-keyed party-pref roll + war-count
+> cap + instigator attribution) is POST-LAUNCH like the combat side. (6) **Four exploit GUARDS** are small, mostly
+> on already-designed subsystems — the **cabinet-crisis safeguard** (#172/#77) is the one that closes a *shipped*
+> loophole (`phaseRunners.ts:2158` auto-confirm-without-vote, a DH-style bug). Cross-ref `game-context.md` rows
+> **#258/#259/#260/#261/#262 (NEW)** and **#206/#221/#237/#248/#247/#256/#45/#56/#172/#199/#77/#163/#66/#170/#128/#210/#20/#92 (sharpened/corroborated)**.
 
 ### 30.4 Authority hierarchy reminder
 
