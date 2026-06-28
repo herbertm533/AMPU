@@ -363,6 +363,7 @@
     - [30.26 Rulings folded from batch 36 — the FIVE design/data threads (★★ #251 the JUDICIARY OVERHAUL + #252 + the cleanest PV-revamp done-confirmation) (`judiciaryidea` / `failednoms` / `terminology` / `space` / `histspeakers`)](#3026-rulings-folded-from-batch-36--the-five-designdata-threads--251-the-judiciary-overhaul--252--the-cleanest-pv-revamp-done-confirmation-judiciaryidea--failednoms--terminology--space--histspeakers)
     - [30.27 Rulings folded from batch 37 — the FIVE CONTENT-AUTHORING / DESIGN threads (#253 the Red/Blue per-era BENCHMARK win-model + #254-#257 + the Immigration/Education genre supply) (`benchmarkupd` / `legisprops2028` / `yearname` / `immigration` / `education`)](#3027-rulings-folded-from-batch-37--the-five-content-authoring--design-threads-253-the-redblue-per-era-benchmark-win-model--254-257--the-immigrationeducation-genre-supply-benchmarkupd--legisprops2028--yearname--immigration--education)
     - [30.28 Rulings folded from batch 38 — FIVE CONTENT-AUTHORING / DESIGN / EXPLOIT-FIX threads (★★ #258 predicate-gated content + #259 party-transformation + #260/#261/#262 + the war-declaration/exploit-fix cluster) (`parties` / `civilrights` / `fixes2022-exploits` / `halfterm` / `agriculture`)](#3028-rulings-folded-from-batch-38--five-content-authoring--design--exploit-fix-threads--258-predicate-gated-content--259-party-transformation--260261262--the-war-declarationexploit-fix-cluster-parties--civilrights--fixes2022-exploits--halfterm--agriculture)
+    - [30.29 Rulings folded from batch 39 — FIVE DESIGN / CONTENT-AUTHORING threads (★★ #264 the COUP/insurrection PROCEDURE subsystem + #263 the game-SETTINGS model + the #182 command-eligibility SETTLED ruling + #219 weighted-House-vote DESIGN-ORIGIN + the Civil-Service/Diplomacy genre drops) (`civil-service` / `rules-update` / `jan6-insurrection` / `us-house-votes` / `diplomacy`)](#3029-rulings-folded-from-batch-39--five-design--content-authoring-threads--264-the-coupinsurrection-procedure-subsystem--263-the-game-settings-model--the-182-command-eligibility-settled-ruling--219-weighted-house-vote-design-origin--the-civil-servicediplomacy-genre-drops-civil-service--rules-update--jan6-insurrection--us-house-votes--diplomacy)
     - [30.4 Authority hierarchy reminder](#304-authority-hierarchy-reminder)
 31. [Gilded-Age era systems (designed, not built)](#31-gilded-age-era-systems-designed-not-built)
     - [31.1 (#147) Tariff-as-national-%-rate + the mutually-exclusive MonetaryRegime](#311-147-tariff-as-national-rate--the-mutually-exclusive-monetaryregime-designed)
@@ -1187,6 +1188,25 @@ places that aren't territories, except if it's ME (part of MA) or WV (part of VA
 > the pre-early-release build window**, not a later-thread invention. The ×2-Command / 0-Command-
 > rookie halves of #153 were ruled later (terror2000); only the no-reroll half traces to this
 > earliest source. (`fixes2022#POST 645-650`.)
+
+> **★ #153/#163 command-GAIN paths — the DESIGN-ORIGIN of "earn Command in-game" (`rules-update` f735601c, batch 39,
+> Aug 2021).** Directly answering Ted's *"too few ways to gain command"* complaint (the same complaint behind the
+> trait-gate pitch vcczar refused, §20.11(2)), vcczar **added two NEW command-acquisition paths** — the bootstrap
+> sources that #153 later DOUBLES the rate of:
+> 1. **Keynote Speaker at the Convention** (POST 17) — becoming the convention keynote speaker gives a **small chance
+>    of +1 command, available to ANYONE, even someone at 0 command.** This is the first documented bootstrap-from-zero
+>    command source that **isn't a scripted event** (it sits on the existing convention machinery, §15.3).
+> 2. **Tiny % command via certain career tracks** (POST 20) — some career tracks now carry a **small per-track chance
+>    to gain command** (explicitly *"won't help Benedict Arnold"* — he's not on a track that grants it). Extends the
+>    #163 career-track skill-growth seeding (now with a command channel, subject to the §5.4 #163 ceiling).
+> Cal's feasibility check (POST 19): a no-command figure (Arnold) could reach the presidency only by surviving to the
+> Constitutional Convention, passing the 12A party-ticket/convention system, keynote-speaking (~1792), then winning
+> (~1796) — i.e. command-gain is **intentionally slow**, consistent with the "command is deliberately rare" ruling.
+> **OPEN:** the Keynote-Speaker / career-track odds are never quantified beyond "small / tiny %" — #153's "doubled
+> gain %" implies a base table exists downstream. *(NEW mechanics on existing systems — add a small +1-command chance
+> to the convention Keynote-Speaker role and a tiny per-track command-gain chance to certain career tracks; both feed
+> the #182 eligibility gate they make reachable. Cite `rules-update`(f735601c)`#POST 17, 19, 20`; `game-context.md`
+> #153/#163/#182.)*
 
 *(SUPERSEDES the earlier "5/5 random traits + alt-states per draft" reading documented in
 [§24.8 Draft rookie grants re-ruled](#248-69-draft-rookie-grants-re-ruled--3-traits--3-alt-states)
@@ -4767,6 +4787,44 @@ revenue and surplus drift independently. *(designed, not built — add
 `game.nationalSurplus: number` distinct from `game.meters.revenue`, with bill/exec-action
 hooks that tick it.)*
 
+#### 13.3.4 ★ #107 (batch 39, `diplomacy`) — the per-country STATE model + the Diplomacy policy-genre content (DESIGNED, 0% shipped)
+
+> **★ The strongest case yet that the diplomacy data model must grow from a flat per-nation relation SCALAR into a
+> per-nation STRUCT** (`diplomacy` b8aecb83, Apr 2022 — vcczar authoring the Diplomacy policy genre; ~55 L/P rows). The
+> genre's content (doctrines / embargoes / recognitions / aid toggles) keys off **per-country game-STATE, not the
+> calendar** — so the engine must track, per foreign nation, more than the §13.3.1 relation number. This is the
+> per-country side of #107 (the §13.3.1 roster grows the SET of nations; this grows the STATE each nation carries).
+
+**(1) ★ The per-foreign-nation STATE dimensions (the headline; from the `Req:` clauses + the option-sets).** Beyond the
+shipped relation scalar, content implies the engine must track per nation at least:
+
+| State dimension | Evidence (`Req:` / option-set) |
+|---|---|
+| **At-war (per nation)** | `At War with this country` gates Embargo Mexico / Sanction Poland / Sanction Turkey |
+| **Relations level** | `Relations with this nation worse than neutral` gates Boycott British Goods / Sanction China/Japan/Russia — a thresholded relation scalar (the §13.3.1 meter) |
+| **Recognition flag** | the POST-6 **Recognize ↔ Do Not Recognize** set (Taiwan/PRC/Western Sahara/Israel/Palestine/Kosovo/Donetsk & Luhansk/North Korea/Taliban-Afghanistan) implies a per-nation recognized/unrecognized bit |
+| **Aid level** | the POST-6 **4-way Aid / Increase / Decrease / Withdraw / End** sets (North Korea/Israel/Palestine/Saudi Arabia) imply a per-nation foreign-aid level (not just a relation number) |
+| **Trade / embargo status** | embargo/boycott/sanction rows imply a per-nation trade-open vs embargoed status (vcczar: "arguably Trade") |
+
+**(2) ★ Opposed-pair / option-set axes (the negation axis, #221/#248).** Deliberate mirror pairs, not one-shot flags:
+**Recognize ↔ Don't-Recognize** (per nation); **4-way Aid** (Aid / Withdraw / Increase / Decrease, + "End all foreign
+aid" / "Withdraw from NATO" / "Leave the UN"); **Interventionist ↔ Isolationist** (`P-Prog` pair); **Globalism-over-
+Nationalism ↔ Nationalism-over-Globalism** (`P-Neo` pair); **Judeo-Christian ↔ Two-State Mid-East balance**.
+
+**(3) Engine-verified (this batch).** `GameState.diplomacy: Record<string, number>` (`types.ts:1574`), clamped −5..+5 —
+**no recognition flag, no aid level, no per-nation at-war, no per-nation trade/embargo status.** War is a SEPARATE
+GLOBAL field (`wars: string[]`, `types.ts:1575`), NOT per-nation. The shipped phase 2.7.1 (`runPhase_2_7_1_Diplomacy`,
+`phaseRunners.ts:3585`) only nudges each nation's scalar by random ±0.5 (+ a small SoS-admin drift). So the entire
+per-country STATE model above is **unrepresented**.
+
+*(designed, 0% shipped — grow `GameState.diplomacy` from `Record<string, number>` into per-nation state carrying at
+least `{relations, recognized?, aidLevel, trade/embargo status}`, PLUS a **per-nation war** flag (today war is a global
+`string[]`); these per-nation dimensions are also #258 predicate TARGETS the era-event `Predicate` enum cannot express
+(per-nation at-war / relations-threshold / recognized / trade-open). The Diplomacy genre CONTENT — ~55 L/P rows
+(doctrines: Monroe/Good-Neighbor/Dollar/Fourteen-Points/Détente; embargoes/sanctions; recognitions; 4-way aid; the
+opposed stance pairs) — is documented at [§14.1.3.f](#1413f--221237248--258--66107-batch-39--the-civil-service--diplomacy-policy-genre-drops--the-office-lifecycle-verb-set--the-per-country-diplomacy-state-model-designed-0-shipped). Cite `diplomacy`(b8aecb83)`#POST 1, 6`; code `types.ts:1574-1575`,
+`phaseRunners.ts:3585, 3292-3295`; `game-context.md` #107 + #258/#237/#248/#221.)*
+
 ---
 
 ## 14. Executive & court management (2.8.x)
@@ -5387,6 +5445,91 @@ multi-tag; Dept-create→Civil-Service) feed the #248 multi-category-tagging req
 `agriculture#POST 1, 2, 3, 4, 5, 6, 7`; `halfterm#POST 1, 1-14, 12-14`; code `types.ts:1513` (no subtype/genre),
 `EraEvent` fire-once, `state.bias` static, `phaseRunners.ts:2608` (#247 ±1 lever); `game-context.md`
 #221/#237/#248/#260/#261/#262 (+ #20/#206/#247/#256).)*
+
+#### 14.1.3.f ★ #221/#237/#248 + #258 + #66/#107 (batch 39) — the Civil-Service + Diplomacy policy-genre drops + the office-lifecycle verb set + the per-country diplomacy STATE model (DESIGNED, 0% shipped)
+
+> **★ Two more fully-tagged single-genre content drops** (the batch-39 siblings of the b37 Immigration/Education and
+> b38 Civil-Rights/Agriculture drops), both **CONTENT-AUTHORING idea dumps** (NOT playthroughs), both vcczar-authored:
+> `civil-service` (fa452d38, Apr 2022, 13 posts) and `diplomacy` (b8aecb83, Apr 2022, 7 posts). **0% shipped** (no
+> `subtype`, no Pres/Gov-Action primitives, no prereq field — §14.1.3 / §14.1.3.d). Each carries the full schema
+> (mechanism prefix `L-`/`P-`/`G-` + era band + `Prereq:` blocks + an `L-Ind-Default` baseline) and each EXTENDS the
+> #258 predicate vocabulary; Civil Service additionally contributes the **#66 office-LIFECYCLE verb set** ([§24.6](#246-66-the-progressive-era-institutional-layer-offices-created-in-game-by-law)) and
+> Diplomacy the **#107 per-country STATE model** ([§13.3.4](#1334--107-batch-39-diplomacy--the-per-country-state-model--the-diplomacy-policy-genre-content-designed-0-shipped)).
+
+**(1) Civil Service genre — FULLY TAGGED** (`civil-service#POST 1`). Shape/counts (NOT transcribed):
+
+| Primitive | ~Count | Spans |
+|---|---|---|
+| **Legis Prop** (`L-`) | **~40** (dominant) | mostly **"Create Dept of X"** (the #66 lifecycle, §24.6) + institutional offices (AG, OMB, EOP, CEA, Congressional-leadership) + merit/structure laws (Hatch Act, Pendleton="Require Most Gov't Positions by Merit not Party Loyalty", Abolish-US-Senate amdt) + the `L-Ind-Default` baselines ("No Federal Civil Service Legislation", "No Attorney General") |
+| **Pres Action** (`P-`) | **~12** | spoils/staffing (Rotation in Office, Kitchen Cabinet, **Spoils System**, fill via party loyalists), WH offices (Chief of Staff, EOP, CEA, National Sec Advisor, Faith-Based Initiative), diplomatic posts (Ministers — see boundary note) |
+| **Gov Action** (`G-`) | **~2** (the THINNEST primitive — the #262 hole) | "Fill State Offices w/ Party Loyalists"; "Req Sudden-Vacancy Appointee be Same Party as Last Officer" → directly seeds vcczar's ASK for more Civil-Service Gov-Actions |
+
+- **Merit↔Spoils opposed/mutually-exclusive axis (#221 option-set):** **Spoils System (P-Dem)** vs **Pendleton merit
+  law (L-Gild)** — and Spoils is itself GATED behind `Law Requiring Offices by Merit NOT Active` (an anti-prereq;
+  the merit law and the spoils action are mutually-exclusive game states).
+- **Spoils/merit scripted-event tie-ins (POST 11, `S-`):** spoils → Black appointments faction-swing *Event*;
+  president-assassination-risk *Event* if he pushes the Pendleton bill (the Garfield case).
+
+**(2) Diplomacy genre — FULLY TAGGED** (`diplomacy#POST 1`; the per-country STATE model is at §13.3.4). ~55 rows, **no
+`G-`** (diplomacy is a FEDERAL genre) and **no `S-`** (kept out by design):
+
+| Primitive | ~Count | Spans |
+|---|---|---|
+| **Legis Prop** (`L-`) | **~22** | embargoes/sanctions/boycotts vs named countries; Marshall Plan; Lend-Lease; Rev-War diplomacy (Petition the King, Declaration of Causes, Invite Canada, Seek Alliance w/ Native Tribes); Formosa/Gulf-of-Tonkin Resolutions; Demand WWI Reparations; + the `L-Ind-Default` baseline ("No Active On-Going Diplomacy Legis") |
+| **Pres Action** (`P-`) | **~33** | doctrines & stance policies (Monroe, Good Neighbor, Dollar Diplomacy, Fourteen Points, Stimson, Point Four, Atoms for Peace, Détente); the opposed stance pairs (Interventionist↔Isolationist; Globalism↔Nationalism; Judeo-Christian↔Two-State); recognition (Recognize Taiwan); UN Membership; aid toggles; Upgrade Ministers to Ambassadors |
+
+**(3) ★★ NEW #258 predicate classes (the cross-thread payoff — extends the §14.1.3.d taxonomy).** Both genres surface
+predicate kinds the prior taxonomy did not, none of which the shipped era-event `Predicate` enum can express:
+
+| NEW predicate class | Verbatim `Prereq:` / `Req:` examples | Genre |
+|---|---|---|
+| **Institution-exists** | Dept of Commerce & Labor exist; Dept of HEW exists; Postal Dept Exists; Independent Dept of VA exists; National Security Act active; Dept of Agriculture Active | both |
+| **Multi-office COMPOUND** | Sec of War **AND** Sec of Navy (both exist → merge) | civil-service |
+| **Cross-primitive MUTUAL-EXCLUSION** | "Not Already Created via Legis Prop" / "Not Already Created via Pres Action" (EOP & CEA — an `L-` and a `P-` row reference the same office state; creating one path disables the other) | civil-service |
+| **Scenario-mode-only** | "For Constitutional Convention Only" (gates "Establish US Senate & Reps / Unicameral / Maintain Continental Congress") | civil-service |
+| **Per-nation DIPLOMATIC-STATE** | `At War with this country`; `Relations worse than neutral`; Israel is Recognized; Trade Open with China/Japan; Indian Sovereignty Exists | both |
+| **War-OUTCOME flags** | `World War II won by Allies` (Marshall Plan); `Any World War Active` (Lend-Lease); `WWI is over and US was involved and allies won` (WWI Reparations) | diplomacy |
+| **Anti-prereq / not-yet** | merit-law **NOT** active → Spoils System; Israel is Recognized as a precondition vs not | both |
+
+- **★ The cross-primitive mutual-exclusion pair is the new schema wrinkle:** EOP/CEA can each be created by EITHER an
+  `L-` or a `P-` row, and creating one path disables the other — the predicate must reference "was this office created,
+  by ANY primitive" (not "by this specific primitive"). New input for the #258 field on #221.
+
+**(4) ★ Genre-BOUNDARY rulings (taxonomy ownership — #237/#248 multi-category tagging).** Both threads are rich in
+routing calls:
+
+| Ruling | Routing | Source |
+|---|---|---|
+| **Immigration / Trade / Expansionism / Military are SEPARATE top-level genres** (not Diplomacy sub-tags) | diplomacy POST 1 |
+| **Embargoes & sanctions "could arguably be in Trade"** (Trade-vs-Diplomacy boundary) | diplomacy POST 1 |
+| **Ministers & Ambassadors "could arguably be Civil Service"** (the cross-genre overlap — authored in BOTH threads; they tie into the loan/troop-request mechanic, suggesting Diplomacy) | both |
+| **Some Civil-Service rows "might be in other groups"** (the create/abolish route is Civil-Service; the policy content stays in its genre) | civil-service POST 1 |
+| **S-tier (Reagan-Gorbachev summit / Suez / Cuban blockade / 3rd-party-conflict intervention) = Scripted Events, NOT Legis/Pres** | diplomacy POST 3, 7 |
+
+- **★ Interventionism event-hook (diplomacy POST 5, 7):** can the player respond to conflicts that do NOT directly
+  involve the US (Russia-Ukraine, Armenia-Azerbaijan) via military aid / direct support? vcczar: **"Scripted Events"**
+  — 3rd-party-conflict intervention is an `S-` hook GATED by the Interventionist stance, not a standing primitive.
+
+**(5) ★ Coverage / Era-of-Future ASKs (#262/#206).** vcczar's explicit asks: **more Civil-Service Gov-Actions** (only 2
+authored — the thinnest primitive) + **Era-of-Future** content for both genres (Diplomacy is otherwise self-assessed
+near-complete). Floated Future content: **Dept of Space** (Future), **Dept of the Internet** (~Era of Terror), **Dept
+of Sports/Arts/Culture** (esp. authoritarian regimes); future/authoritarian civil-service actions ("Require Federal
+Employees to Undergo Human-AI Augmentation" gated on `Human-AI Augmentation Exists`; "Government-sponsored Youth League
+to Promote Party" gated on a Communist/Fascist/Theocratic 3rd party being Major); for Diplomacy: virtual/metaverse
+summits (Pres engages counterparts directly, cutting out ambassadors), AUKUS/Indo-Pacific/TPP alliances, special envoys
+to crises, Long-Telegram containment-doctrine authoring, animal/gift (panda) diplomacy, congressional/presidential
+delegations.
+
+*(designed, 0% shipped — Civil-Service + Diplomacy are two more #237 GENRES / #248 SUBTYPES populating the #221
+registry (Civil Service L/P/G-tagged; Diplomacy L/P-only). NEW #258 predicate classes: institution-exists, multi-office
+compound (War AND Navy→merge), cross-primitive mutual-exclusion (EOP/CEA), scenario-mode, per-nation diplomatic-state,
+war-outcome flags, anti-prereq. Civil Service contributes the #66 office-LIFECYCLE verb set (§24.6); Diplomacy the #107
+per-country STATE model (§13.3.4). Genre-boundary rulings (Ministers/Ambassadors Civil-Service-vs-Diplomacy; embargoes/
+sanctions Trade-vs-Diplomacy; create/abolish→Civil-Service; S-tier events not Legis/Pres) feed the #248 multi-category-
+tagging requirement. Cite `civil-service`(fa452d38)`#POST 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 13`; `diplomacy`(b8aecb83)
+`#POST 1, 2, 3, 4, 5, 6, 7`; code `types.ts:1506-1514` (no subtype/prereq), `types.ts:1196-1208/1111-1133` (closed
+office model), `types.ts:1574-1575` (flat diplomacy scalar + global wars); `game-context.md` #221/#237/#248/#258/#66/
+#107/#262/#206.)*
 
 ### 14.2 Forum design layer: Constitutional Amendments durable state (designed, not built)
 
@@ -8103,6 +8246,26 @@ member with a blunder roll** (§20.10(f)).
 > the `rulebook` §Y "convert up to (Legislative#) senators" tool (Command vs Legislative — pick one). Full
 > spec at [§28.10.1](#28101--208--182-extended-new-redbutton1960-batch-35--two-gm-improvised-cpu-vote-subsystems-the-moderate-faction-swing-vote-model--presidential-pressure-the-command-die-flip-gmapp-designed-not-built).
 > (`redbutton1960#POST 11, 24`; `game-context.md` #182/#208.)
+>
+> **★ #182 command-as-ELIGIBILITY-gate — SETTLED (decisive tier-1 ruling, `rules-update` f735601c, batch 39).** The
+> earliest articulation of the eligibility model the build runs on, ruled directly by vcczar. **Ted's proposal (POST
+> 7):** scrap `command` as the Pres/VP-eligibility gate (too few ways to earn it, especially for non-rookies) and
+> replace it with **TRAITS** — Charisma / Leadership / Celebrity / Debater / Likable / Orator; likewise replace
+> **`admin`** as the Secretary prereq with Leadership / Efficient / Egghead. **vcczar REFUSED (POST 8, 10) — the
+> settled rule: eligibility = ABILITIES, NOT traits:**
+> - **Command STAYS** as the Pres/VP gate. It is **deliberately rare and hard to earn** — *that rarity is the point*
+>   ("it's for those who have the personal ambition to run for president"); a no-command figure (Benedict Arnold) must
+>   wait for an event/path that grants the ambition (the #153/#163 command-GAIN sources below).
+> - **Abilities define the RANGE of jobs** a politician can hold; **traits only enhance/hurt performance** within that
+>   range (POST 8/10/16) — so traits cannot BE the gate (*"plenty of real presidents/cabinet members have none of
+>   those traits"*). Removing ability gates would put historical figures in the wrong jobs — *"one might as well not
+>   have historical figures and just play the Political Process on Steam."*
+> - **vcczar's ONLY concession (POST 11):** a **game SETTING to turn OFF ability requirements** for "very unrealistic
+>   play" — the unrealistic-mode toggle, which lives in the #263 settings model (§29.1.1), NOT as a rule change.
+> Ted conceded ("you're the boss"); ConservativeElector2 agreed requirements are a good **play-incentive** (POST 16).
+> **This SETTLES #182's eligibility model as intentional** and closes the trait-gate alternative. It confirms the
+> command-eligibility gate already PLAYED live (redbutton1960's 0-Command Tip O'Neill couldn't run, above) is design,
+> not improvisation. (`rules-update`(f735601c)`#POST 7, 8, 10, 11, 16`; `game-context.md` #182 + #263.)
 
 **(3) SCOTUS replacement timing — at the PRESIDENTIAL-ACTION phase ON PURPOSE.** A replacement
 justice is nominated at the **Presidential-Action phase deliberately** — GM: *"to replicate
@@ -11300,6 +11463,49 @@ fixed `cabinetSeatsForYear`): the Fed Chair / Chief of Staff / CNO / FBI Directo
 distinct terms, skill+age gates, decline odds, Command grants, and the **create-Fed-deactivates-
 Independent-Treasury** coupling; the Commerce/Labor split; and the same-party+Kingmaker PMG rule.)*
 
+> **★ #66 office LIFECYCLE — the full verb set (`civil-service` fa452d38, batch 39).** The Civil-Service genre's UNIQUE
+> contribution is making department/office **lifecycle the headline content**: federal departments/offices are NOT a
+> fixed list but a **lifecycle managed by content rows** (each verb a Legis-Prop / Pres-Action). This is the concrete
+> data+rules model #66 needs (the holdover/term ruleset #66 already carries does NOT cover these state transitions):
+>
+> | Lifecycle verb | In-thread instance | Prereq gate |
+> |---|---|---|
+> | **create** | "Create Dept of Justice/Navy/Energy/…"; "Establish Office of Att Gen" | mostly none / era-band |
+> | **split** | "Split Dept of Commerce & Labor into Two" (L-Prog); "Split Dept of Education and Health into two" (L-Neo) | parent dept must exist |
+> | **elevate to cabinet** | "Elevate PM Gen to Cabinet-Level" (L-Dem); "Elevate Dept of VA to cabinet-level" (L-Neo) | the independent agency must exist |
+> | **revert to independent agency** | "Revert Dept of Postal Service to Independent Agency" (L-Nuc) | Postal Dept exists |
+> | **merge** | "Merge Sec of War & Navy into new Sec of Def" | both Sec of War AND Sec of Navy exist (a #258 multi-office compound prereq) |
+> | **abolish / repeal** | vcczar ruling (POST 4): abolish Education/Commerce/Energy à la Rick Perry happens **"by repealing the action or law that establishes the departments. Some can't be removed however."** (POST 6 adds: "you can prevent it from being proposed too.") | the creating law/action must be repealable |
+>
+> - **The cabinet is NOT a fixed seat list** — POST 1 enumerates ~20 distinct departments/offices creatable by law
+>   (Navy, Justice, Energy, Manufacturing, Environment & Climate, Media & Propaganda, Religions, Tech & Innov.,
+>   Interior, Homeland Sec, Commerce & Labor, HEW, HUD, Transportation, + institutional offices: AG, OMB, EOP, CEA,
+>   Congressional-leadership posts), well beyond the shipped 7-seat max.
+> - **★ The UNDELETABLE flag (NEW rule wrinkle):** abolition = repeal the creating row, BUT some offices **"can't be
+>   removed"** (vcczar) — a per-office undeletable bit + a "block from being proposed" guard.
+> - **Minister-per-nation office typing** — the genre authors Ministers/Ambassadors to specific nations (Prussia,
+>   Russia, China, Japan, GB, France, Spain, Israel, Indian Sovereignty); today only a generic `Ambassador`
+>   `OfficeType` exists (cross-ref the §13.3.2 Diplomacy state model + the genre-boundary note: these posts arguably
+>   belong to Diplomacy and tie into the loan/troop-request mechanic). A content-shape variant (POST 7): **1–5 random
+>   UNNAMED "minor-country" Minister posts** — a politician posted there gains **XP only**; minor nations **can't be
+>   asked for loans/troops** (an abstracted alternative to naming all nations).
+> - **Confirmation/appointment tie-ins:** **OPM** (Office of Personnel Management) → "really stringent background
+>   checks" → **fewer 'Controversial' nominees accepted** (POST 13 — an office that buffs the confirmation subsystem
+>   against the Controversial-nominee mechanic). **WH Chief of Staff works IN CONJUNCTION with Key Advisor, NOT a
+>   replacement** (vcczar ruling POST 10 — Karl Rove was key advisor, not CoS; Bannon was Trump's initial key advisor);
+>   so CoS is an ADDED office, not a reskin of the existing Key-Advisor slot (cross-ref §24.6's CoS-via-exec-action).
+> - **Engine-verified (this batch):** `cabinetSeatsForYear(year)` (`types.ts:1196-1208`) is a hardcoded year-keyed
+>   function (max 7 seats: State/Treasury/War +Navy≥1798 +AG +Interior≥1849 +PMG≥1829); `OfficeType` is a CLOSED
+>   23-value union (`types.ts:1111-1133`) with no Commerce/Justice/Energy/HEW/etc. and **no Minister-per-nation type**
+>   (generic `Ambassador` only). There is **no create/split/merge/abolish/elevate/revert machinery, no "department"
+>   entity as data, no undeletable flag** — exactly what #66 wants generalized.
+> *(designed, 0% shipped — model offices/departments as DATA with 6 lifecycle state-transitions (create / split /
+> elevate-to-cabinet / revert-to-independent-agency / merge / abolish=repeal-creating-row), an UNDELETABLE flag + a
+> block-from-proposal guard on protected offices, and Minister-per-nation office typing (+ the abstracted 1–5 unnamed
+> minor-country XP-only posts); OPM as a confirmation buff; CoS as an added office alongside Key Advisor. Cite
+> `civil-service`(fa452d38)`#POST 1, 3, 4, 6, 7, 9, 10, 13`; code `types.ts:1196-1208, 1111-1133`; `game-context.md`
+> #66 + #258/#107.)*
+
 ### 24.7 (#67) Lingering — the ~16-meter homeostasis engine (era-gated foreign meters)
 
 > **Extends [§22.1 (the named meter bank)](#221-the-named-meter-bank--numeric-debt--crisiscascade)
@@ -12787,6 +12993,103 @@ paths terminate the game cleanly.)*
 >   Until decided, the build has no "you finished the game" state. (`game-context.md` #207; pairs
 >   §22.11/§27.1 the terminal Future band #206; `welcome2future#post 20, 378`.)
 
+#### 26.4.1 ★★ #264 (NEW, batch 39) — the COUP / insurrection PROCEDURE subsystem (the SURVIVE-and-consolidate path beside #88's loss-roll; DESIGNED, ~0% built)
+
+> **★★ The HEADLINE batch-39 mechanic — the full `rule 3.0` COUP subsystem.** §26.4 above (#88) records only the coup
+> *end-condition ROLL* (the loss path: Standard/Attempted/Autocratic Coup → game-over). This section adds the
+> **structural intent behind it** from its design-origin thread (`jan6-insurrection` 4c14847b, Nov 2022, the canonical
+> source — Will co-authored the coup rules): the **TWO coup TYPES**, their EVENT/meter/trait triggers, the
+> **"Following the Coup" consequence package** (the *survive-and-consolidate* path #88 does NOT capture), the
+> **countercoup** ruling, and the turn-loop placement. **DESIGNED, ~0% built** — the standing KB record (#88) confirms
+> `EraEvent.triggersGameEnd` ships (`types.ts:1635`) but is event-driven with **NO coup path**; there is no
+> treason-trial mechanic, no install-loyalists effect, no +3-buff, no coup-gate THRESHOLD logic, and no Lingering→coup→
+> Legislation hook (the meters themselves ship — DomStab/MilPrep/Economy — but the coup-gate logic does not). The OP
+> (POST 1) explicitly floats **replacing the whole subsystem with a single Era-of-Populism scripted event** — an OPEN
+> PRODUCT QUESTION (full subsystem vs lightweight scripted-event analogue), unresolved, given the rarity below.
+
+**(1) ★ The TWO coup TYPES (the core taxonomy).** A coup is a CHOICE offered to a *specific actor*, gated on
+game-state meters + traits; one type is additionally EVENT-gated:
+
+| | **(A) Standard Coup** | **(B) Populist Coup** (the Jan-6 analogue) |
+|---|---|---|
+| **Who chooses** | the **OPPOSITION leader** (against an "awful" President) | the **incumbent President** (e.g. one who **LOST re-election**, launching to stay in power) |
+| **Trigger gate** | **EVENT-triggered** (not a free choice) — a triggering event must fire | a free CHOICE when the meter/trait gate is met (no event required) |
+| **Meter gate (hardened POST 11)** | Economy ≤ **Great Recession** AND MilPrep ≤ **Slightly Unprepared** AND DomStab ≤ **Violent Unrest** | DomStab **worse-than-neutral** AND MilPrep **worse-than-slightly-prepared** |
+| **Trait gate** | opposition leader has **Controversial OR Leadership** | President has certain traits (Controversial/Leadership-class) |
+| **Triggering EVENTS (Standard only)** | (i) an **Authoritarian Government is in place** + a scripted **overthrow-the-regime** event fires → President may **resign or face the coup**; (ii) **"Newburgh Conspiracy is Real"** scripted event; (iii) the **hardened "Attempted Coup"** general event | — |
+
+- **Why Standard is event-gated** (POST 9): *"It has to have a trigger or it will happen too frequently. The
+  requirements without a trigger aren't that rare."* The designers leaned toward DROPPING Standard Coups as
+  historically implausible (vcczar POST 4; Will POST 10: *"I don't think the country has ever been in a position where
+  a coup has been feasible"*) but **KEPT them, explicitly event-gated** (POST 11/12).
+- **Populist Coups STAY** as a standing meter/trait-gated incumbent choice (POST 4). In EVERY playtest so far **NO
+  President met the Populist requirements** (POST 10/16) — the one near-miss: President **Benedict Arnold** *could*
+  have launched one after losing re-election; **@Cal chose not to** (Arnold became Populist mid-game via Faction-Leader
+  mechanics; he started Traditionalist). So this path is **extremely rare in practice**.
+
+**(2) ★ "Following the Coup" — the consequence package (the survive-and-consolidate path; designed EXTREME).** Applies
+when the **incumbent SURVIVES** the coup; written to apply to BOTH coup types (POST 17). Designed to be game-changing
+(POST 4: *"if you lose a coup roll you get wrecked … if you start a coup, then you better be prepared to finish it
+because if you lose then you're out of power for a long time"*):
+
+1. **Install loyalists — rewrite congressional delegations.** The President **appoints the WINNER of EACH federal
+   election that cycle** (House **and** Senate).
+2. **Treason trials.** Every **opposition** member **not up for reelection** this cycle (i.e. **Senate, military, and
+   Supreme Court**) faces a **treason trial**; **losers are removed from the game** and the President **appoints
+   replacements** → the President gets a **supermajority in all branches**. *(Treason trials are effectively
+   coup-driven impeachment/removals — REUSE the impeachment plumbing; reconcile with the broken impeachment procedure,
+   DH-29..DH-35.)*
+3. **+3 federal-election buff.** All **same-party** members get an **automatic +3 in ALL federal elections**; any
+   **opposition** challenger who runs against them **and loses is removed from the game**. The buff lasts **as long as
+   that President is in office OR a set number of years (~10)** — symbolizing the game's "new corrupt nature." *(OPEN:
+   pick tenure vs fixed ~10-yr clock.)*
+4. **Meter penalties.** Plus the existing **domestic-stability penalty** + a **foreign-relations penalty**.
+
+**(3) ★ COUNTERCOUP — reinstate the ACTUAL election winner (the load-bearing ruling, POST 13, confirmed 22/23).** In a
+Populist Coup the **opposition leader launches a countercoup** (the old rules just said *"follow the standard coup
+rules"*). **Ruling:** if the countercoup succeeds, the **ACTUAL WINNER of the Presidential election is reinstated as
+President — NOT the opposition leader who launched it** — and that actual winner is **added to the treason/impeachment
+rolls** too. **Worked example (the canonical illustration, POST 21):** 2020 Populist Coup → **Trump** launches a coup
+to stay in office despite losing → the **Democratic party leader (Pelosi, treated as party leader over Biden)**
+launches the countercoup → if **Pelosi wins, BIDEN (the actual election winner) becomes President, not Pelosi.** *(Open
+authoring TODO POST 17: the "Following the Coup" section must DIFFERENTIATE countercoup outcomes — the reinstatement
+clause — since it otherwise reads identically for both coup types. Open rule: who the "party leader" is when it differs
+from the President-elect.)*
+
+**(4) ★ Triggers, odds, and TURN-LOOP placement.**
+- **Coup likelihood is tied to the DOMESTIC STABILITY meter** (Ted POST 5; vcczar POST 6: *"The standard Coup is set
+  to domestic stability (it has to be in the worst position) and populist just has to be worse than neutral"*). A
+  **high-following Controversial/Leadership leader** is what tips low DomStab into a coup (Ted's Jan-6 framing).
+- **CPU odds rise across eras but CAP LOW** (POST 4, 6): **~1–5% early-game → ~25% by the 2020 election if conditions
+  are met** — a rare occurrence by design (the era-band axis of #92). **No modern civil-war path was added** (POST 6:
+  *"people will turn to keyboards"* — a deliberate choice NOT to model a modern civil war; distinct from the 1856 Civil
+  War arc, §23). vcczar may add a **recurring event** letting radical parties (or reactions to them) trigger coups more
+  frequently (POST 9).
+- **★ Turn-loop hook (POST 8/9):** coups resolve **AFTER the Lingering phase (2.5.1), BEFORE Legislation** — *"so there
+  is time to do a treason trial that same turn."* (Assumed by both vcczar & Will; NOT yet spelled out in the rules and
+  NOT wired in `phaseRunners.ts`, where Lingering and Legislation live.)
+
+**(5) Relation to #88 (the loss-roll it sits beside).** #88 (§26.4) is the **LOSE-the-coup** roll set (Standard /
+Attempted / Autocratic → game-over); this section is the **SURVIVE-the-coup** package + the **countercoup**. The
+hardened "Attempted Coup" general-event gate here (Economy ≤ Great Recession + MilPrep ≤ Slightly Unprepared + DomStab ≤
+Violent Unrest) is the Nov-2022 **hardening/dating** of #88's `rep1800`-enumerated coup gates — so this thread is where
+those rules were written, and it adds the three structural pieces #88 lacks: (i) the **Populist Coup as an
+incumbent-President CHOICE** (distinct from the opposition-led Standard Coup), (ii) the **"Following the Coup"**
+consequence package, (iii) the **countercoup→reinstate-actual-winner** ruling. Corroborates the #88 balance reality
+that coups are rare-to-dead (no Populist-eligible President in any playtest; the one near-miss declined).
+
+*(designed, ~0% built — add a **coup PROCEDURE** distinct from #88's loss-roll: two coup types (opposition-leader
+event-triggered Standard / incumbent-President Populist), each gated on `meterAtMost` (DomStab/MilPrep/Economy) + trait
+predicates (#258); the EVENT-triggered entry on Authoritarian-overthrow / "Newburgh Conspiracy is Real" / hardened
+"Attempted Coup" payloads (#221 event→choice); a **"Following the Coup"** effect bundle (install-loyalists = appoint
+federal-election winners; treason trials reusing the impeachment removal+replace plumbing → supermajority; a +3
+federal-election buff for tenure-or-~10yr with opposition-challenger-removal; DomStab + foreign-relations penalties); a
+**countercoup** that REINSTATES the actual Presidential-election winner (adding him to the treason rolls); a turn-loop
+hook between Lingering (2.5.1) and Legislation so a treason trial runs the same turn; CPU coup-odds ~1–5%→~25% by 2020,
+capped, scaling by era band and tied to Domestic Stability. **Decide the OPEN product Q first** — full subsystem vs a
+single Era-of-Populism scripted event. Cite `jan6-insurrection`(4c14847b)`#POST 1, 4, 5, 6, 8, 9, 11, 12, 13, 17, 21,
+22, 23`; `game-context.md` #264 (NEW) + #88/#221/#258/#92/DH-29..DH-35.)*
+
 ### 26.5 Era-event-creates-office (bill installs a new cabinet seat)
 
 > **Generalizes the [§24.6 Progressive institutional layer](#246-66-the-progressive-era-institutional-layer-offices-created-in-game-by-law)
@@ -13623,6 +13926,19 @@ amendment. Couples to §23.2 sectional-balance scoring and §27.8 amendments.)*
 state/territory is un-owned or unorganized, the Class-I/II/III senator-rotation assignment on
 admission, the EV join, and the sabotaged-enabling-vote → +1-bias seeding. The dataset must
 **filter out** unorganized-territory pols from the draft pool — a content/territory-gating fix.)*
+
+> **★ #43 — draftability splits by OFFICE TYPE, not a flat bar (clarification, `rules-update` f735601c, batch 39).**
+> The §27.5 gate above is "undraftable until organized"; this thread refines it by office TYPE. Ted/Cal surfaced (POST
+> 3–6) that politicians from a state **not yet organized into a TERRITORY** currently can't be drafted AT ALL (GMs had
+> been bending this for Vermont/Kentucky/Ohio figures). **Designer intent (vcczar/Cal, POST 4–6):** such figures **CAN
+> be drafted for the MILITARY and CABINET (appointed roles)** but **CANNOT hold ELECTED office until their state
+> achieves statehood.** Worked example: **Lewis Cass** held posts 1812–36 (US Senator, Pres nominee, Sec of State)
+> only AFTER Michigan became a state. The current rules wording (e.g. the Northwest Territory bill: "politicians from
+> this state can now be drafted") gates them at the **pre-TERRITORY** stage, which vcczar called possibly unintentional
+> — "**I might change that**" (POST 6, i.e. relax the pre-territory bar). So the gate should be: **appointed (mil/
+> cabinet) allowed pre-statehood; elected blocked until statehood; the pre-TERRITORY bar possibly to be loosened.**
+> Cross-ref #32 (cabinet-eligibility ties to state status), `admitState` (`src/engine/territories.ts`). (`rules-update`
+> (f735601c)`#POST 3, 4, 5, 6`; `game-context.md` #43/#32/#33.)*
 
 ### 27.6 Second Bank recharter clock + the Bank War exec action
 
@@ -15001,6 +15317,47 @@ the early-era drafting profile from a 3rd early-era thread).
 > [§26.1](#261-the-mid-government-boot-shape-general), now with the inaugural-draft + strip-Command
 > + industry-init steps made explicit.
 
+#### 29.1.1 ★ #263 (NEW, batch 39) — the game-SETTINGS / options system (a start-of-game togglable-rule framework; DESIGNED, 0% shipped)
+
+> **★ The design-origin of a SETTINGS/OPTIONS model the build does not have** (`rules-update` f735601c, Aug 2021 — a
+> rules-restructure thread where vcczar, for the first time in the corpus, explicitly designs a **start-of-game
+> options menu** whose toggles GATE engine rules). Sits beside the boot procedure (#115, §29.1): a settings screen is
+> the new-game-config surface, and #115's boot setup is itself one toggle the settings model subsumes. Today the build
+> has **NO settings/options framework** — only scattered single toggles live as separate gaps (#171 draft-restriction,
+> #238 gender/suffrage-eligibility, #24/#115 what-if pool, #182 command-as-gate, #4). **#263 is the umbrella SYSTEM**
+> (a new-game options screen + the per-toggle engine plumbing), distinct from the individual toggles.
+
+**(1) ★ vcczar's framing — the SANCTIONED CHANGE CHANNEL.** POST 11: "**no more overhauls**" — fundamental-mechanic
+changes are CLOSED; vcczar will accept changes only if they are deliverable **as game SETTINGS**, and wants the game
+**≥50% realistic** (a realism floor). So the settings model is the *only* sanctioned channel for ahistorical play —
+which is why the #182 command-eligibility refusal (§20.11(2)) has its single escape hatch HERE (the unrealistic-mode
+toggle), not as a rule change.
+
+**(2) ★ The canonical 7-toggle list (POST 1–3, 11).** Each toggle gates a specific engine rule:
+
+| Toggle | Effect (gates which rule) | Subsumes |
+|---|---|---|
+| **Randomize politician start dates** | you never know when a given politician arrives in a draft (vs the fixed `draftYear` = nearest mult-of-4 to birthYear+25) | NEW |
+| **Allow politicians to move to any state** | removes the home-state restriction on relocation | NEW |
+| **Turn off giving rookies a random trait** | rookies enter without an auto-assigned trait | NEW (rookie-trait cluster) |
+| **Women/minorities draftable before suffrage** | lets disenfranchised figures into pre-suffrage drafts (rules say no; GMs had been leaving them in anyway) | **#238** + #24/#115 |
+| **Factions divided by party vs. draft-anyone-regardless-of-party** | toggles the party-affiliation constraint on faction drafting | **#171** / #4 |
+| **Leave "what if" candidates in** | keep ahistorical "what-if" figures in the pool | **#24/#115** |
+| **Turn OFF ability requirements ("unrealistic mode")** | disables ability prereqs for office eligibility (the only escape from the #182 ability-gate) | NEW toggle on **#182** |
+
+**(3) Authority + open Q.** vcczar (designer, final say) + MrPotatoTed/Ted (co-designer) are tier-1; Cal +
+ConservativeElector2 contribute. **OPEN Q (for the human):** should the settings/options system be ONE umbrella gap (a
+new-game options screen + per-toggle plumbing), or should each toggle stay folded into its existing rule-gap
+(#171/#238/#24/#182…)? This thread argues for the umbrella — the toggles share a single sanctioned channel ("changes
+only via settings, ≥50% realism floor, no more overhauls").
+
+*(designed, 0% shipped — add a **start-of-game settings/options model**: a serializable `GameSettings` record (e.g. on
+`FullGameSnapshot`) with the 7 boolean toggles above, surfaced on a new-game options screen and READ by the gated
+engine rules (draft eligibility, rookie-trait assignment, relocation, ability-gating, what-if-pool inclusion, faction-
+by-party constraint); the **unrealistic-mode** toggle is the canonical bypass of the #182 ability-gate; enforce a
+≥50%-realism design floor as the channel for all future ahistorical-play requests. Cite `rules-update`(f735601c)`#POST
+1, 2, 3, 11`; `game-context.md` #263 (NEW) + #171/#238/#24/#115/#182/#4.)*
+
 ### 29.2 ★ Unsettled fork A — player-controlled SCOTUS (gap #52)
 
 > **DESIGNED/RULED + UNSETTLED.** A player-controlled Supreme Court appeared "for the first time in
@@ -15350,6 +15707,44 @@ the A9 scaling wall demands the build **persist + auto-fill** across cycles.
 > the engine AUTO-derive focus-rep counts from EV at each census, or keep the static authored per-start-date
 > rosters vcczar hand-built (POSTs 27-41)? Also: *"no penalty for LOSING a House election unless you're the
 > incumbent"* (POST 17). (`housepoll#POST 1, 7, 12-15, 17-23, 27-41`; `game-context.md` #219/#55/#34/#191.)
+
+> **★ #219 DESIGN-ORIGIN found (`us-house-votes` 8f12ac05, batch 39, May 2022 — PREDATES the `housepoll` build above).**
+> The weighted-House-vote rule was AGREED in this thread (vcczar proposed; Ted AGREED POST 7; broad "+1" with no
+> dissent) months before `housepoll` (Aug 2022) RESOLVED + built it. New supporting facts the resolved block above
+> doesn't carry:
+> - **It is a REVERT of an OLD rule** vcczar had previously removed — and the reason for removing it was forum-tedium
+>   (*"it was a pain in the ass to playtest on a forum"*), NOT a design rejection. The browser build removes that
+>   objection, so the revert is sound.
+> - **The load-bearing rationale (Ted POST 7):** Cal proved weighted votes matter — *"or else the House was just the
+>   same as the Senate."* The DESIGN INTENT is to make the House mechanically DISTINCT from the Senate (1 named senator
+>   ≠ a weighted-share rep); a single named rep must NOT carry a whole state's weight like a senator.
+> - **Apportionment coupling restated (Ted POST 9):** named-rep count is POPULATION-RANK + ERA keyed (top-3 states get
+>   3 reps → later top-5 → eventually top-10 in the modern era — the era-keyed ladder, #55/#34); a smaller-pop state
+>   (MI < CA) has FEWER House VOTES even at equal named-rep count, because votes = delegation SHARE, not named count.
+>   This thread CAPS at 3 named reps (the pre-`housepoll` 3/2/1 statement; `housepoll` POST 19 later EXPANDED to the
+>   1-10 ladder, which supersedes). vcczar WON'T add ~20k more Reps to support a 4-5 cap (POST 14 — same authoring-cost
+>   wall as `housepoll`'s every-seat rejection). vcczar references a **per-era per-state reps-size progression DOCUMENT**
+>   (POST 10) + a **by-year state-demographics MAP** (POST 21) — authored data the build needs (same artifacts
+>   `housepoll` hand-built).
+> - **#191 corroborated TWICE:** per-seat party-preference variability is *"already fixed"* (vcczar POST 8, May 2022 —
+>   #191 work was already in progress) and the explicit **"McCarthy Rule"** (POST 21): GUARANTEE the minority party 1
+>   of a big state's named seats, swing slightly biased by historical splits (the minority-seat guarantee `housepoll`
+>   later built as "+2 minority bias / ≥20% Red Reps in CA"). NB this "guarantee a seat" sits in tension with
+>   `electiondisc`'s "don't guarantee, just make it swingy" — an unresolved #191 sub-fork (§29.5.1).
+> - **Downstream stakes (pure-mechanic):** vote-SWAYING scales with the swayed rep's WEIGHTED votes (a CA rep worth 18
+>   ≫ a VT rep worth 1, POST 4 — so the sway mechanic's value must use weighted votes, not headcount); **Speaker math
+>   reshapes** (most named reps ≠ most House votes → cross-player alliances, POST 18/20); **big-state seats become
+>   high-value PRIMARY targets** (#250 seat-as-prize, POST 18/20). Meshes with the House-size cap (#255 — vcczar's
+>   explicit motivation: weighting "makes more sense with the legislation that can increase or reduce the size of the
+>   US House," POST 1).
+> - **★ REMAINDER-DIRECTION DISCREPANCY to reconcile (the one thing this thread changes about the rule):** this thread
+>   expresses the remainder as **DROP a vote from the LOWEST-legislative rep** (CA 53/3 → round up to 18/18/18 = 54,
+>   one too many → the lowest-Legislative rep loses a vote → 18/18/17; randomized on ties). The resolved #219/`housepoll`
+>   spec (block above, POST 19/20) expresses it as **floor + ADD the remainder to the HIGHEST-legislative rep**. Net
+>   ranking-by-legislative is the same, but the two formulations can place the off-vote on DIFFERENT reps — the
+>   tech-lead should pick ONE canonical formulation (`housepoll`'s `floor(stateReps/focusReps)` + remainder→highest-Leg
+>   is the later, more-built spec). (`us-house-votes`(8f12ac05)`#POST 1, 3, 4, 6, 7, 8, 9, 10, 14, 18, 20, 21`;
+>   `game-context.md` #219/#55/#34/#191/#255/#250.)
 
 #### 29.5.1 ★ #250 (NEW, `electiondisc`, batch 35) — the House-seat-COMPETITION fork (how multi-seat states run their focus-Rep races) (DESIGNED; direction-set, not ratified)
 
@@ -18138,6 +18533,111 @@ into the #194 lineage system. Cite `histpres#POST 1, 3, 7, 13, 19, 28, 34, 36, 3
 > on already-designed subsystems — the **cabinet-crisis safeguard** (#172/#77) is the one that closes a *shipped*
 > loophole (`phaseRunners.ts:2158` auto-confirm-without-vote, a DH-style bug). Cross-ref `game-context.md` rows
 > **#258/#259/#260/#261/#262 (NEW)** and **#206/#221/#237/#248/#247/#256/#45/#56/#172/#199/#77/#163/#66/#170/#128/#210/#20/#92 (sharpened/corroborated)**.
+
+### 30.29 Rulings folded from batch 39 — FIVE DESIGN / CONTENT-AUTHORING threads (★★ #264 the COUP/insurrection PROCEDURE subsystem + #263 the game-SETTINGS model + the #182 command-eligibility SETTLED ruling + #219 weighted-House-vote DESIGN-ORIGIN + the Civil-Service/Diplomacy genre drops) (`civil-service` / `rules-update` / `jan6-insurrection` / `us-house-votes` / `diplomacy`)
+
+> **★ Batch 39 = a 5-thread DESIGN / CONTENT-AUTHORING batch (NO playtest, NO dice, NO historian, NO played-forward
+> year).** Everything is **designed-only**; the lone shipped-code touches are VERIFICATIONS of absence (the coup
+> subsystem ~0% built; office lifecycle 0%; `GameState.diplomacy` a flat per-nation scalar). The value: the **★★ #264
+> COUP / insurrection PROCEDURE subsystem** (the headline — the canonical `rule 3.0` two-coup-type spec + the
+> "Following the Coup" consequence package + the countercoup ruling, the *structural intent* behind #88's loss-roll),
+> the **★ #263 game-SETTINGS / options model** (a start-of-game togglable-rule framework — the sanctioned channel for
+> ahistorical play, "no more overhauls"), a **SETTLED ruling on #182** (eligibility stays ability-gated, NOT
+> trait-gated; only escape = an unrealistic-mode setting) + two NEW command-GAIN paths (#153/#163), the **DESIGN-ORIGIN
+> of the #219 weighted-House-vote rule** (predates the `housepoll` build; "or else the House is just the Senate"), and
+> two more fully-tagged policy-genre drops (**Civil Service** + **Diplomacy**) that add NEW #258 predicate classes and
+> the **office-LIFECYCLE verb set** (#66) + the **per-country diplomacy STATE model** (#107). Tier-1 designers `@vcczar`
+> + `@MrPotatoTed`/Ted author/rule; **Willthescout7** co-authors the coup rules; **Cal / ConservativeElector2 /
+> ShortKing / matthewyoung123** are the densest contributors. The sources:
+> - **`civil-service`** (fa452d38, "AMPU Civil Service," CONTENT-AUTHORING, Apr 2022, 13 posts; NOT a playthrough) —
+>   the **Civil-Service policy genre in FULLY-TAGGED form** (L/P/G + era bands + `Prereq:` blocks) whose UNIQUE
+>   contribution is making **federal department/office LIFECYCLE the headline content** (create→split→elevate→revert→
+>   merge→abolish + an UNDELETABLE flag) — the data+rules model behind **#66**; plus a 2nd strong witness for **#258**
+>   (NEW predicate classes: institution-exists / multi-office-compound / cross-primitive mutual-exclusion / scenario-
+>   mode / diplomatic-state-flag). → enriches #66/#258/#237/#248/#221/#262/#206. Folded into [§24.6](#246-66-the-progressive-era-institutional-layer-offices-created-in-game-by-law) (#66 lifecycle) + [§14.1.3.f](#1413f--221237248--258--66107-batch-39--the-civil-service--diplomacy-policy-genre-drops--the-office-lifecycle-verb-set--the-per-country-diplomacy-state-model-designed-0-shipped) (the genre + #258 classes). Cite `civil-service`(fa452d38)`#POST n`.
+> - **`rules-update`** (f735601c, "AMPU Rules Update," RULES-RESTRUCTURE + SETTINGS-DESIGN, Aug 2021, 20 posts; NOT a
+>   playthrough) — the **★ design-origin of a game-SETTINGS / options SYSTEM** (#263, the 7-toggle canonical list) +
+>   the **SETTLED #182 command-eligibility ruling** (eligibility = abilities, NOT traits; vcczar's only concession = an
+>   unrealistic-mode setting) + two NEW command-GAIN paths (Keynote Speaker; career-track %) + the draft-by-territory
+>   office-TYPE clarification (#43). → NEW #263; corroborates #182/#153/#163/#43. Folded into [§29.1.1](#2911--263-new-batch-39--the-game-settings--options-system-a-start-of-game-togglable-rule-framework-designed-0-shipped) (#263 NEW) + [§20.11](#2011--the-federalism-presidency-vetooverride-command-as-action-budget-182-scotus-timing-summer2021-designed) (#182 settled) + [§4.1.y](#41y--ted-ruled-draft-rules-designer-authoritative-tedchange) (command-GAIN) + [§29.5/§27.5](#295-the-focus-rep-house-abstraction-gap-55) (#43 office-type). Cite `rules-update`(f735601c)`#POST n`.
+> - **`jan6-insurrection`** (4c14847b, "How to handle the Jan 6th Insurrection," COUP-SUBSYSTEM DESIGN-ORIGIN, Nov
+>   2022, 23 posts; NOT a playthrough) — the **★★ canonical design source for the whole COUP subsystem** (#264): the
+>   TWO coup types (Standard = opposition-leader EVENT-triggered choice; Populist = incumbent-President choice / the
+>   Jan-6 analogue), the "Following the Coup" EXTREME consequence package, the countercoup→reinstate-actual-winner
+>   ruling, the turn-loop hook (after Lingering, before Legislation), and the CPU odds curve (~1–5% early → ~25% by
+>   2020, capped). → **NEW #264**; the design-origin/extension of #88; corroborates #221/#258/#92. Folded into
+>   [§26.4.1](#2641--264-new-batch-39--the-coup--insurrection-procedure-subsystem-the-survive-and-consolidate-path-beside-88s-loss-roll-designed-0-built). Cite `jan6-insurrection`(4c14847b)`#POST n`.
+> - **`us-house-votes`** (8f12ac05, "AMPU: US House Votes," DESIGN-DECISION, May 2022, 22 posts; NOT a playthrough) —
+>   the **DESIGN-ORIGIN of the #219 weighted-House-vote rule** (each named Rep's vote = the state's real delegation
+>   size split among its named reps; a REVERT of an old rule; "or else the House is just the Senate"). Predates the
+>   `housepoll` resolution (§29.5). Surfaces the per-era reps-size progression DOC + the McCarthy-Rule minority-seat
+>   guarantee + the remainder-direction discrepancy. → corroborates #219/#55/#34/#191/#255/#250; NO new gap. Annotated
+>   inline at [§29.5](#295-the-focus-rep-house-abstraction-gap-55). Cite `us-house-votes`(8f12ac05)`#POST n`.
+> - **`diplomacy`** (b8aecb83, "AMPU Diplomacy," CONTENT-AUTHORING, Apr 2022, 7 posts; NOT a playthrough) — the
+>   **Diplomacy policy genre in FULLY-TAGGED form** (~55 L/P rows; doctrines/embargoes/recognitions) + the **clearest
+>   evidence yet that the engine must track per-foreign-nation STATE** ({relations, recognized?, aidLevel,
+>   trade/embargo} + per-nation war) — grows **#107** from a flat scalar; adds NEW #258 predicate classes (per-nation
+>   at-war / relations-threshold / war-outcome flags). → enriches #107/#258/#237/#248/#221/#262/#206. Folded into
+>   [§13.3.4](#1334--107-batch-39-diplomacy--the-per-country-state-model--the-diplomacy-policy-genre-content-designed-0-shipped) (#107 state model) + [§14.1.3.f](#1413f--221237248--258--66107-batch-39--the-civil-service--diplomacy-policy-genre-drops--the-office-lifecycle-verb-set--the-per-country-diplomacy-state-model-designed-0-shipped) (the genre). Cite `diplomacy`(b8aecb83)`#POST n`.
+>
+> **The HEADLINE findings (lead with these):**
+> 1. **★★ #264 — the COUP / insurrection PROCEDURE subsystem (designed, ~0% built).** `rule 3.0` coups: **(A)
+>    Standard Coup** = opposition-leader CHOICE, **event-triggered** (Authoritarian-overthrow scripted event /
+>    "Newburgh Conspiracy is Real" / hardened "Attempted Coup" general event; gated Economy ≤ Great Recession + MilPrep
+>    ≤ Slightly-Unprepared + DomStab ≤ Violent-Unrest + opposition-leader Controversial/Leadership); **(B) Populist
+>    Coup** = incumbent-President CHOICE (the Jan-6 analogue; DomStab worse-than-neutral + MilPrep worse-than-slightly +
+>    Pres trait gate; an incumbent who LOST re-election launching to stay in power). **"Following the Coup"** (EXTREME):
+>    install loyalists (Pres appoints federal-election winners) + treason trials (Senate/military/SCOTUS not up for
+>    reelection → remove+replace → supermajority; reuses impeachment plumbing) + **+3 in all federal elections** for
+>    tenure/~10yr + DomStab/foreign-relations penalties. **Countercoup → reinstates the ACTUAL Presidential-election
+>    winner** (NOT the opposition leader), who joins the treason rolls. **Turn-loop hook:** after Lingering, before
+>    Legislation. This is the *survive-and-consolidate + countercoup* path #88 does NOT capture. At
+>    [§26.4.1](#2641--264-new-batch-39--the-coup--insurrection-procedure-subsystem-the-survive-and-consolidate-path-beside-88s-loss-roll-designed-0-built).
+> 2. **★ #263 — the game-SETTINGS / options system (NEW).** A start-of-game togglable-options model gating engine
+>    rules (canonical 7-toggle list). vcczar's frame: "**no more overhauls**" — fundamental-mechanic changes are closed;
+>    changes are accepted only as SETTINGS, with a **≥50% realism floor**. Subsumes the scattered single-toggle gaps
+>    (#171/#238/#24/#115/#182/#4). Shipped: **no settings/options framework at all.** At
+>    [§29.1.1](#2911--263-new-batch-39--the-game-settings--options-system-a-start-of-game-togglable-rule-framework-designed-0-shipped).
+> 3. **★ #182 command-eligibility — SETTLED.** vcczar REFUSED trait-gating Pres/VP (Ted's pitch: Charisma/Leadership/
+>    Celebrity gate; +admin→Secretary). Ruling: **eligibility = abilities, NOT traits** (abilities set the job RANGE;
+>    traits only enhance/hurt within it; command deliberately rare/hard). Only escape = the unrealistic-mode SETTING
+>    (#263). + two NEW command-GAIN paths (#153/#163): **Keynote Speaker at Convention** = small chance +1 command for
+>    ANYONE (even 0); **tiny % command via certain career tracks**. At [§20.11(2)](#2011--the-federalism-presidency-vetooverride-command-as-action-budget-182-scotus-timing-summer2021-designed) + [§4.1.y](#41y--ted-ruled-draft-rules-designer-authoritative-tedchange).
+> 4. **★ #219 weighted-House-vote DESIGN-ORIGIN (May 2022, predates `housepoll`).** Each named Rep's vote = the state's
+>    real delegation size split among its named reps (CA 53/3 → 18/18/17); a REVERT of an old rule vcczar had removed
+>    for forum-tedium; rationale = "**or else the House is just the Senate**." ★ Remainder-direction discrepancy to
+>    reconcile (this thread: DROP the off-vote from the LOWEST-legislative rep; #219/`housepoll`: ADD remainder to the
+>    HIGHEST-legislative rep). Annotated at [§29.5](#295-the-focus-rep-house-abstraction-gap-55).
+>
+> **★ Designer rulings + new gaps folded (the topical sections carry the detail; this is the index):**
+>
+> | Item | Ruling / spec | Where folded | Cite |
+> |---|---|---|---|
+> | **★★ #264 COUP/insurrection PROCEDURE subsystem (NEW)** | two coup types (Standard = opposition-leader event-triggered choice / Populist = incumbent-President choice); "Following the Coup" package (install loyalists + treason trials→supermajority + +3 federal-election buff for ~10yr + DomStab/foreign penalties); countercoup→reinstate-actual-winner; turn-loop hook after Lingering before Legislation; CPU odds ~1–5%→~25% by 2020, capped, tied to DomStab; treason trials = coup-driven removals (★ tech-lead b39: impeachment is itself UNBUILT — `impeach` absent from `src/`; nothing to reuse, build/co-build it; DH-29..DH-35 are design holes); OPEN product Q = full subsystem vs single Era-of-Populism scripted event | [§26.4.1](#2641--264-new-batch-39--the-coup--insurrection-procedure-subsystem-the-survive-and-consolidate-path-beside-88s-loss-roll-designed-0-built) | `jan6-insurrection`(4c14847b)`#POST 1, 4, 8, 9, 11, 12, 13, 17, 21, 22, 23`; cross-ref #88/#221/#258/#92, DH-29..DH-35 |
+> | **★ #263 game-SETTINGS / options SYSTEM (NEW)** | start-of-game togglable-options model gating engine rules; canonical 7 toggles (randomize-start-dates / move-to-any-state / no-rookie-random-trait / suffrage-pre-draft / factions-by-party-vs-draft-anyone / leave-what-if-candidates / turn-off-ability-requirements="unrealistic mode"); "no more overhauls" + ≥50% realism floor; subsumes #171/#238/#24/#115/#182/#4 as togglable behaviors | [§29.1.1](#2911--263-new-batch-39--the-game-settings--options-system-a-start-of-game-togglable-rule-framework-designed-0-shipped) | `rules-update`(f735601c)`#POST 1, 2, 3, 11` |
+> | **★ #182 command-eligibility SETTLED (ruling on existing)** | eligibility = abilities NOT traits (vcczar refused trait-gating Pres/VP + admin→Secretary); abilities set job RANGE, traits only enhance; command deliberately rare/hard; only escape = the #263 unrealistic-mode setting | [§20.11(2)](#2011--the-federalism-presidency-vetooverride-command-as-action-budget-182-scotus-timing-summer2021-designed) | `rules-update`(f735601c)`#POST 7, 8, 10, 11, 16` |
+> | **★ command-GAIN paths (NEW mechanics on existing systems, #153/#163)** | Keynote Speaker at Convention = small chance +1 command for ANYONE (even 0 — first bootstrap-from-zero source that isn't a scripted event); tiny % command via certain career tracks (won't help off-track figures); origin of "earn command in-game" that #153 later doubles | [§4.1.y](#41y--ted-ruled-draft-rules-designer-authoritative-tedchange) | `rules-update`(f735601c)`#POST 17, 19, 20` |
+> | **★ #219 weighted-House-vote DESIGN-ORIGIN (corroborate)** | each named Rep's vote = state delegation size / named reps (CA 53/3→18/18/17); REVERT of an old rule; "else the House is just the Senate"; per-era reps-size progression DOC + by-year demographics MAP; McCarthy-Rule minority-seat guarantee (#191) + per-seat deviant bias; meshes with House-size cap (#255); raises vote-sway/Speaker/primary stakes (#250); ★ remainder-direction DISCREPANCY (drop-from-lowest-Leg vs add-to-highest-Leg); `housepoll` RESOLVED the design + hand-built the FORUM rule (★ tech-lead b39: NOT in `src/` — the floor tally is 1 vote/member at `phaseRunners.ts:3541`; #219 is a 0%-shipped build delta) | [§29.5](#295-the-focus-rep-house-abstraction-gap-55) | `us-house-votes`(8f12ac05)`#POST 1, 3, 6, 7, 9, 10, 18, 20, 21` |
+> | **★ #66 office LIFECYCLE (sharpen with verb set)** | create→split→elevate-to-cabinet→revert-to-independent-agency→merge→**abolish (repeal creating law/action) + UNDELETABLE flag** for some; Minister-per-nation office typing (today only generic Ambassador); cabinet grows to ~20 depts/offices; OPM→background checks→fewer Controversial nominees; WH CoS works IN CONJUNCTION with Key Advisor (not a reskin) | [§24.6](#246-66-the-progressive-era-institutional-layer-offices-created-in-game-by-law) | `civil-service`(fa452d38)`#POST 1, 3, 4, 6, 9, 10, 13`; code `types.ts:1196-1208, 1111-1133` |
+> | **★ #258 NEW predicate classes (extend taxonomy)** | institution-exists; multi-office compound (War AND Navy→merge); cross-primitive mutual-exclusion ("Not Already Created via Legis Prop / via Pres Action" — EOP/CEA); scenario-mode (Constitutional Convention Only); per-nation diplomatic-state (at-war / relations-threshold / recognized / trade-open); war-outcome flags (WWII-won / any-WW-active / WWI-won); anti-prereq (merit-law NOT active → Spoils) | [§14.1.3.f](#1413f--221237248--258--66107-batch-39--the-civil-service--diplomacy-policy-genre-drops--the-office-lifecycle-verb-set--the-per-country-diplomacy-state-model-designed-0-shipped) | `civil-service`(fa452d38)`#POST 1`; `diplomacy`(b8aecb83)`#POST 1` |
+> | **★ #107 diplomacy per-country STATE model (grow scalar→struct)** | grow `GameState.diplomacy` from a flat relation scalar into per-nation `{relations, recognized?, aidLevel, trade/embargo}` + per-nation war; opposed-pair option-sets (Recognize↔Don't-Recognize; 4-way Aid; Interventionist↔Isolationist; Globalism↔Nationalism) | [§13.3.4](#1334--107-batch-39-diplomacy--the-per-country-state-model--the-diplomacy-policy-genre-content-designed-0-shipped) | `diplomacy`(b8aecb83)`#POST 1, 6`; code `types.ts:1574-1575`, `phaseRunners.ts:3585` |
+> | **★ #43 draft-by-territory office-TYPE split (clarification)** | pre-statehood figures draftable for MILITARY + CABINET (appointed) but NOT elected office until statehood (Lewis Cass post-MI-statehood); pre-TERRITORY bar possibly to be RELAXED ("I might change that") | [§27.5](#275-statehood-by-bill--unorganized-territory-gating) | `rules-update`(f735601c)`#POST 3, 4, 5, 6` |
+> | **Corroborations (no NEW row)** | #221 (4-primitive registry — Civil-Service/Diplomacy genres + coup-as-event-payload); #237/#248 (genre/subtype + multi-category tagging + genre-boundary rulings: Ministers/Ambassadors Civil-Service-vs-Diplomacy, embargoes/sanctions Trade-vs-Diplomacy, S-tier events not Legis/Pres); #262/#206 (more Civil-Service Gov-Actions + Diplomacy L/P + Era-of-Future: Dept of Space/Internet/Sports-Arts-Culture, metaverse summits, AUKUS/TPP, special envoys, gift diplomacy); #92 (era-band CPU-odds scaling); #55/#34 (per-era named-rep ladder + census recompute) | the topical sections | per-thread |
+>
+> **Roadmap takeaway (for the tech-lead + roadmap-planner).** Batch-39 is design/content, ranked:
+> (1) **★★ #264 (coup subsystem)** is a large *survive-and-consolidate* engine that rides on the meters (#88/#92),
+> the scripted-event payload model (#221), and impeachment (treason trials ≈ coup-driven removals — ★ b39: impeachment is UNBUILT in `src/`, build/co-build it;
+> DH-29..DH-35) — but the OPEN product question (full two-type subsystem vs a single Era-of-Populism scripted event)
+> should be decided FIRST given the rarity (no Populist-eligible President in any playtest; CPU cap ≤25%). (2) **★ #263
+> (settings system)** is the umbrella the build lacks — a new-game options screen + per-toggle engine plumbing that
+> SUBSUMES the scattered toggle gaps; it is also the only sanctioned channel for ahistorical play (the #182
+> unrealistic-mode escape lives here). (3) **#182 is SETTLED** — eligibility stays ability-gated; do NOT build a
+> trait-gate; do add the two command-GAIN sources (#153/#163). (4) **#219** is already RESOLVED/built by `housepoll`
+> (§29.5) — this thread only adds provenance + the remainder-direction discrepancy to reconcile. (5) The **two genre
+> drops** (Civil Service + Diplomacy) extend the 0%-shipped content engine (#221/#237/#248) with the **office-lifecycle
+> verb set** (#66 — the data+rules model for create/split/merge/abolish/elevate/revert + the undeletable flag) and the
+> **per-country diplomacy STATE model** (#107 — grow the flat scalar into a struct), plus NEW #258 predicate classes.
+> Cross-ref `game-context.md` rows **#263/#264 (NEW)** and **#66/#88/#107/#153/#163/#182/#191/#206/#219/#221/#237/#248/#250/#255/#258/#262/#34/#43/#55/#92 (sharpened/corroborated)**.
 
 ### 30.4 Authority hierarchy reminder
 
