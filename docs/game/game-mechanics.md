@@ -364,6 +364,7 @@
     - [30.27 Rulings folded from batch 37 — the FIVE CONTENT-AUTHORING / DESIGN threads (#253 the Red/Blue per-era BENCHMARK win-model + #254-#257 + the Immigration/Education genre supply) (`benchmarkupd` / `legisprops2028` / `yearname` / `immigration` / `education`)](#3027-rulings-folded-from-batch-37--the-five-content-authoring--design-threads-253-the-redblue-per-era-benchmark-win-model--254-257--the-immigrationeducation-genre-supply-benchmarkupd--legisprops2028--yearname--immigration--education)
     - [30.28 Rulings folded from batch 38 — FIVE CONTENT-AUTHORING / DESIGN / EXPLOIT-FIX threads (★★ #258 predicate-gated content + #259 party-transformation + #260/#261/#262 + the war-declaration/exploit-fix cluster) (`parties` / `civilrights` / `fixes2022-exploits` / `halfterm` / `agriculture`)](#3028-rulings-folded-from-batch-38--five-content-authoring--design--exploit-fix-threads--258-predicate-gated-content--259-party-transformation--260261262--the-war-declarationexploit-fix-cluster-parties--civilrights--fixes2022-exploits--halfterm--agriculture)
     - [30.29 Rulings folded from batch 39 — FIVE DESIGN / CONTENT-AUTHORING threads (★★ #264 the COUP/insurrection PROCEDURE subsystem + #263 the game-SETTINGS model + the #182 command-eligibility SETTLED ruling + #219 weighted-House-vote DESIGN-ORIGIN + the Civil-Service/Diplomacy genre drops) (`civil-service` / `rules-update` / `jan6-insurrection` / `us-house-votes` / `diplomacy`)](#3029-rulings-folded-from-batch-39--five-design--content-authoring-threads--264-the-coupinsurrection-procedure-subsystem--263-the-game-settings-model--the-182-command-eligibility-settled-ruling--219-weighted-house-vote-design-origin--the-civil-servicediplomacy-genre-drops-civil-service--rules-update--jan6-insurrection--us-house-votes--diplomacy)
+    - [30.30 Rulings folded from batch 40 — FOUR policy-genre drops + ONE war/treaty BALANCE thread (★★ #267 the TREATY/war-END subsystem + #266 meter-at-floor + #265 cabinet-officer agency + #268/#269 territory machine + Healthcare/Crimes/Military/Expansionism enrichments)](#3030-rulings-folded-from-batch-40--four-policy-genre-drops--one-wartreaty-balance-thread--267-the-treatywar-end-subsystem--266-meter-at-floor-no-deterrent--265-cabinet-officer-agency--268269-territory-machine--the-healthcarecrimesmilitaryexpansionism-content-enrichments-65574aaa-healthcare--e456b6b3-crimes-punishments--a2312dd2-foreign-affairstreaty--145db158-military--4e76e6c3-expansionism)
     - [30.4 Authority hierarchy reminder](#304-authority-hierarchy-reminder)
 31. [Gilded-Age era systems (designed, not built)](#31-gilded-age-era-systems-designed-not-built)
     - [31.1 (#147) Tariff-as-national-%-rate + the mutually-exclusive MonetaryRegime](#311-147-tariff-as-national-rate--the-mutually-exclusive-monetaryregime-designed)
@@ -3821,6 +3822,49 @@ the CPU using these actions is what surfaced that edge case.)
 the candidate set**: same-party state → lengthen/remove-limit; opposite-party state →
 shorten/add-limit. Cite `oopscpu#POST 264, 275, 941`.)*
 
+#### 11.3.A ★ #265 (NEW, batch 40) — CABINET-OFFICER per-turn agency: generalize the Gov-Actions library to cabinet seats (DESIGNED, 0% built)
+
+> **★ A recurring batch-40 want, surfaced twice in the same batch from two different threads — generalize the
+> per-turn-action model from GOVERNORS (#20, §11.3 — governor-only today) to CABINET OFFICERS.** The framing is *"give
+> each cabinet seat something to DECIDE each turn,"* so a cabinet officer is a player-engaging ACTIVE AGENT, not a
+> passive seat whose only job is to add a meter bonus on confirmation (§9.3.5). The shipped Gov-Actions library (§11.3,
+> designed) is the existing model this extends to a per-OFFICE action menu. **No existing gap cleanly OWNED "non-diplomacy
+> cabinet-officer per-turn agency"** before this batch — it is now **#265**, framed as an explicit generalization of #20
+> (the officer-actions library) across the cabinet.
+
+**The two batch-40 instances (the cabinet-officer-agency want, by office):**
+
+| Officer | Per-turn decisions floated | Source | Natural home |
+|---|---|---|---|
+| **Attorney General** | **death-penalty MORATORIUM** (the exemplar — *"finally something the AG could actively decide in order to make the position/player more engaging?!"*, cites Garland DOJ + California); **prosecutorial discretion** (favor allies / target adversaries — gated on a corruption-meter threshold); **capital-punishment METHOD** selection + **public-execution** toggle | `e456b6b3` (Crimes & Punishments) POST 13, 2 | the Gov-Actions library (#20/§11.3) **generalized to per-officer agency** + the Crimes content genre ([§14.1.3.g](#1413g--221237248--258--452665266268269-batch-40--the-four-policy-genre-drops-healthcarecrimesmilitaryexpansionism--the-batch-40-content-system-enrichments-designed-0-shipped)) |
+| **Secretary of State** | **treaty NEGOTIATION** (admin adjusts victories-needed; trait-weighted per-phase rolls); **WHITE-PEACE timing** (33% per-phase prompt to accept/submit a white-peace treaty; Integrity gates refusing it) | `a2312dd2` (treaty thread) POST 6, 17 | the diplomacy-actions library (#26, [§13.3.2](#1332-three-diplomacy-actions-library)) + the §21.1.C treaty subsystem (#267) |
+
+> **★ The 10centjimmy SecState detail (the worked spec, `a2312dd2` POST 6 — FLOATED, not a tier-1 ruling).** Gives the
+> SecState + relevant ambassador an active hand in war/treaty resolution: cumulative **SecState + ambassador admin
+> adjusts the # of victories required** (cumulative admin < 5 RAISES the victories needed, > 7 LOWERS them; set ONCE at
+> war start or when the ambassador dies/retires — changing the SecState does NOT re-roll it); a **5% per-Foreign-Affairs-
+> phase roll** to raise/shrink the losses-that-mean-defeat, **trait-weighted** (Geostrategic / Egghead positive vs
+> Lowbrow / Disharmonious negative on either the ambassador or SecState); a **33% per-phase WHITE-PEACE prompt** the
+> SecState may accept and submit to the Senate (**no penalty to refuse white peace UNLESS the SecState has Integrity** →
+> then a 50-pt faction loss + they LOSE the Integrity trait). Ted (POST 17) wants this in but flags it "might open up too
+> many issues." This is the **SecState-version** of the same cabinet-officer-agency want; the **AG-version** (above) has
+> no equivalent worked spec yet — only the design ASK.
+
+**Why #265 is its own gap (not just #20 or #26):** #20 is **governor-only** (the Gov-Actions library) and #26 is the
+**diplomacy-actions** library (SecState-adjacent). Neither owns "**every cabinet seat decides something each turn**" as a
+cross-office concept. The AG version naturally extends #20's officer-action model; the SecState version naturally extends
+#26; **#265 is the umbrella** that says the per-turn-agency pattern should span the cabinet, with each seat's action menu
+gated by its portfolio + the relevant #258 predicates (corruption-meter threshold for AG prosecutorial discretion;
+war-active for SecState white-peace). Cross-ref #20 (Gov-Actions), #26 (diplomacy actions), #45/#267 (the treaty
+subsystem the SecState acts within), #66 (the offices these actions attach to).
+
+*(designed, 0% built — generalize the per-turn-action library from governors (#20/§11.3) to **cabinet officers**: each
+seat gets an action menu (AG = death-penalty moratorium / prosecutorial discretion / capital-punishment method &
+public-execution toggle; SecState = treaty negotiation / white-peace timing), gated by portfolio + #258 predicates;
+resolves like the Gov-Action `d100`/skill model. Shipped cabinet officers are passive (a confirmation meter bonus,
+§9.3.5; no per-turn action hook). Cite `e456b6b3` POST 2, 13; `a2312dd2` POST 6, 17; `game-context.md` #265 (NEW) +
+#20/#26/#45/#66/#267.)*
+
 ### 11.4 State-level policy flags (designed, not built)
 
 Forum tracks **persistent state-level policy switches** (post 125), separate from
@@ -5531,6 +5575,170 @@ tagging requirement. Cite `civil-service`(fa452d38)`#POST 1, 2, 3, 4, 6, 7, 8, 9
 office model), `types.ts:1574-1575` (flat diplomacy scalar + global wars); `game-context.md` #221/#237/#248/#258/#66/
 #107/#262/#206.)*
 
+#### 14.1.3.g ★ #221/#237/#248 + #258 + #45/#266/#52/#66/#268/#269 (batch 40) — the FOUR policy-genre drops (Healthcare/Crimes/Military/Expansionism) + the batch-40 content-system ENRICHMENTS (DESIGNED, 0% shipped)
+
+> **★ Four more single-genre content drops** (the batch-40 siblings of b37 Immigration/Education, b38 Civil-Rights/
+> Agriculture, b39 Civil-Service/Diplomacy), all **CONTENT-AUTHORING idea dumps** (NOT playthroughs), all vcczar-opened.
+> **0% shipped** (no `subtype`, no Pres/Gov-Action primitives, no prereq field — §14.1.3 / §14.1.3.d). Their corroboration
+> of the framework is now routine; this section captures only the **NOVEL enrichments**: a **Drugs SUBTYPE + hierarchical
+> genre→named-sub-section** structure (#248), 3 NEW #258 predicate KINDS + the widest predicate vocab yet (#258), **RNG /
+> roll-for-effect Gov-Actions** + **precedent-FLAG supersession chains** + the **program CREATE→EXPAND→CUT lifecycle**
+> (#221), and genre-boundary rulings + office-creations (#237/#66). The four sources:
+>
+> | Source | Slug | Shape | Genre-completeness framing |
+> |---|---|---|---|
+> | **Healthcare** | `65574aaa` (Apr 2022, 3 posts, ~70 rows) | **UNTAGGED** (3 flat header partitions `Legis Prop:` / `Pres Actions:` / `Gov Actions:`; no `L/P/G` prefix, no era band, no `Preq:`, **no `*-Default`**) | L≈65 / P=3 / G=2 — Pres/Gov thin (#262 ask) |
+> | **Crimes & Punishments** | `e456b6b3` (Apr 2022, 13 posts) | **FULLY-TAGGED** (L/G/P + era bands + `Preq:` blocks + the `L-Ind-Default` baseline "Leave All Crimes & Punishments to the States") | the richest `Preq:` vocab yet; #262 Future ask |
+> | **Military** | `145db158` (Apr 2022, 3 posts) | **UNTAGGED** (mechanism headers only; **no `*-Default`**) | L≈35 / P≈40 / G≈19; vcczar: *"No real major areas of obvious need"* — comparatively COMPLETE (#262) |
+> | **Expansionism** | `4e76e6c3` (Apr 2022, 6 posts) | **UNTAGGED** (no prefix/era/`Preq:`/`*-Default`) | L≈45 / P≈12 / G=3; the ONE genre that overlaps SHIPPED `admitState` (see §17.6.2/§17.6.3) |
+
+**(1) ★ #248 ENRICHMENT — a declared "Drugs" SUBTYPE + the hierarchical genre→named-sub-section structure.** vcczar
+(`e456b6b3` POST 9): *"I have a subsection called **Drugs** that this will be a part of"* — a designer declaring an
+explicit **named sub-section INSIDE a genre**, direct evidence the #248 taxonomy is **hierarchical** (a genre contains
+named sub-sections) and authored sub-section by sub-section. Other batch-40 subtype evidence:
+- **★ Abortion sub-cluster (Healthcare) — a genre-vs-subtype DECISION (flag for consolidation).** A large, internally-
+  coherent abortion cluster, almost all in **opposed pairs** spanning ALL THREE primitives (Ban↔Right-to-Choose
+  amendments; Ban-Fed-from-State-Abortion-Policy↔Grant-Pres-Power-to-Enforce; Mexico City Policy [P]; Block PP Funding
+  [P]; Abortion Restrictions [G]) — may want its **own #248 subtype, or its own #237 genre, or a shared social/bodily-
+  rights axis with Civil Rights** (where gay-marriage/conversion-therapy pairs already live). Not decided in-thread.
+- **Military subtype option-sets** (the `Military` value is already in the canonical 33-enum): the **mutually-opposed
+  nuke TRIAD** (Reduce ↔ Proliferate ↔ Eliminate-all + Nuclear-Freeze-party) — a 3-way negation set, sharper than a
+  binary toggle; the **drone Institute→Increase / Institute→Expand** sequential ladder; budget up/down/major-up/major-
+  down quad. **Multi-subtype evidence:** the named-doctrine family (Truman/Carter/Reagan/Eisenhower/Nixon Doctrines +
+  Roosevelt Corollary + World-War-Neutrality) straddles **Military + Diplomacy** (Truman Doctrine appears in BOTH this
+  drop AND the b39 Diplomacy drop) — corroborates the open single-vs-multi-subtype question.
+- **Expansionism subtype** spans statehood / territory / land-ordinance / annexation / settlement / Indian-affairs
+  sub-clusters; couples to the **Slavery** sibling genre via free/slave admission status (§17.6.2).
+
+**(2) ★★ #258 ENRICHMENT — the widest predicate vocabulary yet + 3 NEW predicate KINDS.** The Crimes `Preq:` block
+(`e456b6b3` POST 1) is the **richest single predicate list captured to date** (convicted-during-incumbency; DomStab ≤
+Violent-Protest; Congress-gave-Pres-roundup-power; US-won-Civil-War; Any-World-War-active; Vietnam-over; Human-AI-Aug-
+exists; Sentient-Robot-boom; **compound Aug AND Robot**; Authoritarian-3rd-party-major; Communist-Movement-active;
+Reconstruction-added; Rev-War-active). It adds **THREE predicate KINDS** the prior §14.1.3.d/.f taxonomy did not isolate:
+
+| NEW predicate KIND | Verbatim example | Source |
+|---|---|---|
+| **prior-policy-active** | "Federal Death Penalty active" → unlocks the four method-specific death-penalty bills (Counterfeiting/Piracy/Treason/Willful-Murder); the Drugs stepping-stone ladder (legalize-medicinal OR supervised-use → THEN full hard-drug legalization) | `e456b6b3` POST 1, 8 |
+| **meter ≥ threshold** | a corruption / state-party-machinery level reached → unlocks the **prosecutorial-discretion** Gov-Action (a meter≥threshold gate, like the DomStab gate) | `e456b6b3` POST 2 |
+| **court-PRECEDENT-exists** | "If Miller test exists →" unlocks a whole content tier (see (5) SCOTUS) — a SCOTUS outcome writes a persistent flag a later `Preq:` reads | `e456b6b3` POST 3 |
+| (+ from Expansionism) **occupation-status** | "X is occupied" gates the annex Legis-Prop (§17.6.2) | `4e76e6c3` POST 1 |
+
+- **★ The Drugs stepping-stone LADDER (`e456b6b3` POST 8) is an intra-subtype prereq CHAIN** — full hard-drug
+  legalization is NOT directly selectable; it is gated behind first passing legalize-medicinal OR supervised-use-sites
+  (cites NY/Oregon). The headline cross-ref: **#248 (declared Drugs subtype) × #258 (intra-subtype prereq ladder)**
+  working together on one content axis. Same chain shape as Agriculture's Dept-of-Ag chain (§14.1.3.e).
+
+**(3) ★★ #221 ENRICHMENTS — three NOVEL primitive patterns.**
+- **★ RNG / roll-for-effect Gov-Actions (the Military HEADLINE, `145db158` POST 2, 3) — a STOCHASTIC effect-node beyond
+  the deterministic L/P/G/S set.** Military tech-TESTING actions: "New ship testing (**chance of** new ship class)";
+  "New naval cannon/gun testing (**chance of** increasing fighting power of the navy)"; same for **air** (fighter/bomber
+  class; air fighting-power) and **army** (tank/vehicle class; army fighting-power). Two-axis payoff per branch:
+  (a) a new unit **class** unlocked, or (b) a **per-branch fighting-power increment**. POST 3 adds the same RNG shape to a
+  blockade Pres/Legis: "Impose blockade on enemy state (maybe the enemy military can take like a random **1-5% hit** for
+  'lack of supplies')." **★ MUST use the seeded RNG** (`src/rng.ts`; no `Math.random` in engine code) so runs stay
+  reproducible. Per-branch fighting-power is a **new state dimension** the shipped single-scalar `military` meter does NOT
+  separate (cross-ref #106 "no army/navy/air branch separation," §21.1.A; #45/#56).
+- **★ Events set a persistent precedent FLAG + form SUPERSESSION CHAINS (`e456b6b3` POST 3).** Scripted events can write
+  a persistent game-state flag that later content reads as a `Preq:`, AND form a chain where each supersedes the prior:
+  the **obscenity doctrine timeline Hicklin (1879) → Roth (1957) → Miller (1973)** (see (5)). Richer than the fire-once
+  `EraEvent` (no precedent-flag, no chained-supersession); same enrichment family as Agriculture's tech-tree.
+- **★ The program CREATE→EXPAND→CUT LIFECYCLE (Healthcare, `65574aaa` POST 1) — an entitlement-program analogue of the
+  #66 office lifecycle.** The same program appears as discrete rows for each stage, implying a stateful per-stage
+  dependency: **CREATE** (Create Medicare/Medicaid) → **EXPAND** (Expand Medicare/Medicaid; add Catastrophic / Drug /
+  Vision / Hearing coverage) → **CUT/DEVOLVE** (Cut Medicare/Medicaid; States-take-over-Medicaid) → **TERMINAL/SUPERSEDE**
+  (Medicare-for-All cuts out insurance programs). Plus a parallel Dept-of-Health funding mini-ladder (Increase/Decrease).
+  Clearest evidence yet that #221 primitives need a **program-state model + per-stage prereqs (#258)** — a flat one-shot
+  flag can't model Create→Expand→Cut. Reconcile with the #66 office-lifecycle (offices vs programs as evolvable stateful
+  institutions, §24.6).
+- **Competing whole-SYSTEM option-sets (Healthcare):** Single-Payer / Obamacare / Swiss-private-mandate / Employer-
+  mandate / Public-option / mandate-w-vs-w/o-penalty are **mutually-exclusive national-system architectures** — picking
+  one supersedes the rest (a #248 option-set at whole-system scale, gated by #258). (POST 2: vcczar self-endorses the
+  Swiss/private-mandate direction as a deliberately-modeled real direction.)
+
+**(4) ★ Military-structure toggles + the draft LADDER feed the military-preparedness meter (#45/#56/#56).** A large bloc
+of Military Legis-Props are standing posture toggles that set the **military-preparedness** input the war formula reads
+(§21.1.A's "MilPrep 0-15" / §21.1.B's 9-level prep band): standing-army/navy toggles; size up/down; defense-spending
+up/down/major quad; a coherent **draft-variant ladder** (Selective Service / peacetime draft / compulsory service /
+"allow the wealthy to buy a substitute" / Pres-Action "Military Draft"); era-flavored manpower (pay-slaveholders-to-use-
+slaves / authorize-privateers / encourage-foreign-soldiers — era-gated #258); a **naval era tech LADDER** (Wood/sail →
+Steam → Steel → hover-vessel, each tier gating the next, #258) that the RNG tech-testing actions (above) UNLOCK. These are
+the batch-40 content feeding the shipped single-scalar `military` meter; **★ they sharpen #45/#106's "no branch
+separation"** (the per-branch fighting-power the RNG actions increment implies the war engine SHOULD track army/navy/air
+strength separately).
+
+**(5) ★★ SCOTUS — the obscenity DOCTRINE as scripted SCOTUS-case events writing a precedent flag that gates content
+(#52 + #258).** `e456b6b3` POST 3 lays out the single strongest worked case of **court-precedent-as-content-gate**:
+- An Era-of-Gilded-Age scripted EVENT (Anthony Comstock founds the NY Society for the Suppression of Vice; **Comstock
+  Act** Legis bans obscene materials via post) → then a **doctrine TIMELINE of SCOTUS-case S-events**: **Hicklin (1879)
+  → Roth (1957) → Miller (1973)**, each writing a **persistent precedent FLAG** that gates downstream content:
+  - *"If no obscenity law OR Hicklin test exist → left to the states"* (the `*-Default` falls through when no flag set).
+  - *"If either exists → govs can advocate for book-burnings"* (Gov-Action gated on precedent-OR).
+  - **★ "If Miller test exists:"** unlocks a distinct content SET — Legis (ban obscene materials/devices; restrict
+    daytime broadcast) + a **Prostitution** graded-severity sub-cluster (Ban / misdemeanor / felony / regulate) +
+    Gov-Actions (restrict brothels; restrict porn access).
+- **This is "court-precedent-exists" as a first-class availability predicate** — a SCOTUS outcome writes a persistent
+  flag a later `Preq:` reads. **The SHIPPED court CANNOT model it:** the court is a **50%/turn coin-flip on hardcoded
+  title strings** (`phaseRunners.ts:~3397`, #52) with no precedent-flag registry and no chained supersession. Strong
+  cross-ref to the SCOTUS cluster (**#52** docket, #218 Rule-of-Four, #249 case-importance, #251 judiciary overhaul) ×
+  **#258**. The obscenity-precedent gap folds to **#52 + #258** (NOTE: the SCOTUS DOCKET gap is #52, NOT #25 — #25 is the
+  cabinet firing-precedent gate, §21.4). Whether "precedent-flag-as-availability-gate" lives under #258 or enriches the
+  SCOTUS cluster is a consolidation decision.
+
+**(6) ★ #66 office-creations + the War→Defense MERGE (2nd witness).** Military Pres-Actions/Legis that create offices —
+the same in-game office-creation pattern as #66 (§24.6), arriving via the Military genre: **Army Chief of Staff**, **Chief
+of Naval Ops** (CNO replaces Senior Admiral, #66), **Chairman of the Joint Chiefs of Staff** / Form-Joint-Chiefs;
+**Establish USMC**; **Establish Merchant Marine + Merchant Marine Academy**. **★ "Combine Army and Navy into Department of
+Defense from War Department"** = the **War + Navy → Defense MERGE** lifecycle verb — a **2nd witness** (with the b39
+Civil-Service drop's Sec-of-War + Sec-of-Navy → Sec-of-Defense, §14.1.3.f) confirming the #66 office-lifecycle
+(create/split/elevate/merge/abolish) **spans Military + Civil-Service** genres (flag: which genre OWNS the War→Defense
+merge). The **Healthcare** drop also carries a #66 office-creation ("Create Independent Veterans Affairs Dept.") arriving
+as a Healthcare row, plus the entitlement-program lifecycle = the office-lifecycle ANALOGUE (see (3)). Also "split FEDERAL
+vs MILITARY capital punishment" as **two un-linked toggles** (`e456b6b3` POST 13 — a data-model note: parallel
+independent policy flags, abolishing one does NOT cascade) and a **5-way mutually-exclusive federal-police STRUCTURE set**
+(`e456b6b3` POST 11) reinforce the #221 option-set / mutually-exclusive pattern.
+
+**(7) ★ #237 genre-BOUNDARY rulings + missing-baseline coverage notes.**
+- **Truman Doctrine** lives in BOTH Military AND Diplomacy (multi-subtype); the presidential doctrines key off foreign
+  posture (Military ↔ Diplomacy boundary).
+- **Veterans/VA** straddles **Healthcare + Civil-Service (#66) + Military** ("Create Independent VA Dept."; "National
+  Healthcare for Disabled Military Veterans"); "Increase allowable medical reasons to avoid the draft" straddles
+  Healthcare + Military/conscription.
+- **War + Navy → Defense merge** straddles **Military ↔ Civil-Service (#66)** (the 2nd witness above).
+- **★ Missing `*-Default` baseline:** Healthcare, Military, and Expansionism were all authored **WITHOUT** a `*-Default`
+  baseline row (unlike Crimes' `L-Ind-Default` "Leave All to the States" and Diplomacy's `L-Ind-Default`) — a #237
+  coverage hole (the seeded "no X policy active" state these genres lack).
+
+**(8) ★ #262/#206 coverage ASKs.** Healthcare (POST 1): more Gov-Actions (only 2), Pres-Actions (only 3), Era-of-Future,
+and **net-new NON-repeal Conservative/Traditionalist/RW-Pop** content (the right side is currently mostly cuts/negations —
+Cut Medicare, Privatize VA, abortion bans). Crimes (POST 1): more Era-of-Future legis/pres/gov. Military: vcczar
+self-assesses "no real major areas of obvious need" → **comparatively COMPLETE** (the contrast case; only hole = absent
+`*-Default` + Future tech). Expansionism (POST 1): **land-acquisition is DONE; the NON-acquisition expansionist axis is
+the hole** (a per-SUBTYPE-within-genre coverage gap) + non-land-grabbing content. Future-band rows present across all four
+(Robot-Era welfare / Fund-Ban-Cloning / Cure-for-Cancer [Healthcare]; space prison colonies / Running-Man pardons / robot
+capital-punishment [Crimes]; navy→hover / AI-Augmented General-in-Chief / robot army / Greenland base [Military];
+US-Antarctica land grants + space colonization [Expansionism]) — corroborates #206.
+
+*(designed, 0% shipped — four more #237 GENRES / #248 SUBTYPES populating the #221 registry. NOVEL enrichments: **#248**
+hierarchical genre→named-sub-section (declared "Drugs" subtype) + abortion genre-vs-subtype decision + Military nuke-
+triad/drone option-sets; **#258** 3 new predicate KINDS (prior-policy-active / meter≥threshold / court-precedent-exists)
++ occupation-status + the Drugs stepping-stone ladder + the widest `Preq:` vocab yet; **#221** RNG/roll-for-effect
+Gov-Actions (Military tech-testing → chance-of-new-class / per-branch fighting-power; blockade → random supply hit — MUST
+use seeded `rng.ts`) + events-set-persistent-precedent-FLAG + supersession chains (obscenity Hicklin→Roth→Miller) +
+program CREATE→EXPAND→CUT lifecycle (Healthcare) + whole-system option-sets; **#52+#258** obscenity SCOTUS-case events
+writing a precedent flag that gates a content tier (shipped coin-flip court `phaseRunners.ts:~3397` can't model it; #52 =
+the docket gap, NOT #25); **#66** VA + Army-CoS/CNO/Chairman-JCS/USMC/Merchant-Marine office-creations + War+Navy→Defense
+merge (2nd witness) + entitlement-program-lifecycle = office-lifecycle analogue; **#45/#56/#106** military-structure
+toggles + draft ladder + naval tech ladder feed the military-prep meter and sharpen "no branch separation"; **#268/#269**
+the Expansionism occupy→annex + state-fission/secession-amendment + action-driven population shift (§17.6.2/§17.6.3);
+**#237** genre-boundary rulings (Truman Doctrine Military+Diplomacy; VA Healthcare+Civil-Service+Military; War+Navy→Defense
+Military+Civil-Service) + several drops missing a `*-Default`; **#262/#206** coverage asks (non-repeal conservative
+Healthcare; non-land-grabbing Expansionism; more Gov/Pres/Future; Military comparatively complete); **#260** Indian-Removal/
+Dawes/land-grants = action-driven population shift (action twin of #260); **#20** death-penalty method + public-execution
+toggle + prosecutorial discretion + SYG/DTR + state-LE funding. Cite `65574aaa` POST 1, 2, 3; `e456b6b3` POST 1, 2, 3, 4,
+8, 9, 10, 11, 13; `145db158` POST 1, 2, 3; `4e76e6c3` POST 1, 3, 4, 5, 6; code `types.ts:1506-1514` (no subtype/prereq),
+`phaseRunners.ts:~3397` (coin-flip court), `types.ts:28/36` (single `military` scalar), `territories.ts:8`; `game-context.md`
+#221/#237/#248/#258/#52/#66/#45/#56/#106/#262/#206/#260/#20/#268/#269/#107.)*
+
 ### 14.2 Forum design layer: Constitutional Amendments durable state (designed, not built)
 
 Some shipped bill effects modify governance abstractly (national meters / interest groups);
@@ -6771,6 +6979,103 @@ post-effect calls `admitState` for a list of states, like the Oregon-Treaty patt
 [`retriesRemaining`, default 3] on territory-gating events, after which the territory is permanently lost.
 Generalizes DH-61; pairs with #177.)*
 
+#### 17.6.2 ★ #268 (NEW, batch 40) — the territory OCCUPATION → annex state machine (occupation-status + occupy→annex/independence/client-state transitions; DESIGNED, partly overlaps SHIPPED `admitState`)
+
+> **★ The Expansionism genre (`4e76e6c3`, CONTENT-AUTHORING, Apr 2022; vcczar) is the ONE genre that maps onto
+> ALREADY-SHIPPED code** — territory admission (`admitState`, §17.6), the annexable registry (`expansionStates.ts`), the
+> Territories page UI all ship — so this section's job is to draw the **content-vs-already-built boundary sharply.** Most
+> of the ~45 Legis rows are *content authored against shipped mechanics* (a "statehood bill" = a Legis-Prop wrapper whose
+> effect calls the existing `admitState`); a hard core needs **new engine**. This subsection captures the occupation
+> state machine (#268); §17.6.3 captures the structural state-map mutations (#269).
+
+**(1) ★ The occupy→annex CHAIN — a per-territory OCCUPATION status the build does not model.** Rows like **"Annex
+Occupied Cuba / Santo Domingo / Haiti / Nicaragua / Panama"** each presume the territory is **already OCCUPIED** (a status
+set by a prior war). The shipped `admitState` (`territories.ts:8`) has **NO occupy-gate** — it admits any registry state
+**directly**, idempotently, from `EXPANSION_STATES_BY_ID`. So the requirement is a three-part state machine:
+
+| Part | Mechanic | Shipped? |
+|---|---|---|
+| (a) **Occupation STATUS** | a per-territory `occupied` status set by the war/occupation system | **NO** — no occupation status on a territory anywhere in `src/` |
+| (b) **`#258` PREREQ on the annex** | "X is occupied" is a #258 predicate gating the annex Legis-Prop | NO — adds an **occupation-status** predicate class to #258 ([§14.1.3.d](#1413d--258-new-batch-38--the-prereq--predicate-gated-content-availability-field-on-the-content-primitives-the-single-most-cross-thread-corroborated-b38-finding-designed-0-shipped)) |
+| (c) **OPPOSED transitions** | from "occupied," the opposed options: **end occupation** / **grant independence** (remove-from-Union → set-to-foreign) / **make a CLIENT-STATE** (a new status value) | **NO** — no independence / client-state status transition in `src/` (the §17.6.1 treaty path only ADMITS) |
+
+**(2) ★ Recognize HYPOTHETICAL / alt-history / seceded nations (Pres-Actions).** The genre wants **"Recognize the
+Confederacy / Northern Confederation / former-Mexico-below-Rio-Grande"** — diplomatic recognition applied to **alt-history
+states the game's own branching produced**, not the fixed diplomacy roster. The shipped recognition model (#107,
+[§13.3.4](#1334--107-batch-39-diplomacy--the-per-country-state-model--the-diplomacy-policy-genre-content-designed-0-shipped))
+has no recognition flag at all, and **certainly** no recognizable target for a seceded/hypothetical entity. This **ties
+the alt-history state model to diplomacy recognition (#107)**: a seceded CSA / Northern-Conf / former-Mexico must become a
+recognizable foreign entity. (The §17.6.2 grant-independence transition above is the mechanism that CREATES such an
+entity from a Union territory.)
+
+> **★ Boundary ruling (vcczar, `4e76e6c3` POST 3) — colonization is "land-grabbing" → mostly OUT of scope; SPACE
+> colonization already has content.** vcczar's framing (POST 1): *"This seems well-covered. I'm done with land grabbing
+> things. So what I need are ideas for NON-land-grabbing expansionist legis props…"* — land-ACQUISITION content is DONE;
+> the coverage hole is the *non-acquisition* axis (#262, a per-SUBTYPE-within-genre coverage gap). Colonization counts as
+> land-grabbing and ties to European relations; **"We got colonizing in space events and legis props already"** (POST 3)
+> — Space expansion already HAS authored content (corroborates #206 / the Space genre). US-controlled Antarctica land
+> grants + space colonization are the **Future wing** of Expansionism.
+
+> **★ Free/slave STATUS rides on admission (POST 4, 5).** "Create Missouri as a FREE State" / "Establish Mexican Cession
+> as a Free State" imply admission carries a **slavery-status flag** that interacts with the Missouri Compromise — a
+> status attribute on the admitted state (a small `admitState` extension), NOT a new primitive. Couples Expansionism to
+> the Slavery sibling genre. (See §17.6.3 for the Nevada→Arizona Missouri-Compromise cascade.)
+
+*(designed, 0% built for the occupy→annex chain — add (a) a per-territory **occupation status** set by the war system,
+(b) an **"X is occupied"** #258 predicate gating the annex Legis-Prop, (c) **grant-independence** (territory→foreign
+nation) + **client-state** status transitions (the opposed twins of annex), and (d) **recognition of hypothetical/seceded
+nations** (#107 — recognize CSA / Northern-Conf / former-Mexico). SHIPPED overlap: `admitState` + `expansionStates.ts`
+(Cuba/Greenland/Brazil/Antilles/etc. already in the annexable registry) + the Territories page — so "annex X" /
+"statehood for X" = content authored against built code; only the occupy-GATE, the independence/client-state TRANSITIONS,
+and hypothetical-nation recognition are new engine. Free/slave status on admission = a small `admitState` extension. Cite
+`4e76e6c3` POST 1, 3, 4, 5; code `territories.ts:8-23`, `expansionStates.ts`; `game-context.md` #268 (NEW) +
+#107/#258/#262/#206/#20.)*
+
+#### 17.6.3 ★ #269 (NEW, batch 40) — structural state-map MUTATIONS (state-FISSION + abolish-states / right-to-secede amendments; DESIGNED, 0% built)
+
+> **★ The hard core of the Expansionism genre (`4e76e6c3`) that needs NEW engine — operations that mutate the existence /
+> boundaries / exit-rules of the state model itself, not just ADD a state.** The shipped state model is **add-only**:
+> `admitState` (`territories.ts:8`) pushes a new `State`; there is NO fission, NO removal, and secession ships ONLY as the
+> scripted 1856 event (`secession-winter`, `phaseRunners.ts:2834` / `eraEvents1856.ts`) — never as a player-grantable
+> right.
+
+**(1) ★ State FISSION — split one seat-bearing state into TWO (POST 1; POST 4 worked example).** "Split Texas into
+several states"; "Split California into two." `grep splitState` → **ZERO** in `src/`. This needs a state-FISSION op that
+**recomputes reps / EV / senators for BOTH halves** and cascades through **derived state geography + apportionment**
+(#34/#55/#219). The concrete consequence question (vcczar POST 4): *if California splits AND the Missouri Compromise is
+kept, does southern Nevada go to Arizona* (since Nevada must be split from its modern rendition)? — i.e. fission cascades
+through derived geography. POST 5 raises the inverse alt-history boundary branches (West/East Florida statehood vs folding
+West Florida into LA/AL/MS; MS statehood vs creating the Alabama Territory) that the fixed 13/31-state scenario rosters
+don't model.
+
+**(2) ★ Structural-AMENDMENT content (POST 1).** "Abolish the States Amendment" and "Grant States the Right to Secede
+Amendment" are Legis-Props (amendments) whose effect changes the **existence / exit rules of the state model.** Secession
+ships ONLY as the scripted 1856 event; abolishing states has **no path at all**. These are **amendment-as-Legis-Prop with
+a structural payload** — a player-legislated secession RIGHT (vs the scripted one-time `secession-winter`), and an
+abolish-states path.
+
+> **★ ACTION-driven population/demographic shift (POST 1, Gov-Actions) — the #260 action twin.** Indian Removal Act / BIA
+> / Dawes Act / Indian Appropriations Act / "civilize"-assimilate-remove tribes, plus the **land-grant-to-settle/populate**
+> cluster (Ohio, Florida, Great Plains, West Coast, US-controlled Antarctica, squatters/veterans/immigrants), are
+> **Legis-Props / Gov-Actions that mutate state POPULATION/DEMOGRAPHICS** (feeding apportionment/lean). This is the
+> **action-driven twin of #260's event-driven Boll-Weevil / Great-Migration shift** ([§14.1.3.e](#1413e--221237248--260261-batch-38--the-civil-rights--agriculture-policy-genre-drops--the-event-spread--firing-budget-mechanics-designed-0-shipped)). `state.bias` is a
+> static scalar (only dynamic mover is the #247 ±1 region nudge); there is NO population/settlement lever. The 3 Expansionism
+> Gov-Actions (Treat Native Americans with Caution / Force Local Native Tribes to Assimilate / Encourage settlement on
+> indigenous tribal lands) are explicitly **per-state Native/settlement demographic levers** (→ #260 + #20 per-state
+> Gov-action upgrade + the Native-American civil-rights sub-cluster). ConservativeElector2 (POST 6) widens this into a
+> **content-template-with-a-territory-parameter** shape: for every region X, "provide land grants to veterans / volunteers
+> / immigrants to settle territory X" + the opposed pair "forcibly remove locals without compensation ↔ compensate former
+> owners," all carrying population effects.
+
+*(designed, 0% built — add (a) a **state-FISSION op** (split one seat-bearing state into two; recompute reps/EV/senators
+for both halves; cascade through derived geography per the Nevada→Arizona / Florida-statehood branches — #34/#55/#219;
+note #55 already records DC/Cuba/PR as full states in the modern 53-roster, so the roster partly anticipates ADD but not
+SPLIT); (b) **player-legislated secession-RIGHT + abolish-states** structural amendments (amendment-as-Legis-Prop that
+rewrites the state model's existence/exit rules — secession ships ONLY as the scripted `secession-winter` 1856 event,
+`phaseRunners.ts:2834`); (c) **action-driven population/demographic mutation** (Indian Removal / Dawes / land-grants —
+the #260 action twin). Cite `4e76e6c3` POST 1, 4, 5, 6; code `territories.ts:8` (add-only), `grep splitState`→0,
+`phaseRunners.ts:2834`/`eraEvents1856.ts` (scripted secession only); `game-context.md` #269 (NEW) + #34/#55/#219/#260/#20/#247.)*
+
 ### 17.7 Forum design layer — the MULTIPLAYER-1772 confirmation (designed, not built)
 
 > **Batch 8.** The **first captured multiplayer 1772 campaign** (`afc6cbd7`, 10 humans, one per
@@ -6978,6 +7283,36 @@ The mechanics are a web, not a list. The load-bearing cross-effects:
 > `rng.ts`): the hardest manual GM tasks are the engine's easiest. This is the concrete, quantified statement
 > of the ① mandate. (`excelautomate#POST 1, 10, 52, 59`; `game-context.md` charter / #114 / DH-36. The
 > roadmap groups these as the "GM-replacement" program; the technical-guide sequences them.)
+
+### 18.x.266 ★ #266 (NEW, batch 40) — meter-at-floor = no deterrent (the systemic-balance flaw, game-wide; DESIGNED)
+
+> **★ A game-WIDE systemic-balance flaw surfaced by the batch-40 treaty thread (`a2312dd2` POST 1, 16) but NOT
+> treaty-specific.** Largo833 (POST 16) reframed the "ignore the losing treaty" exploit (§21.1.C) as *"partly just a
+> symptom"* of a deeper flaw: once **Domestic Stability / party-preference / any score reaches its MINIMUM, further
+> penalties are TOOTHLESS** — the incumbent has **nothing left to lose**, so reckless acts (lose a war, ignore the
+> treaty, crater relations) carry no marginal cost. Largo's in-universe objection: a nation in "open rebellion" at
+> DomStab = 1 wouldn't think *"at least it can't get any worse."* Ted and Largo both frame it as *"likely to cause
+> similar problems with OTHER aspects of the game"* — it will recur anywhere a penalty targets an already-floored meter.
+> This is the **root cause** the §21.1.C treaty exploit is one instance of (option 2's "make the ignore-penalty worse"
+> does NOT fix it — *"they'd already maxed out their negative party preference"*). **Belongs to the meters / game-over
+> subsystem, NOT the war engine.**
+
+**The two floated fixes (Largo833, POST 16 — design spitballs, no tier-1 commitment in-thread):**
+
+| Fix | Mechanic | Cross-ref |
+|---|---|---|
+| **(a) Spill-over** | when a score *would* drop but is **already at minimum**, the penalty **spills into OTHER scores** — so there is always something left to lose. | the general meter bank ([§22.1](#221-the-named-meter-bank--numeric-debt--crisiscascade)) |
+| **(b) Shorten the game-over countdown** | when a floored meter would drop, a **% chance to SHORTEN the loss-countdown**. Largo's example: **DomStab at 1 → 50% chance the game-over window drops from 8 years to 6.** | a **direct modifier on #88's meter-driven game-over clock** — the [§26.4](#264-apocalypse-planet-health-endgame--the-10-year-clock-new-endgame-model) APOCALYPSE 10-yr countdown / the [§26.4](#264-apocalypse-planet-health-endgame--the-10-year-clock-new-endgame-model) `rep1800` per-event-phase coup rolls. The "8yr→6yr" figure implies a **multi-year loss-countdown exists once a meter floors** (consistent with the §26.4 model). |
+
+> **★ Open question for the human (NOT settled in-thread):** is the meter-floor flaw **one gap or two**? Largo offered
+> spill-to-other-scores **and** shorten-the-countdown; no tier-1 designer picked one. Consolidation flagged this as a
+> candidate NEW systemic gap (now **#266**) cross-ref #88 (meter-driven game-over) + #188 (the floored-meter loss path).
+
+*(designed — add a **floored-meter deterrent** to the meters/game-over subsystem so penalties stay meaningful at the
+floor: either (a) spill an at-floor penalty into other scores, or (b) give a floored meter a per-penalty % chance to
+shorten the #88 game-over countdown (DomStab=1 → 50% loss-window 8yr→6yr — a modifier on the [§26.4](#264-apocalypse-planet-health-endgame--the-10-year-clock-new-endgame-model) clock). Game-wide,
+not war-specific. ★ tech-lead b40: variant (b) is NOT deployable today — there is NO meter-driven game-over countdown clock in `src/` (game-over is a one-shot flag; the #88/§26.4 meter-loss clock is UNBUILT, debt #28), so the deployable fix is variant (a) SPILL-OVER at the ~4 meter-clamp call-sites. The §21.1.C "ignore the losing treaty" exploit is the motivating instance. Cite `a2312dd2` POST 1, 16;
+`game-context.md` #266 (NEW) + #88/#188; pairs §21.1.C #267.)*
 
 ---
 
@@ -8810,6 +9145,132 @@ prep-gated 0/1/2/3 simultaneous-war cap, and per-theater General/Admiral assignm
 FLOATED; sliding model AGREED. Mar–Apr 2022 = the earlier design-origin, predating the §21.1.A `rethinkwar` combat
 side by ~5 months. Cite `fixes2022`(a852d451)`#POST 3, 4, 5, 6, 7, 9, 10`; code (no war-declaration party-pref /
 prep-consequence / war-count cap / theater→officer binding in `src/`); `game-context.md` #45 (+ #56/DH-79).)*
+
+#### 21.1.C ★★ #267 (NEW, batch 40) — the TREATY / war-END subsystem: auto-proposed treaty → Senate confirm-or-RENEW-the-war vote + war-length unpredictability (DESIGNED, 0% built)
+
+> **★★ The HEADLINE batch-40 war finding — the war-END subsystem, distinct from #45's combat formula (§21.1.A) and its
+> declaration side (§21.1.B).** Source: `a2312dd2` ("Foreign Affairs/Military/Treaty discussion," a **WAR/TREATY
+> BALANCE-FIX design thread**, **Apr 15–16, 2022**, 17 posts; NOT a playthrough). Triggered by a **live playtest
+> exploit**: President Butler lost multiple wars but Cal **IGNORED the losing treaties** because the loss-penalty meters
+> were already floored, so ignoring was strictly better than signing — *"Smart play! But not very historic"* (POST 1).
+> Tier-1 `@MrPotatoTed` (Ted) opens with 3 fix options + **merges a direction (POST 15/17)**; `@vcczar` rules
+> priorities (POST 1, 3, 4, 9); **Cal / Willthescout7 / 10centjimmy / Arkansas Progressive / Largo833** contribute.
+> Chronologically this thread **bridges** §21.1.B `fixes2022` (Mar–Apr 2022, declaration side) and §21.1.A `rethinkwar`
+> (Sept 2022, combat side) — its own contribution is the **treaty / war-end side**. **0% built** — see the shipped delta.
+>
+> **★ The MOTIVATING bug — the "ignore the losing treaty" exploit (flag for tech-lead: verify shipped → may become a
+> DH-row).** On the playtest the **Secretary of State can delay/ignore a treaty** and the **Senate can reject it**; when
+> the loss-penalty meters a treaty would dock are **already at their minimum**, ignoring is **strictly better than
+> signing** (signing applies a penalty package on top of a war you already lost; ignoring costs nothing the meters can
+> still register). This is a **shipped balance hole in the treaty-handling path** — the systemic root (a floored meter is
+> a dead deterrent) is generalized as **#266 at [§18.x.266](#18x266--266-new-batch-40--meter-at-floor--no-deterrent-the-systemic-balance-flaw-game-wide-designed)**. Tech-lead to verify how the engine applies/skips a losing treaty and
+> whether the ignore-path is genuinely penalty-free at meter floor; if so, this is a **DH-style bug** in addition to the
+> design gap. (`a2312dd2` POST 1.)
+
+**(1) ★ The three options debated → Ted's merged direction (POST 1 → 15/17).**
+
+| # | Option (Ted, POST 1) | Tier-1 stance |
+|---|---|---|
+| 1 | **Wars last forever until a treaty passes**, with **escalating lingering penalties** to force a close (−party-pref / −revenue-budget / −DomStab if long enough). | **vcczar prefers #1** as most realistic (POST 4). Arkansas Progressive fleshed a per-phase ladder — see (4). |
+| 2 | **Keep as-is, make the ignore-penalty worse** (e.g. −5 party-pref). | Ted's own caveat: *"even that would have done nothing here as they'd already maxed out their negative party preference"* — option 2 **alone does NOT fix the floored-meter root** (#266). Cal: only with a 10–20-yr minimum during which party-pref slowly ticks back up. |
+| 3 | **Treaties AUTOMATIC** — can't be delayed/ignored by the Secretary, can't be rejected by the Senate. | vcczar's **speed pick** (POST 3, *"a good opportunity to speed up the game"*); Ted POST 6 *"might be easier… for moving a game along."* **WALKED BACK** by the merge — see (2). |
+
+**(2) ★★ TED'S MERGED DIRECTION (POST 15, restated POST 17) — the adopted spec direction (tier-1; "open to further
+discussion").** This is the Senate confirm-or-renew machinery the bare "treaties are automatic" capture in #45 does NOT
+have:
+
+1. **Treaties are AUTO-PROPOSED in the next legislative session when a war is won or lost.** **White Peace can be
+   proposed by the Secretary of State BEFORE winning or losing, but NOT after** the war resolves.
+2. **The Senate votes to CONFIRM the treaty.** **Failing to confirm can cause BACKLASH against the Senate Majority
+   Leader AND can RENEW the war** (the war does not end). **Senators who voted AGAINST the treaty are PENALIZED**
+   (POST 17 addition, *"blame on the folks unnecessarily prolonging a won or lost war"*).
+3. **Keep the military phase largely as-is, but with a 50% chance of whether to do MORE battles after the first two**
+   (the war-length change — see (5)).
+4. **(POST 17, Ted-endorsed in spirit)** also fold in the **more-engaged ambassador/SecState role** (§6 below /
+   [§13.3.2](#1332-three-diplomacy-actions-library)) — "but understand if that opens up too many issues."
+
+> **★ Reconcile vs #45's current capture:** #45 already records *"treaties are AUTOMATIC."* This thread sharpens that:
+> **automatic = auto-PROPOSED, NOT un-rejectable.** Ted POST 15 keeps a Senate down-vote **with heavy consequences**
+> (backlash vs the Senate Majority Leader + the war RENEWS + anti-treaty senators penalized), walking back option 3's
+> "can't be rejected." The 10centjimmy POST-6 pre-merge version was harsher (every NAY senator −100 faction + 4-yr
+> electoral penalty; Senate Majority offices −200 + 8-yr penalty; DomStab −1; penalties COMPOUND each unratified term;
+> President REQUIRED to sign on approval) — the merged POST-15 version softens "can't be rejected" into "rejection has
+> heavy consequences + can renew the war." The exact magnitudes are 10centjimmy's proposal, not a tier-1 ruling.
+
+**(3) ★ WAR-TIER net-score WIN/LOSS thresholds (Ted, POST 1, for option 1) — note the OPEN tier-1 tension with §21.1.A.**
+A war-TIER-scaled net-score threshold decides which treaty auto-proposes:
+
+| War tier | WIN treaty (net score ≥) | LOSING treaty (net score ≤) | else |
+|---|---|---|---|
+| **Skirmish** | **+1** | **−1** | **White Peace** |
+| **Minor war** | **+3** | **−3** | **White Peace** |
+| **Major war** | **+5** | **−5** | **White Peace** |
+
+> **★ OPEN TIER-1 TENSION — record both, do not silently merge.** This thread's (Apr 2022) **tier-scaled net-score
+> thresholds** are a *different* war-end model from the LATER `rethinkwar` (Sept 2022) **`|score| × 10%`-per-phase roll**
+> already documented on #45 at §21.1.A(2). Chronology suggests the Sept `rethinkwar` %-roll **SUPERSEDED** these Apr
+> thresholds — but no tier-1 designer reconciled them in-thread. Two readings: (a) same mechanic stated two ways, or (b)
+> the design moved from thresholds → the %-roll. **Flag for the human / roadmap.** Cross-ref §21.1.A(2), #45/#56's
+> Major/Minor/Operation tiers.
+
+**(4) ★ War-LENGTH unpredictability + the penalty CUSHION (the other half; POST 1, 8–13, 15).** Today *"you can look at
+the chart and know whether there's any chance of losing the war within this two-year period or not"* — wars are
+deterministic/readable per phase, no suspense. The fix:
+- **Battle count:** **guaranteed first TWO battles, then a 50% chance of whether to do more battles** after each (Ted's
+  merged pick, POST 15); vcczar's POST-1 alternative was "50% chance of another battle after each previous" OR "roll a
+  d6 for the number of battles."
+- **★ Penalty CUSHION (consensus, POST 8, 13):** **minimum ~4 years (2 phases) of fighting before ANY penalties** ("a
+  fair shot at winning"), then **start penalizing at ~6 years** to force a White Peace / quick end. This is the tuning
+  constant for the (5)-below lingering ladder.
+- **Arkansas Progressive's per-phase lingering-penalty LADDER (POST 7, FLOATED for option 1)** — a 2-yr-increment
+  escalation mixing **guaranteed + %-chance** hits to **Revenue/Budget, Party-Preference, relations with any non-allied
+  country, and Domestic Stability** (DomStab first appears at the 6–8 yr phase): Ph1 (0–2 yr) −1 Rev/Budget only; Ph2
+  (2–4) −1 Rev + 25% another −1 + 25% −1 Party-Pref; Ph3 (4–6) −1 Rev + 50% another + 50% −1 Party-Pref + 25% −1
+  non-allied country; Ph4 (6–8) −1 Rev + 75% another + 75% −1 Party-Pref + 50% −1 non-allied + **25% −1 DomStab**;
+  Ph5–10 (8–20 yr) the hits stack (−2/−3 Rev, −2 Party-Pref, multiple non-allied hits, −2/−3 DomStab) until the war
+  *"wrecks your country."* (10centjimmy POST 5 independently described the same "negotiated behind the scenes, then
+  auto-presented to the Senate" shape, pairing with the unpredictability change.)
+
+> **★ WAR-LENGTH DATA (the empirical playtest baseline — POST 11, 12; corroborates #45/#56 length tuning).** The
+> playtest's six wars to date, vs history:
+> | War | In-game yr | Result | Historical |
+> |---|---|---|---|
+> | Revolutionary War | ~8 yr (1776–84) | won | ~7 yr (★ Ted: may need an EXCEPTION to "war gets more painful" — any invasion where surrender = game-over) |
+> | Northwest Indian War | 12 yr (1786–98) | won | ~10 yr (the outlier long war) |
+> | Barbary War | 6 yr (1798–1804) | lost | ~4 yr |
+> | War of 1800 | 4 yr (1800–04) | won | (War of 1812 <3 yr) |
+> | Invasion of Canada | 4 yr (1800–04) | lost | — |
+> | Invasion of Brazil | ongoing | — | — |
+> Ted POST 12: *"We're pretty close to historical accuracy for war lengths!"*
+
+**(5) ★ The successor-eats-predecessor's-treaty refinement (POST 10, 16) — CORROBORATES #45's instigator-attribution.**
+The live Butler scenario surfaced an **attribution** question: if Butler (Red) is replaced by a **Blue** president who
+then **signs Butler's "defeat" treaty**, does Blue eat ALL the loss-penalties even though *"basically the entire war took
+place during Butler's term"*? Largo833: Red could **deflect the penalty by waiting out the term** and leaving Blue the
+brunt — which "seems weird." This is a **fresh, live-playtest instance** of §21.1.B(4)'s "War-Declaring-President FUTURE
+Penalties" (instigator attribution). **Open refinement THIS thread adds:** the penalty should attach to the
+**instigator** UNLESS the successor *elects* to prolong the war (sign-immediately vs try-to-actually-win / snatch-a-
+stalemate) — then the successor shares blame. A design constraint on any "auto-sign the predecessor's treaty" rule. **Not
+settled in-thread** (open question for the human: always-instigator vs successor-only-if-they-prolong).
+
+> **★ AMPU-2 deferral (vcczar, POST 3).** A back-and-forth, **month-to-month NEGOTIATED treaty** (real diplomatic
+> give-and-take) is explicitly deferred to AMPU-2 (*"would probably involve changing AMPU from phases to month-to-month…
+> since you need back and forth on a treaty"*). For AMPU-1, treaties are a single **auto-proposed Senate up/down vote**,
+> NOT a negotiation. (Log on the AMPU-2 wishlist, [§30.11.5](#30115--the-ampu-2-quarantine-out-of-scope-for-ampu-1--not-buildable-mechanics).)
+
+*(designed, 0% built — the war-END subsystem: (a) on a war win/loss the treaty is **auto-PROPOSED in the next
+legislative session** (White Peace proposable by the SecState only BEFORE resolution); (b) a **Senate confirmation
+vote**; (c) **failure → backlash vs the Senate Majority Leader + the war RENEWS + anti-treaty senators penalized**
+(walks back "un-rejectable"); (d) **war-length unpredictability** — guaranteed first 2 battles then a 50% chance of
+more, resolved via **tier-scaled net-score thresholds** Skirmish +1 / Minor +3 / Major +5 → win-treaty (opposite →
+losing-treaty, else White Peace) — ★ OPEN vs the later §21.1.A `|score|×10%` %-roll; (e) **~4-yr cushion before
+penalties, escalate ~6 yr** per Arkansas Progressive's lingering ladder; (f) **successor-eats-predecessor's-treaty**
+refinement on #45's instigator-attribution. The **SHIPPED delta:** today the engine ends a war on a hard count
+(`revolutionaryWar.ts:254-264`) with **no auto-proposed treaty, no Senate confirm-or-renew vote, no White-Peace
+proposal, no lingering-penalty ladder**; the **"ignore the losing treaty" exploit** (penalty-free at floored meters) is
+a candidate DH-row — tech-lead to verify the treaty-handling path. Fold into **#45**; cross-ref #266 (the floored-meter
+root), #265 (SecState treaty agency), #56 (war tiers + length tuning). Cite `a2312dd2` POST 1, 3, 4, 5, 6, 7, 8, 9, 10,
+11, 12, 13, 15, 16, 17; `game-context.md` #267 (NEW) + #45/#56/#266/#265/#88/#188.)*
 
 ### 21.2 Per-state presidential-election method
 
@@ -18638,6 +19099,118 @@ into the #194 lineage system. Cite `histpres#POST 1, 3, 7, 13, 19, 28, 34, 36, 3
 > verb set** (#66 — the data+rules model for create/split/merge/abolish/elevate/revert + the undeletable flag) and the
 > **per-country diplomacy STATE model** (#107 — grow the flat scalar into a struct), plus NEW #258 predicate classes.
 > Cross-ref `game-context.md` rows **#263/#264 (NEW)** and **#66/#88/#107/#153/#163/#182/#191/#206/#219/#221/#237/#248/#250/#255/#258/#262/#34/#43/#55/#92 (sharpened/corroborated)**.
+
+### 30.30 Rulings folded from batch 40 — FOUR policy-genre drops + ONE war/treaty BALANCE thread (★★ #267 the TREATY/war-END subsystem + #266 meter-at-floor-no-deterrent + #265 cabinet-officer agency + #268/#269 territory machine + the Healthcare/Crimes/Military/Expansionism content enrichments) (`65574aaa-healthcare` / `e456b6b3-crimes-punishments` / `a2312dd2-foreign-affairs…treaty` / `145db158-military` / `4e76e6c3-expansionism`)
+
+> **★ Batch 40 = a 5-thread DESIGN / CONTENT-AUTHORING batch (NO playtest, NO dice, NO historian, NO played-forward
+> year) — four policy-genre drops + one war/treaty balance-fix thread.** Everything is **designed-only**; the lone
+> shipped-code touch is a VERIFIED EXISTING exploit (the treaty thread's "ignore the losing treaty" — a candidate DH-row,
+> tech-lead to confirm the treaty-handling path). The value: the **★★ #267 TREATY / war-END subsystem** (the headline —
+> auto-proposed treaty → Senate confirm-or-RENEW-the-war vote + war-length unpredictability, the war-END side bridging
+> #45's combat (§21.1.A) and declaration (§21.1.B) sides), a **★ #266 game-WIDE systemic-balance flaw** (a meter at its
+> floor is a dead deterrent), a **★ #265 cabinet-officer per-turn agency** want (generalize Gov-Actions to AG/SecState),
+> a **★ #268 territory occupation→annex state machine** + **★ #269 structural state-map mutations** (the hard core of
+> Expansionism that overlaps shipped `admitState`), and the **batch-40 content-system ENRICHMENTS** across four genres
+> (Drugs subtype + hierarchical sub-sections #248; 3 new predicate KINDS #258; RNG Gov-Actions + precedent-flag chains +
+> program lifecycle #221; obscenity SCOTUS doctrine #52+#258). Tier-1 designers `@vcczar` + `@MrPotatoTed`/Ted
+> author/rule; **Cal / Willthescout7 / 10centjimmy / jvikings1 / Largo833 / Arkansas Progressive** are the densest
+> contributors. The sources:
+> - **`65574aaa-ampu-healthcare`** (Apr 2022, 3 posts, ~70 rows; NOT a playthrough) — the **Healthcare policy genre in
+>   UNTAGGED form** (3 flat header partitions; no `L/P/G` prefix, no era band, no `Preq:`, **no `*-Default`**). NOVEL: the
+>   **abortion sub-cluster** (genre-vs-subtype decision), the **program CREATE→EXPAND→CUT lifecycle** ladder, and
+>   competing **whole-system option-sets**. → corroborates #237/#248/#221/#258/#262/#206/#66. Folded into
+>   [§14.1.3.g](#1413g--221237248--258--452665266268269-batch-40--the-four-policy-genre-drops-healthcarecrimesmilitaryexpansionism--the-batch-40-content-system-enrichments-designed-0-shipped). Cite `65574aaa#POST n`.
+> - **`e456b6b3-ampu-crimes-punishments`** (Apr 2022, 13 posts; NOT a playthrough) — the **Crimes & Punishments genre
+>   FULLY-TAGGED** (L/G/P + era bands + `Preq:` blocks + `L-Ind-Default` baseline). NOVEL: the **declared "Drugs"
+>   subsection** (#248 hierarchy) + its **stepping-stone prereq ladder** (#258); the **obscenity SCOTUS doctrine**
+>   (Hicklin→Roth→Miller writes a precedent flag gating content, #52+#258); the **AG per-turn agency** ask (#265); the
+>   widest `Preq:` vocab + 3 new predicate KINDS (#258). → folded into [§14.1.3.g](#1413g--221237248--258--452665266268269-batch-40--the-four-policy-genre-drops-healthcarecrimesmilitaryexpansionism--the-batch-40-content-system-enrichments-designed-0-shipped) + [§11.3.A](#113a--265-new-batch-40--cabinet-officer-per-turn-agency-generalize-the-gov-actions-library-to-cabinet-seats-designed-0-built) (#265). Cite `e456b6b3#POST n`.
+> - **`a2312dd2-foreign-affairs…treaty-discussion`** (Apr 15–16 2022, 17 posts; a WAR/TREATY BALANCE-FIX thread, NOT a
+>   playthrough) — the **★★ #267 TREATY / war-END subsystem** (Ted's merged direction: auto-proposed treaty → Senate
+>   confirm-or-RENEW vote + war-length unpredictability) + the **★ #266 meter-at-floor systemic flaw** (Largo833) + the
+>   **★ SecState treaty agency** (10centjimmy — #265's SecState half) + the **successor-eats-predecessor's-treaty**
+>   refinement of #45's instigator-attribution. Bridges §21.1.B (Mar–Apr 2022) and §21.1.A (Sept 2022). → folded into
+>   [§21.1.C](#211c--267-new-batch-40--the-treaty--war-end-subsystem-auto-proposed-treaty--senate-confirm-or-renew-the-war-vote--war-length-unpredictability-designed-0-built) (#267) + [§18.x.266](#18x266--266-new-batch-40--meter-at-floor--no-deterrent-the-systemic-balance-flaw-game-wide-designed) (#266) + [§11.3.A](#113a--265-new-batch-40--cabinet-officer-per-turn-agency-generalize-the-gov-actions-library-to-cabinet-seats-designed-0-built) (#265 SecState). Cite `a2312dd2#POST n`.
+> - **`145db158-ampu-military`** (Apr 2022, 3 posts; NOT a playthrough) — the **Military genre UNTAGGED** (L≈35/P≈40/G≈19;
+>   **no `*-Default`**). NOVEL: **RNG / roll-for-effect Gov-Actions** (tech-testing → chance-of-new-class / per-branch
+>   fighting-power; blockade → random supply hit — #221, MUST use seeded `rng.ts`); the **doctrine** Pres-Action family +
+>   **nuke triad** option-set (#248); the naval **era tech ladder** + draft-variant ladder feeding the military-prep
+>   meter (#45/#56); office-creations + **War+Navy→Defense merge** (#66, 2nd witness). vcczar: comparatively COMPLETE
+>   (#262). → folded into [§14.1.3.g](#1413g--221237248--258--452665266268269-batch-40--the-four-policy-genre-drops-healthcarecrimesmilitaryexpansionism--the-batch-40-content-system-enrichments-designed-0-shipped). Cite `145db158#POST n`.
+> - **`4e76e6c3-ampu-expansionism`** (Apr 2022, 6 posts; NOT a playthrough) — the **Expansionism genre UNTAGGED** (the
+>   ONE genre overlapping SHIPPED `admitState` + `expansionStates.ts` + the Territories UI). NOVEL: the **occupy→annex
+>   state machine** (#268 — occupation status + grant-independence/client-state transitions + hypothetical-nation
+>   recognition #107); **state-FISSION** + abolish-states/secession-right amendments (#269); **action-driven
+>   population/demographic shift** (Indian Removal/Dawes/land-grants — #260 action twin). → folded into
+>   [§17.6.2](#1762--268-new-batch-40--the-territory-occupation--annex-state-machine-occupation-status--occupyannexindependenceclient-state-transitions-designed-partly-overlaps-shipped-admitstate) (#268) + [§17.6.3](#1763--269-new-batch-40--structural-state-map-mutations-state-fission--abolish-states--right-to-secede-amendments-designed-0-built) (#269) + [§14.1.3.g](#1413g--221237248--258--452665266268269-batch-40--the-four-policy-genre-drops-healthcarecrimesmilitaryexpansionism--the-batch-40-content-system-enrichments-designed-0-shipped). Cite `4e76e6c3#POST n`.
+>
+> **The HEADLINE findings (lead with these):**
+> 1. **★★ #267 — the TREATY / war-END subsystem (designed, 0% built).** On a war win/loss, a treaty is **auto-PROPOSED
+>    in the next legislative session** (White Peace proposable by the SecState only BEFORE resolution); the **Senate votes
+>    to confirm**; **rejection → backlash vs the Senate Majority Leader + the war RENEWS + anti-treaty senators
+>    penalized** (walks back "treaties can't be rejected"). **War-length unpredictability:** guaranteed first 2 battles,
+>    then a 50% chance of more, resolved via **tier-scaled net-score thresholds** (Skirmish +1 / Minor +3 / Major +5 →
+>    win-treaty; opposite → loss; else White Peace), with a **~4-yr cushion before penalties, escalate ~6 yr**.
+>    **Successor-eats-predecessor's-treaty** refines #45's instigator-attribution. ★ **OPEN tier-1 tension:** these Apr-
+>    2022 tier-scaled thresholds vs the LATER Sept-2022 `rethinkwar` `|score|×10%`-per-phase roll (already on #45,
+>    §21.1.A) — likely superseded. The motivating bug: the **"ignore the losing treaty" exploit** (penalty-free at floored
+>    meters) — a candidate DH-row, tech-lead to verify. At [§21.1.C](#211c--267-new-batch-40--the-treaty--war-end-subsystem-auto-proposed-treaty--senate-confirm-or-renew-the-war-vote--war-length-unpredictability-designed-0-built).
+> 2. **★ #266 — meter-at-floor = no deterrent (systemic-balance flaw, game-wide).** Once DomStab / party-pref / any score
+>    hits MINIMUM, further penalties are toothless → reckless play has no marginal cost. Fixes (Largo833, FLOATED): (a)
+>    spill an at-floor penalty into other scores, or (b) a floored meter has a % chance to shorten the game-over countdown
+>    (DomStab=1 → 50% loss-window 8yr→6yr — a modifier on #88's clock). The §21.1.C treaty exploit is one symptom. At
+>    [§18.x.266](#18x266--266-new-batch-40--meter-at-floor--no-deterrent-the-systemic-balance-flaw-game-wide-designed).
+> 3. **★ #265 — cabinet-officer per-turn agency.** Generalize the Gov-Actions library (#20, governor-only) to cabinet
+>    seats: AG (death-penalty moratorium / prosecutorial discretion / capital-punishment method) + SecState (treaty
+>    negotiation / white-peace timing). "Give each cabinet seat something to decide each turn." Surfaced twice in the
+>    batch (Crimes = AG; treaty = SecState). At [§11.3.A](#113a--265-new-batch-40--cabinet-officer-per-turn-agency-generalize-the-gov-actions-library-to-cabinet-seats-designed-0-built).
+> 4. **★ #268/#269 — the territory state machine + structural map mutations.** #268: a per-territory **occupation status**
+>    + occupy→annex / grant-independence / client-state transitions + recognize hypothetical/seceded nations (#107) —
+>    OVERLAPS shipped `admitState` (annexable registry built; only the occupy-gate + transitions + hypothetical-recognition
+>    are new). #269: **state-FISSION** (split TX/CA → geography + apportionment cascade) + player-legislated secession-right
+>    / abolish-states amendments (secession ships only as the scripted 1856 event). At
+>    [§17.6.2](#1762--268-new-batch-40--the-territory-occupation--annex-state-machine-occupation-status--occupyannexindependenceclient-state-transitions-designed-partly-overlaps-shipped-admitstate)/[§17.6.3](#1763--269-new-batch-40--structural-state-map-mutations-state-fission--abolish-states--right-to-secede-amendments-designed-0-built).
+>
+> **★ Designer rulings + new gaps folded (the topical sections carry the detail; this is the index):**
+>
+> | Item | Ruling / spec | Where folded | Cite |
+> |---|---|---|---|
+> | **★★ #267 TREATY / war-END subsystem (NEW)** | win/loss → treaty **auto-PROPOSED** next legis session (White Peace by SecState only BEFORE resolution); **Senate confirm vote** → rejection = backlash vs Senate Majority Leader + war RENEWS + anti-treaty senators penalized (walks back "un-rejectable"); war-length unpredictability (guaranteed first 2 battles, then 50%/d6 more; **tier net-score thresholds Skirmish +1 / Minor +3 / Major +5** → win/loss/White-Peace; ~4-yr cushion, escalate ~6 yr per Arkansas-Progressive's lingering ladder); successor-eats-predecessor's-treaty (refines #45 instigator-attribution); ★ OPEN: thread's tier-scaled thresholds (Apr) vs `rethinkwar`'s `|score|×10%` (Sept, on #45) — likely superseded; motivating bug = "ignore the losing treaty" exploit (penalty-free at floored meters → candidate DH-row, tech-lead verify) | [§21.1.C](#211c--267-new-batch-40--the-treaty--war-end-subsystem-auto-proposed-treaty--senate-confirm-or-renew-the-war-vote--war-length-unpredictability-designed-0-built) | `a2312dd2#POST 1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 16, 17`; code `revolutionaryWar.ts:254-264` |
+> | **★ #266 meter-at-floor = no deterrent (NEW systemic)** | a penalty against an already-floored meter is toothless → reckless play; fixes (FLOATED, Largo833): (a) spill at-floor penalty into other scores; (b) floored meter → % chance to shorten the #88 game-over countdown (DomStab=1 → 50% 8yr→6yr); game-WIDE, not war-specific; §21.1.C exploit is one symptom; OPEN: one gap or two | [§18.x.266](#18x266--266-new-batch-40--meter-at-floor--no-deterrent-the-systemic-balance-flaw-game-wide-designed) | `a2312dd2#POST 1, 16`; cross-ref #88/#188 |
+> | **★ #265 cabinet-officer per-turn agency (NEW)** | generalize the Gov-Actions library (#20) to cabinet seats — AG (death-penalty moratorium / prosecutorial discretion gated on corruption-meter / capital-punishment method + public-execution toggle) + SecState (treaty negotiation: admin adjusts victories-needed <5↑/>7↓, set once; 5%/phase loss-threshold roll trait-weighted; 33%/phase white-peace prompt, Integrity gates refusing); "give each seat something to decide each turn"; no existing gap owned non-diplomacy cabinet-officer agency | [§11.3.A](#113a--265-new-batch-40--cabinet-officer-per-turn-agency-generalize-the-gov-actions-library-to-cabinet-seats-designed-0-built) | `e456b6b3#POST 2, 13`; `a2312dd2#POST 6, 17`; cross-ref #20/#26/#45/#66 |
+> | **★ #268 territory occupation→annex state machine (NEW)** | per-territory **occupation status** (set by war) + #258 "X is occupied" prereq on annex + opposed transitions (end-occupation / grant-independence / make-client-state) + recognize hypothetical/alt-history/seceded nations (CSA/Northern-Conf/former-Mexico — ties #107); free/slave status rides on admission; OVERLAPS shipped `admitState`/`expansionStates.ts`/Territories-UI (annexable registry built — content-vs-built boundary) | [§17.6.2](#1762--268-new-batch-40--the-territory-occupation--annex-state-machine-occupation-status--occupyannexindependenceclient-state-transitions-designed-partly-overlaps-shipped-admitstate) | `4e76e6c3#POST 1, 3, 4, 5`; code `territories.ts:8-23`, `expansionStates.ts` |
+> | **★ #269 structural state-map mutations (NEW)** | state-FISSION (split TX/CA → geography + apportionment cascade, the Nevada→Arizona question — #34/#55/#219) + player-legislated secession-right / abolish-states amendments (secession ships ONLY as the scripted `secession-winter` 1856 event); `grep splitState`→0 (add-only `admitState`) | [§17.6.3](#1763--269-new-batch-40--structural-state-map-mutations-state-fission--abolish-states--right-to-secede-amendments-designed-0-built) | `4e76e6c3#POST 1, 4, 5, 6`; code `territories.ts:8`, `phaseRunners.ts:2834` |
+> | **★★ #258 ENRICH (3 new predicate KINDS + widest vocab)** | NEW KINDS: **prior-policy-active** (Fed-Death-Penalty→method bills; Drugs medicinal/supervised→full legalization ladder), **meter≥threshold** (corruption→prosecutorial-discretion), **court-PRECEDENT-exists** (Miller-test→content tier); + occupation-status (Expansionism); richest single `Preq:` block to date | [§14.1.3.g](#1413g--221237248--258--452665266268269-batch-40--the-four-policy-genre-drops-healthcarecrimesmilitaryexpansionism--the-batch-40-content-system-enrichments-designed-0-shipped) | `e456b6b3#POST 1, 2, 3, 8`; `4e76e6c3#POST 1` |
+> | **★ #248 ENRICH (hierarchical sub-sections)** | a genre contains **named sub-sections** — vcczar declares a **"Drugs"** subsection inside Crimes; abortion sub-cluster = genre-vs-subtype DECISION (spans L/P/G); Military nuke-triad (Reduce↔Proliferate↔Eliminate) + drone Institute→Increase ladder; multi-subtype (Truman Doctrine = Military+Diplomacy) | [§14.1.3.g](#1413g--221237248--258--452665266268269-batch-40--the-four-policy-genre-drops-healthcarecrimesmilitaryexpansionism--the-batch-40-content-system-enrichments-designed-0-shipped) | `e456b6b3#POST 9`; `65574aaa#POST 1`; `145db158#POST 1` |
+> | **★ #221 ENRICH (3 novel primitive patterns)** | **RNG / roll-for-effect Gov-Actions** (Military tech-testing → chance-of-new-class / per-branch fighting-power; blockade → random 1-5% supply hit — MUST use seeded `rng.ts`); **events set persistent precedent FLAG + supersession chains** (obscenity Hicklin→Roth→Miller); **program CREATE→EXPAND→CUT lifecycle** (Medicare/Medicaid — entitlement analogue of the #66 office lifecycle) + whole-system option-sets | [§14.1.3.g](#1413g--221237248--258--452665266268269-batch-40--the-four-policy-genre-drops-healthcarecrimesmilitaryexpansionism--the-batch-40-content-system-enrichments-designed-0-shipped) | `145db158#POST 2, 3`; `e456b6b3#POST 3`; `65574aaa#POST 1`; code `rng.ts` |
+> | **★ #52 + #258 SCOTUS obscenity DOCTRINE (ENRICH)** | obscenity doctrine (Hicklin 1879 → Roth 1957 → Miller 1973) as SCOTUS-case scripted-EVENTS each writing a persistent **precedent flag** that GATES a downstream content tier ("If Miller test exists: …"); shipped coin-flip court (`phaseRunners.ts:~3397`) can't model precedent flags; ★ NOTE the docket gap is **#52** NOT #25 (#25 = cabinet firing-precedent) | [§14.1.3.g](#1413g--221237248--258--452665266268269-batch-40--the-four-policy-genre-drops-healthcarecrimesmilitaryexpansionism--the-batch-40-content-system-enrichments-designed-0-shipped) | `e456b6b3#POST 3`; code `phaseRunners.ts:~3397` |
+> | **★ #66 office-creations + War→Defense merge (CORROBORATE, 2nd witness)** | VA + Army-CoS / CNO (replaces Senior Admiral) / Chairman-JCS / USMC / Merchant-Marine + Academy office-creations via the Military genre; **War + Navy → Defense MERGE** = a 2nd merge-verb witness (with b39 Civil-Service); entitlement-program lifecycle = office-lifecycle analogue; split-but-independent Fed-vs-Military capital-punishment toggles | [§14.1.3.g](#1413g--221237248--258--452665266268269-batch-40--the-four-policy-genre-drops-healthcarecrimesmilitaryexpansionism--the-batch-40-content-system-enrichments-designed-0-shipped) | `145db158#POST 1, 2`; `65574aaa#POST 1`; `e456b6b3#POST 13` |
+> | **★ #45/#56/#106 military-prep content + branch separation (CORROBORATE/SHARPEN)** | Military-structure toggles (standing-army/navy, size, defense-spending quad) + draft-variant ladder + era manpower + naval era tech ladder (Wood→Steam→Steel→hover) feed the military-prep meter; ★ per-branch fighting-power (army/navy/air tracked separately) sharpens #106 "no branch separation" | [§14.1.3.g](#1413g--221237248--258--452665266268269-batch-40--the-four-policy-genre-drops-healthcarecrimesmilitaryexpansionism--the-batch-40-content-system-enrichments-designed-0-shipped) | `145db158#POST 1, 2, 3`; code `types.ts:28/36` |
+> | **★ #260 action-driven population shift (CORROBORATE)** | Indian Removal / Dawes / Indian Appropriations / land-grants-to-settle = Legis-Props/Gov-Actions mutating state population/demographics — the **action twin** of #260's event-driven Boll-Weevil/Great-Migration | [§17.6.3](#1763--269-new-batch-40--structural-state-map-mutations-state-fission--abolish-states--right-to-secede-amendments-designed-0-built) | `4e76e6c3#POST 1, 6` |
+> | **★ #237 genre-boundary + missing-baseline (CORROBORATE)** | Truman Doctrine = Military+Diplomacy; VA = Healthcare+Civil-Service+Military; War+Navy→Defense = Military+Civil-Service; **Healthcare/Military/Expansionism authored WITHOUT a `*-Default` baseline** (coverage hole) | [§14.1.3.g](#1413g--221237248--258--452665266268269-batch-40--the-four-policy-genre-drops-healthcarecrimesmilitaryexpansionism--the-batch-40-content-system-enrichments-designed-0-shipped) | `145db158#POST 1`; `65574aaa#POST 1`; `4e76e6c3#POST 1` |
+> | **★ #262/#206 coverage asks (CORROBORATE)** | non-repeal Conservative/Trad/RW-Pop Healthcare; non-land-grabbing Expansionism; more Gov/Pres/Future across genres; Military comparatively COMPLETE (the contrast case); Future-band rows present in all four | [§14.1.3.g](#1413g--221237248--258--452665266268269-batch-40--the-four-policy-genre-drops-healthcarecrimesmilitaryexpansionism--the-batch-40-content-system-enrichments-designed-0-shipped) | `65574aaa#POST 1`; `e456b6b3#POST 1`; `145db158#POST 1`; `4e76e6c3#POST 1` |
+> | **★ #20 Governor/officer Actions (CORROBORATE)** | death-penalty method + public-execution toggle; prosecutorial discretion; SYG/DTR (Federal + state); state-LE funding ↑↓; the 3 Expansionism per-state Native/settlement demographic Gov-Actions — reinforce the per-state/per-officer Gov-action upgrade | [§14.1.3.g](#1413g--221237248--258--452665266268269-batch-40--the-four-policy-genre-drops-healthcarecrimesmilitaryexpansionism--the-batch-40-content-system-enrichments-designed-0-shipped)/[§11.3.A](#113a--265-new-batch-40--cabinet-officer-per-turn-agency-generalize-the-gov-actions-library-to-cabinet-seats-designed-0-built) | `e456b6b3#POST 1, 2, 4, 10, 11`; `4e76e6c3#POST 1, 6` |
+> | **Corroborations (no NEW row)** | #237/#248 (4 more genre/subtype instances); #221 (the 4-primitive registry + scripted events); #107 (recognize hypothetical/seceded nations extends the recognition target set); #88/#188 (the #266 floored-meter clock modifier) | the topical sections | per-thread |
+>
+> **Roadmap takeaway (for the tech-lead + roadmap-planner).** Batch-40 is design/content/balance, ranked:
+> (1) **★★ #267 (treaty / war-END subsystem)** is the war-END half of #45 — auto-proposed treaty + a Senate
+> confirm-or-renew vote + war-length unpredictability; it rides on the war engine (§21.1.A/B) and the legislative-vote
+> plumbing. **First reconcile the OPEN tier-1 tension** (Apr tier-scaled net-score thresholds vs the Sept `rethinkwar`
+> `|score|×10%` already on #45 — likely the latter superseded) before building either war-end model. The **"ignore the
+> losing treaty" exploit** is a candidate **DH-row** — tech-lead to verify the shipped treaty-handling path. (2) **★ #266
+> (meter-at-floor = no deterrent)** is a small game-WIDE meters/game-over fix (spill-over OR a #88 countdown modifier) —
+> decide one-gap-or-two; it makes penalties meaningful at the floor and is the systemic root of the treaty exploit.
+> (3) **★ #265 (cabinet-officer agency)** generalizes the Gov-Actions library (#20) to cabinet seats — a per-office action
+> menu (AG / SecState first); makes passive cabinet seats player-engaging. (4) **★ #268/#269 (territory machine + map
+> mutations)** are the hard core of Expansionism that the shipped `admitState` does NOT cover — the occupation status +
+> grant-independence/client-state transitions + hypothetical-nation recognition (#268), and state-FISSION +
+> secession-right/abolish-states amendments (#269); the annexable registry is already built, so flag the content-vs-built
+> boundary. (5) **The four genre drops** extend the 0%-shipped content engine (#221/#237/#248/#258) with **three novel
+> #221 patterns** (RNG roll-for-effect Gov-Actions — MUST use seeded `rng.ts`; events-set-precedent-FLAG + supersession
+> chains; program CREATE→EXPAND→CUT lifecycle), the **hierarchical genre→sub-section #248 structure** (declared Drugs
+> subtype), **3 new #258 predicate KINDS**, the **obscenity SCOTUS doctrine** (#52+#258), and **#66** office-creations +
+> the War→Defense merge (2nd witness). Cross-ref `game-context.md` rows **#265/#266/#267/#268/#269 (NEW)** and
+> **#45/#52/#56/#66/#88/#106/#107/#188/#206/#221/#237/#248/#258/#260/#262/#20/#34/#55/#219/#247 (sharpened/corroborated)**.
 
 ### 30.4 Authority hierarchy reminder
 
