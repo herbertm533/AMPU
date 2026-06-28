@@ -370,6 +370,7 @@
     - [30.32 Rulings folded from batch 42 — TWO policy-genre drops (Regulations + Banking) + TWO design-origin threads (Benchmarks + SC-case generator) + the What-If ENTRY mechanic (★★ #272 what-if entry-via-scripted-event + the 12-genre MILESTONE CORRECTION) (`d4cd2ee6-regulations` / `beb258f9-banking` / `f012e5cc-benchmarks` / `d474f718-change-to-whatif-politicians` / `07fa6116-future-supreme-court-cases`)](#3032-rulings-folded-from-batch-42--two-policy-genre-drops-regulations--banking--two-design-origin-threads-benchmarks--sc-case-generator--the-what-if-entry-mechanic--the-12-genre-milestone-correction)
     - [30.33 Rulings folded from batch 43 — the IMPEACHMENT design-spec + the Lars-Ark 1772 playtest + the Flavor-event poll + the Playtester survey (★★ #273 the IMPEACHMENT subsystem [DESIGN-INTENT, vcczar DEFERRED] + #274 skill-gain accessibility + DH-81 war-end-per-battle BUG + DH-82 officer-cap clamp) (`ae435b5f-fourteen-points-on-impeachment` / `06fbb2e5-lars-and-ark` / `b73925a4-flavor-event-poll` / `ddd179cb-questions-for-playtesters`)](#3033-rulings-folded-from-batch-43--the-impeachment-design-spec--the-lars-ark-1772-playtest--the-flavor-event-poll--the-playtester-survey--273-the-impeachment-subsystem-design-intent-vcczar-deferred--274-skill-gain-accessibility--dh-81-war-end-per-battle-bug--dh-82-officer-cap-clamp-ae435b5f-fourteen-points-on-impeachment--06fbb2e5-lars-and-ark--b73925a4-flavor-event-poll--ddd179cb-questions-for-playtesters)
     - [30.34 Rulings folded from batch 44 — Ted's ACTUAL "Change Log of Doom" (the AUTHORITATIVE rules-doc edits, WITH NUMBERS) + the Appointments-2.3 maintenance pass + the Kagan content backlog + the Canada alt-states retrofit (★★ the cabinet 20/10/5% + the full era retirement/death charts + the event→enthusiasm formula + the Pres-implementation 2-step table + 3 USER-CONFIRM reconciliations) (`4747b09f-teds-change-log-of-doom` / `5d225e8a-pol-lounge2` / `f64a522c-...kagans-foreign-policy...` / `250bd843-canada-alt-states` / `e07f0cc1-ampu-related-passion-projects`)](#3034-rulings-folded-from-batch-44--teds-actual-change-log-of-doom-the-authoritative-rules-doc-edits-with-numbers--the-appointments-23-maintenance-pass--the-kagan-content-backlog--the-canada-alt-states-retrofit--the-cabinet-20105--the-full-era-retirementdeath-charts--the-evententhusiasm-formula--the-pres-implementation-2-step-table--3-user-confirm-reconciliations-4747b09f-teds-change-log-of-doom--5d225e8a-pol-lounge2--f64a522c-kagans-foreign-policy--250bd843-canada-alt-states--e07f0cc1-ampu-related-passion-projects)
+    - [30.35 Rulings folded from batch 45 — the FIVE playtest highlight-reels / discussion / data threads (★★ the CC/EV cross-batch CORRECTION + #280 alt-state EV-mutation + #281 statehood-eligibility + #247 time-indexed bias + #270/#273 judicial-misconduct charge-roll + #126 botched-major-action resignation + #282-#285 + the #12/#40 BALANCE gaps) (`78e0d55b-alt-states-ev-project` / `5e195107-electoral-trends-1840-playtest-discussion-post` / `0b896cf9-june-2023-ampu-playtest-updates` / `38cedf29-april-2023-playtest-best-moments` / `9acfc425-may-2023-ampu-playtest-updates`)](#3035-rulings-folded-from-batch-45--the-five-playtest-highlight-reels--discussion--data-threads--the-ccev-cross-batch-correction--280-alt-state-ev-mutation--281-statehood-eligibility--247-time-indexed-bias--270273-judicial-misconduct-charge-roll--126-botched-major-action-resignation--282-285--the-1240-balance-gaps-78e0d55b-alt-states-ev-project--5e195107-electoral-trends-1840-playtest-discussion-post--0b896cf9-june-2023-ampu-playtest-updates--38cedf29-april-2023-playtest-best-moments--9acfc425-may-2023-ampu-playtest-updates)
     - [30.4 Authority hierarchy reminder](#304-authority-hierarchy-reminder)
 31. [Gilded-Age era systems (designed, not built)](#31-gilded-age-era-systems-designed-not-built)
     - [31.1 (#147) Tariff-as-national-%-rate + the mutually-exclusive MonetaryRegime](#311-147-tariff-as-national-rate--the-mutually-exclusive-monetaryregime-designed)
@@ -580,7 +581,7 @@ Naval, Science, Technology, Trade, Transportation, Welfare.
 > **★ #216 (sharpened, `kiaofficers` + `strongnevernom`, batch 34) — the "Military" EXPERTISE is being
 > renamed "Army"; legacy entries still say "Military"; the `Military` TRAIT must be disambiguated.** vcczar
 > ruled the **expertise/career-track formerly "Military" is now "Army"** (`kiaofficers#POST 22`), to
-> disambiguate it from the **`Military` *trait*** (e.g. the earned "Military Leader" trait, [§17.4](#174-revolutionary-war)).
+> disambiguate it from the **`Military` *trait*** (e.g. the earned "Military Leader" trait, [§17.4](#174-revolutionary-war-revolutionarywarts)).
 > New dataset adds use **Army**; **many older dataset entries still carry `Military`** → a dataset-consistency
 > sweep. **★ Codebase note:** shipped `Expertise` (`types.ts:182-186`, this list) and the dataset authoring
 > set (`scripts/seedDataset.mjs:30` `EXPERTISE_NAMES`) **both still say `'Military'`** (and `'Naval'`) — the
@@ -4992,7 +4993,7 @@ Each nation in `game.diplomacy`: `0.20` chance to drift `±0.5` (50/50 sign), cl
 ### 13.2 (2.7.2) Military action — `runPhase_2_7_2_Military` (`phaseRunners.ts:3593`)
 
 - **1772 (Revolutionary War active)**: delegates entirely to `runRevWarBattles` (see
-  [§17.4](#174-revolutionary-war)).
+  [§17.4](#174-revolutionary-war-revolutionarywarts)).
 - **Generic wars (1856+)**: per active war, `milPower = meters.military +
   GiC.military`, `enemyPower = 1 + rand×4`; win iff `milPower×10 + d100 > enemyPower×10 +
   50`. War score `±10/−5`; war ends at `±50` (`phaseRunners.ts:3615`).
@@ -5003,7 +5004,7 @@ Each nation in `game.diplomacy`: `0.20` chance to drift `±0.5` (50/50 sign), cl
 > diff-win +5), a per-Military-Phase **`|score|×10%` win/lose roll**, a **Momentum d6** swing, and an
 > **End-War Multiplier** that replaces fixed phase/battle counts — plus **naval as a land-difficulty modifier
 > (no standalone naval win; naval feeds the land general ±1 Mil)**, which fixes the shipped
-> [§17.4 DH-79](#174-revolutionary-war) "one naval win ends naval forever" bug.
+> [§17.4 DH-79](#174-revolutionary-war-revolutionarywarts) "one naval win ends naval forever" bug.
 
 > **★ #158 (NEW, `ted1772`) — CPU bias AGAINST game-over / peace decisions. DESIGNED, not built.**
 > The shipped engine has **no CPU vote on war-surrender or game-ending peace** — terminal
@@ -7755,7 +7756,7 @@ the #260 action twin). Cite `4e76e6c3` POST 1, 4, 5, 6; code `territories.ts:8` 
   runs — corroborates the war-decision variability #158). `grass1772#POST 163, 254, 285`.
 - **★ Doubled-officer Planning-term cap OVERFLOW edge case (NEW, `rookie1772`, batch 24).** The
   founding war-formula rule *"when no Secretary of War exists, double the highest officer's Mil rating
-  for the Planning term"* (the shipped `general.military` doubling stand-in, [§17.4](#174-revolutionary-war)
+  for the Planning term"* (the shipped `general.military` doubling stand-in, [§17.4](#174-revolutionary-war-revolutionarywarts)
   / [§21.1](#211-generic-cross-era-war-system)) can yield a **Planning value of 6 — above the 0-5 ability
   max** (a Mil-3 officer ×2 = 6). The rookie applied it and got 6; Ted: *"a 6 is higher than the max an
   ability can be (5)… I need to take another look at that rule"* (`rookie1772#POST 35`). Build TODO:
@@ -9399,7 +9400,7 @@ designed-not-built and cross-referenced from the per-system sections above.
 
 > **Designed, not built.** Confirmed across federalism + 1772 solo. The shipped engine has
 > **two** war paths and **neither** matches: the rich Revolutionary War
-> ([§17.4](#174-revolutionary-war)) is **1772-scoped**, and the generic resolver
+> ([§17.4](#174-revolutionary-war-revolutionarywarts)) is **1772-scoped**, and the generic resolver
 > (`runPhase_2_7_2_Military`, `phaseRunners.ts:3593-3627`) is a **flat**
 > `milPower×10 + d100 > enemyPower×10 + 50`, war ends at `warScore ±50`. The forum runs **one
 > generic war system for every war** — War of 1795, Barbary War, War of 1812 (`fed` 9; `1772s`
@@ -9448,7 +9449,7 @@ econ, budget, party pref) and **grants/denies territory** (Canada/Quebec on a Wa
 > **scenario-boot pipeline requirement** (relates to #45 + #86 boot pipeline,
 > [§26.1](#261-the-mid-government-boot-shape-general) / [§27.1](#271--the-era-model--eras-are-content-bands-gated-by-game-state--territory-not-calendar-year)):
 > the boot procedure reads the start-year's active-war set and instantiates each as a running `War`
-> in the generic model above. (The 1772 scenario's Revolutionary War, [§17.4](#174-revolutionary-war),
+> in the generic model above. (The 1772 scenario's Revolutionary War, [§17.4](#174-revolutionary-war-revolutionarywarts),
 > is the only war the shipped boots seed — every other era-start currently boots at peace.)
 
 > **★★ #152 (NEW) — the war engine resolves in DEFEAT (a loss PACKAGE), and wars are MULTI-PHASE
@@ -9485,7 +9486,7 @@ econ, budget, party pref) and **grants/denies territory** (Canada/Quebec on a Wa
 > hovered at the edge of a game-over the entire time:
 >
 > **The 1772-RevWar trace (the alarming part for #155, `ted1772` §3 / POST 265, 461, 523-531, 888, 893):**
-> - **Battle formula re-confirmed** (corroborates [§17.4](#174-revolutionary-war) / the additive card above):
+> - **Battle formula re-confirmed** (corroborates [§17.4](#174-revolutionary-war-revolutionarywarts) / the additive card above):
 >   `Planning(SrGen/SrAdm Mil×2) + Battlefield/Sea Command(Mil×10, −1 if a replacement/Decisive adj) +
 >   MilPrep(+10/+15) + EraBenchmarks(+5→+15) + Difficulty(−10 to −25) → d100`.
 > - **The Navy won ZERO battles at sea** across the whole war (~6+ naval battles, all lost; success%
@@ -9506,7 +9507,7 @@ econ, budget, party pref) and **grants/denies territory** (Canada/Quebec on a Wa
 >
 > | # | Floor | Mechanic | Source |
 > |---|---|---|---|
-> | **1** | **French-alliance "unloseable" flag** | Ambassador-to-France → Treaty of Amity & Commerce → *"It is no longer possible for us to lose the Revolutionary War!"* V ruled the **France meter is PINNED at ally until the war ends** (a relations-drop event can't undo it). This is the shipped `frenchAlliance` void-the-loss-cap path ([§17.4](#174-revolutionary-war)). | `ted1772#POST 630-632` |
+> | **1** | **French-alliance "unloseable" flag** | Ambassador-to-France → Treaty of Amity & Commerce → *"It is no longer possible for us to lose the Revolutionary War!"* V ruled the **France meter is PINNED at ally until the war ends** (a relations-drop event can't undo it). This is the shipped `frenchAlliance` void-the-loss-cap path ([§17.4](#174-revolutionary-war-revolutionarywarts)). | `ted1772#POST 630-632` |
 > | **2** | **2/3 (Articles of Confederation) peace-vote threshold** | A game-over peace event needs **2/3 of states**, not a majority. The **Carlisle Peace Commission** (Aye = game-over, colonies rejoin Britain) got **5 Aye / 4 Nay = 55.5% < 66.6%** → peace FAILED, war continued **despite a MAJORITY for peace**. (A 2nd, the Conciliatory Resolution, was likewise rejected.) **55.5% is NOT enough.** | `ted1772#POST 461, 637` |
 > | **3** | **Ted's "CPU opposes game-over 75%" rule (#158)** ⚠ **LEAKY — `cpufull` proved the flat-75% roll INSUFFICIENT** (a 2nd live CPU game-over fired; 4/10 factions rolled ≤25 and a 4-5-4 plurality carried). **Prefer a HARD VETO / points-based anti-peace bias, and a non-plurality-overridable Pres reject.** | Added precisely because CPUs lean toward peace and could end a mostly-CPU game. See [§13.2 #158 STRENGTHENED](#132-272-military-action--runphase_2_7_2_military-phaserunnersts3593) + [§25.7](#257-scripted-abc-event-cabinet-voting). | `ted1772#POST 638`; `cpufull#POST 62-68` |
 >
@@ -9523,7 +9524,7 @@ econ, budget, party pref) and **grants/denies territory** (Canada/Quebec on a Wa
 > (now 4+ fresh-start RevWar sources), plus two build constraints:**
 > - **The MilPrep `milPrepMod` term is FLOORED all founding era (#176).** Both batch-24 runs confirm
 >   MilPrep is **hard-capped at ~2 for the whole Era of Independence** (the auto-forced war bills are
->   wired to federalism-only Militia-Act tiers — [§17.4 #176](#174-revolutionary-war)). So the
+>   wired to federalism-only Militia-Act tiers — [§17.4 #176](#174-revolutionary-war-revolutionarywarts)). So the
 >   `milPrepMod` contribution to the additive battle-card odds is **stuck low all founding war**, on top
 >   of the three floors above. **Any war-balance hardening must treat a permanently-floored founding
 >   MilPrep as a given** (or the #176 ladder must be fixed so the forced bills can lift it). `grass1772
@@ -9553,7 +9554,7 @@ econ, budget, party pref) and **grants/denies territory** (Canada/Quebec on a Wa
 > 1. **No fluidity** — you win a fixed *count* of battles, then the war just ends (no graded progress).
 > 2. **"One naval win ends naval forever"** — *"winning one naval battle means you no longer have to worry
 >    about naval at all, even if the land invasion continues for another ten years"* → the **shipped DH-79
->    bug** (see [§17.4](#174-revolutionary-war)), confirmed in code.
+>    bug** (see [§17.4](#174-revolutionary-war-revolutionarywarts)), confirmed in code.
 > 3. **Wars run far too long / average militaries are stacked toward defeat** — the 1840 Mexican War dragged
 >    1840→1848+ (4 turns), *"entirely too long and very ahistorical."* Ich_bin_Tyler simulated the Civil War
 >    under the then-config (**5 wins to win / 5 losses to lose / 2 losses ends the phase**) with an average
@@ -9694,7 +9695,7 @@ econ, budget, party pref) and **grants/denies territory** (Canada/Quebec on a Wa
 > least 1 Mil ability for **difficult battles in major wars**"* — *"about as much general/admiral expansion
 > I'm willing to do."* So the full conscription model is **designed-but-NOT-adopted**; only this narrow
 > war-hero grant is committed. (This narrow grant is the same earned-Celebrity / earned-Military-Leader rule
-> the dataset thread relies on — see [§17.4 / #243](#174-revolutionary-war).) (`rethinkwar#POST 1, 4-5, 11-12,
+> the dataset thread relies on — see [§17.4 / #243](#174-revolutionary-war-revolutionarywarts).) (`rethinkwar#POST 1, 4-5, 11-12,
 > 16, 18, 20-26`; `game-context.md` #45/#56/#106/#176.)
 
 *(designed, not built — generalize to a `War` model usable in any era: the additive
@@ -16722,7 +16723,7 @@ un-implementable Wyoming Rule — hole #5), and modern lobby cards. Event firing
 > >   had run ~12 turns *still* couldn't hand-run Lingering — the prime corroboration that Lingering is a
 > >   deterministic multi-step pass the build must own (see [§24.7](#247-67-lingering--the-16-meter-homeostasis-engine-era-gated-foreign-meters) / [§11.1](#111-251-lingering-meters--runphase_2_5_1_lingering-phaserunnersts3260)).
 > > - **Meter prerequisites were invisible/opaque** — the rookie raised MilPrep via forced war bills not
-> >   knowing MilPrep/Rev-Budget can't rise past a low tier until federalism-era bills fire ([§17.4 #176](#174-revolutionary-war); `rookie1772#POST 26, 32-33`).
+> >   knowing MilPrep/Rev-Budget can't rise past a low tier until federalism-era bills fire ([§17.4 #176](#174-revolutionary-war-revolutionarywarts); `rookie1772#POST 26, 32-33`).
 > > - **Wrong, undocumented boot data** — the given sheet was a **"hybrid between 1772 and 2020"** with
 > >   all meters mid-set; correct 1772 start values had to be dug from official start sheets (`rookie1772
 > >   #POST 19, 26` — corroborates #115/#86 boot procedure).
@@ -18115,7 +18116,7 @@ and `game-context.md` **DH-29 (★ movement)**.
 | **★ Pre-12A VP = most-EV runner-up (FORK CORRECTED)** | RULED — only the President needs >50% EV; the **VP is the most-EV runner-up**, NO Senate contingent unless 2nd place TIES. Ted's earlier "goes to the Senate" reading corrected (via DJBillyShakes + V). Sharpens DH-62. | [§27.3 DH-62 block](#273-the-12th-amendment-beforeafter-state-machine-era-specific-election-mode-toggle) | 1683, 1714-1716 |
 | **Incompetent pol cannot be a faction leader** | ENFORCED LIVE (corroborates the leadership filters). | [§8.3](#83-223-faction-leaders--runphase_2_2_3_factionleaders-phaserunnersts1940) | 620 |
 | **Negative points allowed this run** | HOUSE-RULED for continuity (Jefferson ran negative); V's official rule is a **0 floor** — build should likely pick the 0 floor. | [§30.2 open items](#302-designer-decision-gated-open-items-tedchange) (boot/scoring edge-case) | 851-855 |
-| **Senior-General auto-accept** | RULED — any General auto-accepts Senior General w/o confirmation. | [§17.4](#174-revolutionary-war) | 819 |
+| **Senior-General auto-accept** | RULED — any General auto-accepts Senior General w/o confirmation. | [§17.4](#174-revolutionary-war-revolutionarywarts) | 819 |
 
 **NEW gaps + the corroboration upgrades (folded into topical homes):**
 
@@ -18237,8 +18238,8 @@ and `game-context.md` **DH-29 (★ movement)**.
 | **Kingmaker scope** | Kingmaker-protégé bond **cannot be voluntarily broken** (anti-cheese); **Kingmakers can't move states**; a protégé has **only ONE** Kingmaker; **1 active Kingmaker per state**. (Master-vs-regular Kingmaker = `tedchange` #128/#316.) | [§6.5](#65-217-kingmakers--protégés) | 262-265, 562, 818-826, 910 |
 | **Major-candidate gate reaffirmed** | A major presidential candidate must be an **eligible faction leader OR a Celebrity, with ≥1 command**; cascade if none qualify; pre-12A no-party-leader → a random faction leader names the candidate. | [§22.3](#223-presidential-primary-subsystem-291) + [§27.3](#273-the-12th-amendment-beforeafter-state-machine-era-specific-election-mode-toggle) | 807-812 |
 | **Make SCOTUS an elected position** (legisprop) | Election in the **election phase**, **national but simple** (like Sen/Gov, not presidential); flesh out later. | [§22.7](#227-scotus-subsystem-253--282) | 555-558 |
-| **Naval vs Army** | **No separate naval skill** (Army/Naval Expertise + once-a-General/Admiral-can't-become-the-other); battle order = **naval first** (50% of another), then ground. | [§13.2](#132-272-military-action--runphase_2_7_2_military-phaserunnersts3593) + [§17.4](#174-revolutionary-war) | 259-260, 902 |
-| **Era-of-Independence military disband is INTENTIONAL** | After the Rev War all but ~1 general disband (small NW-Indian-War force); Militia Act unavailable until Era of Federalism — urgency for a federal government + early military laws. | [§17.4](#174-revolutionary-war) | 832-834 |
+| **Naval vs Army** | **No separate naval skill** (Army/Naval Expertise + once-a-General/Admiral-can't-become-the-other); battle order = **naval first** (50% of another), then ground. | [§13.2](#132-272-military-action--runphase_2_7_2_military-phaserunnersts3593) + [§17.4](#174-revolutionary-war-revolutionarywarts) | 259-260, 902 |
+| **Era-of-Independence military disband is INTENTIONAL** | After the Rev War all but ~1 general disband (small NW-Indian-War force); Militia Act unavailable until Era of Federalism — urgency for a federal government + early military laws. | [§17.4](#174-revolutionary-war-revolutionarywarts) | 832-834 |
 | **Ranking members get the same trait bonuses/points as Chairs** (Ted 2.2-2.4 cleanup) | Plus: can't hold two congressional-leadership posts at once (796); PPT earns points regardless of Maj-Leader (796); mid-phase majority change from deaths → no gains until next legislative phase (837); Key Advisor auto-created with the Presidency (838); SCOTUS Justices refuse military appointments unless a Major War (840). | [§8](#8-leadership-selection-22x) + [§10.4.6](#1046--fixes2022-scripted-event-build-out--corroborates-the-shipped-eraevent-model--the-late-start-boot-filter--firing-rate-cap-open-pieces) | 796-840 |
 | **Lee's Resolution = prop, not foundational** | "Foundational" = bills urgent at Era-of-Federalism start; Lee's is treatable-as-foundational + gets point-giving cards because **CPU won't propose it otherwise** (CPU-proposal-bias). | [§12.1](#121-261-proposals--runphase_2_6_1_proposals-phaserunnersts3431) | 338-352, 899-900 |
 | **CPU candidate-selection fork RESOLVED (soft)** | The **25%/25%/25%/25% + kingmaker** Gov/Senator candidate set is canonical (over the "state-ideology-bias, random-if-tied" alternative). Corroborates the §25.1 75/25 cluster + the `oopscpu` CPU-candidate holes. | [§25.1](#251-candidate-selection-open-seats-primaries-conventions--the-7525-rule) | 740-759, 787-793 |
@@ -19571,12 +19572,12 @@ into the #194 lineage system. Cite `histpres#POST 1, 3, 7, 13, 19, 28, 34, 36, 3
 > `@vcczar` authors/rules across all five; `@MrPotatoTed` (Ted) co-proposes the War-Score points. The sources:
 > - **`rethinkwar`** (0fd0f2e5, "Rethinking how war works," WAR-SYSTEM REDESIGN / design-origin, Sept 2-9
 >   2022, 26 posts) — **★★ the design ORIGIN of the #45 War-Score model + the ORIGIN of bug DH-79.** Folded
->   into [§21.1.A](#211-generic-cross-era-war-system) (the full spec) + [§17.4](#174-revolutionary-war)
+>   into [§21.1.A](#211-generic-cross-era-war-system) (the full spec) + [§17.4](#174-revolutionary-war-revolutionarywarts)
 >   (DH-79 in the shipped engine) + [§13.2](#132-272-military-action--runphase_2_7_2_military-phaserunnersts3593) (pointer). Cite `rethinkwar#POST n`.
 > - **`kiaofficers`** (68fa2220, "KIA Military Leaders Possibly Adding to AMPU," DATASET / WAR-DEATH
 >   MECHANIC, Sep 26 – Oct 4 2022, 25 posts) — **ORIGIN of NEW #243** (war-death rate must scale to roster +
 >   era-gated death reduction) + **NEW #244** (West-Point ⇒ no-reappointment). Folded into
->   [§17.4](#174-revolutionary-war) (#243) + [§9.2.2](#922--244-new-kiaofficers--west-point--no-reappointment-to-a-vacated-major-military-office-office-eligibility-rule-with-dh-75-designed) (#244) +
+>   [§17.4](#174-revolutionary-war-revolutionarywarts) (#243) + [§9.2.2](#922--244-new-kiaofficers--west-point--no-reappointment-to-a-vacated-major-military-office-office-eligibility-rule-with-dh-75-designed) (#244) +
 >   [§3.1](#31-the-four-character-axes) (Army rename) + the #226/#225 blocks ([§10.1](#101-241-deaths-retirements--decay--runphase_2_4_1_deaths-phaserunnersts2341)). Cite `kiaofficers#POST n`.
 > - **`strongnevernom`** (326eee56, "AMPU Strong Never-Nominated Candidates," DATASET-AUTHORING, Oct 12-23
 >   2021, 46 posts) — **ORIGIN of NEW #246 / tension N1** (strong never-nominees ingest at FULL `ROWS`
@@ -19600,15 +19601,15 @@ into the #194 lineage system. Cite `histpres#POST 1, 3, 7, 13, 19, 28, 34, 36, 3
 >    count-based win-path. Full spec at [§21.1.A](#211-generic-cross-era-war-system).
 > 2. **★★ DH-79 — the shipped "one naval win ends naval forever" bug.** `revolutionaryWar.ts:202` records
 >    `navalWins/navalLosses` but the `:254-264` win-check reads **only the ground tallies** → naval is dead
->    state in the outcome. Documented at [§17.4](#174-revolutionary-war).
+>    state in the outcome. Documented at [§17.4](#174-revolutionary-war-revolutionarywarts).
 >
 > **★ Designer rulings + new gaps folded (the topical sections carry the detail; this is the index):**
 >
 > | Item | Ruling / spec | Where folded | Cite |
 > |---|---|---|---|
 > | **★★ #45 War-Score redesign (DESIGN ORIGIN)** | asymmetric War-Score points; per-phase `|score|×10%` roll; Momentum d6; End-War Multiplier (replaces fixed counts); verbatim ChanceOfSuccess formula (Planning + Officer-Mil×10 + MilPrep + ForRel + Benchmarks − Difficulty); naval-as-land-difficulty (±1 Mil, no standalone naval win); French-alliance "don't generalize auto-win" caveat; the narrow adopted war-hero grant (+1 Mil + Celebrity, non-office-holder, difficult battle in a major war); GM ruling war = "a side show" → POST-LAUNCH | [§21.1.A](#211-generic-cross-era-war-system) + [§13.2](#132-272-military-action--runphase_2_7_2_military-phaserunnersts3593) | `rethinkwar#POST 1, 4-5, 11-12, 16, 18, 20-26` |
-> | **★★ DH-79 naval-win bug** | `:202` records navalWins/navalLosses; `:254-264` win-check never reads them → "one naval win ends naval forever"; fix = naval feeds land ±1 Mil | [§17.4](#174-revolutionary-war) | `rethinkwar#POST 1, 16`; code `revolutionaryWar.ts:202, 254-264` |
-> | **★ #243 war-death scaling** | death-% scalar + roster-vs-deaths measurement loop (raise % if under, add pols if over) + era-gated reduction once DoD/CJCS exists; shipped `applyCasualties` has none + is RevWar-only; add ~10 KIA officers (sub-floor, Army expertise, no seeded Frail/Celebrity/Military-Leader); Shaw "die-or-Celebrity" event | [§17.4](#174-revolutionary-war) | `kiaofficers#POST 1, 2, 8, 12, 20-22`; code `revolutionaryWar.ts:67-121` |
+> | **★★ DH-79 naval-win bug** | `:202` records navalWins/navalLosses; `:254-264` win-check never reads them → "one naval win ends naval forever"; fix = naval feeds land ±1 Mil | [§17.4](#174-revolutionary-war-revolutionarywarts) | `rethinkwar#POST 1, 16`; code `revolutionaryWar.ts:202, 254-264` |
+> | **★ #243 war-death scaling** | death-% scalar + roster-vs-deaths measurement loop (raise % if under, add pols if over) + era-gated reduction once DoD/CJCS exists; shipped `applyCasualties` has none + is RevWar-only; add ~10 KIA officers (sub-floor, Army expertise, no seeded Frail/Celebrity/Military-Leader); Shaw "die-or-Celebrity" event | [§17.4](#174-revolutionary-war-revolutionarywarts) | `kiaofficers#POST 1, 2, 8, 12, 20-22`; code `revolutionaryWar.ts:67-121` |
 > | **★ #244 West-Point ⇒ no-reappointment** | once West Point exists, a vacated/removed major military office can't be re-filled by the same person; era-gated on the academy bill; UNBUILT; sits with DH-75 | [§9.2.2](#922--244-new-kiaofficers--west-point--no-reappointment-to-a-vacated-major-military-office-office-eligibility-rule-with-dh-75-designed) | `kiaofficers#POST 12` |
 > | **★ #245 party-leader election = Kingmaker + die** | PL election decided by Kingmaker count + a die (Ivanka 1-KM beat Donald 4-KM on the roll); **Presidency USURPS PL** (the escape hatch from a KM-locked party); **rules doc has NO PL-endorsement rule** (Cal); die size **d3 ↔ d10 open knob** (Cal d3 / Ted d6+); shipped `phaseRunners.ts:2130` picks PL deterministically (Pres-of-party else top-PV) — no count, no die | [§8.5.3.A](#8533a--245-new-majorevents--the-party-leader-election--kingmaker-count--a-die-the-rules-doc-has-no-party-leader-endorsement-rule-designed-not-built) | `majorevents#POST 29-36`; code `phaseRunners.ts:2130` |
 > | **★ #246 / N1 strong never-nominees** | full-strength `ROWS`-class (NOT `ERA_FIGURES` sub-floor); won-never modeled by PV/electability (region/likability/ideology), not stat suppression; OPEN: do they need a 3rd electoral tier, or is won-never emergent? + 11 dynasties + marriage-based membership; Transportation/Agriculture already shipped | [§4.1.x](#41x--246--n1-new-strongnevernom--strong-never-nominated-candidates-ingest-at-full-rows-strength-the-sub-floor-rule-applies-only-to-era_figures-won-never-is-modeled-by-pvelectability-not-stat-suppression-designeddata) | `strongnevernom#POST 1, 10-42` |
@@ -20448,7 +20449,7 @@ into the #194 lineage system. Cite `histpres#POST 1, 3, 7, 13, 19, 28, 34, 36, 3
 >   GENUINE 1772 ERA-PLAYTEST, 2 humans-v-8-CPU, both humans POPULISTS inside BLUE) — the first real
 >   era-run in many batches. Delivers **DH-81** (the war-end-per-battle bug, GM+designer CONFIRMED),
 >   **DH-82** (the doubled-officer Planning clamp), a 3rd-source #176/#155 confirm, and the cleanest
->   #4/#171 + #74 + #76 data. → folded into [§17.4](#174-revolutionary-war) + [§21.1.A](#211-generic-cross-era-war-system) (DH-81/DH-82) + the corroboration table below. Cite `06fbb2e5#POST n`.
+>   #4/#171 + #74 + #76 data. → folded into [§17.4](#174-revolutionary-war-revolutionarywarts) + [§21.1.A](#211-generic-cross-era-war-system) (DH-81/DH-82) + the corroboration table below. Cite `06fbb2e5#POST n`.
 > - **`b73925a4-flavor-event-poll`** (Apr 10–11 2025, 39 posts / 1 chunk; POLL + DESIGN BRAINSTORM,
 >   NOT a playthrough) — the **canonical flavor-event source**: defines flavor = brand/cultural-
 >   institution-tied, NO choices / NO point impact (Ted's tier-1 ruling, POST 38) + an `isFlavor`
@@ -20505,7 +20506,7 @@ into the #194 lineage system. Cite `histpres#POST 1, 3, 7, 13, 19, 28, 34, 36, 3
 > | **★ #262 BALANCE (Trad/extreme disadvantage = mostly INTENDED)** | the LW-Pop/RW-Pop/Prog/Trad disadvantage is mostly **period-accurate, keep it** (NOT broken); faction/era-specific (Red-1 worst seat, RW-Trad strong post-1980); the real fixables = repeal-incentive **invisible in sheets** (#175/#132 legibility) + **too few Moderate-point bills** (vcczar deferred, won't-fix-yet w/ a measurable trigger) | vcczar tier-1 hypothesis + deferral; tier-4 consensus | the balance fold below | `ddd179cb#POST 1, 11, 12, 13, 20, 21, 22` |
 > | **★ #114/DH-36/#179 (the port thesis)** | the Lingering phase is the #1 boring time-sink ("Processing Lingering! the most time-consuming, boring portion of being a GA") → the **"make it a computer game" port thesis** (Ted's Q10: "so I didn't have to CPU all the time") | tier-1 (Ted) + tier-4 | the balance fold below (cross-ref [§31.6 GM-burnout meta](#316-gilded-content-cluster--meta-corroborations-b14)) | `ddd179cb#POST 11, 14, 20` |
 > | **Other balance/UX folds (no NEW row)** | #107/#267 ambassador any-Admin + NATO/Art-5 auto-meter + treaty review; #23 Exec-Actions too hard/blunder-prone; #20 Governor phase dead-air → DLC randomized regional events (vcczar concurs); #251/#252 SCOTUS overhaul (randomized cert/docket, cross-ref #270 generator); #183 momentum works for insurgents; #175 per-law repealability (line-item-veto + term-limit-repeal exploit confirmed patched) | tier-4 asks + vcczar concurrence (#20) | the balance fold below | `ddd179cb#POST 9, 11, 13, 14, 21, 22` |
-> | **Lars-Ark 1772 corroborations (no NEW row)** | #4/#171 draft-ideology restrictions CONFIRMED ON in 1772 ("the only pol I'm eligible for") + Populist-in-major-party disadvantage; #74 CPU AYE-only stalled the Declaration of Independence 3× → candidate **foundational-bill (~75%, can't-perma-stall) requirement**; #76 conversions roll/fail→flip-flopper; #176 MilPrep stuck at 2 (3rd source); #155 1772 RevWar near-un-winnable (counter-constraint data) | GM tier-4 (Ark/Lars); designer-flagged-good-feedback (POST 80) | [§17.4](#174-revolutionary-war) + the corroboration table below | `06fbb2e5#POST 8, 12, 47, 67, 73, 76, 77, 80, 106-107, 122` |
+> | **Lars-Ark 1772 corroborations (no NEW row)** | #4/#171 draft-ideology restrictions CONFIRMED ON in 1772 ("the only pol I'm eligible for") + Populist-in-major-party disadvantage; #74 CPU AYE-only stalled the Declaration of Independence 3× → candidate **foundational-bill (~75%, can't-perma-stall) requirement**; #76 conversions roll/fail→flip-flopper; #176 MilPrep stuck at 2 (3rd source); #155 1772 RevWar near-un-winnable (counter-constraint data) | GM tier-4 (Ark/Lars); designer-flagged-good-feedback (POST 80) | [§17.4](#174-revolutionary-war-revolutionarywarts) + the corroboration table below | `06fbb2e5#POST 8, 12, 47, 67, 73, 76, 77, 80, 106-107, 122` |
 >
 > **Roadmap takeaway (for the tech-lead + roadmap-planner).** Batch-43 is one big NEW subsystem + one
 > confirmed shipped bug + a pile of corroboration, ranked:
@@ -20732,6 +20733,131 @@ into the #194 lineage system. Cite `histpres#POST 1, 3, 7, 13, 19, 28, 34, 36, 3
 > (8) **#276 (Kagan) + #277 (Canada)** are content/data inputs, not mechanics. Cross-ref
 > `game-context.md` rows **#124/#129/#130 (b44 numbers + USER-CONFIRM)**, **#126/#133/#135/#136/#137/
 > #138/#127 (pinned/confirmed)**, and **NEW #275/#276/#277/#278/#279**.
+
+### 30.35 Rulings folded from batch 45 — the FIVE playtest highlight-reels / discussion / data threads (★★ the CC/EV cross-batch CORRECTION + #280 alt-state EV-mutation + #281 statehood-eligibility + #247 time-indexed bias + #270/#273 judicial-misconduct charge-roll + #126 botched-major-action resignation + #282-#285 + the #12/#40 BALANCE gaps) (`78e0d55b-alt-states-ev-project` / `5e195107-electoral-trends-1840-playtest-discussion-post` / `0b896cf9-june-2023-ampu-playtest-updates` / `38cedf29-april-2023-playtest-best-moments` / `9acfc425-may-2023-ampu-playtest-updates`)
+
+> **★★ Batch 45 = a CODE-VERIFIED CORROBORATION + CROSS-BATCH-CORRECTION batch.** Five mixed
+> sources — TWO authoring/data threads (the **alt-state census/EV reference** and a **1840-campaign
+> electoral-trends discussion**) + THREE backer-email **playtest highlight-reels** (Apr / May / Jun
+> 2023). No single playthrough; value is in **mechanics signals**, all spot-checked against `src/` by
+> the digests. The HEADLINE is the **CC/EV cross-batch correction** (the b44 "CC slave-compromise plank
+> rewrites EV" claim is imprecise — see below), plus a cluster of **designed-but-unbuilt** alt-state /
+> election / judiciary subsystems and two **headline balance gaps** (#12 legislation→meters, #40
+> party-rename thresholds). **Authority:** these are GA/playtester observations + author-confirmed data
+> intent (`OrangeP47` is the census/EV authority) + direct designer quotes (`vcczar`/`MrPotatoTed` on
+> the early-game-over and party-morphology stances) — corroboration class, not new rules-doc text. The
+> sources:
+> - **`78e0d55b-alt-states-ev-project`** (Jan–Apr 2023, topic 1700, 44 posts / 1 chunk; AUTHORING /
+>   REFERENCE thread, NOT a playthrough) — OrangeP47's running log writing **EV-change events for every
+>   alt-state** in the master census file + a **statehood-eligibility Q&A**. The durable design
+>   reference behind `src/data/expansionStates.ts`. → folds #280 (EV-mutation), #281 (eligibility),
+>   and the CC/EV correction. Cite `78e0d55b#POST n`.
+> - **`5e195107-electoral-trends-1840-playtest-discussion-post`** (May 2024, topic 5399, 26 posts / 1
+>   chunk; DISCUSSION post for the OWED 1840→~1930 campaign, NOT the playlog) — partners discussing
+>   **decade-keyed state biases** + the **party-rename morphology** they're stuck behind. → folds #247
+>   (time-indexed bias) and #40 (party-rename thresholds). Cite `5e195107#POST n`.
+> - **`0b896cf9-june-2023-ampu-playtest-updates`** (Jun 2023, topic 4480, 27 posts / 1 chunk; backer
+>   HIGHLIGHT-REEL) — the **judicial-misconduct charge-roll** in action (1868 run), the Backroom
+>   20-yr career-track payoff, the Pineapple-Primary convention-kill, war→territory, and the GM-run
+>   Reconstruction election effects. → folds #270/#273, #283, #284, corroborates #277. Cite `0b896cf9#POST n`.
+> - **`38cedf29-april-2023-playtest-best-moments`** (Apr 2023, topic 1865, 30 posts / 1 chunk; backer
+>   HIGHLIGHT-REEL) — the **keynote payoff + sitting-justice keynote rule-idea** (#282), the
+>   **legislation→meters near-zero gap** (#12, headline), the **CC 3/5-compromise → Southern
+>   apportionment** datapoint (#285, the cross-batch correction), the CC ratification mechanics, and the
+>   **3-source assassination** structure (#283). → folds #12, #282, #283, #285. Cite `38cedf29#POST n`.
+> - **`9acfc425-may-2023-ampu-playtest-updates`** (May 2023, topic 2361, 33 posts / 1 chunk; backer
+>   HIGHLIGHT-REEL) — the **foreign-born→President CC lever CONFIRMED shipped** (St. Clair), the
+>   **botched-major-action → double resignation** (#126), the **Carlisle scripted-ending CONFIRMED
+>   shipped** + the designer's "early game-overs acceptable-by-design" stance, and the **senior-general
+>   battle-death DRIFT** (DH-83). → folds #126, DH-83, corroborates the CC/Carlisle shipped levers.
+>   Cite `9acfc425#POST n`.
+>
+> **The HEADLINE findings (lead with these):**
+> 1. **★★ CC/EV CROSS-BATCH CORRECTION (code-verified) — the b44 "CC slave-compromise plank rewrites
+>    EV" claim is imprecise.** `constitutionalConvention.ts:210` sets EVs **uniformly** from
+>    `max(3, (ccDelegateSlots ?? 2) + 1)` for **every** state and **never reads `slaveCompromise`**;
+>    the only shipped in-engine `electoralVotes` rewrite is the **colony→republic transition**. So
+>    "refusing the 3/5 compromise depletes Southern EV/Reps" (observed, `38cedf29#POST 26`) is
+>    **DESIGNED-BUT-UNBUILT (#285)**, not a shipped consequence. Folded into [§17.3](#173-constitutional-convention-constitutionalconventionts) +
+>    [§21.2](#212-per-state-presidential-election-method); the EV-rewrite surface that *should* become
+>    compromise-sensitive is the same one the alt-state EV system needs (#280).
+> 2. **★ #280 — the alt-state EV-MUTATION system (designed-but-unbuilt).** Authored EV-change *events*
+>    grow/shrink each alt-state's EV over the 1772–2020 timeline; **synergy events pull EV BETWEEN
+>    alt-states** (Panama←Latin Columbia; Luzon↔Quezon); alt-states **steal EV from the mainland**
+>    (Rust Belt / CA / MA / FL / high-AfAm-pop states for the Great Migration) and **sometimes give it
+>    BACK** (Luzon/Quezon/Toluca); development is **gated on WW2 (sometimes the Civil War)**;
+>    **plantation-state EV boosts** (Rio, then Venezuela). Build ships **flat EV:4 / bias:0 / agrarian**
+>    for all ~140 expansion seeds (`expansionStates.ts:173-183`); the master census sheet (the EV
+>    curves) is **not in-repo**. At [§17.5](#176-territories-territoriests) (new sub-section).
+> 3. **★ #281 — statehood ELIGIBILITY (designed-but-unbuilt).** A **~60k population floor**; a
+>    **territory-vs-state distinction** (Pacific islands = territories, never states; Guam in limbo;
+>    Puerto Rico clears it); **EV-bearing non-states** (Moon/Mars/DC get EV without statehood);
+>    **fusion/split variants** (CA→2, TX→4, Canada-as-one-state vs per-province). No `population` field
+>    or territory flag on `State`/`StateSeed`; the build lets every seed become a state identically. At
+>    [§17.5](#176-territories-territoriests).
+> 4. **★ #247 — time-INDEXED state bias (designed-but-unbuilt; multi-thread).** Real & alt-state biases
+>    **shift by decade** (Durango B+2 1840-70 → Even 1870-90 → B+1 1890-1930; Lower-CA blue / Upper-CA
+>    red **split their EVs** in close races) vs the build's **static scalar** `state.bias`
+>    (`types.ts:1324`, read by `calcStateVote` `phaseRunners.ts:3709` + ideology-drift
+>    `phaseRunners.ts:903-906`). The same census-sheet artifact as the b44 `e07f0cc1` decade maps. At
+>    [§21.2](#212-per-state-presidential-election-method) (cross-ref).
+> 5. **★ #12 — legislation→meters near-zero (HEADLINE BALANCE GAP).** Marquee bills (Medicaid, NASA,
+>    DoT, HEW, House-cap repeal, PR+DC statehood→52 states) passed with **"no meters changed,"** only
+>    ~50 PV to sponsors (`38cedf29#POST 28-30`) — players **game it** (stonewall the out-party president
+>    at zero cost). Meters exist in-engine; the **bill→meters/enthusiasm wiring is the gap.** Pairs with
+>    #124 (cabinet = the only reliable +meter lever). At [§12](#12-legislation-26x).
+> 6. **★ #126 — botched major presidential action → resignation (designed-but-unbuilt).** An Admin-gated
+>    major presidential action can be **botched** and force resignation — St. Clair + Gallatin
+>    **double-resign** (`9acfc425#POST 19-23`). The Admin-gates-success / Command-scales-blunder
+>    2-step is the b44-spec'd Pres-implementation table; the **forced-resignation outcome** is the new
+>    nuance. At [§14](#14-executive--court-management-28x) (cross-ref §30.34 #126).
+>
+> **★ Designer rulings + gaps folded (the topical sections carry the detail; this is the index):**
+>
+> | Item | Ruling / spec | Authority | Where folded | Cite |
+> |---|---|---|---|---|
+> | **★★ CC/EV CROSS-BATCH CORRECTION (code-verified)** | `constitutionalConvention.ts:210` sets EV uniformly (`max(3, ccDelegateSlots+1)`), never reads `slaveCompromise`; only shipped EV rewrite is colony→republic. "Refusing 3/5 depletes Southern EV/Reps" is **#285 DESIGNED-BUT-UNBUILT**, not shipped. | code-verified (corrects b44) | [§17.3](#173-constitutional-convention-constitutionalconventionts) + [§21.2](#212-per-state-presidential-election-method) | `38cedf29#POST 26-27`; engine L210 |
+> | **★ #280 alt-state EV-mutation (NEW, designed-but-unbuilt)** | EV-change events grow/shrink alt-state EV over the timeline; synergy events pull EV between alt-states; alt-states steal EV from mainland (Rust Belt/CA/MA/FL/Great-Migration) and sometimes give it back (Luzon/Quezon/Toluca); WW2/Civil-War development gates; plantation boosts (Rio/Venezuela). Build ships flat EV:4/bias:0 for all (`expansionStates.ts:173-183`); master census sheet not in-repo. | `OrangeP47` (census/EV authority) | [§17.5](#176-territories-territoriests) | `78e0d55b#POST 1-3, 7, 11, 13, 14, 24, 26-30` |
+> | **★ #281 statehood eligibility (NEW, designed-but-unbuilt)** | ~60k population floor; territory-vs-state distinction (Pacific islands = territories, never states; Guam in limbo; PR clears it); EV-bearing non-states (Moon/Mars/DC); CA→2 / TX→4 / Canada-one-vs-provinces fusion-splits. No `population`/territory flag in `State`/`StateSeed`. | `OrangeP47` Q&A | [§17.5](#176-territories-territoriests) | `78e0d55b#POST 8, 10, 35-43` |
+> | **★ #247 time-indexed state bias (designed-but-unbuilt; multi-thread)** | real & alt-state biases shift by decade (DU B+2→Even→B+1; LC-blue/UC-red split-EV) vs the build's static scalar `state.bias` (`types.ts:1324`, read by `calcStateVote` `phaseRunners.ts:3709`). Same artifact as the b44 `e07f0cc1` decade maps. | GA empirical (1840 campaign) | [§21.2](#212-per-state-presidential-election-method) | `5e195107#POST 2, 5, 9-13` |
+> | **★ #270/#273 judicial-misconduct charge-roll (forum-live, engine-absent)** | "improper SC justice" general event → weighted charge list (**5** Abuse-of-Power / **2** Bribery / **8** Contempt / **1** Corruption / **1** Inciting-Violence / **2** Obstruction / **1** Unethical-Bias) → **resign-or-face-House**; the SCOTUS-case + removal pipeline is GM-rolled (`pendingCourtCases` declared `types.ts:1587`, only ever `[]`; no `impeach*`/`pineapple` in `src/`). Impeachment (#273) remains designer-DEFERRED ("3.0 last; won't fix until Anthony needs it"). | GM-run; Ted DEFERRED (POST 22-23) | [§24.1.1a](#2411a--273-new-batch-43-ae435b5f--the-impeachment-subsystem-design-spec-legislative-proposal--house-judicial-committee--full-house--senate-23-trial-design-intent-vcczar-deferred-0-built) + [§17.5](#176-territories-territoriests) | `0b896cf9#POST 14-23` |
+> | **★ #282 convention KEYNOTE payoff + sitting-justice rule-idea (designed-but-unbuilt)** | keynote gives **command +1** and **+1 to the next presidential primary** (no `keynote`/`primaryBonus` in `src/`); NEW designer rule-idea (Ted): **bar sitting SCOTUS justices from keynoting**, ideally as a COSTLY action (impeachment/recusal pressure) not a hard block. | playtest-confirmed payoff; Ted rule-idea | [§15](#15-elections-29x-and-calcstatevote) | `38cedf29#POST 3-7` |
+> | **★ #283 assassination system — 3 sources (designed-but-unbuilt)** | assassinations come from **(a) scripted events, (b) a rare general event, (c) the Pineapple Primary convention-kill** ("RFK event," killed Tweed 33/50 in 1876 + Grant 1872). Convention-kill + 3-source structure not in `src/` (no `pineapple`). | playtest-confirmed (Will) | [§15](#15-elections-29x-and-calcstatevote) | `38cedf29#POST 18-21`; `0b896cf9#POST 12, 24` |
+> | **★ #284 Reconstruction election subsystem (forum-live, engine-absent)** | ex-Confederate **office lockout** (+ lift) drags the Democratic Party (LA flipped: no eligible successor); **single-turn governor limits**; Southern **martial-law election bias**; **end-via-Executive-Action**. Only flavor strings in `src/`. | GM-run | [§23.4](#234-57-reconstruction-readmission-subsystem-end-nationalism--gilded) (cross-ref) | `0b896cf9#POST 11, 14, 24`; `38cedf29#POST 8` |
+> | **★ #285 CC 3/5-compromise → Southern apportionment (designed-but-unbuilt)** | refusing the 3/5 compromise should **deplete Southern EV/Reps** (slaves not counted). Build sets EV uniformly, ignoring `slaveCompromise` (the CC/EV correction above). | GA observation | [§17.3](#173-constitutional-convention-constitutionalconventionts) | `38cedf29#POST 26-27` |
+> | **★ #12 legislation→meters near-zero (HEADLINE BALANCE GAP)** | marquee bills (Medicaid/NASA/DoT/HEW/House-cap-repeal/PR+DC→52 states) passed with "no meters changed," ~50 PV to sponsors → players stonewall the out-party president at zero cost. Bill→meters/enthusiasm wiring is the gap. Pairs with #124. | GA observation (gamed it) | [§12](#12-legislation-26x) | `38cedf29#POST 28-30` |
+> | **★ #126 botched-major-action → resignation (designed-but-unbuilt)** | an Admin-gated major presidential action can be botched and force resignation (St. Clair + Gallatin double-resign). The b44 Pres-implementation 2-step (Admin gates success, Command scales blunder) plus the **forced-resignation outcome**. | GA observation | [§14](#14-executive--court-management-28x) (cross-ref [§30.34](#3034-rulings-folded-from-batch-44--teds-actual-change-log-of-doom-the-authoritative-rules-doc-edits-with-numbers--the-appointments-23-maintenance-pass--the-kagan-content-backlog--the-canada-alt-states-retrofit--the-cabinet-20105--the-full-era-retirementdeath-charts--the-evententhusiasm-formula--the-pres-implementation-2-step-table--3-user-confirm-reconciliations-4747b09f-teds-change-log-of-doom--5d225e8a-pol-lounge2--f64a522c-kagans-foreign-policy--250bd843-canada-alt-states--e07f0cc1-ampu-related-passion-projects) #126) | `9acfc425#POST 19-23` |
+> | **★ #40 party-rename thresholds — designer-flagged TOO RESTRICTIVE** | Red→Conservative needs (no Republican Party) + (Red leader holds Protectionist Lobby) + Blue wins **3 presidential elections in a row**; Conservative→Labor needs Red is "Conservative" + Red wins 3 in a row; **plus a 50% fire roll**. Designer + players agree too tight to fire in competitive play; **keep** the dominance-cannibalization morphology, **loosen** the thresholds (esp. the 3-win clause). | **vcczar morphology ruling** (POST 24, 26) + tier-4 consensus | [§7](#7-factions-parties--alignment-drift-218) (cross-ref [§25.13](#2513-faction-rename-rule--whig-auto-rename-to-conservative-party-deterministic)) | `5e195107#POST 14-17, 21-26` |
+> | **★ Foreign-born→President CC lever — CONFIRMED SHIPPED** | `presidentialEligibility` article = `natural_born` ("Foreign-born citizens excluded") vs `any_citizen` (`constitutionalConvention.ts:52-58`); CPU 85% `natural_born` (`:119`). St. Clair confirms picking `any_citizen` makes a foreign-born pol eligible. Forum's "persuade 4 states to flip the plank" sub-action is **NOT shipped** (build uses a governor-approval ratification proxy `:189`). | code-verified | [§17.3](#173-constitutional-convention-constitutionalconventionts) | `9acfc425#POST 3, 19` |
+> | **★ Carlisle scripted ending — CONFIRMED SHIPPED + designer stance** | `eraEvents1772.ts:216-310`: `carlisle_commission` (1778+, war active, decider = single **cc-president**, a/b) → **accept** → terminal `dominion_autonomy` (`triggersGameEnd: true`). Two deltas: forum flavor "increased representation in Parliament" vs shipped "dominion autonomy"; forum 4-5-4 CC-tie-defaults-to-ACCEPT vs shipped single cc-president a/b decider. **★ Designer stance: early scripted game-overs are acceptable-by-design — do NOT add early-game-over protection.** Cross-ref DH-81. | code-verified; vcczar stance (POST 29-30) | [§17.4](#174-revolutionary-war-revolutionarywarts) (cross-ref) | `9acfc425#POST 27-30` |
+> | **★ DH-83 senior-general battle-death DRIFT (OPEN)** | a senior-general battle-death was reported in a playtest (`9acfc425#POST 5`), but `revolutionaryWar.ts:87` **excludes** senior commanders from casualties (candidates `filter(p => p.id !== war.seniorGeneralId && p.id !== war.seniorAdmiralId)`); senior commanders instead take stat/Leadership loss on defeat. Record as an OPEN drift (older build / non-battle death / forum variant?). | GM report vs code | [§17.4](#174-revolutionary-war-revolutionarywarts) | `9acfc425#POST 5`; engine L87 |
+> | **CC ratification = 9-governor threshold (shipped) — SHARPEN** | `conv.ratified = approve >= 9` (`constitutionalConvention.ts:192`) via a governor-bias `chance(0.5)` proxy (`:189`) — NOT the forum's per-delegate ~25% persuade roll (`38cedf29#POST 26`). The North refusing 3/5 got only 8/9 governors; a 25% Georgia-delegate roll clutched it (forum flavor for the proxy outcome). | code-verified | [§17.3](#173-constitutional-convention-constitutionalconventionts) | `38cedf29#POST 26`; engine L189, L192 |
+> | **Career-track exit yield broader than themed traits (corroboration)** | Backroom 20-yr forced exit (1868) gave Leadership/Kingmaker/Admin+1/Education/Expansionist/Charisma/Orator/Teflon/**Unlikable** (a negative trait) + manual MOD→CONS — vs shipped `TRACK_THEMED_TRAITS.Backroom = [Manipulative,Kingmaker,Numberfudger]` (`types.ts:212`). Confirms the **20-yr forced-exit cap**, stat bumps, negative draws. | GA observation | [§5](#5-career-tracks--the-expertise-pipeline-212) (cross-ref) | `0b896cf9#POST 24`; cross-ref b44 #279 |
+> | **War→territory acquisition (corroboration, #277)** | Spain→Puerto Rico (1840 run, 1881-82); max-prep + stacked leadership → single-battle win (Modoc). No war-outcome→admit-state wiring in `src/`. | GA observation | [§17.5](#176-territories-territoriests) (cross-ref) | `0b896cf9#POST 7, 25` |
+>
+> **Roadmap takeaway (for the tech-lead + roadmap-planner).** Batch-45 is **code-verified corroboration
+> + one cross-batch correction**, ranked:
+> (1) **★★ The CC/EV correction is load-bearing** — `constitutionalConvention.ts:210` is the *only*
+> shipped EV-rewrite and it's compromise-blind. Both the alt-state EV system (#280) and the
+> 3/5→apportionment design (#285) need that surface to become data-driven; **do not assume any EV
+> consequence of the slave compromise ships today.**
+> (2) **★ The alt-state subsystems (#280/#281/#247)** are a coherent designed-but-unbuilt cluster:
+> EV-mutation events (year + preconditions + source→target deltas, incl. give-back), a population /
+> territory-vs-state / fusion-split data model, and a decade-indexed bias series — **all gated on
+> exporting the master census sheet into the repo** (the data is not captured). The build's flat
+> EV:4/bias:0 placeholder (`expansionStates.ts:173-183`) is the system-wide stub.
+> (3) **★ #12 (legislation→meters)** is the headline BALANCE gap — wire marquee bills to meters/enthusiasm
+> so stonewalling has a cost; pairs with #124 (cabinet = only reliable +meter lever).
+> (4) **★ The judiciary/removal cluster (#270/#273)** is forum-live, engine-absent (`pendingCourtCases`
+> is dead code, only `[]`); impeachment stays **designer-DEFERRED** — do not build before vcczar
+> ratification.
+> (5) **★ #40 (party-rename thresholds)** is a designer-acknowledged TUNING gap — keep the
+> dominance-cannibalization morphology, loosen the 3-consecutive-wins + 50%-roll gates.
+> (6) **★ Designer tuning CONSTRAINTS to honor:** early scripted game-overs (Carlisle) are
+> acceptable-by-design — **do NOT add early-game-over protection** (cross-ref DH-81); and **DH-83** is an
+> OPEN senior-general battle-death drift to verify (`revolutionaryWar.ts:87` death-protects commanders).
+> Cross-ref `game-context.md` rows **#12/#40/#61/#124/#126/#247/#270/#273/#277 (updated)**, **DH-25
+> (updated)**, and **NEW #280-#285 / DH-83**.
 
 ### 30.4 Authority hierarchy reminder
 
