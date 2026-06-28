@@ -369,6 +369,7 @@
     - [30.31 Rulings folded from batch 41 — TWO Courts + TWO Welfare/Courts genre drops + ONE SC-case AUTHORING thread + relocation/faction-default design-origins (★★ #270 the SC-CASE schema + procedural GENERATOR + #271 the elected/retention-election judiciary + ★ MILESTONE [corrected in §30.32]: the first-pass 12-genre content sweep) (`964b8857-future-sc-cases` / `a863421c-courts` / `2cddc161-welfare` / `4e518e05-historical-relocation` / `8189b724-faction-ideology-default`)](#3031-rulings-folded-from-batch-41--two-courts--two-welfarecourts-genre-drops--one-sc-case-authoring-thread--relocationfaction-default-design-origins--270-the-sc-case-schema--procedural-generator--271-the-electedretention-election-judiciary---milestone-later-corrected-in-3032-the-first-pass-12-genre-content-sweep-964b8857-future-sc-cases--a863421c-courts--2cddc161-welfare--4e518e05-historical-relocation--8189b724-faction-ideology-default)
     - [30.32 Rulings folded from batch 42 — TWO policy-genre drops (Regulations + Banking) + TWO design-origin threads (Benchmarks + SC-case generator) + the What-If ENTRY mechanic (★★ #272 what-if entry-via-scripted-event + the 12-genre MILESTONE CORRECTION) (`d4cd2ee6-regulations` / `beb258f9-banking` / `f012e5cc-benchmarks` / `d474f718-change-to-whatif-politicians` / `07fa6116-future-supreme-court-cases`)](#3032-rulings-folded-from-batch-42--two-policy-genre-drops-regulations--banking--two-design-origin-threads-benchmarks--sc-case-generator--the-what-if-entry-mechanic--the-12-genre-milestone-correction)
     - [30.33 Rulings folded from batch 43 — the IMPEACHMENT design-spec + the Lars-Ark 1772 playtest + the Flavor-event poll + the Playtester survey (★★ #273 the IMPEACHMENT subsystem [DESIGN-INTENT, vcczar DEFERRED] + #274 skill-gain accessibility + DH-81 war-end-per-battle BUG + DH-82 officer-cap clamp) (`ae435b5f-fourteen-points-on-impeachment` / `06fbb2e5-lars-and-ark` / `b73925a4-flavor-event-poll` / `ddd179cb-questions-for-playtesters`)](#3033-rulings-folded-from-batch-43--the-impeachment-design-spec--the-lars-ark-1772-playtest--the-flavor-event-poll--the-playtester-survey--273-the-impeachment-subsystem-design-intent-vcczar-deferred--274-skill-gain-accessibility--dh-81-war-end-per-battle-bug--dh-82-officer-cap-clamp-ae435b5f-fourteen-points-on-impeachment--06fbb2e5-lars-and-ark--b73925a4-flavor-event-poll--ddd179cb-questions-for-playtesters)
+    - [30.34 Rulings folded from batch 44 — Ted's ACTUAL "Change Log of Doom" (the AUTHORITATIVE rules-doc edits, WITH NUMBERS) + the Appointments-2.3 maintenance pass + the Kagan content backlog + the Canada alt-states retrofit (★★ the cabinet 20/10/5% + the full era retirement/death charts + the event→enthusiasm formula + the Pres-implementation 2-step table + 3 USER-CONFIRM reconciliations) (`4747b09f-teds-change-log-of-doom` / `5d225e8a-pol-lounge2` / `f64a522c-...kagans-foreign-policy...` / `250bd843-canada-alt-states` / `e07f0cc1-ampu-related-passion-projects`)](#3034-rulings-folded-from-batch-44--teds-actual-change-log-of-doom-the-authoritative-rules-doc-edits-with-numbers--the-appointments-23-maintenance-pass--the-kagan-content-backlog--the-canada-alt-states-retrofit--the-cabinet-20105--the-full-era-retirementdeath-charts--the-evententhusiasm-formula--the-pres-implementation-2-step-table--3-user-confirm-reconciliations-4747b09f-teds-change-log-of-doom--5d225e8a-pol-lounge2--f64a522c-kagans-foreign-policy--250bd843-canada-alt-states--e07f0cc1-ampu-related-passion-projects)
     - [30.4 Authority hierarchy reminder](#304-authority-hierarchy-reminder)
 31. [Gilded-Age era systems (designed, not built)](#31-gilded-age-era-systems-designed-not-built)
     - [31.1 (#147) Tariff-as-national-%-rate + the mutually-exclusive MonetaryRegime](#311-147-tariff-as-national-rate--the-mutually-exclusive-monetaryregime-designed)
@@ -2126,6 +2127,19 @@ target cap**. Cite `tedchange#POST 34-39, 38, 52, 53` + `ted1772#POST 770, 1015`
 > **AUTHORITATIVE — Ted's official patches, `tedchange` POSTs 201-208, 279-283, 316.**
 > **SUPERSEDES** the prior "either-or" reading (Matt's playtest reading: Kingmaker = +1 state
 > only OR Master = +1 national only, not both) that the `nuke`/`pop` playtests operated under.
+>
+> **★★ TRAIT-INHERITANCE LIST SUPERSEDED + ⚠ USER-CONFIRM #3 (b44, the PRIMARY changelog
+> `4747b09f` POST 9 + 31).** The bonus-scope table below is unaffected, but the **trait
+> allowlist/blocklist below is OVERRIDDEN by the published changelog**: Ted inverted it to a
+> CANNOT-gain BLOCKLIST and, after "overwhelming tester feedback" (POST 31), **ADDED basic
+> Kingmaker, Hale, and Flip-Flopper to the no-transfer list.** So the final no-transfer set =
+> **Frail, Lackey, Incoherent, Obscure, Two-Faced, Late Bloomer, Overeager, Master Kingmaker,
+> Carpetbagger, Kingmaker, Hale, Flip-Flopper** (Celebrity STAYS transferable — feedback 50/50).
+> **⚠ USER-CONFIRM #3:** this REVERSES the "Kingmaker (basic) = ALLOWED" and "Hale = ALLOWED" rows
+> in the table below (the `a0f0bf04` "Oprah→Dr Phil" / "lifestyle teaching" reading) — **for the
+> build, basic Kingmaker and Hale do NOT transfer.** Also POST 9: Master-KM + Leadership = **3**
+> protégés (a stray "4" was a self-contradiction); protégés get a flat **+1 Command** (the old
+> 20%-chance-of-+2 was removed). Full index at [§30.34](#3034-rulings-folded-from-batch-44--teds-actual-change-log-of-doom-the-authoritative-rules-doc-edits-with-numbers--the-appointments-23-maintenance-pass--the-kagan-content-backlog--the-canada-alt-states-retrofit--the-cabinet-20105--the-full-era-retirementdeath-charts--the-evententhusiasm-formula--the-pres-implementation-2-step-table--3-user-confirm-reconciliations-4747b09f-teds-change-log-of-doom--5d225e8a-pol-lounge2--f64a522c-kagans-foreign-policy--250bd843-canada-alt-states--e07f0cc1-ampu-related-passion-projects).
 
 **Kingmaker / Master Kingmaker bonus scope** (`tedchange#POST 316`, RULED):
 
@@ -2142,9 +2156,9 @@ playtests, `tedchange#POST 302-320`.)*
 | Trait | Inheritable? | Notes |
 |---|---|---|
 | **Master Kingmaker / National Kingmaker** | **BLOCKED** | "OP enough that it can't be passed" (POST 281) |
-| **Kingmaker (basic)** | **ALLOWED** | basic-tier inheritance OK (POST 283) |
+| **Kingmaker (basic)** | ~~ALLOWED~~ → **BLOCKED (b44)** | `tedchange` said allowed (POST 283); **the PRIMARY changelog `4747b09f` POST 31 BLOCKS it** (USER-CONFIRM #3) |
 | **Frail** | **BLOCKED** | "represents cancer you can't teach" (POST 281) |
-| **Hale** | **ALLOWED** | "represents lifestyle teaching" (POST 281) |
+| **Hale** | ~~ALLOWED~~ → **BLOCKED (b44)** | `tedchange` said allowed ("lifestyle teaching", POST 281); **the PRIMARY changelog `4747b09f` POST 31 BLOCKS it** (USER-CONFIRM #3) |
 | **Flip-Flopper** | **BLOCKED** | always-blocked |
 | **Two-Faced** | **BLOCKED** | always-blocked |
 | **Celebrity** | **ALLOWED** | passable (POST 207) |
@@ -3016,6 +3030,21 @@ This is the **enthusiasm channel** of the two-channel rework above (it supersede
 structure); whether 20% is the Big-4 weight and 10% the rest-of-cabinet weight is the only residue
 of the §30.2 #8/#9 open items.
 
+> **★★ FULLY PINNED + ⚠ USER-CONFIRM #1 + ⚠ "DO NOT BUILD AS-SPECCED" (b44).** The **PRIMARY
+> changelog `4747b09f` POST 19** is the published rules-doc edit and PINS the exact tiers behind the
+> 3-state model: per lobby/interest — **exactly ONE wanted post = no change; ZERO wanted = 20% −1;
+> >1 wanted = 20% +1; NON-stacking (one roll per lobby applied to all factions sharing the card)**,
+> with **Cabinet=20% (all Secretary posts + AG) / Cabinet-Level=10% (non-Sec/AG except Amb/Gen/Adm) /
+> Generals-Admirals-Ambassadors=5%** — this RESOLVES the §30.2 #8/#9 residue (the tiers ARE the
+> weighting). **⚠ USER-CONFIRM #1:** this is the **20/10/5% lobby-WANT** model; the older discussion
+> digest `tedchange`/a0f0bf04 §5 described a DIFFERENT **50%/20% ideology-COMPOSITION** model (the
+> "≥50%/≤20%" sketch in the two-channel table above) — the composition model is **NOT in the written
+> changelog** and is superseded. **⚠ The Appointments-2.3 thread (`5d225e8a` POST 2-3, 8-10, Aug 2024)
+> FLAGS this entire lobby→enthusiasm path for a SIMPLIFYING REBUILD — even with the ±3 cap it produced
+> ~20-pt swings, judged overtuned AND too complex; DO NOT build it as-specced, await the rebuild.**
+> Caveat: the cabinet may be the only reliable POSITIVE meter lever, so any nerf needs a replacement
+> positive lever. Full index at [§30.34](#3034-rulings-folded-from-batch-44--teds-actual-change-log-of-doom-the-authoritative-rules-doc-edits-with-numbers--the-appointments-23-maintenance-pass--the-kagan-content-backlog--the-canada-alt-states-retrofit--the-cabinet-20105--the-full-era-retirementdeath-charts--the-evententhusiasm-formula--the-pres-implementation-2-step-table--3-user-confirm-reconciliations-4747b09f-teds-change-log-of-doom--5d225e8a-pol-lounge2--f64a522c-kagans-foreign-policy--250bd843-canada-alt-states--e07f0cc1-ampu-related-passion-projects).
+
 > **★ PAIR with the #151 cabinet appointment-FAIRNESS penalty** (NEW, Era-of-Terror-gated): on top
 > of the enthusiasm channel, an **unfair distribution of appointments across same-party factions
 > costs −500 points per slighted faction** — see [§9.3.9](#939--ted-ruled-era-of-terror-cabinet-fairness--diversity-penalties-151-designer-authoritative-terror2000). The two cabinet penalties (the #151 same-party
@@ -3374,6 +3403,16 @@ Death/retire vacate office and clean up leadership/protégé chains.
 > RULED. **SUPERSEDES** prior playtest-by-playtest GM improvisations on Hale immortality + ex-Pres
 > retirement (Bushwa's John Adams "undead" loop). Corroborates **Orange's 5%-of-faction-max
 > formula** independently surfaced in `smallbugs#POST 195-197` and `drums#POST 5437`.
+>
+> **★★ SHARPENED + PARTIALLY SUPERSEDED (b44, the PRIMARY changelog `4747b09f` POST 20-22, 26, 28).**
+> The discussion-digest `tedchange` POSTs here described the *trend*; the **published changelog has
+> the exact era × age-band percentage charts** (now in [§30.34](#3034-rulings-folded-from-batch-44--teds-actual-change-log-of-doom-the-authoritative-rules-doc-edits-with-numbers--the-appointments-23-maintenance-pass--the-kagan-content-backlog--the-canada-alt-states-retrofit--the-cabinet-20105--the-full-era-retirementdeath-charts--the-evententhusiasm-formula--the-pres-implementation-2-step-table--3-user-confirm-reconciliations-4747b09f-teds-change-log-of-doom--5d225e8a-pol-lounge2--f64a522c-kagans-foreign-policy--250bd843-canada-alt-states--e07f0cc1-ampu-related-passion-projects)).
+> TWO of this section's `tedchange` rulings are **OVERRIDDEN by the changelog** (changelog wins):
+> (1) **roll ORDER** — `tedchange` POST 148 says death-first/retirement-second; the **changelog POST 20
+> says check RETIREMENTS FIRST, then deaths** (shared 5% cap). (2) **Hale death** — this section's
+> "Hale = ½ chance" is the `a0f0bf04` reading; the **changelog POST 22/28 says Hale = 0% death EXCEPT
+> retired ex-Presidents roll normally** (USER-CONFIRM #2). Frail still rolled first (but at DOUBLED %,
+> POST 22); eldest→youngest after; max 1 death/faction.
 
 **Rate model:**
 - **★ 5%-of-faction-max retirement rate per half-term** (Orange's POST 195 formula, accepted POST 196).
@@ -5159,6 +5198,15 @@ opposed stance pairs) — is documented at [§14.1.3.f](#1413f--221237248--258--
 > the concept but fuzzy wording). This is the **AUTHORITATIVE wording**. Pairs with batch-4's
 > DH-10 (blundered implementations) and applies to Pres-decided era events, exec actions, and
 > any phase requiring a Pres implementation roll.
+>
+> **★★ CONFIRMED by the PRIMARY changelog (b44, `4747b09f` POST 24)** — the published rules-doc
+> edit gives the identical table (Cmd5 avoid / Cmd4 50% avoid / Cmd3 +1 / Cmd2 50% +1 / Cmd1 normal /
+> no-Command-or-expertise −2 unless Efficient on team / Incompetent −3 / Easily-Overwhelmed skips
+> Step 2), with the extra detail that **Step 1 uses Admin (Ted explicitly reverses his earlier
+> "use Command on implementation" stance), the blunder-CHECK trigger uses Command, Delegator = 50%
+> reroll by a random applicable cabinet member (no longer needs Egghead), and the three crisis traits
+> merge into "Crisis Manager"** (which applies to EVENTS with ≥10% crisis-improvement chance). Net:
+> **Admin gates SUCCESS; Command only gates blunder SEVERITY.** See [§30.34](#3034-rulings-folded-from-batch-44--teds-actual-change-log-of-doom-the-authoritative-rules-doc-edits-with-numbers--the-appointments-23-maintenance-pass--the-kagan-content-backlog--the-canada-alt-states-retrofit--the-cabinet-20105--the-full-era-retirementdeath-charts--the-evententhusiasm-formula--the-pres-implementation-2-step-table--3-user-confirm-reconciliations-4747b09f-teds-change-log-of-doom--5d225e8a-pol-lounge2--f64a522c-kagans-foreign-policy--250bd843-canada-alt-states--e07f0cc1-ampu-related-passion-projects).
 
 **Step 1 — Pres rolls ADMIN for implementation** (same as cabinet members).
 - If the roll succeeds: implementation succeeds; no blunder check needed.
@@ -17895,11 +17943,15 @@ This index is a fast-lookup table back to those folds.
    upset/fine/happy model** — per-faction count of satisfied wants → fine(0) / happy(+1 @20%/10%) /
    upset(−1 @20%/10%), one roll/faction, same-ideology factions stack, ±3 cap ([§9.3.7](#937--ted-ruled-cabinet--enthusiasm-rework-designer-authoritative-tedchange),
    `terror2000#POST 486-489`). **The only residue** is whether the 20%/10% split maps to a Big-4-vs-
-   rest-of-cabinet weighting (item 9 below).
+   rest-of-cabinet weighting (item 9 below). **★★ FULLY PINNED (b44, `4747b09f` POST 19): the actual
+   tiers ARE Cabinet 20% / Cabinet-Level 10% / Gen-Adm-Amb 5% (one non-stacking roll per lobby want)
+   — see [§30.34](#3034-rulings-folded-from-batch-44--teds-actual-change-log-of-doom-the-authoritative-rules-doc-edits-with-numbers--the-appointments-23-maintenance-pass--the-kagan-content-backlog--the-canada-alt-states-retrofit--the-cabinet-20105--the-full-era-retirementdeath-charts--the-evententhusiasm-formula--the-pres-implementation-2-step-table--3-user-confirm-reconciliations-4747b09f-teds-change-log-of-doom--5d225e8a-pol-lounge2--f64a522c-kagans-foreign-policy--250bd843-canada-alt-states--e07f0cc1-ampu-related-passion-projects) (USER-CONFIRM #1: this 20/10/5% lobby-WANT model, NOT the 50/20% ideology-composition model).**
 9. **Cabinet ideology weighting — Big-4 vs rest vs cabinet-level** — Ted flagged but didn't
    finalize whether the three tiers get distinct ideology-enthusiasm weights (POST 1-4). (Now the
    *only* open piece of #124 after the `terror2000` 3-state re-tune resolves the channel shape; the
-   20%/10% roll split in §9.3.7 may BE this weighting.)
+   20%/10% roll split in §9.3.7 may BE this weighting.) **★★ RESOLVED (b44, `4747b09f` POST 19):** the
+   tiers are **Cabinet=20% (all Secretary posts + AG), Cabinet-Level=10% (non-Sec/AG except Amb/Gen/
+   Adm), Generals/Admirals/Ambassadors=5%** — see [§30.34](#3034-rulings-folded-from-batch-44--teds-actual-change-log-of-doom-the-authoritative-rules-doc-edits-with-numbers--the-appointments-23-maintenance-pass--the-kagan-content-backlog--the-canada-alt-states-retrofit--the-cabinet-20105--the-full-era-retirementdeath-charts--the-evententhusiasm-formula--the-pres-implementation-2-step-table--3-user-confirm-reconciliations-4747b09f-teds-change-log-of-doom--5d225e8a-pol-lounge2--f64a522c-kagans-foreign-policy--250bd843-canada-alt-states--e07f0cc1-ampu-related-passion-projects). The lobby→enthusiasm path is also FLAGGED for a simplifying rebuild (`5d225e8a`) — do NOT build as-specced.
 
 ### 30.3 Rulings folded from `smallbugs` (vcczar spot rulings)
 
@@ -20475,6 +20527,211 @@ into the #194 lineage system. Cite `histpres#POST 1, 3, 7, 13, 19, 28, 34, 36, 3
 > legislative phase + primaries + legible elections are the crown jewels — **preserve depth/legibility,
 > do not trade it for automation convenience.** Cross-ref `game-context.md` rows **#273/#274 (NEW)**,
 > bugs **DH-81/DH-82 (NEW)**, and **#45/#56/#155/#176/#112/#264/#221/#261/#262/#175/#132/#114/#179/#107/#267/#23/#20/#251/#252/#183/#4/#171/#74/#76 (sharpened/corroborated)**.
+
+### 30.34 Rulings folded from batch 44 — Ted's ACTUAL "Change Log of Doom" (the AUTHORITATIVE rules-doc edits, WITH NUMBERS) + the Appointments-2.3 maintenance pass + the Kagan content backlog + the Canada alt-states retrofit (★★ the cabinet 20/10/5% + the full era retirement/death charts + the event→enthusiasm formula + the Pres-implementation 2-step table + 3 USER-CONFIRM reconciliations) (`4747b09f-teds-change-log-of-doom` / `5d225e8a-pol-lounge2` / `f64a522c-...kagans-foreign-policy...` / `250bd843-canada-alt-states` / `e07f0cc1-ampu-related-passion-projects`)
+
+> **★★ Batch 44 = THE PRIMARY-CHANGELOG batch.** Its headline source `4747b09f` is
+> **@MrPotatoTed's own "Change Log of Doom" (forum topic 5720)** — the **comment-locked
+> thread where Ted posts the concrete section-by-section numbered edits he is making to the
+> official rules doc** during his final cleanup pass. It is the **authoritative written
+> rules-doc text**, and it frequently **HAS THE ACTUAL NUMBERS** that the prior discussion
+> digests (`tedchange`/a0f0bf04, topic 5721 — the *debate ABOUT* this changelog) logged only
+> as "TBD" or "ruled in concept": the **cabinet→enthusiasm 20/10/5% rolls**, the **full
+> 5-era retirement + death percentage charts**, the **event→enthusiasm +100→+10% formula**,
+> the **First-Continental-Congress delegate counts**, and the **2-step Presidential-
+> implementation blunder table**. **Authority:** this changelog is Ted's published rules-doc
+> edit log → it is **AUTHORITATIVE and supersedes the discussion-digest wording wherever they
+> differ.** ★★ **THREE such differences are material reconciliation conflicts — recorded
+> below as USER-CONFIRM #1/#2/#3, mirroring `game-context.md` rows #124/#130/#129.**
+>
+> The batch's other four sources are lighter: an **Appointments-2.3 maintenance/critique
+> pass** (`5d225e8a`, topic 5647), a **foreign-policy content backlog** (`f64a522c`, the
+> Kagan notes — content-pipeline input, NOT mechanics), a **Canada alt-states retrofit**
+> (`250bd843` — territory/admission mechanics), and a **low-signal viz/blog thread**
+> (`e07f0cc1` — no rulings). The sources:
+> - **`4747b09f-teds-change-log-of-doom`** (Sept 18 2024 →, topic 5720, 31 posts / 1 chunk;
+>   PRIMARY-SOURCE CHANGELOG, NOT a playtest) — **THE AUTHORITATIVE numbered rules-doc edits.**
+>   Scope of this 31-post slice: **2.1 drafts → 2.1.4-2.1.8 (relocate/ideology/conversion/
+>   kingmaker/cards) → 2.2 (congressional leadership) → 2.3 (cabinet enthusiasm) → 2.4 (death/
+>   retirement/events/Pres implementation) → 2.9.8 (First Continental Congress)**, then UPDATE
+>   edits incorporating discussion-thread feedback. STOPS at the CC section (2.5/2.6 are later
+>   changelog entries not in this export). NOTE POST 27 + 29 are NOT Ted (Umbrella, despite the
+>   comment lock); everything else is Ted. → folded into the topical sections below (this §30.34
+>   is the designer-ruling INDEX home for the numbers). Cite `4747b09f#POST n`.
+> - **`5d225e8a-pol-lounge2`** ("Pol_Lounge2" is a misnomer — real topic 5647 "Group Discussion
+>   2.3 — Appointments", Aug 24-26 2024, 15 posts / 1 chunk; FOCUSED DESIGN-REWORK pass, NOT a
+>   playthrough; the Appointments thread OWED from batch 43's byte-identical `754a0a4c` mis-export).
+>   A maintenance/critique pass on the 2.3 ruleset: confirms CPU appointment-voting is FIXED,
+>   flags the lobby→enthusiasm system for a **simplifying rebuild** ("do not build as-specced"),
+>   proposes a cluster of unratified tweaks. → folded into [§9](#9-cabinet--military-appointments-23x)
+>   + the gaps table below (#229/#112/#275). Cite `5d225e8a#POST n`.
+> - **`f64a522c-...kagans-foreign-policy...`** (6 posts / 2 chunks; CONTENT-SUGGESTION +
+>   data-fix coordination, NOT a playthrough) — POST 1 = ~190 candidate alt-events from Robert
+>   Kagan's *Dangerous Nation* (book 1 of a series); POSTS 2-6 = a Canada census/EV data-fix
+>   sub-thread. **Content-pipeline input, NOT mechanics** (#221/#258/#92/#248); confirms a
+>   **mid-game EV-mutation primitive exists**. → noted in the content-system + Canada folds below
+>   (#276). Cite `f64a522c#POST n`.
+> - **`250bd843-canada-alt-states`** (34 posts / 1 chunk; worldbuilding/data, NOT a playthrough)
+>   — how to represent Canada as admittable states after an **emergent 1856 playtest left the US
+>   holding Canada** (Buchanan's Pig-War conquest). Territory/admission mechanics. → folded into
+>   the Canada fold below + cross-ref [§23.5](#235-60-canada-conquest--era-gated-territorystatehood--canadian-draft)
+>   (#277). Cite `250bd843#POST n`.
+> - **`e07f0cc1-ampu-related-passion-projects`** (37 posts / 1 chunk; community show-and-tell,
+>   NOT a playtest) — Flourish data-viz maps; **no rulings, no mechanic changes.** Two thin
+>   data-model signals only (time-varying state bias; per-census ideology bonus/malus tables),
+>   relevant only to long modern/1840 campaigns the build doesn't ship. Logged here for
+>   completeness; nothing to fold. Cite `e07f0cc1#POST n`.
+>
+> **The HEADLINE findings (lead with these):**
+> 1. **★★ CABINET → ENTHUSIASM — the ACTUAL NUMBERS (gap #124, `4747b09f` POST 19).** The
+>    primary changelog PINS the percentages the discussion digests called "TBD". Per lobby/
+>    interest: **exactly ONE wanted Cabinet post = content (no change); ZERO wanted = 20% chance
+>    −1 enthusiasm (away from the Pres's party for any faction holding that card); MORE-THAN-ONE
+>    wanted = 20% chance +1**. **Does NOT stack** (5 wanted posts = still ONE 20% roll). **One
+>    roll per lobby/interest**, the single outcome applied to all factions sharing that card.
+>    **Cabinet-LEVEL = same model at 10%; Generals/Admirals/Ambassadors = 5%.** Definitions:
+>    **"Cabinet" = all Secretary posts + the Attorney General; "Cabinet Level" = all non-Sec/AG
+>    posts EXCEPT Ambassador/General/Admiral.** This is the version Ted "been testing
+>    successfully in the 2000 game" → it matches `terror2000`'s three-state upset/fine/happy
+>    model, confirming THAT is the shipped-forum rule. **⚠ USER-CONFIRM #1 below.** Folded into
+>    [§9](#9-cabinet--military-appointments-23x).
+> 2. **★★ RETIREMENT + DEATH — the full era-keyed charts (gap #130, `4747b09f` POST 21-22).**
+>    The exact 5-era × age-band percentage tables (below), `+20%` retirement if NOT holding an
+>    office, **Frail death rolled first at DOUBLED %**, then eldest→youngest, **max 1 death per
+>    faction**, retirements checked BEFORE deaths under a shared **5%-of-faction cap**, appointed/
+>    military posts retire at END of term, Pres/VP age-retire = "won't seek re-election". **⚠
+>    USER-CONFIRM #2 below (Hale = 0% death, not "half").** Folded into [§10](#10-events-24x).
+> 3. **★★ EVENT → ENTHUSIASM formula + the 2-STEP PRESIDENTIAL-IMPLEMENTATION blunder table
+>    (gaps #279/#126, `4747b09f` POST 23-24).** The exact deterministic conversions (below):
+>    per ±100 net points a faction nets → 10%/step enthusiasm shift; ≥6 factions affected → ±1
+>    party preference for the Pres's party. And the canonical Pres-implementation rule: **Step 1
+>    = ADMIN roll (gates success, like cabinet); Step 2 (only on a blunder) = COMMAND-scaled
+>    blunder-severity table**. Folded into [§10](#10-events-24x).
+> 4. **★ NEW concrete rules cluster (gaps #278/#279 + draft/conversion edits).**
+>    **plantation→Agriculture 2:1** on plantation-economy elimination (usually the ACW); **1%
+>    chance to GAIN "can party flip"** (a path to acquire the trait); **career-track backdating =
+>    3 draft classes** at game start (not 5); **harmonious-draft roll now considers the draft
+>    TARGET** too (disharmonious wins); **Continental-Congress President 2-term (4-yr) cap**;
+>    **`cop` → `lawful` trait rename**. Folded into [§4](#4-draft-211)/[§6](#6-politician-churn-213217)/[§17](#17-era-systems).
+> 5. **★ Appointments-2.3 (`5d225e8a`) — SHIPPED-vs-DESIGNED + the "do-not-build-as-specced"
+>    flag (gaps #229/#112/#275).** Shipped `runPhase_2_3_1_Cabinet` is a thin deterministic CPU
+>    auto-fill with **NO confirmation vote, NO lobby→enthusiasm, a flat 10%-relax/−3-penalty
+>    cross-party gate** (NOT the designed ±1-ideology gate); both 2.3 phases skipped in the
+>    independence era. The lobby→enthusiasm rule (the #124 numbers) is **designed-but-unbuilt AND
+>    flagged for a simplifying rebuild** — do NOT build it as-specced. CPU over-rejection of
+>    nominees was FIXED in the manual ruleset. Folded into [§9](#9-cabinet--military-appointments-23x).
+>
+> ### ⚠⚠ The THREE USER-CONFIRM reconciliation conflicts (changelog `4747b09f` is AUTHORITATIVE)
+>
+> In all three the **primary changelog `4747b09f` is the written rules-doc text and WINS**; the
+> prior discussion-digest (`tedchange`/a0f0bf04) value is recorded so the user can confirm.
+> These mirror the `game-context.md` USER-CONFIRM tags on rows #124/#130/#129.
+>
+> | # | Conflict | Changelog value (`4747b09f`, AUTHORITATIVE) | Discussion-digest value (`a0f0bf04`) | Gap-log row |
+> |---|---|---|---|---|
+> | **USER-CONFIRM #1** | Cabinet → enthusiasm MODEL | **20% / 10% / 5% lobby-WANT** rolls (0 wanted → 20% −1; >1 → 20% +1; exactly 1 → no change; Cabinet-Level 10%; Gen/Adm/Amb 5%; non-stacking, one roll per lobby). `POST 19`. | **50% / 20% ideology-COMPOSITION** (≥50% of cabinet of an ideology → +enth; ≤20% representation → −enth). | #124 |
+> | **USER-CONFIRM #2** | Hale-trait DEATH chance | **Hale = 0% death**, regardless of age — with ONE exception: **retired ex-Presidents roll the death chart NO MATTER WHAT** (`POST 26`), incl. Hale ex-Presidents (`POST 28`, so a Hale ex-Pres like Carter doesn't live forever). `POST 22`. | **Hale = 1/2 (half) the chance of death.** (Materially different: immortal-except-ex-Pres vs merely halved.) | #130 |
+> | **USER-CONFIRM #3** | Kingmaker→protégé trait TRANSFER | basic **Kingmaker, Hale, Flip-Flopper do NOT transfer** (added to the no-transfer blocklist `POST 31` after "overwhelming tester feedback"; Celebrity STAYS transferable, feedback 50/50). | basic **Kingmaker + Hale DO transfer** ("Oprah→Dr Phil"; "mentor a healthy lifestyle, not cancer"). | #129 |
+>
+> **★ Designer rulings + gaps folded (the topical sections carry the detail; this is the index):**
+>
+> | Item | Ruling / spec (★ = pins a number the build needs) | Authority | Where folded | Cite |
+> |---|---|---|---|---|
+> | **★★ #124 CABINET→ENTHUSIASM numbers (USER-CONFIRM #1)** | per lobby/interest: 1 wanted Cabinet post = no change; 0 wanted = **20% −1**; >1 = **20% +1**; NON-stacking; one roll per lobby applied to all factions sharing the card. Cabinet-Level = **10%**, Gen/Adm/Amb = **5%**. "Cabinet" = all Sec posts + AG; "Cabinet Level" = non-Sec/AG except Amb/Gen/Adm. The "will an official accept" section is **CPU-only** (humans accept/decline freely). | **Ted tier-1 (primary changelog)** | [§9](#9-cabinet--military-appointments-23x) | `4747b09f#POST 19` |
+> | **★★ #130 RETIREMENT chart (USER-CONFIRM #2 atop it)** | era-keyed % by age band 60-65/66-70/71-75/76-80/81+, **+20% if NOT holding an elected/appointed office** (full table below): 1772-1820 = 20/25/30/40/80; 1820-1868 = 15/20/25/35/75; 1868-1916 = 10/15/20/30/70; 1916-1972 = 5/10/15/25/65; 1972-2100 = 0/5/10/20/60. | **Ted tier-1** | [§10](#10-events-24x) | `4747b09f#POST 21` |
+> | **★★ #130 DEATH chart (USER-CONFIRM #2)** | era-keyed % by age band 25-40/41-60/61-80/81+ (full table below): 1772-1820 = 5/25/30/60; 1820-1868 = 4/20/25/50; 1868-1916 = 3/15/20/40; 1916-1972 = 2/10/15/35; 1972-2100 = 1/5/10/30. **Roll Frail FIRST at DOUBLED %, then eldest→youngest; MAX 1 death/faction; skip if 5%-of-faction already retired.** Hale = **0%** except retired ex-Presidents (USER-CONFIRM #2). | **Ted tier-1** | [§10](#10-events-24x) | `4747b09f#POST 22, 26, 28` |
+> | **★ #130 office-vacancy + retirement framework** | dead party-leader → NEW party-leader ELECTION; dead congressional officer → re-elected; dead chair/ranking → re-appointed (ranking added to vacancy hierarchy after open Chairs); factions lose ≤**5% of their politicians**; **check RETIREMENTS first, then deaths (shared 5% cap)**; cabinet/Gen/Adm/Amb/cabinet-level **retire at END of current 2-yr term** (not immediately); **Pres + VP CAN age-retire** but stay in office and **simply don't run for re-election**. | **Ted tier-1** | [§10](#10-events-24x) | `4747b09f#POST 20` |
+> | **★★ #279 EVENT→ENTHUSIASM formula** | per event: for each **+100 (round down)** a faction nets → **+10% chance** its FL's ideology enthusiasm +1 toward the Pres's party; for each **−100 (round up)** → +10% chance −1 away; **≥6 factions net positive → +1 party preference** for the Pres's party (≥6 net negative → −1). Certain unresolved EraEvos KEEP their %-chance to re-fire in future cycles until resolved/era-passes (needs an EraEvos-sheet flag). | **Ted tier-1** | [§10](#10-events-24x) | `4747b09f#POST 23` |
+> | **★★ #126 PRESIDENTIAL IMPLEMENTATION (2-step, CANONICAL)** | Pres NOT involved unless cabinet blunders. **STEP 1 = roll for implementation using ADMIN (like cabinet), NOT Command** (Ted reverses his earlier stance). Efficient Pres rolls alone; Delegator = 50% reroll by a random applicable cabinet member (no longer needs Egghead); Crisis-Manager applies to EVENTS with ≥10% crisis-improvement chance; "Crisis Admin"→"Crisis Manager" rename. **The blunder-check uses COMMAND** (was Admin). **STEP 2 (blunder roll, only if Step 1 failed): skip if resolved in Step 1; skip if Easily-Overwhelmed.** With relevant expertise: **Cmd 5 = avoid; Cmd 4 = 50% avoid; Cmd 3 = +1; Cmd 2 = 50% +1; Cmd 1 = normal.** No relevant expertise OR no Command = **−2** (unless someone in the implementation phase is Efficient); **Incompetent Pres = −3.** (Net: Admin gates SUCCESS; Command only gates blunder SEVERITY. A `−N` blunder mod is BAD; `+N`/avoid is GOOD.) | **Ted tier-1** | [§10](#10-events-24x) | `4747b09f#POST 24` |
+> | **★ #129 Kingmaker→protégé no-transfer blocklist (USER-CONFIRM #3)** | FINAL CANNOT-gain set: **Frail, Lackey, Incoherent, Obscure, Two-Faced, Late Bloomer, Overeager, Master Kingmaker, Carpetbagger, Kingmaker, Hale, Flip-Flopper** (Celebrity STAYS transferable). Mechanism inverted allowlist→blocklist. Master Kingmaker + Leadership = **3** protégés (was a stray "4"); protégés get a flat **+1 Command** (the old 20%-chance-of-+2 removed); Master Kingmaker = protégés from ANY state. Military-office no longer bars being a protégé; SC Justice + House/Senate Minority Leaders BREAK the bond when a protégé attains them; CPU dead-Kingmaker (no protégé/prospects) = **100% attempt** to shift its own Kingmaker toward a potential protégé if 1-step. | **Ted tier-1** | [§6](#6-politician-churn-213217) | `4747b09f#POST 9, 16, 31` |
+> | **★ #127 conversion/ideology rates** | disgruntled auto party-flip = **33%** (was 25%→75%→33%); **NEW 1% chance to GAIN "can party flip"** (4 triggers: personal ideology maxed toward the opposite party, not Puritan, not a faction leader, hits the 1%; removed the special 10%-for-Moderates → 1% for all); same-party (ally) pliable steal now allowed if the stealing FL's ideology is **ADJACENT** to the target's; inter-party pliable steal still needs an **EXACT** ideology match; failed **opposition-party** conversion can now also grant **Purity**. | **Ted tier-1** | [§6](#6-politician-churn-213217) | `4747b09f#POST 8, 14, 15` |
+> | **★ #278 plantation→Agriculture 2:1 (NEW economic rule)** | when the plantation economy is eliminated (usually via the American Civil War), plantation industries convert to Agriculture at **2:1** (10 plantation → 5 Agriculture). NEW — not in the discussion digest; ties to abolition/ACW economy transition. | **Ted tier-1** | [§17](#17-era-systems) + the slavery/abolition systems | `4747b09f#POST 2` |
+> | **★ #279 Continental-Congress President 2-term cap (NEW)** | no pol may serve more than **TWO terms (4 years)** as President of the Continental Congress (even John Jay served <3 yrs historically). | **Ted tier-1** | [§17](#17-era-systems) | `4747b09f#POST 17` |
+> | **★ #133 First Continental Congress composition** | delegates from each state chosen by the **faction with the most politicians from that state**; **tie → each tied faction appoints an equal number** (uneven leftover assigned randomly). **Delegate counts: big states = 4, small = 2, medium = 3.** Era of Independence: **big = PA/MD/MA/VA; small = DE/GA/NH/RI; medium = all others.** (OPEN: Umbrella asked whether CC appointees need ≥1 Legislative — no Ted answer in this export.) | **Ted tier-1** | [§17](#17-era-systems) | `4747b09f#POST 25` |
+> | **★ #135 / CC leadership (2.2)** | **50/50 House split → the House Majority/Speaker is the party that does NOT hold the Senate majority** (models a 50/50 House). Passive blocks faction-leader at **100%** (was 25%) — EXCEPT elected Presidents are always faction/party leaders. Explicit FL-eligibility relaxation ladder: drop "not obscure" → leadership → career-track → interest/lobby → passive/lackey/incompetent (leaving only: FL's ideology must match a faction ideology card). CPU factions consolidate around a single leadership candidate by round 4. | **Ted tier-1** | [§8](#8-leadership-selection-22x) | `4747b09f#POST 17, 18` |
+> | **★ #136/#137/#138 + draft edits** | random 9th/10th-place skill grant is RANDOM but **Command excluded** (#136); cross-party draft REMOVED — pols enter at their **historically accurate party** in their draft year (#137); **3 random rookies get random traits + 3 get alt-states** (#138, was 5/5); rookie random-trait BLOCKLIST = Kingmaker/Military-Leader/Two-Faced/Flip-Flopper/Decisive-General/Master-Kingmaker/Carpetbagger/Union-Loyalist; random-pol generator starts **Era of Populism**; CPU out-of-ideology draft = **25%**; "if a CPU instruction can't be followed, take the highest-PV draftee"; harmonious-draft roll now considers the **draft TARGET** (disharmonious wins). | **Ted tier-1** | [§4](#4-draft-211) | `4747b09f#POST 3, 4, 5, 11, 12, 13` |
+> | **★ career-track edits** | **backdating = 3 draft classes** at game start (NOT 5 — avoids instant mega-pols); a backdated rookie already holding a job can't join the track; career-track pols advance every 4 years; reworked interest lists + a single **10% roll for ONE** ideology-paired interest (**Moderates now gain NO career-track interests**). | **Ted tier-1** | [§5](#5-career-tracks--the-expertise-pipeline-212) | `4747b09f#POST 6` |
+> | **★ CPU ideology-shift determinism (2.1.5)** | CPU now **ALWAYS (100%)** attempts a 1-step shift toward a state/party-leader match; removed the CPU shift-count cap (follows normal 3-9 action counts); CPU prioritizes **career-track** pols when picking shift targets; the 60/40 [state-ideology vs highest-party-enthusiasm-ideology] chart is rolled **ONCE PER POSSIBLE MOVE** (after the 100% Kingmaker-fix check), career-track prioritized within. | **Ted tier-1** | [§6](#6-politician-churn-213217) | `4747b09f#POST 7, 29-30` |
+> | **★ `cop` → `lawful` trait rename** | the "cop" trait renamed **"lawful"** to match the Excel sheets (check dataset/types for stragglers). | **Ted tier-1** | [§3](#3-politicians--stats) / dataset | `4747b09f#POST 26` |
+> | **★ Isolationist faction-card eligibility widened** | the Isolationist card was so restrictive it almost never got assigned; eligibility widened (Eric's already-house-ruled version). | **Ted tier-1** | [§7](#7-factions-parties--alignment-drift-218) | `4747b09f#POST 10` |
+> | **★ #229/#112/#275 Appointments-2.3 SHIPPED-vs-DESIGNED + rebuild flag** | shipped `runPhase_2_3_1_Cabinet` (phaseRunners.ts:2158) = deterministic CPU auto-fill, **NO confirmation vote**, flat 10%-relax/−3-penalty cross-party gate (NOT the ±1-ideology gate); both 2.3 phases skipped in independence era (phases.ts:89-90). The lobby→enthusiasm rule (#124 numbers) is **designed-but-unbuilt AND flagged for a simplifying rebuild — DO NOT BUILD AS-SPECCED** (overtuned ~20-pt swings, ±3 cap insufficient, too complex). Proposed-but-UNRATIFIED tweaks: career-track removal guard (only nominate a career-tracker if no one with ≥2 Admin is available); Puritan ≤2-step ideology window; CPU auto-resign when relevant skill <2 (EXCEPT an opposite-party life-tenure member never resigns); the §2.4-vs-§2.8 incompetent-President authority inconsistency. **CPU over-rejection of nominees = FIXED** in the manual ruleset (ebrk's CPU-rule change; Tyler CPU-vs-CPU confirmed). | ebrk85/Ted/Tyler/matt/Arkansas-Progressive (mixed: FIXED + FLAGGED + PROPOSED + committed SPEC) | [§9](#9-cabinet--military-appointments-23x) | `5d225e8a#POST 1-15` |
+> | **#276 Kagan foreign-policy content backlog (NOT mechanics)** | ~190 UNRATIFIED candidate alt-events (Kagan *Dangerous Nation*, founding→1898, 0% shipped) — content-pipeline INPUT feeding #221 (Legis-Prop/Pres-Action/Scripted-Event primitives), #258 (predicate gating, e.g. Hawaii-blocked-below-Missouri-line; push-France-out gated on a war-swollen CW army), #92 (era-as-band), #248 (Diplomacy/Expansionism/Military subtypes); the navy-buildup ladder = a ready-made #221 escalating-prereq-chain; a **mid-game EV-mutation primitive exists** (events that change EVs). Emoji-vote tallies never survived; secondary source → needs primary vetting + re-triage against the #221 importance bar. | un-vetted backlog (NOT designer-ratified) | content-system fold (cross-ref #221/#258) | `f64a522c#POST 1, 6` |
+> | **#277 Canada alt-states territory/admission** | emergent conquest of UN-MODELED territory (Buchanan's Pig-War conquest of Canada; also buyable ~1840) — the build has **no acquisition-by-war/event mechanic**. `expansionStates.ts` registers every province as a `region:'Canada'` annexable seed but every seed carries placeholder **EV:4, bias:0**; `admitState` (territories.ts) just copies the seed — no census/EV computation. Canon: EV tallies trustworthy, **state biases never authored by V** (derived ad-hoc by "translating" main-tab guidance); Northern Canada (NWT+Yukon+Nunavut grouped) = tossup; every province its own state EXCEPT PEI; "Central Canada" correctly absent; **ZERO** Canadian draftees in the curated fallback; Canada census built from BAD DATA (OP47 fixing). Abbr delta: thread canon **Manitoba=MB**, build uses **MAN**. | GM worldbuilding (AP/OrangeP47, delegated map authority) | Canada fold (cross-ref [§23.5](#235-60-canada-conquest--era-gated-territorystatehood--canadian-draft)) | `250bd843#POST 1-34; f64a522c#POST 3-6` |
+> | **`e07f0cc1` (NO rulings — logged for completeness)** | community Flourish data-viz thread; two thin data-model signals only — **time-varying per-census state bias** (R+n/D+n, drifts slowly) and **per-state per-census ideology bonus/malus tables** (maintained by hand for the 1840 playtest). Both are forum data assets relevant only to long modern/1840 campaigns the build doesn't ship. NOT a mechanic; no code change implied. | — (no authority — show-and-tell) | none (data-model note only) | `e07f0cc1#POST 6, 12, 35-37` |
+>
+> #### The full era-keyed RETIREMENT chart (`4747b09f` POST 21) — ★ #130
+>
+> **+20% to the chance if the individual does NOT currently hold an elected or appointed office.**
+>
+> | Era band | 60-65 | 66-70 | 71-75 | 76-80 | 81+ |
+> |---|---|---|---|---|---|
+> | **1772-1820** (Independence→Republicanism) | 20% | 25% | 30% | 40% | 80% |
+> | **1820-1868** (Democracy→Nationalism) | 15% | 20% | 25% | 35% | 75% |
+> | **1868-1916** (Gilded Age→Progressivism) | 10% | 15% | 20% | 30% | 70% |
+> | **1916-1972** (Normalcy→Nuclear Age) | 5% | 10% | 15% | 25% | 65% |
+> | **1972-2100** (Neocons→Distant Future) | 0% | 5% | 10% | 20% | 60% |
+>
+> #### The full era-keyed DEATH chart (`4747b09f` POST 22) — ★ #130
+>
+> Atop the chart: do NOT roll death if 5%-of-faction already retired; **Hale = 0%** death (USER-CONFIRM
+> #2; except retired ex-Presidents roll normally); roll **Frail pols first, DOUBLING their %**; after
+> Frail, roll **eldest→youngest**; **MAX one death per faction.**
+>
+> | Era band | 25-40 | 41-60 | 61-80 | 81+ |
+> |---|---|---|---|---|
+> | **1772-1820** | 5% | 25% | 30% | 60% |
+> | **1820-1868** | 4% | 20% | 25% | 50% |
+> | **1868-1916** | 3% | 15% | 20% | 40% |
+> | **1916-1972** | 2% | 10% | 15% | 35% |
+> | **1972-2100** | 1% | 5% | 10% | 30% |
+>
+> > **Note:** these 5-era × age-band charts differ slightly from the `rulebook §N` 3-band death table
+> > already in [§10](#10-events-24x)/[§30.21]; both are designer sources, but the **`4747b09f` charts are
+> > the LATER changelog-doc version** and are authoritative for the build.
+>
+> #### The 2-step Presidential-implementation blunder table (`4747b09f` POST 24) — ★ #126
+>
+> Step 1 (ADMIN, gates success) → on a blunder, Step 2 (COMMAND, gates severity). Skip Step 2 if
+> resolved in Step 1 or if the Pres is Easily Overwhelmed. A **`−N`** blunder modifier is **BAD** (worse
+> outcome); a **`+N` / "avoid"** is **GOOD**.
+>
+> | President's Command (with relevant expertise) | Step-2 blunder effect |
+> |---|---|
+> | **Cmd 5** | avoid the blunder roll entirely (GOOD) |
+> | **Cmd 4** | 50% chance to avoid the blunder roll |
+> | **Cmd 3** | +1 to the blunder roll (GOOD) |
+> | **Cmd 2** | 50% chance of +1 |
+> | **Cmd 1** | blunder roll normal |
+> | **No relevant expertise OR no Command** | **−2** to the blunder roll (unless someone in the implementation phase is Efficient) |
+> | **Incompetent President** | **−3** to the blunder roll |
+>
+> **Roadmap takeaway (for the tech-lead + roadmap-planner).** Batch-44 is the **NUMBERS batch** —
+> it pins the probability inputs the build was missing, all driven by the seeded RNG (`src/rng.ts`),
+> ranked:
+> (1) **★★ #124 cabinet→enthusiasm (USER-CONFIRM #1)** — the build should implement the **20/10/5%
+> lobby-want** model (POST 19), **NOT** the 50/20% ideology-composition model — BUT this whole path is
+> **flagged for a simplifying rebuild (`5d225e8a`): do NOT build as-specced; await the rebuild.** The
+> shipped 2.3 has zero enthusiasm-from-cabinet logic today; any nerf needs a replacement positive
+> meter lever (cabinet may be the only reliable POSITIVE lever).
+> (2) **★★ #130 retirement+death (USER-CONFIRM #2)** — implement the full 5-era charts (above), `+20%`
+> off-office, Frail-first-doubled → eldest→youngest, max-1-death/faction, 5% shared cap,
+> retire-before-death, end-of-term appointed retirement, Pres/VP age-retire-as-no-reelection. **Hale =
+> 0% death except retired ex-Presidents** (NOT "half").
+> (3) **★★ #126 Pres-implementation 2-step** — Admin gates success (Step 1), Command scales blunder
+> severity (Step 2 table above); Easily-Overwhelmed skips Step 2; Incompetent = −3. This is now the
+> canonical rules-doc wording.
+> (4) **★★ #279 event→enthusiasm formula** — the deterministic per-±100→10%/step + 6-faction
+> party-preference threshold; plus recurring-unresolved-EraEvos flag.
+> (5) **★ #129 Kingmaker no-transfer (USER-CONFIRM #3)** — basic Kingmaker + Hale + Flip-Flopper do
+> NOT transfer; Master-KM+Leadership = 3 protégés; protégé = flat +1 Command.
+> (6) **★ Small concrete rules** — #278 plantation→Agriculture 2:1; #279 CC-President 2-term cap;
+> #127 1%-gain-can-party-flip + adjacency same-party steal + 33% disgruntled flip; career-track
+> 3-class backdating; `cop`→`lawful` rename. (7) **Appointments-2.3 (#229/#112/#275)** is a
+> sequenced design task — the lobby→enthusiasm rebuild gates the #124 implementation; spec the
+> career-track removal guard, Puritan ideology window, CPU auto-resign, and the §2.4/§2.8 doc fix.
+> (8) **#276 (Kagan) + #277 (Canada)** are content/data inputs, not mechanics. Cross-ref
+> `game-context.md` rows **#124/#129/#130 (b44 numbers + USER-CONFIRM)**, **#126/#133/#135/#136/#137/
+> #138/#127 (pinned/confirmed)**, and **NEW #275/#276/#277/#278/#279**.
 
 ### 30.4 Authority hierarchy reminder
 

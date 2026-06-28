@@ -4621,6 +4621,36 @@ of batch-43 is bigger or NOT this lane:** #273 impeachment (L, Decision-gated (B
 #221, post-launch); the playtester signal is annotation-only (port thesis #114 + Q9 crown-jewels). **No re-sequence:
 QW32 is the only new cheap-fixes-lane delta (DH-81's S slice rides the war track); top-of-queue UNCHANGED.** debt
 #141/#142; game-mechanics §21.1.A.
+**★★ Batch-44 adds SEVEN new quick-wins (QW33–QW39) — the cheap-fixes-lane delta this batch (debt #149/#150; `4747b09f`
+PRIMARY CHANGELOG + `5d225e8a`; `GM⇒App`).** The `4747b09f` "Change Log of Doom" PINS values prior batches logged as
+"TBD" and yields a cluster of small, concrete rules. **QW33 §2.4-vs-§2.8 doc-fix (debt #146d):** a rules-doc bug only
+(the incompetent-President authority inconsistency, `5d225e8a` POST 1) — XS, doc-only, NO engine code. **QW34 CC-President
+2-term cap (#279, debt #150.2):** no pol serves >2 terms (4 yr) as CC President — a term counter on `continentalCongress.ts`,
+pure-engine, S. **QW35 1%-gain-can-party-flip (#279, debt #150.3):** a pol facing a disgruntled-flip roll but not flippable
+has a flat 1% chance to ACQUIRE "can party flip" (4 conditions; the 10%-for-Moderates was removed) — the first codified
+path to acquire the trait, a roll in the conversion pass (`phaseRunners.ts:682,767`), pure-engine, S. **QW36 harmonious-
+considers-draft-target (#279, debt #150.5):** the out-of-ideology draft roll now also reads the TARGET's harmonious/
+disharmonious trait (one-of-each → disharmonious wins) — a draft-roll modifier in `runPhase_2_1_1_Draft`, pure-engine
+(needs the harmonious/disharmonious trait on draftees), S. **QW37 event→enthusiasm formula (#279, debt #150.1):** per
+event, each +100 a faction nets → +10% chance its FL's ideology enthusiasm moves +1 toward Pres's party (each −100 → −1
+away); ≥6 factions net positive → +1 party-pref (≥6 net negative → −1) — a formula over existing enthusiasm/event data at
+the era-event runner (`phaseRunners.ts:2796`), pure-engine, S. **QW38 plantation→Agriculture 2:1 (#278, debt #149):** when
+the plantation economy is eliminated (usually via the ACW), plantation industries convert to Agriculture at 2:1 — pure-
+engine but RIDES the abolition/plantation-elimination trigger (not modeled today), so it lands WITH the ACW/abolition
+system (#56-#60), S. **QW39 career-track 3-class backdating (#279, debt #150.4):** at game start, backdate career tracks by
+3 draft classes (no-track if already holding a job) — a BOOT-pipeline rule that RIDES the K4 BootSheet start-state field (no
+precedent today), so it ships when scenarioBoot/K4 lands, S. **★ ALSO BUILDABLE-NOW from this batch but NOT new QW rows
+(they FOLD into existing engine epics, per the tech-lead):** the debt-#146 SMALLER cabinet bits — **career-track removal
+guard** (only nominate a career-track pol if no ≥2-Admin candidate is eligible, S) + **CPU auto-resign-below-2 with the
+opposite-party life-tenure carve-out** (S) → fold into **E16** (the cabinet/confirmation epic); the now-fully-specced **#126
+Pres-implementation 2-step** (Admin gates SUCCESS, Command only gates blunder SEVERITY, the 5-tier table, `4747b09f` POST 24)
+→ **M, on the implementation/Lingering track**; **#133 CC composition** (4/3/2 by big/medium/small + tie rule) → founding-
+boot/**E1**. The Puritan-Pres ≤2-step ideology window (debt #146b) is PROPOSED-not-committed — design-confirm stack-vs-replace
+with the ±1 gate first. **★ NOT this lane:** the #124 cabinet-enthusiasm %s, #130 mortality charts, and #129 Kingmaker-
+transfer blocklist all have their NUMBERS now but are **DECISION-GATED (three reconciliation FORKS — see Decision-gated (A)
+below)**; the #276 Kagan ~190-beat foreign-policy backlog is **content-engine-gated** (#221+#258); Canada (#277) is
+**decision-gated + data-authoring**. **No re-sequence: QW33–QW39 are the cheap-fixes-lane delta; top-of-queue UNCHANGED.**
+debt #149/#150; game-mechanics §30.34, §25.5.
 
 | # | Item | Scope | Depends on | Size | Source | Status |
 |---|---|---|---|---|---|---|
@@ -4657,6 +4687,13 @@ QW32 is the only new cheap-fixes-lane delta (DH-81's S slice rides the war track
 | **QW30** | **★ batch-39 #163 — tiny PER-CAREER-TRACK % Command-GAIN (level-contingent; "won't help Benedict Arnold"; `GM⇒App`)** *(NEW, batch 39 — DESIGNED, 0% shipped; the 2nd of the two command-gain adds; DISTINCT from QW28's career-track SKILL ceiling)* | **S — give certain career tracks a tiny % chance to grant +1 Command per cycle, level-contingent.** `f735601c` POST 20: specific career tracks now carry a small per-cycle chance of +1 Command ("won't help Benedict Arnold" — track-specific, so off-track / unsuitable figures gain nothing). Add a `CAREER_ODDS.command`-style level-contingent roll on the track-advance path (`phaseRunners.ts:305-318`). **★ DISTINCT from QW28 (#163 career-track SKILL ceiling) — same gap #163 number, DIFFERENT mechanic:** QW28 CAPS skill gains at 4 via tracks; THIS adds a Command-gain roll to tracks. **★ FEEDS #153's global ×2 rule (QW18)** + pairs QW29 (the Keynote-Speaker grant) — the two command-gain ADD sites. Lands when career-track work is touched; no keystone dependency. **RULED by vcczar (`f735601c` POST 20).** | — (rides the career-track path; pairs QW18/QW29) | S | gap **#163 / `f735601c` POST 20** (codebase career-track odds `CAREER_ODDS` `types.ts:230`; track-advance path `phaseRunners.ts:305-318`; DISTINCT from QW28's skill ceiling, same #163) — NEW (debt #129) | ready |
 | **QW31** | **★ batch-40 #266 — METER-AT-FLOOR SPILL-OVER (a penalty against an already-floored score redistributes into OTHER scores; the GAME-WIDE root cause behind the ignore-losing-treaty exploit; debt #130; `GM⇒App`)** *(NEW, batch 40 — DESIGNED, 0% shipped; SPILL-OVER variant; the countdown-shorten variant is BLOCKED on the unbuilt #88 clock / debt #28)* | **QW–S — add a "floor-penalty still bites" SPILL-OVER at the ~4 meter-clamp call-sites.** Confirmed no-op-at-floor in code: all 7 `NationalMeters` (`types.ts:1399-1407`) clamp, so a penalty against an already-floored meter (DomStab / party-preference / any score) registers NOTHING — once a meter sits at minimum the incumbent has nothing left to lose → reckless play (Largo833 systemic reframing, `a2312dd2` POST 16, Ted-concurred POST 1). **Fix = SPILL-OVER:** when a score would drop but is already at minimum, redistribute the penalty into OTHER scores, so there's always something left to lose. Localized change at the ~4 clamp sites; needs NO unbuilt system. **★ CODEBASE CORRECTION (override the digest/game-master claim): the OTHER floated variant — a floored-meter % chance to shorten the game-over countdown (DomStab=1 → 50% 8yr→6yr) — is NOT deployable today: there is NO meter-driven game-over countdown clock in `src/` (game-over is a one-shot flag; the #88 meter-loss clock is UNBUILT, debt #28). Ship SPILL-OVER only; the countdown variant is blocked on #88/debt-#28.** High systemic-balance value — closes the root cause behind the ignore-the-losing-treaty exploit, GAME-WIDE not treaty-specific (the #267 confirm-or-renew vote attacks the same exploit by construction). DISTINCT from #88 (the end-condition rolls) + #188 (the floored-meter loss path). No dependency; ship in the cheap-fixes lane. **OPEN (human/tech-lead): is this one gap or a sub-row of #88 — but the SPILL-OVER variant is buildable NOW with no human pick.** | — | QW–S | gap **#266 / `a2312dd2` POST 1, 16** (codebase-verified `NationalMeters` clamp at floor with NO spill/countdown mechanism, `types.ts:1399-1407`; **★ NO meter-driven game-over clock in `src/` — countdown-shorten variant blocked on #88/debt-#28**) — NEW (debt #130) | ready (SPILL-OVER variant) |
 | **QW32** | **★ batch-43 DH-82 — doubled-officer "Planning" CLAMP (a one-line `Math.min(5,…)` on the no-SecWar battle-target coefficient; `GM⇒App`)** *(NEW, batch 43 — code-verified bug, 0% clamped; the cheap-fixes-lane delta this batch)* | **XS — wrap the no-SecWar "Planning" coefficient in `Math.min(5,…)`.** When there is no Secretary of War the Planning value = `general.skills.military * 2` (`revolutionaryWar.ts:212`) and feeds the d100 battle target UNCLAMPED → reads **6 with a 3-Mil officer** (`06fbb2e5#POST 73-74`); the naval sum at `:187` is similarly unclamped. **★ This is a DERIVED combat coefficient over-buffing the no-cabinet case, NOT a corrupted stat** — the PERSISTED 0–5 skills ARE clamped (`abilities.ts:6-30`). Fix = `Math.min(5, general.skills.military * 2)` at `:212` (+ mirror at `:187`) **plus a one-line DESIGN call: does the no-SecWar fallback INTEND to exceed 5?** (a tunable, not a rewrite). No dependency; ship in the cheap-fixes lane. **Code-verified bug (`revolutionaryWar.ts:212`/`:187` unclamped vs the `abilities.ts:6-30` skill clamp).** | — | XS | bug **DH-82** (codebase `revolutionaryWar.ts:212` `general.skills.military*2` unclamped d100 target; naval `:187`; `06fbb2e5#POST 73-74`) — NEW (debt #142) | ready |
+| **QW33** | **★ batch-44 §2.4-vs-§2.8 DOC-FIX — incompetent-President authority inconsistency (DOC-ONLY, no engine code; `GM⇒App`)** *(NEW, batch 44 — debt #146d; doc-only)* | **XS — a rules-doc bug, not a code task.** `5d225e8a` POST 1 records a §2.4-vs-§2.8 contradiction in the incompetent-President implementation-authority wording. **NO engine change** — reconcile the two sections in the design doc. The smallest possible item; no dependency; ship anytime. **(Logged in the QW lane for completeness; it is documentation, not a `/build-feature` run.)** | — | XS (doc) | gap **#275 / `5d225e8a` POST 1** (rules-doc §2.4 vs §2.8) — NEW (debt #146d) | ready |
+| **QW34** | **★ batch-44 #279 — CC-PRESIDENT 2-TERM (4-yr) CAP (a term counter on the Continental-Congress system; `GM⇒App`)** *(NEW, batch 44 — debt #150.2; pure-engine)* | **S — no politician may serve more than 2 terms (4 yr) as CC President** (`4747b09f` POST 17). Add a per-pol CC-Presidency term counter on `continentalCongress.ts` and gate re-selection on it. **PURE-ENGINE** (a counter + a gate over existing CC data); RevWar/founding-era-scoped, no keystone dependency. **RULED in the primary changelog (`4747b09f` POST 17).** | — | S | gap **#279 / `4747b09f` POST 17** (codebase `continentalCongress.ts`) — NEW (debt #150.2) | ready |
+| **QW35** | **★ batch-44 #279 — 1%-GAIN "CAN PARTY FLIP" (the first codified path to ACQUIRE the trait; `GM⇒App`)** *(NEW, batch 44 — debt #150.3; pure-engine)* | **S — a pol facing a disgruntled-flip roll but NOT marked flippable has a flat 1% chance to acquire "can party flip"** (4 conditions: personal ideology maxed toward the opposite party, not Puritan, not a faction leader, hits the 1%; the special 10%-for-Moderates was REMOVED → flat 1%, `4747b09f` POST 8/14). A roll in the conversion pass (`phaseRunners.ts:682,767`); the FIRST codified path to ACQUIRE the trait. **PURE-ENGINE**; no dependency. **RULED in the primary changelog (`4747b09f` POST 8, 14).** | — | S | gap **#279 / `4747b09f` POST 8, 14** (codebase conversion path `phaseRunners.ts:682,767`) — NEW (debt #150.3) | ready |
+| **QW36** | **★ batch-44 #279 — HARMONIOUS-CONSIDERS-DRAFT-TARGET (the out-of-ideology draft roll reads the TARGET's harmonious/disharmonious trait; `GM⇒App`)** *(NEW, batch 44 — debt #150.5; pure-engine)* | **S — the out-of-ideology draft roll now ALSO reads the DRAFT TARGET's harmonious/disharmonious trait** (FL and/or target harmonious → easier; either disharmonious → harder; one-of-each → disharmonious wins, `4747b09f` POST 3 #5). A draft-roll modifier in `runPhase_2_1_1_Draft`. **PURE-ENGINE** (needs the harmonious/disharmonious trait on draftees); no dependency. **RULED in the primary changelog (`4747b09f` POST 3 #5).** | — | S | gap **#279 / `4747b09f` POST 3 #5** (codebase `runPhase_2_1_1_Draft`) — NEW (debt #150.5) | ready |
+| **QW37** | **★ batch-44 #279 — EVENT→ENTHUSIASM FORMULA (per-event faction-net → FL ideology-enthusiasm + party-pref shift; `GM⇒App`)** *(NEW, batch 44 — debt #150.1; pure-engine)* | **S — a formula over existing enthusiasm/event data at the era-event runner (`phaseRunners.ts:2796`).** Per event, for each +100 (round down) a faction nets → +10% chance its FL's ideology enthusiasm moves +1 toward Pres's party; each −100 (round up) → +10% −1 away; ≥6 factions net positive → +1 party-pref for Pres's party (≥6 net negative → −1); certain unresolved EraEvos KEEP their %-to-refire (needs an EraEvos-sheet flag). **PURE-ENGINE**; no dependency. **RULED in the primary changelog (`4747b09f` POST 23).** | — | S | gap **#279 / `4747b09f` POST 23** (codebase era-event runner `phaseRunners.ts:2796`) — NEW (debt #150.1) | ready |
+| **QW38** | **★ batch-44 #278 — PLANTATION→AGRICULTURE 2:1 on plantation-economy elimination (a small NEW economic transform; `GM⇒App`)** *(NEW, batch 44 — debt #149; pure-engine but RIDES the ACW/abolition trigger)* | **S — when the plantation economy is eliminated (usually via the American Civil War), plantation industries convert to Agriculture at 2:1** (10 plantation → 5 Agriculture, `4747b09f` POST 2, Ted accepted a playtester rec). A concrete per-state `industries` transform at the plantation-elimination trigger. **PURE-ENGINE** — but the *trigger* (plantation-economy elimination / ACW abolition path) is NOT modeled today, so it lands WITH the abolition/slavery-economy system (#56-#60), not standalone. **RULED in the primary changelog (`4747b09f` POST 2).** | abolition/plantation-elimination trigger (#56-#60) | S | gap **#278 / `4747b09f` POST 2** (codebase: no plantation→Agriculture transform; `industries` on `State`) — NEW (debt #149) | ready (rides ACW trigger) |
+| **QW39** | **★ batch-44 #279 — CAREER-TRACK 3-CLASS BACKDATING (a boot-pipeline start-state rule; `GM⇒App`)** *(NEW, batch 44 — debt #150.4; BOOT-data-gated)* | **S — at game start, backdate career tracks by 3 draft classes** (NOT all 5; no-track if already holding a job, `4747b09f` POST 6). A BOOT-pipeline rule that needs the scenario-boot start-state field (no precedent today), so it RIDES the **K4 BootSheet** start-state work — ships when scenarioBoot/K4 lands. **RULED in the primary changelog (`4747b09f` POST 6).** | K4 `scenarioBoot`/`BootSheet` start-state field | S | gap **#279 / `4747b09f` POST 6** (codebase: career-track boot, no precedent; K4 BootSheet) — NEW (debt #150.4) | ready (rides K4 BootSheet) |
 | **(war track, NOT a QW)** | **★ batch-43 DH-81 — war WIN-MODEL fix (replace the STALE count-threshold win/loss with the war-score+momentum chart; `GM⇒App`)** *(NEW, batch 43 — code-verified bug, S; rides the war track / cheap-fixes lane if scoped tight; the FIRST step of the M post-launch §21.1.A model — NOT given a QW number)* | **S — swap the count-threshold WIN/LOSS conditions at `revolutionaryWar.ts:254-264` (the 7-wins / 16-losses model, `:16-18`) for the war-score+momentum chart + DELETE the stale count columns.** **★ CORRECTED FRAMING (override the digest's "fires-per-battle / instant game-over" cadence claim): the SHIPPED cadence is ALREADY per-term** — `runRevWarBattles` (`revolutionaryWar.ts:175`) runs ONCE per Military Phase 2.7 (`phaseRunners.ts:3593-3596`), the win/loss check is evaluated ONCE AFTER the battle loop (not inside it), the per-battle do-while (`:211-236`, `d100()<=66`) only increments tallies, and `revolutionaryWar.ts` never sets `gameEnded`/`triggersGameEnd` (grep=0); the `06fbb2e5#POST 75` "failed after Trenton" was the MANUAL Google-Sheets sim (VOIDED live). **So this is a win-MODEL fix (S), NOT a cadence rewrite** — the ~66% "another battle?" continuation at `:236` is a tuning delta. **★ The full §21.1.A war-score model (asymmetric battle points + the `|raw-score|×10%-per-phase` roll) is the larger (M) POST-LAUNCH piece DH-81 is the first step of — it folds into the generic-`War` engine (E3) alongside #45 (debt #105); see the war epic.** **★ Determinism: `revolutionaryWar.ts:89,97` use `Math.random` (casualty-victim selection), a SECOND leak distinct from debt #1 — route through seeded `src/rng.ts` (debt #3/K0) before any DH-81 work needing reproducibility.** **★ Must KEEP the 1772 RevWar floor playable** (#155: Navy ~0 wins, momentum −7/−9 in the `06fbb2e5` run — brutally, repeatedly losable by design). RevWar-scoped; no keystone dependency (the seeded-RNG co-land is a determinism note, not a build gate). **Code-verified bug (`revolutionaryWar.ts:254-264` stale 7/16 count-threshold vs the designer's war-score+momentum chart, §21.1.A).** | — (seeded `src/rng.ts` / debt #3 co-lands for reproducibility) | S (the slice) / M (full §21.1.A model, post-launch) | bug **DH-81** (codebase `revolutionaryWar.ts:254-264` + `:16-18` stale count-threshold; `06fbb2e5#POST 73-75` MANUAL-sim framing CORRECTED; `rethinkwar`/#45 §21.1.A model) — NEW (debt #141) | ready (the S win-model slice) |
 
 ---
@@ -6821,6 +6858,33 @@ designer-gated; **batch 15 removes #18 (user) + #124-percentages (designer).** S
 > (`9bd91ee2` / `c33d07b8` / `7d0dfeec` / `4accc8a8` POST n; an enrich-target across the batch-38
 > content threads, no dedicated debt row).
 
+> **★★ Batch-44 — #276 KAGAN FOREIGN-POLICY CONTENT BACKLOG (~190 unratified era-event beats) — UN-ACTIONABLE
+> CONTENT AUTHORING, BLOCKED BEHIND THE CONTENT ENGINE (#221 registry + #258 predicate-gating); debt #147, L.** A
+> player's typed reading-notes from Kagan's *Dangerous Nation* (founding→1898), posted as **candidate alt-event content**
+> (~190 beats, book 1 of a series → more coming). **This is content authoring, not engine work** — and it has **no engine
+> surface to attach to today:** `grep` over `src/` for Barbary/Spanish-American/Monroe/Virginius/Gadsden/Quasi-War finds
+> only a politician NAME string; there is no era-keyed Diplomacy/Expansionism/Military pool. The beats decompose into
+> **#221** primitives (Legis-Props/Pres-Actions/Scripted-Events — the navy-buildup ladder is a ready-made escalating-
+> prereq chain; the Hawaii/Texas/Cuba arcs are supersession chains) gated by **#258** predicates (Hawaii-below-Missouri-
+> line; Louisiana-invasion gated on the Spain→France transfer). **★ DO NOT triage/author until #221 + #258 ship** — then a
+> vetting/triage pass is required FIRST: the emoji-vote tallies NEVER survived (the tag failed to fire), **nothing is
+> designer-ratified, all secondary-source paraphrase**, so the ~190 beats need PRIMARY-source vetting + re-triage against
+> the #221 importance bar before entering the registry. **Park behind the content-engine cluster** (#221/#258/#92/#248);
+> NOT near-term. — #276 (`f64a522c`; debt #147; gated on #221 registry + #258 predicate-field, then a triage pass;
+> game-mechanics).
+> **★★ Batch-44 — CANADA DATA-AUTHORING half (the NON-decision half of #277; pairs the war-mechanic DECISION in
+> Decision-gated (A)); debt #148b/c, the DATA + PIPELINE deliverables.** Once the war-acquisition mechanic is ruled, the
+> Canada work still needs authored DATA, none of it pure-engine: **(b) DATA-AUTHORING** — replace the placeholder per-
+> province EV (`expansionStates.ts:173-183` stamps `electoralVotes:4, bias:0` on every seed; canon tallies are trustworthy
+> — AP wrote the EV-changing events after confirming with V) + bias (the "translated" per-province leans; Northern Canada =
+> NWT+Yukon+Nunavut grouped, a tossup) + industries; **(c) DATA-PIPELINE** — add era-appropriate 1850s Canadian pols via
+> `scripts/` (additive `ERA_FIGURES`/curated, sub-floor electoral stats per the dataset rules; the curated fallback has ZERO
+> Canada-region entries today). Minor: thread canon **Manitoba=MB**, build uses **MAN**. **★ Any EV fix must not break the
+> mid-game EV-mutation path** (CC plank `constitutionalConvention.ts:210` + God-Mode editor `StatesPage.tsx:14`). RISK: V's
+> alt-state bias guidance is undocumented tribal knowledge. **Gated on the war-mechanic ruling first** (Decision-gated (A));
+> the DATA pass then rides the **#120 dataset umbrella (E18d)** + the territory/statehood epic. — Canada DATA half
+> (`f64a522c` POST 3-6; debt #148b/c; pairs the war-mechanic decision; game-mechanics §17.3.y).
+
 ### Decision-gated (NOT ready-to-build — split into TWO sub-buckets batch-12)
 
 **The Decision-gated category now splits into TWO sub-buckets per the batch-12
@@ -7061,6 +7125,52 @@ Distinct from "Roadmap decisions" below, which are tech-lead/planner calls alrea
   event); SCRAP-vs-FULL is the human pick, and either way it is NOT near-term.** — #264 (`4c14847b` POST 1, 2, 4-23; debt
   #125; EXTENDS #88's loss-roll; depends on #88/#92/#221/#258 + impeachment-which-must-be-built-first [DH-54/DH-29..DH-35,
   E10b]; ★ POST-LAUNCH; game-mechanics §26.4.1, §30.29).
+- **★ NEW (batch 44) — FORK 1: CABINET-ENTHUSIASM MODEL #124 — 20/10/5% lobby-WANT vs 50%/20% ideology-COMPOSITION,
+  AND the whole system is rebuild-flagged (DECISION-GATED + DOUBLY-GATED, debt #146/#275).** The `4747b09f` PRIMARY
+  CHANGELOG (POST 19) now PINS the numbers prior batches logged as "TBD" = the **20/10/5% lobby-WANT** model (per
+  lobby/interest: 0-wanted → 20% −1 / >1-wanted → 20% +1 / exactly-1 → no change, non-stacking, one roll/lobby; Cabinet-
+  Level 10%, Gen/Adm/Amb 5%). The older discussion digest (`tedchange`/a0f0bf04 §5) = a DIFFERENT **50%/20% ideology-
+  COMPOSITION** model (≥50% of cabinet of an ideology → +enth; ≤20% → −enth), which is **NOT in the written changelog.**
+  **Changelog is authoritative-by-default = the 20/10/5% lobby-want model — BUT** `5d225e8a` POST 2-3 (the Appointments-2.3
+  thread) records Ted+ebrk judging the whole lobby→enthusiasm system **overtuned (~20-pt swings, ±3 cap insufficient) AND
+  too complicated**, earmarked for its **own future "simplifying rebuild" group discussion** (and the competing matt/AP
+  Big-Four-20%/lower-10% TIERED model, gap #275(2), conflicts with the "simplify" goal). **So this fork is DOUBLY gated:
+  build NEITHER until the user resolves (a) which model AND (b) the simplification rebuild.** Caveat (POST 10): the cabinet
+  may be the only reliable POSITIVE meter lever, so any nerf needs a replacement lever. Folds into **E16's #124 sub-item**
+  once resolved. — FORK 1 #124 (`4747b09f` POST 19; `5d225e8a` POST 2-3, 8-10; debt #146/#275; → E16; game-mechanics §30.34).
+- **★ NEW (batch 44) — FORK 2: MORTALITY #130 — Hale-death value (0%-except-ex-Pres vs half) + the roll-order
+  contradiction (retirements-first vs death-first) (DECISION-GATED, debt #150/#130).** The `4747b09f` PRIMARY CHANGELOG
+  (POST 21-22) now publishes the full 5-era × age-band retirement/death numeric tables → the mortality pass is BUILDABLE
+  (M) EXCEPT for two unresolved values: **(a) Hale value** — changelog POST 22/28 = **Hale 0% death EXCEPT retired ex-
+  Presidents roll the chart normally** (incl. Hale ex-Presidents, so Carter doesn't live forever); the discussion digest =
+  **Hale = 1/2 (half) the chance of death** — materially different (immortal-except-ex-Pres vs merely halved). **(b) ROLL
+  ORDER** — changelog POST 20 says **check RETIREMENTS FIRST, then deaths under a shared 5%-of-faction cap**; this
+  CONTRADICTS the doc's prior **death-first** wording. **Changelog is authoritative-by-default = Hale-0%-except-ex-Pres +
+  retirements-first — but flag BOTH for the user before building the mortality pass.** Folds into the **mortality pass
+  (Phase-1, the #85/#130 schedule)** once resolved. — FORK 2 #130 (`4747b09f` POST 20, 21, 22, 26, 28; debt #150/#130;
+  game-mechanics §30.34).
+- **★ NEW (batch 44) — FORK 3: KINGMAKER-TRANSFER #129 — basic-Kingmaker + Hale BLOCK vs ALLOW (DECISION-GATED, debt
+  #150/#129).** The `4747b09f` PRIMARY CHANGELOG (POST 9 + POST 31) gives the FINAL no-transfer (CANNOT-gain) blocklist:
+  Frail / Lackey / Incoherent / Obscure / Two-Faced / Late-Bloomer / Overeager / Master-Kingmaker / Carpetbagger **PLUS
+  (added POST 31 after "overwhelming tester feedback") Kingmaker, Hale, Flip-Flopper** (Celebrity STAYS transferable). The
+  older discussion digest (`tedchange`/a0f0bf04) = **basic Kingmaker + Hale DO transfer** — so the changelog INVERTS gap
+  #129's prior "Allow list" wording. **Changelog is authoritative-by-default = basic Kingmaker and Hale do NOT transfer —
+  but flag for the user (it inverts the prior wording).** (Also pinned, NOT gated: Master-KM+Leadership = 3 protégés;
+  protégé gets a flat +1 Command, the old 20%/+2 removed — these ship with the Kingmaker work.) Folds into the
+  Kingmaker/protégé trait-transfer work once resolved. — FORK 3 #129 (`4747b09f` POST 9, 31; debt #150/#129; game-mechanics
+  §30.34).
+- **★ NEW (batch 44) — CANADA WAR-ACQUISITION MECHANIC: a designer ruling on territory-conquest BEFORE any acquisition
+  path is built (DECISION-GATED + DATA-AUTHORING, debt #148/#277).** An emergent 1856 run (matthewyoung123: Buchanan
+  escalated the Pig War, conquered Canada, won 1858 — also buyable ~1840, so it RECURS) annexed territory the game was
+  never set up for; GMs retrofitted manually. **Code-verified: NO acquisition-by-war/event path exists** — `admitState`
+  (`territories.ts:8-23`) is a straight seed-copy via the Territories page / God Mode / era graph only, and the seed
+  factory (`expansionStates.ts:173-183`) stamps EVERY expansion seed with placeholder `electoralVotes:4, bias:0`. **The
+  DECISION half: a designer ruling on a war-acquisition / territory-conquest mechanic** (none exists today) — the build
+  cannot infer it. **★ The DATA-AUTHORING half is a SEPARATE parking-lot task** (per-province EV + bias + 1850s Canadian
+  draftees via `scripts/`), recorded in Author-before-build below; it does NOT belong in the build queue until the war
+  mechanic is ruled. **★ Any EV fix must not break the mid-game EV-mutation path** (CC plank `constitutionalConvention.ts:210`
+  + the God-Mode editor `StatesPage.tsx:14`). — Canada (`f64a522c`/`250bd843`; debt #148a; → territory/statehood epic once
+  ruled; pairs the #34/#55 apportionment + #45/#56 war work; game-mechanics §17.3.y).
 - **~~★ #18 — Meter→election STATE SCOPE~~ ✅ RESOLVED batch-15 — REMOVED from
   Decision-gated → PROMOTED to ready-to-build row E20b.** `terror2000` POST 913-926
   SETTLES the fork to **V's CANONICAL 2-LAYER model** (Ted, the DESIGNER, reversed his
@@ -7524,7 +7634,34 @@ Why the order is what it is — the tech-lead's binding calls (§9 batch-43 lead
 §9.1.10 gilded-era content epic + §9 batch-13 lead +
 §6.6.1 batch-13 + §9.6 batch-13 + §9.1.3 methodology + §9 batch-12 lead +
 §9.6 batch-12 + §9 batch-11 lead + §9 batch-10 lead + §9.1.9 + §9 batch-9 lead +
-§9.1.5 + §9.1.8 + §9.1.3 + §9.6 + §9.1.6 + §9.1.7). **★ Batch 37
+§9.1.5 + §9.1.8 + §9.1.3 + §9.6 + §9.1.6 + §9.1.7). **★★ Batch 44 (`4747b09f` PRIMARY-SOURCE CHANGELOG +
+`5d225e8a` Appointments-2.3 rework + `f64a522c` Kagan notes + `250bd843` Canada worldbuilding + the Canada census-fix
+sub-thread) is a CHANGELOG/DESIGN/CONTENT batch whose binding sequencing call is a SET OF FOLD-INS + SEVEN cheap-fixes-lane
+QWs + THREE decision-gate reconciliation FORKS, NOT a re-sequence and NO new keystone. The tech-lead's calls, bound:**
+**(a) BUILDABLE-NOW (cheap-fixes lane) = the `4747b09f` small pure-engine micro-rules + the doc-fix → assigned QW33–QW39**
+(QW33 §2.4/§2.8 doc-fix XS; QW34 CC-Pres 2-term cap; QW35 1%-gain-can-party-flip; QW36 harmonious-considers-target; QW37
+event→enthusiasm formula; QW38 plantation→Agriculture 2:1 [rides the ACW trigger]; QW39 career-track 3-class backdating
+[rides the K4 BootSheet] — each S except the XS doc-fix; b43 ended at QW32, so these continue QW33+). **(b) ALSO buildable-
+now but FOLD into existing epics (NOT new QW rows):** the debt-#146 SMALLER cabinet bits — career-track removal guard +
+CPU auto-resign-below-2 with the opposite-party life-tenure carve-out (S each) → **E16**; the now-fully-specced **#126
+Pres-implementation 2-step** ("ADMIN gates SUCCESS, COMMAND only gates blunder SEVERITY," the 5-tier table) → **M, the
+implementation/Lingering track**; **#133 CC composition** (4/3/2 + tie rule) → founding-boot/**E1**. The Puritan ≤2-step
+window (debt #146b) is PROPOSED-not-committed — design-confirm stack-vs-replace first. **(c) ★ DECISION-GATED — THREE
+reconciliation FORKS + the Canada war-mechanic → Decision-gated (A):** FORK 1 cabinet-enthusiasm #124 (20/10/5% lobby-want
+vs 50%/20% composition, ALSO rebuild-flagged by `5d225e8a` — doubly gated); FORK 2 mortality #130 (Hale 0%-except-ex-Pres
+vs half + the retirements-first-vs-death-first roll-order contradiction); FORK 3 Kingmaker-transfer #129 (basic-KM/Hale
+block vs allow); + the Canada war-acquisition mechanic (#277). The changelog is authoritative-by-default for all four, but
+**each must be user-confirmed before build** — the changelog now PINS the numbers but the user resolves the conflicting
+values. **(d) BLOCKED on the content engine (#221 + #258):** the #276 Kagan ~190-beat foreign-policy backlog (debt #147, L)
+is un-actionable content authoring → parked in Author-before-build behind the content-engine cluster (then a primary-source
+triage pass against the #221 importance bar). **(e) Canada (#277):** the DECISION half (war mechanic) sits in Decision-gated
+(A); the DATA-AUTHORING half (per-province EV/bias + 1850s Canadian draftees via `scripts/`) is a separate Author-before-
+build task gated on that ruling, riding the #120 dataset umbrella (E18d). **★ The Appointments-2.3 thread (`5d225e8a`, owed
+from b43) LANDED:** its buildable bits go to E16 (cabinet bits above); its lobby→enthusiasm rebuild is decision-gated
+(FORK 1 / debt #146). NO gap closed, NO new keystone, NO re-sequence; **top-of-queue UNCHANGED (QW0 → K0/K2 → K3/K4 +
+scenarioBoot → E1).** Within-batch order: QW33–QW39 (cheap-fixes, now) → the debt-#146 cabinet bits + #133 (E16/E1) → #126
+Pres 2-step (implementation/Lingering) → the THREE forks + Canada war-mechanic (Decision-gated, await user) → #276 Kagan
+(content engine) + Canada DATA (author-before-build). debt #146-#150; game-mechanics §30.34, §25.5, §17.3.y. **★ Batch 37
 (`benchmarkupd`/`legisprops2028`/`yearname`/`immigration`/`education`) is a CONTENT/DESIGN batch (NO
 playtest — 5 content/design threads) whose binding sequencing call is a SET OF FOLD-INS + ONE
 DESIGN-RULING BLOCKER + ONE new K-tier-gated epic, NOT a re-sequence; top-of-queue UNCHANGED (QW0 →
