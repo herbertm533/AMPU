@@ -377,6 +377,7 @@
     - [30.39 Rulings folded from batch 49 — ★ #292 the election vote-score FORMULA + the meter→enthusiasm pipeline gap (subsumes State.preferredIdeology) + #283 the assassination outcome-distribution divergence + the Bailouts/Drugs predicate-class evidence (#258/#237/#221/#248/#262/#206/#66) + the marquee-VP stat blocks (#240/#216/#194/#279/#15) (`6801b9f4-meter-interpretation` / `5261c8ff-bailouts` / `c9b97b58-unfinished-presidencies` / `faf2d8b3-drugs` / `b9651d6d-vps`)](#3039-rulings-folded-from-batch-49---292-the-election-vote-score-formula--the-meterenthusiasm-pipeline-gap-subsumes-statepreferredideology--283-the-assassination-outcome-distribution-divergence--the-bailoutsdrugs-predicate-class-evidence-25823722124826220666--the-marquee-vp-stat-blocks-24021619427915-6801b9f4-meter-interpretation--5261c8ff-bailouts--c9b97b58-unfinished-presidencies--faf2d8b3-drugs--b9651d6d-vps)
     - [30.40 Rulings folded from batch 50 — ★★ #20 the deterministic CPU gov-action DECISION SPEC + #296 seeded-RNG keystone + #293 difficulty=ideology×era + #294 industry-eligibility matrix/taxonomy + #295 era-aware draft pool + the #292 four election-resolver absences + #45/DH-81 rev-war-end-multiplier + the FAQ cluster (#191/#287/#129/#153/#112/#238/DH-74) + #158 Hand of Providence + the 1772 10-faction seed roster (`c8d89e49-cpu-rules` / `59d805be-hand-of-providence` / `24757e3a-data-posts` / `6b41ed5b-electoral-trends-1948` / `58da1636-questions-on-game`)](#3040-rulings-folded-from-batch-50---20-the-deterministic-cpu-gov-action-decision-spec--296-seeded-rng-keystone--293-difficultyideologyera--294-industry-eligibility-matrixtaxonomy--295-era-aware-draft-pool--the-292-four-election-resolver-absences--45dh-81-rev-war-end-multiplier--the-faq-cluster-191287129153112238dh-74--158-hand-of-providence--the-1772-10-faction-seed-roster-c8d89e49-cpu-rules--59d805be-hand-of-providence--24757e3a-data-posts--6b41ed5b-electoral-trends-1948--58da1636-questions-on-game)
     - [30.41 Rulings folded from batch 51 — ★ #297 leadership/campaign-focus election bonuses (designed-only, gated behind the realism bar) + NatSec/Guns content catalogs (#221/#262/#258/#236/#248/#66/#206/#237) + #300 firearms-research military-tech combat tree + the CPU faction-score-vote claim (#74) and #301 scenario structural-flexibility + the ideology-card DRAFT decision space (#298 draftee conformance / #299 off-ideology vote penalty, ties #4/#171) (`b5b0ace9-faction-leader-bonus-focus-race-bonus` / `c2bea165-ampu-national-security` / `067233f3-ampu-guns` / `8a0a14a1-radically-different-governing-structure` / `567b03c8-ideology-cards-poll`)](#3041-rulings-folded-from-batch-51---297-leadershipcampaign-focus-election-bonuses-designed-only-gated-behind-the-realism-bar--natsecguns-content-catalogs-22126225823624866206237--300-firearms-research-military-tech-combat-tree--the-cpu-faction-score-vote-claim-74-and-301-scenario-structural-flexibility--the-ideology-card-draft-decision-space-298-draftee-conformance--299-off-ideology-vote-penalty-ties-4171-b5b0ace9-faction-leader-bonus-focus-race-bonus--c2bea165-ampu-national-security--067233f3-ampu-guns--8a0a14a1-radically-different-governing-structure--567b03c8-ideology-cards-poll)
+    - [30.42 Rulings folded from batch 52 — ★ #4/#306 the era-banded eligible-ideology MATRIX (+ 10-faction structure, fringe scoring #262, difficulty #293) + #302 historical party-switch dates/flippable + Trade genre's first SHIPPED foothold (diplomacy meter #237/#221/#303/#304) + the war-casualty TUNE (#85/#45/#56/#300/#296) + the census/reapportionment subsystem (#34/#305/#294) (`7d91c4c7-alternate-method-for-drafting-and-faction-ideologies-poll` / `155bd104-ampu-historical-party-switch-dates` / `40a3bac2-ampu-trade` / `c4eadba5-deep-dive-feedback-foreign-military-affairs` / `074b6d6f-ampu-census`)](#3042-rulings-folded-from-batch-52---4306-the-era-banded-eligible-ideology-matrix--10-faction-structure-fringe-scoring-262-difficulty-293--302-historical-party-switch-datesflippable--trade-genres-first-shipped-foothold-diplomacy-meter-237221303304--the-war-casualty-tune-854556300296--the-censusreapportionment-subsystem-34305294-7d91c4c7-alternate-method-for-drafting-and-faction-ideologies-poll--155bd104-ampu-historical-party-switch-dates--40a3bac2-ampu-trade--c4eadba5-deep-dive-feedback-foreign-military-affairs--074b6d6f-ampu-census)
     - [30.4 Authority hierarchy reminder](#304-authority-hierarchy-reminder)
 31. [Gilded-Age era systems (designed, not built)](#31-gilded-age-era-systems-designed-not-built)
     - [31.1 (#147) Tariff-as-national-%-rate + the mutually-exclusive MonetaryRegime](#311-147-tariff-as-national-rate--the-mutually-exclusive-monetaryregime-designed)
@@ -7129,7 +7130,7 @@ add a retire-on-defeat sweep to 2.10 or right after 2.9.4/2.9.5/2.9.6.)*
 
 Forum factions adopt **era-specific nicknames** (post 298: `War Democrats`, `Finance
 National Republicans`, `Radical Republicans`, `Mavericks`). The `Faction.nickname` field
-exists in the model (`types.ts:1297`); **what triggers a nickname change** is unclear and
+does NOT actually exist — `grep nickname src/` = 0; the base `Faction` has only `name` (`types.ts:1295`), and `types.ts:1297` is `personality` (b52 tech-lead correction). **What triggers a nickname/relabel change** (a designed, unbuilt feature) is unclear and
 seems GM-discretionary. *(designed, not built — formalize an algorithmic / event-driven
 nickname-update rule, possibly keyed on faction's dominant ideology / leader trait /
 recent bill record.)*
@@ -8732,7 +8733,7 @@ table"** (`fed` 184: "the names table is hard on the eyes"). Observed relabels i
 - B5 Democrats → Populists (LW)
 - R1 States'-Rights → Arch-Federalists → Populists (RW) → Arch-Federalists
 
-`Faction.nickname` exists (`types.ts:1297`) but nothing updates it. *(designed, not built —
+there is NO `Faction.nickname` field — the base `Faction` has only `name` (`types.ts:1295`); `types.ts:1297` is `personality` (b52 tech-lead correction), so nothing updates a nickname. *(designed, not built —
 add an authored **names table keyed per (party, era, ideology)** gated by leader traits, with
 both algorithmic mix and a player-edit override.)*
 
@@ -22758,6 +22759,418 @@ restriction-on; #4 = restriction-off), and the coalition-vs-ideology question (P
 restriction era-keyed (looser in modern, where coalitions are messier). (`567b03c8#POST 1, 4, 6, 7, 8`;
 `game-context.md` #298/#299/#4/#171; codebase `factions1772.ts:7`, `phaseRunners.ts:28-52, 55-75, 752, 789`,
 `pv.ts:67-88`, `firstContinentalCongress.ts:119, 145, 195, 217, 225`, `types.ts:5, 322, 1293`.)
+
+### 30.42 Rulings folded from batch 52 — ★ #4/#306 the era-banded eligible-ideology MATRIX (+ 10-faction structure, fringe scoring #262, difficulty #293) + #302 historical party-switch dates/flippable + Trade genre's first SHIPPED foothold (diplomacy meter #237/#221/#303/#304) + the war-casualty TUNE (#85/#45/#56/#300/#296) + the census/reapportionment subsystem (#34/#305/#294) (`7d91c4c7-alternate-method-for-drafting-and-faction-ideologies-poll` / `155bd104-ampu-historical-party-switch-dates` / `40a3bac2-ampu-trade` / `c4eadba5-deep-dive-feedback-foreign-military-affairs` / `074b6d6f-ampu-census`)
+
+> **★ Batch 52 = five DIGEST-ONLY sources (no historian ran the batch); ALL design / content-authoring / spreadsheet-test
+> threads — none is a forum playthrough.** Most are early design-origin or feature-deep-dive threads. **Net new shipped
+> behavior: NONE** — but two of the five debate systems that ARE substantially built today (the **war-casualty system**,
+> §30.42.4, and the **Trade↔diplomacy foothold**, §30.42.3), so this batch is heavier on **balance-tune / shipped-delta**
+> findings than the design-only batch 51. The five sources:
+> - **`7d91c4c7-alternate-method-for-drafting-and-faction-ideologies-poll`** (10 posts / 1 chunk; **Aug 27 2021**;
+>   @vcczar proposes, @MrPotatoTed/@Cal object). The **concrete SPEC #4 waited for** — two fully-worked era-banded
+>   eligible-ideology matrices (Independence 1774-88 + Populism 2012-24), the 10-faction fixed structure (#306),
+>   asymmetric fringe scoring (#262), difficulty=faction×era (#293). Companion of `567b03c8` ([§30.41.5](#30415--298--299--the-ideology-card-draft-decision-space-draftee-conformance--off-ideology-vote-penalty)) +
+>   `8189b724`. → #4/#306/#171/#298/#262/#293. Cite `7d91c4c7#POST n`.
+> - **`155bd104-ampu-historical-party-switch-dates`** (2 posts / 1 chunk; **~Jun 15-16 2021**; @vcczar). The
+>   **design origin** of the historical-party-switch-DATE data layer, the auto/player switch MODES, the per-pol
+>   `flippable` attribute (~8-10%), and the realignment flip-year guide. SIBLING of the relocation thread (`4e518e05`).
+>   → **#302** (new) + #76/#40/#38. Cite `155bd104#POST n`.
+> - **`40a3bac2-ampu-trade`** (3 posts / 1 chunk; **Apr 2022**; @vcczar + community). The **Trade** policy genre — the
+>   **FIRST content genre with a real shipped foothold** (the `game.diplomacy` meter + a proto trade-treaty lever + 2
+>   binary tariff bills). Adds the numeric tariff-rate MAGNITUDE axis (#303), the policy-vs-scripted-event boundary
+>   (#304), USTR/Ex-Im agencies (#66). → #237/#221/#303/#304/#258/#248/#66/#206/#262. Cite `40a3bac2#POST n`.
+> - **`c4eadba5-deep-dive-feedback-foreign-military-affairs`** (9 posts / 1 chunk; **Sep 2022**; MrPotatoTed +
+>   @vcczar + Vols21). The **2.7 deep-dive** on the **battle-casualty system** — which is **SUBSTANTIALLY SHIPPED**
+>   (`applyCasualties`) but tuned too soft. A BALANCE finding on a live system, plus the ALL-HANDS mobilization, the
+>   combat-trait grant, the WOUNDED state, and the FRAIL/HALE contradiction. → #85/#45/#56/#300/#296. Cite `c4eadba5#POST n`.
+> - **`074b6d6f-ampu-census`** (12 posts / 1 chunk; **Sep 2022**; @vcczar + @OrangeP47 + Ted). The **decennial
+>   census / reapportionment** subsystem — RUN AND VALIDATED in vcczar's spreadsheet (1850 census → EV 300 / House
+>   236) but **0% shipped in the browser build**. Adds the population PRIMITIVE (#305), the manufacturing→population
+>   coupling (#294), the era-gated 435 cap. → #34/#305/#294. Cite `074b6d6f#POST n`.
+>
+> **★ Cross-section note — this batch adds NO shipped rules.** Do NOT re-document the draft/ideology systems
+> ([§5](#5-career-tracks--the-expertise-pipeline-212), [§6](#6-politician-churn-213217)), the `eligibleIdeologies` 1772 path ([§30.41.5](#30415--298--299--the-ideology-card-draft-decision-space-draftee-conformance--off-ideology-vote-penalty)),
+> the rev-war battle engine ([§30.41.3](#30413--300--firearms-research-military-tech-upgrade-tree--combat-victory-modifier-designed-0-shipped)),
+> the faction-conversion phase ([§7](#7-factions-parties--alignment-drift-218)), the diplomacy meter, or the static `electoralVotes` field
+> — the subsections below add only the **NEW designed mechanics, the new gaps (#302–#306), and the verified shipped
+> deltas**, all tagged **b52**.
+
+#### 30.42.1 ★ #4 / #306 — the era-banded eligible-ideology MATRIX, the 10-faction structure, fringe scoring (#262) + difficulty (#293) (designed; soft form shipped 1772-inaugural only)
+
+> **Source: `7d91c4c7` POST 1 (vcczar, the whole proposal), 4 (Cal), 5 (Ted), 6, 9, 10 + codebase (`factions1772.ts`,
+> `phaseRunners.ts`, `pv.ts`, `types.ts`).** The **concrete SPEC #4 was a placeholder for** — a per-(faction-slot,
+> era) draft profile that SHIFTS across eras, with two fully-worked era columns. Companion of `567b03c8`
+> ([§30.41.5](#30415--298--299--the-ideology-card-draft-decision-space-draftee-conformance--off-ideology-vote-penalty))
+> and predecessor of `8189b724` (the softened FactNumber resolution). **All designed; the SOFT form ships 1772-inaugural ONLY.**
+
+> **★★ TERMINOLOGY (same trap as §30.41.5).** "Ideologies allowed to draft" here = the **7-point PERSONAL-ideology
+> scale** (`Ideology`, `types.ts:5`: LW Populist … RW Populist). This is **NOT** the shipped `IdeologyCardId`
+> (`types.ts:322` — 22 named policy/alignment cards). Keep them strictly separate.
+
+**★ The era-banded eligible-ideology MATRIX (POST 1) — the per-(faction-slot, era) draft profile.** Premise: *"There
+are 10 factions, 5 per major party. Each faction will evolve over time… Each faction will be allowed to draft
+politicians of specific ideologies allowed for them **in the Historical Era**. Most factions will be allowed two
+ideologies… Some will sometimes be allowed three and some allowed only one."* → the allowed SET is **per-(slot, era)**
+and **shifts era to era.** Two eras worked in full (b52, designed):
+
+**Era of Independence (1774–1788)** — Blue mirrors Red exactly:
+
+| Slot | Eligible ideologies |
+|------|---------------------|
+| Red 1 / Blue 1 | Progressive / Populist / Liberal |
+| Red 2 / Blue 2 | Liberal / Moderate |
+| Red 3 / Blue 3 | Moderate (**1 only**) |
+| Red 4 / Blue 4 | Conservative / Moderate |
+| Red 5 / Blue 5 | Traditionalist / Populist / Conservative |
+
+**Era of Populism (2012–2024)** — Red and Blue now **diverge** (slots have drifted; party no longer mirrors):
+
+| Slot | Red | Blue |
+|------|-----|------|
+| 1 | Moderate / Liberal | Populist / Progressive |
+| 2 | Moderate / Conservative | Liberal / Progressive |
+| 3 | Conservative / Moderate | Liberal (**1 only**) |
+| 4 | Traditionalist / Conservative | Moderate / Liberal |
+| 5 | Populist / Traditionalist | Moderate / Conservative |
+
+**★ Key shape facts (b52):**
+- **Slot 3 is the lone single-ideology anchor** in both eras (Moderate early → Con/Mod (Red) or Liberal (Blue) by
+  2012) — concrete proof the matrix is era-keyed AND that the two parties desynchronize by the modern era.
+- **Most slots = 2 ideologies; some 1, some 3** (the "2/3/1-ideology counts" rule). Endpoint slots 1 + 5 sometimes
+  widen to 3.
+- **★ LW/RW-Populist endpoint binding (POST 1, verbatim):** *"Populists, LW Pop and RW Pop will be separated again
+  and Red 1 and Blue 1 will pick LW Pop politicians and Red 5 and Blue 5, RW Pop."* → endpoint slots draw the
+  *matching* populist wing, not "either Populist." **⚠ CONTRADICTION with `8189b724` POST 3**, where vcczar later
+  relaxes to **either** wing in early eras (historical overlap), diverging near the present. The two threads disagree;
+  the later (`8189b724`) supersedes. **The shipped 1772 data matches THIS thread** (`fact_blue_lw_1772` =
+  `['LW Populist','Progressive']`, `fact_blue_rw_1772` = `['Traditionalist','RW Populist']` — bound per wing,
+  `factions1772.ts:12,16`).
+- This is the **HARD-SET** form (you may draft *only* the allowed set). `8189b724` + the build use the **SOFT
+  two-tier** form (draft your set FIRST, then anyone once the pool is exhausted). The shipped 1772 code implements the
+  *soft* form — i.e. the build matches the **later** thread.
+
+**★ The 10-faction FIXED structure + historical-name picker (#306, NEW, POST 1).** *"There are 10 factions, 5 per
+major party… Players will get to **name their faction or pick from a list of historical names** ('Bourbon Democrats'
+'New Democrats' etc.). There will always be 10 factions."* Each faction **evolves its identity over eras** (the matrix
+is how). Non-human factions are CPU (POST 3). Two optional MODES (POST 1):
+- **(a) parties-only** — *"modes in which there are no factions, only parties for a two player game"* (collapse
+  factions to the 2 parties).
+- **(b) unrestricted** — *"an option to allow play without restrictions to ideologies"* (the matrix OFF).
+Rollout would start at **1788 (Era of Federalism)** — *"This will likely require adjusting the factions."*
+
+**★ Asymmetric fringe scoring (#262, POST 1, verbatim).** *"I'm going to **increase the points earned for fringe
+ideologies based on how uncommon** I think that party can score a success. They will **not be penalized any more for
+failing**, however."* → **reward-by-rarity, no added downside**: a fringe success pays MORE (scaled by rarity), but a
+failed fringe attempt costs nothing extra. Deliberate asymmetry to offset the thin fringe draft pool (the
+populist-scarcity flaw raised in `567b03c8` POST 4, [§30.41.5](#30415--298--299--the-ideology-card-draft-decision-space-draftee-conformance--off-ideology-vote-penalty)).
+
+**★ Difficulty = faction-ideology × era (#293, POST 1, verbatim).** *"there should be **game awards for winning as
+each faction**… some factions have **innate strengths over others**. Players can **choose their difficulty based on the
+faction they select**."* → factions are *intentionally* unbalanced; **faction choice = difficulty selector** (the
+faction × era matrix cell), with a per-faction-win **award/achievement** rewarding clearing the hard ones.
+
+**★ The design TENSION — the playtesters' core objection (durable content, POSTs 4–6, 9–10).** Fixed eligibility
+**kills the strategic ideology-shifting metagame** that veterans value most:
+- **Cal (POST 4):** the hard matrix *"will significantly hamper my faction and the way I've planned for the future if
+  I lose all moderates"* — he holds **18/27 Moderates** and *"had planned on **ideology shifting to Conservative** at
+  the earliest mark."* Forcing the eligible set **destroys a built mid-game plan.** (Lived cost of #298 conformance.)
+- **MrPotatoTed (POST 5, the empirical verdict):** *"a **big part of strategy is drafting/shifting ideologies/etc to
+  keep up with the times**. We did one playthrough where everyone's ideology and statesmen were **mandated** to them,
+  and that seemed to be the **least fun version** of the game we'd played so far."* → a prior fully-mandated run was the
+  worst one tested.
+- **vcczar's fallback (POST 6):** retreat from forced-assignment to **pick-your-faction + keep score**.
+- **POST 9 synthesis:** *"Maybe there's a way to **allow all these options as options**"* (ship hard / soft / unrestricted
+  as MODES). **POST 10:** no decision reached in-thread → resolved later in `8189b724` (the two-tier soft default, which
+  preserves shifting by letting you draft outside the set once it's exhausted). **The unresolved knot:** a hard
+  eligible-set is realistic + legible but **amputates ideology-shifting**; the corpus answer is the **soft priority**, not
+  the hard set.
+
+**★ SHIPPED vs. DESIGNED — code-verified this batch (b52):**
+
+| Surface | Shipped reality | Verdict |
+|---|---|---|
+| **Era-banded eligible matrix** | **SOFT form, 1772-INAUGURAL ONLY.** `Faction1772.eligibleIdeologies: Ideology[]` (`factions1772.ts:7`, populated per-faction `:12-23`) — values closely match this thread's Independence column (slot1 Prog/Pop/Lib, slot2 Lib/Mod, slot3 Mod-anchor, slot4 Con/Trad, slot5 Trad/RW-Pop; Red5 even the 3-wide `['Conservative','Traditionalist','RW Populist']` `:22`). Consumed via `getEligibleIdeologies` (`phaseRunners.ts:28-31`) + `pickBestForFaction` (`:33-53`), **only when `isExpansion1772`** (`:38`: `scenarioId==='1772' && year===startYear`). Soft two-tier: `strict = filter(...); pool = strict.length>0 ? strict : eligible` (`:41-44`); +50 score for an in-set ideology (`:49`) | The soft seed of #4 — but `Faction1772`-only (base `Faction` has no such field, `types.ts:1293-1304`); **1856 has ZERO `eligibleIdeologies`**; gates **only the inaugural draft** |
+| **Per-era dimension / FactNumber table** | **0% built.** `eligibleIdeologies` is a single static array per 1772 faction — no era-keyed lookup, no second column. The "shifts per Historical Era" core has NO representation | The matrix's defining feature (era-keying) is unbuilt |
+| **★ #306 10-faction structure-as-feature** | Both scenarios ship exactly **10 factions = 5/party** (count matches), but the **player-facing feature is absent**: no faction-naming UI, no historical-name picker, no era-evolving faction identity | Present as a COUNT, not the designed feature |
+| **Parties-only / unrestricted modes** | **0% built.** No settings framework (grep `partiesOnly` → 0). Build is **de-facto unrestricted everywhere except the 1772 inaugural** — but not as a player-selectable mode | Neither mode exists |
+| **★ #262 asymmetric fringe scoring** | **0% built.** `computePV` (`pv.ts:67-88`) has **NO ideology/fringe/rarity/score term** — PV is skills × office-weights + command + traits + prestige + age. **Personal ideology does NOT enter PV or elections at all** | The reward-by-rarity rule has no plumbing |
+| **★ #293 difficulty = faction × era + per-faction awards** | **0% built.** No faction-difficulty model; no awards/achievements system (the only `difficulty` in `src/` is Rev-War-tier, `types.ts:539,545,1363` — unrelated to faction selection) | Factions carry no difficulty rating; no award registry |
+| **★ #298 draftee conformance** | **0% built.** `recordDraftPick` (`phaseRunners.ts:55-75`) sets `p.factionId`/`p.partyId` but **NEVER conforms `p.ideology`** (`:55`) — a drafted Moderate stays Moderate | The conformance half (Cal's feared cost) is unbuilt |
+
+→ **Net: pure design provenance + the verified 1772-inaugural soft seed.** This thread is the **concrete matrix SPEC
+for #4** (two era columns transcribed) and mints **#306** (the 10-faction structure-as-feature). The design TENSION
+(fixed eligibility vs strategic ideology-shifting — the "least fun version" objection) is the durable content: it is
+**why the corpus answer is the SOFT priority, not the hard set.** (`7d91c4c7#POST 1, 4, 5, 6, 9, 10`; `game-context.md`
+#4/#306/#171/#298/#262/#293; codebase `factions1772.ts:7,12-23`, `phaseRunners.ts:28-53,55`, `pv.ts:67-88`,
+`types.ts:5,322,539,545,1293-1304,1363`.)
+
+#### 30.42.2 ★ #302 — historical party-switch dates, the `flippable` attribute + the realignment flip-year guide (designed; player-driven conversion is the shipped sibling)
+
+> **Source: `155bd104` POST 1 (vcczar, the whole feature), 2 (Patine, low-signal what-if) + codebase
+> (`phases.ts`, `phaseRunners.ts`, `types.ts`).** The **design origin (Jun 2021)** of (i) the historical-party-switch
+> DATE data layer, (ii) the auto/player switch MODES, (iii) the per-pol `flippable` attribute + multi-flip subset, and
+> (iv) the realignment flip-year calibration guide. SIBLING of the relocation system (`4e518e05`, #38) — same author,
+> same week, same "historical-date DATA + auto/manual/event MODE" shape. **0% built for the switch-date system**; the
+> shipped faction-conversion phase is the spiritual player-driven mode.
+
+**★ The mechanic — historical party-switch dates (POST 1).** vcczar entered **historic party-switching dates per
+politician**, **anchored to PRESIDENTIAL TERM YEARS** — *"a 1994 switch is marked 1996"* (same term-year snap as the
+dataset's `draftYear` = nearest mult-of-4 rule, CLAUDE.md). Three consequences:
+
+| # | Mode / consequence | Detail (POST 1) |
+|---|---|---|
+| **1** | **Start-date historical-party assignment** | Because start dates land on presidential-term years, a switched pol **begins each scenario start date in their HISTORICAL party as of that date** (a pol who flipped IRL in 1850 starts an 1856 game in their post-flip party) |
+| **2** | **Auto-historic switch MODE** | Auto-applies the scheduled historical switches and **DEACTIVATES player switch attempts** (e.g. **Elizabeth Warren auto-switches to Democrats in 1996**). Structural twin of relocation's auto-move mode |
+| **3** | **Player-driven switch MODE** | Players must **actively convert** pols; **events also grant party-switch chances** (rides on the #221 scripted-event primitive). The two modes are **mutually exclusive** (auto deactivates player attempts) |
+
+**★ The `flippable` per-pol attribute + the drafting-strategy axis (POST 1, verbatim).** *"Is it better to draft a C+
+politician that will stay loyal or a B- politician that is flippable? Someone you might lose!"* → **loyalty vs
+flippability is a deliberate scouting/draft tension** (higher ceiling + defection risk vs lower ceiling + reliable).
+Population sizing (calibration data, b52):
+- **~8–10% of AMPU politicians are flippable.**
+- **<1% flip parties MULTIPLE times** (e.g. **Trump**).
+→ Implies a **per-pol boolean** (flippable?) PLUS the scheduled switch DATE(s), with a rare multi-flip subset.
+
+**★ Realignment flip-year guide — era/scenario CALIBRATION data (POST 1).** The macro realignment schedule the per-pol
+switch dates aggregate to (era-aware — direction of flow matters per era):
+
+| Term-yr | Realignment driver | Net flow |
+|---|---|---|
+| **1796** | Hamilton upsets some Federalists | Federalist churn |
+| **1824** | Monroe's lack of party leadership → his party breaks in half | **conservative Federalists → Democrats** (surprising); most flippers → "Red Party" |
+| **1856** | Whig collapse / slavery | **anti-slavery Dems → new Republican Party**; **conservative Whigs → Democrats** |
+| **1872** | Gilded Age / corruption / Reconstruction | net **→ Democrats** |
+| **1896** | Bimetallism splits | **Gold → Republicans**; soft-money / pro-poorer → Democrats |
+| **1932** | Great Depression | net **→ Democrats** |
+| **1972** | LBJ Great Society + Nixon Silent Majority | net **→ GOP** |
+| **1996** | Gingrich's Contract w/ America | **last Southern Dem holdouts → GOP** |
+| **21st c.** | (2004/08/12/16/20) | "net/gain about even" for both parties |
+
+The **BLUE/RED ↔ Democrat/Republican mapping is era-shifted** (the "Red Party" of 1824 ≠ modern GOP; matches the
+era-rename / party-evolution findings, `7d0dfeec` / #40). vcczar: *"party flipping in almost every year"* — the guide
+is the *peak* schedule, not the only switch points. The 1856 realignment is treated as near-deterministic (POST 2:
+Whig extinction + GOP rise happens regardless of Clay/Taylor counterfactuals).
+
+**★ SHIPPED vs. DESIGNED — code-verified this batch (b52):**
+
+| Surface | Shipped reality | Verdict |
+|---|---|---|
+| **Switch-date DATA layer** | **0% built.** Grep `flippable\|switchDate\|partySwitch\|historicSwitch\|partyHistory` over `src/` = **zero**. `Politician` (`types.ts:1251-1291`) has `partyId` (`:1265`) but **no switch-date field, no `flippable` flag, no party history**; `ImportedDraftee` (the CSV row, `types.ts:1780-1793`) has no switch-date/flippable/historical-party column either | The data layer doesn't exist anywhere |
+| **Player-driven switch MODE (the sibling)** | **SHIPPED as Phase `2.1.6 Faction Conversions`** (`phases.ts:9`, "Politicians may switch factions") — `resolveConversion`/`conversionOdds`/`passiveConversionChance` (`phaseRunners.ts:953-1123`) with **`crossParty` poaching** (`:953-990,1067`), sign-free-agent, passive defection. This is the thread's **mode 3** — but **stochastic, present-state-driven, NOT historically-dated**; no scripted EVENT grants a switch (the #221 event path is 0% built) | The player MODE ships; the dated-DATA half does not |
+| **`flippable` PROXY** | **RNG, not history.** `Loyal`/`Opportunist` traits (`types.ts:114-116`) seeded at **`loyal: 0.08`, `opportunist: 0.08`** (`CONVERSION_ODDS.seed`, `types.ts:288`) — the **8% seed numerically echoes the thread's ~8–10% flippable**, but it is a **random per-pol roll**, not the historical `flippable` + scheduled-date data. The loyalty primitive is `loyalty: number` (`types.ts:1273`, [0,1], used by Secession-Winter cabinet defection — NOT party switching) | The number matches by coincidence; the mechanism is RNG |
+| **Auto-historic MODE + start-date assignment** | **0% built.** No scheduler applies dated switches at term-years; scenario seed pols are placed in a fixed `partyId`/faction with no "party as of this start date" resolution | Both unbuilt |
+| **Realignment calibration data** | **0% built.** No per-year/per-era switch-rate or direction-of-flow table; the closest is era-rename / party-evolution content (`7d0dfeec` / #40) which RENAMES the two fixed coalitions but does **not** move pols between them on a schedule | Distinct lever, unbuilt |
+
+→ **Net: pure design provenance (Jun 2021), mints #302.** The build has a **stochastic player-driven cross-party
+conversion phase (2.1.6)** + a **random 8% Loyal/Opportunist seed** — but **NO switch-date data, NO auto-historic
+mode, NO `flippable` per-pol attribute, NO start-date historical-party assignment, NO realignment calibration.**
+Party-switch is the **SIBLING of relocation (#38)** — identical auto/manual/event-mode shape; scope both together. The
+loyalty-vs-flippability **drafting axis** is a scout/draft-UI requirement that is invisible today (flippability is
+hidden RNG). (`155bd104#POST 1, 2`; `game-context.md` #302/#76/#40/#38; codebase `phases.ts:9`,
+`phaseRunners.ts:953-1123`, `types.ts:114-116,288,1265,1273,1284,1251-1291,1780-1793`.)
+
+#### 30.42.3 ★ Trade genre — the FIRST content genre with a real SHIPPED foothold (diplomacy meter + trade-treaty lever + 2 tariff bills); + the tariff-rate MAGNITUDE axis (#303) and the policy-vs-scripted-event boundary (#304)
+
+> **Source: `40a3bac2` POST 1-3 (vcczar + community) + codebase (`types.ts`, `phaseRunners.ts`, `DiplomacyPage.tsx`).**
+> A policy-genre CONTENT drop adding the **Trade** genre. **★ IMPORTANT — unlike NatSec/Guns
+> ([§30.41.2](#30412-national-security--guns-content-catalogs--the-content-engine-cluster-designed-0-shipped)) which
+> were 0% shipped, Trade has SUBSTANTIAL shipped scaffolding** (the diplomacy half). Do NOT blanket-mark Trade "0%
+> shipped." The named trade content, the graduated tariff-rate model, and three distinctive systems are unbuilt.
+
+**★ The shipped FOOTHOLD (verified b52) — the genre's distinguishing fact:**
+- **`game.diplomacy: Record<string, number>`** (`types.ts:1574`), clamped −5..5, seeded per scenario with real
+  nations (`scenario1772.ts:82` Britain/France/Spain/Netherlands; `scenario1856.ts:162`
+  Britain/France/Spain/Mexico/Russia), surfaced by **`DiplomacyPage.tsx`** (Allied/Friendly/Neutral/Tense/Hostile
+  bands), drifted (`phaseRunners.ts:3585-3590`, SoS-skill drift `:3292-3296`).
+- **`diplomacyAtLeast` Predicate variant** (`types.ts:1498`) gates era events on relations; any effect can carry
+  `diplomacy: {nation, delta}[]` (`types.ts:1454`).
+- **★ A proto trade-treaty lever EXISTS:** *"Negotiate a trade treaty"* → `diplomacy.Britain += 0.5` **AND**
+  `meters.economic += 0.3` (`phaseRunners.ts:3640`) — a shipped instance of exactly the trade↔relations coupling this
+  thread wants.
+- **★ BINARY tariff bills (the on/off version of the magnitude axis):** `Tariff Increase` (`revenue +1, economic
+  −0.5`, `Manufacturers +2 / FreeTrade −2`) + `Tariff Reduction` (`revenue −0.5, economic +0.5`, `FreeTrade +2 /
+  Manufacturers −1`) — `phaseRunners.ts:3421-3422`, 2 of the 8 generic `BILL_TEMPLATES` (`:3420-3429`) drawn for CPU
+  factions. The `FreeTrade` ↔ `Manufacturers` interest groups are the shipped stand-in for "industry vs free-trade
+  support."
+
+**★ The content (summarized by THEME, NOT pasted, POSTs 1–3, b52 designed).** Counts (POST 1): **Legis ~7 · Pres ~8 ·
+Gov 0 (n/a)** — the **first genre where Pres Actions ≥ Legis Props** (tariffs are an executive instrument):
+- **Tariff-rate magnitude:** Various tariff rates (Legis) · Slight increase ↔ Slight decrease to most tariffs (Pres,
+  paired continuous-strength lever).
+- **Embargo / retaliation:** Nonintercourse Act · Various retaliatory embargos · Retaliatory Tariff · Close country to
+  outside trade.
+- **Trade-agreement / FTA (diplomacy-coupled):** Reciprocal Tariff Act · Israeli-US FTA · Trade Promotion Authority
+  (*"allows development of FTAs"*) · WTO accession · Trade Mission with X country · AGOA (duty-free for African
+  countries).
+- **Conditional / values-linked:** Restrict trade to human-rights violators · Raise a trade dispute with X country
+  (POST 3: *"likely hurting relations, but encouraging econ/industry support"*).
+- **Named historical levers:** Trump Tariffs · LBJ Tariff. (NAFTA is **NOT** here — see #304 below.)
+- **Agencies-by-law (#66):** US Trade Rep (USTR) · Export-Import Bank.
+- **Federalism pole:** Tariff laws set by states.
+- **Shipping-protection:** Jones Act (US-flagged vessels between US ports; big Hawaii/Puerto Rico impact) + the **Space
+  Jones Act** (Future mirror).
+- **★ Era-of-Future band (#206, vcczar's lead high-need ask):** Create tariff and trade policy for outer space.
+- **Gov Actions = n/a (0)** — the recurring thinnest-primitive hole (#262), same as NatSec.
+
+**★ The three distinctive angles (beyond plain corroboration):**
+
+1. **★ Numeric tariff-rate MAGNITUDE axis (#303, NEW, b52).** "Various tariff rates" + slight increase/decrease is a
+   **continuous policy-strength dimension** — a tariff is set to a *level*, adjustable up/down in increments. Prior
+   genres' levers were binary. **The shipped `Tariff Increase`/`Tariff Reduction` bills (`phaseRunners.ts:3421-3422`)
+   are only the binary version** (fixed ±meter deltas). The thread asks for a **graduated rate model** = a persistent
+   per-good or aggregate **"current tariff rate" program-state** the levers nudge. **No shipped construct holds a
+   current tariff rate value** (grep `tariffRate\|tariffLevel` → 0). Does NOT fit #221's flat-content shape. Pairs
+   with the Gilded **tariff-as-national-%-rate** spec ([§31.1](#311-147-tariff-as-national--rate--the-mutually-exclusive-monetaryregime-designed)).
+2. **★ Policy-content vs Scripted-Event BOUNDARY (#304, NEW, b52).** vcczar explicitly carves **NAFTA + Trump's NAFTA
+   update OUT of the tariff catalog as Scripted Events** — the first content drop that *names* the boundary between
+   authored policy-levers and scripted narrative events. **Build mapping: there is NO `ScriptedEvent` type** (grep
+   `ScriptedEvent` → 0); the de-facto scripted-event mechanism is **era events carrying an optional `templateId`**
+   (`types.ts:1468`, tracked in `game.eraEventsCompleted`, gated by the `Predicate` tree). So NAFTA-as-scripted-event
+   *would* be an era-event node — but **no trade/tariff era-event exists** in `eraEvents1772.ts`/`eraEvents1856.ts`
+   (those graphs are independence/antebellum). The delta = formalize the policy-vs-scripted-event routing RULE +
+   (eventually) trade scripted events on a modern era graph that doesn't yet exist.
+3. **★ Trade ↔ diplomacy / industry coupling (PARTLY shipped, b52).** Trade levers move **foreign relations**
+   (human-rights restriction, FTAs, trade-dispute) and **econ/industry support** together (POST 3: trade-dispute =
+   −relations, +econ/industry). **The diplomacy half SHIPS** (the foothold above). **Gap:** there is **no national
+   "industry support" meter** — industries are *per-state* `Record<string,number>` (`types.ts:1328`); the nearest
+   national axis is the **`Manufacturers` interest group** (which the shipped tariff bills already move). So the
+   diplomacy half is shipped, the industry half is approximated by an interest group, and the named-FTA / human-rights
+   / trade-dispute *content* is entirely unbuilt.
+
+**★ Predicate-gating + per-country parameterization (#258/#248, b52).** USTR/Ex-Im/WTO/AGOA → era-window + "agency
+exists" gates; FTA-with-X / trade-dispute-with-X / trade-mission-with-X / close-country-to-trade → a **per-nation
+target parameter** (the lever is parameterized by *which country*); Trade Promotion Authority → a **"TPA in force"**
+program-state prereq for the FTA actions. **`interface Legislation`** (`types.ts:1506-1520`) carries only the 4-value
+`committee` — no `subtype`/`policyGenre`/tariff-rate/prereq field; the `Predicate` tree has `diplomacyAtLeast` but
+**no** "agency exists" / "policy active" / "tariff rate ≥ X" / "TPA in force" variant (same #258 gap). USTR/Ex-Im are
+the #66 agency-by-law family; the outer-space rows are the #206 Future high-need band.
+
+**★ SHIPPED vs. DESIGNED — code-verified this batch (b52):**
+
+| Area | Shipped reality | Verdict |
+|---|---|---|
+| **Diplomacy meter + trade-treaty lever + tariff bills** | **SHIPPED** — `game.diplomacy` (`types.ts:1574`), `diplomacyAtLeast` (`:1498`), `DiplomacyPage.tsx`, drift (`phaseRunners.ts:3585-3590`); "Negotiate a trade treaty" (`:3640`); `Tariff Increase`/`Reduction` (`:3421-3422`) | **★ Trade's real foothold — the diplomacy half ships** |
+| **Named trade content** (USTR / Ex-Im / FTA / embargo / AGOA / WTO / TPA / Jones / Trump/LBJ tariff / human-rights / outer-space) | **0% shipped.** Grep `tariffRate\|USTR\|Export-Import\|tradeDispute\|FTA\|outerSpace` = zero content hits | Unbuilt |
+| **Graduated tariff-rate program-state (#303)** | **0% shipped.** No "current tariff rate" value anywhere | The magnitude axis is binary-only today |
+| **Scripted-event routing (#304)** | **No `ScriptedEvent` type;** scripted = era-event `templateId` (`types.ts:1468`); no trade era-event node | The boundary RULE is novel; the infra is era-event-only |
+| **National industry-support meter** | **0% shipped.** Industries are per-state (`types.ts:1328`); `Manufacturers` interest group is the stand-in | Decision: new meter vs reuse interest group |
+| **#221 content primitives** (policyGenre / presAction / govAction / subtype / prereq) | **0% shipped** — none exist in the engine | The ~8 Pres Actions have no shipped home |
+
+→ **Net: EXTENDS the policy-genre corpus by one genre (Trade) — but the FIRST genre with a real shipped foothold (the
+diplomacy meter + trade-treaty lever + 2 tariff bills).** Mints **#303** (the magnitude axis) + **#304** (the
+policy-vs-scripted-event boundary). Counts (L≈7 / P≈8 / G=0) are **floors, not finals** (un-deduped). (`40a3bac2#POST
+1-3`; `game-context.md` #237/#221/#303/#304/#258/#248/#66/#206/#262; codebase `types.ts:1328,1454,1468,1498,1506-1520,1574`,
+`phaseRunners.ts:3421-3422,3585-3590,3640`, `scenario1772.ts:82`, `scenario1856.ts:162`, `DiplomacyPage.tsx`.)
+
+#### 30.42.4 ★ #85 / #45 / #56 — the war-casualty system is SHIPPED but UNDERTUNED (+ ALL-HANDS mobilization, combat-trait grant, WOUNDED state, the FRAIL/HALE contradiction)
+
+> **Source: `c4eadba5` POST 2 (vcczar, the proposal), 3-6 (Vols21's chart), 7 (#85 open Qs), 8 (Ted's verdict), 9
+> + codebase (`revolutionaryWar.ts`, `traits.ts`, `types.ts`).** The **2.7 deep-dive** on the battle-casualty
+> system. **★ HEADLINE — unlike Guns #300 (0% shipped), this system is SUBSTANTIALLY BUILT** (`applyCasualties`,
+> `revolutionaryWar.ts:67-123`, called per ground battle `:231` from `runRevWarBattles` `phaseRunners.ts:3595`). This
+> is a **BALANCE-TUNE finding on a LIVE system**, not a greenfield build. All proposals are an in-flight design
+> discussion (Sep 2022, pre-2.7 cutoff), NOT ratified final.
+
+**★ The PRIMARY finding — the casualty chance is tuned TOO SOFT (b52).** Ted (POST 8): *"there were existing rules for
+killing off military career-track folks… the chances are so small, I think it only happened once in two wars that
+lasted a combined 14 years in the 1840 test. To me, that's not very risky."* The mechanical root, code-verified:
+
+| Difficulty | SHIPPED counts (`revolutionaryWar.ts:69-81`) | DESIGN wants (POST 2) | Delta |
+|---|---|---|---|
+| **easy** | deaths `d6≥4 ? 1 : 0`; wounds same → **0–1 each** | **1–2** wounded-or-die | too low; **easy ≡ moderate** |
+| **moderate** | **IDENTICAL to easy** — `d6≥4 ? 1 : 0` → **0–1 each** | **2–3** | too low; not distinct from easy |
+| **difficult** | deaths `d6≤2→1, ≤4→2, else→3`; wounds same → **1–3 each** | **3–4** | slightly low |
+
+**★ SHIPPED `easy` and `moderate` are byte-identical** (`:75-80`) → ~1 death / 14 war-years (Ted's complaint). DESIGN
+wants **easy 1–2 / medium 2–3 / difficult 3–4, tiers DISTINCT.** The thread leans **TUNE, not rebuild** (POST 9:
+*"possibly the existing rule works best"*; method = isolated sample wars). Vols21's literal chart (POST 3-4:
+`1→2deaths · 2→1death · 3→2wounded · 4→1wounded · 5-6→none`, +1 for the bloodiest battles) is **one candidate to
+A/B-test**, NOT the shipped gating.
+
+**★ The other proposed mechanics + their shipped state (b52):**
+
+| Mechanic (POST 2) | Shipped reality | Verdict |
+|---|---|---|
+| **★ ALL HANDS ON DECK mobilization** — pull **all uncareered MIL≥1 pols** (PLUS Military-track) into a war action phase | **NOT shipped.** `appointMilitary` (`revolutionaryWar.ts:41-65`) seats only a senior general + ≤4 generals + senior admiral + ≤2 admirals. The casualty *exposure* pool IS already broad — all MIL≥1 non-Frail pols (`:83`) — but the designed *participation/action* phase doesn't exist | The exposure pool is broad; the All-Hands action phase is **unbuilt** |
+| **★ Combat-as-trait-acquisition** — each battle awards a random military trait from a ~20-trait list (Leadership, Iron Fist, Decisive General, Crisis Manager, etc.) | **NOT shipped.** Survivors get only a **flat `chance(0.1)` +1 MIL** (`:120-122`, capped at 5) — no trait grant. **~3 design traits absent from the union** (`Military Leader`, `Likeable`, `Lackey`; `Two Faced`→`Two-Faced` `types.ts:99`, `Unlikeable`→`Unlikable` `:157`) | Entirely unbuilt; needs ~3 union additions |
+| **WOUNDED state** — wounded pol **loses 1 MIL**, **removed from all future combat**, **gains FRAIL** | **PARTIAL.** Wound branch (`:96-118`) grants **FRAIL only** — does **NOT** decrement `skills.military`. "Removed from combat" is **indirect**: the participant filter excludes `traits.includes('Frail')` (`:43,83`), so a wound (→Frail) removes the pol from later battles. No dedicated `wounded` flag | Frail-via-`tryGrantTrait` combat-locks; **−1 MIL is unbuilt**; no first-class wounded state |
+| **★ FRAIL / HALE death-roll interactions (#85)** | **★ CONTRADICTS the design.** SHIPPED **FRAIL is EXCLUDED from the death/wound pool** (`:83`, `:87`) — the **OPPOSITE** of the design wish that FRAIL *raises* death odds (list a frail pol multiple times). And **HALE gets a one-roll d6 save** (`tryGrantTrait`, `traits.ts:41-59`; Hale↔Frail conflict pair `types.ts:679-680`; resists on d6<4, `conflictD6Threshold=4` `:638`), **NOT** the design's "roll twice, wounded only if 2nd fails" | **Direction UNRESOLVED** — the two #85 open questions land on real, divergent shipped behavior |
+| **Senior commanders spared** | Death/wound candidates **exclude** `seniorGeneralId`/`seniorAdmiralId` (`:87`, "more historical") | Shipped nicety, not in the design text |
+| **Casualties fire on EVERY ground battle, win or loss** | **Shipped** (`:231`) — matches design intent. Win/loss instead drives *commander* skill earn/loss (`applyBattleLoss`/`applyBattleEarn`, `:128-173`) | Matches |
+
+**★ The casualty system is REVOLUTIONARY-WAR-ONLY (b52).** `applyCasualties`/`runRevWarBattles` live in
+`revolutionaryWar.ts`; there is **NO generic war engine and NO Mexican-War / 1856+ / 1840-era war loop**. The thread's
+own proposed test (the **Mexican War on the 1840 sheet**, POST 6) **has no code to run on** — testing it requires
+generalizing the rev-war engine or a throwaway harness. (`warActive` is a `Predicate` token, `phaseRunners.ts:2252,2267`,
+but does not spawn a battle loop for non-rev-war wars.) Ties **DH-81 / #45** (war-end) and **#56** (the war system is
+rev-war-only).
+
+**★ Co-located but independent (b52):**
+- **#300 military-tech → combat modifier** ([§30.41.3](#30413--300--firearms-research-military-tech-upgrade-tree--combat-victory-modifier-designed-0-shipped)) is **still 0% shipped** — the ground target is
+  `planning + military×10 + (frenchAlliance?25:0) + diffMod` (`revolutionaryWar.ts:212-218`); naval is `military×10 +
+  admin + 30` (`:186-191`). No weapon/firearm-tech term. The casualty work and the tech-modifier work are **two
+  independent extensions of the same rev-war battle resolution.**
+- **#296 determinism site:** `applyCasualties` picks victims with **`Math.random()`** (`revolutionaryWar.ts:89,97`),
+  violating the seeded-RNG rule (the rest of the file uses `d`/`d100`/`chance`/`pick` from `rng.ts`). **Any retune
+  must also fix the RNG source.** (Dup of the #296 keystone, [§30.40.2](#30402--296--the-seeded-rng-keystone-the-d100-mechanic-exists-but-runs-on-mathrandom).)
+
+→ **Net: this is a SHIPPED-system balance finding, not a new design.** The casualty system IS built but
+**undertuned** (easy≡moderate at 0–1; difficult caps 1–3 → ~1 death/14 war-years) — a **TUNE** (lift counts toward
+1–2 / 2–3 / 3–4, distinct tiers). The **All-Hands mobilization phase**, the **combat-trait grant**, the **−1-MIL
+wounded decrement**, and a **first-class WOUNDED state** are genuinely new. The **FRAIL/HALE direction is unresolved**
+(shipped behavior is the OPPOSITE of the design wish). The casualty loop is **rev-war-ONLY** (#45/#56). (`c4eadba5#POST
+2, 3, 4, 5, 6, 7, 8, 9`; `game-context.md` #85/#45/#56/#300/#296; codebase `revolutionaryWar.ts:41-65,67-123,83,87,
+89,97,120-122,128-173,186-191,212-218,231`, `traits.ts:41-59`, `phaseRunners.ts:2252,2267,3595`,
+`types.ts:99,157,638,679-680,1367-1368`.)
+
+#### 30.42.5 ★ #34 / #305 / #294 — the decennial census / reapportionment subsystem (validated in spreadsheet, 0% shipped) + the missing state-POPULATION primitive
+
+> **Source: `074b6d6f` POST 1, 2, 3, 4 (the 1850 validation), 5-10 (real-history calibration), 11
+> (manufacturing→population), 12 (FL projection) + codebase (`types.ts`, `phases.ts`, `constitutionalConvention.ts`,
+> `expansionStates.ts`, `phaseRunners.ts`).** The **decennial CENSUS / REAPPORTIONMENT** engine that recomputes each
+> state's **Electoral Votes + House seats** from a population model. **★ RUN AND VALIDATED** in vcczar's spreadsheet
+> (1850 census inside the 1840 playtest → concrete totals) — but **the entire subsystem is 0% shipped in the browser
+> build.** This is the **strongest concrete spec to date for #34.**
+
+**★ The designed subsystem (b52):**
+
+| # | Rule | Detail |
+|---|---|---|
+| **1** | **Decennial trigger → recompute EV + House seats** (POST 1, 2, 4) | Every census year (1850, 1860, 1920, …) recompute each state's EV + House seats from state population, then redraw the battleground/"state biases" map |
+| **2** | **Probabilistic per-state EV-change triggers** (POST 4) | Apportionment shifts are NOT deterministic — each state has a **10% or 25%** chance to gain/lose EV on a roll. In the 1850 test **~8–9 triggers fired, 2 succeeded** ("statistically average") — *"The rules are fairly realistic and worked"* |
+| **3** | **Era-gated 435 House CAP** (POST 7, 9) | The 435 limit + modern apportionment law **dates to 1929** — NOT in force earlier; pre-1929 the House is **uncapped/recomputed**. The 1850 test produced **236 House seats** (pre-cap) |
+| **4** | **Census-ran-but-reapportionment-SKIPPED mode** (POST 5-10) | **1920:** census happened but Congress couldn't agree → **NO seat changes 1920→1930** despite booming population. The system must model a **no-change census** decade. (The 1929 law passed *"just in time"* to avoid repeating it) |
+| **5** | **Population = the input, fed by INDUSTRY / MANUFACTURING + events** (POST 2, 3, 11) | State population grows via **industries moving + manufacturing growth**, themselves driven by era events. Coupled chain: **industry/manufacturing → state population → EV + House seats** |
+| **6** | **Per-state EV/apportionment EVENT modifier** (POST 4) | Events apply a **±N modifier to a state's census result** — **AZ/NM each took −2** ("technically at 1," ahistorical); the 1920 skip is the inverse |
+
+**★ The 1850-in-1840 validation data (POST 4) — the spreadsheet output:** **EV Total 300 · House Seats 236** (POST 4).
+Mostly-historical per-state deltas (e.g. `IL 11 (+2)`, `NC 10 (−5)`, `VA 15 (−2)`, `NY 35 (−1)`). **Ahistorical /
+alt-state outcomes:** **LC (Lower California) 5 EV** + **UC (Upper California) 3 EV** (alt-states, both EV-change
+triggers that fired hit Lower California). **Manufacturing→population calibration** (POST 11): an 1840 event gave **+2
+manufacturing to every state that can support it**; at the **~25% per-roll success rate** it projects ~32.5M US
+population by 1860 (vs 31.2M IRL). **FL projection** (POST 12): minimum **6 EV post-1860 census**, with a **12.5%
+chance of 8 EV** — concrete evidence the model produces forward-looking probabilistic EV.
+
+**★ SHIPPED vs. DESIGNED — code-verified this batch (b52). The ENTIRE subsystem is DESIGNED-ONLY:**
+
+| Surface | Shipped reality | Verdict |
+|---|---|---|
+| **Census / apportionment phase** | **0% built.** `grep census\|apportion\|reapportion\|decennial src/phases.ts` → zero; `PHASE_SEQUENCE` has no census step | No census phase exists |
+| **★ #305 state POPULATION primitive** | **0% built — the missing DATA HOME.** `interface State` (`types.ts:1318-1335`) has only `electoralVotes`, `bias`, `industries`, `isSlaveState`, `admissionYear` (+1772 colony fields) — **NO `population` field, NO `houseSeats` field.** `grep population src/` → zero game-state hits | The population model that drives the whole census has **no data home at all** |
+| **EV recompute** | **0% built.** `electoralVotes` is a **STATIC scalar**, WRITTEN only at statehood (CC path `Math.max(3, (ccDelegateSlots ?? 2) + 1)` `constitutionalConvention.ts:210`; expansion **hardcoded to 4** `expansionStates.ts:178`; territory-conversion seeds `0` `phaseRunners.ts:3169`), READ only by elections (turnout scale `phaseRunners.ts:3692`, EV tally `:3767-3768,:3792`). `admitState` (`territories.ts`) doesn't touch it. **Nothing ever recomputes EV by population or over time** | Only the OUTPUT field exists, used as a fixed per-state constant |
+| **435 cap + House-size rule** | **0% built.** No `435` constant, no House-size cap anywhere | Era-gated cap unrepresentable |
+| **Probabilistic 10%/25% EV-change + event modifier** | **0% built.** No code rolls apportionment triggers; no event applies a per-state EV modifier (AZ/NM −2 has no code path) | Unbuilt |
+| **★ #294 manufacturing → population coupling** | **HALF-present.** Industries **DO mutate at runtime** — lobby→industry +1 nudge (`phaseRunners.ts:1638-1656`, PR7) + era-event bumps raise `s.industries[key]` by ±1 (clamped ≤5) — **but feed METERS only, not population/EV.** The manufacturing→population→EV chain is **half-present (industries change) and half-absent (the population/EV coupling doesn't exist)** | Industries change; the population/EV link is unbuilt |
+| **expansionStates per-state EV + LC/UC** | `expansionStates.ts` hardcodes **`electoralVotes: 4`** for all expansion states (`:178`) vs the per-state design (LC 5 / UC 3); **LC/UC are absent from the registry entirely** (spreadsheet-only). AZ (`:86`) + NM (`:95`) DO exist but at static EV=4 — no base EV to apply the −2 modifier against | Confirms the b50 EV=4-vs-per-state delta; alt-states missing |
+
+→ **Net: a working, validated spreadsheet census engine (300 EV / 236 seats, calibrated to real 1850/1920 history)
+with NONE of its inputs or machinery in the browser build — only the output field (`electoralVotes`) it would write,
+used today as a fixed per-state constant.** This is the **strongest concrete spec for #34** and mints **#305** (the
+state-population primitive — the missing DATA home under #34). The **manufacturing→population coupling (#294)** is
+half-present (industries mutate but feed meters, not population). (`074b6d6f#POST 1, 2, 3, 4, 5, 7, 9, 11, 12`;
+`game-context.md` #34/#305/#294; codebase `types.ts:1318-1335`, `phases.ts`, `constitutionalConvention.ts:210`,
+`expansionStates.ts:86,95,178`, `phaseRunners.ts:1638-1656,3169,3692,3767-3768,3792`, `territories.ts`.)
 
 ### 30.4 Authority hierarchy reminder
 
