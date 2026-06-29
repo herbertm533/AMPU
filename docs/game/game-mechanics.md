@@ -375,6 +375,7 @@
     - [30.37 Rulings folded from batch 47 — FOUR policy-genre drops (Currency / Taxation / Slavery / Infrastructure) + the Northern-secession Civil-War extension (★ the Currency prereq-tree as the #258/#237 content-engine REFERENCE SHAPE + the 7 predicate classes + #288 slavery-flag↔secession-eligibility coupling + Northern/New-England secession & non-playable rumps + the Southern-led Reconstruction branch + #262 cross-genre repeal-only-RW gap) (`de64de1a-currency` / `1bf19872-taxation` / `5d7c29ee-slavery` / `9c383f22-northern-secession` / `d62ea397-infrastructure`)](#3037-rulings-folded-from-batch-47--four-policy-genre-drops-currency--taxation--slavery--infrastructure--the-northern-secession-civil-war-extension--the-currency-prereq-tree-as-the-258237-content-engine-reference-shape--the-7-predicate-classes--288-slavery-flagsecession-eligibility-coupling--northernnew-england-secession--non-playable-rumps--the-southern-led-reconstruction-branch--262-cross-genre-repeal-only-rw-gap-de64de1a-currency--1bf19872-taxation--5d7c29ee-slavery--9c383f22-northern-secession--d62ea397-infrastructure)
     - [30.38 Rulings folded from batch 48 — ★ #289 the 3-tier stat model + scenario-boot stat-init (the 1960 cabinet-crater root cause) + #290 the procedural-generator revamp + the Credit/Debt prereq tree (2nd #258/#237 exemplar; nationalDebt SHIPS) + #291 the non-ideological-populism ideology gap (deferred) + the recent 1772 confirmations (Washington-Rule can FAIL; women's-suffrage CC plank) (`3b46b086-1960-question` / `5e8dc484-politician-generator` / `391df03b-credit-debt` / `036f0dce-tulsi-gabbard` / `e86d8661-top-10-statesmen`)](#3038-rulings-folded-from-batch-48---289-the-3-tier-stat-model--scenario-boot-stat-init-the-1960-cabinet-crater-root-cause--290-the-procedural-generator-revamp--the-creditdebt-prereq-tree-2nd-258237-exemplar-nationaldebt-ships--291-the-non-ideological-populism-ideology-gap-deferred--the-recent-1772-confirmations-washington-rule-can-fail-womens-suffrage-cc-plank-3b46b086-1960-question--5e8dc484-politician-generator--391df03b-credit-debt--036f0dce-tulsi-gabbard--e86d8661-top-10-statesmen)
     - [30.39 Rulings folded from batch 49 — ★ #292 the election vote-score FORMULA + the meter→enthusiasm pipeline gap (subsumes State.preferredIdeology) + #283 the assassination outcome-distribution divergence + the Bailouts/Drugs predicate-class evidence (#258/#237/#221/#248/#262/#206/#66) + the marquee-VP stat blocks (#240/#216/#194/#279/#15) (`6801b9f4-meter-interpretation` / `5261c8ff-bailouts` / `c9b97b58-unfinished-presidencies` / `faf2d8b3-drugs` / `b9651d6d-vps`)](#3039-rulings-folded-from-batch-49---292-the-election-vote-score-formula--the-meterenthusiasm-pipeline-gap-subsumes-statepreferredideology--283-the-assassination-outcome-distribution-divergence--the-bailoutsdrugs-predicate-class-evidence-25823722124826220666--the-marquee-vp-stat-blocks-24021619427915-6801b9f4-meter-interpretation--5261c8ff-bailouts--c9b97b58-unfinished-presidencies--faf2d8b3-drugs--b9651d6d-vps)
+    - [30.40 Rulings folded from batch 50 — ★★ #20 the deterministic CPU gov-action DECISION SPEC + #296 seeded-RNG keystone + #293 difficulty=ideology×era + #294 industry-eligibility matrix/taxonomy + #295 era-aware draft pool + the #292 four election-resolver absences + #45/DH-81 rev-war-end-multiplier + the FAQ cluster (#191/#287/#129/#153/#112/#238/DH-74) + #158 Hand of Providence + the 1772 10-faction seed roster (`c8d89e49-cpu-rules` / `59d805be-hand-of-providence` / `24757e3a-data-posts` / `6b41ed5b-electoral-trends-1948` / `58da1636-questions-on-game`)](#3040-rulings-folded-from-batch-50---20-the-deterministic-cpu-gov-action-decision-spec--296-seeded-rng-keystone--293-difficultyideologyera--294-industry-eligibility-matrixtaxonomy--295-era-aware-draft-pool--the-292-four-election-resolver-absences--45dh-81-rev-war-end-multiplier--the-faq-cluster-191287129153112238dh-74--158-hand-of-providence--the-1772-10-faction-seed-roster-c8d89e49-cpu-rules--59d805be-hand-of-providence--24757e3a-data-posts--6b41ed5b-electoral-trends-1948--58da1636-questions-on-game)
     - [30.4 Authority hierarchy reminder](#304-authority-hierarchy-reminder)
 31. [Gilded-Age era systems (designed, not built)](#31-gilded-age-era-systems-designed-not-built)
     - [31.1 (#147) Tariff-as-national-%-rate + the mutually-exclusive MonetaryRegime](#311-147-tariff-as-national-rate--the-mutually-exclusive-monetaryregime-designed)
@@ -21895,6 +21896,508 @@ content primitives** at all. (`5261c8ff#POST 1-5`; `faf2d8b3#POST 1-9`; `game-co
 `Expertise` unions, `phaseRunners.ts:3685-3723`.) **All of §30.39.4 is a provisional, abandoned-thread
 authoring SNAPSHOT — adopt only with human confirmation; route via `seedDataset.mjs`, never hand-edit
 generated files.**
+
+### 30.40 Rulings folded from batch 50 — ★★ #20 the deterministic CPU gov-action DECISION SPEC + #296 seeded-RNG keystone + #293 difficulty=ideology×era + #294 industry-eligibility matrix/taxonomy + #295 era-aware draft pool + the #292 four election-resolver absences + #45/DH-81 rev-war-end-multiplier + the FAQ cluster (#191/#287/#129/#153/#112/#238/DH-74) + #158 Hand of Providence + the 1772 10-faction seed roster (`c8d89e49-cpu-rules` / `59d805be-hand-of-providence` / `24757e3a-data-posts` / `6b41ed5b-electoral-trends-1948` / `58da1636-questions-on-game`)
+
+> **★ Batch 50 = five DIGEST-ONLY sources (no historian ran the batch); the most CPU-AI-dense + DATA-MODEL-dense
+> batch since `drums` (b5).** The HEADLINE is the **deterministic CPU Gov-Action DECISION SPEC (#20)** — the
+> designer's explicit demand that every CPU rule resolve to a **single d100 against cumulative percentage bands**
+> with ZERO human interpretation — and the four NEW gaps it drags in: **#296** (seeded-RNG keystone, the
+> prerequisite), **#293** (the difficulty model), **#294** (the industry-eligibility matrix + taxonomy), and
+> **#295** (the era-aware draft pool). Two of the sources are designer-authoritative design threads, one is the
+> project FAQ compendium, one is a data-reference index, and one is a narrated all-CPU 1772 run that
+> CORROBORATES the whole CPU suite end-to-end. The sources:
+> - **`c8d89e49-need-your-input-fixing-cpu-rules`** (topic, 56 posts / 1 chunk; Aug 24 – Oct 1 2025 — RECENT;
+>   designer/GM @MrPotatoTed). ★ HIGH-RELEVANCE **design thread**, not a playthrough — the roadmap for making
+>   the CPU AI deterministic and shippable. THE durable provenance for the **#20 gov-action decision spec** +
+>   8 adjacent CPU-rule fixes + the **#296** seeded-RNG keystone. Cite `c8d89e49#POST n`.
+> - **`58da1636-questions-on-game`** (topic, 347 posts / 4 chunks; Dec 2022 – Jun 2026; vcczar + senior GMs).
+>   The project's **FAQ / designer-ruling compendium** — the richest cross-system source of small DURABLE
+>   rulings in the KB. Yields **#293** (difficulty) + the **#191/#287/#129/#153/#112/#238/DH-74** FAQ cluster +
+>   the **#289** 12-point CPU-init audit. Cite `58da1636#POST n`.
+> - **`24757e3a-data-posts`** (topic, 95 posts / 1 chunk; Sep 2024 – Aug 2025; @Arkansas Progressive). The
+>   canonical home of the design's **state×industry eligibility matrix + 9-industry taxonomy + era-evo rollout**
+>   (→ **#294**) and the **draft-pool-by-era reference** (→ **#295**). Most load-bearing artifacts are Flourish
+>   images NOT in the text export — captions/corrections only. Cite `24757e3a#POST n`.
+> - **`6b41ed5b-electoral-trends-1948`** (topic 5474, 51 posts / 1 chunk; Sep 2024 – Mar 2026; @Arkansas
+>   Progressive). A presidential-election RESULTS LOG (1952–2016) for the 1948 Cold-War playtest; mined for the
+>   **four #292 election-resolver absences** (faithless electors, CD EV-split, third-party presidential path,
+>   natural-born non-enforcement). Cite `6b41ed5b#POST n`.
+> - **`59d805be-the-hand-of-providence-the-story-of-a-nation`** (topic, 97 posts / 3 chunks; 2025 — RECENT;
+>   @Ich_bin_Tyler). A narrated **all-CPU 1772-founding traversal** (1772 → ~1787, full Era of Independence) —
+>   the prose-rich sibling of `c8d89e49`. Documents the **1772 10-faction seed roster** and CORROBORATES the
+>   CPU suite (#20). GA-run (corroborative) EXCEPT the @ebrk85 RevWar war-end-multiplier ruling and the
+>   naval-bonus confirmation (→ **#45/DH-81**). The "Hand of Providence" once-per-era GM override is the **#158**
+>   candidate escape-hatch. Cite `59d805be#POST n`.
+>
+> **★ Cross-section note — this batch SHARPENS already-documented rows, it does NOT add shipped rules.** Every
+> headline is **shipped-vs-designed** class. Do NOT re-document the gov-action library ([§11.x](#11-governance-25x),
+> [§30.36](#3036-rulings-folded-from-batch-46--the-five-gov-action--house-incumbency--environment--playtest-reel-threads--civil-war-partially-shipped-4-defection-abstraction-vs-designed-territorial-depth--258-the-governor-predicate-gov-action-archetype--286-pres-fallscandal-event-rate--287-the-2-house-incumbency-bonus--the-contingent-house-election--the-environment-policy-genre-a938ac91-gov-actions-scripted-events--b7acabd2-house-incumbency--9f2ab25f-environment--215f0676-july-2023-updates--243dc711-september-update)),
+> the meter→enthusiasm→election chain ([§30.39.1](#3039-rulings-folded-from-batch-49---292-the-election-vote-score-formula--the-meterenthusiasm-pipeline-gap-subsumes-statepreferredideology--283-the-assassination-outcome-distribution-divergence--the-bailoutsdrugs-predicate-class-evidence-25823722124826220666--the-marquee-vp-stat-blocks-24021619427915-6801b9f4-meter-interpretation--5261c8ff-bailouts--c9b97b58-unfinished-presidencies--faf2d8b3-drugs--b9651d6d-vps)),
+> or the CPU-AI cluster ([§25](#25-cpu-ai-specifications-designed-not-built-unless-flagged)) — the subsections
+> below add only the **NEW decision-spec structure, the new gaps, and the verified deltas.**
+
+#### 30.40.1 ★★ #20 — the deterministic CPU Gov-Action DECISION SPEC (designed; gov-action system 0% shipped)
+
+> **Source: `c8d89e49` POST 1-13, 17-18 (the designer + Arkansas Progressive + the rules team) + codebase.**
+> THE headline of the batch and the deepest CPU-decision spec since `drums`. Extends the long-running **#20**
+> row ([§11](#11-governance-25x); the b46 governor-predicate archetype [§30.36](#3036-rulings-folded-from-batch-46--the-five-gov-action--house-incumbency--environment--playtest-reel-threads--civil-war-partially-shipped-4-defection-abstraction-vs-designed-territorial-depth--258-the-governor-predicate-gov-action-archetype--286-pres-fallscandal-event-rate--287-the-2-house-incumbency-bonus--the-contingent-house-election--the-environment-policy-genre-a938ac91-gov-actions-scripted-events--b7acabd2-house-incumbency--9f2ab25f-environment--215f0676-july-2023-updates--243dc711-september-update)).
+
+**★ The two stated OBJECTIVES (POST 1, restated POST 3), in rank order:**
+1. **FIRST PRIORITY — zero human interpretation.** Every CPU rule must reduce to *"20% of the time it does this,
+   40% that"* — i.e. a **single d100 against cumulative percentage bands** (POST 2: "I do d100, 1-25 is this,
+   26-50 that"). This is the exact mechanic the browser port must encode; it is **the prerequisite for testability**
+   and forces the seeded-RNG keystone (**#296**, §30.40.2).
+2. **SECOND PRIORITY — more strategic / human-like CPU.**
+
+The **problem statement** (POST 4-6): legislation CPU is "straightforward because it's points based," but gov
+actions are "more nebulous… strategic reasons to invest in an industry or adjust term limits, but they aren't
+directly points-based." The fix is **a hierarchy of which gov actions are most beneficial, especially as
+If-Then statements** — the *design* (not the implementer) must encode the decision tree.
+
+**★ The Gov-Action CPU DECISION HIERARCHY (designed; ordered most-human first; POSTs 3-10).** Resolve top-down;
+each tier is a d100-bandable choice within it:
+
+| Order | Tier | What it picks | Why / authority |
+|---|---|---|---|
+| **(i)** | **Political machine + GERRYMANDER — prioritized ABOVE ALL** | The "most human" actions. Non-points-based but party/faction-beneficial — **the "grey area" points-logic misses** | "gerrymandering and other actions which don't result in points CAN benefit a party/faction" (POST 9, endorsed POST 10) |
+| **(ii)** | Any other **eligible SPECIAL action** | Actions yielding **faction-card / meter-crisis / ideo-lobby-IG / party-preference** boosts (build railroads, etc.) — prioritized over generic actions when the gov meets their prereqs | POST 3, 9 |
+| **(iii)** | **HAMSTRING rival ideology** | Use levers (Fill State Offices with Loyalists, Poll Tax, state-loyalist) to make a rival ideology *over*-represented where that hurts it, or suppress its voters | POST 9 (non-points, strategic — same grey area) |
+| **(iv)** | **DEFAULT = increase the largest industry in your state**, STEERED by the faction's lobby card | "increasing an industry is always a points boon… you can't go wrong with this" (POST 6). Lobby-steered: **Wall-St → Finance, Big-Ag → Agriculture, Big-Corps → Mining/Manufacturing** (POST 9). The "when all else fails" reliable choice | POST 6, 9 |
+| **(v)** | **SABOTAGE = decrease an industry** | ONLY when an opponent **leads ALL relevant states** in that industry (then "sabotage the economy"). Flagged "might get out of control" → **needs a guardrail** (per-turn cap / all-states condition) | POST 7 (guarded/conditional) |
+
+**★ Ordering ruling: faction-security ranks ABOVE crisis-response** (POST 18 over the POST 17 minority view) —
+"the most human strategy is to secure your faction ahead of anything else." (Crisis-response is where they
+*start*, but faction security wins the priority contest.)
+
+**★ The Gov-Actions Requirement List (POSTs 11-13; transcribed by Arkansas Progressive, declared "complete"
+POST 13 but is partial — see open items).** Every action needs a machine-readable **requirement predicate**
+over `(governor.traits, governor.expertise/skills, governor.ideology, governor.interestCards,
+sameParty(senators), senatorIdeologies)` + an **activate/deactivate VERB** + an **era-availability gate**.
+Organized into two buckets:
+
+- **Bucket A — NO REQUIREMENT** (any governor may attempt). The whole **"Advocate X" family** (Advocate
+  Environmentalism / Equity-for-Blacks / Isolationism / Military-Service / Nationalism / Political-Reform /
+  Social-Mobility / Traditional-Family-Values / US-Exceptionalism) — each simply **activates** an ideology /
+  interest-group flag. Plus Increase/Decrease State Gov Jobs, Split Electoral Votes, Lower/Raise taxes, Ratify
+  Constitution, Build Hyperloops / State University, Call for new ConCon / state-secession convention, Improve a
+  Burgeoning Industry, Neglect Industry, Volunteer State Funds, Punish Tories, Promote Foreign Immigration, etc.
+  Several carry **inline parentheticals** that are **activation conditions or de-activation actors**, NOT hard
+  prereqs (e.g. "Property requirement for legal voters (Big-Corp/Wall-St to activate; LW-Pop/RW-Pop/Reformist to
+  deactivate)") — toggle-state actions.
+- **Bucket B — PREREQUISITE-GATED.** Pattern = **trait AND/OR expertise AND (sometimes) "one same-party US
+  Senator"** plus occasional **same-party-Senator ideology conditions.** Organized by gate sub-headers:
+  - **"1 Same Party U.S. Senator"** → term-limit toggles, Make-faithless-electors-illegal, Build
+    roads/bridges/canals, Decrease Polling Stations, Major Irrigation, Stand Your Ground, Winner-Takes-All toggles.
+  - **"Ditto Civil Rights Interest"** → Abolish Private Prisons, Gun Buyback, **Poll Tax / Jim Crow / Literacy
+    Test / Segregation / Strict Voting ID (all "deactivate")**, Make-lynching-illegal, Remove CSA Monuments.
+  - **"Ditto Activist Interest"** → big RW/LW-tagged toggle list (Arm Teachers RW; Ban Child Labor LW; Abortion
+    Restrictions RW; Recognize Gay Marriage LW; carry/welfare/overtime).
+  - **"Ditto Justice Expertise"** → Fill State Judges with Loyalists, Anti-Corruption (integrity or reformist),
+    Fair Redistricting (integrity or reformist), **Gerrymander (controversial OR Iron Fist)**, Make State Judges
+    Elected, Tough-on-Crime, legalize gambling/prostitution/lotteries.
+  - **"Ditto Transportation expertise"** AND **"Ditto Business expertise"** → **Build Railroad** (TWO entry
+    expertises); Business also → State Healthcare, State Income Tax, Weaken Labor Unions (Right to Work).
+  - **Ideology-gated** ("Ditto Populist/Progressive/Liberal/Traditionalist") → e.g. **Abolish Slavery** = a
+    *compound* gate (**LW-Pop/Prog/Lib OR Civil Rights — AND "No Senator is Trad or RW Pop"**); Women's Suffrage,
+    Prohibition, crack-down-on-L/R-radicals (mirror pair).
+  - **Interest-card-gated** ("Ditto Iron Fist / Controversial / Integrity / Human Rights / Globalist…") → e.g.
+    Gerrymander reachable via Iron Fist *or* Controversial cards (with Justice expertise).
+  - **Multi-officeholder COMPOUND gates** (the hardest): "Gov + Senator same party + theocratic → Ban Abortion";
+    "Gov + both Senators RW-Activist → Expand Slavery to Native Americans / Poor Whites"; "Gov + both Senators
+    same party → Purge Voter Rolls"; "Gov has ≥1 Judicial ability → Legalize Robot Marriage."
+  - **Parsing keys (POST 11):** "**replace Judicial with Justice when implying expertise**" (the action text says
+    "Judicial" but means the **Justice expertise tag**; POST 15-16 consensus: should be **either Justice
+    expertise OR judicial skill**) and "**one same-party US Senator**" is the recurring gate.
+
+**★ CPU Gov-CANDIDATE selection (POSTs 9-10).** Distinct from action selection — *who* the CPU runs for a Gov
+seat:
+1. **PROTÉGÉS are ALWAYS the first choice** (POST 9, quoted back POST 10).
+2. **Existing CPU rules (POST 10):** "20% of the time select a protégé that has a kingmaker"; "20% select the
+   eligible politician with charisma / leadership / likable / manipulative / integrity."
+3. **Proposed expansion (POST 10):** widen rule 2 to **anyone with a guaranteed +1 to election chances** (via
+   events or anything) — "a guaranteed +1 is much more powerful than the maybe-+1 traits." ★ **BLOCKED:** there
+   is **no per-politician `electionBonus` field** — `applyTraitElectionBonus`/`electionEffects.ts`
+   (`phaseRunners.ts:3729-3735`) is the unrelated *trait*-bonus path. Implementing the expansion **requires
+   modeling an election-bonus value first** (none ships).
+
+**★ SHIPPED vs. DESIGNED — code-verified this batch (b50):**
+
+| Area | Shipped reality | Verdict |
+|---|---|---|
+| Gov-action system | **0% shipped.** `grep govAction\|GovAction\|governorAction` over `src/` = **0 hits**. `GovernorsPage.tsx` is a READ-ONLY `<table>` (State / Region / Governor / Party / Ideology / Gov-Skill — no buttons, no dispatch; `registry.ts:87`) | **0% built** |
+| `industries` mutator | The **ONLY** thing that mutates `State.industries` is the passive **PR7 lobby nudge at 2.1.8** (`phaseRunners.ts:1631-1656`): for each state, for each faction with a living resident member, bump each `LOBBY_INDUSTRY[card]` key **that already exists** on `s.industries` by +1 (clamp ≤5, deduped per (state,key) per year). **No governor, no decision, no action verb** — an automatic side-effect of lobby cards + residency, not a *choice*. It **cannot add a new industry** (`if (!(key in s.industries)) continue`) | The designed "increase the largest industry / Wall-St→Finance" GOV ACTION is **0% built**; only the lobby→industry MAP exists, repurposed as a yearly tick |
+| `LOBBY_INDUSTRY` map | **Already maps** Merchants→`['shipping','finance']`, SmallFarmers→`['agriculture']`, NorthernIndustry→`['manufacturing','coal']`, Planters→`['tobacco']` (`types.ts:398`) — i.e. the **Wall-St→finance / Big-Ag→agriculture / Big-Corps→mfg** steering already exists as data | Reusable as an **ACTION CHOOSER** for tier (iv), not just the 2.1.8 passive nudge |
+| Data targets | `State.industries: Record<string,number>` (`types.ts:1328`), `State.termLimits: 'two_terms'\|'no_limits'` (`types.ts:1396`), `State.electoralVotes` (`types.ts:1323`) all exist | **Data target present, no mutator/CPU rule** for "adjust term limits / split EV / increase industry" |
+| CPU-rule PATTERN | Exists for OTHER phases (draft scoring, ideology-shift `IDEOLOGY_SHIFT_ODDS.cpu`, conversion `CONVERSION_ODDS.cpu`, kingmaker auto-assign, ConCon party-vote CPU) — all `chance(gate)` over RNG | **Pattern proven, just not applied to gov actions** |
+| Protégé / +1-bonus gov-candidate selection | `assignProtege`/`protegeId` (`types.ts:1283`) exists, but **no governor-nomination CPU step** consults `protegeId` or trait lists; the "20%/20%" rules are forum-text only; no `electionBonus` field | **NOT BUILT** |
+
+**★ The all-CPU `59d805be` run CORROBORATES the gov-action menu LIVE** (GA-level, narrated): CPU governors
+spend actions on **"Improve a Burgeoning Industry: Plantation/Maritime/Finance/Agriculture"** → +100 Gov&Dels +
+becomes/ties leader in that industry; **term-limit reforms** → +100 Reformist; **raise/lower taxes** → +100
+LW/RW-Activist (POST 28, 56, 69, 92). This is exactly the industry-investment default (tier iv) + the activate-a-flag
+family (Bucket A) running in a CPU game — observational confirmation that the designed menu behaves as specced.
+
+**★ Open items (for the human / roadmap):** (i) the full action catalog is never finalized in-thread (POST 11
+partial; dupes/truncations) — the authoritative list lives in the **team rules spreadsheet**, needed to enumerate
+every action + predicate + verb + points/IG/meter effect + era-availability; (ii) the **Judicial↔Justice** gate
+(skill vs expertise vs "either," POST 15-16); (iii) the **industry-sabotage guardrail** cap (POST 7); (iv)
+**protégé-priority weight** (keep 20% or raise — POST 10, 10centjimmy argues higher); (v) **"+1 election bonus"
+has no engine representation** — must model a per-politician election-bonus value first. (`c8d89e49#POST 1-13,
+15-18`; `59d805be#POST 28, 56, 69, 92`; `game-context.md` #20; codebase `phaseRunners.ts:1631-1656`,
+`types.ts:398-414, 1283, 1323, 1328, 1396`, `GovernorsPage.tsx`, `registry.ts:87`.)
+
+#### 30.40.2 ★★ #296 — the seeded-RNG keystone (the d100 mechanic exists but runs on `Math.random()`)
+
+> **Source: `c8d89e49` OBJECTIVE-1 + POST 2 (the "roll a die and do it" requirement) + codebase `src/rng.ts`.**
+> The **lowest-level keystone** the deterministic-CPU spec depends on, and the prerequisite that eliminates the
+> `Math.random` determinism bugs flagged across **#292 / #287 / #290**.
+
+**★ The exact mechanic the CPU rules need ALREADY EXISTS in code** — `src/rng.ts` exposes:
+- `d100()` (`rng.ts:12`) — a single 1–100 roll.
+- `rollVs(target): { roll, success, margin }` (`rng.ts:16`) — **the precise d100-vs-threshold helper** OBJECTIVE 1
+  + POST 2 describe ("roll a die, 1-25 is this…"). `success = roll <= target`, `margin = target - roll`.
+
+**★ But it is NOT seeded.** The file's own header comment is the smoking gun: *"We use Math.random by default,
+but expose seeded option. For now… deterministic seeding can be plugged in later."* Every primitive —
+`rand()` (`rng.ts:4`), `d()`, `d100()`, `rollVs()`, `pickWeighted`, `pick`, `shuffle`, `chance`, and `uid()` —
+calls **`Math.random()` directly.** This **directly contradicts CLAUDE.md** ("seeded RNG; keep engine code
+deterministic") and the doc-header claim that "all RNG is deterministic per seed."
+
+**★ Why this is the keystone (not just one more gap):**
+1. OBJECTIVE 1 ("roll a die and do it") is only **verifiable/testable/reproducible** if the rolls are seeded —
+   you cannot unit-test "20% of the time X" against a non-deterministic generator. So #296 is **upstream of the
+   entire #20 gov-action spec.**
+2. It is the **shared root cause** of the determinism debt flagged elsewhere: the `calcStateVote` noise term
+   `(Math.random()-0.5)*8` (#292, [§30.39.1](#3039-rulings-folded-from-batch-49---292-the-election-vote-score-formula--the-meterenthusiasm-pipeline-gap-subsumes-statepreferredideology--283-the-assassination-outcome-distribution-divergence--the-bailoutsdrugs-predicate-class-evidence-25823722124826220666--the-marquee-vp-stat-blocks-24021619427915-6801b9f4-meter-interpretation--5261c8ff-bailouts--c9b97b58-unfinished-presidencies--faf2d8b3-drugs--b9651d6d-vps)),
+   the 1856-setup shuffles, and every CPU `chance(gate)` draw.
+
+**★ Requirement (one focused change):** back `rand()` with a **seeded generator** (e.g. seed stored on
+`GameState`, mulberry32/xoshiro) so `d100`/`rollVs`/`chance`/`pick`/`shuffle` become reproducible; `rollVs` is
+already the right *shape* for the CPU d100 bands — it only needs a seeded backend. `uid()` (which uses both
+`Date.now()` and `Math.random`) should move to a seeded counter for save-reproducibility. (`c8d89e49#POST 1-2`;
+`game-context.md` #296; codebase `src/rng.ts:1-55`, callers `revolutionaryWar.ts:190,217,236`,
+`phaseRunners.ts:3604`.)
+
+#### 30.40.3 ★ #293 — the difficulty model is faction-ideology × era (no easy/hard toggle)
+
+> **Source: `58da1636` POST 10-11 (vcczar, the single most-cited design statement in the FAQ thread) +
+> codebase.** The project's **de-facto difficulty model.**
+
+**★ There is NO easy/hard setting.** vcczar: "I don't think so because I don't know how to have my CPU rules
+enforce that." **Difficulty IS your faction's ideology-fit to the era:**
+
+| Tier | Who | Notes |
+|---|---|---|
+| **Easy** | **Moderate** in most eras; Liberal/Conservative in later eras | Beginners → assign Moderates |
+| **Difficult** | **Progressive** (EXCEPT **1892–1968**, where Prog = moderate difficulty); **LW-Pop or RW-Pop after 1892** | — |
+| **Extremely difficult** | **Traditionalist** (any era); **LW-Pop or RW-Pop before 1892** | Most-experienced → assign Traditionalists |
+
+So difficulty is a **2-D function of (faction ideology × era window)**, not a menu — and it is **emergent** from
+how ideology interacts with state biases, enthusiasm, and the era's content, not a global multiplier.
+
+**★ SHIPPED:** there is **no ideology-keyed difficulty surface** — the build offers a scenario choice (1772 /
+1856) but **no difficulty labeling/guidance keyed to the chosen faction's ideology × era.** Honoring intent
+would be a **"recommended-difficulty by faction/era" advisory surface** (read-only guidance), not a CPU-tuning
+knob (vcczar explicitly rejected enforcing difficulty via CPU rules). (`58da1636#POST 10-11`; `game-context.md`
+#293.)
+
+#### 30.40.4 ★ #294 — the per-state industry-eligibility MATRIX + 9-industry taxonomy + era-evo rollout (designed; SHIPPED is a free-form `Record<string,number>` — a TAXONOMY MISMATCH)
+
+> **Source: `24757e3a` POST 1-5, 93 (the forbidden-industry Flourish + the era-evo schedule) + codebase
+> `types.ts:1328`, `states1856.ts`, `phaseRunners.ts:1631-1656`.** The design's economic substrate. Cross-ref
+> **#278** (the 1865 Plantation→Agriculture 2:1 conversion, now homed here).
+
+**★ The design is a THREE-AXIS industry model:** a state may build industry X iff **(1)** X is **not on the
+state's forbidden list** AND **(2)** X's **era-evo regional unlock** has fired for that state's region by the
+current year.
+
+**★ Axis 1 — the per-state FORBIDDEN-INDUSTRY matrix (POST 1-5).** A Flourish viz "forbidden industries for
+American states," encoded `0.1 = allowed / 1 = forbidden` — for every state, which industries it is **barred
+from ever building.** Provenance is **undocumented even to the design team** (Arkansas Progressive POST 5: "Not
+sure where V decided to base this off of") — it is **vcczar's hand-authored data.** Known **accuracy bugs**
+flagged but NOT confirmed-fixed in-thread:
+
+| State | Data says forbidden | Objection | Status |
+|---|---|---|---|
+| **Puerto Rico** | (orig. Maritime) | CORRECTION POST 2: PR forbids **High-Tech, Finance, Mining — NOT Maritime**; PR is the only High-Tech ban | corrected in-thread |
+| **Vermont** | Maritime | Lake Champlain → St. Lawrence Seaway + Hudson ⇒ should be allowed | flagged, unresolved |
+| **Vermont + New Hampshire** | Mining | "No mining in the Granite State or VT? LOL." | flagged, unresolved |
+| **North Carolina** | **Finance** | Charlotte = 2nd-largest US banking sector after NYC ⇒ "no Finance is off" | flagged for fix (NC instead gets Alt-Energy + High-Tech) |
+
+**★ Axis 2 — the canonical 9-INDUSTRY taxonomy + era-evo rollout (POST 93, "State Industries by Era Evos").**
+The full taxonomy: **Finance, Maritime, High-Tech, Natural-Gas, Plantation, Mining, Manufacturing, Agriculture,
+Alt-Energy.** Each is buildable only after its era-evo fires, in the listed regions, except where the matrix
+forbids it:
+
+| Industry | Rollout |
+|---|---|
+| **Finance / Agriculture / Maritime / Mining** | everywhere except forbidden (no era gate) |
+| **Manufacturing** | New England (1790) → Mid-Atlantic (1790) → Midwest + Great Plains (1828) → all other regions (1866) |
+| **Plantation** | everywhere except forbidden; **ABOLISHED as an industry in 1865** (or when "Slavery is Abolished" / "South Industrializes" fires) → **converts to Agriculture at 2:1, rounding down** (10 plantation → 5 Ag) — cross-ref **#278** |
+| **High-Tech** | West-Coast + NY + MA (1880) → Mid-Atlantic + New England + IL (1885) → Great Plains + Midwest + TX + FL (1960) → everywhere else (2009) |
+| **Alt-Energy** | everywhere except forbidden (1972) |
+| **Natural-Gas** | OK + TX (1901, req. Spindletop) → elsewhere not forbidden (1951) |
+
+**★ A CONTRADICTION the GM flags (POST 90-92):** the era-evo → **lobby/interest-card activation** schedule
+(Lexington→Mil-Ind+Big-Ag; Buttonwood→Wall-St; Manufacturing-Appears→Big-Corps; UN→Human-Rights; etc.)
+**contradicts the Historical-Eras card-minimum file**, which sets a *minimum cards per era* and requires e.g.
+**Human Rights to exist >100 years before the UN.** GMs **currently IGNORE the era-evo activation gates** —
+"those card points don't matter and are null" (POST 92). **Open contradiction; needs design reconciliation
+before either is built.**
+
+**★ SHIPPED reality (code-verified, the TAXONOMY MISMATCH):**
+- `State.industries` is a **free-form `Record<string,number>`** (`types.ts:1328`) — **NO eligibility/forbidden
+  field on `State`**, and no forbidden-industry structure anywhere in `src/`. Industry development is
+  **unconstrained by any matrix.**
+- Industries are seeded **ad-hoc per state** with names that **do not match the design taxonomy**:
+  `states1856.ts` uses `manufacturing, finance, fishing, lumber, agriculture, coal, shipping, tobacco, cotton,
+  sugar, cattle, mining` — **no `plantation`, `maritime`, `high tech`, `natural gas`, `alt energy`** exist in
+  shipped data.
+- The **only** industry mutator is the PR7 lobby nudge (§30.40.1) — it can only **raise existing keys** and has
+  **no per-state eligibility check.**
+- **No era-evo rollout exists** — nothing implements Manufacturing-Appears-1790, High-Tech-1880, Alt-Energy-1972,
+  or the 1865 Plantation→Agriculture 2:1 conversion. Industries are static except for the lobby nudge.
+- **No industry-development player action / UI** — `StatesPage.tsx` only *displays* industries.
+
+**★ Requirement:** add a per-state forbidden/eligible-industry field; reconcile the ad-hoc 12-ish keys to the
+canonical 9-industry taxonomy (or map old→new); build the era-evo regional-unlock + Plantation→Ag 2:1 conversion;
+fix the four matrix accuracy bugs (with vcczar sign-off on provenance). (`24757e3a#POST 1-5, 90-93`;
+`game-context.md` #294, #278; codebase `types.ts:1328`, `states1856.ts`, `phaseRunners.ts:1631-1656`,
+`StatesPage.tsx`.)
+
+#### 30.40.5 ★ #295 — the era-aware draft pool (~7,670 named pols, era-sized; SHIPPED is flat `factions.length*2` / raw `draftYear`-match)
+
+> **Source: `24757e3a` POST 6-15 (the draftable-pols-by-era Flourish charts) + codebase
+> `phaseRunners.ts:184, 151`.** The draft-pool design reference. Cross-ref the draft section ([§4](#4-draft-211)).
+
+**★ The designed pool:**
+- **~7,670 named historical/quasi-historical politicians across 1772–2048** (≈3,900 Republicans + ≈3,600
+  Democrats; POST 12-13) — a roughly **even R/D split.**
+- **Era-aware pool sizes.** Eras are **12–20 years long** (POST 8-9), so per-era totals are not directly
+  comparable; per-era counts are charted ("Draftable Pols by Era," POST 6).
+- **The Independence era is an outlier** — the **Inaugural Draft** plus the 1776 and 1784 drafts all fall in one
+  era (POST 10), inflating it.
+- **Actual per-draft counts are MODULATED by the Constitution + which alt-states exist** (POST 7) — the chosen
+  Constitution and admitted alt-states change who actually drafts.
+- For the 2012 draft, the **politician generator** is endorsed to fill out the modern pool procedurally (POST 15).
+
+**★ SHIPPED reality (code-verified):** draft pool sizing is **NOT era-aware.**
+- The **procedural generator** uses `draftSize = factions.length * 2` (~20 rookies; `phaseRunners.ts:184`)
+  **regardless of era.**
+- The **dataset-driven path** (`STANDARD_DRAFT_CLASSES`, the ~18.5k generated pool) drafts whoever has
+  `draftYear === current year` whose home state is in the Union (`phaseRunners.ts:151`) — **no per-era target
+  count, no Constitution/alt-state modulation of pool size, no R/D-balance target.**
+
+**★ Requirement:** era-aware draft-pool sizing/reporting (surface per-era counts; Independence inflation;
+Constitution/alt-state modulation). The narrated `59d805be` run CORROBORATES the dataset-seeded inaugural class
++ ~5-8 named historicals drafted per CPU per cycle (POST 21). (`24757e3a#POST 6-15`; `59d805be#POST 21`;
+`game-context.md` #295; codebase `phaseRunners.ts:151, 184`.)
+
+#### 30.40.6 ★ #292 (EXTENDED) — the FOUR election-resolver absences (faithless electors, CD EV-split, third-party presidential path, natural-born non-enforcement) + the state-conditional-enthusiasm ruling
+
+> **Source: `6b41ed5b` POST 2-28 (the 1948 results log) + `58da1636` POST 119-124, 208-210, 321-322 (the FAQ
+> election rulings) + codebase `phaseRunners.ts:3685-3768`, `constitutionalConvention.ts:52-55`.** Extends
+> **#292** ([§30.39.1](#3039-rulings-folded-from-batch-49---292-the-election-vote-score-formula--the-meterenthusiasm-pipeline-gap-subsumes-statepreferredideology--283-the-assassination-outcome-distribution-divergence--the-bailoutsdrugs-predicate-class-evidence-25823722124826220666--the-marquee-vp-stat-blocks-24021619427915-6801b9f4-meter-interpretation--5261c8ff-bailouts--c9b97b58-unfinished-presidencies--faf2d8b3-drugs--b9651d6d-vps))
+> with **four confirmed resolver ABSENCES** + the enthusiasm-gating ruling. **Do NOT re-document the vote-score
+> formula** — this adds only the four missing branches.
+
+**★ The four presidential-resolver absences (all code-verified ABSENT this batch):**
+
+| # | Designed/observed mechanic | Evidence | Shipped reality | Verdict |
+|---|---|---|---|---|
+| 1 | **Faithless electors** — fire **per-election with state-specific incidence**, can flip NET EV | AZ/SC 1952; **TX/VA/GA 1956** ("only time," widest schism — Taft LOSES net EV despite higher PV); only **3** elections 1952–1988 produced **none** (faithlessness is the NORM) (`6b41ed5b#POST 2,3,4,8,10`) | `runPhase_2_9_4_PresidentialGeneral` is strict WTA — `if (blue.pct > red.pct) blueEv += s.electoralVotes; else redEv += …` (`phaseRunners.ts:3767-3768`); **zero `faithless` logic in `src/`** | **DESIGNED/observed stochastic; SHIPPED deterministic WTA, GM-narrated** |
+| 2 | **Congressional-district EV-split** (ME/NE-style within-state) | **LA-02 1980** "for the opposite winner"; **TN-01 1992** (`6b41ed5b#POST 9, 28`) | EV allocated **whole-state only** (one block, 3767-3768); no CD sub-units | **NOT BUILT** — distinct from b45's *inter-alt-state* EV split |
+| 3 | **Third-party presidential path** — viable, reaches **14.59%** (1984); b45 sibling had a near-WIN | Carlson 14.59%; "16 states… capped at max margin" (`6b41ed5b#POST 10, 28`) | Resolver instantiates **only `[blueCand, redCand]`** (`phaseRunners.ts:3754`), tallies only BLUE/RED per state, emits a two-row EV — **no third-party candidate in the pres resolver at all** | **HARD two-party; NOT representable** (note `58da1636` POST 311-313: design SAYS 3rd parties can run/win, the 3rd-party nominee becomes party leader, an EraEvos-mandated run overrides a meter-triggered one) |
+| 4 | **Natural-born ENFORCEMENT** | "Foreign-Born Stan Stephens" first foreign-born president 1980 (`6b41ed5b#POST 9`) | CC **defines** `presidentialEligibility: 'natural_born'\|'any_citizen'` (default natural_born ~85%, `constitutionalConvention.ts:52-55, 118-119`) **but the primary filter checks only `age>=35 && age<=80 && command>=2`** (`phaseRunners.ts:3729`) — **no natural-born gate** | **INVERTED** — the lever is defined but **never enforced**; foreign-born win is the *unconditional default*, not a modeled milestone |
+
+**★ The enthusiasm-gating ruling (FAQ headline, `58da1636` POST 119-124, 208-210) — corroborates #292's
+ruling (a):** **enthusiasm bonus is STATE-conditional; other meter election-bonuses are GLOBAL.** A "+2 Moderate"
+enthusiasm applies **only in states with a Moderate bias, regardless of party bias**, in both primaries and the
+general; a meter effect like "QoL → +1 Liberal" applies **across the board.** This **corrected a widespread
+misreading** ("Time to recalculate all the election sheets," POST 124). SHIPPED `calcStateVote` applies
+`enthusiasm * 2` **unconditionally** (the un-gated behavior #292 ruling (a) calls wrong).
+
+**★ State margin cap + base-lean+die-roll CONFIRMED (not deltas):** "capped at max margin" (POST 28) and "Hawaii
+was D+10 → 9-to-19 after die rolls" (POST 31) corroborate the shipped clamped `bias + RNG` model. (`6b41ed5b#POST
+2-31`; `58da1636#POST 119-124, 208-210, 311-313`; `game-context.md` #292; codebase `phaseRunners.ts:3685-3768,
+3725-3729`, `constitutionalConvention.ts:52-55,118-119`.)
+
+#### 30.40.7 ★ #45 / DH-81 — the Revolutionary-War war-end multiplier ruling (1.0→0.5) + the additive-term divergences + the unread naval→land bonus
+
+> **Source: `59d805be` POST 49-50 (@ebrk85, designer, RECENT 2025) + POST 40, 43-44, 59, 73 + codebase
+> `revolutionaryWar.ts`.** A RECENT designer balance ruling on the RevWar end-chance + two additive-term
+> divergences. Extends **#45 / DH-81** ([§30.33](#3033-rulings-folded-from-batch-43--the-impeachment-design-spec--the-lars-ark-1772-playtest--the-flavor-event-poll--the-playtester-survey--273-the-impeachment-subsystem-design-intent-vcczar-deferred--274-skill-gain-accessibility--dh-81-war-end-per-battle-bug--dh-82-officer-cap-clamp-ae435b5f-fourteen-points-on-impeachment--06fbb2e5-lars-and-ark--b73925a4-flavor-event-poll--ddd179cb-questions-for-playtesters)).
+
+**★ The DESIGNER RULING (POST 49-50, @ebrk85):** chance-to-end-war = `WarScore × multiplier ×10 = %`. "We
+updated the war chart for the Revolution. **The war-end multiplier for it is now 0.5 instead of 1**" — in testing
+the Revolution "was ending in one turn (usually as a loss) way too often for what was historically a longer war.
+**The master doc was updated.**" Worked: `(3+1−2) × 0.5 = 1 → 10%` (POST 50). This is **authoritative, RECENT
+(2025)** balance.
+
+**★ SHIPPED-vs-DESIGNED (code-verified):**
+
+| Term | Forum (designed) | Shipped `revolutionaryWar.ts` | Verdict |
+|---|---|---|---|
+| **War-end chance** | `WarScore × 0.5 × 10 = %` per-turn end-chance roll | **NO multiplier at all** — war ends on a **count threshold**: `currentGroundWins >= groundWinsNeeded` → win; `currentGroundLosses >= groundLossesRemaining && !frenchAlliance` → loss (`revolutionaryWar.ts:254-263`) | **DIVERGENT** — consistent with the b43 stale-count-threshold win-model (DH-81); the 0.5 multiplier model is **not in the build** |
+| **French-alliance bonus** | Benchmarks **+15** (for 3/4) as an itemized term | a **fixed +25** on the ground target `(war.frenchAlliance ? 25 : 0)` (`revolutionaryWar.ts:214`); the naval phase uses a hard `+30` "slight US edge with French alliance" (`:191`) | **DIVERGENT additive term** (build +25/+30 vs forum +15 benchmark) |
+| **Difficulty deduction** | Easy 0 / Moderate −10 / Hard −25 (POST 40) | Easy **+15** / Moderate **0** / Difficult **−20** (`revolutionaryWar.ts:216`); difficulty drawn `chance(0.4)?difficult : chance(0.5)?moderate : easy` | **DIVERGENT magnitudes** (different baseline/sign convention) |
+| **Naval→land bonus** | a prior naval win → **75%-chance bonus to the next land battle** (possibly only non-domestic landings; designer-confirmed POST 43-44) | `navalWins` IS tracked (`revolutionaryWar.ts:202`) but **never read into the ground-battle target** — the ground `baseTarget` is `planning + generalScore + frenchAlliance` only | **UNREAD** — `navalWins` is a dead counter for land battles |
+
+**★ Confirmed matching (build ↔ design):** the **core** battle formula `planning(SecWar.admin + officer.mil) +
+officer.mil×10 ± difficulty` matches; **Senior General / Senior Admiral** drive planning (`seniorGeneralId` /
+`seniorAdmiralId`); **War Score** accrues win +1..+3 / lose −2/−3; defeated commanders take stat hits;
+**"if no army/navy created, military phases cannot be won"** (the special-session create-Army/Navy gate). The
+all-CPU run reached the **France-alliance floor** ("Rev War cannot end in US defeat") and **won at White Plains**
+(rolled 13 ≤ 40%). (`59d805be#POST 40, 43-44, 49-50, 59, 67, 73`; `game-context.md` #45, DH-81; codebase
+`revolutionaryWar.ts:185-265`.)
+
+#### 30.40.8 ★ the FAQ ruling cluster (#191/#287 seat-bias, #129 kingmaker, #153 command, #112 block, #238 draft-gating, DH-74 two-bill conflict)
+
+> **Source: `58da1636` (the FAQ compendium) + `59d805be` POST 71 (the two-bill conflict).** A cluster of
+> durable cross-system rulings. Each EXTENDS an existing row; the durable deltas:
+
+- **★ #191 / #287 — Seat bias OVERRIDES state bias in Rep elections; "Toss-Up" = NO bias** (`58da1636#POST
+  321-322). If a seat has its own bias, use **only** that (ignore state bias); blank seat → default to state
+  bias; **"Toss-Up" seat → no bias at all.** ★ SHIPPED: the House is abstracted via `representativeIds` with
+  **state-level `bias` only — no per-seat/per-district bias field** — so the designed per-seat bias (with
+  Toss-Up) is **not in the current abstraction.**
+- **★ #129 — Kingmaker constraints** (`58da1636#POST 228-236, 305-307): **one kingmaker per protégé** (can't
+  stack a second/master kingmaker on the same protégé); **chains need a Master Kingmaker** (only one kingmaker
+  activatable per state, so a non-master blocks the chain; old chain-bonuses were removed); **4(+) dissolution
+  paths** — (1) protégé elected Pres/VP (kingmaker → Key Advisor, pair dissolves), (2) kingmaker dies, (3)
+  non-master kingmaker moves state, (4) ideology drifts >1 apart (each may drift 1, not 2) — **plus a
+  disharmonious pair drops at 10%/cycle**; protégés **can't be SC Justices or Congressional leaders**;
+  re-pairing after loss is allowed (flagged "cheese").
+- **★ #153 — Command must be EARNED in-game** (`58da1636#POST 195-200): a ~22-source enumeration (faction
+  leader 20%; party leader **75% first election / 25% after**; winning Pres election 50%; re-elected VP 25%; Sec
+  of State 10% first confirm; Continental-Congress pres 20%; committee chair 10%; military leadership 20% in
+  major war; governing/senate longevity; protégé of a command-kingmaker; events & crisis-legislation 10%;
+  keynote/filibuster small chances). **Losing a medium/easy battle can LOSE command.** Most skills/traits seed
+  from real-life achievement, **but command, leadership (and ~controversial) must be earned** unless the start
+  year is past when they earned them IRL.
+- **★ #112 — "Block ≠ vote"** (`58da1636#POST 158-165, 255-265): players may always *vote* however they like.
+  **Blocking** = a Senate Majority Leader (**Iron Fist**) **refusing to bring a nominee to a vote at all**
+  (nomination fails, no vote). A SML can only block a judicial/cabinet nominee **>1 ideology away** from the
+  SML's ideology, **unless** the nominee has *controversial*; a *harmonious* leader won't block a
+  non-controversial nominee; an *integrity* leader won't block an *integrity* nominee. The rules text uses the
+  two words interchangeably in places ("sloppy writing," POST 264) ⇒ the build must model a **refuse-to-bring
+  path distinct from vote-tallying.**
+- **★ #238 — Women/Black politicians enter ONLY at first office-eligible draft** (`58da1636#POST 17-23):
+  **decided NO** to pre-drafting; they are added to the **first draft in which they can hold office** (e.g. Susan
+  B. Anthony enters 1872 as a 52-yr-old rookie). Rationale: pre-drafting would drive ahistorical early
+  enfranchisement votes. Drives dataset `draftYear` / eligibility gating.
+- **★ DH-74 — two conflicting bills both passing the same session has NO resolution rule** (`59d805be#POST 71):
+  in the all-CPU run, **two conflicting "Move Capital" bills (NY and Boston) both passed the same session**; the
+  GM ad-hoc'd "pick the one with fewer No votes" and flagged: "we probably should have this figured out… or
+  maybe it is there and I just don't see it." A real **mutually-exclusive / superseding-legislation
+  conflict-resolution gap** (cross-ref the b50 update to DH-74). Also corroborated in-thread: **two-conflicting-bills
+  needs a post-passage resolution rule** (`58da1636` re capital-finalization — moving to DC *finalizes* the
+  capital; others can be moved repeatedly, POST 76-85).
+- **Phase-order CONFIRMED (#headline FAQ ruling):** **deaths / resignations / events run BEFORE
+  legislation/actions** (`58da1636#POST 1-3) — "the most logical spot"; matches the engine's
+  `PHASE_SEQUENCE`/`shouldRunPhase` ordering. Truman's mid-term resignation was a **general event, not a bug.**
+  (`58da1636#POST 1-3, 17-23, 158-165, 195-200, 228-236, 255-265, 305-307, 321-322`; `59d805be#POST 71`;
+  `game-context.md` #191, #287, #129, #153, #112, #238, DH-74.)
+
+#### 30.40.9 #289 (EXTENDED) — the 12-point CPU-initialization ambiguity audit + #158 the "Hand of Providence" override + the 1772 10-faction seed roster
+
+> **Source: `58da1636` POST 315-318 (Umbrella's audit) + `59d805be` POST 1, 2, 35-38 (the Hand + the roster).**
+> Two design-process items + the founding-faction documentation payload. Extends **#289**.
+
+**★ #289 — the 12-point CPU / game-setup ambiguity audit (`58da1636#POST 315-318, Umbrella; vcczar/Ted
+acknowledged most, "we need a *How To Start A Playtest* guide").** The places where CPU rules + setup are vague
+enough that GMs make human calls — exactly the ambiguities a deterministic engine must pin down:
+1. **Initial-draft stat-set selection** (First-Year / Midway / Historic / Peak) — no rule for when to use Midway,
+   how to round .5 values, or how to assign Expertise to non-Historic pols.
+2. **"Benefits their faction" (Gov actions)** undefined for a CPU — points? industry-building? state-tilt?
+   (→ folds directly into the #20 spec, §30.40.1.)
+3. **Hard-maxed meters & crisis actions** — if a meter can't move (capped in Independence), do crisis actions
+   still "address the crisis"?
+4. **Inactive-era meter effects** — do they apply? (Consensus leaning **no**, POST 317.)
+5. **Proposer-selection ties** — sort by Legis then party; ties among equal-Legis pols broken how? (Ted: literal
+   count-stop; Umbrella: PV — not in rules.)
+6. **Conversion order / Pliable→Puritan** — which faction leader converts first? Rules: **ascending faction size,
+   ties random** (POST 318).
+7. **Gov-vs-Rep eligibility** — which does the CPU run a dual-eligible pol for? (Umbrella defaults to Gov.)
+8. **Election candidate-selection** should weight ±1 election modifiers + traits (Provincial for local, Military
+   post-war) — currently doesn't.
+9. **Ideology-shift CPU rules** don't protect Integrity/Puritan pols ⇒ they gain Flipflopper/Two-Faced too often.
+10. **Early ConCon** (~1780–82) leaves a gap — post-ratification you'd expect Pres/Senate/SC elections but many
+    sections "don't apply until Era of Federalism."
+11. **Initial SC Chief Justice selection** unspecified ⇒ tends to seat an all-one-party court.
+12. **Pre-party Pres elections** pick candidates by most-kingmakers (no party leader in Independence);
+    alternate-candidate rules rarely fire.
+
+**★ #158 — the "Hand of Providence" once-per-era GM override** (`59d805be#POST 1, 35-38). The thread's named
+twist: **once per era**, the GM takes control of **one CPU faction's decision in one phase, or curates one
+event**, "to ensure stability… or open up paths to alternative history the CPUs might not stumble upon." Used
+exactly once in the Era of Independence: the CPU Congress **rejected** both Franklin (SoS) and Arnold (Sr
+Admiral) 4-6; the Hand **forced Blue4 to vote yes**, swinging both to 8-2. A **forum/GM convention, not a game
+feature** — but a clean articulation of a **sanctioned single GM/player override per era** for stability /
+scripted alt-history. ★ Directly relevant to the **CPU-game-over problem (#158)**: `cpufull` had **no such escape
+hatch and died to a CPU vote**, whereas this run — **with the Hand available** and the CPUs choosing A on every
+peace/loyalist event — **completed the founding loop cleanly** (war won, confederation built). The
+contrasting clean completion is the counter-example to `cpufull`'s scripted game-over.
+
+**★ The 1772 10-faction SEED ROSTER (`59d805be#POST 2) — the documentation payload.** Ten CPU factions split
+into two parties by founding polarity (both "Patriots"; **Blue = Anti-Federalist track, Red = Federalist track**
+— the inverse of later-era color valence). Diff against `src/data/scenario1772.ts`:
+
+| Slot | Faction | Leader | Identity | Ideology | Lobbies / lean | Key figures |
+|---|---|---|---|---|---|---|
+| **B1** | Sons of Liberty (LW) | Samuel Adams | Radical Vanguard | LW Populist + Reformist | LW Activism, Civil Rights, Big Agriculture | Thomas Paine, Ethan Allen, Elias Boudinot |
+| **B2** | Hanson Patriots | John Hanson | Practical Pioneers | Moderate | Expansionist, Big Agriculture (later Mil-Ind, Free Trade) | John Hancock, George Clinton, Elbridge Gerry |
+| **B3** | Randolph Patriots | Peyton Randolph | Genteel Expansionists | Moderate | Expansionist, Big Agriculture, Free Trade | Richard Henry Lee, R.R. Livingston, Peter Muhlenberg |
+| **B4** | Patriots (Cons) | John Dickinson | Cautious Nationalists | Conservative + Reformist | Nationalist, Big Agriculture | Patrick Henry, Anthony Wayne, T. Kościuszko |
+| **B5** | Sons of Liberty (RW) | Thomas Jefferson | Agrarian Radicals | Traditionalist + RW Populist | RW Activism, Big Agriculture | George Mason, Daniel Boone, John Paul Jones |
+| **R1** | Livermore Patriots | Samuel Livermore | Moral Order | Moderate (Theocrat) | Law & Order, Private Education, Big Pharma | Benjamin Rush, Thomas McKean, Oliver Ellsworth |
+| **R2** | Franklin Patriots | Benjamin Franklin | Scientific Globalists | Moderate | Civil Rights, Globalist, Human Rights, Mil-Ind, Welfare | John Jay, Charles Carroll, Daniel Morgan |
+| **R3** | Moderate Patriots | Roger Sherman | Steady Hand | Moderate | Expansionist, Law & Order | George Washington, Sam Huntington, Wm Paterson |
+| **R4** | Adams Patriots | John Adams | Sovereign Builders | Moderate | Expansionist, Mil-Ind, Big Agriculture, Wall St, Free Trade, Welfare | James Wilson, John Sullivan, James Otis Jr |
+| **R5** | Patriots (Trad) | Benjamin Lincoln | Iron Guard | Conservative + Traditionalist | Nationalist, Theocrat, Big Corporations, Protectionist, Isolationist | Robert Morris, Henry Laurens, Philip Schuyler |
+
+Notable: **R1 Livermore** is a Theocrat / Law&Order / Big-Pharma faction (readers flag it as unusual). **CPU
+faction-leader churn re-profiles on death/retirement** (B3 Randolph → Milton → Telfair; B2 Hanson → Clinton; B4
+Dickinson → Bartlett "directly represents the military-industrial interest") — leader pick is **lobby/skill-driven,
+not seniority.** (`58da1636#POST 315-318`; `59d805be#POST 1, 2, 23, 35-38, 52, 63, 66, 81-82`; `game-context.md`
+#289, #158.)
+
+#### 30.40.10 The 8 adjacent CPU-rule fixes resolved in `c8d89e49` (designed; roadmap-ready)
+
+> **Source: `c8d89e49` POST 19-56.** Concrete CPU rules the thread *resolved* (not gov-action, but the port
+> needs them). Logged compactly; several are designer-SHIPPED-to-the-rules:
+
+1. **Fringe-faction draft discount (POST 20-27).** Evaluate "only-I-can-take" pols (e.g. a Blue-fringe faction's
+   Jefferson) at a **fraction of real PV** so the fringe CPU swoops them late but before a bordering CPU (~30%
+   cross-border attempt rate) can steal them — fixes the un-human "grab the uncontested high-PV pol first"
+   behavior. (Draft is PV-based today; the fringe-discount is unbuilt.)
+2. **VP re-nomination + alternates (POST 31 — designer SHIPPED to rules §2.9.4):** (a) a CPU incumbent
+   President-party-leader **always re-nominates their incumbent VP** if eligible; (b) the CPU **nominates an
+   alternate if no one else has** (avoids 50/50 ties); (c) the CPU **prioritizes alternates from its own
+   faction.**
+3. **Senate-appointment-vs-House-majority comparator (POST 42, OrangeP47):** the CPU will consider an
+   **other-party** Senate appointee over a same-party **Focus Rep** when appointing the Focus Rep "would reduce
+   the CPU's House majority more than appointing the other party would damage its Senate majority."
+4. **Efficient-cabinet meter-reroll (POST 47-48):** **Admin 4-5 → reroll any non-improving roll; Admin 0-3 →
+   reroll only decreasing rolls; meter-state override** (if meter at lowest → reroll anything not improving; if
+   at highest → don't reroll non-decreasing); **in crisis always reroll.**
+5. **SCOTUS vacancy acceptance odds + VP-can't-accept (POST 50-51):** justice accepts top-cabinet only 10% ⇒
+   infer **top cabinet accepts SCOTUS ~90%, senators/reps/governors 100%; VP CANNOT accept** (elected with the
+   President, can't resign to switch jobs).
+6. **The 4-step ideology-shift CPU ruleset (POST 55):** (1) kingmaker w/ no protégé & no puritan/integrity →
+   shift kingmaker toward a potential protégé (one move); (2) kingmaker w/ no protégé & has puritan/integrity →
+   shift a protégé toward kingmaker (6-way tiebreaker ladder); (3) **40% toward party's highest-enthusiasm
+   ideology**; (4) **60% toward the politician's state's preferred ideology** — all "provided the shift can be
+   made in one move." (Cross-ref the `drums` 4-step rule [§29.10](#2910--the-canonical-4-step-enthusiasm-shift-rule--crisis-bill-failure-scoring-51-resolved); this is a refined sibling.)
+7. **Lowest-scoring-faction-then-random tiebreaker (POST 56):** for "choose any faction" rules (§3.0.26) → use
+   the **lowest-scoring faction as tiebreaker, then random.**
+8. **DEFERRED (designer ruled post-release):** **Revolutionary-War un-winnability under CPU rules** (POST 44-46:
+   9/10 sims lost — Mil-Prep caps at 2 without the Militia Act, CPU rarely builds Continental Navy / Minister to
+   France, puts good officers on the military career-track so they're unavailable; "more like something to deal
+   with after release") — cross-ref the b47 rethinking-how-war-works cluster; and the **AI bundling rules**
+   (POST 19: "the worst AI mess in the game… should be thrown out and started over"). (`c8d89e49#POST 19-56`;
+   `game-context.md` #20.)
 
 ### 30.4 Authority hierarchy reminder
 
