@@ -374,6 +374,7 @@
     - [30.36 Rulings folded from batch 46 — the FIVE gov-action / House-incumbency / Environment / playtest-reel threads (★★ Civil-War PARTIALLY-shipped 4-defection abstraction vs designed territorial DEPTH + #258 the governor-predicate Gov-Action archetype + #286 pres fall/scandal event-rate + #287 the +2 House-incumbency bonus + the contingent-House election + the Environment policy genre) (`a938ac91-gov-actions-scripted-events` / `b7acabd2-house-incumbency` / `9f2ab25f-environment` / `215f0676-july-2023-updates` / `243dc711-september-update`)](#3036-rulings-folded-from-batch-46--the-five-gov-action--house-incumbency--environment--playtest-reel-threads--civil-war-partially-shipped-4-defection-abstraction-vs-designed-territorial-depth--258-the-governor-predicate-gov-action-archetype--286-pres-fallscandal-event-rate--287-the-2-house-incumbency-bonus--the-contingent-house-election--the-environment-policy-genre-a938ac91-gov-actions-scripted-events--b7acabd2-house-incumbency--9f2ab25f-environment--215f0676-july-2023-updates--243dc711-september-update)
     - [30.37 Rulings folded from batch 47 — FOUR policy-genre drops (Currency / Taxation / Slavery / Infrastructure) + the Northern-secession Civil-War extension (★ the Currency prereq-tree as the #258/#237 content-engine REFERENCE SHAPE + the 7 predicate classes + #288 slavery-flag↔secession-eligibility coupling + Northern/New-England secession & non-playable rumps + the Southern-led Reconstruction branch + #262 cross-genre repeal-only-RW gap) (`de64de1a-currency` / `1bf19872-taxation` / `5d7c29ee-slavery` / `9c383f22-northern-secession` / `d62ea397-infrastructure`)](#3037-rulings-folded-from-batch-47--four-policy-genre-drops-currency--taxation--slavery--infrastructure--the-northern-secession-civil-war-extension--the-currency-prereq-tree-as-the-258237-content-engine-reference-shape--the-7-predicate-classes--288-slavery-flagsecession-eligibility-coupling--northernnew-england-secession--non-playable-rumps--the-southern-led-reconstruction-branch--262-cross-genre-repeal-only-rw-gap-de64de1a-currency--1bf19872-taxation--5d7c29ee-slavery--9c383f22-northern-secession--d62ea397-infrastructure)
     - [30.38 Rulings folded from batch 48 — ★ #289 the 3-tier stat model + scenario-boot stat-init (the 1960 cabinet-crater root cause) + #290 the procedural-generator revamp + the Credit/Debt prereq tree (2nd #258/#237 exemplar; nationalDebt SHIPS) + #291 the non-ideological-populism ideology gap (deferred) + the recent 1772 confirmations (Washington-Rule can FAIL; women's-suffrage CC plank) (`3b46b086-1960-question` / `5e8dc484-politician-generator` / `391df03b-credit-debt` / `036f0dce-tulsi-gabbard` / `e86d8661-top-10-statesmen`)](#3038-rulings-folded-from-batch-48---289-the-3-tier-stat-model--scenario-boot-stat-init-the-1960-cabinet-crater-root-cause--290-the-procedural-generator-revamp--the-creditdebt-prereq-tree-2nd-258237-exemplar-nationaldebt-ships--291-the-non-ideological-populism-ideology-gap-deferred--the-recent-1772-confirmations-washington-rule-can-fail-womens-suffrage-cc-plank-3b46b086-1960-question--5e8dc484-politician-generator--391df03b-credit-debt--036f0dce-tulsi-gabbard--e86d8661-top-10-statesmen)
+    - [30.39 Rulings folded from batch 49 — ★ #292 the election vote-score FORMULA + the meter→enthusiasm pipeline gap (subsumes State.preferredIdeology) + #283 the assassination outcome-distribution divergence + the Bailouts/Drugs predicate-class evidence (#258/#237/#221/#248/#262/#206/#66) + the marquee-VP stat blocks (#240/#216/#194/#279/#15) (`6801b9f4-meter-interpretation` / `5261c8ff-bailouts` / `c9b97b58-unfinished-presidencies` / `faf2d8b3-drugs` / `b9651d6d-vps`)](#3039-rulings-folded-from-batch-49---292-the-election-vote-score-formula--the-meterenthusiasm-pipeline-gap-subsumes-statepreferredideology--283-the-assassination-outcome-distribution-divergence--the-bailoutsdrugs-predicate-class-evidence-25823722124826220666--the-marquee-vp-stat-blocks-24021619427915-6801b9f4-meter-interpretation--5261c8ff-bailouts--c9b97b58-unfinished-presidencies--faf2d8b3-drugs--b9651d6d-vps)
     - [30.4 Authority hierarchy reminder](#304-authority-hierarchy-reminder)
 31. [Gilded-Age era systems (designed, not built)](#31-gilded-age-era-systems-designed-not-built)
     - [31.1 (#147) Tariff-as-national-%-rate + the mutually-exclusive MonetaryRegime](#311-147-tariff-as-national-rate--the-mutually-exclusive-monetaryregime-designed)
@@ -21559,6 +21560,341 @@ is why Gabbard's pre-Red-turn `ideology: "Liberal"` is *expected* to read stale.
 
 (`036f0dce#POST 1-14`; `e86d8661#POST 1-5`; `game-context.md` #291 / #279 / #153 / #104 / #159; codebase
 `types.ts:3,5-12,62-117,98`, `constitutionalConvention.ts:6-67`, `revolutionaryWar.ts:41-65`.)
+
+### 30.39 Rulings folded from batch 49 — ★ #292 the election vote-score FORMULA + the meter→enthusiasm pipeline gap (subsumes State.preferredIdeology) + #283 the assassination outcome-distribution divergence + the Bailouts/Drugs predicate-class evidence (#258/#237/#221/#248/#262/#206/#66) + the marquee-VP stat blocks (#240/#216/#194/#279/#15) (`6801b9f4-meter-interpretation` / `5261c8ff-bailouts` / `c9b97b58-unfinished-presidencies` / `faf2d8b3-drugs` / `b9651d6d-vps`)
+
+> **★ Batch 49 = five DIGEST-ONLY sources (no historian ran the batch), three of which are CODE-VERIFIED
+> gap statements and two of which are CONTENT-AUTHORING / DATASET drops.** The two HEADLINE findings are
+> the **election vote-score FORMULA + meter→enthusiasm pipeline (#292)** and the **assassination
+> outcome-distribution divergence (#283)** — both are *shipped-vs-designed* class, sharpening already-known
+> gaps with a worked formula and an exact distribution rather than adding shipped rules. The remaining three
+> sources are the policy-genre content engine (Bailouts + Drugs → #258/#237/#221/#248/#262/#206/#66, **0%
+> shipped**) and a provisional marquee-VP curated-dataset spec (#240/#216/#194/#279/#15). The sources:
+> - **`6801b9f4-meter-interpretation`** (topic 1530, 11 posts / 1 chunk; Sept 2022, a **rules-interpretation
+>   debate** among hosts/playtesters framed against an in-progress **1916 / v2.8** run approaching the 1918
+>   midterms). The richest single source for *how the meter→election pipeline is intended to work*; the GMs
+>   themselves hedge/disagree, and Ted states the shipped behavior. The **#292** headline. Cite `6801b9f4#POST n`.
+> - **`c9b97b58-unfinished-presidencies`** (topic 1717, 13 posts / 1 chunk; Jan–Feb 2023; **design Q&A** on
+>   presidencies cut short + whether assassinations are possible). Yields the **canonical assassination
+>   OUTCOME spec (50/25/25)** + designer-floated refinements. The **#283** headline. Cite `c9b97b58#POST n`.
+> - **`5261c8ff-ampu-bailouts`** (topic 1170, @vcczar, 5 posts / 1 chunk; 4/8/2022; **CONTENT-AUTHORING**,
+>   the Bailout subtype — the **3rd prereq-structured content tree**, sibling of b47 Currency / b48
+>   Credit-Debt). The **strongest single source yet for the #258 predicate-class set.** Cite `5261c8ff#POST n`.
+> - **`faf2d8b3-ampu-drugs`** (topic 1185, @vcczar, 9 posts / 1 chunk; **CONTENT-AUTHORING**, the Drugs
+>   subtype, **UNTAGGED 3-partition form** — eras + prereqs explicitly dropped "to save time"). A **BALANCED
+>   #262 counter-example** to the left-skewed Environment/Taxation genres. Cite `faf2d8b3#POST n`.
+> - **`b9651d6d-ampu-vps...`** (topic 802, @vcczar, 18 posts / 1 chunk; **CURATED dataset-authoring**, 11
+>   marquee-VP stat blocks — **EXPLICITLY UNFINISHED/PROVISIONAL**, paused POST 6 then abandoned POST 17-18).
+>   Routes via `seedDataset.mjs` `CURATED_ROWS` (#240). Cite `b9651d6d#POST n`.
+>
+> **★ This batch reconciles TWO long-standing axes of confusion, flagged here so the roadmap does not
+> conflate them:** (a) the assassination spec has a **TARGET axis** (*who* gets hit — the `tedchange`
+> 50%-Pres/25%-Rep-or-Senator/25%-faction-leader table, [§30.24/§3581](#3024-rulings-folded-from-batch-34--the-five-wardatarecord-threads-the-45-war-score-design-origin--dh-79-rethinkwar--kiaofficers--strongnevernom--majorevents--newplaytest);
+> and the c9b97b58 40/30/20/10 office-weight refinement) AND a **separate OUTCOME axis** (*what happens* —
+> the c9b97b58 50/25/25 death/wound/unharmed, #283 below). The two 50/25/25 figures are **orthogonal** —
+> one slices the victim pool, the other slices the survival result. (b) the meter→enthusiasm→election chain
+> already has rich coverage ([§22.2](#222-faction-enthusiasm--party-preference-election-engine--the-score-economy),
+> [§29.3](#293--the-meterenthusiasmelection-model--51-resolved-drums-4-step--18-resolved-terror2000--vs-2-layer-model-gap-1851),
+> [§29.10](#2910--the-canonical-4-step-enthusiasm-shift-rule--crisis-bill-failure-scoring-51-resolved),
+> [§30.34](#3034-rulings-folded-from-batch-44--teds-actual-change-log-of-doom-the-authoritative-rules-doc-edits-with-numbers--the-appointments-23-maintenance-pass--the-kagan-content-backlog--the-canada-alt-states-retrofit--the-cabinet-20105--the-full-era-retirementdeath-charts--the-evententhusiasm-formula--the-pres-implementation-2-step-table--3-user-confirm-reconciliations-4747b09f-teds-change-log-of-doom--5d225e8a-pol-lounge2--f64a522c-kagans-foreign-policy--250bd843-canada-alt-states--e07f0cc1-ampu-related-passion-projects));
+> **#292 is the FORMULA-level worked example that ties them into one per-candidate score** and pins three
+> additive terms (incumbent +1 / media +1 / midterm −1) that the shipped `calcStateVote` lacks. Do not
+> re-document the chain — #292 below only adds the score formula + the three missing terms + the missing
+> derivation step.
+
+#### 30.39.1 ★★ #292 — the election vote-score FORMULA + the meter→enthusiasm derivation gap (subsumes `State.preferredIdeology`) (designed; partially shipped)
+
+> **Source: `6801b9f4` POST 1-10 (Ark/Rezi/Ted, the worked 1916 Alabama-Governor example) + codebase
+> `calcStateVote` (`phaseRunners.ts:3685-3723`).** This is the **HEADLINE** of the batch and the
+> formula-level capstone of the meter→enthusiasm→election cluster
+> ([§22.2](#222-faction-enthusiasm--party-preference-election-engine--the-score-economy),
+> [§29.3](#293--the-meterenthusiasmelection-model--51-resolved-drums-4-step--18-resolved-terror2000--vs-2-layer-model-gap-1851),
+> [§29.10](#2910--the-canonical-4-step-enthusiasm-shift-rule--crisis-bill-failure-scoring-51-resolved)).
+> **Provenance caution:** this is a **forum house-rules debate** — the GMs hedge ("that's just how I do it,"
+> "I believe," "probably forgot") and Ted flags elections as an **explicit REWORK target** (POST 10:
+> *"I'd like to really rework how elections work in general"*). Treat the scoring model as **open, not
+> settled canon**; the value is the worked arithmetic + the verified shipped-vs-designed delta.
+
+**★ The canonical per-candidate election score (designed).** Highest summed total takes the seat:
+
+```
+score = enthusiasm-from-meters       (ideology bonus; GATED — see ruling (a))
+      + party-pref                   (national party lean, R±n / D±n)
+      + incumbent              (+1)  ← NOT a calcStateVote term in the build
+      + media-card             (+1)  ← NOT a calcStateVote term in the build
+      + state-bias        (+5 match) ← shipped is GRADUATED bias*5, not a flat +5
+      + ideology-match    (+1 @ 75%) ← NOT a calcStateVote term in the build (ruling (b))
+      + president's-party-midterm-penalty (−1)  ← NOT a calcStateVote term in the build
+      + die roll
+```
+
+**★ The worked example — 1916 Alabama Governor, v2.8 (`6801b9f4` POST 1, corrected POST 2):**
+
+| Candidate | Terms | Total |
+|---|---|---|
+| **Wm. F. Aldrich** (Moderate, RED) | party-pref **+3** (R+3; Moderate gets no enthusiasm shift) · die **3** | **6** |
+| **Gov. Charles Henderson** (LW Pop, BLUE, **incumbent**) | incumbent **+1** · media card **+1** · meters **+2** (LW Pop) · AL state bias **+5** (Blue — *forgotten POST 1, corrected POST 2*) · president's-party midterm **−1** · die **4** | **13** |
+
+→ **Henderson wins 13–6.** (The +5 state-bias term was *initially forgotten*, which is exactly the kind of
+manual-bookkeeping error the app must subsume — cf. [§18.1](#181--the-charter--the-app-must-subsume-the-human-gm-the-30-minphase--automate-budget).)
+
+**★ The crucial designer rulings (these are the load-bearing deltas):**
+
+| # | Ruling | Authority | Status |
+|---|---|---|---|
+| **(a)** | The **enthusiasm bonus applies ONLY if that ideology is ALSO the state's preferred ideology.** "I don't give ideological enthusiasm bonuses unless it's also the state ideology, as it makes 0 sense for a LW Populist to get a boost in Alabama" (Rezi POST 5); Ted: "Yeah, I do it Rezi's way. I think that's how V said to do it forever ago" (POST 6). A LW-Pop in AL gets **no** national-enthusiasm transfer. | Rezi POST 5 / Ted POST 6 (*"how V said to do it"*) | **DESIGNED — shipped applies enthusiasm UNCONDITIONALLY (the thing they call wrong)** |
+| **(b)** | A **SEPARATE +1** (party-agnostic) for the candidate's ideology == the state's preferred ideology, distinct from (a). Worked: a Red Conservative in a Conservative-preferring state gets the **enthusiasm +3 PLUS a 75% chance of +1**; a **Blue** Conservative (e.g. Manchin in WV) gets the **+1 (at 75%) but NOT the +3** (Conservatives prefer Red). | Ark POST 7 / Ted POST 8 | **DESIGNED at 75%** — but **Ted admits the 75% never shipped** (POST 9: *"probably forgot to set up the 75% columns… this was when the state bias matches were guaranteed"*) ⇒ forum-shipped collapsed it to a **guaranteed +1**. The browser build has **NEITHER variant.** |
+| **(c)** | **Enthusiasm is computed once per turn at the END of the Lingering phase from the meters** — a snapshot the election step then reads, NOT recomputed at election time. | Ted POST 6 | **DESIGNED — the build NEVER derives enthusiasm from meters anywhere (the biggest gap, below)** |
+| **(d)** | **Quality-of-Life + Planet's-Health are ERA-GATED unlocks** — they "unlock later on" and (in 1916) should not yet be contributing their Libs +1 / LW-Pop +1 shifts. The thread's **8 "meters"**: Rev-Budget, Econ-Stab, Mil-Prep, Dom-Stab, Honest-Gov, **Quality-of-Life** (later unlock), **Planet's-Health** (later unlock), **Party-Pref** (the national party-lean, distinct from the 7 ideology-shift meters). | Tyler POST 3 (unchallenged) | **DESIGNED — shipped is INVERTED (below)** |
+
+**★ THE biggest structural gap — the meter→enthusiasm DERIVATION pipeline is entirely MISSING.** The whole
+thread *presumes* a step that turns meter values into per-ideology enthusiasm shifts (e.g. Rev-Budget 7 →
+Cons +1 / Progs −1; Planet's-Health 8 → LW-Pop +1). **The build has no such step.** `game.enthusiasm` is a
+**static authored table** (`buildEnthusiasm()` per scenario, e.g. `scenario1856.ts:18-31`) that is only ever
+mutated by **era-event effects** (`applyEffect`, `phaseRunners.ts:3229-3232`) — there is no
+`refreshEnthusiasm`/`computeEnthusiasm`/`enthusiasmFromMeters`, and nothing runs at end-of-Lingering to
+re-derive it. **Meters and enthusiasm are decoupled in code.** This is **upstream of #12 (bill→meter) and
+#124 (cabinet→meter):** even once those levers move the meters, the movement never reaches elections until
+this derivation exists. (Cross-ref the already-documented event→enthusiasm formula in
+[§30.34](#3034-rulings-folded-from-batch-44--teds-actual-change-log-of-doom-the-authoritative-rules-doc-edits-with-numbers--the-appointments-23-maintenance-pass--the-kagan-content-backlog--the-canada-alt-states-retrofit--the-cabinet-20105--the-full-era-retirementdeath-charts--the-evententhusiasm-formula--the-pres-implementation-2-step-table--3-user-confirm-reconciliations-4747b09f-teds-change-log-of-doom--5d225e8a-pol-lounge2--f64a522c-kagans-foreign-policy--250bd843-canada-alt-states--e07f0cc1-ampu-related-passion-projects):
+events nudging enthusiasm IS the shipped path; **meters nudging enthusiasm is the missing one.**)
+
+**★ SHIPPED `calcStateVote` (`phaseRunners.ts:3685-3723`) — the per-candidate score:**
+
+```
+score = 50
+      + baseLean * 5     // baseLean = ±state.bias by party (CONTINUOUS, not a flat +5)
+      + partyPref * 5    // ±game.partyPreference by party
+      + enthusiasm * 2   // game.enthusiasm[ideology][party]  ← applied UNCONDITIONALLY (not gated)
+      + pv * 0.1         // pvCache (office-weighted PV)
+      + factionBias      // electionFactionBias, lobby/interest-card driven, capped ±3
+      + traitBonus       // PR4a trait election effects
+      + (Math.random()-0.5) * 8   // ≈ ±4 noise — NON-DETERMINISTIC (determinism debt)
+```
+Winner = highest `pct` (share of summed scores) per state (`phaseRunners.ts:3709-3719`).
+
+**★ Shipped-vs-designed reconciliation (verified this batch):**
+
+| Designed term (#292) | Shipped `calcStateVote` | Verdict |
+|---|---|---|
+| enthusiasm-from-meters, **gated on state-ideology match** (a) | `enthusiasm * 2` applied **unconditionally**; **no per-state preferred-ideology field exists** — `State` has only `bias: number` (`types.ts:1324`); grep `preferredIdeology\|likedIdeology\|stateIdeology\|favoredIdeology` = **0** in `src/` | **PARTIAL + WRONG-GATE** — present but un-gated; needs the state preferred-ideology datum |
+| party-pref | `partyPref * 5` (`±game.partyPreference`) | **SHIPPED (matches)** |
+| **incumbent +1** | grep `incumbentBonus\|midterm\|mediaCard\|presParty` = **0**; incumbency affects elections only indirectly via `pv*0.1` and a separate seat-challenge branch (`phaseRunners.ts:~2040`) | **NOT BUILT as a score term** |
+| **media-card +1** | no media-card concept in the score | **NOT BUILT** |
+| state-bias **+5 on match** | `baseLean * 5` = **continuous** ±`state.bias`*5 (graduated), not a flat +5; and `state.bias` already DRIFTS (`IDEOLOGY_SHIFT_ODDS.drift.stateBias`, `phaseRunners.ts:903-906/2608`) — closer to #247's dynamic-bias than to this thread's flat +5 | **PARTIAL** — same family, graduated not flat |
+| **ideology-match +1 (75% designed / guaranteed forum-shipped)** (b) | **neither variant exists** (depends on the same missing state-preferred-ideology datum) — build is **behind even the forum build** here | **NOT BUILT** |
+| **president's-party midterm −1** | grep = **0**; no midterm/president-party term | **NOT BUILT** (note the −1-to-incumbents idea IS discussed for *bias*, not *vote-score*, [§30.13](#3013-rulings-folded-from-modernday-ga-run-2016-start-modern-multiplayer--ted-blessed-marquee-rulings)) |
+| enthusiasm computed at **end-of-Lingering from meters** (c) | **no derivation step at all**; `game.enthusiasm` is static-authored + only era-event-nudged | **NOT BUILT (the keystone gap)** |
+| QoL + Planet **era-gated unlocks** (d) | `quality`/`planet` are permanent `NationalMeters` fields **seeded live from turn 1** (1856 `quality 0, planet 4`; 1772 `quality -1, planet 5`) and rendered unconditionally (`MetersPage.tsx:5`); **no unlock mechanism**. Build has **7 meters, not 8** — "Party-Pref" is the separate `game.partyPreference` scalar | **NOT BUILT + INVERTED** (live when designed-locked) |
+| discrete additive **die roll** | continuous `(Math.random()-0.5)*8`, and **non-deterministic** (violates the `src/rng.ts` rule) | **PARTIAL + determinism debt** |
+
+**★ #292 SUBSUMES `State.preferredIdeology` as a prerequisite.** Both ruling (a) (gate enthusiasm) and (b)
+(the +1 ideology-match) require a **per-state preferred-ideology** datum that the shipped `State` lacks
+(`types.ts:1318-1324`, only `bias`). The per-era preferred-ideology *table* is already documented as a
+content requirement ([§30.9 / line 14667](#309-rulings-folded-from-ideo1928-ga-run-interwar-1928-campaign--one-ted-designer-ruling), *"Arizona's preferred ideos are Mod, Lib"*) and as a draft-profile field
+([§4.1 draft-profile #4](#4-draft-211)) — #292 makes it **load-bearing for elections**, not just drafting.
+Add a state preferred-ideology (likely most/least-preferred, per the `ideo1928` AZ bug), gate the enthusiasm
+term on it, and add the +1 match term — these three are one coupled unit.
+
+**Open questions (for the human):** (i) the LW-Pop **+1 vs +2** arithmetic in POST 1 — the *raw* net
+enthusiasm Ark lists is +1 but Henderson is scored +2; this is plausibly exactly the shipped `enthusiasm * 2`
+weight (raw +1 → applied +2), in which case the shipped multiplier already matches intent. (ii) at **which
+era/year** do QoL + Planet unlock (POST 3 asserts a later-era gate but gives no boundary). (iii) is the +1
+match **75% or guaranteed** for the rework. (iv) does the midterm −1 apply to **all** down-ballot offices or
+only some (the example is a Governor race). (`6801b9f4#POST 1-10`; `game-context.md` #292; codebase
+`phaseRunners.ts:3685-3723`, `types.ts:1318-1407`, `scenario1856.ts:18-31`, `MetersPage.tsx:5`.)
+
+#### 30.39.2 ★ #283 — the assassination OUTCOME-distribution divergence (50/25/25 vs ~67%-survive-and-BUFFED) (designed; partially shipped)
+
+> **Source: `c9b97b58` POST 1-13 (ebrk85/Willthescout7/Cal/Vols21/MrPotatoTed) + codebase
+> `anytimeEvents.ts:222-238`.** Sharpens the assassination system (b46 #283) with an **exact OUTCOME
+> distribution** and confirms **era-varying general-event rates in code.** Reconcile carefully against the
+> two ALREADY-documented assassination axes (see the batch-header note + the table below).
+
+**★ The canonical OUTCOME spec (designed, `c9b97b58` POST 5-6, ebrk85, verbatim):** an *Assassination
+Attempt* on a **random office-holder** (NOT President-only — answers POST 3, so Huey-Long-type victims are in
+scope) →
+
+| Roll | Outcome |
+|---|---|
+| **50%** | **death** |
+| **25%** | **wound — −1 to ALL abilities** (every skill in `admin/legislative/judicial/military/governing/backroom`, presumably `command` too) |
+| **25%** | **no serious injury (unharmed)** |
+
+**★ SHIPPED reality (`anytimeEvents.ts:222-238`) — two weighted personal templates, both gated
+`eras: ['nationalism','modern']`:**
+
+| Template | Weight | Effect |
+|---|---|---|
+| `assassination-attempt-survived` | **2** | `grantTrait Charismatic` + `pvBump +8` ("public sympathy surges") — **survives and is BUFFED** |
+| `assassination-killed` | **1** | `death` |
+
+⇒ once an assassination template is selected, the implied split is **~67% survive-and-BUFFED / ~33% killed** —
+**NOT 50/25/25.** **The −1-to-all-abilities WOUND branch does not exist at all** (no `AnytimeEventEffect`
+applies a uniform −1 across every skill), and the shipped "survive" outcome *helps* the victim (Charismatic
++ PV) — the **opposite** of a wound.
+
+**★ Era-varying general-event rates ARE shipped (CONFIRMS POST 12, "general events… vary by era… no cyber
+attack in 1788").** Two mechanisms: (a) per-era `ANYTIME_EVENTS_RULES.eraConfig` — `fireMult`
+0.8/0.9/1.0/1.1 + `nationalFireMult` 0.9/0.95/1.0/1.1 across independence/federalism/nationalism/modern
+(`types.ts:1076-1085`); (b) per-template `eras?: Era[]` filter + `eraWeightMult` in the selection pool
+(`phaseRunners.ts:2663-2673`). Assassination being `['nationalism','modern']`-only literally encodes "no
+assassination general event in early eras." **BUT** the engine has only **4 coarse eras**, so the forum's
+fine-grained **"1960s spike"** (POST 11-12) **cannot** be expressed — the 1960s sit inside the broad
+`modern` band.
+
+**★ Reconciliation — three orthogonal assassination axes (do NOT conflate):**
+
+| Axis | Spec | Source | Status |
+|---|---|---|---|
+| **OUTCOME** (what happens to the victim) | 50% death / 25% wound (−1 all) / 25% unharmed | `c9b97b58` #283 (this batch) | **shipped ~67%-survive-buffed/~33%-death; WOUND branch MISSING** |
+| **TARGET** (who gets hit) | `tedchange`: 50% Pres / 25% Rep-or-Senator / 25% faction-leader · `c9b97b58` refinement: 40% Pres / 30% Gov / 20% Sen / 10% Rep | [§30.24 / line 3581](#3024-rulings-folded-from-batch-34--the-five-wardatarecord-threads-the-45-war-score-design-origin--dh-79-rethinkwar--kiaofficers--strongnevernom--majorevents--newplaytest) + `c9b97b58` POST 11 | **shipped target is UNIFORM-random over all living pols — NO office/notability weighting** (`rollPersonalEvents`, `phaseRunners.ts:2655-2660`) |
+| **CANDIDATE-targeted variant** (Pineapple Primary) | a random presidential candidate shot at the convention; **lethality d100 ≤ 50 = killed** (binary, NO wound branch) | [§C / line 13313](#258-conversion-ai--deterministic--rolls-with-pliable--ideology-adjacency-gating) (`drums`) + `c9b97b58` POST 13 | **claimed to exist, but `grep -i pineapple` over `src/` = 0 matches — reconcile (renamed/removed/out-of-engine?)** |
+
+**★ Designer-floated refinements (designed, NOT shipped — roadmap candidates):**
+1. **Office/notability weighting on the target** (40/30/20/10 Pres/Gov/Sen/Rep, POST 11) — the build's
+   uniform-random pick is exactly the "random schmucks" problem Cal/Vols21 flag (POST 7, 10).
+2. **Hale/Frail modify survival** (POST 11): Hale → much more likely to survive / attempt thwarted; Frail →
+   more likely death or severe wound forcing them out to recover. The traits exist and gate **mortality
+   decay** (`frailDeathMult 1.5`, `haleChanceMult`) and the **Revolutionary-War wound roll**
+   (`revolutionaryWar.ts:99-117`) — but are **NOT** consulted on the assassination roll.
+3. **Conditional extra triggers** (POST 11): after a Civil War; when **domestic stability** drops below a
+   threshold; in high-risk eras (1960s). `domestic` meter exists but is never read to gate an assassination.
+4. **Once-per-cycle pre-convention candidate assassination check** (POST 11) — "the scandal roll, but once,"
+   targeting a primary candidate; unbuilt.
+5. **USS Princeton / cabinet mass-casualty** flavor event (POST 10, a non-assassination negligence event
+   killing multiple cabinet-level officers) — unbuilt as a named template.
+
+**Confirms (build matches design):** fixed-predetermined-era starts (cut-short figures are playable
+counterfactuals, POST 1-2); assassination exists as a general/random event over any office-holder; general
+pools/rates vary by era. **Open question (for the human):** does the −1-all-abilities wound need a new
+effect kind, or compose from `skillBump -1` × all + `commandBump -1`? Should 50/25/25 *replace* the
+two-template behavior or coexist as a separate "major" path? (`c9b97b58#POST 1-13`; `game-context.md` #283;
+codebase `anytimeEvents.ts:222-238`, `phaseRunners.ts:2650-2791`, `types.ts:1076-1085,84,102`,
+`revolutionaryWar.ts:99-117`.)
+
+#### 30.39.3 ★ #258 / #237 / #221 / #248 / #262 / #206 / #66 — Bailouts + Drugs: the policy-genre content engine (designed, 0% shipped)
+
+> **Source: `5261c8ff` POST 1-5 (Bailouts) + `faf2d8b3` POST 1-9 (Drugs), both @vcczar CONTENT-AUTHORING
+> drops + codebase.** These are the **3rd and 4th worked policy-genre exemplars** after b47 Currency
+> ([§30.37.1](#3037-rulings-folded-from-batch-47--four-policy-genre-drops-currency--taxation--slavery--infrastructure--the-northern-secession-civil-war-extension--the-currency-prereq-tree-as-the-258237-content-engine-reference-shape--the-7-predicate-classes--288-slavery-flagsecession-eligibility-coupling--northernnew-england-secession--non-playable-rumps--the-southern-led-reconstruction-branch--262-cross-genre-repeal-only-rw-gap-de64de1a-currency--1bf19872-taxation--5d7c29ee-slavery--9c383f22-northern-secession--d62ea397-infrastructure))
+> and b48 Credit/Debt ([§30.38.2](#3038-rulings-folded-from-batch-48---289-the-3-tier-stat-model--scenario-boot-stat-init-the-1960-cabinet-crater-root-cause--290-the-procedural-generator-revamp--the-creditdebt-prereq-tree-2nd-258237-exemplar-nationaldebt-ships--291-the-non-ideological-populism-ideology-gap-deferred--the-recent-1772-confirmations-washington-rule-can-fail-womens-suffrage-cc-plank-3b46b086-1960-question--5e8dc484-politician-generator--391df03b-credit-debt--036f0dce-tulsi-gabbard--e86d8661-top-10-statesmen)).
+> **Verified 0% shipped this batch** — no bailout/TARP/pandemic and no drug/prohibition/marijuana/alcohol
+> content exists in `src/` (the only "tobacco" is a state-commodity tag). **DESIGNED, NOT BUILT.**
+
+**★ Bailouts (`5261c8ff`) = the STRONGEST single evidence for the #258 predicate-class registry.** It is the
+3rd **prereq-structured** tree (same `{id, actionType L/P/S, era|ideology tag, prereq Predicate, effects}`
+row shape, grouped BY PREREQUISITE). Three predicate classes are exercised:
+
+| Predicate class | Bailout instance | Build gap |
+|---|---|---|
+| **Economic-meter BAND** | "Economic Meter at **Stagnant** or worse"; "at **Panic** or worse" | shipped `economic` is a raw `number` (`types.ts:1401`); band names are **UI-only display strings** (`Meter.tsx:15`: `Depression…Slowdown…Stable…Roaring` — **no "Stagnant"/"Panic"**); the `Predicate` union supports only `meterAtLeast`/`meterAtMost` ⇒ **author bands MUST compile to numeric thresholds** + the vocab reconciled (★ open: Stagnant≈Slowdown/Sluggish? Panic≈Recession/Severe-Recession?) |
+| **policy-active / policy-NOT-active** | "Ban Too Big to Fail **NOT active**" (gates Corp/Wall-St bailouts); "any pandemic package **active**" (gates Expand Stimulus); "**Garn-St-Germaine active**" (gates the S&L-Crisis event) | no in-force-policy concept: `Predicate` has `eventCompleted`/`eventChose`/`flag` (`types.ts:1487-1504`) but **no active-policy registry**; `Legislation` is a runtime instance with a `status`, not a named-policy set ⇒ needs **active-policy tracking** |
+| **EVENT-active** | "**Requires any pandemic**" (gates the 3 Pandemic Relief packages) | **no pandemic event/flag/meter ships**; distinct from policy-active — predicates on a *scripted condition being live* |
+
+**★ Content ↔ event interplay (new, load-bearing for the engine).** Two **scripted-event (`S`) nodes are
+embedded inside the content tree** as siblings of legislation — **Subprime Mortgage Crisis (S-Ter)** and
+**Savings-and-Loans Crisis (S-Neo)** — and the S&L Crisis is itself gated by **Garn-St-Germaine being
+active** (a **policy → event** chain). So the catalog is not pure legislation: **events flip flags/meters;
+flags/meters gate downstream legislation.** This is the same content↔event coupling the engine must model.
+Bailouts also adds an **ideology-gated** axis (`L-Ide`, the three income-tier worker bailouts gated by player
+ideology, not era) and intent to **scale per-industry** ("bailout legislation for each industry," POST 5 →
+the `PolicyArea` enum `types.ts:183-189`); plus the accepted **disaster-area-declaration → federal rebuild
+funds** add-on (POST 3-4; the infrastructure-1-5 idea was *deferred* to its own genre).
+
+**★ Drugs (`faf2d8b3`) — a FORMAT-CHANGE + sub-model requests + the #262 counter-example.** vcczar
+**reverted to the UNTAGGED 3-partition form** (Legis Prop / Gov Action / Pres Action) and **explicitly
+dropped eras + prereqs "to save time"** (POST 1) — so **two authoring styles now coexist** (tagged
+prereq-tree vs untagged 3-partition). Counts: **~14 Legis · 4 Pres · 2 Gov.** Key items:
+
+- **#248 graded option-sets — the richest specimen yet:** legalize↔criminalize for **marijuana** and **hard
+  drugs**; **18th Amendment ↔ 21st Amendment** (institute↔repeal, also #66); **min-drinking-age 18 ↔ 21**;
+  **tax ↔ don't-tax**; **ban ↔ legalize e-cigarettes**; and **★ a THREE-pole set** at Gov scope per
+  substance — **criminalize / decriminalize / legalize** (POST 8-9) — pushing #248 **beyond binary** toward
+  graded option-sets. (Bailouts contributes the **income-tier option-set** — high/middle/low-income worker
+  bailouts.)
+- **#66 institutions/amendments:** 18th & 21st Amendments; **Drug Czar** (a standing exec office, ONDCP
+  analog); **Federal Drug Courts**; the **"Grant the Fed gov't authority to enforce Prohibition"**
+  enabler (Volstead analog) — plus **Institute → Expand War on Drugs** as a clean #221 base-action +
+  modifier-verb ladder.
+- **#206 Future band (vcczar's headline ask, thin):** **War-on-Drugs-for-Video-Game-Addiction** and
+  **virtual drugs / mind-sims** (POST 1, 7); Bailouts contributes **climate-relocation assistance** (POST 2,
+  re-surfacing #206 in a 2nd thread).
+- **★ #262 — Drugs is a BALANCED COUNTER-EXAMPLE.** Unlike the **left-skewed** Environment/Taxation genres
+  (where vcczar flagged the RW side as repeal-only), Drugs natively carries **both** left/libertarian
+  (legalize/decriminalize) **and** right/authoritarian (criminalize/Prohibition/War-on-Drugs/strict-tobacco)
+  poles ⇒ **the left-skew is GENRE-SPECIFIC, not universal.** Log Drugs as needing **primitive-depth growth
+  (Future + Gov Actions), NOT left/right rebalancing.**
+- **★ NEW sub-models Drugs surfaces (the build lacks all):** a **substance-class enum ≥3 buckets** (marijuana
+  / hard drugs / **psychedelics** as a separate class, POST 2 — + tobacco / alcohol / **e-cigarettes** /
+  **virtual drugs**); a **decriminalize tier** (the middle pole); **county / local-option + dry-by-default
+  states** (KS/MS/TN default-dry, AL local-option, POST 4) — a **sub-state granularity** the build has no
+  model for; and a **policy → court-case trigger** (religious-ritual drug-use exemption → free-exercise
+  challenge, POST 3 — ties Drugs to the SCOTUS-case system). Drugs adds **program-state predicates** to
+  #258: **Prohibition-in-force** (gates Increase-Punishments / enforcement-authority / 21st-repeal) and
+  **War-on-Drugs-instituted** (gates Expand-WoD).
+
+**★ Catalog-shape corroboration (#237/#221).** With Currency + Credit-Debt + Bailouts, **three independent
+threads share the identical prereq-tree shape** ⇒ a uniform `PolicyNode { id, actionType, era|ideology,
+prereq: Predicate, effects }` data model is the intended target — and Drugs proves the same *content* can be
+authored in an untagged form pending the schema pass. **The load-bearing build gap is the same across all
+four:** there is **no authorable policy/legislation content catalog** (legislation is created at runtime; the
+shipped library is **8 generic `BILL_TEMPLATES`**, `phaseRunners.ts:~3420-3429`), **no active-policy
+tracking**, **no meter-band/policy-active/EVENT-active predicates**, and `GraphFlagId` is only
+`'loansEnabled' | 'warVictoryGuaranteed'` (`types.ts:1109`). Pres Actions and Gov Actions **do not exist as
+content primitives** at all. (`5261c8ff#POST 1-5`; `faf2d8b3#POST 1-9`; `game-context.md`
+#258/#237/#221/#248/#262/#206/#66; codebase `types.ts:183-189,1109,1401,1487-1504,1506-1520`,
+`Meter.tsx:15`, `phaseRunners.ts:~3420-3429`.)
+
+#### 30.39.4 #240 / #216 / #194 / #279 / #15 — the marquee-VP curated stat blocks (provisional dataset; designed)
+
+> **Source: `b9651d6d` POST 1-18 (@vcczar, one ConservativeElector2 reply) + codebase
+> `seedDataset.mjs` / `public/standard-draft-classes.json` / `src/types.ts`.** A **CURATED dataset-authoring**
+> drop of **11 marquee-VP stat blocks** — Agnew, Barkley, Bentsen, F.P. Blair Jr, C.W. Bryan, N.M. Butler,
+> W.O. Butler, Cheney, G. Clinton, Colfax, C. Curtis. **★ EXPLICITLY UNFINISHED/PROVISIONAL** (paused POST 6,
+> abandoned POST 17-18: *"some of the components might change"*). **Per project dataset rules, do NOT
+> hand-edit the generated files** — any adoption routes through **`scripts/seedDataset.mjs` `CURATED_ROWS`**
+> (these figures served in Congress ⇒ override tier, not `ERA_ROWS`) **+ regenerate** (#240).
+
+- **#240 — the authoring schema + provenance caution.** Each block: `<Name> / [<Dynasty>] / <Ideology> /
+  <N> command, <N> <skill>… (counts of nonzero skills) / <Expertise> "as initial expertise" (singular — wrap
+  as a one-element `expertise: Expertise[]`) / <Traits> / [Can be independent] / Notes`. Notes always carry a
+  **"Best for <office>" role tag** + frequently a **crisis-president verdict** ("if becomes president, you
+  better be at war"; "great crisis president") — encoding designer intent for the as-president/crisis layer.
+  VPs are deliberately **flat/low** (mostly 1s, "second bananas") — which **clashes with the shipped
+  auto-derived rows** (Barkley legis 5/backroom 4, Bentsen legis 5/backroom 3 — a curated override would have
+  to *lower* shipped stats). **Pattern: the shipped curated layer has ingested NONE of this** — served
+  figures carry generic real-data stats (no traits/expertise/dynasty); never-served figures (N.M. Butler,
+  W.O. Butler, C.W. Bryan, F.P. Blair Jr, George Clinton under that name) are **ABSENT**. (★ N.M. Butler
+  never served in Congress ⇒ belongs in `ERA_ROWS`, not `CURATED_ROWS` — a tier correction.)
+- **#216 — trait-union reconcile.** Cited traits **NOT in the shipped `Trait` union** (resolve before
+  adoption): **Cop** (b44 logged `cop`→`lawful`, but `lawful` is **also** not shipped — define a law-and-order
+  trait); **Pliable** (≈ `Impressionable`); **Bookkeeper** (fiscal-competence; ≈ `Numberfudger`? or new);
+  **Illicit** (≈ `Corrupt`/`Scandalous`); **Disharmonious** (inverse of `Harmonious`; ≈ `Puritan`);
+  **Expansionist** (foreign-policy lean; no clean shipped match); **Geostrategist** (foreign-policy
+  competence; no equivalent); **Lackey** (subservient; overlaps `Loyal`/`Impressionable`/`Passive`). Plus
+  **Civil Rights** = a policy-domain tag (closer to *expertise* than trait — reconcile axis). (All cited
+  *expertise* tags — Business/Justice/Military/Education/Economics/Media — already exist; only array-wrapping
+  needed.)
+- **#194 — 5 named dynasties:** **Blair** (F.P. Blair Jr), **Bryan** (C.W. Bryan), **Cheney** (Dick),
+  **Clinton** (George; nephew DeWitt noted), **Colfax** (Schuyler). Treated as a first-class field ⇒ implies a
+  **`dynasty` grouping on `Politician`** — **not in shipped `types.ts`.**
+- **#279 — `Can be independent`** appears only on **Colfax** as a standalone line distinct from traits;
+  **confirmed ABSENT** from the shipped `Trait` union (also flagged b48) ⇒ needs a real **party-independence
+  flag**, not currently shipped. (The `independent` substring in `types.ts` is unrelated code.)
+- **★ #15 — VP-on-ticket HOME-STATE delivery bonus (couples to #292).** A recurring, explicit design
+  heuristic: a VP is valued for *which state he delivers on the ticket* — Clinton "will likely win you **NY**
+  if he's on the ticket, unless facing another ticket with NY" (POST 14); N.M. Butler → NY (POST 8); W.O.
+  Butler / Barkley → **KY** (POST 9, 3); Colfax → **IN** (POST 15). **Design ask: VP-on-ticket should confer
+  a home-state electoral bonus, gated against an opposing same-state ticket** — **not evidenced in the
+  current `calcStateVote`** (which has no ticket/VP-home-state term). This is a **new additive term for the
+  #292 election rework**, alongside the incumbent/media/midterm terms.
+
+(`b9651d6d#POST 1-18`; `game-context.md` #240/#216/#194/#279/#15; `docs/draft-class-authoring.md`; codebase
+`scripts/seedDataset.mjs` `CURATED_ROWS`, `public/standard-draft-classes.json`, `src/types.ts` `Trait` /
+`Expertise` unions, `phaseRunners.ts:3685-3723`.) **All of §30.39.4 is a provisional, abandoned-thread
+authoring SNAPSHOT — adopt only with human confirmation; route via `seedDataset.mjs`, never hand-edit
+generated files.**
 
 ### 30.4 Authority hierarchy reminder
 
