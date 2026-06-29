@@ -373,6 +373,7 @@
     - [30.35 Rulings folded from batch 45 — the FIVE playtest highlight-reels / discussion / data threads (★★ the CC/EV cross-batch CORRECTION + #280 alt-state EV-mutation + #281 statehood-eligibility + #247 time-indexed bias + #270/#273 judicial-misconduct charge-roll + #126 botched-major-action resignation + #282-#285 + the #12/#40 BALANCE gaps) (`78e0d55b-alt-states-ev-project` / `5e195107-electoral-trends-1840-playtest-discussion-post` / `0b896cf9-june-2023-ampu-playtest-updates` / `38cedf29-april-2023-playtest-best-moments` / `9acfc425-may-2023-ampu-playtest-updates`)](#3035-rulings-folded-from-batch-45--the-five-playtest-highlight-reels--discussion--data-threads--the-ccev-cross-batch-correction--280-alt-state-ev-mutation--281-statehood-eligibility--247-time-indexed-bias--270273-judicial-misconduct-charge-roll--126-botched-major-action-resignation--282-285--the-1240-balance-gaps-78e0d55b-alt-states-ev-project--5e195107-electoral-trends-1840-playtest-discussion-post--0b896cf9-june-2023-ampu-playtest-updates--38cedf29-april-2023-playtest-best-moments--9acfc425-may-2023-ampu-playtest-updates)
     - [30.36 Rulings folded from batch 46 — the FIVE gov-action / House-incumbency / Environment / playtest-reel threads (★★ Civil-War PARTIALLY-shipped 4-defection abstraction vs designed territorial DEPTH + #258 the governor-predicate Gov-Action archetype + #286 pres fall/scandal event-rate + #287 the +2 House-incumbency bonus + the contingent-House election + the Environment policy genre) (`a938ac91-gov-actions-scripted-events` / `b7acabd2-house-incumbency` / `9f2ab25f-environment` / `215f0676-july-2023-updates` / `243dc711-september-update`)](#3036-rulings-folded-from-batch-46--the-five-gov-action--house-incumbency--environment--playtest-reel-threads--civil-war-partially-shipped-4-defection-abstraction-vs-designed-territorial-depth--258-the-governor-predicate-gov-action-archetype--286-pres-fallscandal-event-rate--287-the-2-house-incumbency-bonus--the-contingent-house-election--the-environment-policy-genre-a938ac91-gov-actions-scripted-events--b7acabd2-house-incumbency--9f2ab25f-environment--215f0676-july-2023-updates--243dc711-september-update)
     - [30.37 Rulings folded from batch 47 — FOUR policy-genre drops (Currency / Taxation / Slavery / Infrastructure) + the Northern-secession Civil-War extension (★ the Currency prereq-tree as the #258/#237 content-engine REFERENCE SHAPE + the 7 predicate classes + #288 slavery-flag↔secession-eligibility coupling + Northern/New-England secession & non-playable rumps + the Southern-led Reconstruction branch + #262 cross-genre repeal-only-RW gap) (`de64de1a-currency` / `1bf19872-taxation` / `5d7c29ee-slavery` / `9c383f22-northern-secession` / `d62ea397-infrastructure`)](#3037-rulings-folded-from-batch-47--four-policy-genre-drops-currency--taxation--slavery--infrastructure--the-northern-secession-civil-war-extension--the-currency-prereq-tree-as-the-258237-content-engine-reference-shape--the-7-predicate-classes--288-slavery-flagsecession-eligibility-coupling--northernnew-england-secession--non-playable-rumps--the-southern-led-reconstruction-branch--262-cross-genre-repeal-only-rw-gap-de64de1a-currency--1bf19872-taxation--5d7c29ee-slavery--9c383f22-northern-secession--d62ea397-infrastructure)
+    - [30.38 Rulings folded from batch 48 — ★ #289 the 3-tier stat model + scenario-boot stat-init (the 1960 cabinet-crater root cause) + #290 the procedural-generator revamp + the Credit/Debt prereq tree (2nd #258/#237 exemplar; nationalDebt SHIPS) + #291 the non-ideological-populism ideology gap (deferred) + the recent 1772 confirmations (Washington-Rule can FAIL; women's-suffrage CC plank) (`3b46b086-1960-question` / `5e8dc484-politician-generator` / `391df03b-credit-debt` / `036f0dce-tulsi-gabbard` / `e86d8661-top-10-statesmen`)](#3038-rulings-folded-from-batch-48---289-the-3-tier-stat-model--scenario-boot-stat-init-the-1960-cabinet-crater-root-cause--290-the-procedural-generator-revamp--the-creditdebt-prereq-tree-2nd-258237-exemplar-nationaldebt-ships--291-the-non-ideological-populism-ideology-gap-deferred--the-recent-1772-confirmations-washington-rule-can-fail-womens-suffrage-cc-plank-3b46b086-1960-question--5e8dc484-politician-generator--391df03b-credit-debt--036f0dce-tulsi-gabbard--e86d8661-top-10-statesmen)
     - [30.4 Authority hierarchy reminder](#304-authority-hierarchy-reminder)
 31. [Gilded-Age era systems (designed, not built)](#31-gilded-age-era-systems-designed-not-built)
     - [31.1 (#147) Tariff-as-national-%-rate + the mutually-exclusive MonetaryRegime](#311-147-tariff-as-national-rate--the-mutually-exclusive-monetaryregime-designed)
@@ -21210,6 +21211,354 @@ into the #194 lineage system. Cite `histpres#POST 1, 3, 7, 13, 19, 28, 34, 36, 3
 > (5) **#66 institutions** (US Mint, Federal Reserve, Bank of US, Bank of North America, Continental Currency, IRS, 16th Amendment, TVA) are law-created, some repealable/privatizable — **no institution layer ships**; this is the substrate predicate-class (a) reads.
 > (6) **#206 Future band** content harvested (robot slavery, genetic/cyber-mod tax, sea colonies, hyperloop/Moon-Amtrak, Amero, crypto/digital-currency standards, Fiat-Nixon-Shock) — feeds the Future backlog, doubly-unbuilt.
 > (7) **Content-migration**: fold the shipped hand-cards (Internal Improvements / Pacific Railroad Bill / Public Works Program; Fugitive Slave Act Strengthening / Personal Liberty Law) into the genre library once #221/#237 land. Cross-ref `game-context.md` rows **#258/#237/#221/#248/#262/#206/#66/#56/#57/#58/#156/#284 (updated)** and **NEW #288 (slavery-flag unification + flag-write effect + secession-eligibility input)**.
+
+### 30.38 Rulings folded from batch 48 — ★ #289 the 3-tier stat model + scenario-boot stat-init (the 1960 cabinet-crater root cause) + #290 the procedural-generator revamp + the Credit/Debt prereq tree (2nd #258/#237 exemplar; nationalDebt SHIPS) + #291 the non-ideological-populism ideology gap (deferred) + the recent 1772 confirmations (Washington-Rule can FAIL; women's-suffrage CC plank) (`3b46b086-1960-question` / `5e8dc484-politician-generator` / `391df03b-credit-debt` / `036f0dce-tulsi-gabbard` / `e86d8661-top-10-statesmen`)
+
+> **★ Batch 48 = a CODE-VERIFIED batch: one HEADLINE data-model gap, one content-engine corroboration, two
+> generator/ideology design specs, and a recent-1772 confirmation pass.** Five sources, all spot-checked
+> against `src/` by the digests — this is **root-cause / shipped-vs-designed class, NOT new shipped rules.**
+> Three findings are load-bearing:
+> 1. **★★ #289 — the 3-TIER stat model + the scenario-BOOT stat-init.** The single most consequential gap
+>    in the batch. The shipped `Politician` carries **ONE** `skills` block + **one** `command` (no
+>    `peakYear`, no rookie/midway/historic-peak tiers — `types.ts:1271,1281`), and **scenario boot applies
+>    NO stat progression** to pre-game draft classes. The designed model (vcczar, the 1960-playtest
+>    diagnosis thread) gives each politician three stat tiers keyed to a **peak year**, and the boot
+>    back-fills pre-game drafts by **career-age**: ≈≥16 career-yrs → maxed/peak, 8-15 → midway, <8 → rookie.
+>    Without it the roster boots at rookie stats → **~8 pols with 3 Admin, none >3 → every cabinet is
+>    2-Admin appointees that crater the meters at turn 1**. This is the **precondition for #124
+>    (cabinet→meters) and #12 (legislation→meters)** to behave (§30.38.1). The in-game career track that
+>    develops *newly*-drafted pols **IS built** (`careerTrack`/`careerTrackYears`, roll every 4 yrs,
+>    `CAREER_TRACK_MAX_YEARS = 20`) — only the **pre-game back-fill** is missing.
+> 2. **★ The Credit/Debt tree = the SECOND worked #258/#237 prereq-tree exemplar** (sibling of the b47
+>    Currency tree, §30.37.1) — same `{action-type L/P, era/ideology tag, precondition, effects}` row
+>    shape, organized BY PREREQUISITE. It adds **two predicate classes** the Currency tree under-emphasized
+>    (diplomatic-recognition; policy-active/program-state) and demands a **debt-level predicate leaf**
+>    (`debtExists`/`debtAtLeast`) the `Predicate` union lacks. **★ nationalDebt nuance: the debt STATE
+>    SHIPS** (`game.nationalDebt`, `types.ts:1573`, seeded $0/1772 & $32M/1856, displayed, passively paid
+>    down) **but is NOT a `MeterKey`** — so no predicate can gate on it, and **none of the tree's enactable
+>    items exist** (§30.38.2).
+> 3. **★ #290 the procedural-generator revamp + #291 the ideology gap.** #290 = a region×party×gender
+>    "Noah's-Ark" lattice with weighted regional name/ethnicity pools + a real `gender` field, vs the
+>    shipped flat 20-rookie `Math.random` stub (§30.38.3). #291 = the 7-point ideology scale has **no
+>    axis for non-ideological / "pure-populism" / personal-gain figures** (Gabbard mis-rates as Liberal) —
+>    **DESIGNER-ACKNOWLEDGED, DEFERRED** behind "many more Gabbards" (§30.38.4). Plus recent-1772
+>    confirmations: the **Washington-Rule acclaim candidacy can FAIL** (a losable election, not a
+>    coronation) and the **women's-suffrage CC plank → Domestic-Stability crisis** (designed; the shipped
+>    CC has 7 article votes and no suffrage plank) (§30.38.4).
+>
+> **Authority:** `vcczar`/"Arkansas Progressive" (tier-1 designer, the two are one handle mid-rename) for
+> #289 (the rookie/midway/peak data-model statement + the boot rule, `3b46b086` POST 5-9), the Credit/Debt
+> tree (`391df03b` POST 1), the generator revamp (`5e8dc484` POST 1, 4), and the ideology-gap ruling
+> (`036f0dce` POST 10, 12, 14); `Vols21` for the concrete boot-age formula (`3b46b086` POST 9);
+> `Murrman104` named the cabinet-crater symptom (`3b46b086` POST 3); `OrangeP47`/`Willthescout7` supply the
+> Credit/Debt add-ons (`391df03b` POST 2-11). All five are **DESIGN/DIAGNOSIS threads, not playthroughs**,
+> except `e86d8661` (a recent **2025 1772-era end-of-era retrospective** that re-witnesses shipped founding
+> systems). The sources:
+> - **`3b46b086-1960-playtest-question`** (topic 1382, 21 posts / 1 chunk; BALANCE/DESIGN diagnosis) — the
+>   ROOT-CAUSE thread upstream of the two 1960 threads already digested (`8bc0231c` original run, `3c3c46f0`
+>   restart). States the 3-tier stat model + the boot stat-init formula + the CJCS military-admin coupling
+>   (→#49). Playtester poll chose mid-course correction 8-4 (a restart happened anyway). Cite `3b46b086#POST n`.
+> - **`5e8dc484-im-improving-the-politician-generator`** (topic year 1900, 6 posts / 1 chunk; DESIGN
+>   discussion) — the PROCEDURAL generator revamp (the random fallback pool, NOT the curated historical
+>   dataset). Cite `5e8dc484#POST n`.
+> - **`391df03b-ampu-creditdebt`** (topic 1179, 11 posts / 1 chunk; CONTENT-AUTHORING, smallest subtype,
+>   NOT ratified — *"It might not need to be expanded"*) — the Credit/Debt prereq tree (transcribed
+>   §30.38.2) + add-ons (POST 2-11); 2 designer rulings (filial-debt = early repealable only POST 7;
+>   Lend-Lease → Diplomacy POST 8). Cite `391df03b#POST n`.
+> - **`036f0dce-ampu-question-tulsi-gabbard`** (topic 1572, Oct 2022, 14 posts / 1 chunk; ideology-model +
+>   trait-classification discussion) — the non-ideological-populism axis gap (#291, deferred) + the
+>   interim `Can be Independent` / `Can Party Flip` / party-switch-date handling (#279, NOT shipped). Cite
+>   `036f0dce#POST n`.
+> - **`e86d8661-top-10-influential-statesmen-of-the-revolutionary-war-era`** (topic 6177, Apr 2025, 5
+>   posts / 1 chunk; end-of-era narrative retrospective) — a CONFIRMATION source for shipped 1772 systems
+>   (senior General/Admiral, Treaty of Paris, Dutch loan, command→presidential gate, abolish-slavery
+>   gov-action) + two nuances (Washington-Rule can FAIL; women's-suffrage CC plank → DomStab). Cite
+>   `e86d8661#POST n`.
+
+#### 30.38.1 ★★ #289 — the 3-tier stat model + the scenario-boot stat-init (the 1960 cabinet-crater ROOT CAUSE) (designed, not built)
+
+> **Source: `3b46b086` POST 3, 5-9 (vcczar + Vols21 + Murrman104) + codebase.** This is the upstream
+> root-cause statement for the scenario-boot keystone ([§26.1](#261-the-mid-government-boot-shape-general),
+> [§29.1](#291--the-scenario-boot-procedure-as-practiced-gap-115)) and the precondition for the
+> cabinet→meters ([§22.1](#221-the-named-meter-bank--numeric-debt--crisiscascade)) / legislation→meters
+> levers. **Designed, not built — the multi-tier stat data model does not exist in `src/`.**
+
+**The symptom (`3b46b086` POST 3, Murrman104):** in the 1960 modern-era playtest, *"there's maybe 8 … pols
+in the game rn with 3 admin and **none with more than 3**. This is leading to a scenario where every cabinet
+is filled with a bunch of **2's who crater the meters**."* Plus a **party-competence asymmetry**: the GOP
+bench was far deeper than the Democratic bench, so whichever weaker party wins drags the meters into a
+**death-spiral** with no recovery path.
+
+**★★ The root cause — the boot ran everyone on ROOKIE/draft stats.** The designed data model has, **per
+politician, three stat tiers** (`3b46b086` POST 5-6, vcczar):
+
+| Tier | When it applies | Source note |
+|---|---|---|
+| **rookie / draft-start** | the floor, at draft | the only tier the shipped build has |
+| **midway** | for pols who start *after* draft year but *before* the peak year | POST 5 |
+| **historic / peak** | *"take place at peak year or after. Each politician has a peak year."* | POST 5 |
+
+The 1960 run *"used the stats that **Cal started the playtest with** and the **old traits**. So **midway and
+peak stats were NOT added**"* (POST 6) → *"Without them, **everyone is starting with rookie stats**"* (POST 7).
+
+**★ The scenario-BOOT stat-init formula** (`3b46b086` POST 7-9):
+1. **Apply midway/peak ONLY to pols drafted BEFORE game start** (POST 7-8). Pols **drafted in-game** *"have
+   to develop naturally via career track"* — which is **BUILT** (see below).
+2. **Keyed to draft-class AGE at the start year** (POST 9, Vols21, citing the sheet): **draft classes 1944 &
+   prior = MAXED** (*"16 years which follows the career path logic"*); **8-15 years = MIDPOINT**; (implied)
+   **<8 years = rookie**. So: **≥16 career-yrs → peak · 8-15 → midway · <8 → rookie.**
+
+**★ NUANCE — reconcile the 16-yr boot figure vs the 20-yr code cap.** The sheet's "16 years = maxed"
+(POST 9) and the shipped **`CAREER_TRACK_MAX_YEARS = 20`** disagree. The in-game career track rolls a skill
+gain every 4 career-years up to the cap (`phaseRunners.ts:455-470`: `careerTrackYears += 2` per turn,
+`rollThreshold` fires on `careerTrackYears % 4 === 0`), so 20 in-game years = 5 rolls, 16 = 4 rolls. Which
+governs the boot back-fill (the 16-yr "career-path" figure or the 20-yr in-game cap) is **OPEN** — reconcile
+before authoring.
+
+**★ Shipped reality** (verified this batch):
+
+| Designed (this thread) | Shipped today | Verdict |
+|---|---|---|
+| Per-politician **peak year** + 3 stat tiers (rookie / midway / historic-peak) | `Politician` carries **ONE** `skills: Skills` + **one** `command` (`types.ts:1271,1281`). **No `peakYear`/`midway`/`peak`/`rookie` field anywhere in `src/`** (every "peak" grep hit is "Speaker"/"speak"). Seed rows + the draft CSV author exactly ONE stat set. | **NOT BUILT** |
+| Boot applies midway/peak by **draft-class age** (≥16 maxed / 8-15 midway / <8 rookie) for pre-game drafts | `scenario1772.ts` / `scenario1856.ts` seed fixed authored stats; **no boot-time stat scaling by draft-class age** exists. | **NOT BUILT** — boot does no age-based stat-init |
+| In-game drafts "develop naturally via career track" | **EXISTS** — `careerTrack`/`careerTrackYears` (`types.ts:1279-1280`), `CAREER_TRACK_MAX_YEARS = 20`, `rollThreshold` every 4 career-yrs (`phaseRunners.ts:455-470`), mentor acceleration. | **BUILT (partial match)** — only the pre-game back-fill is missing; career cap is **20** vs the sheet's **16** (reconcile) |
+
+**★ Why this is the precondition for #124 / #12.** The Lingering/meter engine **multiplies appointee Admin**
+(cabinet→meters, [§22.1](#221-the-named-meter-bank--numeric-debt--crisiscascade)); a whole roster capped at
+2-3 Admin **guarantees a meter crisis at turn 1**. Boot stat-init is therefore the **input** the cabinet→meter
+lever (#124) and legislation→meter lever (#12) read — without correct seed stats both read garbage and spiral.
+A separate **bench competence-parity** balance pass (or meter floors) is also implied (the GOP/Dem asymmetry,
+POST 3) — boot stat-init alone won't fix a structurally-lopsided bench.
+
+**★ #49 — the CJCS / military-prep residual (modern-era, designed, not built).** Even *with* maxed stats,
+*"most Generals have ZERO Admin, so the Chairmen of Joint Chiefs will continue to tank the military prep"*
+(`3b46b086` POST 9). Designer consensus (POST 12): **do NOT beef up generals' Admin** — high-Admin generals
+get mis-used as cabinet/ambassadors *"in ways not often done in history."* So the CJCS seat needs a
+**role-specific competence read** (military-derived, not raw Admin). Three hybrids floated:
+- **Preferred (POST 12):** CJCS effectiveness = **military skill + admin-gained-on-appointment** (≈3-4 total).
+- **Alt (POST 10):** use **military ability during the Lingering phase** for the CJCS seat instead of Admin.
+- **Alt (POST 11):** **admin −1 for historical** (equivalent-admin = mil−1) and **+1 on a future appointment
+  with base 0** ("as a forum test").
+No JCS / military-prep / Chairman seat ships (grep: only "Speaker"; no military-prep meter — `military` is a
+generic `NationalMeters` band). Build target = **1772 + 1856** cabinet/officer apparatus first; the CJCS
+coupling is future modern-era content. Cross-ref the military-appointment / officer-cohort work (DH-75 / #209),
+the generals-0-Admin-by-design guard, and the era-event cabinet-defection coupling
+([§28.7](#287-modern-cabinet--the-era-of-terror-cabinet-rework-231)).
+
+> **Open (for the human):** (1) 16-yr boot figure vs 20-yr code cap — which governs the back-fill? (2) Does
+> the model store 3 explicit stat blocks per politician (+ a `peakYear`), or store peak + a derivation rule
+> that computes rookie/midway from career-age (the cheaper build)? (3) Which CJCS hybrid is canon (POST 12 is
+> the front-runner but never finalized)? (4) Is bench competence-asymmetry intended era-flavor or a balance
+> bug to flatten? (`3b46b086#POST 9, 5-6, 12`; `game-context.md` #289 / #49 / #124 / #12.)
+
+#### 30.38.2 ★ Credit/Debt prereq tree = the SECOND #258/#237 exemplar (+ the nationalDebt-SHIPS nuance) (designed, not built)
+
+> **Source: `391df03b` POST 1 (verbatim structure) + POST 2-11 (add-ons) + codebase.** A direct sibling of
+> the b47 Currency tree ([§30.37.1](#30371--the-currency-policy-tree--the-258237-content-engine-reference-shape-designed-not-built)),
+> built in the **identical authoring shape** — a catalog organized BY PREREQUISITE, every item carrying an
+> **action-type (L/P) + era/ideology tag**. Currency + Credit/Debt are now the **two canonical worked
+> exemplars** of the **#258** predicate-gated content engine + **#237** policy-genre framework. Credit/Debt
+> is the **smallest** subtype (vcczar's own words) but adds **two predicate classes the Currency tree
+> under-emphasized**. **The policy CONTENT layer is designed, not built; the debt STATE ships (see nuance).**
+
+**The data-model shape (same as Currency):** `{ actionType: L (Act of Congress) | P (Presidential/Gov
+action), era/ideology tag, precondition: Predicate, effects }`. Era tags in this small tree: **Ind**
+(Independence), **Fed** (Federalist — Hamilton's program), **Prog** (Progressive), **Default** (the starting
+state before any policy). **The Credit/Debt tree, transcribed BY PREREQUISITE** (`391df03b` POST 1):
+
+| Precondition group | Policies (action-type · era-tag) |
+|---|---|
+| **No preq** (always available) | Funding Act (L·Fed — Hamiltonian funding/assumption; the keystone later items chain off) · Require balanced budget except during major war or crisis (L·Prog — the carve-out is itself an active-war/crisis-meter predicate baked into the effect) |
+| **No national credit/debt active** *(a DEFAULT state)* | No National Credit/Debt (L·Ind·**Default** — the founding-era default; mirror of Currency's Spanish-Dollar default) |
+| **National Debt Exists** *(a program-state predicate)* | Abolish National Debt Policy (**P**·Fed — gated on a debt actually existing) |
+| **Dutch Recognize US** *(a DIPLOMATIC-RECOGNITION predicate)* | Secure Dutch Loan (L·Ind — the 1782 Amsterdam loan) |
+| **Funding Act** *(the only chained prereq in the tree)* | Take Out Emergency Foreign Loan (**P**·Fed — requires the Funding Act to have passed first) |
+
+**The implicit chain:** `Funding Act` → `Emergency Foreign Loan` (depth-2, the only real chain). The other
+gates are **state predicates** (debt-exists, no-debt-default) and an **event/recognition predicate**
+(Dutch-recognize). Though tiny (~6 base items vs Currency's ~20), it exercises **five precondition kinds**
+(always-on / default-state / program-state / chained-policy / diplomatic-event) — which is why it corroborates
+the catalog shape. Note **both `P` items are Federalist-era debt moves** (Hamiltonian finance was substantially
+executive-driven) — consistent with the Currency tree's L/P-tracks-real-enactment pattern.
+
+**★★ nationalDebt SHIPS — the precise shipped-vs-designed line.** Correcting the naive "no debt/budget state
+ships" hypothesis: a national-debt *state* **DOES ship**, and a budget meter with the exact bands the tree
+wants **ships too**. What is **absent** is the policy **content** layer that reads/writes them. Verified this
+batch:
+
+| Element | Shipped? | Detail |
+|---|---|---|
+| `game.nationalDebt: number` | **YES** | `types.ts:1573` (on the `GameState` singleton). Seeded **$0** (`scenario1772.ts:81`) / **$32,000,000** (`scenario1856.ts:161`). Displayed (`Dashboard.tsx:83`, `MetersPage.tsx:18`). |
+| Debt paydown | **YES (passive only)** | mutated in **exactly one place** — a turn-end `nationalDebt = max(0, nationalDebt − meters.revenue × $1.5M)` (`phaseRunners.ts:3376`). No player lever moves it. |
+| Debt as a **`MeterKey`** | **NO** | `NationalMeters` = `revenue/economic/military/domestic/honest/quality/planet` (`types.ts:1399-1407`) — **no debt field.** So the `meterAtLeast`/`meterAtMost` predicates **cannot** target the debt. |
+| Debt-level **predicate leaf** | **NO** | `Predicate` union (`types.ts:1485-1504`) has **no debt/budget leaf** — no `debtExists`, no `debtAtLeast`/`debtAtMost`. So **nothing can gate on the debt at all** (kills the "National Debt Exists" prereq, 3c, and the "Debt ceiling reached" event, POST 10). |
+| `revenue` budget meter **bands** | **YES (display-only)** | `Meter.tsx:14` names `revenue` bands `Bankruptcy · Crisis · Heavy Deficit · Deficit · Tight · **Balanced** · Healthy · **Surplus** · …` — exactly the vocabulary the balanced-budget law (3a) + the "unbalanced → no reelection" law (POST 11) need. But they are **display strings, not queryable thresholds** — no predicate reads them. |
+| **Dutch loan** | **YES (one-off)** | the `dutch_recognition` era event (`eraEvents1772.ts:248`, *"John Adams secures a large loan in Amsterdam"*) sets the **`loansEnabled` graph flag** (`phaseRunners.ts:3144`; `GraphFlagId = 'loansEnabled' \| 'warVictoryGuaranteed'`, `types.ts:1109`). A **bespoke flag, not a generic recognition-of-nation-X predicate.** |
+| The tree's **enactable items** (Funding Act, Abolish-Debt, Secure Dutch Loan, Emergency Loan, balanced-budget law) | **NO** | none exist — there is **no "take out a loan" action, no Funding Act, no debt-ceiling event.** The debt only moves passively. |
+
+**★ The two predicate classes Credit/Debt ADDS to the #258 set** (beyond the b47 Currency 7):
+- **(h) Diplomatic-recognition** — "Dutch Recognize US" gates "Secure Dutch Loan." The build ships the
+  *outcome* as the bespoke `loansEnabled` flag, but `diplomacyAtLeast` tests a *relationship value*, not a
+  *recognition state*. **Requirement:** a recognition-of-nation predicate (or generalize `loansEnabled` into
+  a gateable "foreign credit open" state).
+- **(i) Policy-active / program-state** — "National Debt Exists" (program-state) and "Preq: Funding Act"
+  (a prior policy enacted). The build's only "did X happen" path is `eventCompleted`/`eventChose` over
+  *era-events* — there is **no generic "policy/law X is currently enacted" predicate**. (Same keystone the
+  Currency tree flagged as its biggest single requirement — **two threads now demand it** ⇒ high confidence
+  it is a keystone, not a one-off.) This subsumes the new **debt-level leaf** (`debtExists`/`debtAtLeast`,
+  the single most concrete new predicate this thread adds).
+
+**★ New action types / effect classes the add-ons require** (`391df03b` POST 2-11):
+- **Constitutional Amendment as a 3rd action type** (POST 10) — a **Balanced Budget Amendment** (federal
+  Amendment) **+ a state version as a Gov-action**. So policy `actionType ∈ {Congress-bill (L), President-
+  action (P), Amendment, Governor-action}` — extends the Currency tree's L/P split + level-of-government gate.
+- **Debt-ceiling EVENT** (POST 10) — "Debt ceiling reached" → choose **expand / keep / reduce**; keyed off the
+  tracked debt value crossing a threshold (the debt-band predicate the build lacks). A clean fit for the
+  existing `anytimeNationalEvents` system (cf. the shipped "financial panic" anytime event).
+- **Sell-territory-to-pay-down-debt** (POST 2) — couples debt to expansionism (especially the over-extended
+  expansionist route): trade held territory for debt reduction. No shipped analog (`admitState` adds states;
+  nothing removes/sells them). Feeds expansionism (#4e76e6c3) + small-US dynamics (#221/#248).
+- **Eligibility-toggling law** (POST 11) — *"if the budget is not balanced, no member of Congress can run for
+  reelection."* A policy whose effect, gated on a budget band, **bars an entire office class from
+  reelection.** The flat `EraEventResponseEffect` (meters/enthusiasm/interest-groups) cannot express
+  "disable candidacy for office class X." A novel effect class.
+- **Filial-debt / personal-debt Future law** (POST 6) — South-Korea-style debt inheritance; QoL-meter impact
+  (`quality`, `Meter.tsx:19`); Big-Business pro / Progressive anti. **DESIGNER RULING (POST 7):** infeasible
+  in modern Western politics (*"instant death for a political career"*) — viable only as an **early-game
+  repealable law**, never with real US support. Future-band content (#206); the live instance of the open
+  scope question (national vs personal debt, left open POST 4).
+- **Lend-Lease → routed to Diplomacy** (POST 5). **DESIGNER RULING (POST 8):** *"that's more under
+  diplomacy"* — a genre-boundary call; Lend-Lease is NOT a Credit/Debt item (cf. the Currency thread's
+  "national symbols → maybe a separate thread"). Belongs to the Diplomacy genre (`b8aecb83`).
+
+> **Open (for the human):** (1) scope — national debt only, or personal/household debt too (POST 3-4, left
+> open)? (2) debt-ceiling thresholds — at what `nationalDebt` value does the event fire, and what do
+> expand/keep/reduce do numerically (undefined in-thread)? (3) which `revenue` band(s) count as "balanced"
+> for the balanced-budget law (3a) + the no-reelection law (POST 11)? (4) is this subtype expanded or
+> final-as-is (*"It might not need to be expanded"*, POST 1 — unlike Currency, no "looks good"
+> ratification)? (`391df03b#POST 1-11`; `game-context.md` #258/#237/#221/#66/#206; codebase `types.ts:1573,
+> 1399-1407,1485-1504,1109`, `phaseRunners.ts:3376,3144`.)
+
+#### 30.38.3 ★ #290 — the procedural politician-generator revamp (the random fallback pool) (designed, not built)
+
+> **Source: `5e8dc484` POST 1, 4 (vcczar) + codebase.** This is about the **PROCEDURAL generator** — the
+> random fallback pool used when **no historical draft class exists** for a draft year (the source-#3
+> fallback in `runPhase_2_1_1_Draft`, `phaseRunners.ts`). It is **distinct from** the curated historical
+> draft dataset (`scripts/legislatorsToDataset.mjs` → `standard-draft-classes.json`, ~18.5k real figures),
+> which already ships with real names/birthdays. **Designed, not built — the shipped fallback is a flat stub.**
+
+**The designed revamp:**
+- **Region × party-specific generation (POST 1)** — given names AND surnames become **regionally specific**
+  (no longer one uniform national pool); ideologies, interests, "and etc." generated **regionally AND
+  party-specifically** (a Blue Deep-South pol and a Red Mountain-West pol must not have identically-
+  distributed rolls). Generation becomes **weighted by region × party**, not uniform random.
+- **★ The "Noah's-Ark" lattice (POST 1)** — the headline structural rule: each generated draft contains
+  **4 politicians per state, 2 per party, each Male or Female** → per state = {Blue Male, Blue Female, Red
+  Male, Red Female}. A fixed per-state / per-party / per-gender quota.
+- **A real `gender` field (POST 1)** — Male | Female, with **future non-binary / trans** generated pols +
+  dedicated NB/trans name pools ("we will certainly have more of them in the future"). NB/trans are presently
+  lumped under an "LGBT" flag. **Explicitly deferred to post-early-release** ("might not happen until after
+  early release … during the summer").
+- **Weighted regional name/ethnicity pools (POST 4)** — method: start from the original DB, then **ADD** the
+  **25 most common surnames** (region-weighted) + region-appropriate male & female given names, and for the
+  **Deep South specifically black, Cuban-American, and creole given names + surnames**. **Outliers still
+  allowed** — generation is *weighted*, not hard-restricted. **Race is NOT yet linked to names** (POST 4 —
+  an open design problem vcczar isn't sure he can code in Google Sheets).
+- **Provenance quirk (POST 2-3):** the original random-name DB was seeded from a contributor's high-school
+  yearbook; a "surname-only" data-cleanliness bug ("Justin Tomazich") was owned/fixed. A data-cleanliness
+  fix, not a mechanic.
+- **Blocked-by (POST 6):** the generator's **per-state draft math is downstream of the not-yet-final
+  draft-count / draft rules + the alt-states work** — porting/finalization is blocked until those land.
+
+**★ Shipped reality — a flat uniform stub** (`runPhase_2_1_1_Draft`, `phaseRunners.ts:177-238`):
+
+| Designed (this thread) | Shipped today (`phaseRunners.ts:177-238`) |
+|---|---|
+| Names **regionally specific**, weighted pools per region | **15 hardcoded national first-names + 15 last-names**, `pick()` uniform. No region input. |
+| Ideology generated **region × party-specific** | **Uniform random** `pick(ideologies)` over all 7. Party is **`null` at generation** (pols are unaffiliated until drafted, so per-party generation is impossible in the current model). |
+| **Interests** generated regionally/party-specifically | Generated pols get `interests: []` (empty). |
+| Pool = **4/state, 2/party, M/F ("Noah's Ark")** | Pool size = `factions.length × 2` (≈20 total), each pol's `state = pick(stateIds)` **random**. **No per-state quota, no party split, no gender split.** |
+| **Gender** field (M/F; future NB/trans + LGBT flag) | **No `gender` field exists** on `Politician` (`types.ts:1251`) or `ImportedDraftee` (`types.ts:1780`). No LGBT/NB/trans/race fields anywhere. |
+| Region-aware (Deep South black/Cuban/creole pools) | `State` HAS a `region` enum (`types.ts:1322`) used by relocation & Secession Winter — but the **generator never reads it.** |
+| Weighted draws with outliers | Pure uniform `pick()` — no weighting machinery. |
+| Deterministic per seed | Uses **`Math.random` directly** — violates the "engine code stays deterministic / no `Math.random`" rule. The seeded RNG (`rng.ts`, incl. `pickWeighted`) is **not** wired into this legacy path. |
+
+**Roadmap note.** The designed generator is an **author-time Google-Sheets tool** (POST 4: "code in google
+sheets") producing a names/ideology corpus; its **port status into the TS engine is unknown / not done** — the
+shipped fallback predates this revamp. Any revamp should also **move the fallback onto seeded `rng.ts`**.
+**★ Open Qs:** (1) port target — does the revamp emit a build-time dataset (like the historical pipeline) or
+run at runtime in the engine? (2) does the new model **pre-assign party** at generation (breaking the current
+unaffiliated-rookie convention, `partyId: null`)? (3) does `gender` carry mechanical weight or is it
+flavor/name-pool selection only? (4) is `race` a target entity field, or only implicit name-pool weighting?
+(5) the alt-state draft math is blocked on the final draft rules. (`5e8dc484#POST 1, 4, 6`; `game-context.md`
+#290 / #238 gender; codebase `phaseRunners.ts:177-238`, `types.ts:1251,1780,1322`.)
+
+#### 30.38.4 #291 ideology-axis gap (deferred) + the recent-1772 confirmations (Washington-Rule can FAIL; women's-suffrage CC plank)
+
+> **Sources: `036f0dce` POST 9-14 (ideology gap) + `e86d8661` POST 1-5 (1772 confirmations) + codebase.**
+> Folds the deferred ideology-model limitation, the NOT-shipped interim flip/independent handling, and a
+> recent-2025 re-witnessing of the founding-era systems with two sharpening nuances.
+
+**★ #291 — the 7-point ideology model has no axis for non-ideological / "pure" populism (DEFERRED).** The
+shipped `Ideology` scale (`types.ts:5-12`: `LW Populist · Progressive · Liberal · Moderate · Conservative ·
+Traditionalist · RW Populist`) has **no home for ambition/personal-gain-driven figures with no fixed
+ideology** — so the rater defaults them toward the **center**, a **systematic mis-classification** (vcczar,
+`036f0dce` POST 12: *"our 7 point model doesn't really account for that. It's probably why people with extreme
+views sometimes get mistaken for 'moderate'."*). Worked case: **Tulsi Gabbard** ships as `ideology: "Liberal",
+traits: []` (one step off Moderate — the exact predicted outcome), NOT `RW Populist` and with no flip/
+independent trait. **Two recorded fix options, both deferred** (POST 13-14): cheap = force an LW/RW-pop call
+**+ a dedicated "pure / non-ideological populist" trait**; expensive = a **new ideology axis** — judged not
+worth it *until "many more Gabbards"* (POST 13, *"a 1 in 1,000 case"*). **Status: LIMITATION acknowledged by
+the model's own author (a political scientist); fix DEFERRED, out of scope.** A known accuracy ceiling, not a
+bug to file; revisit only if extreme-but-non-ideological figures become common (later eras / populist-heavy
+scenarios).
+
+**★ #279 — the interim flip/independent handling is NOT shipped.** For an *in-flux* figure (mid-party-switch),
+the 2022 Excel-era workaround was **two traits** — `Can be Independent` + `Can Party Flip` (`036f0dce`
+POST 2-3) — plus a **party-switch-date** convention and an **independent → "caucus-with-a-party"** mapping
+(Sanders/King flattened to BLUE, POST 1). **None of this ships:** `PartyId = 'BLUE' | 'RED'` only
+(`types.ts:3`, no INDEPENDENT value, no caucus/`switchYear`/`partySwitchDate` field); neither `Can be
+Independent` nor `Can Party Flip` exists in the shipped `Trait` union (`types.ts:62-117`) — the nearest
+shipped trait, **`Flip-Flopper`** (`types.ts:98`), is a *negative-electoral* instability penalty, semantically
+distinct from a party-affiliation/can-flip flag. These were Excel-era hand-tags lost in the dataset
+regeneration; cross-ref the b44 can-flip cluster (#279/#129) before assuming intent. The dataset is a
+deliberately-provisional **point-in-time snapshot** for active figures (POST 7), expected to be revised — which
+is why Gabbard's pre-Red-turn `ideology: "Liberal"` is *expected* to read stale.
+
+**★ Recent-1772 confirmations (`e86d8661`, a 2025 founding-era retrospective) — shipped systems re-witnessed:**
+- **The "Washington Rule" acclaim candidacy can FAIL (#153/#104 nuance).** Benedict Arnold (war hero + CC
+  President) was the *"first unsuccessful 'Washington Rule' candidate,"* finishing **4th** (behind even the VP
+  candidate). The shipped Washington-Rule path (Military Leadership + Celebrity → presidential eligibility,
+  cross-ref [§17](#17-era-systems) and the `ted1772` audit) grants *eligibility*, but the resulting election
+  is a **real contested race the marquee figure can LOSE** — not an auto-coronation. (John Hancock won the
+  first Presidency; Jefferson 2nd → first VP; Washington 3rd.) A confirmation nuance for gap #153/#104.
+- **Women's-suffrage CC plank → Domestic-Stability crisis (DESIGNED, not built).** Incoming first President
+  Hancock inherits *"the budding domestic stability crisis that erupted when women were given the right to
+  vote at the Constitutional Convention"* — a concrete **CC-plank → meter-consequence** interaction. **DELTA:**
+  the shipped CC (`constitutionalConvention.ts:6-67`, `makeConvention`) offers exactly **7 article votes**
+  (`legislature, executive, judiciary, slaveCompromise, amendmentProcess, presidentialEligibility,
+  termLimits`) and **NO suffrage plank** (`grep suffrage|women.*vote|right to vote` in `src/` = **0**). The
+  Domestic-Stability meter (`meters.domestic`) ships and already imposes an incumbent penalty, but nothing
+  wires a CC suffrage decision to it. **Requirement:** a women's-suffrage CC plank whose "enacted" branch
+  fires a Domestic-Stability hit the next administration inherits. Confirms the consequence is intended **at
+  the CC** (not only later eras) — cross-ref [§159 women's-suffrage cluster] in `game-context.md`.
+- **Other shipped 1772 systems re-confirmed (no delta):** senior General/Admiral skill changes by battle
+  result (`applyBattleLoss`/`applyBattleEarn`, `revolutionaryWar.ts`) incl. Leadership-trait stripping on a
+  loss; **Treaty of Paris** ending the war + ceding western territory (`applyTreatyOfParis`); the
+  **command → presidential-eligibility gate** + leader-pick command grant; the **abolish-slavery gov-action
+  with a reelection cost** that scales with how pro-slavery the state is (CT cheap; Deep-South GA
+  career-ending — b47 #288); the **rolling President-of-the-Continental-Congress** office; per-power
+  **diplomacy meters**; and the **Dutch loan** (`dutch_recognition` → `loansEnabled`, the same fact as the
+  Credit/Debt tree's "Secure Dutch Loan," §30.38.2).
+- **One open question (`e86d8661` Delta B):** the narrative shows **mid-war senior-slot turnover by
+  performance on an OCCUPIED slot** (Hopkins→Arnold, Gates→Sumter), but shipped `appointMilitary`
+  (`revolutionaryWar.ts:41-65`) fills only an **empty** senior slot — it does not visibly re-rank an occupied
+  slot when the incumbent's skill falls below a subordinate's. The skill-degradation half is shipped; the
+  auto-demote/auto-promote-into-an-occupied-senior-slot half may be GM-driven or not fully built. Verify
+  whether the senior slot ever re-ranks while occupied.
+
+(`036f0dce#POST 1-14`; `e86d8661#POST 1-5`; `game-context.md` #291 / #279 / #153 / #104 / #159; codebase
+`types.ts:3,5-12,62-117,98`, `constitutionalConvention.ts:6-67`, `revolutionaryWar.ts:41-65`.)
 
 ### 30.4 Authority hierarchy reminder
 
