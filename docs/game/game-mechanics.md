@@ -23172,6 +23172,455 @@ half-present (industries mutate but feed meters, not population). (`074b6d6f#POS
 `game-context.md` #34/#305/#294; codebase `types.ts:1318-1335`, `phases.ts`, `constitutionalConvention.ts:210`,
 `expansionStates.ts:86,95,178`, `phaseRunners.ts:1638-1656,3169,3692,3767-3768,3792`, `territories.ts`.)
 
+### 30.43 Rulings folded from batch 53 — ★★ #34/#305/#307/#308 the FULL census/reapportionment ALGORITHM ("rules 3.0.24": the ordered 5-step EV recompute + House-cap reconciliation + Big/Med/Small classification + influential-Rep delegation-vote model + ahistorical-seat bias) + the #20/#294 gov-action OVERHAUL (designer's "token afterthought" admission, trait-gating, industry↔expertise coupling, generic-fallback legis) + #270 the SC Case GENERATOR schema (Yea/Nay dual-payload + points + 25%-chance meter) + event/legis authoring (#309 state-abolition→appointed gov, #310 event TARGET + name-templating, #258 deactivation-trigger, #221 1,000+ legis, #311 tutorial) + ★ REJECTED #313 territorial offices (`5e5735ec-ampu-us-census` / `ca33f7f9-favoriteleast-fav-ampu-phases` / `f8354a70-ampu-supreme-court-case-generator` / `e1e87737-ampu-filling-out-descriptions` / `a06b07df-territorial-delegates-governors`)
+
+> **★ Batch 53 = five DIGEST-ONLY sources (no historian ran the batch); ALL design / ruleset / dev-log / sentiment /
+> feature-request threads — none is a forum playthrough.** **Net new shipped behavior: NONE** (re-verified at `src/`
+> HEAD 2026-06-29) — every mechanic below is **designed-only or a designer ruling**, and the batch's headline
+> (`5e5735ec`) is the **single most concrete WRITTEN ALGORITHM** for the census/apportionment cluster in the corpus,
+> sharpening the b52 spreadsheet RUN (`074b6d6f`, [§30.42.5](#30425--34--305--294--the-decennial-census--reapportionment-subsystem-validated-in-spreadsheet-0-shipped--the-missing-state-population-primitive)) it precedes by ~5 months. New gap IDs minted this batch: **#307–#313**;
+> sharpened: **#34 / #305 / #294 / #20 / #270 / #258 / #221 / #92**. The five sources:
+> - **`5e5735ec-ampu-us-census`** (5 posts / 1 chunk; **Apr 2022**; @vcczar typed the whole ruleset into "rules 3.0").
+>   ★ The **canonical census/reapportionment RULESET "rules 3.0.24"** (POST 1) — the ordered **5-step EV recompute**,
+>   the **House-cap reconciliation**, the **Big/Medium/Small state-size classification**, the **influential-Rep
+>   delegation-voting-power model**, and the **ahistorical-seat bias rules**. The SPEC that underlies the b52
+>   `074b6d6f` spreadsheet run. → #34/#305/#294 (sharpen) + #307/#308 (new). Cite `5e5735ec#POST 1, 5`. **§30.43.1.**
+> - **`ca33f7f9-favoriteleast-fav-ampu-phases`** (14 posts / 1 chunk; **Sep 2022**; @vcczar + @MrPotatoTed + @Vols21).
+>   A phase-sentiment poll carrying **first-party DESIGNER-INTENT**: gov-actions began as **"token actions"**; **SC,
+>   Gov, Mil are ALL afterthought phases** vcczar would AUTOMATE. The **gov-action overhaul shape** (trait-gating +
+>   industry↔governor-EXPERTISE coupling + extra attempt) + the legis-discoverability / generic-fallback ask (with the
+>   anti-fluff CONFLICT). → #20/#294/#221/#262 (corroborate+sharpen) + #312 (state-history log, new). Cite
+>   `ca33f7f9#POST 4, 5, 13`. **§30.43.2.**
+> - **`f8354a70-ampu-supreme-court-case-generator`** (7 posts / 1 chunk; **May 2022**; @vcczar + @ConservativeElector2).
+>   vcczar's **first working draft of the procedural SC Case GENERATOR** — the concrete **8-column row schema** (`<A>
+>   v. <B>` + points + Yea/Nay dual payload, each side a 25%-chance ±meter + interest/ideology-group reward) + the
+>   **same-side-of-the-aisle conflicting-interest** design goal. → #270 (the strongest concrete spec for the generated
+>   branch). Cite `f8354a70#POST 1, 2, 3, 4`. **§30.43.3.**
+> - **`e1e87737-ampu-filling-out-descriptions`** (32 posts / 1 chunk; **Nov 2021**; @vcczar dev-log). A
+>   content-authoring journal with **three buried rulings**: **state-abolition → President-appointed governors**
+>   (#309); **General Events restructured with a TARGET column + name-templated narrative** (#310); **1,000+ legis-props
+>   lacking deactivation-date / turn-off triggers** (#258/#221). Plus a tutorial ask (#311) + the 6-named-era authoring
+>   taxonomy (#92). Cite `e1e87737#POST 2, 3, 6-8, 31, 32`. **§30.43.4.**
+> - **`a06b07df-territorial-delegates-governors`** (11 posts / 1 chunk; **Nov-Dec 2023**; @theFreezerFlame pitch,
+>   @vcczar REJECTION). ★ **DESIGNER-REJECTED** feature — Territorial Delegate + Territorial Governor offices, rejected
+>   firmly (the 4th time) on roster-cost / low-value / perf grounds. Logged **REJECTED/DEFERRED #313** so it is NOT
+>   re-proposed; flags the real underlying gap (territories have ZERO pre-statehood gameplay). Cite `a06b07df#POST 1,
+>   2, 5, 8, 10`. **§30.43.5.**
+>
+> **★ Cross-section note — this batch adds NO shipped rules.** Do NOT re-document the static `electoralVotes` field
+> ([§30.42.5](#30425--34--305--294--the-decennial-census--reapportionment-subsystem-validated-in-spreadsheet-0-shipped--the-missing-state-population-primitive)), the EV-derived focus-Rep ladder + per-rep vote-weight rule already documented from the later
+> `housepoll` build ([§29.5](#295-the-focus-rep-house-abstraction-gap-55) — which **SUPERSEDES** this batch's flat 3/2/1, see §30.43.1), the token gov-action nudge
+> ([§11.2](#112-252-governor-actions--runphase_2_5_2_governors-phaserunnersts3382) / #20), the token court coin-flip (#270), the era-content registry
+> ([§30.23](#3023-rulings-folded-from-batch-33--the-five-designdiscussionbuild-threads-that-delivered-long-flagged-gating-items-groupthinkpv--legisexecgov--ampuelections--housepoll--excelautomate) / #221), or the deferred census EV-delta queue ([§10.4.3](#1043-census-driven-ev-deltas)). The subsections below add only the **NEW
+> designed mechanics, the new gaps (#307–#313), and the verified shipped deltas**, all tagged **b53**.
+
+#### 30.43.1 ★★ #34 / #305 / #307 / #308 — the FULL census/reapportionment ALGORITHM ("rules 3.0.24"): the ordered 5-step EV recompute + House-cap reconciliation + Big/Med/Small classification + influential-Rep delegation-vote model + ahistorical-seat bias (designed; 0% shipped)
+
+> **Source: `5e5735ec` POST 1 (vcczar — the ENTIRE ruleset "rules 3.0.24"), 5 (the lone QA caveat) + codebase
+> (`types.ts`, `phases.ts`, `constitutionalConvention.ts`, `expansionStates.ts`, `scenario1856.ts`, `phaseRunners.ts`,
+> `territories.ts`).** The **single most concrete WRITTEN census algorithm in the corpus** — the SPEC that underlies
+> the b52 `074b6d6f` spreadsheet RUN ([§30.42.5](#30425--34--305--294--the-decennial-census--reapportionment-subsystem-validated-in-spreadsheet-0-shipped--the-missing-state-population-primitive); Apr-2022 spec → Sep-2022 validation). **★ 0% shipped, re-verified
+> b53** — no census phase, no recompute, no House-cap constant, no state-size concept, no influential-Rep abstraction;
+> `state.electoralVotes` remains a static per-state constant.
+
+**★★ A. The EV RECOMPUTE — 5 steps, applied per-state IN ORDER (POST 1).** The output of all five = each state's new EV
+total for the upcoming election cycle:
+
+| # | Step | Detail (POST 1) |
+|---|---|---|
+| **1** | **HISTORICAL census Δ** | Add the +/- that **historically** occurred to whatever each state's EVs are currently at (baseline = real apportionment deltas) |
+| **2** | **SCRIPTED-EVENT Δ** | Apply EV adjustments from scripted events. **"Indian Removal" is the PRIMARY scripted event affecting state growth** (the source of the b52 AZ/NM −2-type modifier, #305) |
+| **3** | **INDUSTRY-SHIFT Δ** | Apply EV adjustments for industry changes, each a **probabilistic roll** resolved at the next election under the new census (the exact table is **B** below) — #294 |
+| **4** | **LEGIS-PROP Δ** | Apply EV adjustments from legislative props. *"The US Constitutional Convention might start off with some major adjustments because of the slavery question"* — legislation can shift a state's EV (#305) |
+| **5** | **SUM + FLOOR** | Add up total EVs for every state, **ensuring no state falls below 3 EVs** (the ≥3 EV floor) |
+
+**★★ B. Step-3 industry-shift EV probabilities (EXACT, POST 1) — the #294 coupling's odds.** Each is a per-state
+probabilistic roll over a 10-year observation window:
+
+| Trigger (observed over the window) | Effect | Chance |
+|---|---|---|
+| Industry **improved 2×** within 10 years | **+1 EV** | **25%** |
+| State becomes the **NEW LEADER** in an industry | **+1 EV** | **25%** |
+| State's **PRIMARY industry changes** to a new industry | **+1 EV** | **10%** |
+| Industry **decreased 2×** within 10 years | **−1 EV** | **25%** |
+| State **replaced as leader** in an industry | **−1 EV** | **25%** |
+
+*(These are the same "most chances are 10% or 25%" rolls `074b6d6f` POST 4 saw fire ~8–9× with 2 successes — this thread
+DEFINES them per-trigger. The coupling needs an **"improved/decreased 2× in 10yr" delta-history** + a **per-industry
+leader table** that the build has NO concept of: `State.industries` mutates (`phaseRunners.ts:1648-1650`) but feeds
+**meters, never EV**.)*
+
+**★ C. Activation & cadence (POST 1).** The census is **automatically in play once the US CONSTITUTION is adopted**
+(Constitution-triggered, **NOT era-gated** — before adoption there is NO census). It alters the electoral map + the US
+Reps for the **decennial, presidential-term-anchored** cycles **1790-92 / 1800-1802 / 1810-12 / …** — the change lands
+at the election under the new census. (Sharpens the batch-28 `completions` "auto-active on Constitution adoption,
+effect at the census-half-term start" reconciliation, [§28.9](#289-the-per-decade-census--statehoodterritory-the-level-b-census-mechanic).)
+
+**★★ D. The HOUSE-CAP reconciliation algorithm (POST 1) — run AFTER the 5-step sum.** The step that ties the recompute
+to a House size cap:
+
+1. **If NO House cap exists → SKIP this step ENTIRELY.** (Pre-1929 eras; matches the b52 era-gated 435-cap finding,
+   [§30.42.5](#30425--34--305--294--the-decennial-census--reapportionment-subsystem-validated-in-spreadsheet-0-shipped--the-missing-state-population-primitive).)
+2. **If a cap exists:** compare your computed EV total to **`House Cap + (number of states × 2)`** (the ×2 = each
+   state's 2 US Senators). **EXCLUDE the EVs of DC, the Moon, and Mars** from this comparison.
+3. Get into compliance by **randomly adding/subtracting EVs**, under **two constraints**:
+   - **No state loses or gains 2× as many EVs as any other state** in this process.
+   - **No state may fall below 3 EVs** when done.
+4. **★ QA caveat (POST 5, vcczar):** *"might want to double check the cap/formula legis that it doesn't 'undo' gains/losses
+   when implemented"* — reconciliation must **NOT silently cancel the step-1–4 deltas** (the author-flagged open
+   edge-case).
+
+**★★ E. State-size CLASSIFICATION (#307, NEW, POST 1) — derived from the FINAL EVs.** After D, every state is bucketed:
+
+| Size | Threshold | 10%-quota FLOOR (POST 1) |
+|---|---|---|
+| **Big** | EV **≥ 15** | If Big states are **< 10% of all states**, **PROMOTE** the next-largest states to Big until 10% is reached |
+| **Small** | EV **≤ 4** | If Small states are **< 10% of all states**, **DEMOTE** the next-smallest states to Small until 10% is reached |
+| **Medium** | everything not Big or Small | — |
+
+The classification is **re-derived at each decennial census** as EVs shift, and is the **INPUT to the influential-Rep
+delegation count** (F) + (likely) AI/UI targeting. **★ DISTINCT from #293** (the DIFFICULTY model = faction-ideology ×
+era, [§30.40.3](#30403--293--the-difficulty-model-is-faction-ideology--era-no-easyhard-toggle)) — do NOT conflate; #307 is a state-size concept, not a difficulty concept.
+
+**★★ F. The INFLUENTIAL-REP delegation-voting-power model (#308, NEW, POST 1) — the House ABSTRACTION.** The game does
+**NOT** model all 435 House members — it abstracts each state's delegation down to **1–3 elected "influential Reps"**
+who carry the delegation's full (unequal-weighted) vote:
+
+| State size (#307) | Influential Reps |
+|---|---|
+| **Big** | **3** |
+| **Medium** | **2** |
+| **Small** | **1** |
+
+These influential Reps **face election and represent the state's delegation.** The **voting-power formula**:
+
+1. A state's **total US Reps = its EV − 2** (subtract the 2 Senators). *(Matches the comment already at
+   `scenario1856.ts:93`.)*
+2. Divide those total Reps among the influential Reps: **÷3 if Big, ÷2 if Medium, ×1 if Small.**
+3. Round so the math sums correctly; **leftover votes go to the delegation's highest-`legis` Rep (randomized if tied).**
+4. **Worked example (POST 1):** CA with **55 EV → 53 US Reps**, **3 influential Reps** → 53/3 = **17.7 each** → give
+   each **17** (= 51) → the **2 leftover** votes go to the highest-`legis` Rep in the delegation. So influential Reps
+   carry **UNEQUAL** vote weights.
+
+**★ G. Ahistorical-seat BIAS rules (#308 sub-rule, NEW, POST 1).** Historical eras decide whether a delegation's seats
+deviate from the **state bias**. If a state has an *ahistorical* population (one more/fewer influential Rep than in
+history):
+
+- **ADDING** an ahistorical seat → **25% state-bias / 25% tossup / 25% Red +1 / 25% Blue +1.**
+- **SUBTRACTING** a seat → remove one **at random, BUT one seat must retain the state bias.** Worked example: between
+  AZ's "Red +1" bias seat and a "Blue +2" deviant seat, **the deviant seat is removed** (a deviant seat goes BEFORE the
+  bias seat).
+
+**★★ H. RECONCILE with the existing House models.** This batch's 3.0.24 (Apr 2022) is the **EARLY** form; later threads
+already documented in this doc SUPERSEDE parts of it:
+
+- **★ The flat 3/2/1 influential-Rep count (F) is SUPERSEDED by the `housepoll` "3.0.16" 1-10 EV-derived LADDER**
+  ([§29.5](#295-the-focus-rep-house-abstraction-gap-55), Aug 2022): focus-Rep count = a `≤5→1 / 6-10→2 / 11-15→3 / … / ≥46→10` ladder, NOT a hard Big/Med/Small
+  3/2/1 — "supersedes any hard-coded size labels." **The vote-power formula is the SAME idea**: §29.5's
+  `floor(stateUSReps / focusReps)` with remainder→highest-`legis` Rep is the 3.0.24 (EV−2)÷count + leftover→highest-`legis`
+  rule, just generalized off the ladder. So treat **3.0.24 as the ORIGIN and the `housepoll` ladder as the canonical
+  count.** (The remainder-direction discrepancy — drop-from-lowest vs add-to-highest — is the [§29.5](#295-the-focus-rep-house-abstraction-gap-55) reconciliation
+  the tech-lead must settle.)
+- **★ The state-bias-typed seats (G) ARE the #191 deviant-bias engine** + the `housepoll` "+2 minority bias / ≥20% Red
+  Reps in CA" minority-seat guarantee — cross-ref [§29.5](#295-the-focus-rep-house-abstraction-gap-55) and the #191 down-ballot model.
+- **★ The delegation carries a single weighted vote (F) — cross-ref #62** ([§24.2](#242-62-contingent-house-election--tied-chamber-inverse-control)), the contingent-House model that
+  ALSO logs a per-state delegation vote. The census output (this section) is the delegation-SIZE input #62 + the
+  House-vote loop both presume.
+
+**★ SHIPPED vs. DESIGNED — code-verified this batch (b53). The ENTIRE 3.0.24 ruleset is DESIGNED-ONLY (0%):**
+
+| Surface | Shipped reality | Verdict |
+|---|---|---|
+| **Census / apportionment phase + decennial cadence** | **0% built.** `PHASE_SEQUENCE` (`phases.ts:3-47`) has no census/apportionment/reapportionment step; `grep -i census\|apportion\|reapportion\|decennial src/` → ZERO. `isPresidentialYear` exists (`phases.ts:53`, `year%4`) but nothing anchors a 1790/1800/1810 trigger, and there is **no "Constitution adopted ⇒ census on" hook** | No census engine; cadence + activation absent |
+| **The 5-step EV recompute (steps 1-5)** | **0% built.** `electoralVotes` is a STATIC scalar, written only at statehood (CC `Math.max(3,(ccDelegateSlots??2)+1)` `constitutionalConvention.ts:210`; expansion hardcoded **4** `expansionStates.ts:178`; territory-conversion seeds **0** `phaseRunners.ts:3169`), read only by elections (`phaseRunners.ts:3692,3767-3768`). `admitState` (`territories.ts`) never touches it. **Nothing recomputes EV by history, event, industry, legislation, or time** | Only the OUTPUT field exists; no recompute |
+| **Step 2/4 event + legis EV modifier** | **0% built.** No scripted-event or legis-prop path applies ±N EV (Indian Removal, the CC slavery adjustment, AZ/NM −2) — Steps 2 & 4 are unbuilt | No event/legis→EV path |
+| **★ #294 Step-3 industry→EV coupling** | **HALF-present.** Industries DO mutate at runtime (lobby→industry +1 nudge `phaseRunners.ts:1648-1650`, PR7, clamp ≤5) — but feed **METERS only, not EV**. No code rolls a 25%/10% EV change; no "improved 2× in 10yr" delta-history, no per-industry leader table | Industries change; the EV link + the tracking it needs are unbuilt |
+| **House-cap reconciliation (D)** | **0% built.** No `435`/House-cap constant; `grep -i houseCap\|\b435\b src/` → ZERO. No cap ⇒ no reconciliation; the DC/Moon/Mars exclusion + the two constraints have no home | Era-gated cap unrepresentable |
+| **★ #307 Big/Med/Small classification** | **0% built.** `grep -i stateSize\|sizeClass src/` → ZERO; `State` (`types.ts:1318-1335`) has `electoralVotes` but no size class + no quota logic | No state-size concept |
+| **★ #308 influential-Rep delegation-vote model** | **0% built — the formula is recognized in a COMMENT only.** `scenario1856.ts:93` (`const reps = Math.max(1, s.electoralVotes - 2); // EVs = reps + 2 senators`) uses the SAME EV−2 arithmetic, but seeds **one politician PER SEAT** (e.g. ~33 Reps for a 35-EV NY) — the OPPOSITE of the design's 1-3-influential-Rep abstraction. No `influentialRep`/delegation-weight concept (`grep influentialRep` = 0), no per-rep vote weight, no leftover-tiebreak, no recompute, no bias-typed seats | The EV−2 formula is *named in a comment*; the abstraction is absent |
+| **★ #308 ahistorical-seat bias (G)** | **0% built.** Seats are not bias-typed today (no per-seat `bias`/deviant flag); the 25/25/25/25 add rule + the protect-the-bias-seat subtract rule have no code path | Unbuilt |
+
+→ **Net: a complete, written census ALGORITHM (the ordered 5-step recompute + House-cap reconciliation + state-size
+classification + influential-Rep delegation-vote model + ahistorical-seat bias) with NONE of its machinery, inputs, or
+output-recompute in the browser build — only the `electoralVotes` output field (a fixed per-state constant) and the EV−2
+formula NAMED in a seeding comment.** This is the **strongest concrete spec for #34** and mints **#307** (state-size
+classification) + **#308** (the influential-Rep delegation-voting subsystem — a distinct House-representation system the
+apportionment OUTPUT feeds). The flat 3/2/1 count is the ORIGIN of, and is SUPERSEDED by, the `housepoll` 1-10 ladder
+([§29.5](#295-the-focus-rep-house-abstraction-gap-55)). (`5e5735ec#POST 1, 5`; `game-context.md` #34/#305/#294/#307/#308; codebase `types.ts:1318-1335`,
+`phases.ts:3-47,53`, `constitutionalConvention.ts:210`, `expansionStates.ts:178`, `scenario1856.ts:93`,
+`phaseRunners.ts:1648-1650,3169,3692,3767-3768`, `territories.ts`.)
+
+#### 30.43.2 ★ #20 / #294 — the gov-action OVERHAUL (designer's "token afterthought" admission; trait-gating + industry↔governor-EXPERTISE coupling + extra attempt) + legis discoverability / generic-fallback bills (#221/#262) (designed; the shipped gov-action is a token 30% nudge)
+
+> **Source: `ca33f7f9` POST 4 (Ted), 5 (★ vcczar's designer-intent admission), 13 (Vols21) + codebase
+> (`phaseRunners.ts`, `GovernorsPage.tsx`, `types.ts`).** A phase-sentiment poll whose high-signal payload is
+> **first-party DESIGNER INTENT** about WHY three phases are thin, plus the concrete **gov-action overhaul shape**.
+> Everything CORROBORATES existing rows (#20 gov-actions, #294 industry, #221 legis); the trait-gating + expertise
+> coupling + extra-attempt + generic-fallback asks are **sub-refinements** to attach.
+
+**★★ A. The designer's "token afterthought" admission (vcczar, POST 5) — the durable provenance.** This is the
+first-party ROOT of why SC/Gov/Mil are thin — deliberate, not oversight:
+- **Gov actions began as TOKEN.** *"Initially I had no Gov actions because the game is about the Fed Gov. But then I
+  created **token actions just so Gov had something to do**. Had to have Govs because so many Govs run for president."*
+- **★ SC, Gov, AND Mil are ALL afterthought phases vcczar would AUTOMATE.** *"I'm least interested in the SC, Gov, and
+  Mil, which is why all of these were initially kind of **token parts of the game** as they weren't initially designed
+  to be much of a focus. They're also all phases that I would probably **automate** when I'm playing."* → explains the
+  shipped thinness of the gov nudge (this section) AND the court coin-flip (#270, §30.43.3) in one statement.
+- **vcczar's real design love** (where the richness is intended): the **President↔Congress dynamic**, scripted events,
+  general events, legis props, and **Presidential Conventions** (his #1 — and CPU conventions surprised him by being
+  fun, POST 7).
+- **The mandate:** Ted (POST 4) + vcczar agree gov-actions *"need the most work, esp. for CPU"* → vcczar: **"put this
+  in suggested fixes."**
+
+**★ B. The four concrete asks (POSTs 4-5, 13).** All attach to existing rows:
+
+| # | Ask | Source | Couples to |
+|---|---|---|---|
+| **A** | **Gov-actions gated on the individual governor's TRAITS** (who the gov *is* must matter) | Ted POST 4-5; vcczar agrees | #20 ↔ trait system (the predicate-over-`traits` the b50 `c8d89e49` requirement list also demands, [§30.40.1](#30401--20--the-deterministic-cpu-gov-action-decision-spec-designed-gov-action-system-0-shipped)) |
+| **B** | **INDUSTRIES coupled to governor EXPERTISE** — need an **Agriculture-expert** gov to grow the Agriculture industry | Ted POST 4-5 | #294: gov-actions ↔ `Expertise` ↔ `State.industries` (same ask as b46 `a938ac91` "tie it to Gov experience") |
+| **D** | **EXTRA gov-action attempt + a slightly higher SUCCESS rate** (gov actions too hard to succeed in tests) | Vols21 POST 13 | #20 resolution mechanic (no per-action budget/success surface ships today) |
+| **C** | **Generic FALLBACK legislation** (*"choose ideology × choose aspect [economic/foreign/education/…]"* help/regulate-an-industry bill) **+ fluff bills** (name a battleship/airport; airport→gov action) — to fix legis **discoverability** | Vols21 POST 13 | #221/#262 content registry / legis-prop pool |
+| **E** | *(minor)* player-kept **state-history log** (narrative feuds, e.g. Burr v. Hamilton) | Vols21 POST 13 | #312 (new) — flavor/UI subsystem |
+
+**★ C. The industry↔governor-EXPERTISE coupling (ask B) — the axes EXIST and are UNCONNECTED.** This is the
+gov-action-side twin of the census Step-3 industry coupling (§30.43.1): the `Expertise` enum (`types.ts:182`) **already
+includes `'Agriculture'`, `'Transportation'`, `'Energy'`, `'Business'`, etc.** — exactly the tags the ask wants to gate
+industry-growth on — and `State.industries` is `Record<string, number>` (`types.ts:1328`). But the **ONLY** thing that
+moves `industries` is the **PR7 lobby→industry +1 nudge** (`phaseRunners.ts:1631-1652`, keyed off `LOBBY_INDUSTRY`
+`types.ts:398`) — there is **NO governor-expertise → industry-growth path**, and **no governor action that touches
+`industries` at all.** The pieces are present and unwired.
+
+**★ D. The CONFLICT to flag (ask C, do NOT resolve).** The fluff-bill half (name-a-battleship/airport) runs **DIRECTLY
+AGAINST vcczar's standing anti-fluff CPU-realism curation rule** (`518fb253` / [§30.23](#3023-rulings-folded-from-batch-33--the-five-designdiscussionbuild-threads-that-delivered-long-flagged-gating-items-groupthinkpv--legisexecgov--ampuelections--housepoll--excelautomate): bizarre/fluff laws REJECTED so *"the
+computer players don't end up proposing them"*). The **generic-fallback bill is the defensible half**; true fluff the
+designer has historically resisted for CPU-pool-dilution reasons. Carried as an Open Question (#221).
+
+**★ SHIPPED vs. DESIGNED — code-verified this batch (b53). The gov-action phase EXISTS but is a token auto-nudge; none
+of asks A-E ship:**
+
+| Surface | Shipped reality | Verdict |
+|---|---|---|
+| **Gov-action phase** | **Token, automatic, hidden, skill-only.** `runPhase_2_5_2_Governors` (`phaseRunners.ts:3382-3392`) is the ENTIRE system: per state with a governor, a **30% chance** to nudge `s.bias` by `(gov.skills.governing − 1) × 0.05` toward the gov's party. **Reads NEITHER `gov.traits` NOR `gov.expertise` NOR `s.industries`** (grep of 3382-3392 = none). No player choice, no action menu, no success/fail roll, no extra-attempt concept | The literal "token action" vcczar describes |
+| **`govAction` concept** | **0% built.** `grep -rniE govAction\|governorAction src/` → 0 hits. No Gov-Action type, data file, or selectable-action registry | Absent |
+| **`GovernorsPage` (UI)** | **READ-ONLY** (`src/pages/GovernorsPage.tsx`, 34 lines): a roster table (State / Region / Governor / Party / Ideology / Gov Skill). No action UI — players cannot direct a governor | No player-facing gov-action surface |
+| **★ Ask A (trait-gating)** | **0% built.** Traits exist on `Politician.traits` (`types.ts:1272`) but the gov phase consults none | Unbuilt |
+| **★ Ask B (industry↔expertise coupling, #294)** | **0% built — axes both ship, unconnected.** `Expertise` enum (`types.ts:182`, has `Agriculture` etc.) ↔ `State.industries` (`types.ts:1328`); the ONLY industry mutator is the PR7 lobby nudge (`phaseRunners.ts:1631-1652`) — no governor-expertise→industry path | Pieces present, unwired |
+| **★ Ask C (generic-fallback + fluff legis, #221)** | **0% built.** No generic/fallback/fluff legislation primitive; bills come from a small fixed inline `BILL_TEMPLATES` array (`phaseRunners.ts:3420+`, ~tariff/homestead/internal-improvements/naval-expansion) + the CC templates. No era-keyed authored proposal pool, no "choose ideology × choose aspect" generator, no discoverability/filter UI | Confirms #221 + the discoverability problem |
+| **Ask D (extra attempt + better success)** | **N/A to a system that exposes no attempts.** The gov phase is a single flat 30% nudge with no per-governor action budget or success/fail surface to tune | Nothing to tune today |
+| **Ask E (state-history log, #312)** | **0% built.** No per-state narrative-history store (`engine/log.ts` is event/phase system logging, not a player-curated state journal) | Minor flavor, unbuilt |
+
+→ **Net: pure designer-intent provenance + a re-verified token shipped reality.** The headline is **vcczar's own
+statement that SC/Gov/Mil are deliberate "token" afterthoughts he'd automate** — the durable WHY behind the thin gov
+nudge (this section) and the court coin-flip (§30.43.3). The gov-action overhaul shape (trait-gating + industry↔expertise
+coupling + extra attempt) sharpens **#20/#294**; the generic-fallback + fluff ask sharpens **#221/#262** (with the
+anti-fluff CONFLICT flagged); the state-history log mints **#312**. (`ca33f7f9#POST 4, 5, 7, 13`; `game-context.md`
+#20/#294/#221/#262/#312; codebase `phaseRunners.ts:3382-3392,1631-1652,3420`, `GovernorsPage.tsx`, `types.ts:182,398,1272,1328`.)
+
+#### 30.43.3 ★ #270 — the SC Case GENERATOR row schema (`<A> v. <B>` + points + Yea/Nay dual payload, 25%-chance ±meter + interest/ideology-group reward) + the same-side-of-the-aisle conflicting-interest design goal (designed; court phase is a 4-string coin-flip)
+
+> **Source: `f8354a70` POST 1 (the schema + first row), 2/5/7 (3 more sample rows), 3 (★ ConservativeElector2's
+> design insight), 4 (vcczar's "totally random" caveat) + codebase (`phaseRunners.ts`, `types.ts`,
+> `scenario1772.ts`, `scenario1856.ts`).** vcczar's **first working draft of the procedural SC Case GENERATOR** (a
+> spreadsheet tab, POST 1) — the missing MIDDLE of the SC-case chain between the b41 IDEA (`07fa6116`) and the authored
+> docket (`964b8857`). It resolves #270's abstract "generator" into a **concrete 8-column case row**. The PRIMITIVES
+> the generator needs mostly SHIP; the generator + the per-side payload do NOT.
+
+**★★ A. The case GENERATOR row SCHEMA (POST 1) — the load-bearing artifact.** Each generated case = **one row, 8
+fields**, two symmetric ruling sides (Yea / Nay), each side carrying **(a) a 25%-chance METER modification + (b) an
+interest/ideology-GROUP reward**:
+
+```
+Part A | v. | Part B               | Points | Yea-mod (25% ± METER)  | Yea-group   | Nay-mod (25% ± METER)  | Nay-group
+Orr    | v. | City of Philadelphia |  200   | 25% + rev/budg         | Trads       | 25% − honest gov       | LW Pop        (POST 1)
+Sheng  | v. | Bao to Seitan        |  200   | 25% − quality of life  | Libs        | 25% + rev/budg         | Civil Rights  (POST 2)
+Assis  | v. | Dunder Mifflin       |  200   | 25% + quality of life  | Wall Street | 25% + honest gov       | Labor Unions  (POST 5)
+Hoar   | v. | Ghostbusters         |  100   | 25% + rev/budg         | Wall Street | 25% + honest gov       | Reformists    (POST 7)
+```
+
+Decomposed:
+- **Case NAME = procedural `<Part A> v. <Part B>`** — random surname/entity vs random surname/entity. Names are random
+  and often nonsensical / pop-culture ("Bao to Seitan," "Dunder Mifflin," "Ghostbusters"). ("City of Philadelphia"
+  hints at the entity-side variety; not yet resolved to the later `<person> v. <state>` form.)
+- **POINTS = 100 or 200** (a per-case weight/stake; the only two values observed). **NEW datum vs #270 as logged** —
+  the authored `964b8857` cases have NO points → **points are a GENERATOR-branch field.**
+- **Per ruling side (Yea AND Nay independently):**
+  - **(a) a METER MODIFICATION at a flat 25% CHANCE**, signed ±, on a named meter (`rev/budg` = revenue, `honest gov`
+    = honest, `quality of life` = quality) — the ruling **MIGHT (25%)** move a national meter ±.
+  - **(b) an INTEREST/IDEOLOGY-GROUP REWARD** (the group that *wins* if that side is chosen): `Trads`, `LW Pop`,
+    `Libs`, `Civil Rights`, `Wall Street`, `Labor Unions`, `Reformists` — a **mix of ideology-bucket labels** (Trads /
+    LW Pop / Libs) and **interest-card groups** (Wall Street / Civil Rights / Labor Unions / Reformists).
+
+**★ B. The DESIGN GOAL — conflicting interests on the SAME side of the aisle (POST 3, vcczar agrees POST 4).** The
+reason the per-side group rewards are independent random draws:
+- **ConservativeElector2 (POST 3):** *"I especially like that you have to make sacrifices here. Arguably left-wingers
+  favor both Libs and Civil Rights, but you have to decide in a way besides liberal vs. conservative. Amazing direction
+  to have **conflicting interests on one side of the aisle** as well!"* → the *Sheng v. Bao* row makes **Yea reward
+  Libs but Nay reward Civil Rights** (both left-coded), so a left player must **trade off two ALLIED groups**, not just
+  pick left-vs-right. **Deliberate intent: produce intra-coalition dilemmas.**
+- **★ vcczar's caveat (POST 4):** *"Yeah, well, **it's totally random. So some cases probably won't make sense.**"* —
+  the same-side-conflict EMERGES from pure randomness; vcczar explicitly accepts the **content-quality cost** (random
+  name + random meter + random group ⇒ some incoherent rows). This is the **random-generation vs curated-coherence
+  tension** + the design reason for the `07fa6116` POST 28 **"generator + ~50 SPECIFIC authored cases"** combo (curated
+  cases backstop the nonsensical generated ones).
+
+**★ C. The reward-channel mapping — the payload is BUILDABLE on existing types.** The generator's vocabulary maps onto
+SHIPPED primitives (this is why #270's build cost is lower than it looks):
+- **Meters** (`NationalMeters` `types.ts:1399-1407`, all live): `rev/budg → revenue`, `honest gov → honest`, `quality
+  of life → quality`.
+- **Group rewards SPLIT across two SHIPPED channels:** **interest-card scores** (Wall St / Civil Rights /
+  Labor≈`Workers` / Reformists≈`Reformers`, `InterestCardId` `types.ts:310-314` → `interestGroups` `types.ts:1572`)
+  AND **ideology ENTHUSIASM** (Trads / LW Pop / Libs = `Ideology` `types.ts:6-12` → `enthusiasm` `types.ts:1415-1418`).
+  A faithful reward must target **BOTH**.
+- **★ The per-side payload SHAPE already ships:** `EraEventResponseEffect` (`types.ts:1448-1457`) carries **`meters?`
+  + `interestGroups?` + `enthusiasm?`** — exactly the three reward kinds a generated case needs (it's used live by
+  `BILL_TEMPLATES` `phaseRunners.ts:3421-3428` + era events).
+
+**★ SHIPPED vs. DESIGNED — code-verified this batch (b53). The court phase is a coin-flip; the generator is 0% shipped:**
+
+| Surface | Shipped reality | Verdict |
+|---|---|---|
+| **Court phase** | **Bare coin-flip.** `runPhase_2_5_3_Court` (`phaseRunners.ts:3397-3415`): **50%/turn** any case fires; picks `title` from **4 hardcoded generic strings** (`:3399-3404`, e.g. "Interstate commerce dispute"); rules `conservative`/`liberal` by **raw justice-ideology HEADCOUNT** (`:3407-3409`); nudges `partyPreference` by **±0.1** (`:3412-3413`). No name generator, no points, no Yea/Nay payload, no meter move, no group reward | The "token SC phase" (the #270 court is the SC twin of the §30.43.2 gov nudge) |
+| **`SupremeCourtCase` type** | **EXISTS but is a DEAD STUB.** `types.ts:1548-1556`: `{ id, year, title, description, decided, ruling?, effect? }` — a **single `effect?`** (no Yea/Nay split, no `points`, no 25%-chance modifier). `pendingCourtCases` (`types.ts:1587`) seeded `[]` in BOTH scenarios (`scenario1772.ts:95`, `scenario1856.ts:175`) and **never read or written** by the court phase | The case type is dead; the generator is 0% shipped |
+| **★ The generator + points + Yea/Nay dual payload + 25%-chance meter** | **0% built.** No row generator; no `points` field; the case shape is single-`effect?` not dual; no 25%-chance wrapper on the meter half | The four generator-branch pieces are all unbuilt |
+| **Reward channels (meters / interest-groups / enthusiasm)** | **✅ all SHIP.** Meters live (`types.ts:1399-1407`); interest-group + enthusiasm reward channels live; `EraEventResponseEffect` (`types.ts:1448-1457`) already carries all three — **the per-side payload is buildable on the existing effect type** | The reward vocabulary maps to shipped primitives |
+
+→ **Net: meters ✅ ship, interest-group + enthusiasm channels ✅ ship, the effect-payload type ✅ ships — but the SC case
+GENERATOR, the `points` field, the Yea/Nay dual-payload case, and the per-ruling 25%-chance meter modifier all 0%
+ship**; the court phase is a 4-string coin-flip and `pendingCourtCases`/`SupremeCourtCase.effect` are dead. This is the
+strongest concrete SCHEMA spec for **#270's generated branch**; the same-side-conflict goal is its design rationale; the
+random-vs-curated tension is the design reason for the curated-backstop docket. **OPEN (for human):** does a generated
+case reward an interest-group score, an ideology-enthusiasm bump, or either at random? what do `points` DO (stake vs
+Landmark weight vs mini-game score)? is the 25% chance ONLY on the meter half (group deterministic)? final name form
+`name v. name` vs `<person> v. <state>`? (`f8354a70#POST 1, 2, 3, 4, 5, 7`; `game-context.md` #270; codebase
+`phaseRunners.ts:3397-3415,3421-3428`, `types.ts:310-314,1399-1407,1415-1418,1448-1457,1548-1556,1572,1587`,
+`scenario1772.ts:95`, `scenario1856.ts:175`.)
+
+#### 30.43.4 #309 / #310 / #258 / #221 / #92 / #311 — event & legislation authoring rulings (state-abolition → appointed governors; event TARGET + name-templated narrative; legis deactivation-trigger; 1,000+ legis-props; 6-named-era taxonomy; tutorial) (designed; all unbuilt)
+
+> **Source: `e1e87737` POST 2/31 (deactivation + 1,000+ count), 3 (★ state-abolition ruling), 6-8 (★ event
+> restructure), 9/16/20/24/26 (era taxonomy), 32 (tutorial) + codebase (`types.ts`, `phaseRunners.ts`, `pages`,
+> `components`).** A Nov-2021 content-authoring dev-log with **three buried design RULINGS** plus a tutorial ask and an
+> era-taxonomy datum. All UNBUILT in the current build (status reflects HEAD, not 2021).
+
+**★ A. State-abolition → President APPOINTS the governors (#309, NEW ruling, POST 3).** *"Abolishing the states will now
+lead to the President appointing the governors. Originally, I had governor actions eliminated, but I think someone would
+fill this vacuum."* Establishes **(a)** a **state-abolition mechanic** (a state CAN be abolished — presumably via a
+Legis Prop / amendment) and **(b)** its consequence: the governorship does **NOT** go vacant; the **President APPOINTS**
+the governor (a federal-takeover / power-vacuum model), replacing the elected-governor + gov-action loop for that state.
+DISTINCT from #20 (elected-governor actions) — this is an **appointed (vs elected) governorship + a state-status
+(abolished) flag.**
+
+**★ B. General Events restructured: narrative + name-templating + a TARGET column (#310, NEW, POST 6-8).** The old
+**"descriptions"** field (how the event works) was renamed **"Special"**, and the **"notes"** field was folded into
+"Special" too. Net: **General Events now emit a NARRATIVE**, with **blank spots filled by the relevant person's NAME**
+(name-templated text). A **new column records who the general event GOES TO** — an explicit event **TARGET / recipient**,
+which *"sometimes [should] go to a faction leader."* So general events are **person-/faction-SCOPED, not just global**;
+and new general events are being **keyed to newer TRAITS** (POST 8). DISTINCT from #221 (event tier/era-gating) / #258
+(predicate availability) — this is the event **RECIPIENT + narrative-templating** field.
+
+**★ C. Legis-prop deactivation-date / turn-off TRIGGER + the 1,000+ count (#258/#221, POST 2, 31).** Of the catalog,
+*"a lot of these **don't have the deactivation date** and some **don't specify what turns them off**, so I'm making
+notes on each one"* (POST 2) — i.e. each legis-prop needs not just an availability predicate but an explicit
+**deactivation-date + turn-off-TRIGGER** attribute (the repeal/expiry/superseded-by half of the lifecycle, #258/#175).
+And the **content-volume datum: "There's well over 1,000 of them"** (POST 31, vcczar ~10% through writing
+descriptions) — the count for the 0%-shipped authored Legis-Prop pool (#221).
+
+**★ D. Process / taxonomy notes (secondary).**
+- **Tutorial / per-phase pop-up tips (#311, NEW, POST 32, MrPotatoTed):** *"President Infinity can be pretty
+  overwhelming if you've never played before, hoping to make AMPU a little more user-friendly."* The **FIRST onboarding
+  requirement in the corpus.** Pairs with the recurring *"Congress is a swamp of rules, counterrules and exceptions"*
+  complaint (`ca33f7f9` POST 12) — the housekeeping/Congress phases that drag by hand are exactly where guidance is
+  most needed.
+- **Content pipeline = master spreadsheets** edited era-by-era; MrPotatoTed imports finished pages into the live
+  playthrough (POST 4-5) — consistent with the #221 spreadsheet-authoring model.
+- **Authoring era taxonomy (#92, POSTs 9, 16, 20, 24, 26):** Era of Independence, Federalism, Republicanism, Democracy,
+  Manifest Destiny, Nationalism — **6 named eras, more granular than the shipped 4-value `Era` enum**
+  (`independence|federalism|nationalism|modern`, `types.ts:1337`). Corroborates the era-band-granularity gap (#92/#206).
+- Scripted Events get **two authoring passes** (descriptions first, then a redraft "once they are in the CPU"), and
+  their language must match the option language (POST 11, 17) — no mechanics revealed.
+
+**★ SHIPPED vs. DESIGNED — code-verified this batch (b53). All three rulings + the tutorial are UNBUILT:**
+
+| Surface | Shipped reality | Verdict |
+|---|---|---|
+| **★ #309 state-abolition + appointed governor** | **ABSENT.** No abolish-state action/flag in `src/` (`grep -i aboli` → only the **Abolitionists** interest group / **Abolition** ideology card, unrelated). Governors are **elected only**: `runPhase_2_9_5_Governors` (`phaseRunners.ts:3816`) runs `calcStateVote(...,'governor')` and assigns `s.governorId` to the winner; the only gov unlock is `governorsExist` at 2.4.3 (`phaseRunners.ts:2861-2866`); the gov-action phase (`:3382`) just skips null-`governorId` states. No President-appoints-governor path, no abolition, no power-vacuum | Unbuilt |
+| **★ #310 event TARGET + name-templating** | **ABSENT.** `EraEvent` (`types.ts:1466`) has a `decider` field (`'president'|'congress'|'cabinet'|'cc-president'|'auto'` — who RESOLVES it) but **no `target`/`recipientId`/`goesTo`** and no faction-leader-recipient concept; `EventEntry` (`types.ts:1439`) likewise has no target. **No `{name}` substitution** — `description`/`text` are STATIC strings. There is **no separate "General Event" type** (build ships `EraEvent` (scripted) + `anytimeEvents` + `anytimeNationalEvents`) | Unbuilt |
+| **★ #258 legis deactivation-date / turn-off** | **ABSENT.** `Legislation` (`types.ts:1506`) is a runtime INSTANCE record (sponsor/votes/status/`effects`) — **no `deactivationDate`/`expiry`/`repeal`/`turnsOff` field** (the only expiry-like field is the unrelated `failedBidExpiresYear` `types.ts:1289`). The `Predicate` machinery (`types.ts:1487`) gates era-EVENT availability only, not legis-prop activation/deactivation | Unbuilt |
+| **★ #221 1,000+ authored legis pool** | **ABSENT.** No era-keyed authored Legis-Prop catalog; bills are generated from tiny inline `templates`/`BILL_TEMPLATES` arrays (`continentalCongress.ts` CC bills; modern proposer `phaseRunners.ts:3426+`). The 1,000+ count QUANTIFIES the missing pool | Confirms #221's 0%-built status |
+| **★ #311 tutorial / per-phase tips** | **ABSENT.** No tutorial/onboarding/tip system in `src/pages` or `src/components` (grep-confirmed). The app drops a new player straight into the phase loop with no guided intro | First onboarding gap; unbuilt |
+| **#92 era granularity** | The build's 4-value `Era` enum (`types.ts:1337`) collapses the 6 authoring eras (Republicanism/Democracy/Manifest-Destiny are sub-bands of `nationalism`) | Corroborates #92/#206 |
+
+→ **Net: three designer RULINGS (state-abolition→appointed-governor #309; event TARGET + name-templated narrative #310;
+legis deactivation-date/turn-off-trigger #258) + a content-volume datum (1,000+ legis-props, #221) + the first
+onboarding requirement (#311) + the 6-named-era taxonomy (#92) — all DESIGNED, 0% built.** #309 + #310 are new gaps;
+#258/#221/#92 are corroborations with sharper data. (`e1e87737#POST 2, 3, 4-5, 6-8, 9, 11, 16, 17, 20, 24, 26, 31, 32`;
+`game-context.md` #309/#310/#258/#221/#311/#92; codebase `types.ts:1272,1289,1337,1439,1466,1487,1506`,
+`phaseRunners.ts:2861-2866,3382,3426,3816`.)
+
+#### 30.43.5 ★ #313 — REJECTED/DEFERRED: Territorial DELEGATE + Territorial GOVERNOR offices (logged so it is NOT re-proposed) + the real underlying gap (territories have ZERO pre-statehood gameplay)
+
+> **Source: `a06b07df` POST 1 (theFreezerFlame's pitch), 2 (the "3-4 times rejected" datum), 5 + 8 (★ vcczar's
+> REJECTION — the durable part), 10 (the overlap counter), 11 + codebase (`types.ts`, `territories.ts`,
+> `expansionStates.ts`, `phaseRunners.ts`, `phases.ts`).** A **feature-request thread vcczar REJECTS on the record.**
+> Logged here as a DESIGNER-REJECTED feature so it is **not re-proposed as a build gap.**
+
+> **★ STATUS: REJECTED / DEFERRED.** This proposal *"has come up like 3-4 times and every time V has been very vehement
+> against it"* (POST 2). Re-open **ONLY** if all three deferral conditions are met (below).
+
+**★ A. The proposal (theFreezerFlame, POST 1) — DO NOT BUILD.** Two new offices to give pre-statehood territories
+gameplay ("more gameplay instead of just being there until statehood"):
+- **Territorial Delegates** — created by a law *"Establish the Offices of Territorial Delegates"*; **elected the same as
+  the House**; can **serve on committees + propose legislation** but get **NO floor votes until statehood** (a
+  non-voting House member); **BONUS points** for proposing a **statehood-admission act that passes.**
+- **Territorial Governors** — *"just governors but for territories"*; a special Gov Action **"Call on Congress to Admit
+  Territory as State"** (auto-succeeds, **25% chance of a point bonus** to the party that passes it); a possible alt
+  action *"call for independence"* if **Domestic Stability is low enough.**
+- **Shadow delegations** floated but explicitly deprioritized.
+
+**★ B. The REJECTION (vcczar, POSTs 5, 8) — the durable part.** Verbatim-sourced reasoning:
+1. **Low value** — *"Don't really see it as adding much to the game."* (POST 5)
+2. **Performance / turn-length cost** — would be *"helping make the turns take longer and probably helping slow down
+   the processor."* (POST 5)
+3. **★ Politician-roster cost (the CORE blocker)** — *"I'd have to add terr govs and terr delegates to the house for
+   ALL terrs and hypothetical terrs. Im imagining this means **at least 100 more people — most so obscure that even I
+   haven't even heard about them.**"* (POST 8) — and vcczar IS the dataset author, so that is the obscurity bar.
+
+**Deferral conditions (POST 5) — ALL THREE required to revisit:** *"If anything is done in regards to this it will be
+**(1) after early release**, and **(2) if there's popular demand** for it, and **(3) if it can be added to the game
+fairly easily.**"*
+
+**★ C. The partial-overlap counter (theFreezerFlame, POST 10).** Many real territorial delegates *already exist* in the
+dataset because they were **elected to Congress after statehood** (e.g. **John Crowell of Alabama**) — *"I assume most
+of them are already there."* So the +100 estimate is **partly overlap** (the runtime dataset is built from everyone who
+served in Congress). But this **softens, not overturns**: the *hypothetical-territory* governors/delegates and
+never-served delegates remain genuinely un-modeled, and vcczar's other two objections stand.
+
+**★ D. The REAL underlying gap it points at (FLAG these sub-mechanics — they are genuine holes, even though the whole is
+rejected).** Code-verified:
+- **Pre-statehood territories have ZERO gameplay** — `admitState` (`territories.ts`) is a one-shot **seed-copy**: a
+  territory does **not exist as a `State`** (with governor/reps/senators) until admitted; before that it is only a
+  registry entry in `expansionStates.ts` (~150 annexable/hypothetical seeds). *"Just being there until statehood"* is
+  literally the shipped behavior; there is no committee/propose/elect layer for territories.
+- **No statehood-admission ACT / proposer bonus** — statehood happens only via **era-graph nodes** (e.g.
+  `vermont_statehood → admitState(snap,'vt')`), God Mode, or the Territories page. There is **no legislation TYPE for
+  admitting a state** (ties #43 bill-driven statehood), hence no "bonus for proposing a passing statehood act."
+- **The "call for independence" trigger has a SUBSTRATE but no wiring** — `snap.game.meters.domestic` (Domestic
+  Stability, clamped **−5..+5**, written by era-event effects) **EXISTS**, so the substrate for a "low-stability →
+  independence" trigger is present, even though no such trigger is wired.
+- **No territorial `OfficeType`** — `OfficeType` (`types.ts:~1111`) is President … Senator / Representative / Governor /
+  cabinet / court / leadership; **no Territorial Delegate, no Territorial Governor, no non-voting / no-floor-vote member**
+  (`floorVote`/`nonVoting` greps = 0). A new territorial office would be a **net-new system**, not an extension.
+- **The roster cost is real** — `expansionStates.ts` registers ~150 annexable/expansion seeds; a delegate + governor
+  per territory is exactly the "100+ obscure politicians" vcczar cites, and the curated draft pipeline is **additive,
+  sub-floor** for obscure figures (CLAUDE.md dataset rules) — real authoring cost per head.
+
+→ **Net: a DESIGNER-REJECTED feature (the 4th rejection), logged REJECTED/DEFERRED as #313 so it is not re-proposed —
+re-open ONLY if all three deferral conditions are met (after early release + popular demand + easy to add).** The
+durable value is the **REJECTION on the record** + the three salvageable sub-mechanics it points at (pre-statehood
+territory gameplay is a genuine hole; no statehood-admission legislation type, ties #43; the low-`domestic` independence
+trigger has a substrate but no wiring). (`a06b07df#POST 1, 2, 5, 8, 9, 10, 11`; `game-context.md` #313; codebase
+`types.ts:~1111`, `territories.ts`, `expansionStates.ts`, `phaseRunners.ts:3382`, `phases.ts`.)
+
 ### 30.4 Authority hierarchy reminder
 
 When rule sources disagree:
