@@ -23621,6 +23621,383 @@ territory gameplay is a genuine hole; no statehood-admission legislation type, t
 trigger has a substrate but no wiring). (`a06b07df#POST 1, 2, 5, 8, 9, 10, 11`; `game-context.md` #313; codebase
 `types.ts:~1111`, `territories.ts`, `expansionStates.ts`, `phaseRunners.ts:3382`, `phases.ts`.)
 
+### 30.44 Rulings folded from batch 54 — ★ #314 the CPU ideology-shift MOVEMENT rule (forum-canonical 60/40 state-pref/party-enthusiasm via D-100×3 vs shipped faction-center 2.1.5 — diverges on EVERY axis) + #293/#92 faction-difficulty CALIBRATION (per-faction era-favorability WINDOWS + lobby-access-by-faction asymmetry) + career/election/officer confirmations & 2 divergences (#317 faction-leader-only-presidential-candidate NOT enforced, #318 inter-party-cooperation rewards, #315 draft skill-tie unadmitted-home-state tiebreak) + modern content & SC-case schema widening (#270 WV-v-EPA N-groups-per-ruling, #169/#206 no modern scenario, #316 front-page-media inclusion bar) + #221/#248/#294/#261 "Era Evo" corporate FLAVOR-event category (`410ed3c8-cpu-issues` / `8b4f8164-most-difficult-faction` / `ef3301e4-playtester-question` / `3a0e70be-ampu-things-for-biden-presidency` / `f1209123-era-evos-corporate-flavor-events`)
+
+> **★ Batch 54 = five DIGEST-ONLY sources (no historian ran the batch); ALL rules-reconciliation / design-discussion /
+> sentiment / content-catalog / content-authoring threads — none is a forum playthrough.** **Net new shipped behavior:
+> NONE** (re-verified at `src/` HEAD 2026-06-29) — every mechanic below is **designed-only, a community-adjudicated
+> manual rule, a designer ruling, or a confirmation of already-shipped behavior**. The batch's two headline findings are
+> (a) the **CPU ideology-shift "Movement" rule** — the forum's canonical 60/40 spec DIVERGES from the shipped `2.1.5`
+> faction-center system on **every axis** (#314, a RECONCILIATION decision: which ruleset is canonical, plus the
+> per-state preferred-ideology data layer it needs), and (b) the richest **per-faction difficulty CALIBRATION** in the
+> corpus (era-favorability WINDOWS + lobby-access asymmetry, #293/#92). New gap IDs minted this batch: **#314–#318**;
+> sharpened: **#247 / #293 / #270 / #169 / #206 / #221 / #248 / #294 / #261 / #92 / #313 / #74.** The five sources:
+> - **`410ed3c8-cpu-issues`** (politicslounge topic 5344, 5 posts / 1 chunk; **Apr 2024**; @Bushwa777 mid-playtest
+>   surfaces rule CONTRADICTIONS, @matthewyoung123 co-resolves). A **RULES-RECONCILIATION** thread — *"we need to have
+>   one set of rules."* Resolves two contradictions: (1) territory-origin **draftees** are draftable (clarifies/limits
+>   the REJECTED #313 — POLITICIANS-from-territories ≠ territorial OFFICES); (2) the **CPU Movement** rule = **20% via a
+>   D-100 rolled 3×, 60% toward STATE-preferred ideology / 40% toward party-HIGHEST-ENTHUSIASM ideology, one-shift-only,
+>   avoid two-faced, canonical count = 3** (the "≤5/phase" is a stale holdover). → #314 (new) + #247/#74/#313/#315
+>   (sharpen). Cite `410ed3c8#POST 1-5`. **§30.44.1, §30.44.3.**
+> - **`8b4f8164-most-difficult-faction`** (politicslounge topic 5405, 13 posts / 1 chunk; **May 2024**; @vcczar collects
+>   opinions, @pman argues fullest). The single most CONCRETE per-faction calibration of the **difficulty =
+>   faction-ideology × era** model: the per-faction **era-favorability WINDOWS** (Red5 hardest-early-but-dominant-post-
+>   1974; Red1 the ONLY faction never favored; Blue only-shut-out-in-Reconstruction) + the **lobby-access-by-faction
+>   asymmetry** (Red5 easily gets Big Oil/Business/Finance/Big Ag/RW-Media, Red1 can't). → #293/#92 (sharpen) + the
+>   single-player-hardest-faction-enjoyment risk (#114). Cite `8b4f8164#POST 3, 4, 6, 9, 10, 12`. **§30.44.2.**
+> - **`ef3301e4-playtester-question`** (politicslounge topic 4538, 11 posts / 1 chunk; sentiment). Players name their
+>   FAVORITE systems — mostly CONFIRMS shipped loops (career-track 20-yr lock, election die-roll=turnout, charisma/
+>   Propagandist bonus, legis breadth, events) + two genuinely-new items: ★ faction-leader = only major presidential
+>   candidate aside from celebs (NOT enforced, #317) and ★ inter-party-cooperation REWARDS (#318). → #317/#318 (new) +
+>   the re-corroborated media-card→election / war→election / House-per-district / contested-PPT-Speaker gaps. Cite
+>   `ef3301e4#POST 2, 3, 5, 9, 10`. **§30.44.3.**
+> - **`3a0e70be-ampu-things-for-biden-presidency`** (politicslounge topic 1389, 12 posts / 1 chunk; **Aug 2022+**;
+>   @ConservativeElector2 proposes, @vcczar rules). A MODERN-ERA (2021+) content CATALOG — sibling of `24061ad6`
+>   (`biden2021`). Provides #270's first **modern, real-world, dual-payload, MULTI-interest** case (★ **WV v. EPA**,
+>   widening the SC-case schema to N-groups-per-ruling) + the ★ **"front-page media presence" content-INCLUSION bar**
+>   (#316, new) + modern legis/gov/pres-action content + the unmodeled **Environmentalists / Big Business** groups. →
+>   #270/#169/#206 (sharpen) + #316 (new). Cite `3a0e70be#POST 2, 7, 8`. **§30.44.4.**
+> - **`f1209123-era-evos-corporate-flavor-events`** (politicslounge topic 6116, 2 posts / 1 chunk; **Mar 2025**;
+>   Arkansas Progressive supplies @vcczar a curated list, accepted). A CONTENT-AUTHORING drop defining the **"Era Evo"**
+>   FLAVOR-event category (~50 authored corp/cultural milestones, year + category + home-state + owning-corp). Maps
+>   entirely onto existing gaps — sharpens #221 (flavor tier), #248 (subtype taxonomy, possible missing Media value),
+>   #294 (corp→home-state→industry/EV link; ★ TERMINOLOGY COLLISION with #294's existing "era-evo" industry-UNLOCK
+>   meaning), #206, #261, + the lobby cluster. → all DESIGNED, 0% shipped. Cite `f1209123#POST 1, 2`. **§30.44.5.**
+>
+> **★ Cross-section note — this batch adds NO shipped rules.** Do NOT re-document the shipped `2.1.5` ideology-shift /
+> drift system ([§6.3](#63-215-ideology-shifts)), the canonical 4-step ENTHUSIASM-shift rule ([§29.10](#2910--the-canonical-4-step-enthusiasm-shift-rule--crisis-bill-failure-scoring-51-resolved)), the b50 `c8d89e49` POST 55 4-step CPU
+> ideology-shift ruleset that ALREADY names the 60/40 split ([§30.40.2](#30402--296--the-seeded-rng-keystone-the-d100-mechanic-exists-but-runs-on-mathrandom)), the difficulty=ideology×era model
+> ([§30.40.3](#30403--293--the-difficulty-model-is-faction-ideology--era-no-easyhard-toggle)), the industry-eligibility matrix / era-evo industry-UNLOCK rollout ([§30.40.4](#30404--294--the-per-state-industry-eligibility-matrix--9-industry-taxonomy--era-evo-rollout-designed-shipped-is-a-free-form-recordstringnumber--a-taxonomy-mismatch)),
+> the SC Case GENERATOR schema ([§30.43.3](#30433--270--the-sc-case-generator-row-schema-a-v-b--points--yeanay-dual-payload-25-chance-meter--interestideology-group-reward--the-same-side-of-the-aisle-conflicting-interest-design-goal-designed-court-phase-is-a-4-string-coin-flip)), the focus-Rep House abstraction
+> ([§29.5](#295-the-focus-rep-house-abstraction-gap-55)), or the token gov-action nudge ([§11.2](#112-252-governor-actions--runphase_2_5_2_governors-phaserunnersts3382)). The subsections below add only the **NEW designed
+> mechanics, the new gaps (#314–#318), the b54 reconciliation decisions, and the verified shipped confirmations/deltas**,
+> all tagged **b54**.
+
+#### 30.44.1 ★ #314 — the CPU ideology-shift "Movement" rule: forum-canonical (60/40 state-pref / party-enthusiasm via D-100×3) vs SHIPPED `2.1.5` faction-center — a DESIGNED-vs-SHIPPED divergence on EVERY axis (a RECONCILIATION decision + the data layer it needs)
+
+> **Source: `410ed3c8` POST 1 (the "we need ONE set of rules" thesis), 3 (the verbatim CPU-Movement rule), 4-5
+> (matthewyoung123 + Bushwa777 adjudication) + codebase (`phaseRunners.ts:767-809,845-884,886-930`, `types.ts:253-263`,
+> `types.ts:1318-1335,1415`).** The batch headline. **★ Both rulesets are documented BELOW; consolidation owns the
+> reconciliation decision (which is canonical).** All forum rules here are **community-adjudicated MANUAL CPU rules**
+> (how the *forum* CPU is meant to behave), NOT designer-ratified engine spec.
+
+**★ A. The forum-CANONICAL CPU-Movement rule (`410ed3c8` POST 3-5).** A per-phase action where the CPU shifts a few of
+its OWN politicians' ideologies:
+
+| Axis | Canonical rule (forum) |
+|---|---|
+| **Trigger / count** | **Roll a D-100 three times. Each roll ≤ 20 → randomly select ONE eligible politician to move.** So "20% chance to shift three" = three independent 20% draws ⇒ **0–3 moves per phase** (NOT a single 20% gate on a fixed three). |
+| **★ Target — 60/40 split** | **60%** toward the **preferred ideology of the politician's STATE**; **40%** toward the ideology with the **HIGHEST ENTHUSIASM in the actor's PARTY** — each *"provided the shift can be made in ONE shift."* |
+| **One-shift-only** | Only politicians who can reach the target in **one step** are eligible. |
+| **Avoid two-faced** | The CPU **always tries to avoid the 'two-faced' penalty** — never move a pol the move would flip-flop. (Self-AVOIDANCE.) |
+| **Canonical count = 3** | matthewyoung123: the *"≤5 per phase"* line is a **STALE holdover** *"from when the limit was higher and was not changed when player limits got updated."* Bushwa: *"I always just stick with 3."* |
+
+**Supporting-data mechanics the 60/40 target needs (POST 4-5):**
+- **"Geo Ideologies" / preferred STATE ideology** (the 60% target): each state has a **most-preferred AND least-preferred
+  ideology** (both **+** and **−** poles). matthewyoung123 maintains **two public maps**; *"listed on the Gov tabs, and
+  elsewhere."* Bushwa flags these **still need to be authoritatively set** ("AB have to set Geo Ideologies").
+- **"Highest-enthusiasm ideology in a party"** (the 40% target): read the **meter page** — *"the meter that is most away
+  from the center for both the Reds and the Blues."* The party's furthest-from-center enthusiasm meter names that
+  party's highest-enthusiasm ideology.
+
+> **★ The 60/40 split is NOT new this batch** — it is already documented from the b50 `c8d89e49` POST 55 4-step CPU
+> ideology-shift ruleset ([§30.40.2](#30402--296--the-seeded-rng-keystone-the-d100-mechanic-exists-but-runs-on-mathrandom), steps 3-4) and is a refined sibling of the `drums` 4-step ENTHUSIASM rule
+> ([§29.10](#2910--the-canonical-4-step-enthusiasm-shift-rule--crisis-bill-failure-scoring-51-resolved), which is the LEGISLATION→enthusiasm reshuffle — a DIFFERENT mechanic; do not conflate). **What `410ed3c8`
+> ADDS** is (a) the explicit **D-100×3-at-20% trigger** mechanic, (b) the **count-3-vs-5 reconciliation** (the "5" is
+> stale), and (c) the demonstration that this canonical rule **diverges from the shipped engine on every axis** (B).
+
+**★ B. The SHIPPED `2.1.5` system — `resolveIdeologyShift` (`phaseRunners.ts:767-809`), CPU pass `:845-884`.** Already
+documented in full at [§6.3](#63-215-ideology-shifts); the b54 finding is the **per-axis DIVERGENCE table** vs the
+canonical rule (A):
+
+| Axis | Forum-canonical (A) | SHIPPED `2.1.5` (`src/`) | Diverges? |
+|---|---|---|---|
+| **Target** | 60% STATE-preferred / 40% party-highest-ENTHUSIASM | steps **one toward the actor FACTION's mean-ideology CENTER** (`factionCenter`, `phaseRunners.ts:704`; `:773-775`) — **no 60/40, no state-pref target, no enthusiasm target** | **YES (hard)** |
+| **Odds** | 20% via D-100 rolled 3× | self gate **30%** / success **65%**; opposed gate **10%** / success **15%** (`IDEOLOGY_SHIFT_ODDS`, `types.ts:253-261`) | **YES** |
+| **Count / cap** | **3** (canonical; "5" is stale) | capped at **`IDEOLOGY_ATTEMPTS_PER_TURN = 5`/faction** (`types.ts:263`) — the build encodes the *rejected* number by coincidence of structure | **YES** |
+| **Two-faced** | **AVOID** (self-avoidance gate) | the opposed path can *INFLICT* a flip-flopper stack on the **VICTIM** on success (`ffRisk:0.5`, `phaseRunners.ts:790-792`; `flipFlopperPenalty += 1`) — an **offensive flip-flop ATTACK**, not avoidance. Different concept entirely | **YES** |
+| **Self vs opposed** | shifts only the CPU's OWN pols | has BOTH a self pass AND an opposed (rival-roster) poach pass | **N/A (extra)** |
+
+**★ Closest structural analog (NOT a match):** the **passive drift** chain (`phaseRunners.ts:886-930`) — *"up to three
+rolls, at most one move; first success ends the chain"* — mirrors the canonical "D-100 ×3, one move each" SHAPE, BUT it
+is **passive per-politician drift** over EVERY living pol (not the CPU "shift 3 of YOUR pols" action), rates are **8%
+faction / 4% state-bias / 1% residual** (not 20%), and its targets are **faction center** (8%) + **state `bias` SIGN**
+(4%, only where `|bias| ≥ 1`) — **not** a named preferred ideology.
+
+**★ C. The data layer the 60%-target needs is ABSENT (sharpens #247).** `grep
+preferredIdeology|leastPreferred|mostPreferred|geoIdeolog|stateIdeology` across `src/` → **ZERO matches.** `interface
+State` (`types.ts:1318-1335`) carries only **`bias: number`** (`:1324`) — a single scalar lean (positive = red), **no
+most/least-preferred ideology pair.** The drift state-pull reads only `bias` sign. **The both-poles (+ and −) per-state
+preferred-ideology maps matthewyoung123 maintains have NO data home in the build** — the canonical 60%-shift target is
+unbuildable until a per-state preferred-ideology field is added (#247).
+
+**★ D. The enthusiasm→shift wiring is ABSENT (sub-delta).** `interface Enthusiasm`
+(`types.ts:1415`), `game.enthusiasm[ideology][party]` is **read by ELECTIONS** (`calcStateVote`,
+`phaseRunners.ts:3709`) and the EnthusiasmPage meter UI — but **no shift/drift path consults it** to pick a target. The
+canonical 40%-toward-highest-party-enthusiasm rule is **un-built**.
+
+**★ SHIPPED vs DESIGNED — code-verified this batch (b54):**
+
+| Surface | Shipped reality | Verdict |
+|---|---|---|
+| **CPU ideology-shift system** | **SHIPS, but a DIFFERENT ruleset.** `2.1.5` steps toward faction center at 30%/65% (self) & 10%/15% (opposed) with an offensive flip-flop attack (§6.3) | Subsystem exists; rules diverge on every axis (B) |
+| **60% STATE-preferred target** | **0% built.** No per-state preferred-ideology field; only `bias: number` (`types.ts:1324`); grep → 0 | Needs the #247 data layer |
+| **40% party-highest-enthusiasm target** | **0% built.** `Enthusiasm` exists (`types.ts:1415`) but no shift path reads it | Un-wired |
+| **D-100×3-at-20% trigger** | **0% built.** Build uses 30%/65% & 10%/15% gates, not three 20% draws | Divergent odds |
+| **Canonical count = 3** | **Build caps at 5** (`IDEOLOGY_ATTEMPTS_PER_TURN`, `types.ts:263`) — the stale number | Reconcile to 3 (or ratify 5) |
+| **Avoid-two-faced self-gate** | **0% built.** Build has an OFFENSIVE flip-flop attack instead (`ffRisk`, `phaseRunners.ts:790-792`) | Opposite concept |
+
+→ **Net: the build ships an ideology-shift/drift subsystem that resolves toward FACTION CENTER on different odds than
+the forum's canonical CPU-Movement rule (60% state-pref / 40% party-enthusiasm, D-100×3-at-20%, count-3, avoid-two-faced).
+This is the canonical-rules-reconciliation delta the thread's thesis ("we need ONE set of rules") demands** — mints
+**#314** (the CPU-Movement reconciliation), sharpens **#247** (the per-state preferred-ideology data layer) and **#74**
+(deterministic CPU). The reconciliation is a designer decision: ratify the forum 60/40 model (and build the data layer)
+OR ratify the shipped faction-center model (and retire the forum spec). (`410ed3c8#POST 1-5`; `game-context.md`
+#314/#247/#74; codebase `phaseRunners.ts:704,767-809,845-884,886-930,3709`, `types.ts:253-263,1318-1335,1415`.)
+
+#### 30.44.2 ★ #293 / #92 — faction-difficulty CALIBRATION: faction IS the difficulty selector + per-faction era-favorability WINDOWS + the lobby-access-by-faction asymmetry (designed; the build has no faction-era favorability term, no Red1–Red5 axis, only a coarse 3-bucket lobby gate)
+
+> **Source: `8b4f8164` POST 3 (vcczar — faction = the difficulty selector), 4 (single-player concern), 6/9/10/12
+> (pman — Red1-hardest + lobby asymmetry) + codebase (`types.ts:1293-1304,1337`, `phaseRunners.ts:3709,1539-1561,
+> 1798-1801`, `factions1856.ts:24-31`).** The richest per-faction CALIBRATION DATA in the corpus for the difficulty =
+> faction-ideology × era model ([§30.40.3](#30403--293--the-difficulty-model-is-faction-ideology--era-no-easyhard-toggle), #293). It does not invent a mechanic — it supplies the per-faction
+> era WINDOWS + the lobby-access asymmetry as explicit inputs.
+
+**★ A. Faction = the difficulty selector (re-confirms #293).** vcczar (POST 3): *"Since this game won't have easy,
+moderate, difficult, very difficult — the difficulty levels are SET BY THE FACTION you select."* Onboarding corollary:
+experienced players take FRINGE factions, beginners take MODERATES.
+
+**★ B. Per-faction era-favorability WINDOWS (the substance — POST 1, 2, 5-13).** Whole-thread consensus: **Red5 =
+hardest EARLY/overall by most votes; pman argues Red1 is the hardest of ALL** (never gets a friendly era). General laws:
+any Red faction is rough; any FRINGE faction is harder than center-left/center-right; Blue is rarely shut out.
+
+| Faction (era-aware label) | Difficulty | Era-favorability WINDOW | Lobby/era note |
+|---|---|---|---|
+| **Red5** (RW-Pop/Trad) | Hardest EARLY; most-voted hardest overall | Shut out 1800s + first ~25% of game; South SECEDES (takes most Red5 states); Gilded-Age South that fits it is solid Blue; brief 1900s–1920s window, then **New-Deal shutout**; **DOMINATES post-1974** (New Right) | **Easiest of the Reds to ACQUIRE Big Oil / Big Business / Finance / Big Ag**; can grab **RW Media** when it matters most |
+| **Red1** (LW-Pop, "lefty red") | pman: **HARDEST OVERALL** | ★ The ONLY faction that NEVER gets a friendly era. Even when Red is strong, Red1 is disadvantaged vs the rest of its party; post-1974 Red5 is king while Red1 is "essentially unplayable until you make them a mod faction" | **HARD to get** Big Oil/Business/Finance/Big Ag (those favor Red5); **no RW-Media access** |
+| Red1 counter (Euri) | — | Red1 ≈ **Radical Republicans** in Reconstruction — BUT Reconstruction is SHORT vs 1974→future, and **Mod-Red's Big-Business/Finance cards dominate even that era** | — |
+| **Any Red** | Rough | **Shut out of government until ~1850** (barring flukes — e.g. Silas Wood), and **again during the New Deal** | — |
+| **Blue** (any) | Easiest party-wide | **Rarely shut out — except during RECONSTRUCTION** | — |
+| **Fringe (any party)** | Harder than center | Always tougher than the **center-right / center-left** factions | — |
+
+**★ C. The lobby-access-by-faction asymmetry (NEW input to #293 — POST 6, 9).** pman frames lobby access as **part of
+the faction-difficulty calculus**, not a tuning aside: the Red-targetable lobbies (**Big Oil, Big Business, Finance, Big
+Ag**) are *much easier for Red5* and *much harder for Red1*; **Red5 alone can grab the RW-Media card**. This implies a
+**lobby-card-acquisition weighting that varies by faction IDEOLOGY, beyond party.**
+
+**★ D. Single-player enjoyment risk (vcczar, POST 4 — open design risk for #114).** The faction-as-difficulty model is
+great for MULTIPLAYER but raises a 1-player-vs-CPU question: *"are the hardest factions worthwhile to play OR too
+difficult for most players to find enjoyment from"* (no allies to bail you out). Plus a mode divergence: **multiplayer
+trends "win elections at any cost, almost no focus on points"; single-player has "a lot more emphasis on the points
+structure."**
+
+**★ SHIPPED vs DESIGNED — code-verified this batch (b54):**
+
+| Surface | Shipped reality | Verdict |
+|---|---|---|
+| **Per-faction difficulty / favorability model** | **0% built.** `Faction` (`types.ts:1293-1304`) has `id/name/partyId/personality('LW'\|'Center'\|'RW')/ideologyCards/lobbyCards/interestCards/leaderId/isPlayer` — **no `difficulty`, no `favorability`, no per-era field.** The only `difficulty` in `src/` is the Rev-War battle tier (`types.ts:1363`), unrelated | No difficulty surface |
+| **★ Red1–Red5 / Blue1–Blue5 axis** | **0% built.** `Faction.personality` is a **3-bucket** `'LW'\|'Center'\|'RW'` (`types.ts:1297`); factions are era-specific named sets (1772, 1856), NOT a persistent 1–5 ideology ladder. **The fine-grained Red1-vs-Red5 distinction has NO representational home** | No granularity beyond LW/Center/RW |
+| **Faction-ideology × era win term** | **0% built.** `calcStateVote` (`phaseRunners.ts:3709`) score = `50 + baseLean*5 + partyPref*5 + enthusiasm*2 + pv*0.1 + factionBias + traitBonus + noise` — `baseLean = state.bias` (per-state static, NOT per-faction-era); **NO faction-ideology × era favorability term.** `electionFactionBias` (`phaseRunners.ts:1539-1561`) is **card-driven** (interest/lobby cards × interest-group scores, clamped ±3), carrying **no era-favorability, no ideology weight** | Era windows arise only emergently from state-bias drift, not era-scripted by faction |
+| **The eras the calibration references** | **0% built (#92).** `Era = 'independence'\|'federalism'\|'nationalism'\|'modern'` (`types.ts:1337`) — **NO Reconstruction, Gilded Age, New Deal, or post-1974/New-Right era.** The entire era-favorability table is keyed to eras the 4-value enum **cannot represent** | Calibration cannot even be EXPRESSED against current eras |
+| **Lobby-card-to-faction affinity** | **PARTIAL, COARSE (3-bucket).** A faction can acquire a candidate lobby only if its proxy interest-group bucket **matches its own LW/Center/RW bucket** (`interestCardBucket[proxy] === bucket`, `phaseRunners.ts:1798-1801`) AND the group is above the add-threshold. **Direction** of the asymmetry exists at 3-bucket level — but **no Red1-vs-Red5 differentiation, no ideology-weighted ease**; within a bucket, acquisition is gated only by interest-group score, identically for every faction | Coarse gate; no finer asymmetry |
+| **The modern lobby NAMES (Big Oil/Business/Finance/Big Ag/RW Media)** | **NOT `LobbyCardId` values.** `LobbyCardId` (`types.ts:316-320`) is only the 1772/1856 historical set (Patriots, Merchants, Planters, SlavePower, NorthernIndustry…). **Big Oil/Business/Finance/Big Ag/RW Media exist only as interest-group STRINGS** (`BigOilGas`/`BigAg`/`WallStreet`/`RWMedia`/`BigTech`/`MilitaryIndustrial`, `factions1856.ts:24-31`) — **no playable modern lobby CARDS, no modern-era faction set** to attach the post-1974 calibration to | Modern lobbies are strings, not cards |
+
+→ **Net: #293's emergent-difficulty model is real but UNMODELED as a surface; this thread is the richest calibration
+DATA for it. None of the era-windows or the lobby-access asymmetry is representable in `src/` today** (no faction-era
+model, no Red1–Red5 axis, no modern eras/lobbies, only a coarse 3-bucket lobby gate). Sharpens **#293** (the per-faction
+era WINDOWS + the lobby-access asymmetry are NEW inputs) and **#92** (the favorability eras are unrepresentable in the
+4-value `Era` enum); the single-player-hardest-faction-enjoyment question is an **open design risk for #114**. The
+`8189b724` faction-default table supplies the Red1–Red5 default-ideology labels this thread uses. (`8b4f8164#POST 3, 4,
+6, 7, 9, 10, 12`; `game-context.md` #293/#92/#114; codebase `types.ts:1293-1304,1297,1337,1363,316-320`,
+`phaseRunners.ts:3709,1539-1561,1798-1801`, `factions1856.ts:24-31`.)
+
+#### 30.44.3 — career-track / election / officer CONFIRMATIONS (shipped) + 2 divergences (★ #317 faction-leader = only major presidential candidate NOT enforced; #318 inter-party-cooperation rewards; #315 draft skill-tie unadmitted-home-state tiebreak) (mixed shipped/designed)
+
+> **Source: `ef3301e4` POST 2 (career-track favorite), 3 (election die-roll=turnout + bonus stack), 5 (★ faction-leader
+> presidential rule), 9 (inter-party cooperation), 10 (contested PPT/Speaker) + `410ed3c8` POST 1-2 (draft tiebreak) +
+> codebase (`types.ts:43-60,236,302,738-776`, `phaseRunners.ts:401-461,3709-3711,3725-3749,33-53`).** A sentiment
+> thread whose value is mostly CONFIRMING shipped loops, plus two genuinely-new design asks + one new draft tiebreak.
+
+**★ A. CONFIRMED-SHIPPED (the favorites that ARE built).**
+
+| Mechanic (player's framing) | Shipped confirmation | Cite |
+|---|---|---|
+| **Career tracks + multi-year LOCK** (legislative / admin / backroom / private, each a trade-off) | 7 tracks incl. `Private` + `Backroom` (`CAREER_TRACKS`, `types.ts:43-60`); held on-track, **exits at `careerTrackYears >= CAREER_TRACK_MAX_YEARS = 20`** (`types.ts:236`; `phaseRunners.ts:401-461`) | CONFIRMED |
+| **Backroom → kingmaker/protégé network, ~20-yr lock** | Backroom→kingmaker graduation at `KINGMAKER_RULES.graduationYears = 20` (`types.ts:302`) | CONFIRMED |
+| **Election die-roll = turnout / name-recognition** | `calcStateVote` adds **`(Math.random() - 0.5) * 8`** (`phaseRunners.ts:3709-3711`) — the random term IS the die-roll/turnout. *(Also a #296 determinism site: uses `Math.random()`, not the seeded `rng.ts`.)* | CONFIRMED |
+| **Charisma / Propagandist election bonus** | `TRAIT_ELECTION_EFFECTS` (`types.ts:738-776`) — Charismatic/Propagandist rows per context, landed via `applyTraitElectionBonus` | CONFIRMED |
+
+> **★ CAVEAT — no per-track lock duration.** The player's *"private sector ~4yr"* figure is **NOT a distinct constant** —
+> the only lock is the single **20-yr max applied to EVERY track**. Tracks roll skill/trait at 4-yr marks
+> (`phaseRunners.ts:460`) but can only EXIT at year 20 or via manual re-select (`setPlayerCareerTrack`, which RESETS the
+> counter). The "pull out after 4 years" gamble = player-initiated re-selection, not a Private-track unlock. *(Open: is a
+> shorter Private lock intended?)*
+
+**★ B. DIVERGENCE #317 (NEW) — faction-leader = only major presidential candidate (aside from celebs) is NOT
+ENFORCED.** A player states as a HARD rule (POST 5): *"only your faction leader can be a major candidate for President
+(aside from celebs)."* **★ NOT SHIPPED:** the presidential primary `runPhase_2_9_1_Primaries`
+(`phaseRunners.ts:3725-3749`) selects the nominee from **ANY party member** aged **35-80** with **`command >= 2`**,
+ranked by `pvCache + command*5 + trait bonus`. There is **NO `factionLeaderOf` gate and NO `Celebrity`-trait gate** on
+presidential candidacy. Faction-leader machinery exists (`factionLeaderOf`, the `2.2.3` leader election) but is **not
+wired to gate the presidential field**. → **needs a designer ruling** before it becomes a build requirement (is this a
+real intended eligibility rule, or forum shorthand for "leaders have the PV to win"?).
+
+**★ C. NEW #318 — inter-party-cooperation REWARDS (design ask, POST 9).** Player WISH: *"I personally wish there was
+more to be gained with inter-party cooperation"* — e.g. a **con-Red faction + left-Dem faction** strike a structured
+cross-aisle deal (*remove Reconstruction in exchange for the Gold Standard*) that GRANTS something to both sides
+(logrolling / quid-pro-quo across parties). **NOT in the build** — legislation passes by **vote tallies only**; there is
+no cross-party deal/exchange mechanic that rewards cooperation. **★ Pairs with the DEFECTION risk** the same thread shows
+(POST 10: concessions traded for a repeal-of-Reconstruction promise the other side never intended to honor) — any reward
+mechanic should model defection. Same logrolling family as the contested-officer-concession dynamic.
+
+**★ D. NEW #315 — draft skill-tie → prefer-unadmitted-home-state rookie tiebreak (from `410ed3c8`).** Canonical draft
+rule (`410ed3c8` POST 1): *"When there are multiple rookie options tied for the highest SKILL, choose the politician
+whose home state is NOT admitted into the union yet, when possible."* Satisfiable because **territory-origin draftees
+exist** (POST 2: *"You can draft politicians from territories"* — a rookie's `state` may be an unadmitted territory).
+**★ NOT BUILT:** `pickBestForFaction` (`phaseRunners.ts:33-53`) scores **`pvCache` + ideology-match bonuses** and sorts —
+there is **no skill-tie tiebreak and no admitted-state check** anywhere in the draft. *(★ Distinct from the REJECTED
+#313 — territory-origin POLITICIANS (draftable) ≠ territorial OFFICES (the rejected concept, [§30.43.5](#30435--313--rejecteddeferred-territorial-delegate--territorial-governor-offices-logged-so-it-is-not-re-proposed--the-real-underlying-gap-territories-have-zero-pre-statehood-gameplay)). Keep separate.)*
+
+**★ E. Re-corroborated gaps (NOT net-new — confirm they remain unbuilt).**
+
+| Gap | Player's framing | Shipped reality |
+|---|---|---|
+| **Faction MEDIA card → election bonus** | POST 3 names it in the bonus stack | **Absent from `calcStateVote`** — no Media/media-card term; cards drive faction ALIGNMENT, not a per-candidate election bonus |
+| **Recent-war-performance → election bonus** | POST 3 ("fought well in a recent war") | **Absent from `calcStateVote`** — war grants Command/traits earlier (feed PV indirectly), but no direct election bump |
+| **House per-DISTRICT bias** | POST 3, 7 ("an inordinate amount of time looking at district biases") | House uses **state-level `state.bias`** (`'house'` ctx); `representativeIds` is a flat per-state list with **no district lean** — cross-ref the focus-Rep abstraction ([§29.5](#295-the-focus-rep-house-abstraction-gap-55)) |
+| **Contested PPT / Speaker + concessions** | POST 10 (minority trades concessions to install a favorable officer, then gets backstabbed) | Speaker + President pro tempore are **auto-appointed to the top-PV member of the majority party** (`2.2.1`) — **no contest, no minority participation, no concession mechanic** |
+
+→ **Net: mostly CONFIRMATION of shipped loops (career-track 20-yr lock, election die-roll, charisma/Propagandist bonus) +
+two NEW design asks (#317 the unenforced faction-leader presidential gate, #318 inter-party-cooperation rewards) + one
+NEW unbuilt draft tiebreak (#315). The media-card→election / war→election / House-per-district / contested-PPT-Speaker
+gaps remain unbuilt.** (`ef3301e4#POST 2, 3, 5, 9, 10`; `410ed3c8#POST 1, 2`; `game-context.md` #317/#318/#315/#313;
+codebase `types.ts:43-60,236,302,738-776`, `phaseRunners.ts:33-53,401-461,460,3709-3711,3725-3749`.)
+
+#### 30.44.4 ★ #270 / #169 / #206 / #316 — modern (Biden-era) content: WV v. EPA WIDENS the SC-case schema to N-groups-per-ruling + the modern legis/gov/pres-action catalog + the "front-page media presence" content-INCLUSION bar (designed; no modern scenario, court is a 4-string coin-flip)
+
+> **Source: `3a0e70be` POST 2 (★ WV v. EPA), 3 (state-Loving/Griswold), 4-12 (the content catalog), 7/8 (★ the
+> media-salience inclusion bar) + codebase (`phaseRunners.ts:3397-3415`, `types.ts:1337,1548-1556,310-320,1448-1457`,
+> `scenario1772.ts:69`, `scenario1856.ts:149`).** A MODERN-ERA (2021+) content CATALOG — sibling of `24061ad6`
+> (`biden2021`) — that provides #270's first MODERN real-world worked case + one genuinely-new curation rule.
+
+**★ A. WV v. EPA — the first modern, real-world, dual-payload, MULTI-interest SC case (POST 2).** CE2's spec: *"WV v
+EPA … Could **gain points for big business, conservatives, trads** and **lose points for reformists, environmentalists,
+progs and libs**, **reverse if it goes the other way**."*
+
+- **★ WIDENS the #270 schema to N-groups-per-ruling.** The `f8354a70` generator schema ([§30.43.3](#30433--270--the-sc-case-generator-row-schema-a-v-b--points--yeanay-dual-payload-25-chance-meter--interestideology-group-reward--the-same-side-of-the-aisle-conflicting-interest-design-goal-designed-court-phase-is-a-4-string-coin-flip)) had **one group per
+  side**; WV v. EPA moves a **whole BUNDLE** together — confirming the dual-payload shape but extending it to a **LIST of
+  groups per Yea/Nay ruling**, not a single group.
+- **Ruling A (deregulation side):** **+** Big Business, Conservatives, Trads · **−** Reformists, Environmentalists,
+  Progs, Libs. **Ruling B ("reverse"):** signs flip — the clean symmetric mirror.
+- **MIXED channels (same split as `f8354a70`):** interest-group rewards (Big Business, Environmentalists, Reformists) +
+  ideology-ENTHUSIASM rewards (Conservatives, Trads, Progs, Libs) — a faithful payload writes BOTH.
+
+**★ B. The modern docket (→ #270 authoring input):** **Dobbs v. Jackson** (overturn Roe; already shipped per
+`biden2021`), **Kennedy v. Bremerton**, **Ingraham v. Wright** (1977; 8th-Amdt school corporal punishment — gated below
+by the inclusion bar).
+
+**★ C. Modern legislation + gov/pres-action content (→ content engine #221 + #20, all 0% built):**
+- **Legislation:** insulin price cap (POST 10), CHIPS / semiconductor subsidies, IRA (POST 12). *(CHIPS + IRA shipped per
+  `biden2021` §2; insulin cap is new here.)*
+- **Gov actions (state-level):** decide **Loving v. Virginia & Griswold v. Connecticut at the STATE level** (post-Dobbs
+  devolution, POST 3); defund / increase police funding (POST 5); the private-corporal-punishment angle (POST 8).
+- **Pres actions (federal):** recognize the **Armenian genocide** (POST 5); expand domestic oil / tap the **Strategic
+  Petroleum Reserve** (POST 11, a "called-for-but-not-pursued" counterfactual); **abortion-on-federal-land** (POST 12,
+  the progressive-activist post-Dobbs ask).
+
+**★ D. NEW #316 — the "front-page media presence" content-INCLUSION bar (vcczar, POST 7/8).** The thread's one
+genuinely-new design/curation rule. On the corporal-punishment items: *"I'll consider this when it has some **front page
+media presence on a major news website. 95% of voters aren't even going to know this is being discussed.**"*
+- A **curation GATE on what becomes content:** an issue earns a card (SC case / gov action / event) only once it has
+  **mainstream front-page media salience** — niche coverage (CE2 first read the Missouri story on an *Austrian* site)
+  **does not qualify**. Rationale: **voter awareness** (the game models things voters actually react to).
+- **Distinct from `biden2021`'s "nothing minor / on par with prior presidencies" bar** — both are content-inclusion
+  thresholds, but #316 is a sharper, quotable criterion: **media salience, not historical weight.** vcczar still scopes
+  corporal-punishment as a valid FUTURE candidate (POST 8), just below the bar for now.
+- **Reads as an AUTHOR-TIME gate** (vcczar decides), not an in-game salience weight.
+
+**★ SHIPPED vs DESIGNED — code-verified this batch (b54):**
+
+| Surface | Shipped reality | Verdict |
+|---|---|---|
+| **Modern scenario** | **0% built.** Only `scenario1772.ts` (`:69`) + `scenario1856.ts` (`:149`) exist; the `modern` `Era` value (`types.ts:1337`) **has no scenario** — the whole Biden-era catalog has **no era to live in** (#169/#206) | No modern band |
+| **SC-case system** | **bare coin-flip.** `runPhase_2_5_3_Court` (`phaseRunners.ts:3397-3415`) = 50%/turn fire, **4 hardcoded generic title STRINGS**, rules by justice-ideology headcount, nudges `partyPreference` ±0.1. **No named cases, no Yea/Nay dual payload, no points, no interest/ideology reward.** `SupremeCourtCase` (`types.ts:1548-1556`) has a **single `effect?`** (not the dual mirror WV-v-EPA needs) and is a **dead stub** (`pendingCourtCases` seeded `[]`, never read) | Dobbs/WV-v-EPA/Kennedy/Ingraham = content for an unbuilt generator (#270) |
+| **★ Environmentalists / Big Business interest groups** | **NOT in the enums.** `InterestCardId`/`LobbyCardId` (`types.ts:310-320`) have **no Environmentalists** (no climate/green entry — only the `planet` national meter is green-adjacent) and **no "Big Business"** (closest is `WallStreet`/`Manufacturers`/`MilitaryIndustrial`). **GENUINELY NEW groups needed** — WV-v-EPA can't be authored faithfully without them (mirrors `biden2021`'s unmodeled "Pacifists") | New groups required |
+| **Payload type for the dual reward** | **EXISTS.** `EraEventResponseEffect` (`types.ts:1448-1457`) carries `meters?` + `interestGroups?` + `enthusiasm?` — a WV-v-EPA bundle (interest deltas + enthusiasm deltas) is **buildable on existing types** once the new groups are added and a Yea/Nay dual-effect case shape exists | Channel exists; case shape + groups missing |
+| **gov-action / pres-action SYSTEM** | **0% built.** `grep govAction\|presAction\|executiveAction src/` → no files. The Loving/Griswold devolution, defund-police, Armenian-genocide, oil/SPR, federal-land-abortion items have **no executive/gubernatorial-action framework** (#20) | No action framework |
+| **#316 inclusion bar** | **N/A (author-time curation rule)** — no code surface intended | Author-time gate |
+
+→ **Net: every item is content for systems that are 0% shipped** (no modern scenario, no SC-case generator/docket, no
+gov/pres-action system) — except the national-meter + ideology-enthusiasm + interest-score reward CHANNELS, which exist.
+WV v. EPA WIDENS the #270 schema to **N-groups-per-ruling** (court still a 4-string coin-flip); **Environmentalists +
+Big Business** are unmodeled groups; **#316** mints the front-page-media content-inclusion bar. (`3a0e70be#POST 2, 3, 4,
+5, 7, 8, 10, 11, 12`; `game-context.md` #270/#169/#206/#316/#20; codebase `phaseRunners.ts:3397-3415`,
+`types.ts:1337,1548-1556,310-320,1448-1457,6-12,1399-1407`, `scenario1772.ts:69`, `scenario1856.ts:149`.)
+
+#### 30.44.5 ★ #221 / #248 / #294 / #261 — the "Era Evo" corporate FLAVOR-event category (~50 authored corp/cultural milestones tying corp → year → home-state → industry sector → lobby) + the ★ TERMINOLOGY COLLISION on "era-evo" (designed; 0% shipped — no flavor category, no corp entity, no industry-sector taxonomy)
+
+> **Source: `f1209123` POST 1 (Arkansas Progressive's hand-categorized "List of Corporation Era Evos by Category"), 2
+> (vcczar accepts + 3 home-state adds) + codebase (`types.ts:1466,1328,398,310-327`, `phaseRunners.ts:1631-1656`,
+> `eraEvents1772.ts:84`, `eraEvents1856.ts:60`).** A CONTENT-AUTHORING drop that maps ENTIRELY onto existing gaps —
+> the FLAVOR-content companion to #221/#248/#294/#206/#261. Code-verified **0% shipped.**
+
+**★ A. What an "Era Evo" IS (the authoring artifact).** An era-evolution **FLAVOR event**: a real corporation founding,
+product launch, media debut, or cultural milestone, filed under an **industry/media CATEGORY**, stamped with a **year**
+and (often) a **home STATE** + an **owning corporation**. Atmosphere/period-texture (the flavor tier #221 + the
+`b73925a4` Flavor-Event Poll define: *"no choices / no point impact"*), authored **per era, by category**.
+
+| Category (count) | Examples | Flavor signal |
+|---|---|---|
+| **News & Journalism (4)** | USS Maine 1898 (Hearst/Pulitzer), Ida Tarbell's Standard Oil exposé 1904, first Pulitzers 1917, NYT begins 1851 | Media + Big-Oil-muckraking |
+| **Radio & Television (8)** | Grand Ole Opry 1927, NBC 1925, Ed Sullivan 1948, I Love Lucy 1955, MTV 1981, Netflix streaming 2007 (Streaming Wars 2019), Judge Judy | Media arc spanning into modern/Future bands |
+| **Film & Plays (2)** | Radio City Music Hall 1932, The Great Train Robbery (Edison Mfg Co) | — |
+| **Finance & Industry (~38)** | Bank of Manhattan 1799, Du Pont (DE), Carnegie Steel → US Steel, Ford Assembly Line, GE, Kodak, IBM, Apple, AT&T, Enron, Amazon, Coca-Cola (GA) | Long historical→modern spine |
+| **Missing-corp adds (POST 1-2)** | **Coca-Cola — GA · General Mills — MN · Chrysler (Stellantis) — MI** | explicit CORP → HOME-STATE pairs |
+
+**★ B. ⚠ TERMINOLOGY COLLISION — "era-evo" is used TWO ways (KEEP DISTINCT when building).**
+- **(a) On #294** ([§30.40.4](#30404--294--the-per-state-industry-eligibility-matrix--9-industry-taxonomy--era-evo-rollout-designed-shipped-is-a-free-form-recordstringnumber--a-taxonomy-mismatch)) "era-evo" = an **industry/lobby UNLOCK SCHEDULE** (Wall-St born at the Buttonwood Agreement,
+  Natural-Gas requires Spindletop, Manufacturing rolls out NE 1790 → all 1866) — a **MECHANICAL** regional-availability
+  gate.
+- **(b) In THIS thread** "era-evo" = the **name of a FLAVOR-EVENT CATEGORY** — atmospheric corp/cultural milestones with
+  little/no mechanical effect.
+- They are RELATED (a corp's founding event ≈ the cultural marker for its industry's era-evo unlock) but are **different
+  constructs** — do not conflate.
+
+**★ C. The mechanical hooks the list implies (all design-side, all 0% shipped):**
+1. **Corp → industry SECTOR** — each entry buckets to steel / oil / auto / tech / finance / media / insurance / CPG →
+   maps onto **#294's industry taxonomy**.
+2. **Corp → HOME STATE** (RJ Reynolds=NC, J&J=NJ, Du Pont=DE, Coca-Cola=GA, General Mills=MN, Chrysler=MI) → an HQ→state
+   link that, **if it drove state industry strength**, feeds the census industry-shift → ±EV roll ([§30.43.1](#30431--34--305--307--308--the-full-censusreapportionment-algorithm-rules-3024-the-ordered-5-step-ev-recompute--house-cap-reconciliation--bigmedsmall-classification--influential-rep-delegation-vote-model--ahistorical-seat-bias-designed-0-shipped) Step 3 / #294 /
+   #305→#34). ★ The concrete realization of the **corp-HQ → state-industry → census industry-shift → EV** chain.
+3. **Corp/event → LOBBY / interest card** — Hearst/NBC/MTV ⇒ Media; Standard Oil/Tarbell ⇒ Big-Oil; Carnegie/US Steel/
+   AT&T ⇒ Big-Business; Bank of Manhattan/Dow Jones ⇒ Finance/Wall-St. NB the SHIPPED card sets are era-specific
+   1772/1856 only — **no Big-Business / Big-Oil / Media / Finance card exists by those names.**
+
+**★ D. ★ RECOMMENDATION (the entity-vs-tag call).** Whether this warrants a first-class **corporation/company entity** is
+almost certainly **NO** — these are FLAVOR events, not simulated entities (vcczar accepts them as a LIST, not a system).
+**Recommend: model corps as flavor-event TAGS `{homeState, industrySector}`** (optionally a lobby tag) feeding the #294
+industry layer, **NOT a corporation object.** Hand the final entity-vs-tag scoping call to the human.
+
+**★ SHIPPED vs DESIGNED — code-verified this batch (b54):**
+
+| Surface | Shipped reality | Verdict |
+|---|---|---|
+| **"Era Evo" / flavor category or subtype on events** | **0% built.** `EraEvent` (`types.ts:1466`) is a single uniform shape (`id/year/title/description/responses/decider/postEffects`) — **NO `isFlavor` flag, NO category/subtype field, NO per-category era-activation.** No `era-evo`/`isFlavor`/`flavorEvent` token in `src/` | No flavor tier (#221) |
+| **★ Industry/sector SUBTYPE (#248)** | **0% built.** No industry-sector taxonomy; possible **missing Media/Entertainment value** in the 33-value `subtype` enum (NBC/CBS/MTV/Netflix/Hearst not obviously among the 33) — flag for the taxonomy-review pass | Subtype tag absent |
+| **Corporation / company ENTITY** | **0% built.** No `corporation`/`companyId`/`headquarters` identifier; "Company" appears only as event PROSE (East India Co., Ohio Life Insurance & Trust Co., `eraEvents1772.ts:84`, `eraEvents1856.ts:60`) | No corp entity (correct — recommend tags) |
+| **Industry-SECTOR taxonomy + corp→home-state→industry/EV link** | **0% built (the #294 taxonomy MISMATCH).** `State.industries` is free-form `Record<string,number>` (`types.ts:1328`) with ad-hoc 1772/1856 keys (shipping/finance/tobacco/cotton/manufacturing…) — no steel/oil/auto/tech/media sectors. The ONLY industry mutator is the PR7 lobby→industry +1 nudge (`LOBBY_INDUSTRY`, `types.ts:398`; `phaseRunners.ts:1631-1656`), which feeds **METERS, never `electoralVotes`** | Corp-HQ → state-industry → EV chain unbuilt |
+| **National Big-Business / Big-Oil / Media / Finance lobby cards** | **0% built.** `LobbyCardId`/`InterestCardId`/`IdeologyCardId` (`types.ts:310-327`) are era-specific faction-influence cards (Merchants, NorthernIndustry, WallStreet, Planters…) — **no generic national Big-Business/Big-Oil/Media/Finance lobby** these corp events would feed; no event→lobby-activation hook | Lobby cluster gap |
+
+→ **Net: wholly designed content + couplings, 0% shipped. It sharpens existing 0%-shipped gaps and reveals NO new
+architecture** beyond what #221 / #248 / #294 / #206 / #261 already record. The one NEW *framing* worth registering
+(folded, not a new gap row) is the **"Era Evo" flavor-event CATEGORY as a named authored content line tying real corps →
+year → home-state → industry sector → lobby** — the FLAVOR half of #294's industry-evo schedule, on #221's flavor tier
+with a #248 subtype tag. Corroborates #206 (thin late/modern band — NYT 1851 → MTV 1981 → Netflix 2007 → "Amazon
+dominates"), #261 (per-half-term flavor firing budget — ~50 more flavor events atop the 1,355 existing), and the
+lobby-card cluster. ⚠ **IP / real-brand-name risk** (Coca-Cola, Apple, Netflix…) is an un-raised human call.
+(`f1209123#POST 1, 2`; `game-context.md` #221/#248/#294/#206/#261; codebase `types.ts:1466,1328,398,310-327`,
+`phaseRunners.ts:1631-1656`, `eraEvents1772.ts:84`, `eraEvents1856.ts:60`.)
+
 ### 30.4 Authority hierarchy reminder
 
 When rule sources disagree:
