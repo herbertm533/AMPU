@@ -376,6 +376,7 @@
     - [30.38 Rulings folded from batch 48 — ★ #289 the 3-tier stat model + scenario-boot stat-init (the 1960 cabinet-crater root cause) + #290 the procedural-generator revamp + the Credit/Debt prereq tree (2nd #258/#237 exemplar; nationalDebt SHIPS) + #291 the non-ideological-populism ideology gap (deferred) + the recent 1772 confirmations (Washington-Rule can FAIL; women's-suffrage CC plank) (`3b46b086-1960-question` / `5e8dc484-politician-generator` / `391df03b-credit-debt` / `036f0dce-tulsi-gabbard` / `e86d8661-top-10-statesmen`)](#3038-rulings-folded-from-batch-48---289-the-3-tier-stat-model--scenario-boot-stat-init-the-1960-cabinet-crater-root-cause--290-the-procedural-generator-revamp--the-creditdebt-prereq-tree-2nd-258237-exemplar-nationaldebt-ships--291-the-non-ideological-populism-ideology-gap-deferred--the-recent-1772-confirmations-washington-rule-can-fail-womens-suffrage-cc-plank-3b46b086-1960-question--5e8dc484-politician-generator--391df03b-credit-debt--036f0dce-tulsi-gabbard--e86d8661-top-10-statesmen)
     - [30.39 Rulings folded from batch 49 — ★ #292 the election vote-score FORMULA + the meter→enthusiasm pipeline gap (subsumes State.preferredIdeology) + #283 the assassination outcome-distribution divergence + the Bailouts/Drugs predicate-class evidence (#258/#237/#221/#248/#262/#206/#66) + the marquee-VP stat blocks (#240/#216/#194/#279/#15) (`6801b9f4-meter-interpretation` / `5261c8ff-bailouts` / `c9b97b58-unfinished-presidencies` / `faf2d8b3-drugs` / `b9651d6d-vps`)](#3039-rulings-folded-from-batch-49---292-the-election-vote-score-formula--the-meterenthusiasm-pipeline-gap-subsumes-statepreferredideology--283-the-assassination-outcome-distribution-divergence--the-bailoutsdrugs-predicate-class-evidence-25823722124826220666--the-marquee-vp-stat-blocks-24021619427915-6801b9f4-meter-interpretation--5261c8ff-bailouts--c9b97b58-unfinished-presidencies--faf2d8b3-drugs--b9651d6d-vps)
     - [30.40 Rulings folded from batch 50 — ★★ #20 the deterministic CPU gov-action DECISION SPEC + #296 seeded-RNG keystone + #293 difficulty=ideology×era + #294 industry-eligibility matrix/taxonomy + #295 era-aware draft pool + the #292 four election-resolver absences + #45/DH-81 rev-war-end-multiplier + the FAQ cluster (#191/#287/#129/#153/#112/#238/DH-74) + #158 Hand of Providence + the 1772 10-faction seed roster (`c8d89e49-cpu-rules` / `59d805be-hand-of-providence` / `24757e3a-data-posts` / `6b41ed5b-electoral-trends-1948` / `58da1636-questions-on-game`)](#3040-rulings-folded-from-batch-50---20-the-deterministic-cpu-gov-action-decision-spec--296-seeded-rng-keystone--293-difficultyideologyera--294-industry-eligibility-matrixtaxonomy--295-era-aware-draft-pool--the-292-four-election-resolver-absences--45dh-81-rev-war-end-multiplier--the-faq-cluster-191287129153112238dh-74--158-hand-of-providence--the-1772-10-faction-seed-roster-c8d89e49-cpu-rules--59d805be-hand-of-providence--24757e3a-data-posts--6b41ed5b-electoral-trends-1948--58da1636-questions-on-game)
+    - [30.41 Rulings folded from batch 51 — ★ #297 leadership/campaign-focus election bonuses (designed-only, gated behind the realism bar) + NatSec/Guns content catalogs (#221/#262/#258/#236/#248/#66/#206/#237) + #300 firearms-research military-tech combat tree + the CPU faction-score-vote claim (#74) and #301 scenario structural-flexibility + the ideology-card DRAFT decision space (#298 draftee conformance / #299 off-ideology vote penalty, ties #4/#171) (`b5b0ace9-faction-leader-bonus-focus-race-bonus` / `c2bea165-ampu-national-security` / `067233f3-ampu-guns` / `8a0a14a1-radically-different-governing-structure` / `567b03c8-ideology-cards-poll`)](#3041-rulings-folded-from-batch-51---297-leadershipcampaign-focus-election-bonuses-designed-only-gated-behind-the-realism-bar--natsecguns-content-catalogs-22126225823624866206237--300-firearms-research-military-tech-combat-tree--the-cpu-faction-score-vote-claim-74-and-301-scenario-structural-flexibility--the-ideology-card-draft-decision-space-298-draftee-conformance--299-off-ideology-vote-penalty-ties-4171-b5b0ace9-faction-leader-bonus-focus-race-bonus--c2bea165-ampu-national-security--067233f3-ampu-guns--8a0a14a1-radically-different-governing-structure--567b03c8-ideology-cards-poll)
     - [30.4 Authority hierarchy reminder](#304-authority-hierarchy-reminder)
 31. [Gilded-Age era systems (designed, not built)](#31-gilded-age-era-systems-designed-not-built)
     - [31.1 (#147) Tariff-as-national-%-rate + the mutually-exclusive MonetaryRegime](#311-147-tariff-as-national-rate--the-mutually-exclusive-monetaryregime-designed)
@@ -22398,6 +22399,365 @@ not seniority.** (`58da1636#POST 315-318`; `59d805be#POST 1, 2, 23, 35-38, 52, 6
    with after release") — cross-ref the b47 rethinking-how-war-works cluster; and the **AI bundling rules**
    (POST 19: "the worst AI mess in the game… should be thrown out and started over"). (`c8d89e49#POST 19-56`;
    `game-context.md` #20.)
+
+### 30.41 Rulings folded from batch 51 — ★ #297 leadership/campaign-focus election bonuses (designed-only, gated behind the realism bar) + NatSec/Guns content catalogs (#221/#262/#258/#236/#248/#66/#206/#237) + #300 firearms-research military-tech combat tree + the CPU faction-score-vote claim (#74) and #301 scenario structural-flexibility + the ideology-card DRAFT decision space (#298 draftee conformance / #299 off-ideology vote penalty, ties #4/#171) (`b5b0ace9-faction-leader-bonus-focus-race-bonus` / `c2bea165-ampu-national-security` / `067233f3-ampu-guns` / `8a0a14a1-radically-different-governing-structure` / `567b03c8-ideology-cards-poll`)
+
+> **★ Batch 51 = five DIGEST-ONLY sources (no historian ran the batch); ALL design / wish-list / content-authoring
+> threads — none is a playthrough.** Nothing here adds shipped behavior; every headline is **designed-only** and most
+> SHARPEN already-documented rows. The five sources:
+> - **`b5b0ace9-faction-leader-bonus-focus-race-bonus`** (politicslounge topic 6223, 11 posts / 1 chunk; **May 2 2025**;
+>   matthewyoung123 proposes, 10centjimmy floats an alternative, vcczar sets the approval gate). A **RULE-PROPOSAL** thread
+>   for two new election bonuses (faction-leader flat bonus; "focus race") + a catch-all alternative, all gated behind
+>   vcczar's "needs several historical examples" bar — **none approved in-thread.** → **#297.** Cite `b5b0ace9#POST n`.
+> - **`c2bea165-ampu-national-security`** (politicslounge topic 1195, 3 posts / 1 chunk; **Apr 2022**; @vcczar). A
+>   policy-genre CONTENT drop adding the **National Security** genre; CORROBORATES the content-engine cluster and surfaces
+>   the corpus's clearest **policy-DISABLES-policy** (Privacy Amendment) case. → #221/#262/#258/#236/#248/#66/#206. Cite
+>   `c2bea165#POST n`.
+> - **`067233f3-ampu-guns`** (politicslounge topic 1190, 6 posts / 1 chunk; **Apr 2022**; @vcczar). The **Guns** policy
+>   genre + a NEW weapon-class taxonomy + the **firearms-research military-tech combat tree** (→ **#300**) + the
+>   DESIGN-ASSERTED-SHIPPED "leave gun laws to the states" discrepancy (→ #237). Cite `067233f3#POST n`.
+> - **`8a0a14a1-radically-different-governing-structure`** (politicslounge topic 5026, 16 posts / 1 chunk; Nov–Dec 2023).
+>   A meta/wish-list thread yielding two precise **CPU-vote-model facts** (→ #74) + a catalog of **scenario
+>   structural-flexibility** wishes (→ **#301**). Cite `8a0a14a1#POST n`.
+> - **`567b03c8-ideology-cards-poll`** (politicslounge, 9 posts / 1 chunk; **Aug 26 2021**; @vcczar + @MrPotatoTed). The
+>   **design origin** of the faction-vs-personal-ideology tension — a five-option decision space for the personal-ideology
+>   draft system, predecessor of `8189b724`. → **#298** (draftee conformance) + **#299** (off-ideology vote penalty), ties
+>   #4/#171. Cite `567b03c8#POST n`.
+>
+> **★ Cross-section note — this batch adds NO shipped rules.** Do NOT re-document the election vote-score formula
+> ([§30.39.1](#3039-rulings-folded-from-batch-49---292-the-election-vote-score-formula--the-meterenthusiasm-pipeline-gap-subsumes-statepreferredideology--283-the-assassination-outcome-distribution-divergence--the-bailoutsdrugs-predicate-class-evidence-25823722124826220666--the-marquee-vp-stat-blocks-24021619427915-6801b9f4-meter-interpretation--5261c8ff-bailouts--c9b97b58-unfinished-presidencies--faf2d8b3-drugs--b9651d6d-vps)),
+> the content-engine cluster ([§30.30](#3030-rulings-folded-from-batch-40--four-policy-genre-drops--one-wartreaty-balance-thread--267-the-treatywar-end-subsystem--266-meter-at-floor-no-deterrent--265-cabinet-officer-agency--268269-territory-machine--the-healthcarecrimesmilitaryexpansionism-content-enrichments-65574aaa-healthcare--e456b6b3-crimes-punishments--a2312dd2-foreign-affairstreaty--145db158-military--4e76e6c3-expansionism)),
+> the seeded-RNG keystone ([§30.40.2](#30402--296--the-seeded-rng-keystone-the-d100-mechanic-exists-but-runs-on-mathrandom)),
+> or the draft/ideology systems ([§5](#5-drafting-211), [§6](#6-ideology-7-point-scale)) — the subsections below add only
+> the **NEW designed mechanics, the new gaps, and the verified deltas**, all tagged **b51**.
+
+#### 30.41.1 ★ #297 — election-bonus mechanics for leadership / campaign-focus (designed-only; gated behind the realism bar)
+
+> **Source: `b5b0ace9` POST 1, 3, 6, 7, 8, 10 (matthewyoung123 + 10centjimmy + vcczar) + codebase (`pv.ts`,
+> `phaseRunners.ts`, `types.ts`).** Three PROPOSED election bonuses, all **0% built** and all gated behind vcczar's
+> standing **"needs several historical examples"** approval bar (POST 2) — **none approved in-thread.** Touches the
+> faction-leader / party-leader machinery, which IS modeled as roles + PV but feeds elections only INDIRECTLY.
+
+**★ The three proposed mechanics (all DESIGN-ONLY, b51):**
+
+| # | Proposal (proposer) | Bonus | Scope / rules |
+|---|---|---|---|
+| **(a)** | **Faction-leader flat election bonus** (matthewyoung123, POST 1, 6, 7, 10) | **+2 in primaries, +1 in general** | **Non-presidential only** (POST 7). **Reserved for faction leaders who AREN'T party leaders** (POST 6) — a party leader does NOT additionally get it. **No stacking with the party-leader bonus: "you get the larger of the two"** (POST 10) |
+| **(b)** | **"Focus race"** (matthewyoung123, POST 1) | die-rolled: **5–6 → +2 / 3–4 → +1 / 1–2 → nothing** | Each election, **every faction secretly designates ONE non-presidential race** (Gov / Sen / Rep) to "focus" on — one per faction per election, **never the Presidency**, **hidden until results**. Flavor = national-party campaign focus or a donor cash influx |
+| **(c)** | **Catch-all leadership bonus** (10centjimmy, POST 8 — *alternative*) | **50% roll → +1** | Fires if a politician is **BOTH "not obscure" AND has the Leadership trait.** Framed as a "catch all" to skip the leader/party-leader bookkeeping. **In-thread dissent:** 10centjimmy never warms to (a) even after the stacking clarification (POST 11) |
+
+**★ KEY MECHANIC FACT — today leadership reaches elections ONLY via PV (verified b51):**
+- Faction-leader / party-leader **roles EXIST and grant PV:** `FactionLeader: 8` / `PartyLeader: 14` office-prestige
+  (`pv.ts:25-26`); `p.factionLeaderOf != null → +8 PV` (`pv.ts:83`). The role fields are real:
+  `Politician.factionLeaderOf` (`types.ts:1290`), `Faction.leaderId` (`types.ts:1301`), `Party.leaderId`
+  (`types.ts:1309`); selection phases 2.2.3 / 2.2.4 set them.
+- **PV reaches `calcStateVote` ONLY through `pv * 0.1`** — the general scorer sums
+  `50 + baseLean*5 + partyPref*5 + enthusiasm*2 + pv*0.1 + factionBias + traitBonus + jitter`
+  (`phaseRunners.ts:3699, 3709-3711`); the primary scorer sums `pvCache + command*5 + traitBonus`
+  (`phaseRunners.ts:3733`). **Neither scorer reads `factionLeaderOf` / `leaderId`** → there is **NO flat
+  leadership-keyed election term**, and **no focus-race concept anywhere in `src/`** (grep `focusRace|campaignFocus`
+  → zero). So mechanic (a), (b), and (c) are all 0% built.
+- **★ The thread ASSUMES a party-leader FLAT election bonus that does NOT exist.** The "larger of the two / no-stack"
+  rule (POST 5, 9, 10) presumes a flat party-leader bonus (e.g. "+1 in the prez primary"); the build has **only the
+  PV channel** (`PartyLeader: 14` PV) — there is no flat party-leader election term. If (a) is ever adopted, the
+  presumed party-leader bonus must be **built first** to make "larger of the two" well-defined.
+- **10centjimmy's (c) is unwired both ends:** `Leadership` is a real trait (`types.ts:80, 137`) but has **NO row in
+  `TRAIT_ELECTION_EFFECTS`** (verified — grep `trait: 'Leadership'` over `types.ts` = zero), so it confers no direct
+  election bonus today (only the generic +4 positive-trait PV at `pv.ts:76`, and faction-leader tenure stability).
+  `Obscure`, by contrast, DOES carry `TRAIT_ELECTION_EFFECTS` rows (−2/−4, `types.ts:845-849`) — so the channel itself
+  is fully wired (`applyTraitElectionBonus` `electionEffects.ts:16` is summed into both scorers), and (c)'s "not
+  obscure" clause must reconcile with that existing Obscure penalty rather than assume a clean slate. The work for
+  (a)/(c) reduces to ADDING trait rows + a focus-designation input, not building the bonus plumbing. (b51 tech-lead correction)
+
+**★ Candidate shipping vehicle (for tech-lead — designed-only).** All three map cleanly onto the existing **additive
+trait-bonus channel**: `TRAIT_ELECTION_BANDS = { SMALL: 2, MEDIUM: 4, LARGE: 8 }` (`types.ts:721-725`), summed into
+the score as `traitBonus` via `applyTraitElectionBonus`. The `ElectionContext` enum
+(`presPrimary | presGeneral | house | senatePre17 | governor | internalParty`, `types.ts:697`) already distinguishes
+primary vs general, which the **+2-primary / +1-general** split of (a) requires. **Caveat:** the **primary scorer
+(`phaseRunners.ts:3733`) takes a separate `applyTraitElectionBonus(..., 'presPrimary')` call** — any new
+leadership/focus term must be added to BOTH scorers, and (a)/(b)'s non-presidential scope means the term belongs in
+`calcStateVote` (house/senate/governor contexts), NOT the presidential primary path.
+
+**★ Process — the standing realism gate (verbatim, POST 2):** *"with any real rule change suggestions, I'll need
+several historical examples that show the realism of such a change."* A standing design norm, not thread-specific;
+no examples were supplied here, so **all three mechanics remain PROPOSED-ONLY.** (`b5b0ace9#POST 1, 2, 3, 6, 7, 8,
+10, 11`; `game-context.md` #297; codebase `pv.ts:25-26, 76, 83`, `phaseRunners.ts:3699, 3709-3711, 3733`,
+`types.ts:80, 137, 697, 721-725, 1290, 1301, 1309`.)
+
+#### 30.41.2 National Security + Guns content catalogs → the content-engine cluster (designed, 0% shipped)
+
+> **Source: `c2bea165` POST 1-3 + `067233f3` POST 1-6 (@vcczar + community) + codebase.** Two policy-genre CONTENT
+> drops (National Security, Guns) — UNTAGGED 3-partition lists (`Legis Prop` / `Pres Actions` / `Gov Actions`, no
+> `L-/P-/G-` prefix, no era-band tag, no `Preq:` block — same authoring stage as taxation/drugs/environment). They
+> add **NO shipped behavior**; they EXTEND the **0%-shipped policy-genre corpus** by two genres and CORROBORATE the
+> content-engine cluster. (The firearms-research COMBAT tree, a war-system extension, is split out to
+> [§30.41.3](#30413--300--firearms-research-military-tech-upgrade-tree--combat-victory-modifier-designed-0-shipped).)
+
+**★ The 3-primitive split is wildly uneven — Pres/Gov Actions are the thin primitives (#221 / #262, b51):**
+
+| Genre | Legis Prop | Pres Actions | Gov Actions | vcczar's explicit ask |
+|---|---|---|---|---|
+| **National Security** (`c2bea165` POST 1) | **~30** | **1** (National Security Advisor) | **n/a (0)** | *"Obviously, the high need area is Pres Actions"* (opening line) |
+| **Guns** (`067233f3` POST 1) | **~22** | **0 (n/a)** | **2** (Arm teachers · Restrictive gun laws) | *"the major areas of need here are pres actions, gov actions, and stuff for Era of the Future"* |
+
+This is the **most extreme thin-primitive split in the sweep so far** (sibling of taxation P=2/G=3). **Pres Actions
+and Gov Actions as content primitives do not exist in the engine AT ALL** — so even the lone "National Security
+Advisor" Pres Action and the two Guns Gov Actions have no shipped home. Same recurring **RW-non-modifier thinness**:
+the only clear right-pole rows are "leave to the states"; the authoritarian items are an axis of their own.
+
+**★ Content themes (summarized, NOT pasted verbatim, b51):**
+- **NatSec institutions (the #66 agency-creation spine):** Create **FBI · CIA · Director of National Intelligence ·
+  National Security Council · National Security Advisor · Insurrection Act of 1807** · subsidize secret police — all
+  law-created standing institutions, era-gated by real founding dates.
+- **NatSec surveillance / civil-liberties:** 4th Amendment · wiretapping · covert FBI searches · mass phone-data ·
+  surveillance expansion · permanent airport/border security (modern cluster).
+- **★ NatSec authoritarian block = the Fascist/Theocratic-USA "authoritarian kit" (#236):** ban opposing parties ·
+  state religion (multiple forms, incl. **ban-religion as the opposite pole**) · nationalize all private media · ban
+  dissenting art · remove non-state monuments · round-up / deport specific groups · secret police. National Security
+  is partly a **delivery vehicle for the #236 alt-government bundle.**
+- **Guns control pole (dominant):** ban cop-killer bullets / sawed-off / snubnose / machine guns / ghost guns /
+  bump stocks / assault weapons / large-cap magazines · **Ban Private Ownership of Firearms (Amendment)** (far pole,
+  #66) · Brady Act · restrict by mental-illness/felon/drug-user.
+- **Guns deregulation pole:** **2nd Amendment** (#66) · Federal Open Carry · Arm School Teachers · legalize civilian
+  military weaponry (far pole, anti-pole to the ban-ownership amendment).
+- **★ Guns weapon-class taxonomy (NEW sub-model, sibling of the Drugs substance-class enum):** handgun · long-rifle ·
+  shotgun · machine-gun · assault-weapon · ghost-gun · bump-stock · large-cap-magazine. Each ban/restrict row may need
+  a weapon-class variant — the same enum-granularity question Drugs raised. **No weapon-class field in `src/`** (#248).
+- **Funding two-pole levers (#221 modifier-verb / #248 opposed pair):** Increase ↔ Decrease Nat-Sec funding.
+- **Federalism / scope:** "Leave National Security to the states" · "Leave All Matters Pertaining to Personal Weapons
+  to the States" (the devolution poles).
+
+**★ The Privacy Amendment is the corpus's clearest policy-DISABLES-policy case (#258, b51).** `c2bea165` POST 2 — a
+modern-era **Privacy Amendment that "would disable most National Security legislation"**: ONE passed law that turns
+OFF a whole *class* of prior laws. This is the strongest in-corpus demand for a **law-active / passed / repealed
+predicate** — a "policy-active / repealed-by" relationship with **no existing `Predicate` variant**. The Guns genre
+adds two more predicate stressors: **manufacturer-liability shield ↔ open-to-lawsuits** (`067233f3` POST 4, named by
+the community as "X and the counter would be Y" — the canonical #248 opposed-pair specimen + a program-state the
+counter-law repeals) and **state reciprocity** (`067233f3` POST 3 — every state honors every other's carry law: a
+**cross-state "policy X active in state B?"** linkage the `Predicate` tree entirely lacks; only `stateAdmitted` exists).
+
+**★ Era-gated institutions-created-by-law (#66, b51):** FBI / CIA / DNI / NSC + Insurrection Act (NatSec); 2nd Amdt +
+Ban-Private-Ownership Amdt (Guns). Era windows IMPLIED inline (no explicit `Preq:`): 4th Amdt 1791 · Insurrection
+Act 1807+ · anti-Masonic ~1820s–30s · FBI/CIA/NSC/airport-security post-WWII/2001 · Brady 1993 · ghost-guns/bump-
+stocks 2017–2020s. The **Guns genre is the widest era spread of any content genre so far** — exactly why it stresses
+#258 era-gating.
+
+**★ Era-of-Future + modern-no-scenario gaps (#206, b51).** Both genres are modern-heavy, and the thin Pres/Gov
+bands are precisely the modern-leaning primitives. Guns adds explicit **Future-band** rows vcczar wants grown:
+**Mandate Police Convert to Non-Lethal Weaponry · Replace Human Police w/ Robot Law Enforcement.** `Era` IS a shipped
+enum (`'independence' | 'federalism' | 'nationalism' | 'modern'`) but `'modern'` is used **only** for scaling tables,
+and **shipped scenarios are 1772 + 1856 only** — so the modern-heavy content has **no scenario to land in** (the
+content hole compounds the no-modern-scenario hole).
+
+**★ The "leave gun laws to the states" DESIGN-ASSERTED-SHIPPED discrepancy (#237, b51).** `067233f3` POST 5 (@Timur)
+proposes "leave gun laws to the states"; **POST 6 (vcczar): "The game has that."** **CAUTION — this is NOT a shipped
+gun-policy lever.** The only "states-rights" construct in `src/` is the **`StatesRights` ideology card** on factions
+(`types.ts:323, 361`; `factions1772.ts:16`, `factions1856.ts:5-6`) — a faction alignment tag, **not** a gun-specific
+devolution policy. vcczar is referring to his master design list / the federalism ideology framing, **not** shipped
+Guns content. Log as **DESIGN-ASSERTED-SHIPPED, build-UNVERIFIED.**
+
+**★ SHIPPED vs. DESIGNED — code-verified this batch (b51):**
+
+| Area | Shipped reality | Verdict |
+|---|---|---|
+| NatSec / Guns content | **0% shipped.** Grep `src/` for nat-sec / gun / FBI / CIA / surveillance / 2nd-Amendment / Brady / open-carry / ghost-gun / robot-police = **zero** (the only "gun" is a `future-foot-gun` comment, `phaseRunners.ts:2303`) | **0% built** |
+| `Legislation` shape | `interface Legislation` (`types.ts:1506-1520`) has only the 4-value `committee` (`Domestic\|Foreign\|Economic\|Justice`) — **NO `subtype`, NO `policyGenre`, NO weapon-class, NO prereq/condition field** | Cannot tag a genre, weapon-class, the funding ↔ lever, or the Privacy-Amendment disable relationship |
+| `Predicate` tree | The only condition construct (`types.ts:1487-1504`: `yearAtLeast`/`eventCompleted`/`meterAtLeast`/`warActive`/`stateAdmitted`/`rosterHasSkill`/…), wired **ONLY** to the 2.4.3 era-event graph. **No variant expresses "a law is active/passed/repealed", "an agency exists", or "policy X is active in state B"** | The Privacy-Amendment counter/repeal, the shield-in-force program-state, and state reciprocity are all unrepresentable (#258) |
+| Bill library | The entire shipped library is **8 generic `BILL_TEMPLATES`** (`phaseRunners.ts:3420-3429`), randomly drawn for CPU factions. Closest adjacents = `Naval Expansion` (Foreign), Fugitive-Slave / Personal-Liberty (Justice) | No FBI/CIA/surveillance/2nd-Amdt/Brady/weapon-ban bill anywhere |
+
+→ **Net: pure design provenance; adds NO shipped behavior; extends the 0%-shipped policy-genre corpus by two genres
+(National Security, Guns) and adds the FIRST clean policy-disables-policy (Privacy Amendment) + opposed-counter
+(manufacturer shield) + cross-state policy-active (reciprocity) specimens.** All counts are **floors, not finals** —
+both lists are un-deduped (NatSec Advisor appears as both a Legis Prop and the lone Pres Action; "leave to states"
+appears twice in Guns). (`c2bea165#POST 1-3`; `067233f3#POST 1-6`; `game-context.md` #221/#262/#258/#236/#248/#66/
+#206/#237; codebase `types.ts:323, 361, 1337, 1487-1504, 1506-1520`, `phaseRunners.ts:3420-3429`,
+`factions1772.ts:16`, `factions1856.ts:5-6`.)
+
+#### 30.41.3 ★ #300 — firearms-research military-tech upgrade tree → combat-victory modifier (designed, 0% shipped)
+
+> **Source: `067233f3` POST 3 (community add-on) + codebase `revolutionaryWar.ts`.** The ONE genuinely NEW mechanic
+> the Guns thread surfaces — a **war/combat-system extension, NOT a content primitive.** It does not map onto the
+> content-engine IDs; it ties the Guns genre to the war engine via a tech-tier modifier.
+
+**★ The proposal (POST 3, verbatim intent):** *"upgrading firearms of the military — flintlocks → percussion cap →
+repeating rifles → bolt action → semi-auto → fully auto. Upgrading military firearms should slightly increase the
+chance of victory in combat."* A **linear, era-banded military-tech ladder** where each tier raises the battle-win
+chance:
+
+| Tier | Era band (inferred) |
+|---|---|
+| **Flintlock** | founding (Era of Independence) — the ladder's base, war-era-appropriate |
+| **Percussion cap** | ~1820s+ |
+| **Repeating rifle** | mid-19c |
+| **Bolt-action** | late-19c / early-20c |
+| **Semi-auto** | early–mid-20c |
+| **Fully-auto** | modern (the ladder's cap — no Future tier proposed for firearms research itself) |
+
+**★ SHIPPED reality — 0% built (verified b51):** the ONLY combat system is `revolutionaryWar.ts`. Its battle targets:
+- **Ground:** `planning + generalScore(military×10) + (frenchAlliance ? 25 : 0) + diffMod`, then `win = d100() <=
+  baseTarget + diffMod` (`revolutionaryWar.ts:212-218`).
+- **Naval:** `planning + adminScore(military×10) + 30`, `win = d100() <= target + 30` (`revolutionaryWar.ts:186-192`).
+
+**There is NO weapon-tech / equipment term in either target, and no military-tech tier field on the snapshot** (the
+`RevolutionaryWar` interface carries no "current firearm tier"). The entire ladder + its combat modifier is
+designed-only.
+
+**★ What the build would need (designed; for tech-lead):**
+1. A **persistent military-tech tier program-state** (a new field — likely a generic `militaryTech` struct usable by
+   *future* eras' wars too, not just `RevolutionaryWar`, since the ladder spans flintlock→fully-auto across all eras).
+2. An **era-banded ladder** with a **prev-tier prerequisite + era prerequisite** (no percussion-cap before ~1820s) —
+   exactly the #258 prereq shape, and a sibling of the shipped-design **naval era tech-ladder** (Wood/sail → Steam →
+   Steel → hover-vessel) at [§30.30](#3030-rulings-folded-from-batch-40--four-policy-genre-drops--one-wartreaty-balance-thread--267-the-treatywar-end-subsystem--266-meter-at-floor-no-deterrent--265-cabinet-officer-agency--268269-territory-machine--the-healthcarecrimesmilitaryexpansionism-content-enrichments-65574aaa-healthcare--e456b6b3-crimes-punishments--a2312dd2-foreign-affairstreaty--145db158-military--4e76e6c3-expansionism).
+3. A **tier-scaled term added to the success roll** (the `<= target` comparison) — which **MUST draw from the seeded
+   `rng.ts`** (`d100()`, not `Math.random`) per the **#296 keystone** ([§30.40.2](#30402--296--the-seeded-rng-keystone-the-d100-mechanic-exists-but-runs-on-mathrandom)).
+   "Slightly increase the chance" leaves the per-tier increment numerically open (a roadmap tuning question).
+
+**★ Reconcile as ONE military-tech system with the `145db158` weapon-testing axis.** The b40 Military genre already
+proposed **RNG "new weapon testing → chance of a per-branch fighting-power increment / new unit class"** (army/navy/
+air; [§30.30 (3)](#3030-rulings-folded-from-batch-40--four-policy-genre-drops--one-wartreaty-balance-thread--267-the-treatywar-end-subsystem--266-meter-at-floor-no-deterrent--265-cabinet-officer-agency--268269-territory-machine--the-healthcarecrimesmilitaryexpansionism-content-enrichments-65574aaa-healthcare--e456b6b3-crimes-punishments--a2312dd2-foreign-affairstreaty--145db158-military--4e76e6c3-expansionism)).
+The firearms ladder (POST 3) is the **deterministic-tier sibling** of that **stochastic power-bump** axis — both
+mutate the combat math via a per-branch / per-tier "fighting power" the shipped single-scalar `military` meter does
+NOT separate (#106 "no army/navy/air branch separation"). They should be designed as **one military-tech subsystem**
+(tiers + power increments + the war-target term), not two. (`067233f3#POST 3`; `game-context.md` #300/#296/#106;
+codebase `revolutionaryWar.ts:186-192, 212-218`.)
+
+#### 30.41.4 ★ #74 / #301 — the CPU faction-score vote claim + scenario structural flexibility (designed)
+
+> **Source: `8a0a14a1` POST 8, 11, 13 + the structural-wish catalog (POST 1, 4, 7, 10) + codebase
+> (`continentalCongress.ts`, `eraGraph.ts`, `constitutionalConvention.ts`, `types.ts`).** A meta/wish-list thread
+> whose durable value is two precise CPU-vote facts (→ #74) + a catalog of scenario structural-parameterizability
+> requirements (→ **#301**). All designed; the CPU facts SHARPEN the existing CPU-vote gap.
+
+**★ (a) The "faction-score is the largest factor" DESIGN claim vs. the SHIPPED affiliation model (#74, b51).**
+- **DESIGN (POST 11, Largo833, verbatim):** *"effect on the faction score plays the largest part in how a CPU
+  votes."* The designed core of the CPU vote model is **faction-score optimization** — a CPU supports/opposes a
+  measure primarily by its projected effect on the controlling faction's score.
+- **SHIPPED — `voteCC` is a flat AFFILIATION model, NO faction-score computation.** The only legislative CPU vote in
+  the build (CC-era) decides each delegate's aye/nay by a flat probability keyed on relationship to the bill's
+  sponsor: **same-faction → 0.92, same-party → 0.60, else → 0.20**, nudged by `cardVoteBias(...)` over the bill's
+  interest-group cards (`continentalCongress.ts:211-215`). There is **no computation of the bill's projected effect
+  on the voting faction's score** — the build uses party/faction *identity* as a proxy. Delta = replace the
+  identity-proxy with a score-weighted vote.
+
+**★ (b) The "CPU wants historical choices" bias — partial, and only in the 1772 era-event graph (#74, b51).**
+- **DESIGN (POST 8, ebrk85, verbatim):** *"The CPU is programmed to want historical choices. So yea human players
+  have to band together to get anything ahistorical through a Convention. And even then it's really hard."*
+  Corroborated by lived experience (POST 6-7): a group's only ahistorical Convention win was "Slaves not counted
+  towards Electoral vote total" + a failed "voting rights for all men" attempt.
+- **SHIPPED — a pro-historical default exists ONLY for era events.** `pickAIResponse` documents *"the
+  spine/historical response (id 'a') is the default"* and falls back to the first/historical response when no faction
+  bias applies (`eraGraph.ts:88-103`); core-spine nodes fire unconditionally (`eraGraph.ts:~118+`). So "CPU wants
+  historical choices" is **partially shipped for the 1772 era-event graph as a first-response default** — NOT as a
+  score-weighted preference.
+- **The Convention CPU has NO historical-preference layer.** `preferredOption` (`constitutionalConvention.ts:102-123`)
+  picks each article by **party identity + `chance()` coin-flips** (e.g. legislature: RED → bicameral, BLUE →
+  `chance(0.7) ? bicameral : unicameral`; termLimits: BLUE → two_terms, else → no_limits). No historical weighting,
+  no faction-score input.
+- **★ The TENSION (POST 11, the whole point):** "wants historical choices" (a) vs. "optimizes faction score" (b)
+  pull opposite ways — a long 9-CPU game (no human coordination) would plausibly produce VERY ahistorical outcomes
+  (slaves never freed, women never enfranchised) *because* CPUs chase faction score, not history. **The composition
+  rule is UNDEFINED** — is the historical bias a default/tie-break, a fixed weight on the faction-score objective, or
+  an era-decaying nudge? The forum asserts both but never specs the blend. **Open question for the deterministic-CPU
+  spec.** (POST 13, pman: the early eras are biased enough that a human controlling 2-3 center-Blue factions before
+  1840 could force extreme departures, e.g. a lifetime President — the **ahistorical lever = coordinated Blue-Party
+  control pre-1840**; asserted intuition, "won't be able to test until Beta.")
+
+**★ (c) #296 seeded-RNG blocks reproducible counterfactual playtests (b51).** All the CPU decisions above
+(`voteCC`, `preferredOption`, ratification) resolve via `chance()`/`pick()` → `Math.random()` (`rng.ts`), so a
+"radically different Convention" playtest is **not reproducible or tunable** until the RNG is seeded. (Dup of the
+#296 keystone, [§30.40.2](#30402--296--the-seeded-rng-keystone-the-d100-mechanic-exists-but-runs-on-mathrandom).)
+
+**★ (d) #301 — scenario structural flexibility is largely unrepresentable or INERT (NEW, b51).** Players wish-list
+counterfactual structural modes (alt legislature, regional remap, alt-Convention, lifetime President); the
+scenario/types model can't express most of them:
+
+| Wish | Shipped reality | Verdict |
+|---|---|---|
+| **Unicameral / no-Senate legislature** (POST 7) | The Convention offers a `legislature` article (`bicameral` vs `unicameral`, `constitutionalConvention.ts:8-15`) and `ConstitutionalArticles.legislature: 'bicameral'\|'unicameral'` is a stored field (`types.ts:1390`). **BUT it is NEVER read downstream** — the only consumer is `applyConvention` storing the value with a `?? 'bicameral'` fallback (`constitutionalConvention.ts:137`); no House/Senate construction branches on it. 1856 hardcodes `'bicameral'` (`scenario1856.ts:183`) | **Recordable but mechanically INERT** — legislature is hardcoded bicameral; choosing "Unicameral" does nothing |
+| **Regional remap** (POST 1, 4) | `State.region` is a **fixed closed union** (`'Northeast'\|'Midwest'\|'South'\|'West'\|'Border'\|'Canada'\|'Caribbean'\|'Latin America'\|'Pacific'\|'Atlantic'`, `types.ts:1322`), statically assigned in scenario data. Region drives loyalty decay / relocation; it is **consumed, not configurable** — no remap mechanism | **NOT parameterized** |
+| **Lifetime-appointed President** (POST 1, 10, 13) | Only an unenforced `termLimits: 'two_terms'\|'no_limits'` Convention article (`constitutionalConvention.ts:120-121`; `types.ts:1396`). **"No limits" ≠ "lifetime appointed"** — the executive article tops out at elected / congressional / council (`constitutionalConvention.ts:18-24`); no appointed-for-life option, and no evidence `termLimits` is enforced on presidential re-eligibility | **Not representable as designed** beyond an unenforced flag |
+
+→ **The designed ahistorical lever = coordinated Blue-Party control pre-1840** (POST 13). **Deltas:** (1) make the
+`legislature` article DRIVE legislature construction if no-Senate play is in scope; (2) decide whether regional remap
+is a config-time feature or only the in-game Northern-secession path; (3) decide whether "lifetime President" is a
+new executive-article option or just enforcing `no_limits`; (4) define the historical-bias × faction-score
+composition (b) and extend it from era events to Conventions/legislation. (`8a0a14a1#POST 1, 4, 6-8, 10, 11, 13`;
+`game-context.md` #74/#296/#301; codebase `continentalCongress.ts:211-215`, `eraGraph.ts:88-103`,
+`constitutionalConvention.ts:8-15, 18-24, 102-123, 120-121, 137`, `types.ts:1322, 1390, 1396`, `scenario1856.ts:183`,
+`rng.ts`.)
+
+#### 30.41.5 ★ #298 / #299 — the ideology-card DRAFT decision space (draftee conformance + off-ideology vote penalty)
+
+> **Source: `567b03c8` POST 1, 4, 6, 7, 8 (@vcczar + @MrPotatoTed + @jvikings1 + @Hestia) + codebase
+> (`phaseRunners.ts`, `pv.ts`, `factions1772.ts`).** The **design origin (Aug 26 2021)** of the central
+> faction-vs-personal-ideology tension — a five-option decision space for the **personal-ideology card** draft
+> system, predecessor of `8189b724` (Sept 2021, which chose option #3's priority-range "FactNumber" spec). Mints two
+> new gap surfaces (**#298** draftee conformance, **#299** off-ideology vote penalty) and ties #4 / #171.
+
+> **★★ CRITICAL TERMINOLOGY TRAP (keep strictly separate).** This thread's **"ideology card" = a politician's 7-point
+> PERSONAL ideology slot** (`LW Populist … RW Populist`, the `Ideology` type, `types.ts:5`) that governs which pols you
+> may draft / how they vote. This is **NOT** the shipped **`IdeologyCardId`** type (`types.ts:322` — `Independence`,
+> `Republicanism`, `Whiggery`, `StatesRights`, … 22 **named policy/alignment cards** driving faction alignment drift).
+> The shipped "ideology cards" are a **different mechanic that reused the name.** Throughout this subsection,
+> "ideology card" means the **personal-ideology slot**, never the named-policy-card object.
+
+**★ The five-option decision space (POST 1) — capture exactly:**
+
+| # | Option | Cards? | Mechanic | Stated downside |
+|---|---|---|---|---|
+| **1** | Keep as-is | KEEP | Player gets an ideology card even if members don't align; cards may be assigned by **RELATIVE DISTRIBUTION** (you might get "Traditionalist" though most members are Moderate, because another faction out-Moderates you) | status-quo mismatch persists |
+| **2** | Draftees conform to drafter | KEEP | Drafted pols **automatically take the drafter's card ideology** (Bernie → Conservative if a Conservative drafts him) | *"the simulation will be in no way realistic"* |
+| **3** | Draft within 1 + conform | KEEP | May only draft pols **within 1 step** of your card ideology; **draftees then take on the card ideology.** Endpoints (LW/RW-Pop) can draft only their own kind + the single adjacent | *"the fringe players will have fewer politicians"* |
+| **4** | Abolish cards | KILL | Draft anyone in the same **party**, no ideology gate | **the "Rand Paul Problem"** — moderates dominate; Calhoun/Cruz/Paul operate like moderates because rosters are Moderate-heavy |
+| **5** | Abolish cards + off-ideology VOTE penalty | KILL | Like #4 but **heavily penalize voting a pol against their PERSONAL ideology** (Ron Paul voting for Social Security loses many points) → can't bloc-vote; hand-pick each pol's vote | big overhaul; per-pol vote micromanagement |
+
+**vcczar's position (POST 1, 8):** favors **#1 or #3** (a "slight variation"); against #4/#5 *"because it gets rid of
+what makes a Faction a Faction… will require a huge overhaul."* (His "new variant of #3" → `8189b724`, the softened
+priority-range spec.)
+
+**★ The two core tensions (durable design content):**
+- **Faction = coalition OR ideology?** (Hestia, POST 6): *"do our factions set what is a 'faction' simply by having a
+  coalition of people, or do the ideologies set the factions?"* vcczar concedes a hard gate *"isn't realistic…
+  that's generally what happens in history"* (coalitions hold mismatched members). The open philosophical question
+  under #4/#171 — a faction is a *coalition* (any-ideology, realistic) OR an *ideology* (gated, legible), per surface.
+- **Populist / fringe draft-pool scarcity** (jvikings1, POST 4): under #3, endpoint ideologies (LW-Pop / RW-Pop) have
+  **one** adjacent vs **two** for centre ideologies → a strictly smaller draft pool AND a historically thin one.
+  Mitigation = more what-if / minor fringe statesmen (ties the what-if-roster work, #24/#115), at the risk of
+  over-empowering genuine fringe figures.
+- **★ The "Rand Paul Problem" (NAMED, POST 4, 7).** Under any non-gated draft, an ideologically-distinctive figure
+  flattens to Moderate because rosters are Moderate-heavy and nothing forces them to vote their ideology. Ted (POST 7):
+  *"the 'Rand Paul Problem'… still exists in the CURRENT game, if he ends up happening to be in the moderate
+  faction."* The canonical name for "distinctive pols flatten to centre under no ideology mechanic" — the motivation
+  for either (a) the draft gate (#3) or (b) the off-ideology vote penalty (#5).
+
+**★ SHIPPED vs. DESIGNED — code-verified this batch (b51).** Net: a **partial option-#3 draft gate ships, but ONLY
+in the 1772 inaugural draft**; outside it the draft is **soft-preference only** (option-#4-like). **No
+draftee-conformance (#2/#3), no off-ideology vote penalty (#5). Personal ideology does NOT enter PV / elections.**
+
+| Surface | Shipped reality | Verdict |
+|---|---|---|
+| **Option-#3 draft-within-range** | **PARTIALLY SHIPPED — 1772 inaugural ONLY.** `Faction1772.eligibleIdeologies: Ideology[]` (`factions1772.ts:7`, per-faction) is consumed by `getEligibleIdeologies` (`phaseRunners.ts:28`) + `pickBestForFaction` (`phaseRunners.ts:33`): **only when `isExpansion1772`** (`year === startYear`, line 38-39) does it filter the pool to eligible ideologies, with the **exact two-tier "priority first, then anyone" softening** (`strict = filter(...); pool = strict.length>0 ? strict : eligible`, line 41-44). Encodes the **populist-asymmetry mitigation** — endpoint factions get 2-3 eligibles (`fact_blue_rw_1772 = ['Traditionalist','RW Populist']`) | The shipped seed of #4's priority-range rule — but a `Faction1772`-only field (base `Faction` has none, `types.ts:1293`); 1856 has no `eligibleIdeologies`; gates only the inaugural draft |
+| **Outside 1772-inaugural** | **SOFT PREFERENCE ONLY (option-#4-like).** `pickBestForFaction` scores by `p.pvCache + (ideoMatch ? 25 : 0)` (`phaseRunners.ts:45-52`), where `ideoMatch` tests the pol against the faction's 3-bucket `personality` ('LW'/'Center'/'RW'), not a 7-point card. A faction merely *prefers* on-bucket pols (+25 PV) but can draft anyone | **#4 with a thumb on the scale**, NOT #3 |
+| **★ #298 — draftee ideology-CONFORMANCE (#2/#3 half)** | **0% built.** `recordDraftPick` (`phaseRunners.ts:55-75`) sets `p.factionId` / `p.partyId` but **NEVER mutates `p.ideology`** — a drafted Moderate stays Moderate; the faction's card does not overwrite the pol's personal ideology | The "draftees take on the card ideology" half of #2/#3 is **0% built** |
+| **★ #299 — off-ideology VOTE penalty (option #5)** | **0% built.** `computePV` (`pv.ts:67-88`) has **no ideology term at all** (skills × office-weights, command, traits, office prestige, age — nothing reads `p.ideology`). No per-pol vote-selection surface exists | Designer-DISFAVORED; the **only** fix for the Rand Paul Problem **without** a draft gate |
+
+**★ The SOFT cousin of #298 that DOES ship (b51):** the **ideology-SHIFT / drift** system mutates `p.ideology` toward
+the actor faction's center over time (`phaseRunners.ts:752, 789` — `p.ideology = to` after a successful
+`ideologyShiftOdds` roll, gated to phase 2.1.5, governed by `IDEOLOGY_SHIFT_ODDS`). So pols can be **gradually
+converted** toward the faction (a softer cousin of #2's *instant* conformance). The design choice is **instant
+conformance on draft (#298) vs. gradual drift (shipped).** Personal ideology is ALSO used in
+`firstContinentalCongress.ts` for CC selection (`ideologyDistance`, lines 119, 145, 195, 217, 225) — so the data
+exists to build #298/#299 on; it just never touches **elections / PV or draft-eligibility outside 1772-inaugural.**
+
+**★ The partial draft-eligibility gate generalizes to #4 / #171 (b51).** The shipped `eligibleIdeologies` path is the
+**earliest concrete evidence** for the long-running #4 (era-specific per-faction draft profile) and #171 (era-keyed
+restriction toggle) rows — it is option #3 *partly built in one place*, with the exact priority-then-fallback shape.
+The gap is **generalizing it** to all eras / draft-years and onto base `Faction` (1856 has none; later draft years
+fall through to the soft +25-PV preference). The five options ARE the #171 toggle's design space (#1/#3 =
+restriction-on; #4 = restriction-off), and the coalition-vs-ideology question (POST 6) is the *why* behind making the
+restriction era-keyed (looser in modern, where coalitions are messier). (`567b03c8#POST 1, 4, 6, 7, 8`;
+`game-context.md` #298/#299/#4/#171; codebase `factions1772.ts:7`, `phaseRunners.ts:28-52, 55-75, 752, 789`,
+`pv.ts:67-88`, `firstContinentalCongress.ts:119, 145, 195, 217, 225`, `types.ts:5, 322, 1293`.)
 
 ### 30.4 Authority hierarchy reminder
 
