@@ -25074,6 +25074,384 @@ in both shipped scenarios** (1772/1856 end pre-1914/1920) — a requirement for 
 scenario** the forum plays. No new gap ID. (`92202e9a#POST 1-7`; `game-context.md` #238/#258/DH-14; codebase
 `types.ts:1251,1318,1395,1466-1482,1487-1504,1780,738`, `phaseRunners.ts:3685`.)
 
+### 30.47 Rulings folded from batch 57 — ★ CPU GOVERNOR-ACTION selection (the 25/25/50 table baseline + the multi-bucket trait/expertise/industry selector + the #294 direction conflict; #20/#328/#294) + FUTURE-era events & predicate-gating (the doubly-unbuilt Era-of-the-Future + the "extend `precondition` to ALL content" authoring requirement + building-renaming flavor; #206/#221/#258/#261) + the "Disgraced" trait system (impeachment/unpopularity→office-lock + cabinet-spread + protégé penalty + the forceRetire-wired-but-no-event finding; #327/#112/#130/#140/#216) + INCUMBENCY + focus-race (the ousted-official +1 "half" comeback advantage + the #297 verbatim re-post; #287/#297) + Menendez/ILLICIT prison removal (the Illicit-gated prison-corruption flavor + the `[age]` token; #140/#216) (`0ff5e582-cpu-governor-action-selection` / `2bb66197-futures-so-bright-event-chains` / `326c33dd-disgraced-trait` / `0dc883c4-menendez-illicit-prison` / `4df5941d-ousted-incumbency-advantage`)
+
+> **★ Batch 57 = five SMALL DESIGN / FEATURE-REQUEST threads + one future-era SPEED-RUN — all DIGEST-ONLY,
+> none a faithful playthrough** (the `futures-so-bright` run explicitly **skips most phases** to test event
+> chains; the other four are design/Q&A). **Net new shipped behavior: NONE** (re-verified at `src/` HEAD
+> 2026-06-30) — every ruling below is **designed-only**, a **confirmation/delta vs already-shipped behavior**,
+> or an **OPEN design fork**. The consolidation logged **#327** [the Disgraced trait system] + **#328** [the
+> CPU governor-action selection structure]; the rest **sharpen** existing gaps (#20/#294, #206/#221/#258/#261,
+> #112/#130/#140/#216, #287/#297). The five sources:
+> - **`0ff5e582-cpu-governor-action-selection`** ("How should CPU choose Governor Actions?"; topic 1430, **Aug
+>   3–4 2022**; 5 posts / 1 chunk; @MrPotatoTed opens, @OrangeP47 the industry-as-help reading). The **concrete
+>   CPU Gov-Action SELECTION heuristic** behind the #20 gov-action overhaul: states the CURRENT **25/25/50**
+>   table rule + its named flaws + a proposed **multi-bucket** selector (trait-gated, expertise-as-guide,
+>   industry-as-help, election-law, special-passion). → **#328 (new)** + #20/#294 (sharpen). ★ #294 DIRECTION
+>   CONFLICT. Cite `0ff5e582#POST 1-5`. **§30.47.1.**
+> - **`2bb66197-futures-so-bright-event-chains`** ("Futures so bright I gotta wear shades"; **batch 57**; 3 posts
+>   / 1 chunk; GM @MrPotatoTed, **vcczar-requested**, phases skipped to fire future-era event chains; covers
+>   2024→2032 Noem→Yang). A large **future-era content sample** (climate/tech/culture/building-renaming) for the
+>   doubly-unbuilt post-`modern` band + **★ two explicit no-prereq complaints** (half-the-animals-extinct,
+>   citizens-in-space) = the sharpest author-voiced evidence for **predicate-gating-as-authoring-requirement**.
+>   → #206/#221/#258/#261 (sharpen). ★ NOTE: all 7 meters modeled (Earth's-health = `planet`); **no missing
+>   meter**. Cite `2bb66197#POST 1,3`. **§30.47.2.**
+> - **`326c33dd-disgraced-trait`** ("Trait Suggestion" / the "Disgraced" trait; politicslounge topic 4453, **16
+>   May 2023**; 3 posts / 1 chunk; @theFreezerFlame OPs, @vcczar rules POST 2, @Imperator Taco Cat pushes back).
+>   A self-contained proposal for a **"Disgraced"** office-prohibition trait (impeachment/unpopularity earn,
+>   Integrity-immunity, the **vcczar-endorsed 20% cabinet-spread**, protégé −1-all, the contested
+>   disharmonious-expel, rare recovery). ★ vcczar's "already have most with retirement" is **FORUM-not-build**
+>   (shipped retirement is AGE-ONLY). → **#327 (new)** + #112/#130/#140/#216 (sharpen). Cite `326c33dd#POST 1-3`.
+>   **§30.47.3.**
+> - **`4df5941d-ousted-incumbency-advantage`** ("Give former Reps/Senators/Governors a +1 incumbency advantage…
+>   after being ousted the previous election"; politicslounge topic 6218, **Apr–May 2025**; 7 posts / 1 chunk).
+>   ONE new election-bonus idea — the **ousted-official comeback +1 "half" incumbency advantage** (a sub-rule of
+>   the #287 seat-specific +2 incumbency family) — then a **verbatim RE-POST of #297** (faction-leader bonus +
+>   secret focus-race). → #287 (sharpen, new sub-rule) + #297 (corroborate, do not re-number). ★ The code's
+>   `incumbencyAdvantage` is the faction-leader CHALLENGE — distinct. Cite `4df5941d#POST 1-7`. **§30.47.4.**
+> - **`0dc883c4-menendez-illicit-prison`** ("Menendez officially in prison"; **batch 57**; 4 posts / 1 chunk;
+>   @theFreezerFlame proposes, @vcczar rules POST 4). An **Illicit-trait → small-chance prison-corruption
+>   removal** flavor refinement of an existing (designed) controversial-removal mechanic + the `[age]` template
+>   token. ★ vcczar's "already exist" = DESIGNED, not built (the forceRetire-wired-but-no-event finding). →
+>   #140/#216 (sharpen). Cite `0dc883c4#POST 1-4`. **§30.47.5.**
+>
+> **★ Cross-section note — this batch adds NO shipped rules; it sharpens existing homes (+ 2 new gaps
+> #327/#328).** The deep existing homes the children below CROSS-LINK to (rather than re-derive): the CPU
+> bill-scorer twin (the #323 scoring formula at **§30.45.5**); the era-event / `Predicate` engine and the
+> eras-are-content-bands architecture (§27.1); the sibling demographic-gap pattern and trait-roster reconcile
+> (the Jeannette-Rankin gate at **§30.46.5**, and the canonical trait union at `types.ts:62-117`); the
+> impeachment subsystem and retirement/death model discussed throughout §9/§11. The subsections below add only
+> the **NEW design forks/rulings, the verified shipped confirmations/deltas, and the two new gaps (#327/#328)**,
+> all tagged **b57**.
+
+#### 30.47.1 ★ CPU GOVERNOR-ACTION selection (#20 / #328 / #294) — the 25/25/50 TABLE baseline + the multi-bucket trait/expertise/industry/election-law/special-passion SELECTOR + the #294 industry⇄lobby DIRECTION CONFLICT (designed/OPEN; SHIPPED = a flat 30% governing-skill `bias` nudge reading NO traits/expertise/cards/crisis/industry)
+
+> **Source: `0ff5e582` POST 1-5 (the concrete CPU Gov-Action selection heuristic; the deep spec behind the #20
+> gov-action overhaul) + codebase (`phaseRunners.ts:3382-3392` the ENTIRE governor turn; `:1638-1656` the
+> `LOBBY_INDUSTRY` consumer; `:9` seeded `chance`/`pick`/`pickWeighted` imports; `types.ts:62-117` `Trait`,
+> `:182-192` the 19-tag `Expertise` axis, `:398-414` `LOBBY_INDUSTRY`, `:1396` convention-only `termLimits`,
+> `:1277` `Politician.expertise`).** This is the **governor-action TWIN of the #323 CPU bill-scorer** — same
+> multi-factor weighted-roll problem, distinct phase (the #323 CPU bill-scorer lives at §30.45.5). ★ Do NOT
+> re-derive the CPU-scoring weighting machinery here — this child adds the **concrete 25/25/50 baseline, the
+> bucket structure, the trait/expertise/industry sub-rules, and the #294 direction conflict**.
+
+**★ A. SHIPPED reality — the governor turn is a flat 30% governing-skill `bias` nudge (code-verified).** The
+ENTIRE CPU governor brain is the 11-line `runPhase_2_5_2_Governors` (`phaseRunners.ts:3382-3392`): for each
+state with a governor, **30%** chance (`chance(0.3)`, seeded) to nudge `s.bias` by `(gov.skills.governing − 1) *
+0.05`, signed by party (`BLUE` −, else +), clamped ±5. It reads **only** `gov.skills.governing` and
+`gov.partyId`. There is **NO** 25/25/50 rule, **no** trait/expertise gate, **no** industry/election-law/special-
+passion path, and the GovernorsPage is read-only.
+
+**★ B. The 25/25/50 TABLE baseline — the rule players run by HAND (POST 1), itself never the app.** The current
+human-table CPU gov-action rule (NOT the app's logic):
+
+| Bucket | Chance | What the CPU does | Named flaw (POST 1) |
+|---|---|---|---|
+| **Ideology card** | **~25%** | something helping the faction's ideology card | **Many eras have NO ideology-card option** → the bucket dead-ends |
+| **Crisis** | **~25%** | something helping a crisis | (survivable) |
+| **"Help the party overall"** | **~50%** | a catch-all "helps their party overall" action | **Too poorly defined to be a CPU action** — the dominant bucket has no operational meaning |
+
+> ★ So the 25/25/50 rule is itself a **DESIGN datum the app has never implemented** — the table rule and the
+> shipped flat-30%-nudge are two different things. Ted (POST 1) also wants **traits to play a bigger part** (flaw 3).
+
+**★ C. The PROPOSED multi-bucket SELECTOR (POST 1, 2, 5; the #328 structure).** Roll a bucket, then (where
+noted) a sub-roll for the specific action:
+
+| Bucket | Sub-roll / gate | Source |
+|---|---|---|
+| **% Improve a state industry** | **2nd roll** to pick WHICH industry if the gov's state has >1 | POST 5 |
+| **% Ideology card + lobby cards + crisis** | "as we have now" — the *survivable* part of the current rule, folded into ONE bucket | POST 5 |
+| **% Tinker with election laws** | gerrymander / term limits, **gated on qualifications** (e.g. **≥1 same-party Senator**); "could be a subset of one above" | POST 5 |
+| **% Special passion** | e.g. **Civil Rights** or **Theocrat** — roll a chance the gov uses that passion to guide the action | POST 5 |
+
+**★ D. Cross-cutting OVERRIDES — trait-gated + expertise-as-guide (the headline #20/b53 asks, concretized).**
+These select *within* buckets (mainly election-law + improve-industry):
+
+| Override | Rule | Shipped pieces (all UNWIRED to the gov phase) |
+|---|---|---|
+| **Trait-gated** (POST 1) | `Integrity` → **50%** institute/tighten term limits; `Controversial` OR `Manipulative` → **50%** remove term limits | `Integrity`/`Controversial`/`Manipulative` all in `Trait` (`types.ts:64/103/73`); read by election bands, **0% by the gov phase** |
+| **Expertise-as-guide** (POST 5) | `Justice` (Judicial) → focus **police/prisons**; `Business`/`Economics` → **improve a state industry**, preferring an industry matching another of the gov's expertise (e.g. Business+Agriculture → improve agriculture) | 19-tag `Expertise` axis (`types.ts:182-192`); `gov.expertise` (`types.ts:1277`) **never read by the gov phase** |
+
+**★ E. Industry-expansion AS "help" → lobby points — and the #294 DIRECTION CONFLICT (POST 2-4).** OrangeP47:
+"help" sometimes = an **industry-expansion move, because those can give POINTS to cards — agriculture expansion
+→ Big-Ag, finance → Wall Street"; Ted agreed (POST 3). This is the natural fallback "when the AI doesn't know
+what to do," *especially* clear when multiple same-party factions share a lobby card (POST 4, an 1840s 3-faction
+Big-Ag game).
+
+> ★ **DIRECTION MATTERS for the build.** The thread wants **industry-expansion ⇒ lobby-card POINTS** (a governor
+> improves industry → the matching lobby card gains value). The SHIPPED `LOBBY_INDUSTRY` coupling
+> (`phaseRunners.ts:1638-1656`, the 2.1.8 alignment-drift pass) runs the **REVERSE arrow**: **held lobby cards
+> ⇒ industry +1** (a faction holding a card bumps the matching state industry, capped 5). **Same `LOBBY_INDUSTRY`
+> table (`types.ts:398-414`), opposite causal direction.** So #294 is *partially* shipped, but the gov-action
+> arrow the thread wants (improve-industry feeds the card, as a governor "help" move) is **unbuilt**, AND the
+> direction differs — the build does industry-from-cards, the thread wants cards-from-industry.
+
+**★ F. Open questions (parking lot, POST 5).** (1) **Un-leadable-industry payoff** — is improving an industry
+worth it when you can never be the top state? Needs a non-rank payoff (lobby-points-regardless?) or a CPU guard.
+(2) **Tax-cut-attracts-industry** — should lowering/repealing a state income tax give a chance to attract
+manufacturers/finance? A NEW proposed tax↔industry coupling, distinct from the taxation threads. (3) Is the
+election-law-tinker bucket its own bucket or a subset?
+
+| Surface | Shipped today | Designed (thread) | file:line |
+|---|---|---|---|
+| Governor action | Flat **30%** `chance(0.3)` → `s.bias += (governing−1)*0.05` (party-signed, ±5); reads only `governing`+`partyId` | A weighted multi-bucket selector (industry / ideology+lobby+crisis / election-law / special-passion) with trait+expertise overrides | `phaseRunners.ts:3382-3392` |
+| Trait gate (term limits) | **NONE** — gov phase reads no `gov.traits` | `Integrity`→tighten / `Controversial`\|`Manipulative`→remove, 50% ea | `phaseRunners.ts:3382-3392`; `types.ts:64/103/73` |
+| Expertise gate (police / industry) | **NONE** — gov phase reads no `gov.expertise` | `Justice`→police/prisons; `Business`/`Economics`→improve-industry (prefer matching expertise) | `phaseRunners.ts:3382-3392`; `types.ts:182-192,1277` |
+| Industry-expansion-as-help → lobby pts | **REVERSE only** — held lobby cards ⇒ industry +1 (capped 5) | improve-industry ⇒ matching lobby card gains points | `phaseRunners.ts:1638-1656`; `types.ts:398-414` |
+| Election-law action (term limits / gerrymander) | **NONE** — `termLimits` is convention-only (`'two_terms'\|'no_limits'`); **no `gerrymander` field** (grep=0); no ≥1-same-party-Sen gate | A gated election-law bucket | `types.ts:1396`; grep |
+| Special-passion (Civil Rights / Theocrat) | **NONE** — `CivilRights`/`Theocrats` exist as lobby/interest cards, not per-pol passions; no `passion` field | A roll routing the gov-action through a passion | `types.ts:313/327`, `factions1856.ts:28` |
+| Seeded RNG for rolls | **PRESENT** — gov phase imports `chance`/`pick`/`pickWeighted` from `../rng` | (inherits determinism free) | `phaseRunners.ts:9` |
+
+**→ Net (b57):** the entire CPU-governor-action brain is the 11-line flat-30%-nudge stub
+(`phaseRunners.ts:3382-3392`); the 25/25/50 table rule and every proposed bucket are **0% built**. Mints
+**#328** (the multi-bucket gov-action selector). Sharpens **#20** (concrete trait-gated/expertise-as-guide
+spec) and **#294** (★ the industry⇄lobby DIRECTION CONFLICT — shipped runs the reverse arrow). The building
+blocks ship as **data/infra** (the `Trait` union incl. Integrity/Controversial/Manipulative, the 19-tag
+`Expertise` axis, `LOBBY_INDUSTRY` [reversed], convention-only `termLimits`, seeded `chance`), so the overhaul
+is **wiring existing pieces into a new selector, not building from zero** — and it is the twin of the #323 CPU
+bill-scorer. (`0ff5e582#POST 1-5`; `game-context.md` #20/#328/#294; codebase `phaseRunners.ts:3382-3392,
+1638-1656,9`, `types.ts:62-117,182-192,398-414,1277,1396`.)
+
+#### 30.47.2 ★ FUTURE-era events + PREDICATE-GATING as an authoring requirement (#206 / #221 / #258 / #261) — the doubly-unbuilt Era-of-the-Future (2024-2032) + the ~40-event future corpus + the "extend `precondition` to ALL content" delta + the building-renaming flavor class (designed; SHIPPED = `Predicate`/`evalPredicate`/`precondition` exist but wired in the 1772 graph ONLY; no `future` Era; NO missing meter)
+
+> **Source: `2bb66197` POST 1, 3 (the vcczar-requested Era-of-the-Future SPEED-RUN, phases skipped to fire
+> event chains; 2024→2032) + codebase (`types.ts:1337` `Era` enum [no `future`]; `:1487-1504` the `Predicate`
+> tree; `:1399-1407` `NationalMeters` [7 fields incl. `planet`]; `:1570` `GameState.partyPreference`;
+> `:1448-1457` `EraEventResponseEffect.meters`; `eraGraph.ts:12` `evalPredicate`, `:114` the selection gate;
+> `eraEvents1772.ts:25` `GraphNode.precondition`).** ★ Do NOT re-derive the eras-are-content-bands architecture
+> (§27.1) or the era-event engine here — this child adds the **future-era content sample, the predicate-gating-
+> as-authoring-requirement sharpening (#258), the building-renaming flavor class (#261), and the meter-coverage
+> confirmation (no missing meter)**.
+
+**★ A. The doubly-unbuilt Era-of-the-Future (POST 1, 3).** Set **2024-2032** — *past* the `modern` band
+entirely. Presidential spine: **Kristi Noem (R) first female President 2024** (VP Portman) → re-elected 2028
+over Sestak-Bayh → **Andrew Yang (Yang-Gang) wins 2032** over Trump Jr-Graham. The GM treats this as a named
+**"Era of the Future."** This is **doubly-unbuilt**: the `Era` enum has no `future` value (`types.ts:1337`),
+there is no future scenario (only `scenario1772.ts`/`scenario1856.ts`), AND the content to fill it does not
+exist. The run is the future era played **entirely by hand** (corroborates #206). Polarity = modern left/right
+(Red = Republicans, Blue = Democrats), unambiguous.
+
+**★ B. ★★ The headline signal — events firing with NO PREREQ (#258, the sharpest evidence yet).** The GM names
+**two** events by name as needing prereqs they don't have — the exact symptom of availability not being
+predicate-gated:
+
+| Event (verbatim) | GM complaint | What it proves |
+|---|---|---|
+| **"Half the animals that existed in 2020 are extinct"** | *"This needs some kind of prereq, this is the second test where half the animals on Earth are dropping dead in two years"* (POST 1) | An ecological-collapse event with **no precondition** fires **repeatedly / too early** (twice across two runs). Needs a gate (`meterAtMost{planet}` + `yearAtLeast`, or an `eventCompleted` chain) — the repeat-firing argues a missing **once-only / `eventCompleted` guard**, not just a year gate. |
+| **"Apply Bill of Rights & Voting Suffrage to Citizens in Space"** | *"(there technically aren't any citizens in Space, but there's no prereqs so I guess we're being proactive)"* (POST 3) | A consequence event fires before its **enabling state exists** (no "citizens in space" predicate ever became true). Needs a prereq (`eventCompleted`/`flag`) on the upstream node. |
+
+> **★ Build reality — the machinery EXISTS but is NOT applied here (code-verified).** The serializable
+> `Predicate` tree (`types.ts:1487-1504`) + its interpreter `evalPredicate` (`eraGraph.ts:12`) are real and
+> shipped, and graph nodes carry an optional `precondition` gated at selection (`eraEvents1772.ts:25`,
+> `eraGraph.ts:114`). **BUT predicate-gating is deployed in the 1772 era graph ONLY** — `eraEvents1856.ts`,
+> `data/anytimeEvents.ts`, and `data/anytimeNationalEvents.ts` contain **ZERO** `precondition`/`Predicate`
+> usage (grep `-c` = 0 each, re-verified at HEAD). Future-era content (which doesn't exist at all) would, like
+> 1856/anytime, fire year/weight-gated at best, ungated at worst. **#258 delta = extend predicate-gating to ALL
+> event content (esp. future) and make it a CONTENT AUTHORING REQUIREMENT, not just an available primitive.**
+> This is the strongest author-voiced datapoint for that gap.
+
+**★ C. The future-era content sample (~40 events, by theme; #221).** Not transcribed in full — sampled:
+
+| Theme | Sampled events |
+|---|---|
+| **Climate / ecological** | devastating hurricane (PR), oil spills ×2 (one −1 `planet`), MT/ID/WA droughts & wildfires, **rising seas → Gulf then West-Coast cities uninhabitable** (→ Great-Recession crash → Domestic Stability to lowest, open rebellion), half-the-animals-extinct (★B) |
+| **Tech / AI / cyber** | **Robot Controversy** (AI job-loss / civilization-end fears → Quality of Life to 3), cyber attacks ×2, rising cyber crime, **ban crypto** (+1 Econ), **mandate self-driving / ban human-driven cars**, **Universal Federal ID mandate**, **mandate microchipping & barcoding citizens**, pet microchips, regulate/mandate data encryption, **climate-control tech becomes available** |
+| **Culture / society** | **non-religious becomes the largest "religion"**, **legalize euthanasia nationwide**, **National Daycare System**, **remove religious symbolism from federal buildings**, **Direct Democracy in the post-internet world** (+1 Honest Govt), **social-media-as-governments** (pick-your-own-government), Bill-of-Rights/suffrage for citizens in space (★B) |
+| **Building-renaming FLAVOR class (#261)** | rename/name the **White House, the Pentagon ("Cool Math Building"), Treasury, SCOTUS building, VA, DoE, DoT, Capital Reflecting Pool** — after Conservative justices/generals/presidents, etc. A whole **partisan building-renaming generator** (~10 instances in 3 posts), cosmetic intent |
+
+**★ D. The meter set exercised — ★ NO MISSING METER (code-verified).** The future events move the **national
+meters** + party preference. All named labels map to shipped fields:
+
+| Thread label | Shipped field | Sample movement |
+|---|---|---|
+| Quality of Life | `quality` | "falls to 4"; Robot Controversy "to 3" |
+| Domestic Stability | `domestic` | "−1 (4)"; "by 2 → threats of rebellion"; "lowest, open rebellion" |
+| Economic Stability | `economic` | "drops to a Great Recession"; ban-crypto "+1 into a recession" |
+| Honest Government | `honest` | Direct Democracy "+1" |
+| **Earth's health** | **`planet`** | oil spill "Earth's health drops by 1" |
+| Party Preference | `game.partyPreference` (**NOT a meter**) | Race Riots + National Guard → "Party Preference +1 Red" |
+
+> ★ **All 7 meters are already modeled — incl. Earth's-health = `planet` (`types.ts:1399-1407`, `planet` at
+> `:1406`). There is NO missing meter.** `partyPreference` is a top-level `GameState` field (`types.ts:1570`),
+> correctly separate from the meter bundle. So the future-era *content* is missing, but the *meter substrate it
+> targets* is present and complete — events move meters via `EraEventResponseEffect.meters` (`types.ts:1448-1457`).
+
+| Surface | Shipped today | Designed (thread) | file:line |
+|---|---|---|---|
+| Era band | `Era = 'independence'\|'federalism'\|'nationalism'\|'modern'` — **no `future`** | a named Era-of-the-Future (2024+) | `types.ts:1337` |
+| Future scenario / content | only 1772 + 1856; **no future data**; era graphs are 1772+1856 | a bootable 2024-start scenario + ~40 future events | `src/data/scenario*.ts`, `eraEvents1772.ts`/`eraEvents1856.ts` |
+| Predicate / prereq gating | `Predicate` + `evalPredicate` + `precondition` exist, gated at `eraGraph.ts:114`, **but used in the 1772 graph ONLY**; 1856 + both anytime pools = **0** preconditions | every event needs a prereq it can't fire nonsensically/repeatedly | `types.ts:1487-1504`, `eraGraph.ts:12/114`, `eraEvents1772.ts:25` |
+| National meters | 7 incl. `planet`; `partyPreference` separate | Quality/Domestic/Economic/Honest/**Earth's-health**/Party-Pref all moved | `types.ts:1399-1407,1570,1448-1457` |
+| Building-renaming flavor | **NONE** (grep `rename`/`Pentagon` in `src/data` = 0) | a partisan renaming generator (~10 instances) | grep |
+
+**→ Net (b57):** the Era-of-the-Future is **doubly-unbuilt** (no era value, no scenario, no content) and was
+played by hand. Sharpens **#206** (doubly-unbuilt future era), **#221** (the ~40-event future content corpus),
+and — ★ most sharply — **#258**: the predicate/prereq machinery is BUILT but applied in the 1772 graph ONLY, so
+the delta is **extend predicate-gating to ALL content + make it an authoring requirement** (the half-animals /
+citizens-in-space events firing ungated are the evidence; the repeat-firing wants a once-only/`eventCompleted`
+guard). Adds the **building-renaming flavor class to #261** (one parametrized template + target/party list).
+★ **NO missing meter** — Earth's-health = `planet` (`types.ts:1406`); all 7 are modeled. (`2bb66197#POST 1,3`;
+`game-context.md` #206/#221/#258/#261; codebase `types.ts:1337,1399-1407,1448-1457,1487-1504,1570`,
+`eraGraph.ts:12/114`, `eraEvents1772.ts:25`.)
+
+#### 30.47.3 ★ The "Disgraced" trait system (#327 / #112 / #130 / #140 / #216) — impeachment/unpopularity→80% office-PROHIBITION + categorical Integrity-immunity + the 20% cabinet-SPREAD (vcczar-endorsed) + protégé −1-all + the contested disharmonious-expel + rare recovery (designed; SHIPPED = trait absent, impeachment 0%, retirement AGE-ONLY, Integrity only blocks Corrupt on a d6; ★ forceRetire executes but ZERO templates carry it)
+
+> **Source: `326c33dd` POST 1-3 (the "Disgraced" trait proposal; vcczar rules POST 2) + codebase
+> (`types.ts:62-117` the 55-trait `Trait` union [no Disgraced/Illicit/Disharmonious]; `:1278-1291` Politician
+> eligibility fields; `:1283` `protegeId`; `:634,639,658-692` trait-lifecycle / conflict-displacement;
+> `phaseRunners.ts:2341-2380` AGE-ONLY retirement; `:2723-2728` the `forceRetire` executor; `:2746-2750` the
+> Integrity d6 Corrupt-block; `anytimeEvents.ts:28,240-386` scandal templates + the `forceRetire` type decl).**
+> ★ vcczar's load-bearing ruling (POST 2): **"Already have most of this with retirement, but extending it to the
+> cabinet sounds like a good idea."** The code audit shows this describes the **FORUM game, NOT the shipped
+> build** — the build's retirement is purely age-based.
+
+**★ A. The proposal (POST 1, theFreezerFlame) — the rule cluster.**
+
+| # | Rule | Status |
+|---|---|---|
+| 1 | **Earn (president):** an **impeached OR significantly-unpopular** president → **80%** to gain Disgraced | treated NOT-new (vcczar: "already have most with retirement") — but the trigger (impeachment) is 0% built |
+| 2 | **★ Core effect:** a Disgraced pol is **prohibited from holding ANY office** (a hard, recoverable eligibility lock, distinct from death/retirement) | NEW first-class flag |
+| 3 | **★ Integrity immunity:** pols with **Integrity CANNOT receive Disgraced** (categorical) | shipped Integrity is WEAKER (d6 Corrupt-block only) |
+| 4 | **★ Cabinet spread:** each member of the disgraced president's cabinet has a **20%** chance to also gain Disgraced | **— vcczar's endorsed NEW bit (POST 2)** |
+| 5 | **Protégé penalty:** the disgraced president's protégés receive **−1 to ALL scores** (a stat hit, not the flag) | NEW; vcczar silent |
+| 6 | **Earn (Congress & SCOTUS):** members can gain Disgraced **via impeachment** | downstream of the unbuilt impeachment pipeline |
+| 7 | **Disharmonious-expel (CONTESTED):** a Disharmonious Rep/Sen → **5%** chance to PROPOSE a bill to expel an opposing-ideology, also-Disharmonious member; if it passes 2/3 → **80%** the expelled member gains Disgraced | contested; OP clarifies the 5% gates the *proposal* (POST 3); Imperator Taco Cat wants it narrowed to **Controversial @ Domestic-Stability = 1** (POST 2) |
+| 8 | **Rare RECOVERY:** a rare chance a Disgraced pol loses the trait ("popularity resurgence") | NEW; generalizes beyond Disgraced |
+
+**★ B. vcczar's ruling (POST 2) — the load-bearing build-state note.**
+
+- **"Already have most with retirement"** = the disgrace-on-scandal-REMOVAL idea is, in the designer's mind,
+  already served by the retirement/removal system (a scandal-hit pol is removed via forced retirement). Items
+  #1-#2 are treated as NOT new. **★ CAVEAT — true of the FORUM game, NOT the shipped build:** shipped
+  retirement is **AGE-ONLY** (see §C), with no scandal/unpopularity/impeachment removal path.
+- **"Extending it to the cabinet sounds like a good idea"** = the **20% cabinet-spread (#4)** is the
+  genuinely-new, designer-endorsed addition.
+- **Silent on:** the protégé −1-all (#5), a first-class office-prohibition FLAG distinct from retirement (#2/#3),
+  recovery (#8), and the disharmonious-expel (#7, actively contested).
+
+**★ C. SHIPPED vs DESIGN — the trait & ALL sub-mechanics are UNBUILT (code-verified).**
+
+| Area | In `src/` today | Requirement | file:line |
+|---|---|---|---|
+| "Disgraced" trait | **ABSENT** from the 55-trait union (grep `disgrac` = 0); corroborates the trait-roster gap **#216** | add the trait | `types.ts:62-117` |
+| Impeachment system | **0% built** (grep `impeach` = 0; #112) — items #1/#6 have **no trigger to hang on** | build the impeachment pipeline first | grep |
+| **★ Retirement = AGE-ONLY** | `runPhase_2_4_1_Deaths` computes retirement solely from `retireRateFor(age)*retireMult` (mortality brackets) — **no scandal/unpopularity/impeachment input**. So vcczar's "already have most" is **FORUM-not-build** (#130) | add a non-age removal trigger | `phaseRunners.ts:2351-2380` |
+| **★ forceRetire — RESOLVED** | The engine **DOES execute** `forceRetire` (sets `retiredYear`, vacates office via `markPoliticianRetired`) — but **ZERO event templates carry it in `effects[]`** (only the type decl at `anytimeEvents.ts:28`). So scandal/corruption→removal is **designed-not-shipped**; the fix = add `forceRetire`/`death` to a scandal template's effects (#140) | wire forceRetire into a scandal template | `phaseRunners.ts:2723-2728`; `anytimeEvents.ts:28` |
+| **★ Integrity immunity — NARROW** | Integrity only **blocks the `Corrupt` grant on a d6** during scandal-scaled events ("Integrity weathers the scandal — Corrupt does not take, on a d6"); it is a probabilistic, scandal-specific Corrupt-block, NOT the proposal's **categorical Disgraced** lock | extend to a categorical Disgraced block (100%) | `phaseRunners.ts:2746-2750` |
+| Office-prohibition FLAG | **NONE** — office eligibility is gated only by `deathYear`/`retiredYear`/`currentOffice`; no "barred/disgraced/ineligible" field. A recoverable Disgraced lock ≠ `retiredYear` (a permanent exit) | add a net-new recoverable flag + eligibility-filter wiring | `types.ts:1278-1291` |
+| Protégé −1-all (#5) | **NONE** — `protegeId` + the Kingmaker/Protégé system model mentorship, but no mentor-fall→protégé-penalty path | add the guilt-by-association stat hit | `types.ts:1283`; `phaseRunners.ts:1240+` |
+| Disharmonious-expel (#7) | **NONE** — grep `expel` = 0; no expel/propose-to-impeach plumbing. ★ **"Disharmonious" is itself ABSENT** from the `Trait` union (one of the canon-only traits, #216) | (lowest priority; likely drop or heavily gate) | grep; `types.ts:62-117` |
+| Trait-recovery (#8) | **NONE** as "popularity resurgence" — removal is only old-age fade (`fadingPool`) or conflict-displacement on a d6 (`TRAIT_CONFLICTS`) | add a penalty-trait recovery path | `types.ts:634,639,658-692` |
+
+**→ Net (b57):** mints **#327** (the Disgraced trait system). The trait and **all** sub-mechanics are
+**0% built**, and ★ vcczar's "already have most with retirement" does **NOT hold for the shipped build** —
+retirement is age-only (#130), impeachment is 0% (#112), and Integrity only blocks Corrupt on a d6 (not a
+categorical Disgraced lock). ★ **forceRetire RESOLVED:** the executor exists (`phaseRunners.ts:2723-2728`) but
+**zero templates carry it**, so scandal→removal is designed-not-shipped — the fix is adding `forceRetire`/`death`
+to a scandal template's `effects[]` (#140). The designer-endorsed bit is the **20% cabinet-spread**. Corroborates
+the trait-roster gap (#216, +Disgraced/Disharmonious). (`326c33dd#POST 1-3`; `game-context.md`
+#327/#112/#130/#140/#216; codebase `types.ts:62-117,1278-1291,1283,634,639,658-692`,
+`phaseRunners.ts:2351-2380,2723-2728,2746-2750`, `anytimeEvents.ts:28,240-386`.)
+
+#### 30.47.4 ★ INCUMBENCY + focus-race (#287 / #297) — the ousted-official +1 "half" comeback advantage (a NEW sub-rule of the seat-specific +2 incumbency family) + the parked governor-mini-approval + the ★ #297 VERBATIM re-post (designed; SHIPPED = `calcStateVote` has NO incumbency/prior-office term, `Politician` has no ousted/prior-seat flag; the code's `incumbencyAdvantage` is the faction-leader CHALLENGE — distinct)
+
+> **Source: `4df5941d` POST 1-7 (the ousted-comeback +1 idea + a verbatim #297 re-post) + codebase
+> (`phaseRunners.ts:3685-3723` `calcStateVote` [the election scorer]; `:3733` the primary scorer; `:3908-3911`
+> Senate vacate; `runPhase_2_9_6_Congressional` House re-contest; `types.ts:1252-1291` `Politician`
+> [`currentOffice` `:1278`, no prior/ousted field]; `:462-479` `LEADERSHIP_RULES.eraConfig.*.incumbencyAdvantage`;
+> `pv.ts`).** ★ Do NOT re-derive #297 (faction-leader bonus + focus-race) — POST 7 is a **verbatim re-post**;
+> cite it as additional corroboration, don't re-describe it as new. This child adds the **NEW ousted-comeback
+> +1 sub-rule** and the **parked governor-mini-approval**.
+
+**★ A. MAIN PROPOSAL — the ousted-official comeback "half" (+1) incumbency advantage (POST 1, 4, 5, 6).** A
+former **Rep / Senator / Governor** who was **OUSTED the previous election** gets a **+1 ("half") incumbency
+advantage** when running for their **OLD seat** (literal same office in the same state). Rationale = name
+recognition + a donor network ("An ousted former elected official does start with name recognition and a network
+of donors, even if they can be beaten by a well-run campaign," POST 4).
+
+- **"Half"** = explicitly a fraction of full incumbency (full sitting-incumbent = the **+2** of the #287
+  House-incumbency thread; this is its half).
+- **Effectiveness deliberately NOT factored** — "Effectiveness isn't factored into incumbency advantage IRL or
+  in-game" (POST 4); there is **no "were they good at their job?" measure** in the game and the proposer says
+  one isn't feasible (POST 3).
+- **Implementability:** "the flag should be easy to implement" (POST 5) — a per-pol "ousted from seat X last
+  election" flag + a +1 term in the matching `calcStateVote` context.
+- **★ Balance objection (POST 6):** "there's already a tendency for people/CPUs to run the same candidates over
+  and over again and I don't really want to incentivize that." A +1 to the SAME ousted candidate in the SAME
+  seat pushes toward stale rematches — the central design tension (possible soft veto or tuning note; unresolved).
+- **No in-thread approval** — left as an open proposal, gated behind the standing empirical-data/realism bar
+  ("Do we have empirical data backing this though?", POST 5).
+
+**★ B. Parked — governor mini-approval (POST 3, explicitly deferred).** Floated as the would-be effectiveness
+proxy for incumbency, then rejected as out-of-scope: "Would be cool if governors could have their own mini
+approvals though but that's a whole new mechanic that I don't see being added at this point." Log as a SEPARATE
+parked idea, not a requirement. (No per-governor approval meter exists; grep = 0.)
+
+**★ C. ★ POST 7 is a VERBATIM RE-POST of #297 (corroboration only).** The same poster "throw[s] out two more
+ideas," which are the identical two mechanics already ingested as **#297** (batch 51, the `b5b0ace9` thread,
+topic 6223): (1) **faction-leader bonus: +2 primary / +1 general**; (2) **secret "focus race"** (each election,
+every faction designates ONE non-presidential race — Gov/Sen/Rep, never the Presidency — to focus; die-rolled
+5-6→+2 / 3-4→+1 / 1-2→nothing; hidden until results). The two threads (6218 here, 6223 = #297) are the **same
+proposer's election-bonus cluster.** Treat as **corroboration of #297 — do NOT re-number** (the deep #297 home
+already documents both).
+
+**★ D. SHIPPED vs DESIGN — no incumbency term anywhere (code-verified).**
+
+| Surface | Shipped today | Designed (thread) | file:line |
+|---|---|---|---|
+| Election scorer | `calcStateVote` = `50 + baseLean*5 + partyPref*5 + enthusiasm*2 + pv*0.1 + factionBias + traitBonus + (±4 jitter)` — **no incumbency, no prior-office, no returning-candidate term**. A returning officeholder gets only office-weighted PV via `pv*0.1` | a +1 "half" term for an ousted former-holder in their old seat | `phaseRunners.ts:3685-3723` |
+| Primary scorer | `pvCache + command*5 + traitBonus` — no incumbency term | (same +1) | `phaseRunners.ts:3733` |
+| Ousted / prior-seat flag | **NONE** — `Politician` has `currentOffice` but **no** `previousOffice`/`priorSeat`/`ousted`/`lostElection`/`officeHistory` (grep = 0). Nothing records that a pol held-then-lost a specific seat | a "lost seat X last election" flag | `types.ts:1252-1291,1278` |
+| "Old seat" concept | **NONE** — House seats re-contested from scratch each cycle (fresh top-PV field, no lock/bonus); Senate vacates the prior holder with no bonus | a returnable prior seat | `runPhase_2_9_6_Congressional`; `phaseRunners.ts:3908-3911` |
+| **★ The code's `incumbencyAdvantage`** | the **faction-leader CHALLENGE** system (`LEADERSHIP_RULES.eraConfig.*.incumbencyAdvantage`, 8-30 by era; consumed `phaseRunners.ts:2070`, `FactionLeaderPage.tsx`) — **intra-faction leadership tenure, NOT electoral seat incumbency. Do NOT conflate.** | — | `types.ts:462-479` |
+| Governor mini-approval | **NONE** (grep = 0) | parked / out-of-scope | grep |
+| #297 (leader bonus / focus-race) | **0% built** — leadership reaches elections ONLY via PV (`FactionLeader: 8`/`PartyLeader: 14` prestige); no flat leadership election term; **no focus-race** (grep `focusRace\|campaignFocus` = 0). Leadership's only generic election touch is `LEADERSHIP_RULES.electionOnBallotMul` (1.1× PV) | the #297 bonuses | `pv.ts`; `phaseRunners.ts:1558` |
+
+**→ Net (b57):** the **ousted-comeback +1 "half" incumbency advantage** is a **NEW sub-rule of the #287
+seat-specific +2 incumbency family** (file it there, not as a fresh top-level gap) — SHIPPED `calcStateVote` has
+**no incumbency/prior-office term** and `Politician` has **no ousted/prior-seat flag**; gated behind the
+realism bar + carries a designer over-incentivize-repeats objection. The **governor mini-approval** is parked
+(out-of-scope). ★ POST 7 **corroborates #297** verbatim (do NOT re-number). ★ The code's `incumbencyAdvantage`
+(`types.ts:462`) is the **faction-leader CHALLENGE — distinct** from electoral seat incumbency. (`4df5941d#POST
+1-7`; `game-context.md` #287/#297; codebase `phaseRunners.ts:3685-3723,3733,3908-3911,2070,1558`,
+`types.ts:462-479,1252-1291`, `pv.ts`.)
+
+#### 30.47.5 ★ Menendez / ILLICIT prison-removal (#140 / #216) — the Illicit-trait → small-chance prison-corruption removal flavor + the `[age]` template token (designed; SHIPPED = controversial/scandal removal is designed-not-shipped [the forceRetire-wired-but-no-event finding], "Illicit" absent from the trait union, no `{age}` interpolation)
+
+> **Source: `0dc883c4` POST 1-4 (the Menendez prison flavor request; vcczar rules POST 4) + codebase
+> (`types.ts:62-117` the `Trait` union [no `Illicit`]; `anytimeEvents.ts:27-28` the `death`/`forceRetire` effect
+> kinds, `:240-386` scandal templates, `:37+` the `{first} {last} ({state})` text interpolation [no `{age}`];
+> `anytimeNationalEvents.ts:202-210` `civic-executive-scandal`).** A MINOR flavor refinement of an **existing
+> (designed) controversial-removal mechanic** — folds onto the §30.47.3 disgrace/removal findings. ★ vcczar
+> (POST 4): *"There are already random events that can remove controversial politicians from office and/or the
+> game"* — true of the DESIGNED game, NOT the shipped build (the forceRetire-wired-but-no-event finding).
+
+**★ A. The request (POST 1, theFreezerFlame; the only signal).** A **trait-targeted scandal-removal event:**
+condition on a pol (a) **holding office** AND (b) having the **Illicit** trait → roll a **small chance** →
+**remove from the game**, with flavor *"[Politician], [age], has been sentenced to prison for corruption
+charges."* ("It would be kinda funny tbh.") Net-new vs the existing removal mechanic = (1) it keys specifically
+on **Illicit** (not generic "controversial"), and (2) the **prison-for-corruption flavor + the `[age]` token**.
+(Jokes only: POST 2 "won't have any Illinois politicians left," POST 3 "You Blagojevich'ed him!")
+
+**★ B. SHIPPED vs DESIGN — removal is designed-not-shipped; "Illicit" absent; no `{age}` token (code-verified).**
+
+| Area | In `src/` today | Designed (thread) | file:line |
+|---|---|---|---|
+| "Illicit" trait | **ABSENT** (grep `Illicit` = 0). The corruption-adjacent carriers are **`Corrupt`/`Scandalous`/`Controversial`** — "Illicit" is forum/design vocabulary (open: distinct trait or alias for the three?). Corroborates #216 | add the trait, or alias | `types.ts:62-117` |
+| **★ Scandal → REMOVAL event** | **designed-not-shipped.** The scandal-* templates (bribery/speculation/federal-investigation/affair/misconduct/gaffe) only **grant `Scandalous`/`Controversial` + a `pvHit`** — **none removes the pol.** The removal **primitive exists** (`{kind:'death'}`/`{kind:'forceRetire'}`), but `death` is wired to only 2 violence/accident templates and **`forceRetire` is carried by ZERO templates** (type decl only). So vcczar's "already exist" = the DESIGNED game; the BUILD has no scandal→removal wiring | wire a scandal/corruption → removal (forceRetire/death) event with a small trigger probability | `anytimeEvents.ts:27-28,240-386`; `anytimeNationalEvents.ts:202-210` |
+| Per-event flavor text | **partially shipped** — anytime events carry a `text` field with `{first} {last} ({state})` interpolation; the prison line is trivially expressible | the prison-corruption line | `anytimeEvents.ts:37+` |
+| **`[age]` template token** | **NOT a variable** — no `{age}`/`[age]` token in the interpolation today | add `[age]` as a template variable | `anytimeEvents.ts` (grep = 0) |
+
+**→ Net (b57):** the **scandal/controversial-REMOVAL** event is **designed (POST 4) but NOT shipped** — the
+exact **forceRetire-wired-but-no-event** finding cross-referenced at §30.47.3§C (the `forceRetire` executor
+exists at `phaseRunners.ts:2723-2728` but **zero templates carry it in `effects[]`**); the build's scandal-*
+events only grant `Scandalous`/`Controversial` + `pvHit`. The genuinely-new (small) refinement = an
+**office-holder + Illicit-trait → small chance → removed-from-game**, narrowing the generic controversial-removal
+to **Illicit** + adding **prison-corruption flavor + an `[age]` template token** (not currently a variable). Low
+priority ("kinda funny"). Sharpens **#140** (the scandal-recycle/removal gap) and **#216** ("Illicit" absent
+from the trait union). (`0dc883c4#POST 1-4`; `game-context.md` #140/#216; codebase `types.ts:62-117`,
+`anytimeEvents.ts:27-28,37,240-386`, `anytimeNationalEvents.ts:202-210`.)
+
 ### 30.4 Authority hierarchy reminder
 
 When rule sources disagree:
