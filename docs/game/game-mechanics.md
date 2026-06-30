@@ -23998,6 +23998,673 @@ lobby-card cluster. ⚠ **IP / real-brand-name risk** (Coca-Cola, Apple, Netflix
 (`f1209123#POST 1, 2`; `game-context.md` #221/#248/#294/#206/#261; codebase `types.ts:1466,1328,398,310-327`,
 `phaseRunners.ts:1631-1656`, `eraEvents1772.ts:84`, `eraEvents1856.ts:60`.)
 
+### 30.45 Rulings folded from batch 55 — ★★ the canonical SECESSION / CIVIL-WAR / RECONSTRUCTION ruleset ("AMPU rules 3.0.32 / 3.0.35": the ideology-keyed convention-VOTE table + politician-stay-% tables + office modifiers + Union-Loyalist/Provincial loyalty + Civil-War-as-Major-War theaters + secessionist Government + Reconstruction readmission/auto-readmit + the #324 5-step citizenship-strip ladder) + ★ the canonical CPU PRESIDENTIAL-CONVENTION spec (d6 promise table + place-based drop-out + 10/25-ballot compromise/Dark-Horse + CPU VP-pick + platform/keynote; the INTENTIONAL multi-ballot slow-roll design rule) + the canonical Abilities/Expertise/Traits reference ("3.0.19-2": 6 abilities / 19 expertises / 57 traits + lobby↔expertise + cabinet tiers; the ★ backroom-7th-ability + 55-vs-57-trait + cabinet-tier build-vs-canon deltas) + 1892 "Era of Progressivism" + the Cabinet-Appointment-ENTHUSIASM calculator (20/10/5% per-tier roll) + Automation script-inventory (the Lingering 4-part / committee-+1-roll / CPU bill-scoring gaps; rules 3.0.25) — gaps #319–#324 (new) + sharpened #56/#58/#288/#156/#157/#284/#324/#45/#34/#121/#185/#71/#72/#181/#183/#20/#216/#294/#66/#124/#199/#92/#301/#40/#306/#293/#30/#134/#322/#323/#296 (`6b680261-secession-and-civil-war` / `d1058b12-cpu-rules-for-presidential-conventions` / `87c94e25-abilities-expertise-traits-reference` / `26b112e5-1892-era-of-progressivism` / `1bb2ac6b-working-towards-automation-scripts`)
+
+> **★ Batch 55 = a LARGE rules-CANONICALIZATION batch — five DIGEST-ONLY sources, FOUR of them canonical
+> rules-DOCS (no historian ran the batch; only one source narrates any in-game play).** **Net new shipped
+> behavior: NONE** (re-verified at `src/` HEAD 2026-06-29) — every mechanic below is **designed-only,
+> a designer-ratified canonical ruleset, or a confirmation/delta vs already-shipped behavior**. The two
+> headline canonical specs are (a) the **Secession / Civil-War / Reconstruction ruleset "AMPU v1.3"** —
+> vcczar-approved and folded into the Union rules doc at versions **3.0.32 & 3.0.35** — whose engine is
+> **~0% shipped** (data primitives `isSlaveState`/`region` exist but are read by ZERO secession code, #288),
+> and (b) the **canonical CPU Presidential-Convention spec** for the 2.9.2 phase (also ~0% shipped — 2.9.2
+> is a one-line log stub). New gap IDs minted this batch: **#319–#324**. The five sources:
+> - **`6b680261-secession-and-civil-war`** (politicslounge topic 6626, 10 posts / 1 chunk; **Oct–Nov 2025**;
+>   OP @Bushwa777 got the Civil War in a playtest, found secession rules "very slim," asks for ONE
+>   consolidated category; the **rules author** transcribes the full spec [POST 4, ~200 lines], runs it by
+>   ebrk85/10centjimmy/Zagnut/etc., **vcczar approves** [POST 4, 27] → into Union rules **3.0.32 & 3.0.35**
+>   [POST 8]; @theFreezerFlame adds the accepted **Provincial = 100%-by-region** rule [POST 9–10]). ★ The
+>   **HEADLINE** — the deep canonical spec for the secession gaps. → #319/#321/#324 (new) + #56/#58/#288/
+>   #156/#157/#284/#45/#34/#121 (sharpen). Cite `6b680261#POST 4, 9, 27`. **§30.45.1.**
+> - **`d1058b12-cpu-rules-for-presidential-conventions`** (politicslounge topic 6738, 11 posts / 1 chunk;
+>   **Jan 2026**; @Arkansas Progressive rewrites the canonical CPU-convention rules-doc, @OrangeP47
+>   discusses). The full deterministic-CPU spec for the **PRESIDENTIAL nominating convention** (NOT the
+>   Constitutional Convention — `pendingConvention` is a different system). → #319 (new, the CPU-convention
+>   spec) + #185/#71/#72/#181/#183/#20/#74/#10 (sharpen). ★ **DESIGN RULE: the multi-ballot slow-roll is
+>   an INTENTIONAL settled compromise — do not re-litigate** (POST 7, 10). Cite `d1058b12#POST 1, 4, 7, 10`.
+>   **§30.45.2.**
+> - **`87c94e25-abilities-expertise-traits-reference`** ("Abilities, Expertise, and Traits for Dummies";
+>   politicslounge topic 6251, 21 posts / 1 chunk; **Jul 2025–Mar 2026**; @Arkansas Progressive authors,
+>   community asks clarifying Qs; sourced from rules **3.0.19-2**). THE authoritative reference for the four
+>   pillars of a politician's stat block — **6 Abilities · 19 Expertises · 57 Traits · Lobby/Cabinet
+>   plumbing.** → #319/#320/#321 (new) + #216/#294/#66 (sharpen). Cite `87c94e25#POST 1-21`. **§30.45.3.**
+> - **`26b112e5-1892-era-of-progressivism`** (politicslounge / Political Process Discord, 23 posts / 1
+>   chunk; **1892-start** era-playtest; GM @Arkansas Progressive; mixed human+CPU, "**script-automated
+>   except player-input Era Evos**"). The only source that narrates in-game play (one 1892 year:
+>   leaders→appointments→confirmations→gains→deaths). Names an **1892 "Era of Progressivism" start era**
+>   the 4-value `Era` enum can't express; prints the **Cabinet-Appointment-ENTHUSIASM calculator** (the
+>   sharpest new delta). → #322 (new) + #124/#199/#92/#301/#40/#306/#293/#30 (sharpen). Cite
+>   `26b112e5#POST 1, 12, 13, 16-20`. **§30.45.4.**
+> - **`1bb2ac6b-working-towards-automation-scripts`** ("Working Towards Automation: Scripts"; politicslounge
+>   topic 1524, 47 posts / 1 chunk; **2022–2026**; @Arkansas Progressive + community hand-build Python/
+>   Google-Apps scripts to automate the spreadsheet-playtest math). A **meta/tooling** thread — the **script
+>   inventory is a de-facto spec of the engine's subsystem set** (corroborates #20 + the whole phase set);
+>   three specific build signals (Lingering 4-part, committee +1-ability roll, CPU bill-scoring formula);
+>   rules-version pin **3.0.25**. → #323 (new) + #134/#322/#20/#296 (sharpen). Cite `1bb2ac6b#POST 2-5,
+>   38-41, 44`. **§30.45.5.**
+>
+> **★ Cross-section note — this batch adds NO shipped rules and re-confirms huge existing sections; do NOT
+> re-document them.** The deep existing homes the children below CROSS-LINK to (rather than re-derive):
+> the Civil-War/Reconstruction arc ([§23](#23-civil-war--reconstruction-1856-arc-designed-not-built):
+> #56 secession §23.1, the two-theater engine §23.3, Reconstruction §23.4, the canonical #156 Reconstruction
+> rewrite §23.4.1); the convention machinery ([§15.3](#153-convention-machinery-292--full-forum-design-designed-not-built) /
+> [§25.4](#254-convention-cpu--per-ballot-momentum--interballot-menu--compromise-picker) /
+> [§22.6](#226-the-cpu-delegate-engine-convention--primary-apportionment)); the canonical 2.5.1 Lingering algorithm
+> ([§11.1.z](#111z--the-canonical-251-lingering-algorithm-179134--multi-roll-meter-pit--taxtariff-decay--admin-save-ladder--officermeter-map-new-rulebook-batch-31-designed-the-authoritative-source));
+> the cabinet confirmation subsystem ([§9.3.11](#9311--the-canonical-cabinetscotus-confirmation-subsystem-172dh-76--199--the-authoritative-spec-new-rulebook--apptdeepdive-batch-31-designed-not-built))
+> and cabinet→enthusiasm rework ([§9.3.7](#937--ted-ruled-cabinet--enthusiasm-rework-designer-authoritative-tedchange)); the meter→enthusiasm→election model
+> ([§29.3](#293--the-meterenthusiasmelection-model--51-resolved-drums-4-step--18-resolved-terror2000--vs-2-layer-model-gap-1851)) and the canonical 4-step enthusiasm-shift rule ([§29.10](#2910--the-canonical-4-step-enthusiasm-shift-rule--crisis-bill-failure-scoring-51-resolved)).
+> The subsections below add only the **NEW canonical rulesets, exact verbatim tables not yet captured, the
+> new gaps (#319–#324), and the verified shipped confirmations/deltas**, all tagged **b55**.
+
+#### 30.45.1 ★★ the canonical SECESSION / CIVIL-WAR / RECONSTRUCTION ruleset ("AMPU rules 3.0.32 / 3.0.35") — the ideology-keyed convention VOTE table + politician stay-% tables + Union-Loyalist/Provincial loyalty + Civil-War-as-Major-War theaters + secessionist Government + Reconstruction readmission + the #324 5-step citizenship-strip ladder (designed; the engine is ~0% shipped — `isSlaveState` ships but is read by ZERO secession code)
+
+> **Source: `6b680261` POST 4 (the entire spec, ~200 lines — the load-bearing post), 9–10 (the Provincial
+> 100%-by-region addition), 8/27 (vcczar approval → Union rules 3.0.32 & 3.0.35) + codebase
+> (`types.ts:62-117,1322,1329,1337,1403,1453`, `phaseRunners.ts:2834-3053,3175,3209,3240-3252`,
+> `revolutionaryWar.ts:16-18,254-263`, `RevolutionaryWar` type `types.ts:1371-1387`, `phases.ts:134`,
+> `states1772.ts`/`states1856.ts`, `StatesPage.tsx:20`).** The **batch headline.** This is the deep
+> CANONICAL spec for the secession/CW/Reconstruction gaps already documented at [§23](#23-civil-war--reconstruction-1856-arc-designed-not-built)
+> (#56/#57/#58 §23.1/§23.3/§23.4, the #156 Reconstruction rewrite §23.4.1, the #121 appointment cascade).
+> ★ **Do NOT re-derive §23 — this child adds the EXACT verbatim tables (the ideology-VOTE table, the
+> stay-% tables, the office modifiers, the #324 citizenship ladder) that §23 had not yet captured**, plus
+> the 3.0.32/3.0.35 version marker. All rules here are **designer-ratified canonical spec** (vcczar-approved).
+
+**★ A. Secession TRIGGERS by era (the entry points; POST 4 — summary, not every option).** Many events can
+break up the Union; each is era-keyed:
+
+| Era | Trigger → outcome |
+|---|---|
+| **Federalism** | *Quaker Petition to Abolish Slavery, opt-B* → early **Upper-South + Deep-South** secession convention |
+| **Republicanism** | *Essex Junto* → **NY + New England** separate nation; *Hartford Convention* + state conventions → **MA/CT/RI/NH/VT (+ME if formed)** |
+| **Democracy** | *Nullification Crisis* → **SC secedes** (other Deep-South get the convention option); *Texas Revolution opt-C* → TX joins a Deep-South Confederacy; *Mormon Extermination Order opt-B BLUNDERED* → Upper/Deep-South crisis |
+| **Nationalism** | *John Brown's **Raid** opt-B BLUNDERED* → automatic conventions + Civil War (Upper+Deep South); *John Brown's **Uprising*** (raid WORKED) → nationwide slave uprising, branches opt-C (US military disperses) / opt-D (Congress abolishes slavery → ends it, OR fails → **North secedes**); **CSA formation after the last elections** (FL/AL/GA/MS/LA/TX/SC/NC/TN/AR/VA) **triggers after a RED election win where NO southern state voted for the candidate**; **border-state spread** (MD/DE/KY/MO join the established CSA); **Northern variants** (NY+New England → Northern Confederacy) |
+
+> Seceded-state pols go **inactive** (not playable) unless **Union Loyalist**, until their states are
+> regained (see §C/§F). This cross-links to the antebellum trigger chain already at
+> [§23.1](#231-58-secession--southern-unionist--secessionist-trait-gating-the-antebellum-payoff) and the
+> Northern-secession extension at [§30.37](#3037-rulings-folded-from-batch-47--four-policy-genre-drops-currency--taxation--slavery--infrastructure--the-northern-secession-civil-war-extension--the-currency-prereq-tree-as-the-258237-content-engine-reference-shape--the-7-predicate-classes--288-slavery-flagsecession-eligibility-coupling--northernnew-england-secession--non-playable-rumps--the-southern-led-reconstruction-branch--262-cross-genre-repeal-only-rw-gap-de64de1a-currency--1bf19872-taxation--5d7c29ee-slavery--9c383f22-northern-secession--d62ea397-infrastructure).
+
+**★ B. State secession CONVENTION — the Gov-action ideology-keyed VOTE table (POST 4).** A **Gov action**;
+each state's politicians vote, ideology sets the probability. Border-state table is separate (§D).
+
+| Ideology | SOUTHERN Civil War — vote FOR secession | NORTHERN Civil War — vote FOR secession |
+|---|---|---|
+| Traditionalist | **75%** | 0% *(proposed)* |
+| RW Populist | **75%** | 0% *(proposed)* |
+| Conservative | **50%** | 25% *(proposed)* |
+| Moderate | **30%** | **50%** |
+| Liberal | **0%** | 50% *(proposed)* |
+| Progressive | **0%** | **75%** |
+| LW Populist | **0%** | **75%** *(proposed)* |
+| **Nationalist** (modifier) | **−25% likelihood** | **−25% likelihood** |
+| **Union Loyalist** (trait) | **NEVER** | **NEVER** |
+| Civil Rights / LW Activist | — | **75%** |
+
+> The Northern-CW rows tagged *(proposed)* are the author's suggested mirror addition (POST 4): in the North
+> it's the LW-Pops/Progs (abolitionists) leading secession after failed nationwide abolition, the mirror of
+> Trad/RW-Pop leading in the South.
+
+**Vote outcomes (POST 4):**
+- **Secede** → the state leaves and joins any other seceded state to form a Confederacy.
+- **Vote NO** → **administration −1 in elections in that state at the next national election** + **50%
+  chance domestic-stability −1** ("a state may find they are an island unto themselves" if it stays while
+  all neighbors leave).
+
+**★ C. WHICH POLITICIANS LEAVE — the stay-% tables (POST 4).** *Union Loyalist → never secedes regardless
+of state.* Otherwise roll per the ideology/race/region table for the relevant theater:
+
+| SOUTHERN secession — % a pol STAYS with the Union | Stay % | | NORTHERN secession — % a pol STAYS with the Union | Stay % |
+|---|---|---|---|---|
+| Liberal / Progressive / LW Populist | **90%** | | LW Populist / Progressive (abolitionists) | **10%** |
+| Black politicians | **99%** | | Black politicians | **1%** |
+| Nationalist | **50%** | | Liberal | **25%** |
+| Moderate, Upper South | **10%** | | Moderate | **50%** |
+| Moderate, Southwest | **10%** | | Nationalist (any ideology) | **75%** |
+| Conservative, Upper South | **5%** | | Traditionalist | **75%** |
+| Moderate, Deep South | **3%** | | RW Populist | **90%** |
+
+**National-figure office modifiers (applied to the SECEDE chance; POST 4):**
+
+| Office | Modifier to secede |
+|---|---|
+| Gov / US Senator / US Rep of a seceding state | **+5%** (more likely to secede) |
+| President / VP / cabinet / cabinet-level officer | **−10%** |
+| SC Justice | **−25%** |
+| General / Admiral | **−10%** |
+
+**★ D. Border-state table (MD, DE, KY, MO — Southern-secession case; POST 4).** Ideology-keyed chance to
+**SECEDE** (Union Loyalist never secedes):
+
+| Ideology | Secede % |
+|---|---|
+| RW Populist / Traditionalist | **75%** |
+| Conservative | **50%** |
+| Moderate | **25%** |
+| Liberal / Progressive / LW Populist | **10%** |
+
+**★ E. The loyalty-trait system (the heart of it; POST 4, 9–10):**
+- **Union Loyalist** (EARNED by pols who defy a seceding home state): **never secede**; **+1 party
+  preference to a presidential ticket** during CW/Reconstruction (if ≥1 ticket member has it); **−1 in
+  their home-state elections AFTER Reconstruction**; they **keep their seceded home state** as residence.
+  Seceded states **cannot send Reps/Senators to US Congress or get new SC justices**, but loyal pols from
+  those states **can serve in the US military, cabinet, or as Ambassador**.
+- **Provincial** (accepted addition, POST 9–10): **100% secession-or-loyalty by region, regardless of
+  ideology** — **OVERRIDES the % tables** (B/C/D).
+- **Southern Unionist** — the loyalty-to-Union-from-a-Southern-state archetype (will NOT secede with the
+  Deep/Upper South or Southwest).
+
+**★ F. Civil War = a MAJOR WAR — theater structure (POST 4).** Tiered as the general case of the war system
+([§21.1](#211-generic-cross-era-war-system), [§23.3](#233-56-civil-war--the-two-theater-combat-engine-multi-term-subsystem)):
+- **Northern secession** → **ONE front (Northeast) + sea.** US must win the front AND at sea.
+- **Southern secession** → **TWO land theaters (East + West), each its own theater, + sea in BOTH.** US
+  must win **both** land theaters **and** at sea in both to win.
+- **Secessionist Government (#157):** the new Confederacy appoints **at random** a **President, VP, Senior
+  Admiral, Senior General** — criteria mirror the US (Pres/VP ≥35 yrs + reside in a seceding state + ≥1
+  Command; Sr Admiral = Naval interest + ≥1 Military skill; Sr General = Military/Army interest + ≥1
+  Military skill). Optional: a secessionist cabinet + Ambassadors + lower Generals/Admirals on identical
+  US-cabinet criteria.
+- **Guerilla Warfare = a separate MINOR War (POST 4):** even after the conventional Civil War is **WON**,
+  there's a chance for a guerilla war in the "back woods"; affected states enter heavy military
+  reconstruction, but **states CANNOT be readmitted until the guerilla war is finished.**
+
+**★ G. Reconstruction — state readmission (Union victory; POST 4 = #156, sharpens [§23.4](#234-57-reconstruction-readmission-subsystem-end-nationalism--gilded) /
+[§23.4.1](#2341--hd1--reconstruction-played-by-humans-on-both-sides--vcczars-authoritative-rewrite-156-the-canonical-reconstruction-design)).** Triggered immediately on Union victory:
+- On war end (**phase 2.7**), formerly-seceded states go **immediately** into military occupation, then
+  are auto-proposed in Congress for "affirmation" (or via Presidential exec action).
+- *"Create Military Districts to establish Martial Law"* → **5 military districts**, Union Generals
+  governing. **President appoints Governors (2-yr / half-term terms, in phase 2.8 Executive)** — Gov needs
+  ≥1 Gov skill + in-state residence; **all real-life pols (Blue & Red) must be appointed before any are
+  generated**; no term limits. State gets **no Congressional representation** until Congress readmits it;
+  as states return via Congress, the President **loses** Gov-appointment power there.
+- Readmission also requires **14th-Amendment ratification**.
+- **The 3 readmission plans (Congress OR President-by-exec-action; already in the game's bill list):**
+  1. **Immediate / pre-war bias** — bring states back at once, no reconstruction, with pre-war biases.
+  2. **10% Ironclad Oath plan** (Andrew Johnson's) — all states back, **no party-preference penalty**.
+  3. **"Establish Strict Majority Loyalty w. Ironclad Oath"** — states voted on **individually**; each
+     readmitted state shifts **+2 toward the incumbent** AND its Gov/Congress party-pref shifts **+2 in the
+     OPPOSITE direction of the historical state majority** for **8 YEARS / 4 HALF-TERMS** (e.g. TN Blue+2 →
+     neutral; CT Red+1 → Blue+1).
+- **★ AUTO-READMIT (if Congress does NOTHING): states automatically readmit after 12 YEARS / 6 HALF-TERMS
+  with NO party-pref penalty** — mirrors 1865–1877. So Congress has **6 half-terms** to act or the
+  Strict-Majority penalty never lands.
+- **Representation on readmission:** states keep their **pre-secession House seat count until the next
+  census** — which should count CW casualties (more the longer the war ran) + freed slaves if given the
+  vote → couples to the census/apportionment subsystem ([§30.43.1](#30431--34--305--307--308--the-full-censusreapportionment-algorithm-rules-3024-the-ordered-5-step-ev-recompute--house-cap-reconciliation--bigmedsmall-classification--influential-rep-delegation-vote-model--ahistorical-seat-bias-designed-0-shipped)).
+
+**★ H. Reconstruction — politicians who seceded: the #324 5-step CITIZENSHIP-STRIP LADDER (POST 4).**
+Congress **or** President may decide pol citizenship. Five options, **least → most severe**, each with a
+**±250-pt ideology swing** (Southern secession shown; Northern = opposite points unless noted):
+
+| # | Option | Ideology swing (±250 pts) |
+|---|---|---|
+| 1 | **Restore Citizenship of Former Confederates** (all seceded pols pardoned) | **+250** RW-Pop/Trad/RW-Activist · **−250** LW-Pop/Prog/LW-Activist |
+| 2 | **Strip Senior Confederate leaders only** (Pres, VP, Sr Admiral, Sr General removed; rest pardoned; Reconstruction active) | **+250** Trad & Cons · **−250** Lib & Prog |
+| 3 | **Strip ALL Confederate leaders** (Pres, VP, cabinet-if-selected, senior military) — *"closest to historical"* | **+250** Cons/Mod/Lib · **−250** RW-Pop/LW-Pop *(same if Northern)* |
+| 4 | **Strip all Confederate leaders + all who held office at secession** (Govs, Reps, Senators, cabinet, sr military) | **+250** Mod/Lib · **−250** RW-Pop/LW-Pop/RW-Activist/LW-Activist *(all cases)* |
+| 5 | **Strip ALL who seceded** (every Confederate-declaring pol removed permanently). **EXCEPTION: pols draftable DURING the war are exempt** — the war began before they could swear allegiance, so the **draft class of 1864 and later survive** | **+250** LW-Pop/Prog/LW-Activist · **−250** RW-Pop/Trad/RW-Activist |
+
+- **Plus a Presidential exec action — "Pardon Confederate Soldiers"** (cannot be deactivated): pardons
+  rank-and-file soldiers after a loyalty oath; does **NOT** pardon any politician.
+
+**★ I. Reconstruction election bonuses (#284 — while penalties last; POST 4):**
+- **Black candidates +1 in EVERY election** in readmitted states — *as long as Blacks have the vote*
+  (freed-slave enthusiasm); lasts as long as the state's party-pref penalty is in effect.
+- **Civil Rights-interest candidates +1** (Gov / Rep / Senator) in any former Confederate state — *if
+  slavery is abolished by Congress during the war or the half-term after*; same duration.
+- On return, a state runs Gov/Rep (and Senator if directly elected) elections with the bias penalty added
+  to existing bias (e.g. a Blue+5 state votes as Blue+3 for 8 yrs; a Blue+1 seat becomes Red+1).
+
+**★ SHIPPED vs DESIGNED — code-verified this batch (b55): the engine is ~0% shipped; only data primitives
++ a narrow PR6 EVENT exist.**
+
+| Surface | Shipped reality | Verdict |
+|---|---|---|
+| **`State.isSlaveState`** | **SHIPS but UNREAD for secession (#288).** Written at data-definition (`states1772.ts`/`states1856.ts`) + territory conversion (`isSlaveState: t.region==='South'\|\|t.region==='Border'`, `phaseRunners.ts:3175`); **read by ONLY display** (`StatesPage.tsx:20`) — **zero secession/CW reads** | Primitive exists; no consumer (#288) |
+| **`State.region`** | SHIPS as a **fixed enum** `'Northeast'\|'Midwest'\|'South'\|'West'\|'Border'\|…` (`types.ts:1322`) — **NO Upper-South / Deep-South / Southwest** granularity the stay-% table (§C) needs; `'Border'` is not restricted to MD/DE/KY/MO | Coarse; region-granularity gap |
+| **State secession-convention VOTE (§B) + no-secede penalty** | **0% built.** No per-state ideology-keyed roll; no admin−1/50%-domestic−1 writer (the `domestic` meter `types.ts:1403` + `domesticStability?` effect field `types.ts:1453` EXIST but no convention code writes them) | Unbuilt |
+| **Politician-stay-% tables + office modifiers + border table (§C/§D)** | **0% built.** No mechanism moves pols out of factions on secession — only the 4 PR6 cabinet seats defect (a flat resignation, NOT the ideology/region table) | Unbuilt |
+| **Loyalty traits (§E)** | **PARTIAL/ABSENT.** `Union Loyalist` **and** `Southern Unionist` are **ABSENT from the `Trait` union** (`types.ts:62-117`); `Provincial` EXISTS but **only as a PR4b election-modifier** (`types.ts:107,170,916-922`), NOT the POST-9 "100%-by-region" loyalty rule | Traits missing/mis-wired (#320) |
+| **Civil-War theaters + battle engine (§F)** | **0% built.** `startWar` pushes a **name-only generic `War`** into `snap.wars` (`{id,name,enemy,startYear,warScore:0,…}`, `phaseRunners.ts:3240-3252`); the actual battle engine `revolutionaryWar.ts` is **single-front** (`currentGroundWins`/`groundWinsNeeded`, `:16-18,254-263`) and runs **only on `game.revolutionaryWar`** (2.7.2 gated `phases.ts:134`), NOT on `snap.wars`. `RevolutionaryWar` (`types.ts:1371-1387`) has **no theater / `isCivilWar` field** → no East/West, no two-theater win | Name-only war; no engine (#56) |
+| **Secessionist Government (§F, #157)** | **0% built.** No Confederate-side roster; no random Pres/VP/Sr-Adm/Sr-Gen generator | Unbuilt (#157) |
+| **Guerilla-as-Minor-War (§F)** | **0% built.** No minor-war track; no readmission block | Unbuilt |
+| **Reconstruction readmission (§G, #156)** | **0% built.** No Reconstruction phase (`phases.ts` has 2.7 Foreign/Military + 2.8 Executive but **no military-district / martial-law / Gov-appointment-under-occupation / readmit step**); no `readmission`/`reconstruction`/`militaryDistrict` anywhere in `src/`; the 3 plans + 12-yr/6-half-term auto-readmit + 14th-Amendment requirement all unbuilt (the canonical design is at [§23.4.1](#2341--hd1--reconstruction-played-by-humans-on-both-sides--vcczars-authoritative-rewrite-156-the-canonical-reconstruction-design)) | Unbuilt (#156) |
+| **#324 citizenship-strip ladder (§H) + "Pardon Confederate Soldiers"** | **0% built.** The 5 options + ±250 swings + draft-1864+ exemption + the un-deactivatable soldier-pardon exec action all unbuilt (POST 4 claims the bills "exist in the game" — that's the **spreadsheet** bill list, not the browser build) | Unbuilt (#324) |
+| **Reconstruction election bonuses (§I, #284)** | **0% built.** No Black-+1/Civil-Rights-+1 readmitted-state election bonus | Unbuilt (#284) |
+| **Census coupling (§G)** | **0% built.** Census subsystem itself unbuilt ([§30.43.1](#30431--34--305--307--308--the-full-censusreapportionment-algorithm-rules-3024-the-ordered-5-step-ev-recompute--house-cap-reconciliation--bigmedsmall-classification--influential-rep-delegation-vote-model--ahistorical-seat-bias-designed-0-shipped)); no state-POPULATION primitive | No attach point yet (#34) |
+
+> **Determinism note:** every §B–§D roll (convention vote, who-leaves, border-state) must route through the
+> seeded RNG (`src/rng.ts`) to keep the engine deterministic (#296) — the existing PR6 Secession-Winter
+> defection rolls already go through the engine's RNG path.
+
+→ **Net: the canonical Secession/CW/Reconstruction ruleset "AMPU v1.3" (Union rules 3.0.32 & 3.0.35) is the
+DEEP SPEC for the §23 system, whose engine is ~0% shipped.** Data primitives `isSlaveState`/`region` exist
+but are read by zero secession code (#288); the convention VOTE table, stay-% tables, office modifiers,
+border table, loyalty traits (Union-Loyalist/Southern-Unionist ABSENT; Provincial election-only), two-theater
+war, secessionist Government (#157), Reconstruction readmission (#156), the #324 citizenship-strip ladder, and
+the #284 election bonuses are **all unbuilt**. Mints **#324** (the 5-step citizenship-strip ladder), sharpens
+**#56/#58/#288/#156/#157/#284/#45/#34/#121.** (`6b680261#POST 4, 9, 27`; `game-context.md`
+#56/#58/#288/#156/#157/#284/#324; codebase as cited above.)
+
+#### 30.45.2 ★★ the canonical CPU PRESIDENTIAL-CONVENTION spec (#185; +#71/#72/#181/#183) — candidate selection + balloting + the d6 promise table + place-based drop-out + 10/25-ballot compromise/Dark-Horse + CPU VP-pick + platform/keynote; ★ the INTENTIONAL multi-ballot SLOW-ROLL design rule (designed; 2.9.2 is a one-line log stub — ~0% shipped)
+
+> **Source: `d1058b12` POST 1 (the authoritative rewrite text — transcribe-the-algorithm post), 4 (the
+> deltas vs the prior doc), 7/10 (the slow-roll DESIGN RULE) + codebase (`phaseRunners.ts:3725-3750`
+> Primaries, `engine.ts:69` Conventions stub, `phases.ts:40`, `types.ts:1568` `vicePresidentId`,
+> `phaseRunners.ts:3752-3814` PresidentialGeneral, `constitutionalConvention.ts` / `engine.ts:18`
+> `pendingConvention`).** The canonical CPU-decision layer for the **2.9.1 Primaries → 2.9.2 Conventions**
+> flow — the deterministic-CPU spec for vcczar's favorite phase. ★ **This is the PRESIDENTIAL nominating
+> convention, NOT the Constitutional Convention** (the shipped `pendingConvention`/`makeConvention`/
+> `constitutionalConvention.ts` is the founding-era *Constitutional* Convention — a wholly separate system;
+> do not conflate). Cross-links to the existing convention-machinery design at
+> [§15.3](#153-convention-machinery-292--full-forum-design-designed-not-built),
+> [§25.4](#254-convention-cpu--per-ballot-momentum--interballot-menu--compromise-picker), and the delegate
+> engine at [§22.6](#226-the-cpu-delegate-engine-convention--primary-apportionment) — this child adds the
+> EXACT d6 promise table, place-based drop-out logic, and CPU VP/platform/keynote picks those did not
+> capture. **★ Framing (POST 1, 4):** this is a REWRITE of an existing rules-doc — the only genuinely NEW
+> mechanics vs the prior compromise are (1) 2nd/3rd/4th + minor-candidate rules, (2) the **single d6**
+> promise roll replacing the old 6×d100, (3) VP positive-trait preference + negative-trait avoidance;
+> everything else is the previously-agreed compromise.
+
+**★ A. Candidate selection (POST 1).**
+- **Who the CPU faction runs:** faction **leader 75%** / **a celebrity with ≥1 command 10%** / **no major
+  candidate 15%**.
+- **If no major candidate:** run **a minor candidate 50%** — but **75%** if the election has **no incumbent
+  from their party**. **At least one faction per party MUST run a candidate** (floor — never an empty field).
+- **Nominators (for the major's nom speech):** pick an **orator 60%** / **someone else 40%**. **Never anyone
+  with Incoherent.** **No one who is running** may give the major candidate's nomination speech.
+
+**★ B. Balloting & inter-ballot actions (POST 1).**
+- **Threshold manipulation:** if the CPU's faction is **1st in delegates** → try to **LOWER** the nomination
+  threshold **25%** (if possible); if **last** → try to **RAISE** it **25%** (if possible).
+- **Offer targeting (universal):** all offers go **same-ideology first → closest ideology → random**.
+- **Promise-eligibility fallback:** if an offered candidate is ineligible for a promise, it passes to **the
+  faction** that was offered it. **Puritans never accept or make a presidential promise for a drop-out.**
+
+**★ B1. Presidential-promise system — CPU major is 1st in delegates (POST 1).** **25%** of the time, offer
+**a non-faction candidate with <half the CPU's delegates** a **drop-out-for-endorsement promise** (split
+**50%** offer to the candidate / **50%** to the faction). **The reward is rolled on a single d6** (this d6
+*replaces* the old 6×d100):
+
+| d6 | Reward | CPU ACCEPT odds |
+|---|---|---|
+| 1 | **Vice President** | **50%** |
+| 2 | **Senior cabinet** — SecState 40% / SecTreasury 20% / SecWar(Defense) 20% / AG 20% | SecState **40%**; Treasury/War/AG **33%** each |
+| 3 | **Minor cabinet** (random non-senior cabinet seat) | junior cabinet **25%** |
+| 4 | **Cabinet-level (non-secretary) OR ambassador** (random) | ambassador **20%** (non-sec cabinet ≈ junior 25%) |
+| 5 | **Supreme Court appointment** | **20%** |
+| 6 | **Party-plank choice** | **20%** |
+
+**★ B2. CPU major is 2nd / 3rd / 4th place (POST 1):** **33%** drop out and **endorse the candidate with the
+most momentum** (tie → matching-ideology → random); **25%** run the §B1 presidential-promise logic as the
+offerer.
+
+**★ B3. CPU major is LAST place (POST 1):** **50%** make an offer to a candidate with **>half the CPU's
+delegates** — offering to be **VP 50%** / a **faction-eligible cabinet seat 50%**; **25%** drop out with **NO
+presidential promise** — rising to **50%** if last for the **3rd consecutive ballot**.
+
+**★ B4. Minor-candidate drop logic, by faction place (POST 1):**
+- **Faction 1st w/ a minor:** major leads momentum → drop out; else stay for the next ballot.
+- **Faction 2nd/3rd/4th w/ a minor:** major leads momentum → drop out; **25%** drop & endorse the momentum
+  leader matching the faction leader's ideology (→ random matching major → random).
+- **Faction LAST w/ a minor:** **50%** drop with no endorsement / **50%** drop & endorse the momentum leader
+  (tie → faction-leader ideology → random).
+
+**★ B5. Standing CPU behaviors + ballot-shift calls (POST 1):** CPU candidates **always** attempt appeals,
+smoke-filled-room influence, party-whipping, or kingmaker interference. A **1st-place** faction calls a
+ballot shift if the leading major has **>50% of delegates**; the **last-place** faction calls one if the
+**2nd-place candidate has <half the front-runner's delegates**.
+
+**★ C. Compromise candidate & Dark Horse (POST 1).**
+- **Compromise trigger:** faction leaders call for a **compromise candidate** if **no one wins after 10
+  ballots**, at **25%**.
+- **Compromise pick:** a candidate of **same or adjacent ideology** to the faction leader, **from an allied
+  faction** — **50% current office-holder / 40% former office-holder / 10% anyone else**; else support one of
+  their ideology or bordering it (random tie); if none border and they have no compromise candidate → call
+  for a **Dark Horse ASAP**; if they can't → randomly support a compromise candidate.
+- **Dark Horse trigger:** after **5 ballots of compromise candidates**, faction leaders call for a **Dark
+  Horse at 25%**. **At 25 ballots the Dark Horse rule fires AUTOMATICALLY.**
+- **Dark Horse pick:** the **party leader** selects an **of-age politician with ≥1 command from the faction
+  with the LOWEST score**. **All CPUs support the Dark Horse.**
+
+**★ D. VP selection (#72; POST 1).**
+- **Keep the incumbent VP 90%** (or vote for the VP if the convention chose the nominee). **Voided if** the
+  VP has **Incompetent or Controversial**, or the player **declines** the offer.
+- **Otherwise source the VP:** **50%** eligible pol from the **lowest-scoring faction + a different region** /
+  **25%** any faction with an eligible **office-holding** pol + different region / **25%** any faction with an
+  eligible pol (any office).
+- **Then trait preference:** **33%** pick a VP with any of **harmonious / likable / provincial /
+  cosmopolitan**; on tie or none-qualify, randomly choose a VP who is **not unlikable or disharmonious**.
+- **Hard constraints:** **no VP from the same state as the nominee**; the CPU **always keeps a presidential
+  promise** (a promised VP overrides the above).
+- **Voting on a VP at the convention:** support **own faction**; if both options are the CPU's faction, pick
+  the one with the **most of harmonious/likable/cosmopolitan/provincial** (tie/none → random).
+
+**★ E. Party platform & keynote (#181; POST 1).**
+- **Platform stance** (unless restricted, e.g. by Puritan): **50%** favor **own cards specifically** / **25%**
+  favor the **lowest-score same-party faction** / **25%** favor the **lowest-enthusiasm same-party faction**.
+  **Presidential promises are kept first** (plank promises override).
+- **Micromanager nominee:** blocks & replaces an **ally's** plank **only 25%**, randomly replacing it with one
+  that helps **the nominee's faction 50%** / **the party as a whole 50%**.
+- **Keynote speaker:** from the **lowest-score same-party faction 50%** / next lowest **25%** / next lowest
+  **25%**; from that faction, a **random office-holder with ≥1 command 75%** / random non-office-holder with
+  ≥1 command **25%**; **prioritize orators — pick an available one 75%.**
+
+**★ F. DESIGN RULE (durable; #319) — the INTENTIONAL multi-ballot SLOW-ROLL (POST 7, 10).** *Presidential
+conventions are deliberately slow-rolled across many ballots to preserve the multi-ballot / brokered-
+convention drama; CPUs are intentionally limited (no full optimization) for the same reason.* AP (POST 7):
+*"it was intentional to slow-roll the conventions to maintain the multi-ballot effect. I don't want to
+re-litigate it."* POST 10: this was *"probably the single biggest argument (in terms of game mechanics) we've
+had on the forum."* **This is a settled, hard-won compromise — do NOT "improve" CPU convention aggression
+without a designer mandate.** OrangeP47's motivation for the rewrite (POST 6): *"candidates for CPUs really
+don't do anything if they're not first and second or last"* + *"should prioritize picking VPs with good
+traits at least some of the time"* — i.e. the new 2nd/3rd/4th + minor rules and VP trait prefs fill the
+idle-middle-candidate gap WITHOUT touching the slow-roll.
+
+**★ SHIPPED vs DESIGNED — code-verified this batch (b55): the presidential-convention SYSTEM is ~0% shipped,
+its CPU logic 0% shipped.**
+
+| Surface | Shipped reality | Verdict |
+|---|---|---|
+| **2.9.1 Primaries** | **A single-winner STUB, not a primary.** `runPhase_2_9_1_Primaries` (`phaseRunners.ts:3725-3750`) filters each party to `age 35-80 && command >= 2`, sorts ONCE on `pvCache + command*5 + traitBonus`, **picks the top one.** No factions-running-candidates, no delegates, no nominators, no minor candidates, no celebrity path (gate is `command>=2`; spec's celebrity needs only ≥1 — moot since flow unbuilt) | Top-PV pick only |
+| **2.9.2 Conventions** | **A one-line LOG STUB.** `engine.ts:69`: `case '2.9.2': addLog(... 'Party conventions ratify the primary winners.'); return {};` — **zero** balloting/threshold/momentum/promises/compromise/Dark-Horse/platform/keynote; the phase exists in `PHASE_SEQUENCE` (`phases.ts:40`) purely as a label | Label only |
+| **Convention data model** | **0% built.** No `delegate`/`ballot`/`momentum`/`darkHorse`/`presidentialPromise`/`threshold`/`keynote`/`platform`/`runningMate` in `src/types.ts` (the only `delegate*` fields are **Continental Congress**; the only `Convention` type is `ConstitutionalConvention`) | No model |
+| **CPU promise / drop-out / compromise / Dark-Horse (§B/§C)** | **0% built.** None of the d6 promise table, place-based drop-out, 10/25-ballot triggers exist | Unbuilt |
+| **VP / running-mate selection (§D, #72)** | **0% built.** `vicePresidentId` (`types.ts:1568`) is **only read for display**, seeded once in 1856, and **only ever cleared — never set** by the engine; `runPhase_2_9_4_PresidentialGeneral` (`phaseRunners.ts:3752-3814`) runs a head-to-head EV race with **no running mate** and resets the cabinet to null post-election | No VP is ever set |
+| **Platform / plank / keynote (§E, #181/#10)** | **0% built.** No `platform`/`plank`/`keynote` in `src/engine` (consistent with the separately-tracked platform epic) | Unbuilt |
+| **`pendingConvention`** | **The CONSTITUTIONAL Convention** (`engine.ts:18`, `constitutionalConvention.ts`) — a different system; NOT evidence of a presidential convention | Different system |
+
+→ **Net: this is the complete CPU spec for an UNBUILT system.** It slots under the convention-state-machine
+gap (#185, the *system*) and the deterministic-CPU gap (#20, the *CPU logic*); §E overlaps the platform epic
+(#181/#10); §B2–B4 endorsement-momentum overlaps #183; the floor-vote rules (VP-vote support-own-faction,
+ballot-shift calls, Dark-Horse support) overlap #74. Mints **#319** (the CPU Presidential-Convention spec),
+sharpens **#185/#71/#72/#181/#183/#20/#74/#10.** ★ The binding constraint on any future build is the
+**intentional multi-ballot slow-roll** (§F). (`d1058b12#POST 1, 4, 6, 7, 10`; `game-context.md`
+#319/#185/#71/#72/#181/#183/#20; codebase `phaseRunners.ts:3725-3750,3752-3814`, `engine.ts:18,69`,
+`phases.ts:40`, `types.ts:1568`, `constitutionalConvention.ts`.)
+
+#### 30.45.3 ★ the canonical ABILITIES / EXPERTISE / TRAITS reference ("rules 3.0.19-2") — 6 abilities (★ NOT 7: backroom is track-only #319) + 19 expertises + 57 traits (★ code 55, DIFFERENT roster #320) + lobby↔expertise (18) + lobby→industry (#294) + the cabinet tiers (★ missing Cabinet-Level + special Ministers + Key Advisor #66) (designed reference; build-vs-canon deltas itemized)
+
+> **Source: `87c94e25` POST 1-21 (the rules-reference; sourced explicitly from rules 3.0.19-2, POST 10) +
+> codebase (`types.ts:24-41,50,62-117,182-192,202,316-320,373-391,398-414,421-425,1111-1134,1196-1208,1221,
+> 1233,1281`, `phaseRunners.ts:2203,2238-2239,2911-2966,717-718`, `engine/expertise.ts`).** THE authoritative
+> reference for the four pillars of a politician's stat block. **Pure design intent** (no rolls, no roster).
+> Cross-links to the PV/trait overhaul ([§3.4.1](#341--the-pv-system-overhaul--per-trait-tiers--non-linear-ability-curve--trait-remap--display-scale-new-revamppv--summer2021-batch-30-designed-the-shipped-pvts-is-at-a-pre-revamp-state--dh-77)), the career/expertise pipeline ([§5](#5-career-tracks--the-expertise-pipeline-212)),
+> and the cabinet confirmation subsystem ([§9.3.11](#9311--the-canonical-cabinetscotus-confirmation-subsystem-172dh-76--199--the-authoritative-spec-new-rulebook--apptdeepdive-batch-31-designed-not-built)) — this child adds the **canonical
+> COUNTS** (6/19/57) and the **build-vs-canon roster deltas** those did not enumerate.
+
+**★ A. The 6 ABILITIES (0–5; POST 1–6).** Canonical set = **Command, Legislative, Governing, Judicial,
+Administrative, Military**. ★ **There is NO "backroom" ABILITY** — Backroom is a career *track*, not a 0–5
+ability. Granted "at random % chance unless specified." Recurring shape: **win a battle → ability up; lose a
+battle → ability down (tier-sensitive); old-age rolls erode all six; anytime-evos both grant and remove;
+"leave the career track" is a major grant for Command/Legis/Gov/Admin.** Key earn/use anchors (not exhaustive):
+
+| Ability | Notable EARN | Notable USE | LOSS |
+|---|---|---|---|
+| **Command** | faction/party leader; leave any track except Backroom; protégé of a Master Kingmaker (guaranteed); ContCong President; initial SecState appt; Sr Gen/Adm while a major war active; win a battle/major war | caps exec actions/half-term; caps sways in session; caps pres-primary/general actions (noted "homebrew") | anytime-evos; old-age |
+| **Legislative** | Legislative track (primary); cong leadership; committee/chair; faction/re-elected-party leader; difficult battles | gate to House/Senate/ContCong; ≥2 to hold Chair/Ranking or filibuster | anytime-evos; old-age; losing moderate/easy battles |
+| **Governing** | Governing/State-Exec track; faction/party leader; meter-improving gov-action; difficult/medium battles | gate to governorship; **enact state laws (each Gov = +20% cumulative to gov-actions)** | old-age; anytime-evos; losing moderate/easy battles |
+| **Judicial** | Judicial track (primary) ONLY | SCOTUS appointment; exec-action implementation | old-age; anytime-evos |
+| **Administrative** | Admin track; all tracks but Legislative (secondary); **cabinet confirmation (DOUBLED if Egghead/Efficient; STACKS)**; 2+ terms Governor/Senator | **≥2 for cabinet** (unless no eligibles); **≥3 for DCIA/DNI, DFBI, UN Amb**; moves meters in Lingering; +1 in primaries (econ crisis + econ expertise) | anytime-evos; old-age; **Easily Overwhelmed**; losing moderate/easy battles |
+| **Military** | Military track; 2 Rev-War-era evos; difficult/medium battles | drives **Military Preparedness** in Lingering; **≥2 for Sr Gen/CoS & Sr Adm/CNO**; **≥3 auto-confirmed** | anytime-evos; losing battles; old-age |
+
+**★ B. The 19 EXPERTISES (POST 7–9).** Agriculture · Business · Economics · Education · Energy · Environment ·
+Foreign Affairs · Healthcare · Housing · Justice · Labor · Media · Military · Naval · Science · Technology ·
+Trade · Transportation · Welfare. ("what the politician studied in higher education, or worked their way up.")
+- **GAIN:** leaving career tracks · **re-elected as governor** · committee appointment · cabinet/ambassador
+  appointment or reappointment.
+- **USE (3):** (1) **eligibility for cabinet appointments** (primary); (2) **determining FACTION IDEOLOGIES**;
+  (3) gating **certain governor-actions**.
+
+**★ C. The 57 TRAITS (rules 3.0.19-2; POST 10).** The post declares **57 traits** (catalogs ~55 by name).
+Mechanically-loaded ones: **Charisma/Likable/Unlikable/Orator/Debater/Propagandist/Obscure/Cosmopolitan/
+Provincial** (election-swing); **Kingmaker (+1 state) / Master Kingmaker (+1 national) / Leadership**
+(deep-dive below); **Iron Fist / Efficient / Delegator (cabinet-mult UP) / Micromanager (DOWN) / Egghead
+(doubles cabinet admin) / Easily Overwhelmed (erodes Admin) / Manipulative** (governance/cabinet); **Crisis
+Manager/Admin/Gov, Decisive General, Military Leader, Naive Strategist, Geostrategist** (crisis/war);
+**Bookkeeper, Numberfudger, Lawful (a.k.a. "Cop" — born AG), Illicit, Jurisprudence, Domestic Warrior,
+Domestic Apathy, Everyman, Magician** (domain/cabinet routing); **Integrity / Controversial / Incoherent**
+(integrity axis); **Carpetbagger / Southern Unionist** (sectional, 1856-relevant).
+- ★ **Magician** (POST 10–12): generational legislative strategist, named after Van Buren ("The Little
+  Magician"); **RARE** — ~12 historical holders (Gerry, Burr, Van Buren, Douglas, Cannon, Reed, Kern, Lewis,
+  McCarthy, LBJ, McConnell, Gingrich). "A couple traits were removed a bit ago" → the trait list is versioned.
+- ★ **"Lawful"/"Cop" rename** (POST 14–15): the same trait is **"Cop" in the master sheet, "Lawful" in all
+  other documentation.**
+- **Leadership deep-dive (POST 13):** GAIN = all tracks **except Judicial** + cong officers + faction/party
+  leader + difficult/medium battles; USE = become party leader **(100%)**, Kingmaker **+2 protégé limit**,
+  compel SCOTUS retirements (as faction leader), block primary challengers w/ Iron Fist **90%**, +1 candidate
+  strength, +1 debate (+2 w/ Charisma), 33% unilaterally change party rules at convention, **obscure VP can
+  gain it on a 1/d6**, 20%/10%/5% (Big/Med/Small state) on election/re-election as governor.
+- **Trait GAIN/USE/LOSS (general, POST 10):** GAIN = coming off all tracks, becoming a protégé, winning OR
+  losing elections; LOSS = **old age** (advantageous ones fade) or **gain a conflicting trait → d6 roll** to
+  lose the held one.
+
+**★ D. Lobby ↔ Expertise keying (POST 16) — the 18 modern lobbies.** Faction-leader lobby cards are keyed to
+an expertise:
+
+| Lobby | Expertise | | Lobby | Expertise |
+|---|---|---|---|---|
+| Big Agriculture | Agriculture | | Labor Unions | Labor |
+| Big Corporations | Business | | LW/RW Media | Media |
+| Wall St | Economics | | Military-Industrial | **Military OR Naval** |
+| Public/Private Education | Education | | Science | Science |
+| Big Oil & Gas | Energy | | Big Tech | Technology |
+| Environmentalist | Environment | | Free Trade/Protectionist | Trade |
+| Globalist/Isolationist | Foreign Affairs | | Transportation | Transportation |
+| Big Pharma/Public Healthcare | Healthcare | | Welfare | Welfare |
+| Public Housing | Housing | | Law & Order/Human Rights | Justice |
+
+**★ E. Lobby → state-industry ±1 (POST 17–20 — ties #294).** Big Corporations → Mining/Manufacturing; Wall
+Street → Finance; Big Agriculture → Agriculture/Plantation; Technology → High Tech; Environment → Alt Energy;
+Military-Industrial → Maritime; Big Oil & Gas → Natural Gas; **Labor Unions → −Manufacturing, −Mining** (its
+*positive* industry tie is Manufacturing per zag "if I'm not mistaken," but its lobby *effect* is negative).
+
+**★ F. Cabinet structure (POST 21).**
+- **Big-4 / Upper Cabinet:** **State, Treasury, War (later Defense), Attorney General** — always face a
+  **confirmation hearing** (Committee/Floor vote).
+- **Lower Cabinet:** any "Secretary of …" created by legislation + PMG (once the elevation bill enacts).
+- **Cabinet-Level:** FBI, CIA/DNI, Bank Pres/**Fed Reserve Chair**, **UN Ambassador**, **National Security
+  Advisor**, PMG (when first created).
+- **Ambassadors:** initially **Ministers** before elevation. Special **non-meter Ministers**: **Indian
+  Sovereignty, Confederate States, Northern Confederacy** (petition → "Free States of America"), **Western
+  America**.
+- **Key Advisor:** a **distinct non-cabinet** position.
+
+**★ SHIPPED vs DESIGNED — code-verified this batch (b55).**
+
+| Pillar | Build-vs-canon | Verdict |
+|---|---|---|
+| **★ Abilities — backroom 7th ability (#319)** | Code `SkillKey` (`types.ts:24-41`) = **7 keys** `admin/legislative/judicial/military/governing/backroom`; canonical = **6 abilities, NO backroom** (Backroom is only a *track* — `CareerTrack` includes `'Backroom'` `:50`, `TRACK_SKILL.Backroom='backroom'` `:202`). The shipped `Skills` type **promotes Backroom to a first-class 0–5 ability the canon does NOT recognize.** (canon "Command/Admin/Military" map to code `command` [a separate `Politician.command` field `:1281`, not in `Skills`] / `admin` / `military`) | **7 of canon's 6** — naming/model discrepancy (#319) |
+| **Expertise — exact set (#294)** | Code `Expertise` (`types.ts:182-192`) = **19 tags, identical set & spelling.** **19 of 19.** Engine WIRES all 3 canonical USES: cabinet eligibility (`CABINET_SEAT_SCORING.expertiseBonus=5`, `phaseRunners.ts:2238-2239`; AG/SecWar/SecState event mults `:2911-2966`); faction-ideology (`EXPERTISE_IDEOLOGY_LEAN` `types.ts:421-425`, summed `phaseRunners.ts:717-718`); grant paths (track-exit/committee/cabinet/lobby) | **MATCH on set; PARTIAL on uses** |
+| **Expertise faction-ideology lean** | **PARTIAL — only 3 of 19 tags carry a lean** (`EXPERTISE_IDEOLOGY_LEAN`: Agriculture +1 / Business +0.5 / Labor −1); canon implies **all** expertises feed faction ideology | 3/19 wired |
+| **Expertise re-elected-governor grant** | **NOT FOUND** — the canonical "re-elected as governor" expertise gain is unimplemented | Unbuilt |
+| **Expertise gov-action gating (3rd USE)** | **NO CONSUMER** — there is no gov-action system (no `govAction` token), so the 3rd canonical USE has nothing to gate | Dangling USE |
+| **★ Traits — count + roster (#320/#216)** | Code `Trait` (`types.ts:62-117`) = **55** vs canon **57 declared** (~55 cataloged). A **substantially DIFFERENT roster**: **41 overlap** (incl. renames Charisma→`Charismatic`, Flipflopper→`Flip-Flopper`); **15 canon-only ABSENT** (Bookkeeper, Disharmonious, Easily Overwhelmed, Everyman, Geostrategist, Illicit, Incoherent, Jurisprudence, Lackey, Late Bloomer, **Lawful/Cop**, **Military Leader**, Pliable, **Southern Unionist**, Teflon); **14 code-only NOT in canon** (Ambitious, Corrupt, Failed Bid, Globalist, Ideologue, Impressionable, Incompetent, Loyal, Nationalist, Opportunist, Outsider, Reformist, Scandalous, Traitor). ★ **Easily Overwhelmed** is *referenced* in Admin-loss design yet is NOT in the union (dangling); ★ **Lawful/Cop entirely absent** despite being the canon AG-defining trait | **55 vs 57; ~28 divergent across both directions (#320)** |
+| **Trait machinery** | The *machinery* matches canon: conflict-loss d6 (`TRAIT_CONFLICTS` + `conflictD6Threshold:4`, `types.ts:639,658-692`), old-age fade (`TRAIT_LIFECYCLE_RULES.fadingPool`), election/governance impacts (`TRAIT_ELECTION_EFFECTS`/`TRAIT_GOVERNANCE_EFFECTS`); only the *roster* diverges | Machinery OK |
+| **Lobby↔expertise keying** | Code `LobbyCardId` (`types.ts:316-320`) = **15 era-flavored lobbies** (Patriots/Merchants/…/Nativists) — an **entirely different naming scheme** (1772/1856 flavor, not the modern Big-Ag/Wall-St canon); `LOBBY_EXPERTISE` (`:373-391`) keys only **7 of 15** to an expertise (8 are `null`). The canonical 18-lobby table is the **modern-era** taxonomy | **Different lobby sets** |
+| **Lobby→industry ±1 (#294)** | `LOBBY_INDUSTRY` (`types.ts:398-414`) maps the **15 shipped lobbies** to era-state industry keys — same primitive over a different lobby/industry vocabulary; the canonical modern table is the unbuilt target | **Same primitive, different vocab (#294)** |
+| **★ Cabinet tiers (#66)** | `OfficeType` (`types.ts:1111-1134`) ships **Big-4** (State/Treasury/War/AG) + Navy/Interior/PMG + GeneralInChief/Admiral + Ambassador; `cabinetSeatsForYear` (`:1196-1208`) era-gates 4→5→6→7 (1789/1798/1829/1849). **MISSING vs canon:** the **Cabinet-Level tier** (FBI, CIA/DNI, Fed Chair, **UN Ambassador**, **NSA**); the **special non-meter Ministers** (Indian Sovereignty, Confederate States, Northern Confederacy, Western America); **Key Advisor.** Confirmation exists (`CABINET_SEAT_SCORING`, cross-party gate `:1233`) but is **auto-scored, NOT a Committee/Floor vote** | **Big-4 shipped; Cabinet-Level + Ministers + Key Advisor missing (#66)** |
+
+→ **Net: the canonical stat-block reference (rules 3.0.19-2).** Three build-vs-canon deltas mint/sharpen gaps:
+**#319** (code has a 7th `backroom` ability the canon rejects), **#320/#216** (traits 55 vs 57, ~28 divergent
+both ways; Lawful/Cop & Military Leader & Southern Unionist canon-only), and **#66** (cabinet missing the
+Cabinet-Level tier, special Ministers, Key Advisor; confirmation auto-scored not Committee/Floor-voted).
+Expertise is the cleanest match (19/19, all 3 uses wired — though faction-lean only 3/19, re-elected-gov grant
+absent, gov-action gating has no consumer). Sharpens **#294** (lobby↔expertise/industry over divergent
+vocabularies). (`87c94e25#POST 1-21`; `game-context.md` #319/#320/#216/#294/#66; codebase as cited above.)
+
+#### 30.45.4 ★ 1892 "Era of Progressivism" + the CABINET-APPOINTMENT-ENTHUSIASM calculator (#124) — the per-lobby per-tier 20/10/5% roll → −1 faction enthusiasm → ideology→party movement (the sharpest new delta); + the rejected-confirmation→Controversial branch (#199), the 10 era-faction names (#40/#306), party-leader reward numbers (#30) (designed; shipped enthusiasm is per-IDEOLOGY only, event-moved — NO per-faction enthusiasm, NO appointment roll)
+
+> **Source: `26b112e5` POST 1 (1892 start + script-automation model), 12 (10 era-faction names), 13
+> (party-leader rewards), 14 (appointments + exp→post matching), 16-17 (confirmation + rejection fallout),
+> 19 (post-confirm ability/expertise gains), 20 (the Cabinet Enthusiasm calculator), 21-23 (regions/deaths/
+> replacements) + historical-context §5 (the 1896–1932 pre-realignment hinge) + codebase (`types.ts:1337,
+> 1415-1418`, `scenario1856.ts:18`, `eraEvents1856.ts:20`, `EnthusiasmPage.tsx`, `phaseRunners.ts` 2.3.x +
+> `ABILITY_EARN_RULES`/`:2203`).** The only batch-55 source that narrates in-game play (one 1892 year:
+> leaders → appointments → confirmations → gains → deaths). ★ **POLARITY = the 1896–1932 pre-realignment
+> hinge: BLUE = Democrats, RED = Republicans, progressivism in BOTH parties** — do NOT read as modern
+> left/right (historical-context §5). Cross-links to the meter→enthusiasm→election model
+> ([§29.3](#293--the-meterenthusiasmelection-model--51-resolved-drums-4-step--18-resolved-terror2000--vs-2-layer-model-gap-1851)),
+> the canonical 4-step enthusiasm-shift rule ([§29.10](#2910--the-canonical-4-step-enthusiasm-shift-rule--crisis-bill-failure-scoring-51-resolved)),
+> the cabinet→enthusiasm rework ([§9.3.7](#937--ted-ruled-cabinet--enthusiasm-rework-designer-authoritative-tedchange)), and the confirmation subsystem
+> ([§9.3.11](#9311--the-canonical-cabinetscotus-confirmation-subsystem-172dh-76--199--the-authoritative-spec-new-rulebook--apptdeepdive-batch-31-designed-not-built)) — this child adds the EXACT 20/10/5% appointment-roll formula and the rejected-confirmation
+> branch those did not capture.
+
+**★ A. 1892 "Era of Progressivism" is a START ERA the build can't express (#92/#301).** The GM boots
+**1892** off a spreadsheet ("a pre-rookie draft of the Era's established politicians," POST 1). There is
+**no 1892/Progressivism scenario** (only `scenario1772.ts` + `scenario1856.ts`), and **"Era of
+Progressivism" ≠ any `Era` enum value** (`Era = 'independence'|'federalism'|'nationalism'|'modern'`, 4
+values, `types.ts:1337`) — 1892 collapses into `modern`. One more datapoint that the game is **designed as
+era-agnostic, built with two hardcoded scenarios** ([§30.43.4](#30434-309--310--258--221--92--311--event--legislation-authoring-rulings-state-abolition--appointed-governors-event-target--name-templated-narrative-legis-deactivation-trigger-1000-legis-props-6-named-era-taxonomy-tutorial-designed-all-unbuilt) 6-named-era taxonomy).
+
+**★ B. 10 era-specific faction names (#40/#306; POST 12).** Period-accurate **Red = Republicans / Blue =
+Democrats** (leaders in parens):
+
+| Blue (Democrats) | Red (Republicans) |
+|---|---|
+| **B1 Progressives** — William Jennings Bryan | **R1 Liberals** — Frederick Douglass |
+| **B2 Conservationists** — Charles Barwig | **R2 School Book Liberals** — William B Allison |
+| **B3 Conservatives** — William C Redfield | **R3 Moderates** — Thomas Brackett Reed |
+| **B4 Traditionalists** — John B Gordon | **R4 Imperialists** — James G Blaine |
+| **B5 Traditionalist Democrats** — Grover Cleveland (kept) | **R5 Tariff Republicans** — Henry Cabot Lodge Sr |
+
+Corroborates **#40/#306** (era-specific faction identity): shipped factions are hardcoded per-scenario
+(`factions1772.ts`/`factions1856.ts`); these 10 Progressive-era names have no build representation. (Note B2
+"Conservationists" + the Environmentalist lobby below = the era's distinctive TR-adjacent conservation
+politics.)
+
+**★ C. The CABINET-APPOINTMENT-ENTHUSIASM CALCULATOR (#124 — the sharpest new delta; POST 20).** A script
+runs **per lobby/interest group** after appointments. For each group it rolls **once per post-tier the group
+holds influence in**; a roll **≤ the tier threshold** triggers, applying **−1 enthusiasm to the FACTION(s)
+that hold that group's card**:
+
+| Tier | Trigger chance | Roll semantics (d100) |
+|---|---|---|
+| **Cabinet** | **20%** | "rolled NN (need <==20 to trigger)" |
+| **Cabinet-Level** | **10%** | "need <==10" |
+| **Ambassador / Gen / Adm** | **5%** | "need <==05" |
+
+On trigger → "TRIGGERED -> -1" + "Affected factions (-1): <factions>". The 1892 run fired six (Private
+Education roll 07 → cabinet; Environmentalist 06 → −1 Blue 2; Military-Industrial 03; Science 20 → −1 Red 1;
+Protectionist 12 → −1 Blue 5 + Red 5; Transportation 09 → −1 Red 3). That **per-faction enthusiasm then
+rolls up into ideology→party movement** ("TOTAL MOVEMENT": Mod −2 Blue, Cons −2 Blue, Trad/RW-Pop/LW-Pop/
+Prog/Lib each −1 Blue).
+
+**★ D. Rejected confirmation → appointee gains `controversial` + party-preference shift (#199; POST 16-17).**
+A failed Senate confirmation (Minister Swanson REJECTED 10-12) **grants the appointee `controversial`** and
+**shifts state/party preference toward the rejecting party** ("Blame for Swanson's failure lies with Irby and
+the Senate Democrats, shifting preference towards the Republican Party. Swanson gains controversial.").
+Cleveland then re-picks Eustis, **confirmed automatically**.
+
+**★ E. Smaller concrete mechanics (POST 13, 19, 21-23):**
+- **Party-leader reward numbers (#30; POST 13):** winner/default leader gets **leadership + 100 pts + an
+  ideology→party-preference swing + an "X/5 to avoid [ability] drop" roll** (Cleveland party-leader by
+  default: +leadership, +100 pts, Cons +2 Blue / LW-Pop·Prog·Lib −1 Blue, **"17/5 to avoid drop"**; Reed wins
+  **after 3 ballots**: +1 command, +100 pts, Mod +2 Red…, **"20/5 to avoid drop"**).
+- **Post-confirm ability/expertise gains are explicit die rolls** (POST 19): "AG gained +1 Admin (roll: 5,
+  chance: 20%)"; "State rolled a 5 and removed 'obscure'"; **expertise assigned per office** (State→Army,
+  Treasury→Business, Navy→Naval).
+- **Exp-type→post matching enforced** ("Benson has no Navy expertise, subbed with Robert Coontz," POST 14);
+  **cabinet appointment vacates the appointee's prior elected seat → interim gubernatorial fill** (POST 15,
+  23); **regional favorability set forward to the next election** (#293; "Cleveland −1 in Upper South,
+  Mountain States, West Coast in 1896," POST 21); **named-cause deaths + flavor-reason retirements** (POST 22).
+- **Era-evo automation model (#322-adjacent; POST 1):** the GM **automates everything except player-input
+  decisions (Era Evos)** — one more datapoint that an end-to-end engine is *designed*; humans intervene only
+  at branch points (relates to the script-automation track, §30.45.5).
+
+**★ SHIPPED vs DESIGNED — code-verified this batch (b55).**
+
+| Surface | Shipped reality | Verdict |
+|---|---|---|
+| **★ Cabinet-Appointment-Enthusiasm (§C, #124)** | **0% built — wrong SHAPE.** Shipped `Enthusiasm` (`types.ts:1415-1418`) is **per-IDEOLOGY → party**, a −5..+5 scale (`{[ideology]:{BLUE;RED}}`), built ONCE at scenario start (`buildEnthusiasm`, `scenario1856.ts:18`), surfaced read-only on `EnthusiasmPage.tsx`, and **moved ONLY by era-event effects** (`enthusiasm:[{ideology,party,delta}]`, e.g. `eraEvents1856.ts:20`). There is **NO per-faction enthusiasm value, NO interest-group-card→faction binding for enthusiasm, and NO appointment-tier 20/10/5% roll** anywhere in 2.3.x | Per-faction enthusiasm + appointment roll unbuilt (#124) |
+| **Rejected confirmation branch (§D, #199)** | **0% built.** The shipped 2.3.1 path handles SUCCESSFUL confirmation (Admin/expertise earn) but **no rejection → Controversial + pref-shift branch** exists (`reject`/`Controversial` in `src/engine` finds only resolver-bool comments) | Unbuilt (#199) |
+| **1892 era band (§A, #92/#301)** | **0% built.** 4-value `Era` enum (`types.ts:1337`); no Gilded/Progressive band; no 1892 scenario | Unbuilt (#92/#301) |
+| **10 era-faction names (§B, #40/#306)** | **0% built.** Factions hardcoded per-scenario; no Progressive-era roster | Unbuilt (#40/#306) |
+| **Party-leader reward numbers (§E, #30)** | **PARTIAL.** Leadership-grant pipeline ships (2.2.3/2.2.4); the concrete +100-pts + ideology-swing + "X/5 avoid drop" numbers are the GM-spreadsheet payoff spec | Concrete numbers designed |
+| **Post-confirm gains / exp→post / vacancy-fill / deaths (§E)** | **SHIPPED (corroborated).** `ABILITY_EARN_RULES.cabinetConfirmAdmin` (`phaseRunners.ts:2203`); per-office expertise grant; vacancy/replacement chain; deaths/retirement subsystem | Shipped |
+
+→ **Net: the 1892 run's sharpest contribution is the Cabinet-Appointment-Enthusiasm calculator** — a per-lobby
+per-tier **20/10/5%** roll → **−1 enthusiasm to card-holding FACTIONS** → rolling up to ideology→party
+movement, a mechanic **absent from the build** (shipped enthusiasm is per-ideology→party, −5..+5, event-moved
+only). Mints **#322** (1892 era-band datapoint + the appointment-enthusiasm calculator framing), sharpens
+**#124** (the appointment-enthusiasm formula), **#199** (rejected-confirmation→Controversial branch), **#92/
+#301** (era granularity), **#40/#306** (era factions), **#293** (era-favorability), **#30** (party-leader
+reward numbers). (`26b112e5#POST 1, 12, 13, 14, 16-23`; `game-context.md` #124/#199/#92/#301/#40/#306/#293/#30;
+codebase `types.ts:1337,1415-1418`, `scenario1856.ts:18`, `eraEvents1856.ts:20`, `phaseRunners.ts:2203`.)
+
+#### 30.45.5 AUTOMATION / LINGERING (#323) — the script inventory as a de-facto subsystem spec (corroborates #20) + the ★ Lingering phase is 3 parts short (#134) + the committee +1-ability roll not coded (#322) + the CPU bill-SELECTION scoring formula (#323) + rules-version markers (3.0.25) (mixed: corroborates shipped; 3 specific NEW gaps)
+
+> **Source: `1bb2ac6b` POST 1-47 (the script-inventory log), specifically 2-5 (CPU bill-scoring formula),
+> 3-4 (committee +1-roll omission), 38-41 (the Lingering 4-part spec), 44 (rules 3.0.25), 45 (war ±10
+> terminator) + codebase (`phaseRunners.ts:1894,3260`, `rng.ts:1-5`, `revolutionaryWar.ts:254-263`).** A
+> **meta/tooling** thread (GA-built Python/Apps scripts), so **corroborative of designed intent, not new
+> authoritative rulings** — but the script inventory is a de-facto spec of the engine's subsystem set.
+> Cross-links to the canonical 2.5.1 Lingering algorithm ([§11.1.z](#111z--the-canonical-251-lingering-algorithm-179134--multi-roll-meter-pit--taxtariff-decay--admin-save-ladder--officermeter-map-new-rulebook-batch-31-designed-the-authoritative-source))
+> and the deterministic-CPU cluster — this child adds the script-inventory corroboration + three specific
+> build signals + the rules-version pin.
+
+**★ A. The script inventory = a de-facto subsystem checklist (corroborates #20 + the full phase set).** Each
+script someone bothered to write confirms a system is **designed & rule-specified** (tedious enough to want
+automated + deterministic enough to script): Committee Expertise Gains · Leader Gains (faction/party/committee)
+· General Gov+Rep elections (any state/era) · CPU Voting/Confirmation (`CPUConfirmation.py`) · CPU laws ·
+Battle/War sim (Rev-War data plugged in) · VP scoring · Era Evos · Anytime Evos · Political (party) conversions
+· Career-track gains · Cabinet gains · Cabinet enthusiasm · **Lingering** (volatility + tax/tariff decay +
+meter→meter) · Pol GENERATOR (rules **3.0.25**) · Drafts (Inaugural/Rookie) · Deaths & Retirements. → **the
+entire designed phase set is independently confirmed** by the community finding each piece worth scripting from
+the written rules.
+
+**★ B. The Lingering phase is 3 parts short (#134; POST 38-41).** The **designed Lingering phase has FOUR
+parts**: (1) general meter ticking, (2) **volatility**, (3) **tax/tariff decay**, (4) **meter-effects-on-other-
+meters** (cross-meter coupling). It is the single most dreaded/tedious end-of-turn phase (matthewyoung123:
+volatility + tax/tariff decay "don't make sense where they are"; AP: "sorta got volatility working, haven't
+done decay, everything else done except meter effects on other meters"). The full canonical 4-part spec is at
+[§11.1.z](#111z--the-canonical-251-lingering-algorithm-179134--multi-roll-meter-pit--taxtariff-decay--admin-save-ladder--officermeter-map-new-rulebook-batch-31-designed-the-authoritative-source).
+
+**★ C. Committee XP gain WITHOUT the small-chance +1-ability roll (#322; POST 3-4).** The **designed rule
+includes a small per-pol chance of a +1 ability from committee service** — separate from the deterministic XP
+grant. Ted ran 10,000 pols through the committee-gains script and saw **zero +1 Legislative**; AP confirms it
+was **intentionally omitted** ("the original point was just to simulate the Committee experience gains, since
+that was the really tedious part. I might add it").
+
+**★ D. The CPU bill-SELECTION scoring formula (#323; POST 2, 5).** The **explicit scoring heuristic behind
+CPU bill selection**: per-faction score = **(which cards a proposal impacts) × (its point value) × (which
+factions hold those cards)** → one **sortable column per faction**, so a CPU instantly sees the highest-value
+play; then manually confirm prereqs + meter impacts. ★ This is **DISTINCT from the #74 CPU VOTING heuristic**
+(how a CPU votes on a bill) — it is the CPU's bill-*proposal*/selection score. AP: "doable, lots of backend
+nonsense."
+
+**★ E. Rules-version markers + the war ±10 signal (POST 44, 45).** The pol generator was generated **from
+rules 3.0.25** (a late-2025/early-2026 ruleset pin). Their war sim found "battles do **not end even when
+warscore is 10 or -10**" — a missing war-resolution terminator at the ±10 bound (their sim plugs in the Rev-War
+battle data, confirming the war engine is fully data-specified). **All scripts are roll-based** → confirms the
+engine is roll-driven throughout and any in-app port must draw from a **reproducible seeded RNG** (#296).
+
+> **★ Rules-version markers folded this batch (b55):** **3.0.19-2** (the Abilities/Expertise/Traits reference,
+> §30.45.3), **3.0.25** (the pol generator, this section), **3.0.32 & 3.0.35** (the Secession/CW/Reconstruction
+> ruleset, §30.45.1). These date the late-2025/early-2026 ruleset and refine the version timeline alongside the
+> earlier "3.0.24" census ([§30.43.1](#30431--34--305--307--308--the-full-censusreapportionment-algorithm-rules-3024-the-ordered-5-step-ev-recompute--house-cap-reconciliation--bigmedsmall-classification--influential-rep-delegation-vote-model--ahistorical-seat-bias-designed-0-shipped)) markers.
+
+**★ SHIPPED vs DESIGNED — code-verified this batch (b55).**
+
+| Surface | Shipped reality | Verdict |
+|---|---|---|
+| **Script inventory ↔ phase set (§A, #20)** | **CORROBORATES.** Every scripted subsystem has a shipped phase-runner equivalent (committee/leader/cabinet gains, gov+rep+CPU elections, CPU voting/confirm, war sim, VP scoring, era/anytime evos, conversions, career tracks, drafts, lingering); meta-confirmation, not a new gap | Corroborated |
+| **★ Lingering 4-part (§B, #134)** | **PARTIAL — ships part (1) only.** `runPhase_2_5_1_Lingering` (`phaseRunners.ts:3260`) = cabinet-skill-driven per-meter drift + per-seat expertise bonus + per-trait modulation + national-debt update. **NO volatility, NO tax/tariff decay, NO meter→meter cross-effects** | 3 parts short (#134) |
+| **★ Committee +1-ability roll (§C, #322)** | **NOT BUILT.** `runPhase_2_2_2_Committees` (`phaseRunners.ts:1894`) grants the **4 chairs** command+1/legislative+1 + committee expertise — **no small-chance +1-ability roll, no per-member (non-chair) pass.** The primitive EXISTS in career-track `rollThreshold` (`phaseRunners.ts:299`); committee service just doesn't use it | Roll unbuilt (#322) |
+| **★ CPU bill-scoring formula (§D, #323)** | **DOCUMENTED, not in code (distinct from #74).** The cards×points×holders selection heuristic is the formula behind CPU/human-CPU bill PROPOSAL — feeds #20; #74 is the separate CPU VOTING heuristic | Formula documented (#323) |
+| **Seeded RNG (§E, #296)** | **CORROBORATES the gap.** All scripts roll dice; `src/rng.ts:1-5` still uses `Math.random` (un-seeded) | Gap stands (#296) |
+| **War ±10 terminator (§E)** | **VERIFY.** Their sim's "battles don't end at ±10" — the app's `revolutionaryWar.ts:254-263` is a separate impl; flag the ±10 terminator to verify (the shipped resolver ends a battle-war at `warScore ±50`, [§23.3](#233-56-civil-war--the-two-theater-combat-engine-multi-term-subsystem)) | Verify in app |
+
+→ **Net: a meta/tooling corroboration with three specific NEW build signals.** The script inventory confirms
+the full designed phase set (#20); mints **#323** (the Lingering-4-part + committee-+1-roll + CPU-bill-scoring
+cluster); sharpens **#134** (Lingering ships only part 1 of 4), **#322** (committee +1-ability roll omitted),
+**#20** (CPU bill-selection scoring formula), **#296** (seeded RNG). Folds the **3.0.25** version marker. ⚠
+**Designer note:** the forum itself finds the Lingering volatility + tax/tariff-decay + meter-cross-effects
+parts confusing ("don't make sense where they are") — a possible candidate for *deliberate* simplification
+rather than faithful port (a human/designer call, not a defect). (`1bb2ac6b#POST 2-5, 38-41, 44, 45`;
+`game-context.md` #134/#322/#323/#20/#296; codebase `phaseRunners.ts:1894,3260,299`, `rng.ts:1-5`,
+`revolutionaryWar.ts:254-263`.)
+
 ### 30.4 Authority hierarchy reminder
 
 When rule sources disagree:
