@@ -24665,6 +24665,415 @@ rather than faithful port (a human/designer call, not a defect). (`1bb2ac6b#POST
 `game-context.md` #134/#322/#323/#20/#296; codebase `phaseRunners.ts:1894,3260,299`, `rng.ts:1-5`,
 `revolutionaryWar.ts:254-263`.)
 
+### 30.46 Rulings folded from batch 56 — ★ SC nomination-CONFIRMATION (auto-confirm-vs-always-vote fork + the age/Judicial nominee gate #326 + veto relocation; #66/#270/#20) + party-shift INEVITABILITY (the ideology-drift engine + the era-banded eligible-ideology matrix's 3rd witness + the "can be independent" draft-party tag; #4/#171/#298/#302/#263/#306/#314) + post-1772 START-DATE / scenario-boot phase-entry (A/B/C; the 1856 HYBRID boot; #86/#115/#186/#92) + California UC/LC SPLIT-STATE pol-assignment (#325 + the alt-states gap/#294/#295/#34) + Jeannette-Rankin women's-SUFFRAGE candidacy gate (the absent gender attribute + per-state/federal/−5 options; #238/#258/DH-14) (`70a67176-sc-nomination-confirmation` / `0af55af3-party-shift-inevitability` / `b15af728-game-start-date` / `2b729148-california-uc-lc-split` / `92202e9a-jeannette-rankin-suffrage`)
+
+> **★ Batch 56 = five SMALL DESIGN/Q&A threads — all DIGEST-ONLY, none a playthrough** (no historian ran a
+> game; one source narrates no in-game play). **Net new shipped behavior: NONE** (re-verified at `src/` HEAD
+> 2026-06-30) — every ruling below is **designed-only**, a **confirmation/delta vs already-shipped behavior**,
+> or an **OPEN design fork**. No new gap IDs are minted in the doc here (the consolidation logged **#325**
+> [split-state pol-assignment] + **#326** [SC-nominee age/Judicial gate]); the rest sharpen existing gaps. The
+> five sources:
+> - **`70a67176-sc-nomination-confirmation`** ("Deep Dive Feedback: Executive Orders / Supreme Court
+>   nomination–confirmation"; politicslounge, **Sept 15–16 2022**; 9 posts / 1 chunk; lead @vcczar/MrPotatoTed,
+>   the 2.8 deep-dive sequel to the 2.3 cabinet deep-dive `b9028796`). The **canonical design origin of the SC
+>   nomination/confirmation mechanic** + its core unresolved fork (auto-confirm vs always-vote). → #326 (new) +
+>   #66/#270/#20 (sharpen). Cite `70a67176#POST 2-9`. **§30.46.1.**
+> - **`0af55af3-party-shift-inevitability`** ("Is the party shift inevitable…?"; politicslounge topic 5065,
+>   **~14 Dec 2023**; 7 posts / 1 chunk; @theFreezerFlame relays vcczar's design, @Arkansas Progressive
+>   counter-proposes). The definitive answer that the modern partisan sort is **practically guaranteed under
+>   default rules** + the **3rd independent witness for the #4 era-banded eligible-ideology matrix** (a single
+>   faction's trajectory across 3 eras) + the **"can be independent" draft-party tag**. → #4/#171/#298/#302/
+>   #263/#306/#314 (sharpen); one parking-lot REJECTED alternative. Cite `0af55af3#POST 2-7`. **§30.46.2.**
+> - **`b15af728-game-start-date`** ("When should a new game actually BEGIN?"; politicslounge topic 6314,
+>   **Jun 19–21 2025**; 10 posts / 1 chunk; @MrPotatoTed polls). The **start-PHASE-ENTRY decision** for any
+>   post-1772 scenario (A=2.4 cabinet-confirmed / B=2.1 post-election-pre-cabinet [front-runner] / C=election)
+>   + the option-A no-Faction-Leader-turn-1 gap + the start-date-sheet error class. → #86/#115/#186/#263/#92
+>   (sharpen). ★ **Correction: 1856 ships AND is the default New-Game scenario** (`NewGameScreen.tsx:25`) — the
+>   thread's "only 1772 ships" (POST 6) is **stale**. Cite `b15af728#POST 1-10`. **§30.46.3.**
+> - **`2b729148-california-uc-lc-split`** ("Is it possible for California politicians to be divided into UC and
+>   LC?"; politicslounge topic 5362, **4–9 May 2024**; 7 posts / 1 chunk; @theFreezerFlame / @Ich_bin_Tyler /
+>   matthewyoung123 relay vcczar's vision). The **split-state (alt-state) pol-assignment** mechanic: a historic
+>   state modeled as N split alt-states (CA→UC/LC, TX→4) + a per-draft-class random assignment die + a ≥4-core-
+>   office random-fill floor + the non-chosen split persisting. → #325 (new) + the alt-states/#294/#295/#34
+>   cluster (sharpen). ★ Distinct from the SHIPPED `Politician.altState` carpetbagger field. Cite
+>   `2b729148#POST 1-6`. **§30.46.4.**
+> - **`92202e9a-jeannette-rankin-suffrage`** ("Is there a way to have a Jeannette Rankin situation?";
+>   politicslounge topic 5183, **Feb 17 2024**; 7 posts / 1 chunk; @vcczar adjudicates, @Euri proposes,
+>   @theFreezerFlame OPs). The **women's-suffrage candidate-eligibility GATE** (a woman holding federal office
+>   *before* the federal amendment) with 3 design options (A random-woman event / B per-state early-suffrage
+>   flag [vcczar-endorsed] / C always-run-with-−5) — **prerequisite: a gender attribute that does not exist**.
+>   → #238/#258/DH-14 (sharpen). Cite `92202e9a#POST 1-7`. **§30.46.5.**
+>
+> **★ Cross-section note — this batch adds NO shipped rules; it sharpens existing homes.** The deep existing
+> homes the children below CROSS-LINK to (rather than re-derive): the cabinet/SCOTUS confirmation subsystem
+> ([§9.3.11](#9311--the-canonical-cabinetscotus-confirmation-subsystem-172dh-76--199--the-authoritative-spec-new-rulebook--apptdeepdive-batch-31-designed-not-built));
+> the SC Case generator ([§30.43.3](#30433--270--the-sc-case-generator-row-schema-a-v-b--points--yeanay-dual-payload-25-chance-meter--interestideology-group-reward--the-same-side-of-the-aisle-conflicting-interest-design-goal-designed-court-phase-is-a-4-string-coin-flip));
+> the era-banded eligible-ideology matrix ([§30.42.1](#30421--4--306--the-era-banded-eligible-ideology-matrix-the-10-faction-structure-fringe-scoring-262--difficulty-293-designed-soft-form-shipped-1772-inaugural-only))
+> and the CPU ideology-shift rule ([§30.44.1](#30441--314--the-cpu-ideology-shift-movement-rule-forum-canonical-6040-state-pref--party-enthusiasm-via-d-1003-vs-shipped-215-faction-center--a-designed-vs-shipped-divergence-on-every-axis-a-reconciliation-decision--the-data-layer-it-needs));
+> the historical party-switch / `flippable` system ([§30.42.2](#30422--302--historical-party-switch-dates-the-flippable-attribute--the-realignment-flip-year-guide-designed-player-driven-conversion-is-the-shipped-sibling));
+> and the scenario-boot keystone discussed throughout §26/§27. The subsections below add only the **NEW design
+> forks/rulings, the verified shipped confirmations/deltas, and the two new gaps (#325/#326)**, all tagged **b56**.
+
+#### 30.46.1 ★ SC nomination–CONFIRMATION (#66 / #270 / #326 / #20) — the auto-confirm-vs-always-vote OPEN fork + the SC-nominee AGE/Judicial gate (#326) + the compromise-candidate rule + the veto→legislative relocation (designed/OPEN; SHIPPED = NO vote, auto-pick, no age floor)
+
+> **Source: `70a67176` POST 2-9 (the 2.8 deep-dive; the canonical SC-confirmation design origin) + codebase
+> (`phaseRunners.ts:3397` court-decisions, `3632` Executive Orders, `3648-3667` Court Mgmt / retire+auto-pick,
+> `3655` age-75 retire trigger, `3661-3667` auto-pick filter+seat, `2191-2198` cabinet auto-confirm "mirror";
+> `types.ts:1548-1556,1584-1587` court data model).** SC confirmation is meant to **mirror cabinet
+> confirmation** (POST 3, 5); the cabinet "mirror" itself ships as auto-score, so SCOTUS inherits the gap.
+> ★ Do NOT re-derive the cabinet/SCOTUS confirmation spec at [§9.3.11](#9311--the-canonical-cabinetscotus-confirmation-subsystem-172dh-76--199--the-authoritative-spec-new-rulebook--apptdeepdive-batch-31-designed-not-built) —
+> this child adds the **SC-specific ideology-sneak rationale, the auto-confirm-vs-always-vote FORK, the #326
+> age/Judicial nominee gate, and the veto-relocation placement decision**.
+
+**★ A. SHIPPED reality — there is NO SC confirmation vote (code-verified).** Justices are never nominated-by-
+faction and never voted on; the only path to grow the court is the reactive 2.8.2 retire-and-replace:
+
+| Surface | Shipped today | file:line |
+|---|---|---|
+| SC nomination / confirmation flow | **NONE** — no per-nominee process, no committee→floor vote | `phaseRunners.ts:3648` `runPhase_2_8_2_CourtMgmt` |
+| Justice replacement | On retirement, **auto-picks highest-`judicial` (≥2), same party as President** → instantly logged "confirmed as Associate Justice." No vote, no opposition, no compromise. | `phaseRunners.ts:3661-3667` |
+| Age floor on a NEW justice | **NONE** — `age >= 75` only *triggers retirement*; the candidate filter has no age term, so **a 20-year-old is seatable** | `phaseRunners.ts:3655` (retire), `3661` (no age in filter) |
+| Cabinet "mirror" | **Auto-scored, no Senate vote** — best-scored eligible pol is set into the seat + logged "confirmed" | `phaseRunners.ts:2191-2198` `runPhase_2_3_1` |
+| Court DECISIONS automated by ideology | **YES** — 50% coin-flip/phase on 4 hardcoded strings; counts Con/Trad/RW-Pop vs Lib/Prog/LW-Pop justices, greater side wins, ±0.1 partyPreference; **ignores `pendingCourtCases`** | `phaseRunners.ts:3397` `runPhase_2_5_3_Court` |
+
+> ★ The shipped auto-pick **reproduces the live bug** the thread reports (POST 7): a nominee voted down for
+> being extreme + under-30 + J1 was "auto-confirmed"-replaced by a *second* equally-extreme, under-30, J1
+> candidate — because the auto-pick optimizes `judicial` only, with no moderation and no age floor.
+
+**★ B. The CORE design fork — auto-confirm vs ALWAYS-VOTE (OPEN; POST 2, 5-9).** vcczar floated **auto-
+confirming** an SC nominee *if enough factions vote against but the Majority Leader doesn't "block."* Players
+pushed back hard for **always voting on each nominee.** **UNRESOLVED in-thread.** The pro-always-vote case:
+
+| # | Argument | Detail | Post |
+|---|---|---|---|
+| a | **Competitive selling point** | Rival political games are frequently *asked* for the ability to vote on SC justices "even if the court isn't in the game" → a marketing differentiator | 6 |
+| b | **Ideology-sneak prevention** | Auto-confirm could **sneak extreme justices onto the court** (e.g. an RW-Pop faction w/ 3 Judicial ramming nominees) because the makeup "wasn't allowed to moderate by voting"; an extreme court blocks e.g. desegregation | 8, 9 |
+| c | **★ The either/or with automated court DECISIONS** | Willthescout7: court decisions are ideology-automated *now* (`runPhase_2_5_3_Court:3397`, the 50% coin-flip) — that is "an either/or with confirmation automation, not something you can have both of." **If decisions are ideology-driven, confirmation MUST be a real vote** (the vote is the only ideology check). | 9 |
+
+> The dissent (POST 5, minority): the current system is "fine… not broken," happens less often than cabinet
+> noms → "won't be as annoying," leave it alone. The always-vote camp dominated.
+
+**★ C. Compromise-candidate requirement (POST 6, 7) — the auto-confirm survival condition.** If auto-confirm
+is kept at all, the auto-pick must be a **"compromise" nominee a majority would accept** (more moderate, high
+Judicial) — directly fixing the §A bug. Real precedent cited: Reagan's 2 blocked nominees → Rehnquist,
+overwhelmingly approved. (Generalizes the cabinet "SML recommends 5 most-qualified replacements" idea from
+[§9.3.11](#9311--the-canonical-cabinetscotus-confirmation-subsystem-172dh-76--199--the-authoritative-spec-new-rulebook--apptdeepdive-batch-31-designed-not-built),
+but adds a *moderation* constraint that is new.)
+
+**★ D. The SC-nominee AGE-minimum / Judicial-rating GATE (#326; POST 7).** Two proposed forms (designer to
+pick); **nothing like either ships** — the only floor is `judicial >= 2` in the auto-pick filter:
+
+| Form | Rule |
+|---|---|
+| **Flat age-min + penalty** | **Age minimum 30** (stop law students/undergrads); **huge penalty under 40 (or 35).** |
+| **Judicial-keyed floor** (more elegant / self-balancing) | **J5 → 30**, **J4 → 35**, **J3 → 40** (appoint w/o penalty); **J2 or J1 → 45+.** |
+
+> **#326 = NEW build requirement.** The shipped filter (`phaseRunners.ts:3661`) requires *only* `judicial >= 2`
+> with **no age floor**, so the under-30/J1 nominee that triggered the live bug is seatable — exactly the
+> defect #326 closes. (The age-min would also need to apply to the human-facing nomination path that does not
+> yet exist, not just the CPU auto-pick.)
+
+**★ E. Veto / sign-laws RELOCATED out of 2.8 (POST 3, 4; ACCEPTED by both vcczar & MrPotatoTed).** "President
+signs laws / veto procedures" moves **to the legislative session** (out of the executive 2.8 phase) — rationale:
+"makes scoring so much easier." **Shipped: N/A** — neither a 2.8 nor a legislative veto/sign step is implemented
+as such today; record as a placement decision + unbuilt feature. (Pairs with the legislative-session phase.)
+
+**→ Net (b56):** the whole SC nomination/confirmation flow is **0% built** and inherits the cabinet-mirror gap
+(#66); court **decisions** ARE ideology-automated (a 4-string coin-flip, #270) which — per the ★C either/or
+constraint — argues confirmation must become a real vote. Mints **#326** (the age/Judicial nominee gate),
+leaves the **auto-confirm-vs-always-vote fork OPEN** (a roadmap design-decision), and folds the **veto→
+legislative relocation** placement. (`70a67176#POST 2-9`; `game-context.md` #66/#270/#326/#20; codebase
+`phaseRunners.ts:3397,3632,3648-3667,2191-2198`, `types.ts:1548-1556`.)
+
+#### 30.46.2 ★ Party-shift INEVITABILITY + draft eligibility (#4 / #171 / #298 / #302 / #263 / #306 / #314) — the ideology-drift ENGINE (shipped) + the era-banded eligible-ideology MATRIX's 3rd witness (1772 byte-confirmed) + the "can be independent" draft-party tag (designed) + the restriction settings toggle + the REJECTED enthusiasm-eligibility alternative
+
+> **Source: `0af55af3` POST 2-7 (theFreezerFlame relaying vcczar's design + the AP counter-proposal) + codebase
+> (`factions1772.ts:6-7,19` the `eligibleIdeologies` field + Red-1 data; `phaseRunners.ts:28` `getEligibleIdeologies`,
+> `38-44` consumed only when `isExpansion1772`, `60` `recordDraftPick` partyId assign; `704-728` `factionCenter`,
+> `740-794` `resolveIdeologyShift`/`ideologyShiftOdds`/`stepToward` the drift engine).** ★ Do NOT re-derive the
+> #4 matrix at [§30.42.1](#30421--4--306--the-era-banded-eligible-ideology-matrix-the-10-faction-structure-fringe-scoring-262--difficulty-293-designed-soft-form-shipped-1772-inaugural-only)
+> or the #314 CPU-shift rule at [§30.44.1](#30441--314--the-cpu-ideology-shift-movement-rule-forum-canonical-6040-state-pref--party-enthusiasm-via-d-1003-vs-shipped-215-faction-center--a-designed-vs-shipped-divergence-on-every-axis-a-reconciliation-decision--the-data-layer-it-needs) —
+> this child adds the **inevitability THESIS, the 3rd matrix witness (a single faction across 3 eras + a 1772
+> code-confirm), the "can be independent" draft-party tag, and the rejected enthusiasm-eligibility alternative**.
+
+**★ A. The inevitability THESIS (POST 2, 4, 6, 7).** The modern partisan sort is **practically guaranteed under
+default rules** via a feedback loop:
+
+1. A faction may only draft within its **era-restricted eligible ideologies** (the #4 matrix, §B).
+2. **Drafted pols then SHIFT ideology over time toward the faction's center** ("you can't keep parties from
+   shifting because the pols they draft will shift," POST 6).
+3. → the faction's composition (and its eligible band next era) drifts the same way → the realignment
+   reproduces itself.
+
+> POST 7: **"default rules means that the party shift will happen as it did historically, but if someone wants
+> to play ahistorically that is certainly possible"** — the inevitability is a property of DEFAULT (restricted)
+> mode; escapable only by turning restrictions OFF. vcczar's relayed design principle (POST 4): **"party cards
+> are determined by politicians, not the other way around"** — a faction's identity is a FUNCTION of its
+> roster, not a label that constrains it (the reason the §E counter-proposal was rejected). This is the #108
+> realignment-is-emergent thesis from the draft-restriction angle.
+
+**★ B. The era-banded eligible-ideology MATRIX — a SINGLE FACTION across 3 eras (#4, 3rd witness; POST 6).**
+
+> "Red 1 can draft **LW Pop, Prog, Lib in 1772**. By **1892** they're limited to **LW Pop and Prog**. and by
+> **2012 just Lib/Mod**." (theFreezerFlame, POST 6)
+
+| Faction | 1772 (Independence) | 1892 (Progressivism) | 2012 (Populism) |
+|---|---|---|---|
+| **Red 1** (Red's left-most slot) | LW Pop / Prog / Lib | LW Pop / Prog | Lib / Mod |
+
+Two facts this nails down:
+- **The eligible set shifts RIGHTWARD over time even for the left-most Red slot** — Red-1 starts able to draft
+  the whole left wing, sheds Liberal by 1892, sheds the entire populist/progressive left by 2012 (Lib/Mod only).
+- **★ The 1772 datum is BYTE-CONFIRMED by the SHIPPED data:** `fact_red_lw_1772` ships
+  `eligibleIdeologies: ['LW Populist','Progressive','Liberal']` (`factions1772.ts:19`) = POST 6's "Red 1 …
+  LW Pop, Prog, Lib in 1772," exactly. So the **1772 column of #4 is BUILT & CONFIRMED; the 1892 and 2012
+  columns are UNBUILT** (no later-era eligible-ideology tables ship). Reconciles cleanly with the b52
+  `7d91c4c7` matrix (Independence + 2012 columns) — this adds the intermediate **1892** Red-1 cell.
+
+**★ C. The ideology-DRIFT engine is SHIPPED (the inevitability's second half; #298/#314).** Code-verified, the
+"drafted pols shift toward the faction" half of §A IS built:
+- `factionCenter` (`phaseRunners.ts:704-728`) computes the living-member mean ideology (leader-weighted, plus a
+  clamped lobby-expertise econ-lean nudge).
+- `resolveIdeologyShift` (`phaseRunners.ts:767-794`) steps a pol **one** toward that center on a successful roll
+  (`stepToward` `:740-742`; odds `ideologyShiftOdds` `:746-754`), in phase `2.1.5`.
+
+> So the drift-toward-faction-center DIRECTION matches the thread's claim and ships. (The exact CPU-shift RULE
+> still diverges from forum-canonical on every axis per #314 — see [§30.44.1](#30441--314--the-cpu-ideology-shift-movement-rule-forum-canonical-6040-state-pref--party-enthusiasm-via-d-1003-vs-shipped-215-faction-center--a-designed-vs-shipped-divergence-on-every-axis-a-reconciliation-decision--the-data-layer-it-needs);
+> the DIRECTION is confirmed, the MOVEMENT formula is the reconciliation item.)
+
+**★ D. The "can be independent" draft-party TAG (#302; NEW facet; POST 6) + the restriction toggle (#171/#306/#263).**
+
+> "And unless a pol has a **'can be independent'** tag, then only their **starting party** (Blue for AOC, Red
+> for George H.W. Bush) can draft them." (POST 6)
+
+A discrete per-politician attribute gating WHICH PARTY may draft a pol:
+- **Default:** a pol may be drafted **only by their starting (historical) party** (AOC→Blue; GHW Bush→Red) — a
+  draft-time party gate.
+- **Exception:** a pol carrying the **"can be independent" tag** may be drafted by **EITHER party.**
+
+This is **distinct** from the #4 ideology gate (which gates by IDEOLOGY) and from the #302 party-switch system
+(which moves a pol between parties DURING a campaign). It RELATES to #302 (both concern party flexibility) but is
+its own data field — already listed in the docs as the unbuilt `canBeIndependent` curated-override flag; this
+thread is the playtest-side confirmation + crisp semantics + examples.
+
+> **★ SHIPPED — 0% built (code-verified):** grep `canBeIndependent` over `src/`/`scripts/`/`public/*.json`/
+> `politicians-dataset.csv` = **ZERO** (the term appears only in docs). `Politician` (`types.ts:1251`) has
+> `partyId`/`factionId` but **no draft-party-eligibility flag.** And the shipped draft sets
+> `p.partyId = faction.partyId` at pick time (`recordDraftPick` `phaseRunners.ts:60`) with **NO starting-party
+> gate at all** — any faction picks from the shared `pendingDraftPool` regardless of a pol's historical party.
+> So the build enforces **NEITHER the default starting-party gate NOR the tag** (#302). The **draft-restriction
+> SETTINGS TOGGLE** (#171/#306/#263 — "you can turn off draft restrictions … in the settings," POST 6;
+> default-ON = historical shift) is likewise **0% built** (grep `draftRestriction|restrictDraft|
+> unrestrictedDraft|eraDraftIdeologyRestrict` = ZERO); the only restriction that ships is the hardcoded
+> `isExpansion1772` branch (`phaseRunners.ts:38`), which is neither era-keyed-general nor user-toggleable.
+
+**★ E. The REJECTED enthusiasm-driven-eligibility counter-proposal (POST 3, 5; PARKING-LOT).** Arkansas
+Progressive proposed an alternative to fixed per-era tables: **draftable ideologies = a function of party
+ENTHUSIASM per ideology** (a live, state-dependent gate), with **LW-Populist treated as party-NEUTRAL** (either
+party may draft it). **REJECTED by design** (POST 4) — it inverts vcczar's "party cards follow pols" principle.
+Capture as an explicit alternative to #4's fixed-matrix approach — NOT adopted. (Note: the enthusiasm-as-driver
+instinct DOES appear, adopted, in the #314 CPU-shift "40% = highest-enthusiasm ideology" rule — but for SHIFT,
+not draft eligibility.)
+
+**→ Net (b56):** corroborates #4 (3rd witness, +1892 cell, 1772 byte-confirm), #171/#306/#263 (the restriction
+is a user settings toggle, 0% built), #298/#314 (the drift engine IS shipped — the inevitability's mechanism),
+#302 (the "can be independent" draft-party tag, 0% built — the build enforces neither the default gate nor the
+tag); logs the rejected enthusiasm-eligibility alternative. No new gap ID. (`0af55af3#POST 2-7`;
+`game-context.md` #4/#171/#298/#302/#263/#306/#314; codebase `factions1772.ts:6-7,19`,
+`phaseRunners.ts:28,38-44,60,704-728,767-794`.)
+
+#### 30.46.3 ★ Post-1772 START-DATE / scenario-boot phase-entry (#86 / #115 / #186 / #263 / #92) — the A/B/C start-phase decision (B-leaning) + the SHIPPED 1856 HYBRID boot (matches NEITHER A nor B) + the option-A no-Faction-Leader-turn-1 gap + the start-date-sheet error class (designed; 1856 ships as a hardcoded hybrid)
+
+> **Source: `b15af728` POST 1-10 (the start-phase poll) + codebase (`NewGameScreen.tsx:8-21` scenario list,
+> `:25` 1856 default; `GameContext.tsx:24,264-272` `startNewGame(factionId, scenarioId?)`; `scenario1856.ts:
+> 124-193` the seated incumbents + `:153` `phaseId: '2.1.2'` boot + `:61-89` algorithmic senator seeding;
+> `scenario1772.ts` + `phases.ts:64-67` the 1772 inaugural-draft special-case).** This is the
+> **start-PHASE-ENTRY half of the scenario-boot keystone** (#86/#115/#186): the existing boot item covered
+> *who is seated*; this thread adds *which phase the turn enters and which turn-1 phases skip*. Cross-links the
+> arbitrary-year-start model (#92) and the settings-surface (#263).
+
+**★ A. The design question + the poll (POST 1).** vcczar's "start-date sheet" assumes a game begins **AFTER the
+most recent election AND after the cabinet is appointed/confirmed** — ahistorically early (an 1856 start seats
+Buchanan + cabinet, but Buchanan won at the END of 1856, was sworn in 1857). The rules **never state** how to
+boot a post-1772 game or which phases to skip. The poll:
+
+| Option | Start point | Boot phase |
+|---|---|---|
+| **A — Leave as-is** | post-election **WITH cabinet already confirmed** (1856 = Buchanan + cabinet seated) | first turn at **2.4** |
+| **B — Begin at 2.1** ← front-runner | post-election but **BEFORE cabinet nomination** (Buchanan won, no cabinet yet) | **2.1** |
+| **C — Begin at the election** | **no historical-accuracy assumption** — play the seed-year election in-game | election (2.9.x) |
+| **D — Other** | — | — |
+
+**★ B. Where the team landed (POST 2-10).** **B is the front-runner** — favored for **coding simplicity +
+accessibility** ("jump in at 2.1… don't worry about existing leaders and cabinet"; "would prefer not to have a
+Cabinet cobbling thrown at me on turn 1"). **A has real support** ("starting with historicity… skipping
+appointments"). The wish (POST 4, 6): **support BOTH A and B as selectable options** "eventually" — but the app
+"must choose one or the other" for now (folds into the #263 settings surface). Forum GMs can boot however they
+like (a 1960 pre-election start was already run informally, POST 5); the app must pick one.
+
+**★ C. The SHIPPED 1856 boot is a HYBRID matching NEITHER A nor B (code-verified).** Each scenario **hardcodes**
+its entry phase; there is **no generic/configurable start-phase boot and no A/B/C toggle**:
+- **1772** enters `2.1.1` (inaugural draft — the `scenarioId==='1772' && year===startYear` special-case,
+  `phases.ts:64-67`).
+- **1856** enters **`2.1.2` Career Tracks** (`scenario1856.ts:153`, comment "start past draft for first turn
+  (rookie crop already included)").
+
+> The 1856 boot is **option-A-LIKE** in seating incumbents — Buchanan as President, a **partial** cabinet
+> (`scenario1856.ts:124-136`: only SecState seeded; Treasury/War/Navy/AG/Interior/Postmaster `null`), SCOTUS
+> (`:138-139`), governors (`governorsExist:true` `:179`), and a **full** Senate+House (algorithmically seeded
+> `:61-89`), with `constitutionRatified:true` (`:181`) — i.e. the **ahistorical pre-1857-swearing-in** start the
+> thread critiques. But it is **NOT the option-A 2.4-start** (it enters at **2.1.2**, *upstream* of the 2.2.x
+> leadership phases) **and NOT the option-B 2.1.1 draft-start** (it **skips the turn-1 draft**, booting one
+> phase later at 2.1.2). So it is its own third thing: incumbents seated (like A) **+** boot into early-turn
+> management (near B). **The A/B/C framing does not map 1-to-1 onto what ships → the boot-phase decision needs
+> an explicit reconcile.**
+
+**★ D. The option-A no-Faction-Leader-turn-1 rules gap (POST 7; NEW, option-A-conditional).** A *true* option-A
+boot (cabinet pre-confirmed ⇒ first turn at **2.4**) would **skip phase 2.2.3 Faction Leaders**, leaving every
+faction with **NO Faction Leader for turn 1** by current rules. **Shipped: N/A today** — 1856 boots at **2.1.2**
+(upstream of 2.2.3), so Faction Leaders ARE selected on turn 1; the build **sidesteps** the gap by NOT using a
+2.4-start. But if the boot decision ever lands on option A for any era, this becomes a live hole the BootSheet
+must pre-seed (pre-assign turn-1 Faction Leaders) or the phase sequence must special-case.
+
+**★ E. The start-date-sheet ERROR class (POST 1; NEW data-quality note; #186/#187).** While building an 1820
+template OP found sheet errors — e.g. **Senate seats marked "vacant" that don't vacate until after the
+midterms** — plus other inconsistencies. **Shipped:** the 1856 boot **assigns senators algorithmically**
+(`scenario1856.ts:61-89`: historical seeds first, then same-region party-leaning filler to fill all 62 seats),
+so it does NOT import the sheet's vacancy errors — but any future **data-driven `BootSheet`** built from that
+sheet would inherit them → a seat/incumbent correctness bar before it feeds the engine.
+
+> **★ CORRECTION (override the thread's "only 1772 ships," POST 6 — STALE):** the build offers **BOTH 1772 and
+> 1856** as user-selectable New-Game scenarios (`NewGameScreen.tsx:8-21`; `startNewGame(factionId, scenarioId?:
+> '1772'|'1856')`, `GameContext.tsx:24,264-272`), with **1856 the DEFAULT** (`NewGameScreen.tsx:25`
+> `useState<ScenarioId>('1856')`). A post-1772 start **already ships** — the June-2025 forum statement predates
+> it. Corroborates **#92** (the forum treats arbitrary year-starts — 1820/1840/1960 templates — as
+> off-the-shelf, against the shipped `year % 4` era model).
+
+**→ Net (b56):** adds the **start-phase-entry axis (A/B/C, B-leaning)** to the scenario-boot keystone
+(#86/#115/#186); records the **1856 hybrid boot** (incumbents seated + enters 2.1.2 — matches neither A nor B,
+needs reconcile), the **option-A no-Faction-Leader-turn-1 gap** (not live; a blocker if A is ever adopted), and
+the **start-date-sheet error class** (data-quality bar). No new gap ID. (`b15af728#POST 1-10`; `game-context.md`
+#86/#115/#186/#263/#92; codebase `NewGameScreen.tsx:8-21,25`, `GameContext.tsx:24,264-272`,
+`scenario1856.ts:124-193,61-89,153`, `phases.ts:64-67`.)
+
+#### 30.46.4 ★ California UC/LC SPLIT-STATE pol-assignment (#325 + the alt-states gap / #294 / #295 / #34) — a historic state as N split alt-states + a per-draft-class random assignment die + the ≥4-core-office random-fill floor + the non-chosen-split persistence (designed; 0% shipped — CA/TX are single states; `altState` is the UNRELATED carpetbagger field)
+
+> **Source: `2b729148` POST 1-6 (the split-state assignment thread; matthewyoung123 relays vcczar's vision) +
+> codebase (`states1856.ts:24` `tx` / `:35` `ca` single states; `expansionStates.ts:178` flat EV=4;
+> `types.ts:1256-1257` `altState`/`altStateSeeded`; `phaseRunners.ts:626-642` the `altState` relocation seed;
+> `RELOCATION_ODDS` `types.ts:241`).** ENRICHES the expansionStates / alt-states-EV gap (b50/b53) with the
+> concrete **split-state assignment mechanic** the registry needs. ★ Do NOT conflate with the relocation
+> `altState` field (§D below) or re-derive the census/EV gap at [§30.43.1](#30431--34--305--307--308--the-full-censusreapportionment-algorithm-rules-3024-the-ordered-5-step-ev-recompute--house-cap-reconciliation--bigmedsmall-classification--influential-rep-delegation-vote-model--ahistorical-seat-bias-designed-0-shipped).
+
+**★ A. The mechanic (POST 1-5).** Some historic states are modeled as **several split alt-states**:
+- **California → 2 splits:** Upper California (UC) + Lower California (LC).
+- **Texas → 4 splits:** e.g. West Texas / North Texas (+ two more).
+
+**★ B. The per-draft-class random assignment DIE (POST 2, 5; #325).** Historic pols from the parent state are
+dropped **RANDOMLY** into a split, by a die **re-rolled every new draft class** ("right now the game just places
+them randomly," POST 2 — describes the FORUM/spreadsheet ground truth, not the shipped browser build):
+
+| State | Die |
+|---|---|
+| **California** | **50/50** — `1–50 → Lower Cal`, `51–100 → Upper Cal` |
+| **Texas** | **quartiles** — `1–25 / 26–50 / 51–75 / 76–100` → the four TX splits |
+
+**★ C. The ≥4-core-office random-GENERATED-fill FLOOR (POST 5; #325).** If a split-state doesn't end up with **at
+least 4 pols (1 Governor, 1 Representative, 2 Senators)**, it is **back-filled with random-GENERATED pols** — the
+staffing floor that keeps a split functional. (For TX, dividing four ways means "there'd not be enough to go
+around… the game would not function," POST 4.)
+
+**★ D. The non-chosen split PERSISTS (POST 3; #325).** The split a pol is *not* placed in **still exists as a
+permanent, independently-admittable alt-state** — both halves (and all 4 TX parts) are real states;
+randomization only decides which one a given pol lands in.
+
+**★ E. Designer rationale — randomize to MINIMIZE generated pols (POST 4, 6).** "V specifically said we're doing
+it the random way **to reduce how many generated pols there are**, as that's in line with his vision" (POST 6).
+Randomization is a deliberate generated-pol-minimization rule, **not** a placeholder — the same rationale family
+as the **b53 territorial-offices #313 rejection** ([§30.43.5](#30435--313--rejecteddeferred-territorial-delegate--territorial-governor-offices-logged-so-it-is-not-re-proposed--the-real-underlying-gap-territories-have-zero-pre-statehood-gameplay)).
+The **by-residence alternative** (place each pol in the split they actually reside in, POST 1) is an *allowed
+option* "and there's no shame" in it, but is **explicitly NOT the default** (POST 6).
+
+> **★ SHIPPED — 0% built (code-verified):**
+> - CA / TX exist **only as single states** — `states1856.ts:35` `ca` (`electoralVotes: 4`) and `:24` `tx`
+>   (`electoralVotes: 4`). No `upper_cal`/`lower_cal`/`west_texas`/`north_texas` etc. anywhere in `src/`.
+> - **UC/LC absent from the expansion registry** — `expansionStates.ts` (the ~150-entry annexable-territories
+>   registry) has no California or Texas split (it adds real CA-adjacent states + Mexican carve-ups, but no
+>   UC/LC); EV is hardcoded flat **4** for every entry (`:178`) — inadequate for split-states.
+> - **No pol→split assignment of any kind** — no per-draft-class die, no quartile roll, no ≥4-core-office fill.
+> - ★ **`altState` is a DIFFERENT system — do NOT conflate.** `Politician.altState` (`types.ts:1256`) +
+>   `altStateSeeded` (`:1257`) is the **relocation / carpetbagger secondary-home** field, seeded by region
+>   distance for relocation odds in `runPhase_2_1_4_Relocations` (`phaseRunners.ts:626-642`: same-region 0.40 /
+>   cross-region 0.15 / else none, per `RELOCATION_ODDS.seed`, `types.ts:241`). It has **nothing to do** with a
+>   CA UC/LC split. `State` (`types.ts`) has no `parentState`/`splitOf`/split-group field either — a split-group
+>   abstraction would be net-new.
+
+**→ Net (b56):** mints **#325** (the split-state pol-assignment mechanic — random per-draft-class die + ≥4-core
+random-fill floor + non-chosen-split persistence + the generated-pol-minimization rationale); enriches the
+alt-states/expansionStates gap and couples to #34 (split-states need real EVs, not flat 4), #294 (industry per
+split), #295 (the historic pool the die draws from). 0% shipped — `altState` is the unrelated carpetbagger
+field. (`2b729148#POST 1-6`; `game-context.md` #325/#294/#295/#34; codebase `states1856.ts:24,35`,
+`expansionStates.ts:178`, `types.ts:1256-1257,241`, `phaseRunners.ts:626-642`.)
+
+#### 30.46.5 ★ Jeannette-Rankin women's-SUFFRAGE candidacy gate (#238 / #258 / DH-14) — the ABSENT gender attribute (the prerequisite) + the federal-amendment eligibility gate + 3 design options (A random-woman event / B per-state early-suffrage flag [endorsed] / C always-run-−5) + the 19th-Amendment unlock (designed; 0% built in `src/` — inert in both shipped scenarios)
+
+> **Source: `92202e9a` POST 1-7 (the women's-suffrage / female-candidate-eligibility exchange; vcczar
+> adjudicates) + codebase (`types.ts:1251-1291` `Politician` / `:1780-1793` `ImportedDraftee` — NO gender;
+> `:1318-1335` `State` — no suffrage flag; `:1487-1504` the `Predicate` tree — `stateAdmitted` but no
+> state-flag/suffrage predicate; `:1395` `presidentialEligibility` the SEPARATE citizenship gate; `:738`
+> `TRAIT_ELECTION_EFFECTS`; `:1466-1482` `EraEvent`/`postEffects`; `phaseRunners.ts:3685` `calcStateVote`).**
+> The real Jeannette Rankin case: elected the US House **1916**, four years before the 19th Amendment (1920),
+> because **Montana granted women's suffrage at the STATE level in 1914** — a per-STATE early-suffrage case, not
+> a federal-amendment case.
+
+**★ A. The forum-build state + the question (POST 1, 2).** vcczar (POST 2): "Rankine and other women are in the
+game **but currently that amendment has to be passed**. What I might end up doing after early release is create
+an event that selects a random woman to relive the Rankin experience." So in the **forum build**: women ARE in
+the pool, but a woman **cannot run/hold office until the women's-suffrage AMENDMENT passes** — a hard federal
+gate; the Rankin situation (a woman in office *before* the 19th) **currently cannot happen**. vcczar was
+"stumped" by the per-state-vs-federal mismatch.
+
+**★ B. The three design options (POST 2-4, 7).**
+
+| # | Option | Proposed by | Status |
+|---|---|---|---|
+| **A** | **Post-release "Rankin event"** — a scripted/era event picking a **random woman** to "relive the Rankin experience" (a one-off scripted exception to the gate) | vcczar (POST 2) | floated; "what I might end up doing" — the pre-release stopgap |
+| **B** | **Per-STATE early-suffrage flag** — let women run in **states that adopted suffrage before the federal Amendment** (MT 1914) | Euri (POST 3) | vcczar: **"makes sense to me"** (POST 7) — the ENDORSED durable rule |
+| **C** | **Always-run with −5 penalty** — women **always** eligible but take a **severe −5 election penalty** until federal suffrage passes | Euri (POST 4) | alternative to B; not adjudicated (cheapest, least faithful) |
+
+> A (event exception) and B (per-state rule) are layerable — A is the pre-release stopgap, B the durable
+> systemic rule; C is the simpler systemic alternative (one global penalty vs a per-state flag).
+
+**★ C. The 19th-Amendment UNLOCK (DH-14 / #114).** The amendment's passage is what flips the gate — in the
+forum build the 19th exists as a **scripted era-event (A/B/C decision) AND a legislative bill** that passes in
+human-majority games (House 374-61 / Sen 79-17, per the 1916 digests `5027f0f3`/`a0b7ef49`); DH-14 frames it as
+"never passes with CPUs." **This thread is the DESIGN-INTENT source for what the amendment's passage GATES** —
+i.e. *why* the amendment matters mechanically (it unlocks female candidacy), which DH-14 records the existence
+of but not the consequence of.
+
+**★ D. SHIPPED vs DESIGN — 0% built in `src/`, missing the prerequisite (code-verified).** The whole mechanic
+presupposes a **gender attribute that does not exist**:
+
+| Area | In `src/` today | Requirement | file:line |
+|---|---|---|---|
+| **Gender / sex attribute** | **ABSENT** — `Politician` and `ImportedDraftee` have no `gender`/`sex`/`isFemale` field; grep `gender\|female\|suffrage` over `src/` = **0**. The eligibility question is unrepresentable. | Add a gender field to both types + the dataset pipeline (`scripts/`) — **prereq for every option** | `types.ts:1251`, `:1780` |
+| **Federal-suffrage candidacy gate** | **ABSENT** — `calcStateVote` (`phaseRunners.ts:3685`) + election runners filter only on pool/faction/ideology, never gender or a suffrage flag; no `GameState` suffrage flag | Add a federal-suffrage game-state flag + an eligibility predicate barring female candidacy until set | `phaseRunners.ts:3685` |
+| **Per-STATE early-suffrage flag** [B] | **ABSENT** — `State` has no suffrage flag; the `Predicate` tree has `stateAdmitted` but **no per-state-flag / state-suffrage predicate** (a NEW predicate class #258 would add) | Add a per-state `womenSuffrageYear`/flag + a state-level branch (eligible in state X if X's suffrage year ≤ current year, even pre-federal) | `types.ts:1318`, `:1487-1504` |
+| **−5 penalty channel** [C] | **PRESENT as a channel** — `calcStateVote` already sums signed additive biases into per-candidate `score` (faction bias, trait bands via `TRAIT_ELECTION_EFFECTS` `types.ts:738`); a flat −5 modifier slots in here | No new channel — add a conditional −5 term gated on `(female && !federalSuffrage && !stateSuffrage)`; cheapest of the three | `phaseRunners.ts:3685`, `types.ts:738` |
+| **Random-woman "Rankin event"** [A] | **ABSENT, but AUTHORABLE** — `EraEvent` + `postEffects` (`types.ts:1466-1482`, incl. `addPolitician`) could carry a scripted eligibility-exception effect; no such effect type exists today | Author the event + a per-politician eligibility-exception flag / a new `postEffects` kind | `types.ts:1466-1482` |
+| **The suffrage amendment as content** | **ABSENT** in `src/data` (no suffrage event/bill); the `EraEvent`/`Legislation` machinery to author one exists | Author the amendment + wire its passage to flip the eligibility flag | `src/data` (none); `types.ts:1466` |
+
+> ★ The suffrage gate is distinct from the constitutional `presidentialEligibility: 'natural_born' |
+> 'any_citizen'` field (`types.ts:1395`) — that is a separate **citizenship** gate, not a suffrage/gender gate.
+> This is the first digest to call for a **demographic** eligibility predicate.
+
+**→ Net (b56):** a genuine **demographic-attribute gap** — even the cheapest option (C) requires the gender
+field first (0% built). Sharpens #258 (the per-state suffrage flag is a NEW predicate class), DH-14/#114 (this
+is the design-intent for what the 19th's passage GATES), and the general candidate-eligibility surface. **Inert
+in both shipped scenarios** (1772/1856 end pre-1914/1920) — a requirement for the **unbuilt 1916 Progressive
+scenario** the forum plays. No new gap ID. (`92202e9a#POST 1-7`; `game-context.md` #238/#258/DH-14; codebase
+`types.ts:1251,1318,1395,1466-1482,1487-1504,1780,738`, `phaseRunners.ts:3685`.)
+
 ### 30.4 Authority hierarchy reminder
 
 When rule sources disagree:
