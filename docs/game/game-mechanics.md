@@ -25452,6 +25452,381 @@ priority ("kinda funny"). Sharpens **#140** (the scandal-recycle/removal gap) an
 from the trait union). (`0dc883c4#POST 1-4`; `game-context.md` #140/#216; codebase `types.ts:62-117`,
 `anytimeEvents.ts:27-28,37,240-386`, `anytimeNationalEvents.ts:202-210`.)
 
+### 30.48 Rulings folded from batch 58 — ★ the AUTHORITATIVE State-of-Rules designer CHANGELOG (military-preparedness→FLAT battle bonus + state-movement cap 4/half-term + election trait/ability 50%±1 / 20%×ability; #45/#56/#85, #38, #189, #292, #296, #287, #327) + CONGRESSIONAL INVESTIGATIONS / special committees (the v3.0.40 system, the designed producer of the dead `forceRetire` executor; #330/#327/#112/#206/#258/#221) + PRE-PRIMARY conventions + nomination ERA-SELECTOR + King Caucus (the human convention rulebook + the 12A P+VP ticket + the era-branch; #185/#71/#72/#183/#331) + BUNDLE/OMNIBUS bill + modern content tail (#329/#169/#221/#270/#258/#206/#20) + the 1928-duo corroboration & "Mixed Doubles/Singles" terminology (#92/#4/#1/#114) (`97aa3f6f-state-of-rules-changelog` / `1ae348bb-investigations-special-committees` / `fb8070f3-preprimary-conventions` / `df11a769-trump-2-0-content-catalog` / `eb573c91-1928-era-of-ideologies-duo`)
+
+> **Batch-58 character.** ONE thread (`97aa3f6f`) is an **AUTHORITATIVE designer changelog** — three
+> already-landed RULINGS with exact numbers (not proposals) — and it is the most mechanically load-bearing
+> source in the batch; the other four are two **canonical human rulebooks** (investigations v3.0.40;
+> pre-primary conventions), one **modern content backlog** (bundle bill + Trump-2.0 catalog), and one **thin
+> 1928 chronicle** (corroboration only). Net: **3 sharpened formulas with canonical numbers, 2 net-new
+> systems (investigations #330, nomination era-selector/King-Caucus #331), 1 net-new bill type (bundle
+> #329)**, all **shipped-vs-designed-verified against `src/` HEAD 2026-06-30**. The umbrella finding: **the
+> investigations ruleset is the designed PRODUCER of the dead `forceRetire` executor** (`anytimeEvents.ts:28`
+> decl / `phaseRunners.ts:2723-2728` exec; **zero templates emit it** — the b57 QW49 finding), and the
+> nomination rulebook re-confirms **`vicePresidentId` is NEVER set by any election path** (the 12A ticket is
+> unmodeled).
+
+#### 30.48.1 ★ The AUTHORITATIVE State-of-Rules designer changelog — 3 landed RULINGS with canonical numbers (#45/#56/#85, #38, #189/#292, #296/#287/#327) — military-preparedness→FLAT battle bonus, state-movement cap 4/half-term, election trait/ability 50%±1 / 20%×ability (designer-canonical; SHIPPED diverges on ALL THREE)
+
+> **Source: `97aa3f6f` POST 1 (military preparedness, Anthony, edited Oct 29 2025), POST 4 (state-movement
+> cap, 12/30/2025), POST 5/6 (election trait/ability, ebrk85, Mar 8 2026) + codebase
+> (`revolutionaryWar.ts:187-218`; `types.ts:247`, `phaseRunners.ts:534-540,577,579,584,588`;
+> `phaseRunners.ts:3685-3723`, `electionEffects.ts:16-39`, `types.ts:721-758`).** This is **THE single most
+> load-bearing thread in b58** — a designer CHANGELOG, not discussion. POST 1: *"Changes have been reflected
+> on the Meters master sheet."* POST 5: *"changes that were made in development/coding of the elections."*
+> **Every number below is canonical designer intent.** Where the shipped build diverges, treat it as a
+> **defect-against-spec**, not an open design question. Authority class = `tedchange`/`fixes2022` (designer
+> changelog; §30.4 tier 2).
+
+**★ RULING 1 — Military-Preparedness meter → a FLAT per-tier battle bonus (replaces the OLD probability table).**
+Anthony changed how the **Military-Preparedness** meter affects battle chance-of-success: instead of *"a random
+generation of +15, +10 etc"*, each meter level now gives **a straight +/− to chance-of-success, flat** (POST 1).
+Tabulated old-vs-new (9 meter tiers, worst→best):
+
+| Meter tier (low→high) | **NEW** flat battle bonus (canonical) | **OLD** probabilistic effect (DO NOT re-implement) |
+|---|---|---|
+| 1 | **−10** | 0% +15 / 20% +10 / 40% +5 / **40% immediate defeat** |
+| 2 | **−5** | 10% +15 / 20% +10 / 50% +5 / 20% immediate defeat |
+| 3 | **0** (no effect) | 20% +15 / 30% +10 / 40% +5 / 10% immediate defeat |
+| 4 | **+5** | 40% +15 / 60% +10 / 100% +5 |
+| 5 | **+5** | 40% +15 / 50% +10 / 10% +5 |
+| 6 | **+10** | 60% +15 / 30% +10 / 10% +5 |
+| 7 | **+10** | 75% +15 / 25% +10 |
+| 8 | **+15** | 80% +15 / 20% +10 |
+| 9 | **+20** | 100% +15 |
+
+- The change **deletes the "immediate-defeat" branch** the old low tiers carried and converts the whole table
+  to a deterministic per-tier modifier on the to-hit roll. The new ladder is **banded** (tiers 4&5 both +5;
+  6&7 both +10) — 9 steps, not 9 distinct values.
+- **SHIPPED = NEITHER table.** The Rev-War battle resolver reads **no preparedness meter at all**. `military` is
+  a real `NationalMeters` field (`types.ts:1402`, −5..+5; UI label "Military Preparedness" `Meter.tsx:6`), but
+  combat ignores it: naval `target = (SecWar.admin + admiral.military) + admiral.military*10; win = d100() ≤
+  target + 30` (`revolutionaryWar.ts:187-191`); ground `baseTarget = planning + general.military*10 +
+  (frenchAlliance ? 25 : 0)`, `diffMod ∈ {−20,0,+15}`, `win = d100() ≤ baseTarget + diffMod`
+  (`revolutionaryWar.ts:212-218`). **Grep of `revolutionaryWar.ts` for `meters.military` = 0.** The meter feeds
+  only era-event modifiers (`phaseRunners.ts:2925,2928`), a `milPower` display/threshold (`:3602`), and a
+  "use the army" gov-action (`:3638`) — never the resolver. → the preparedness→combat coupling is **entirely
+  unbuilt**; when built it must land in the **NEW flat form**, adding the tier bonus to `target` at
+  `revolutionaryWar.ts:191` and to `baseTarget + diffMod` at `:218`. **Sharpens #45/#56/#85.**
+
+**★ RULING 2 — State-movement (relocation) cap = 4 SUCCESSES per faction per HALF-TERM, alt-state EXCLUDED.**
+POST 4 (verbatim): *"Factions are limited to FOUR state movements (excluding alt-state movements) per
+half-term."* Unit = **per faction, per half-term** (AMPU's 2-year election cadence); counts **successful
+movements**, NOT attempts; **alt-state moves are EXCLUDED** (moving a pol to their pre-seeded `altState` does
+not consume one of the four). Old-vs-new vs shipped:
+
+| Dimension | **DESIGNED (canonical, POST 4)** | **SHIPPED today** | file:line |
+|---|---|---|---|
+| Cap value | **4** | 5 | `types.ts:247` (`RELOCATION_ATTEMPTS_PER_TURN = 5`) |
+| Counted unit | **successes (movements)** | **attempts** (failed roll still increments) | `phaseRunners.ts:579` (increment) precedes `:584` (success roll) |
+| Scope window | **per half-term** | per **turn/year**, reset yearly | `phaseRunners.ts:534-540` (`attemptCounts` yearly reset), `:577` (per-turn cap gate) |
+| alt-state moves | **EXCLUDED** from the cap | **INCLUDED** (counted; only effect of `altState` is on odds, consumed on success) | `phaseRunners.ts:577-588` (no alt special-case; `:588` consumes alt only on success) |
+
+- Net effective allowance diverges hard: shipped gives **~10 attempts/faction/half-term** (5 × 2 turns,
+  attempts incl. failures), vs the ruling's **4 successful movements**. There is **no half-term-scoped
+  relocation counter** in `src/` (grep = 0; `halfTermSummary.ts` tracks deaths/retirements, not moves). →
+  honoring the ruling is a **re-model, not a tweak of the `5`**: a per-faction **success** counter scoped to
+  the **half-term**, capped at **4**, with **alt-state excluded**. **Sharpens #38** (flags a UNIT/SEMANTICS
+  conflict).
+
+**★ RULING 3 — Election trait & ability bonus, simplified to 50%±1 / 20%×ability (opponent-conditional rows REMOVED).**
+Scope (POST 5): *"For Gov/Sen/Rep, these apply to primaries and general elections (not pre-primary elections)."*
+NEW vs OLD:
+
+| Trigger | **NEW** (canonical, POST 5/6) | **OLD** (replaced) |
+|---|---|---|
+| **Celebrity** | **50% chance +1** | +1 only if BOTH Celebrity AND Military Leader; 50% +1 if Celebrity ONLY |
+| **Military Leader** | **50% chance +1** (now **independent** of celebrity) | (folded into the celebrity pair above) |
+| **Integrity** | **50% +1**; **−1 if** self also has **Controversial** | 50% +1 only **IF an opponent** had Scandalous/Controversial/Corrupt |
+| **Charisma** | **50% +1**; **−1 if** self also has **Uncharismatic** | 50% +1 only **IF an opponent** had Uncharismatic |
+| **Likable** | **50% +1**; **−1 if** self also has **Unlikable** | 50% +1 only **IF an opponent** had Unlikable |
+| **Gov OR Legis ability** | **20% × ability chance of +1** (ability 2 ⇒ 40%; ability 5 ⇒ 100%). **Gov/Sen ONLY — NOT House.** | *"50% chance the candidate with the HIGHEST Gov ability +1, so long as there isn't a tie"* (winner-take-one) |
+
+Designer summary (POST 5): *"50% chance +1 for having one of those positive traits; 50% chance −1 for a
+negative one … It no longer matters if your opponent has the opposite trait. Same thing for Gov or Legis
+ability — your opponent's ability doesn't effect your chance of +1 but there is now an increasing chance of
+getting the bonus the stronger your candidate's ability is."* **Three structural shifts:** (1)
+**opponent-conditional rows are GONE** — the integrity/charisma/likable penalty now fires on the candidate's
+**own** opposite trait, never on an opponent's; (2) the **"highest Gov ability" winner-take-one rule is
+REPLACED** by a per-candidate **20% × (Gov OR Legis) ability** independent roll, **restricted to Gov/Sen**; (3)
+adds *"a whole bunch more rolls"* to process by hand (easier to code, harder to table-run).
+
+- **SHIPPED is on a THIRD model.** `calcStateVote` builds each candidate score as `50 + baseLean*5 +
+  partyPref*5 + enthusiasm*2 + pv*0.1 + factionBias + traitBonus + (Math.random()−0.5)*8`
+  (`phaseRunners.ts:3709-3711`), with `traitBonus` from `applyTraitElectionBonus` (`electionEffects.ts:16-39`).
+  Three concrete divergences: (a) **traits are DETERMINISTIC fixed points, not 50%±1** — magnitudes
+  `TRAIT_ELECTION_BANDS = {SMALL:2, MEDIUM:4, LARGE:8}` (`types.ts:721-725`) added whenever held, no roll
+  (`electionEffects.ts:28,33-36`); e.g. Charismatic in a general is a flat **+4** every time vs the ruling's
+  **50% chance of +1**; (b) **opponent-conditional rows STILL EXIST** — the exact thing the ruling removes:
+  `applyTraitElectionBonus` swaps to `bumpedMagnitude` when an opponent has a listed trait
+  (`electionEffects.ts:29-32`; e.g. Integrity bumped SMALL→MEDIUM vs a Scandalous/Controversial/Corrupt
+  opponent, `types.ts:748-758`); (c) **NO Gov/Legis-ability term at all** in the state-vote scorer (grep of
+  `:3685-3723` for `skills.governing`/`skills.legislative` = 0; the only nearby `skills.governing` reads are
+  the CPU governor `bias` nudge `:3388` and a gov-appointment scorer `:2234`, neither electoral).
+- **★ SEEDED-RNG note (cross-ref #287/#296).** `calcStateVote` calls **`Math.random()`** directly for its
+  `(Math.random()−0.5)*8` jitter (`phaseRunners.ts:3711`) — the known determinism violation (project rule =
+  seeded `rng.ts` only). The Change-3 rebuild's new 50% / 20%×ability **rolls must use seeded `chance(...)`**,
+  and the ±8 jitter is likely **superseded entirely** by the per-trait rolls.
+- **Net:** Change 3 is a **rewrite of the per-trait/ability electoral model** — (a) fixed magnitudes → **50%
+  chance ±1** per positive/own-negative trait; (b) **drop opponent-conditional bumps**; (c) **add 20%×(Gov|Legis
+  ability) chance of +1**, Gov/Sen only; (d) seeded `chance`, replacing `Math.random`; (e) scope to
+  primaries+generals (NOT pre-primaries). **Sharpens #189/#292** (election scoring) and **CONFIRMS #287/#296**
+  (the `Math.random` offender, with a line anchor). (`97aa3f6f#POST 1/4/5/6`; codebase as cited;
+  `game-context.md` #45/#56/#85, #38, #189/#292, #296/#287.)
+
+#### 30.48.2 ★ Congressional investigations / special committees — the v3.0.40 system, the designed PRODUCER of the dead `forceRetire` executor (#330 NEW / #327 / #112 / #206 / #258 / #221) — 2 launch paths, 5-member committee, 6d6+modifier guilt roll, 6-band verdict (designed; SHIPPED = 0% — only the 4 bill-review committees exist)
+
+> **Source: `1ae348bb` ruleset v3.0.40 (matthewyoung123 drafted §3.0.40; 10centjimmy ratified + added the
+> legis-prop Populism extension; POST 1/2/3) + codebase (`phases.ts:3-47`; `types.ts:1237` the 4-committee
+> enum; `phaseRunners.ts:1894,3463,3476` bill committees; `anytimeEvents.ts:28` `forceRetire` decl +
+> `:240-386,258` scandal templates; `phaseRunners.ts:2723-2728,2717` the forceRetire/death executors;
+> `types.ts:62-117` traits, `:1128` `SpeakerOfHouse`, `:1337` the 4-Era enum, `:325/357` Populism-as-card,
+> `:1093-1094,1570` partyPreference; `labels.ts:52` `honest` meter).** A **genuinely NEW top-level system not
+> previously in the KB**, ratified at the forum table (*"Looks fine to me"*) but **0% built in the app**. It is
+> the **design HOME for scandal→removal**: the shipped engine has the removal machinery but no template fires
+> it (b57/QW49, §30.47.3§C) — this ruleset is exactly what *should* fire it.
+
+**★ A. Two launch paths.**
+
+| Path | Gate | Who forms it | Chamber | Formation probability |
+|---|---|---|---|---|
+| **A — Era/Random-Evo special committee** | **NOT era-gated** (fires whenever an Evo grants it; can occur pre-Populism) | **Speaker of the House** OR **Senate Majority Leader** | **House** if Senate Maj/Min Leader don't exist yet; **Senate** once they do (unless the event names a chamber) | **50%** if target is **same party** as chamber majority; **100%** if **opposite party** |
+| **B — Legis-prop-driven investigation** | **Era of Populism and LATER** | proposer = a Rep or Senator; appointed by Speaker/Maj Leader | **House** if a Rep proposed; **Senate** if a Senator | gated by the procedure below (Judicial-Committee → full vote → 25% proceed gate) |
+
+**★ B. Path-B procedure (Populism+).** (1) An *"Investigate X"* legis prop is proposed → that body's **Judicial
+Committee** vote. (2) If it passes committee → must pass **full House AND Senate**. (3) If it passes → an
+**Investigation Committee forms**. The 9 investigation props (each maps to a target group; one target randomly
+selected): Intelligence Agencies→FBI+CIA Director; Military→SecDef/War/Navy+Generals+Admirals; Federal
+Banking & Finance→Fed-Reserve-Chair+SecTreasury; House/Senate Leadership; Congressional Committee→committee
+chairs; Executive Branch→President+cabinet **except** Treasury/Defense; Judiciary→SCOTUS justices; **Lobby /
+Special Interest→opposition faction leader who holds the investigated CARD** (POST 3 amendment). *(Intelligence
+Agencies & Military props are defined but lack the launch rule — POST 1: "though they should" — OPEN.)*
+
+**★ C. Committee composition + the always-opposition rule.** **5 members**; **majority of seats to the party
+controlling that body**; **≥1 seat to the out-of-power party** (CPU randomizes); **chair = the majority-party
+member with the highest Legislative skill** (random if tied). **The investigation is always initiated by the
+dominant party, and ALL targets are drawn from the OPPOSITION (non-dominant) party** — regardless of who
+proposed the prop.
+
+**★ D. The roll — 25% proceed gate, then 6d6 + modifiers → 6-band verdict.** Pre-roll gate: **25/100** to
+proceed (fail → *"not enough evidence"*, no penalties/bonuses beyond the normal points for the legislation
+passing). Pass → roll **1d6 for EACH of the 5 committee members and sum** (range 5–30; worked example
+4+5+1+3+5 = 18), then apply modifiers (*"use all that apply"*; OR-pairs cap so you never double-count):
+
+| Modifier | Applies when the investigated Statesman… |
+|---|---|
+| **−5** | has **Magician** OR **Teflon** (both → just −5) |
+| **−4** | has **Integrity** |
+| **−3** | is within 1 ideology slot of **all** their own-party committee members |
+| **−2** | has **Leadership** OR **Harmonious** (both → just −2) |
+| **−1** | shares a faction with **any** committee member |
+| **+1** | shares a faction with **no** committee member |
+| **+2** | has **Easily Overwhelmed** OR **Disharmonious** (both → just +2) |
+| **+3** | is **not** within 1 slot of all own-party committee members |
+| **+4** | is **Controversial** OR **Illicit** (both → just +4) |
+| **+5** | is **Incompetent** |
+
+**6-band verdict scale** (★ in-ruleset PAPER bug — bands **15 and 20 overlap verbatim**, "15-20" and "21-25"
+both include their endpoints; a build must pick **half-open** bands):
+
+| Roll total | Outcome |
+|---|---|
+| **0–10** | Not guilty; **gains Integrity** (if lacking). 10% chance party-pref **+1 toward the President's party** ("witch hunt"). |
+| **11–15** | Not guilty; **retains post**. |
+| **15–20** | Not guilty, but **50% gains Disharmonious / 50% gains Manipulative**. |
+| **21–25** | **Guilty** — must **resign current post**; **may NEVER again serve cabinet/military/judiciary**; **but a sitting Rep/Senator does NOT resign**. Unemployed = barred from cabinet/judiciary/military but **may still RUN for office** (a **partial office-ban**). |
+| **26–30** | Guilty, resigns, **gains Controversial or Illicit** (whichever they lack; random if neither); barred from cabinet/military/judiciary. 10% **Honest Gov +1**. |
+| **31+** | Guilty, resigns, **removed from the game PERMANENTLY**. Party-pref **+1 AWAY from** the incumbent President. No Honest-Gov change ("rooting out corruption"). |
+
+**Committee-member side-effects** (GUILTY: same-party-as-guilty 5% gain Integrity; opposite-party 10% gain
+Leadership + 5% gain Integrity; **10% Honest-Gov +1**. NOT-GUILTY: same-party-as-target 5% gain Manipulative
+AND Propagandist; opposite-party 5% gain Disharmonious + 10% gain Pliable; **10% Honest-Gov −1**). **★ Point
+payout (POST 1):** during the **Executive Phase**, faction points are awarded **as if the legislation were
+signed by the President — REGARDLESS of the guilty/innocent outcome** (passing the prop pays out like any bill,
+independent of verdict).
+
+**★ E. SHIPPED-vs-designed — 0% built; the designed producer of the dead `forceRetire` executor.**
+
+| Area | In `src/` today | Designed (v3.0.40) | file:line |
+|---|---|---|---|
+| Investigation phase/entity/roll | **ABSENT (0%).** `PHASE_SEQUENCE` has no investigation phase; the only "committees" are the 4 bill-review committees `'Domestic'\|'Foreign'\|'Economic'\|'Justice'` that move a `Bill` through `committee→passed/killed` — **no 5-member panel, no targets, no guilt roll**. Grep `investigat\|specialCommittee` = 0 | a new investigation entity + phase + 5-member appoint+chair selector + seeded 6d6 roll | `phases.ts:3-47`; `types.ts:1237`; `phaseRunners.ts:1894,3463,3476` |
+| **★ scandal→removal trigger** | **machinery present, NEVER fired (QW49).** `forceRetire` declared `anytimeEvents.ts:28`, **executed** `phaseRunners.ts:2723-2728` (sets `retiredYear`/`recordRetirement`/`markPoliticianRetired`) — **but grep `kind: 'forceRetire'` in `src/data` = 0**; no template emits it. The scandal-* templates grant only `Scandalous`/`Controversial` + `pvHit`, never remove | **this ruleset's "guilty→resigns/removed" is the natural PRODUCER** | `anytimeEvents.ts:28,240-386`; `phaseRunners.ts:2723-2728` |
+| **Two punishment STATES** | **neither expressible.** Engine has only `death` (`phaseRunners.ts:2717`) and `forceRetire` (full retirement). No **partial office-ban** ("never cabinet/military/judiciary again, but may still RUN") and no **non-death "removed from game"** status | add a partial office-ban status + a non-death removal status | `phaseRunners.ts:2717,2723-2728` |
+| **Missing traits** | **`Teflon`, `Illicit`, `Disharmonious`, `Easily Overwhelmed`, `Pliable` all ABSENT** (extends #327: b57 logged Disgraced/Illicit/Disharmonious; this thread ADDS Teflon, Easily Overwhelmed, Pliable). Present: Magician/Manipulative/Propagandist/Integrity/Harmonious/Leadership/Controversial/Incompetent/Scandalous/Corrupt | add the 5–6 modifier/outcome traits | `types.ts:62-117` |
+| **Missing offices** | **no Senate Majority/Minority Leader** (only `SpeakerOfHouse` + a Pro Tem); no FBI/CIA Director, Fed-Reserve-Chair, distinct SecDef/War/Navy as target slots | add the modern leadership + agency offices | `types.ts:1128`; `phases.ts:13` |
+| **Era gate "Populism+"** | **NOT expressible.** `Era` = 4 values `independence\|federalism\|nationalism\|modern`; no Populism/future band. "Populism" exists ONLY as an `IdeologyCardId`, unrelated to era gating | a Populism era-band or year gate (#206/#258) | `types.ts:1337,325,357` |
+| Cheap-win outcome levers | **DO map.** Honest-Gov ±1 → `honest` meter; party-pref ±1 → `partyPreference` (clamped ±5). The verdict's meter/party consequences are wireable to real state | wire as-is | `labels.ts:52`; `types.ts:1093-1094,1570` |
+| Two-stage gate plumbing | **pattern EXISTS** — bills already route committee→full-vote (`_2_6_2_Committee` → 2.6.3 Floor Votes); the *investigation* use of it does not | reuse the plumbing pattern | `phaseRunners.ts:3463` |
+
+**→ Net (b58):** an **entirely NEW top-level system** (#330), 0% built, sitting on three things that DO ship as
+infra — the **committee→floor two-stage vote pattern**, the **`forceRetire` executor** (dead code awaiting a
+trigger — QW49), and the **`honest` meter + `partyPreference`** outcome fields. It is the **canonical scandal→
+removal producer** and the strongest corroboration yet that `forceRetire` is wired-but-unfed. Surfaces **5–6
+missing traits** (extends #327), **two punishment states** with no representation (partial office-ban;
+non-death removal), **missing offices** (Senate Maj/Min Leader + modern agency cabinet slots), and the
+**non-expressible Populism era gate** (#206/#258). OPEN: the Intel/Military props lack the launch rule "though
+they should" (POST 1); the Lobby targeting is parameterized by a specific **card** with no card→target analog
+(POST 3). (`1ae348bb#POST 1/2/3`; codebase as cited; `game-context.md` #330/#327/#112/#206/#258/#221, QW49.)
+
+#### 30.48.3 ★ Pre-primary convention rulebook + nomination ERA-SELECTOR + King Caucus (#185/#71/#72/#183, #331 NEW) — the human convention machine + the 12A P+VP ticket (`vicePresidentId` never set) + the era-branch (caucus/convention/primary) (designed; SHIPPED = 2.9.2 log stub + 2.9.1 single-PV sort)
+
+> **Source: `fb8070f3` (matthewyoung123, "post-12A pre-primary conventions"; POST 1 the rulebook, POST 7 the
+> King-Caucus era gate, POST 2-3/8-9 dark-horse clarification) + codebase (`engine.ts:69` the 2.9.2 stub;
+> `phaseRunners.ts:3725-3750` 2.9.1, `:3752-3814` the presidential general; `phases.ts:40,53-55,69-70`;
+> `scenario1772.ts:76`/`scenario1856.ts:156`/`phaseRunners.ts:2450` the `vicePresidentId` write surface).**
+> The **canonical HUMAN-side base ruleset** that the b55 CPU spec (#71/#72) automates and the 1960 capture
+> (#185, `redbutton`) exercised in play. **~0% shipped** (2.9.2 is a one-line log line).
+
+**★ A. The era-selector — which nominating mechanism applies when (#331 NEW; POST 1, 7).** A single era branch
+that the shipped nomination phase **does not have**:
+
+| Era window | Mechanism | KB ownership |
+|---|---|---|
+| Pre-12A (≤1804) | the old two-votes-per-elector / **spoiler** rules | #72 (`ted1772`/`oopscpu`) |
+| **Post-12A → ~1830s** | **Congressional Nominating Caucus ("King Caucus")** — Pres+VP nominated by each party's senators+congressmen; *"basically just use the same logic as congress positions"* (POST 7) | **#331 NEW** |
+| **~1830s → pre-state-primaries** | **National Convention** (this thread's rulebook; *"normalization of conventions in the 1830s via event probably"*) | #185 |
+| Primary era onward | primaries → convention (2.9.1 → 2.9.2) | the shipped (stubbed) path |
+
+The 12th Amendment is the **hinge**: electors vote **separately** for President and VP, which is *why* a
+convention forms a deliberate **P+VP ticket** rather than the pre-12A "top-2-EV" accident.
+
+**★ B. The convention machine (POST 1) — the human rulebook under #71/#72/#185.** (Designed; reuses existing
+`Trait`/`command` primitives, none of which 2.9.1/2.9.2 reads today.)
+
+- **Who may run:** each faction selects **2 max** — one **MAJOR** (= faction leader OR a Celebrity-trait pol)
+  + one **MINOR/favorite-son** (any pol); **all nominees need ≥1 Command**; the party **out** of the White
+  House conventions **first**. *(Note the shipped floor mismatch: 2.9.1's gate is `command >= 2`; the rulebook
+  floor is **≥1** plus the Celebrity/faction-leader path.)*
+- **Delegate allocation — the "quarter rule"** (unit rule OFF): each state's delegates split into **4 equal
+  parts** → ¼ to the **Governor's** faction's candidate, ¼ to the **Senior Senator's**, ¼ to the **Junior
+  Senator's**, ¼ to the candidate with the **most Momentum**. Override ladder: **home-state lock** (a
+  candidate from a state holds ALL its delegates while in) → **ideology fallback** (state's preferred
+  ideology) → **most Momentum** → **major-wins-tie**. UNIT RULE ON = WTA per state. After ballot 1: keep
+  Gov/Sen + ideology delegates while you hold that candidate; **momentum delegates switch** to the new
+  momentum leader.
+- **Momentum:** party leader auto-starts **+1** and **wins all momentum ties**; **nomination speech** d6 (1 =
+  −1 Mo; 5 = +1 only if speaker is an Orator; 6 = +1 Mo); **frontrunner penalty** — 33% of the time, if the
+  pre-convention frontrunner loses ballot 1, **−1 Mo** to him and **+1 Mo** to 2nd place; thereafter Mo → the
+  greatest ballot-to-ballot delegate gain. A minor can be **promoted to major** if Top-2 after round 1.
+- **Win threshold** = whatever the **kingmaker vote** set: **½ / ⅔ / ¾ / unanimous**. **Force a Rules Change**
+  (suspend/apply unit rule; lower threshold) needs **two** faction-leaders/majors requesting; each faction's
+  votes = **# of pols with the `Kingmaker` trait**, majority wins, **tie = FAILS**; an **`Iron Fist`** leader
+  sets rules unilaterally, a **`Leadership`** leader forces on a d6 5-6.
+- **★ Command-points = the inter-ballot ACTION BUDGET** (a clean rule tying the existing `command` field to
+  convention agency): *"a candidate may take as many inter-ballot actions as he has Command points."* The
+  14-action major menu: Force-Rules-Change; **Presidential Promise** (offer to a fewer-delegate
+  candidate/faction; recipient must qualify; **+1 Mo per cross-faction drop+endorse**; CPU accept odds **VP
+  50% / SecState 40% / Treasury·War·AG 33% / junior cabinet 25% / ambassador·next-SCOTUS·next-general·party-
+  platform 20%**); Drop-out(+endorse) (+1 Mo per cross-faction endorse); Whip-the-Party (leader only, d6 6,
+  5-6 with Leadership); Influence-Smoke-Filled-Rooms (active protégé of an active Kingmaker, d6 5-6); Kingmaker
+  Interference; Appeal-to-Integrity / -Credibility / Reliable-Party-Nominee (`Predictable`) / Will-of-the-
+  People / Lies-and-Propaganda (`Controversial`+`Propagandist`, d6 4-6, but 1-2 → **−1 party-pref**);
+  Request-a-Ballot-Shift (2 factions → move delegates to the leader); **Call-for-Compromise** (after 10
+  ballots); **Call-for-Dark-Horse** (after 5 compromise-ballots; **AUTO after the 25th ballot**). A
+  MINOR may only stay / drop / drop+endorse.
+- **Slim-competition VP-promise shortcut:** if only **two** total majors, the leader may offer **VP to the
+  2nd's faction**; accepted → **ballot 1 unanimous, skip to VP**. CPU offers 50% / accepts 50%.
+- **Brokered resolution:** **Compromise @ ballot 10** (2 factions; each picks an of-age ≥1-Command candidate
+  from an allied faction, not previously in the race; replaces+absorbs delegates; limit 1/faction); **Dark
+  Horse @ 5 compromise-ballots, AUTO @ 25** — the faction controlling the **Party Leader** picks an of-age,
+  ≥1-Command, **Presidency-eligible (35+, native-born)** pol from the **LOWEST-overall-score faction** in its
+  party (cascade up if none eligible). POST 2-3/8-9 clarify: dark-horse is **ONE selection with two
+  requirements** (lowest-score faction + Presidency-eligible), not two selections.
+
+**★ C. SHIPPED-vs-designed — ~0% built; `vicePresidentId` NEVER set by any election path.**
+
+| Area | In `src/` today | Designed (thread) | file:line |
+|---|---|---|---|
+| 2.9.2 Conventions | **ONE-LINE LOG STUB** — `addLog(snap,'2.9.2','election','Party conventions ratify the primary winners.'); return {}`. Zero delegates/ballots/threshold/momentum/promises/compromise/dark-horse/VP/platform | the full convention machine (B above) | `engine.ts:69`; `phases.ts:40` |
+| 2.9.1 Primaries | **single-WINNER PV sort** — filters `age 35-80 && command >= 2`, sorts ONCE on `pvCache + command*5 + traitBonus`, takes the **top one**. No factions running candidates, no major/minor split, no Celebrity path, no delegates/nominators | faction-leader-or-Celebrity major + ≥1-Command minor; quarter-rule delegates | `phaseRunners.ts:3725-3750` |
+| **★★ 12A P+VP TICKET** | **`vicePresidentId` is NEVER SET by the election flow.** Write surface = only nulled (`scenario1772.ts:76`, `phaseRunners.ts:2450`), seeded once (`scenario1856.ts:156`), read for display (`CabinetPage.tsx`/`Dashboard.tsx`). `runPhase_2_9_4_PresidentialGeneral` runs a **head-to-head EV race with NO running mate**, sets `presidentId`, resets cabinet to null — **never touches `vicePresidentId`** | deliberate ticket formation + VP selection + ticket-composition meter effects | `phaseRunners.ts:3752-3814`; `scenario1772.ts:76`, `scenario1856.ts:156`, `phaseRunners.ts:2450` |
+| Convention DATA MODEL | **NONE** — grep `types.ts` for `delegate*/ballot/momentum/darkHorse/presidentialPromise/threshold/keynote/platform/runningMate` = nothing for presidential nomination (the only `delegate*` is Continental-Congress; the only `Convention` is `ConstitutionalConvention` — **DO NOT conflate**) | a delegate/ballot/momentum/promise model | `types.ts` (grep = 0); `constitutionalConvention.ts` |
+| **Era branch (#331)** | **NONE** — nomination phases fire only in presidential years (`isPresidentialYear = year % 4 === 0`) with **no era branch** selecting caucus/convention/primary; **no Congressional Nominating Caucus path** (grep `caucus` = a flavor blurb `FactionLeaderPage.tsx:12` only) | the 4-row era-selector + a King-Caucus mechanism (reuse congress-position logic) | `phases.ts:53-55,69-70`; `FactionLeaderPage.tsx:12` |
+
+**→ Net (b58):** a **complete design on an empty stub.** This is the human rulebook under the CPU spec
+(#71/#72) and the 1960 capture (#185) — all three describe the same unbuilt machine. **#331 NEW** = the
+**nomination era-selector + King Caucus band** (an era branch the shipped `isPresidentialYear`/`shouldRunPhase`
+lacks). The **load-bearing shipped-vs-designed delta**: **`vicePresidentId` is never set by any election path**
+— the 12A ticket is entirely unmodeled. New concrete details folded onto #185/#71: the **quarter-rule**
+allocation + fallback ladder, the full **inter-ballot trait-appeal table** with d6 gates, and
+**Command-points = the inter-ballot action budget**. (`fb8070f3#POST 1/2/3/7/8/9`; codebase as cited;
+`game-context.md` #185/#71/#72/#183/#331.)
+
+#### 30.48.4 ★ Bundle / omnibus bill + modern content tail (#329 NEW / #169 / #221 / #270 / #206 / #258 / #20) — a container bill of independently-authored components voted as one + per-state vote-buying riders + the Trump-2.0 catalog confirmations (designed; SHIPPED = `Legislation` single-effect, exec-action 4-item stub, empty SCOTUS slot, 1772-only predicate gating)
+
+> **Source: `df11a769` (vcczar's Trump-2.0 content catalog; POST 1 inclusion bar, POST 17/20/21/22 the
+> Behemoth + exec/legis catalog, POST 24 near-future legis) + codebase (`types.ts:1506-1520` `Legislation`
+> single-effect; `eraGraph.ts:12,107-114` + `eraEvents1772.ts`/`eraEvents1856.ts` the 1772-only precondition;
+> `phaseRunners.ts:3632-3646` the exec-action stub; `types.ts:1548-1556` `SupremeCourtCase` +
+> `scenario1856.ts:175` empty docket; `types.ts:1337` the 4-Era enum).** A **modern-era CONTENT BACKLOG**
+> whose one design DECISION is the **GOP "Behemoth" as a bundle bill** (POST 20).
+
+**★ A. Bundle / omnibus bill (#329 NEW) — the headline mechanic.** vcczar's POST-20 decision: add the GOP
+"Behemoth" and *"break it up into its key components so that it can work as a **bundle bill** if someone ever
+wants to replicate it."* A bundle bill = a **CONTAINER of N independently-authored sub-effects** (each a normal
+bill-sized effect) **voted as one**. Components: designer-fixed = **Medicaid cuts + tax changes** (POST 20);
+community = ICE funding, **state-targeted swing-vote exemptions** (Alaska/Hawaii carve-outs → a **per-state
+vote-buying RIDER** that modulates a single state's vote, POST 21), 10-yr AI-regulation preemption, bar non-US
+DOJ settlements, EV/hybrid registration grants (POST 22). The 3 Laken Riley "detain (theft / assault-on-police
+/ bodily-injury)" bills are explicitly framed as separable components → another candidate bundle (POST 17).
+
+- **SHIPPED = single-effect.** `Legislation` (`types.ts:1506-1520`) carries a **single** `effects:
+  EraEventResponseEffect` blob — **no sub-component/rider/amendment ARRAY**, no container-of-parts. Grep all of
+  `src/` for `bundle|omnibus|component|rider|provisions|subBill` = **0 legislation hits** (only
+  `constitutionalArticles.amendmentProcess` + the senate-pre-17th note). The per-state vote-buying rider has
+  no representation. **DISTINCT from #221** (the content-primitive registry — a bundle is a NEW bill **type**
+  on top) **and from the composite `EraEventResponseEffect`** (which carries multiple sub-effects inside ONE
+  response but is NOT a set of separately-VOTABLE components). → net-new bill type = compose N
+  independently-authored sub-effects + a joint-vote layer + per-state riders.
+
+**★ B. Modern content tail — confirmations (no new mechanics beyond the bundle).**
+
+| Item | Shipped state | Gap |
+|---|---|---|
+| **Exec actions** (DOGE, Schedule F, Liberation-Day tariffs, gated pardon-allies, send-Marines, Border Czar, refuse-disaster-aid, bomb-Iran, gerrymander — ~20) | `runPhase_2_8_1_Executive` is the ENTIRE system: a 50% roll then `pick()` of **4 fixed actions**; **era-agnostic, not data-driven, no precondition hook, no player choice** (one faint "pardon" overlap) | #169 — replace the stub with a predicate-gated, era-banded, data-authored exec-action catalog |
+| **Predicate gating** ("requires Reciprocal Tariff Act / Jan-6 era-evo / natural disaster / unrest+protest / populist president") | `Predicate`/`evalPredicate`/`precondition` exist but `precondition` is **authored ONLY in `eraEvents1772.ts`**; `eraEvents1856.ts` uses hardcoded `if (year >= 1856 …)` blocks with **zero** preconditions; exec/gov actions have **no predicate hook at all** | #258 — generalize the predicate gate beyond the 1772 graph, to modern events AND to exec/gov actions |
+| **3-primitive content model** | `EraEvent { responses → effect }` is data-driven for EVENTS, but **exec + gov actions are NOT modeled in it** (hardcoded stubs) | #221 — bring exec/gov actions under the same data-driven primitive |
+| **SCOTUS cases** (Skrmetti / 2024 docket) | `SupremeCourtCase` type + `pendingCourtCases` plumbing exist, but `scenario1856.ts:175` seeds **`[]`** — **zero authored cases** | #270 — net-new content on a ready-but-empty slot |
+| **Future-era band** ("Era of Near Future Legis", POST 24) | `Era` union stops at `'modern'`; no scenario beyond 1856 | #206 — future-era band inexpressible (cross-ref §30.47.2) |
+| **Gov actions** (National Guard, refuse-deportations, governor-pacts, detain-judges, social-media-presence w/ trait gains, testify) | 30%-skill `bias` stub; read-only GovernorsPage | #20 — gov-action overhaul (cross-ref §30.47.1) |
+
+*(Provenance-only: the designer's **inclusion bar** — "major not minor", **≥40% pass/act chance**, no
+duplication, on-par-with-existing (POST 1) — is a reusable **content-author acceptance gate**, belongs in
+authoring guidance, not the gap log.)*
+
+**→ Net (b58):** the **bundle/omnibus bill is the one net-new mechanic** (#329) — `Legislation` is
+single-effect today (grep `bundle|omnibus|component|rider` = 0); the rest is **modern content confirmations**
+(#169 exec-stub, #270 empty SCOTUS slot, #258 1772-only predicate gating, #221 exec/gov outside the primitive,
+#206 future band, #20 gov stub). (`df11a769#POST 1/17/20/21/22/24`; codebase as cited; `game-context.md`
+#329/#169/#221/#270/#258/#206/#20.)
+
+#### 30.48.5 1928-duo corroboration + "Mixed Doubles / Mixed Singles" mode terminology (#92/#4/#1/#114) — second-witness only (no new mechanic)
+
+> **Source: `eb573c91` (Vee01 + KevinStorm, a 1928 "Era of Ideologies" duo; thin chronicle — setup + 20-year
+> career-track passes only, no election/event played) + codebase (`NewGameScreen.tsx:6-18` two scenarios;
+> `factions1856.ts:5` the 3-bucket `personality`; `types.ts:5-22` Ideology; `CAREER_TRACK_MAX_YEARS=20`).**
+> **Almost entirely corroboration**; one terminology-only addition.
+
+- **CORROBORATES #92 (eras-as-content-bands / start-anywhere) — a SECOND independent 1928 witness** (distinct
+  from `ideo1928`): prints the "Era of Ideologies" band + its era-stamped **10-faction R1–R5/B1–B5 draft
+  profile** (POST 1, 3). App ships **1772 + 1856 only**; a 1928 start is custom/imported-draft. UNBUILT.
+- **CORROBORATES #4 (per-(faction,era) ideology drafting profile)** — POST 3 is a literal 1928 instance of the
+  allowed-ideology matrix (R1=Lib/Prog/LW-Pop … B5=Trad/RW-Pop), confirming it is **era-keyed** and that 1928
+  sits between the founding spread and the modern desync. Shipped only for the 1772 inaugural draft.
+- **CORROBORATES #293's R1–R5/B1–B5 representational gap** — the 10-slot ladder the build's 3-bucket
+  `Faction.personality` cannot represent (no 1-to-5 ideology rank per party).
+- **CORROBORATES #1/#114 (multiplayer model; per-faction CPU fallback; solo-vs-MP tension) + adds named
+  modes.** A 2-human game fills the other 8 seats with CPU (POST 1); the CPU burden is felt and rejected
+  mid-thread (POST 9). **NEW (terminology only):** **"Mixed Doubles"** = each human runs a **cross-party
+  ideological cluster** (left: R1,R2,B1,B2,B3 / right: B4,B5,R3,R4,R5; POSTs 14-15); **"Mixed Singles" / "Reds
+  vs Blues"** = one human all-Red vs one all-Blue, **a planned rule set** (POST 16). No new *mechanic*
+  (multi-faction human control is #1) — recorded so the planned modes are traceable.
+- **CORROBORATES #289 (in-game career-track development)** — POST 17's per-tenure "+N skill / +expertise /
+  +traits / loses Obscure / +1 command" gains are the shipped career track (`CAREER_TRACK_MAX_YEARS = 20`);
+  the boot-time multi-tier back-fill (the missing half of #289) is not exercised. Ideology 7-point scale
+  MATCHES `types.ts:5-22` exactly (corroboration only). (`eb573c91#POST 1/3/9/14/15/16/17`;
+  `game-context.md` #92/#4/#293/#1/#114/#289.)
+
 ### 30.4 Authority hierarchy reminder
 
 When rule sources disagree:
