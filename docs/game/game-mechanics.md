@@ -26798,6 +26798,221 @@ lifted (#169). (CORROBORATES the future-era cluster [#206 bands], #221 [bill/pre
 [president-action nodes]; SHARPENS #258 + its NEW block-edge sub-item. `8f7ae0b9#POST 2/3/4/5/6/7`; codebase as
 cited.)
 
+### 30.52 Rulings folded from batch 62 — ★ a ZERO-MINT / SHARPEN-ONLY batch: the DESIGNER-AUTHORITATIVE whole-system THIRD-PARTY lifecycle (spawn-gate + nominee-criteria + event-spawn + the win-and-absorb REALIGNMENT that RESOLVES DH-55's open decision; #48/DH-55) + the ARREST → office-lock-UNLESS-pardoned ruling with the crime-type PARDON AUTHORITY-SPLIT (federal→President / state→Governor) + the designer's BAR: a candidacy-BLOCK ("cannot RUN", distinct from removal) — the inverse of #330's "may still RUN" band + the acquitted-bonus / convicted-malus next-election per-pol modifier (#122/#327/#292/#140) + two modern content-engine sharpens (per-president-midterm flavor-speech name-templating + multi-era event availability; #169/#206/#221) — NO new gap IDs this batch; every delta SHARPENS an existing owner (`5b162cf5-third-party-system` / `5500e143-trump-arrest-scandal-pardon` / `27711296-ampu-biden-events`)
+
+> **Batch scope (b62): a ZERO-MINT batch — no new gap IDs were assigned.** Every ruling below SHARPENS an
+> existing owner (#48, DH-55, #122, #327, #292, #140, #169, #206, #221). The three load-bearing sharpens for the
+> tech-lead: (a) the third-party **win-and-absorb REALIGNMENT** rule (the authoritative resolution of DH-55's open
+> "keep 2-party hard-wire + absorb-the-winner" vs ">2 dynamic parties" decision → designer picks **absorb-the-
+> winner**, count stays 2); (b) the pardon **AUTHORITY-SPLIT** (federal crime → President pardons; state crime →
+> Governor pardons — sharpens #122); (c) the **candidacy-BLOCK variant** ("a legal block against RUNNING, not him
+> choosing not to run" — the designer's explicit BAR for building the arrest feature; the inverse of #330's
+> "barred from cabinet/military/judiciary but may still RUN" band). All three are **~0% built** at HEAD.
+
+#### 30.52.1 ★ The THIRD-PARTY lifecycle — the DESIGNER-AUTHORITATIVE 4-part ruleset (spawn GATE + nominee CRITERIA + EVENT-spawn + the win-and-absorb REALIGNMENT that RESOLVES DH-55) — #48 / DH-55 (designer-authoritative; the whole subsystem is ~0% built — phase 2.9.3 is a hardcoded no-op and `PartyId` is a hard `'BLUE'|'RED'` binary that cannot represent a third party at all)
+
+> **Source: `5b162cf5` ("How are third parties handled in the game?", 2 posts, Jul 10 2024) — POST 1 Cholbus's
+> question; POST 2 the designer's single-post, end-to-end statement of the THIRD-PARTY RULESET (spawn gate →
+> nominee criteria → event-triggered spawn → impermanence + win-and-absorb realignment) + codebase (`phases.ts:41`
+> the `2.9.3` phase decl; `engine.ts:70` its no-op body; `types.ts:3` `PartyId = 'BLUE'|'RED'`; `types.ts:1570` +
+> `:1093-1094` `partyPreference` ±5; `types.ts:1415-1418` + `:1571` the per-ideology `enthusiasm` BLUE/RED table;
+> `types.ts:5-12` the 7-point scale (`Moderate` = index 3, the literal center); `types.ts:1448-1457`
+> `EraEventResponseEffect`; `phaseRunners.ts:3728-3746`/`:3752-3754` the two-party primary + hard-2-candidate
+> general).** This is the ONE place the designer states the *complete* third-party lifecycle in order. Authority
+> class = **designer-authoritative** (the designer answering a direct mechanics question). It CONFIRMS #48's spawn
+> gate verbatim in the designer's own words and is the AUTHORITATIVE statement of the absorb-the-winner rule that
+> DH-55 flags as the open design decision. **No new gap ID — this SHARPENS #48 (spawn) and RESOLVES DH-55 (permanence).**
+
+**★ The 4-part lifecycle (as designed):**
+
+1. **Spawn GATE — a two-condition AND, BOTH meters neutral** (POST 2: *"If the party preference is neutral, so not
+   favoring either party, and an ideology enthusiasm does not favor either party then a third party can occur. It
+   would come from a faction that has the neutral ideology."*):
+   - **(a) national party-preference is NEUTRAL** — at/near 0, favoring neither BLUE nor RED (`game.partyPreference`,
+     signed, clamped ±5; `types.ts:1570`, `:1093-1094`), **AND**
+   - **(b) some ideology's enthusiasm is NEUTRAL** — that ideology's BLUE≈RED, favoring neither party
+     (`game.enthusiasm[ideology] = { BLUE, RED }` −5..+5; `types.ts:1415-1418`, `:1571`).
+   - **Origin = a faction that HOLDS the neutral ideology.** The spawning faction is the one whose ideology is the
+     discontented/neutral one. The rule is stated in terms of *whichever* ideology sits neutral (not hard-coded to
+     `Moderate`, though `Moderate` is the literal 7-point center, `types.ts:5-12`).
+   - ★ **This is the same gate #48 already owns** (from `nuke`/`modern`: "Party Pref in the middle 3 boxes AND an
+     ideology discontented-with-both → the discontented faction of the incumbent's party runs independent"). This
+     Q&A is the designer restating that gate in his own words. It does NOT restate #48's incumbent-party carve-out
+     or the LW-Pop/RW-Pop bid detail — those remain #48's finer grain (no conflict).
+2. **Nominee CRITERIA gate** (POST 2: *"Politicians have to meet certain criteria to be the presidential nominees
+   for the third parties."*): a third party cannot field just anyone — the candidate must qualify. The Q&A does not
+   enumerate the criteria; #48/`nuke` supply the concrete gate (a **"can be independent" pol tag** + **Command** +
+   being of the neutral/discontented ideology; a **Celebrity** candidate appears nationwide).
+3. **EVENT-triggered spawn — bypasses the meter gate** (POST 2: *"There are also some events that trigger third
+   parties even if the meters are not allowing for one."*): a SECOND spawn path — scripted/era EVENTS can force a
+   third party even when party-preference and ideology-enthusiasm are NOT neutral (the organic gate would forbid
+   it). This is the "historical lower-stakes 3rd-party run" path #48 gestures at (e.g. the John-B-Anderson expy in
+   `nuke`).
+4. **★ TRANSIENT unless WIN-and-ABSORB — the realignment rule that RESOLVES DH-55** (POST 2: *"The third parties do
+   not become permanent though, in most cases, unless they win a presidential election and an event triggers to
+   allow for their new party to absorb one of the original existing parties."*):
+   - **Default: third parties are TRANSIENT** — contest one election, then dissolve; they do NOT persist "in most
+     cases."
+   - **The ONLY path to permanence is a two-condition AND:** (1) the third party **WINS a presidential election**,
+     **AND** (2) **an event fires** that lets the new party **ABSORB one of the two existing parties** (a
+     realignment — the winner's party displaces/merges an incumbent major party).
+   - ★ **This RESOLVES DH-55's open decision toward the absorb-the-winner rule.** DH-55 records the open choice:
+     keep the 2-party hard-wire *with the absorb-the-winner rule* vs. support >2 dynamic parties. The designer here
+     picks **absorb-the-winner**: permanence is achieved by the new party **ABSORBING** an existing one (not by
+     adding a 3rd standing party), so **the party count stays at 2** — an event-gated relaxation of the 2-party
+     hard-wire, NOT a dynamic-party-count feature. This is a party-realignment / party-**absorption** mechanic
+     gated on (win + event).
+
+**★ SHIPPED — the whole third-party subsystem is ~0% built; the party model is a hard binary that cannot represent a third party.**
+
+| Designed piece | SHIPPED reality (verified `src/` HEAD, 2026-07-01) |
+|---|---|
+| The organic spawn GATE reads both meters | **Phase `2.9.3` "Third Party" is a HARDCODED NO-OP.** It exists in `PHASE_SEQUENCE` (`phases.ts:41`), but its entire engine body is one line: `case '2.9.3': addLog(snap, '2.9.3', 'election', 'No third-party challenge this cycle.'); return {};` (`engine.ts:70`). It **never reads `partyPreference` or `enthusiasm`**, never rolls, never spawns. A designed-slot / unbuilt-body signal — the slot was scaffolded knowing a check belongs there. |
+| A third party can exist as a party | **`PartyId` is a HARD BINARY.** `export type PartyId = 'BLUE' \| 'RED';` (`types.ts:3`). Every party-keyed structure is two-valued: `enthusiasm[ideo] = { BLUE, RED }` (`types.ts:1415-1418`); the primary iterates `['BLUE','RED']` (`phaseRunners.ts:3728`); the general builds `[blueCand, redCand]` and **hard-returns `null` if either is missing** (`phaseRunners.ts:3752-3754`) — no third ballot slot. Representing a third party is an **architectural change** (DH-55), not a config tweak. |
+| Gate inputs exist and are read for a spawn | **The inputs SHIP; nothing reads "both neutral → spawn."** `partyPreference` (`types.ts:1570`, `:1093-1094`) and the per-ideology `enthusiasm` table (`types.ts:1415-1418`, `:1571`) both ship and are moved by events (`applyEffect`, `phaseRunners.ts:3226-3233`), but **no code implements the neutral-AND-neutral spawn predicate.** The substrate is present; the gate is unbuilt. |
+| Nominee CRITERIA gate for a third party | **UNBUILT.** The only nominee gate in code is the two-party primary (age 35–80, command ≥ 2, PV+command+trait sort; `phaseRunners.ts:3728-3746`) — **only for `['BLUE','RED']`**. There is **no `canBeIndependent` pol tag**, no Celebrity-nominee path, no third-party candidate selection anywhere. |
+| EVENT-triggered spawn | **UNBUILT.** `EraEventResponseEffect` (`types.ts:1448-1457`) can move `partyPreference`, `enthusiasm`, `interestGroups`, `meters`, `diplomacy`, `startWar` — but has **no `spawnThirdParty` / third-party-trigger field.** Events can nudge the meters *toward* neutral but cannot directly instantiate a third party. |
+| Win-and-absorb REALIGNMENT | **UNBUILT.** Grep of `src/` for `absorb`/`merge.*party`/`spawnThirdParty` = **0 party-absorption logic** (the only `absorb`/`reabsorb` tokens are Revolutionary-War flavor, `eraEvents1772.ts:300`, `GameOverScreen.tsx:10`). A winning independent cannot exist (see `PartyId`), so even the "becomes a Party Leader" fallback DH-55 describes is not reachable through `2.9.3` today. |
+
+**→ Net (30.52.1):** the whole third-party lifecycle — organic spawn gate, nominee gate, event-spawn, and the
+win-and-absorb realignment — is **unbuilt**. The election sequence *reserves* the slot (`2.9.3`) but the body is a
+one-line no-op (`engine.ts:70`), and the party model is a hard `'BLUE'|'RED'` binary (`types.ts:3`) that cannot
+represent a third party without an architectural change (DH-55). The gate's *inputs* ship and are event-driven; the
+two-party nominee primary ships. So the build has the SUBSTRATE but none of the third-party MECHANISM. (SHARPENS
+#48 [spawn gate + the event-spawn sub-path + nominee criteria] with the Jul-2024 designer confirmation; RESOLVES
+DH-55 toward the absorb-the-winner rule [count stays 2]. Cross-ref #228 [the spoiler VOTE-DRAIN half — this thread
+is the SPAWN + LIFECYCLE half], #292 [`calcStateVote` reads the same meters], #4 [faction ideology → spawn origin].
+`5b162cf5#POST 2`; codebase as cited.)
+
+#### 30.52.2 ★ Arrest / scandal → office-lock + the PARDON release valve (crime-type AUTHORITY-SPLIT) + the candidacy-BLOCK variant + the acquitted/convicted next-election modifier (#122 / #327 / #292 / #140) — the designer's BAR: worth building only if there's a legal block against RUNNING, not a pol choosing not to run (designed; office-lock + pardon-lift + candidacy-block + per-pol next-election modifier are all UNBUILT; the enthusiasm/party-pref/domestic-stability EFFECT half is already expressible — a missing TEMPLATE, not a type)
+
+> **Source: `5500e143` ("How best to handle Trump's arrest in AMPU", 4 posts, Apr 4 2023) — POST 2 Imperator Taco
+> Cat's proposal (reuse Debs's-arrest handling; else a composite arrest event: election penalty + force-set state +
+> office-lock-UNLESS-pardoned + optionally generalize to all `Controversial` pols); POST 3 MrPotatoTed's BAR (worth
+> building only if there's a legal block against RUNNING, not a pol choosing not to run); POST 4 the designer's
+> "if we add it" effect model (RW/LW-populist enthusiasm ↑ for the ex-president's party + a roll for moderate
+> enthusiasm going the other way + party-preference + domestic-stability + a second roll = acquitted-bonus /
+> convicted-malus in the NEXT election) + codebase (`phaseRunners.ts:3639` the flavor `'Pardon political
+> prisoners.'` action; `phaseRunners.ts:2723-2728` `forceRetire`; `types.ts:1448-1457` `EraEventResponseEffect`;
+> `types.ts:1278-1291` office-eligibility fields; `types.ts:738` `TRAIT_ELECTION_EFFECTS`; `types.ts:831`
+> Controversial `presGeneral` −MEDIUM; `phaseRunners.ts:3685` `calcStateVote`).** A tiny thread but a clean
+> designer BAR statement. Authority class = **designer spot ruling** (MrPotatoTed). **No new gap ID — this SHARPENS
+> #122 (pardon), #327 (office-prohibition), #292/#189 (election scoring), and #140 (removal).**
+
+**★ The four proposed capabilities, and how they map to owners:**
+
+1. **Arrest → office-lock UNLESS pardoned + the crime-type AUTHORITY-SPLIT** (POST 2; SHARPENS #327 and #122). An
+   arrested pol is **barred from an appointed office UNTIL PARDONED**, and the pardon authority is **role-dependent
+   by CRIME TYPE:**
+   - **federal crime → the PRESIDENT pardons**, and
+   - **state crime → the GOVERNOR pardons.**
+   This is a **sibling of #327's Disgraced → office-prohibition** direction (a trait/status that locks a pol out of
+   *appointed* office) but **WITH a release valve (a pardon) that #327 does not have.** It also SHARPENS **#122**
+   (pardon mechanics, previously unspecified on *who* can pardon and *what* a pardon lifts): a pardon here RELEASES
+   an office-LOCK (a second concrete use-case beside the b28 secessionist use-case where a pardon RESTORES a seceded
+   pol to the eligible pool), and it adds the **federal-vs-state pardoner split** #122 had not recorded. The
+   proposer also floats **generalizing the lock to ALL `Controversial` pols** (the same generalize-a-scandal-trait
+   pattern #327/#216 track).
+2. **★ The candidacy-BLOCK variant — "cannot RUN", distinct from removal — the designer's BAR** (POST 3/4; the crux
+   delta). MrPotatoTed's gate for building the feature at all: *"Unless it has a real impact on the election — by
+   which I mean if there ends up being some kind of legal block against him RUNNING (not just him choosing not to
+   run) — then I could see adding it. Otherwise it's just a random 'gains controversial' event applied to a
+   candidate who already has controversial."* Two distinct capabilities are separated:
+   - **Candidacy block** (barred from *running* / standing for election while REMAINING IN PLAY) — what the designer
+     says would justify the feature, **AND**
+   - **Removal / retirement** (taken out of play) — what the engine *can already do* (`forceRetire`).
+   - ★ **This is the INVERSE of #330's punishment band.** #330 = "barred from cabinet/military/judiciary but **may
+     still RUN**." This ruling is the mirror: a pol who **stays in play but is barred from STANDING FOR ELECTION.**
+     Together they define a **run-vs-appointment punishment-state axis** — a scandal/legal outcome can strip
+     *appointment* eligibility (the #330/#327 band) OR *candidacy* eligibility (this variant), and the two are
+     independent flags. The designer frames the candidacy block generally ("a legal block against running"), not as
+     an arrest one-off.
+3. **The effect model — enthusiasm / party-pref / domestic-stability** (POST 4; already expressible). Raise **RW /
+   LW-populist enthusiasm** for the ex-president's party; **a roll** for **moderate enthusiasm** going the other way
+   (backlash); plus **party-preference** and **domestic-stability** effects. ★ **This half is expressible TODAY** —
+   `EraEventResponseEffect` (`types.ts:1448-1457`) already carries `enthusiasm?: { ideology, party, delta }[]`,
+   `partyPreference?: number`, and `domesticStability?: number`. The delta is a **missing TEMPLATE that emits an
+   arrest response, NOT a type change.**
+4. **The acquitted-bonus / convicted-malus NEXT-election per-pol modifier** (POST 4; SHARPENS #292/#189). A **second
+   roll** gives the former president a **bonus (if acquitted)** or **malus (if convicted)** in the **NEXT election**
+   — a **stateful, one-shot, per-politician election modifier carried FORWARD** and seeded by the prior arrest roll.
+   This does NOT exist: there is no per-pol next-election modifier and no acquit/convict resolution anywhere.
+
+**★ SHIPPED — office-lock, pardon-lift, candidacy-block, and the per-pol next-election modifier are ALL unbuilt.**
+
+| Proposed element | SHIPPED reality (verified `src/` HEAD) | Verdict |
+|---|---|---|
+| Reuse "Debs's arrest" handling | **No `Debs` politician or event exists** (grep `Debs` → 0; Debs is a Progressive-era figure, shipped eras are 1772/1856). | **Dead reference** — any arrest mechanic is net-new |
+| Office-lock UNLESS pardoned | Office eligibility is gated only by `deathYear`/`retiredYear`/`currentOffice` (`types.ts:1278-1291`); **no recoverable ineligibility flag** (that flag = #327, itself a gap). | **Not built** |
+| PARDON by President (federal) / Governor (state) | Only the FLAVOR exec action `'Pardon political prisoners.'` (`phaseRunners.ts:3639`) which nudges `partyPreference` ±0.2 and **targets NO politician**; **no politician-targeted pardon for President OR Governor, no governor path at all.** | **Not built** (SHARPENS #122) |
+| Candidacy BLOCK (legal block on RUNNING) | Engine has **removal** (`forceRetire`, `phaseRunners.ts:2723-2728`, QW49/#140) but **no candidacy block** — grep `candidacyBlock`/`barred`/`ineligible`/`cannotRun`/`canRun` → **0.** A living, un-retired pol cannot be barred-from-running while staying in play. | **Not built — the designer's BAR** |
+| Force-set the arrested pol's state | No arrest-driven state-pin exists. | **Not built** |
+| Enthusiasm(RW/LW ↑, moderate roll ↓) + party-pref + domestic-stability | `EraEventResponseEffect` already has `enthusiasm[]`, `partyPreference`, `domesticStability` (`types.ts:1448-1457`). | **Expressible — needs a TEMPLATE, not a type** |
+| Acquitted-bonus / convicted-malus NEXT election | **No per-pol next-election modifier, no acquit/convict resolution** (grep `acquit`/`convict`/`nextElection`/`electionModifier` → 0). Trait election bands are STATIC per-trait (`TRAIT_ELECTION_EFFECTS`, `types.ts:738`; Controversial `presGeneral` −MEDIUM, `types.ts:831`); `calcStateVote` (`phaseRunners.ts:3685`) has no event-seeded carry-forward term. | **Not built** (SHARPENS #292/#189) |
+| "gains Controversial" event | Exists: `Controversial` trait + scandal/duel anytime events grant it (`anytimeEvents.ts:180,198`; `scandal-*` at `:240+`). | **Built** — hence the designer's "just another gains-Controversial event" point |
+
+**→ Net (30.52.2):** the arrest feature collapses to flavor UNLESS the **candidacy-BLOCK** exists (the designer's
+explicit bar) — and it does not. The **office-lock + pardon-lift** (with the federal/state authority-split) and the
+**acquitted/convicted next-election per-pol modifier** are also unbuilt; only the **enthusiasm/party-pref/domestic-
+stability effect half** is expressible (a missing TEMPLATE, not a type). This is MODERN-flavored content, moot for
+the shipped 1772/1856 eras. (SHARPENS #327 [the office-prohibition flag a pardon would RELEASE], #122 [pardon —
+adds the crime-type authority-split + the office-lock-release use-case], #292/#189 [the per-pol next-election
+modifier], #140 [removal ≠ candidacy block]; the candidacy-block is the INVERSE of #330's "may still RUN" band —
+the run-vs-appointment punishment-state axis. Cross-ref #216 [Illicit/scandal traits], #112 [impeachment-
+disqualification], #284 [Reconstruction ex-Confederate lockout — same pardon family]. `5500e143#POST 2/3/4`;
+codebase as cited.)
+
+#### 30.52.3 ★ Modern / Biden content-engine sharpens — a per-president-midterm FLAVOR-SPEECH name-templated event CLASS + a multi-era-spanning event-availability edge case (#169 / #206 / #221) — two content-model sharpens, both fold; Biden/modern content is ~0% reachable (only 1772 & 1856 scenarios ship; `Era` has no `future` value)
+
+> **Source: `27711296` ("AMPU Biden Events", 4 posts, Nov 6 2022, OrangeP47 +2) — a modern-band content idea list;
+> POST 4 the per-president-midterm flavor-speech class; POST 2 the FIFA-corruption multi-era-availability thread +
+> the 2026-World-Cup future beat + codebase (`types.ts:1466` `EraEvent` [scheduled by literal `year`, NO `eras`
+> field]; `anytimeEvents.ts:12` `AnytimeEventTemplate.eras?: Era[]`; `types.ts:1337` `Era` = 4-value, NO `future`;
+> `eraEvents1856.ts:12,61` the `decider:'president'` + zero-effect `responses[]` flavor-event shape;
+> `types.ts:310-320` `InterestCardId`/`LobbyCardId`).** The smallest of the modern-content threads. Authority class
+> = **playtester content proposal** (invokes the designer's twice-before-generalizing rule himself). **No new gap ID
+> — both items FOLD into #169 / #206 / #221.**
+
+**★ The two content-model sharpens:**
+
+1. **A per-president-midterm-reaction FLAVOR-SPEECH event CLASS** (POST 4; folds on #221/#169). A low/zero-impact
+   dialogue event **parameterized by the INCUMBENT president**, firing on a recurring post-midterm beat
+   (`isElectionYear && !isPresidentialYear`, i.e. `year % 4 === 2`). It is a *president* event (fires for whoever
+   holds the office), NOT a *Biden* one-off — the proposer invoked the twice-before-generalizing rule himself
+   ("if you do this with biden, you might have to do this with every other president"). **Shipped:** the
+   `decider:'president'` + zero-effect `responses[]` flavor-event SHAPE already ships (`eraEvents1856.ts:12,61`);
+   the MISSING capability is **per-office-holder NAME-TEMPLATING** — there is **no president-name interpolation
+   token in the `EraEvent` model** (`types.ts:1466`), so a flavor speech cannot be templated with the sitting
+   president's name.
+2. **A MULTI-ERA-SPANNING event-availability edge case** (POST 2; folds on #206/#258). The FIFA-corruption content
+   thread "could stretch back all the way to Obama" while the **2026 World Cup** is an explicit **Era-of-the-Future**
+   beat — so a SINGLE content thread's availability spans **≥3 era bands** (late-modern Obama → Biden → future), the
+   same multi-band-availability shape `8f7ae0b9` records (30.51.4). **Shipped:** era-gating half-supports this —
+   `AnytimeEventTemplate.eras?: Era[]` (`anytimeEvents.ts:12`) already accepts a MULTI-band list (e.g.
+   `eras:['modern']`), but (a) **`Era` has NO `future` value** (`types.ts:1337`, the doubly-unbuilt hole #206
+   owns) so the span cannot include it, and (b) **`EraEvent` — the SCRIPTED-event type — has no `eras` field AT
+   ALL** (scheduled by literal `year`, `types.ts:1466`), so a genuinely cross-era *scripted* event is
+   unrepresentable. The 2026-World-Cup beat is another future-band content row with no enum slot.
+
+**★ SHIPPED — Biden/modern content is ~0% reachable.** Only the **1772** and **1856** scenarios ship; `Era` =
+`'independence' | 'federalism' | 'nationalism' | 'modern'` (`types.ts:1337`) with **no `future`** value. The
+thread's minor unmodeled-interest-group asides (unionization ⇒ a Labor/Unions group; AfCFTA ⇒ foreign-trade —
+neither in `InterestCardId`/`LobbyCardId`, `types.ts:310-320`) are the same gap as the Environmentalists/Big-
+Business/Pacifists cases.
+
+**→ Net (30.52.3):** two content-model sharpens, no mint. The per-president flavor-speech class needs **per-office-
+holder name-templating** the content model lacks (no name-interpolation token on `EraEvent`, `types.ts:1466`), and
+the FIFA thread's Obama→Biden→Future availability needs both the **`future` `Era` value** (#206) and a **multi-band
+`eras[]` on the scripted-event type** (`EraEvent` has none, `types.ts:1466`). (CORROBORATES #169 [the Biden cluster
+/ president-action content], #206 [the future-band enum hole + multi-era availability], #221 [the flavor content
+tier]; cross-ref #258 [predicate-gated availability] and 30.51.4's multi-band-availability shape. `27711296#POST
+2/4`; codebase as cited.)
+
+> **One-line note on the two thin b62 threads (no sub-section, ZERO mechanical delta):** the Era-of-Independence
+> poll and the play-strategy Q&A carry no new mechanics. The only fold-worthy line: the play-strategy Q&A CONFIRMS
+> that **per-state bias is a live win-calc term** in `calcStateVote` (`phaseRunners.ts:3685`) — already documented;
+> no change.
+
 ### 30.4 Authority hierarchy reminder
 
 When rule sources disagree:
