@@ -27381,6 +27381,132 @@ Every skill/trait/ideology read **must anchor to `draftYear`** (Wilson/TR "Lib" 
 
 **→ Net (30.55):** ZERO new mints in this doc. Records the authoritative politician DATA MODEL and settles the reconciliations: **#216** (4 renames + 13 genuinely-missing + 10 acquired-not-seeded — the complete trait map), **#319** (the source omits `backroom` — the pre-`backroom` ground-truth), **#240** (the 7,349 roster is the master `CURATED_ROWS` source the pipeline should reconcile against), **#4** (Red/Blue + ideology are era-relative, anchored to `draftYear` — Reagan=Blue-1936 vs Nixon=Red-1940). Carries the two game-pm mints for the tech-lead: **#339** (Draft Value stored-vs-derived) and **#338** (per-politician bio, unrepresentable at runtime). *(Sources: `docs/game/sources/politician-dataset/analysis.md` §Schema/§Skill/§Trait/§Ideology/§Team/§Era/§Draft-Value; `sample.md` decoded marquee; `docs/game/playtest-digests/politician-dataset.md`; game-context b-entries #338/#339 (and #216/#319/#240/#4); `historical-context-politician-roster.md`; codebase `types.ts:3,5-12,24-30,43-60,62-117,1251-1291,1780-1793`, `pv.ts:67-89` as cited.)*
 
+### 30.56 Era-event MODEL + the sheet↔forum reconciliation — from the authoritative 2,475-event ground-truth (`era-events` ingest) — the complete per-event record (identity + `Requires` precondition + Era-band gating + Type genre + 6 Pres Responses A-F with per-response Resolve-ABILITY/Modification/Points + immediate meter/point/office-point effects + Percent Chance) mapped field-by-field to the shipped `EraEvent` (`types.ts:1466`), the sheet↔forum RECONCILIATION ruling (sheet = authoritative FLAT base corpus; forum threads = ADDENDA supplying chain-DSL topology + modern/future events + genre mechanics), the 2 NEW mints this surfaces (per-response Resolve-ability #340, office-points+carry #341), and the 16-era / 151-future-event / genre-skew coverage picture (#258/#221/#248/#206/#262)
+
+> **What this block is.** A **dataset-reconciliation** ingest, not a playtest. The
+> "source" is the **authoritative era-event CORPUS** — the `Era Evos Standardizing`
+> sheet (`b41ac9b1-Copy_of_Era_Evos_Standardizing.xlsx`, 2 tabs: `EraEvos` = **2,475
+> events × 49 columns**; `EventsbyHalfTerm` = per-half-term pacing), the full scripted
+> era-event content across **16 eras** from Independence (1772) to the Distant Future
+> (speculative). It is the **ground-truth flat base** the shipped era-event system
+> (~105 events across 2 eras) should reconcile against — a **~24× superset** in event
+> count and an **8× superset** in era coverage — and the flat-file authoritative data
+> for the content-primitive cluster: the **1,664 `Requires` clauses ARE the
+> `Predicate`-gated availability DATA** #258 has been inferring from forum threads, and
+> the **Type genre + per-response effects ARE the schema fields** #221/#248 ask for. It
+> settles the user's key ask — **do the forum event threads still add anything beyond
+> this sheet, especially for future eras?** — with the ruling in §30.56.2 (short
+> answer: the sheet is the authoritative flat base; the forum threads remain ADDENDA
+> that supply the event-CHAIN DSL topology the flat sheet cannot express, the specific
+> modern/future events + SCOTUS docket the 2022-terminating sheet lacks, and the
+> stateful genre mechanics). MINTS TWO NEW gaps recorded in the game-pm digest and in
+> game-context b-entries **#340** (per-response Resolve-ABILITY) and **#341**
+> (office-points + 10%-next-election carry); SHARPENS **#258/#221/#248/#206/#262**. All
+> codebase citations re-verified against `src/` HEAD 2026-07-01 (`EraEvent`
+> `types.ts:1466`; `EraEventResponse` `:1459`; `EraEventResponseEffect` `:1448`;
+> `Predicate` `:1487`; `Era` enum `:1337`).
+
+#### 30.56.1 ★ The era-event DATA MODEL (ground-truth schema) — the complete per-event 49-column record, field-by-field, mapped to the shipped `EraEvent` (`types.ts:1466`): where they MATCH (Scripted_ID→`templateId`, Requires→the serializable `Predicate` tree, meter shifts→`effect.meters`, Game-Ends→`triggersGameEnd`) and where they DON'T — Type genre has NO shipped field (#221/#248), the per-response Resolve-ABILITY has NO shipped analogue (★ #340, the shipped `decider` is an OFFICE that CHOOSES not an ability that RESOLVES), office-points + next-election carry has NO channel (★ #341)
+
+Each of the **2,475** rows is a fixed-shape authored record. The full 49-column schema and its shipped mapping (source: `analysis.md` §Schema + §MODEL RECONCILIATION; sheet header cols 1-43 with 7 trailing empties 42-48):
+
+| Sheet column(s) | Type / range | Shipped `EraEvent` field | Match? |
+|---|---|---|---|
+| **Event** (col 1) | display string | `title` (`:1470`) | ✔ |
+| **Scripted_ID** (col 2) | slug | `templateId` (`:1468`, tracked in `game.eraEventsCompleted`) | ✔ |
+| **Era Starts** (col 3) / **Deactivate-when-era-≥** (col 4) | era-band names | (no direct field) — era-band gating **#206**; shipped uses literal `year` (`:1469`) + the 1772 graph, `Era` enum = **4** values (`independence\|federalism\|nationalism\|modern`, `:1337`) | ✘ band-gating gap |
+| **Requires** (col 5) | precondition string, **1,664/2,475 have one** | ★ **the serializable `Predicate` tree** (`:1487`), interpreted by `evalPredicate` — **wired to the 1772 graph ONLY** (`eraGraph.ts`, `eraEvents1772.ts`); the sheet's `Requires` is the ground-truth DATA for it (**#258**) | ✔ shape / ✘ scope (1772-only) |
+| **Description / Wiki / Historic Year** (cols 6/8/11) | prose / URL / year | `description` (`:1471`); Wiki + Historic-Year are **author-time anchors only** (no shipped field) | ✔ (description) |
+| **Type** (col 9) — Flavor / Foreign-Mil / Domestic / Economics / Judicial | 5-value genre | ★ **(NONE)** — no `type`/genre field on `EraEvent` at all — **#221** (two-category taxonomy) + **#248** (subtype axis) | ✘ delta |
+| **Percent Chance** (col 12) | fire probability 0-100 | (no explicit field) — scripted events fire deterministically today; folds on **#221** as a fire-probability event-record field | ✘ delta |
+| **Pres Response A-F** (cols 19/24/28/32/36/40) | up to 6 response texts | `responses: EraEventResponse[]` (`:1472`) — shipped array **unbounded**, sheet caps at **6** | ✔ shape |
+| **Resolve A-F** (cols 20/25/29/33/37/41) — ability, *"Admin unless stated"* | per-response ability + office scope | ★★ **(NONE)** — the shipped `EraEventResponse` (`:1459`) is `{ id, label, description, effect }` with **no resolve/ability/modification field**; `EraEvent.decider` (`:1473`) is the OFFICE union `president\|congress\|cabinet\|cc-president\|auto` that chooses WHO SELECTS, not an ability that resolves HOW WELL — **★ NEW #340** | ✘ **delta (minted NEW)** |
+| **Modification A-F** (cols 22/26/…) | modifier applied to the check | (NONE) — part of #340 (the resolve-check modifier) | ✘ delta |
+| **Points A-F** (cols 23/27/…) | faction/ideology award per response | `effect.interestGroups` / `effect.enthusiasm` / `effect.partyPreference` (`:1452/1451/1450`) — but **sign is graded by the Resolve outcome** (#340), which is unrepresentable | ✔ channel / ✘ grading |
+| **Immediate Meter shifts** (col 18) — **1,222 events**, often probabilistic ("25% chance − dom stab") | meter deltas | `effect.meters` (`:1449`) / `effect.domesticStability` (`:1453`) | ✔ (probabilistic rolls not modeled) |
+| **Immediate Point gains / losses** (cols 16/17) | faction/ideology point awards | `effect.interestGroups` / `effect.enthusiasm` (`:1452/1451`) | ✔ |
+| **Immediate Office Points Gained / Lost** (cols 14/15) — *"(carries 10% chance of ±1 for the officer in next election)"*, **1,611 have a gained value** | per-office-holder point currency + a probabilistic election carry | ★★ **(NONE)** — `EraEventResponseEffect` (`:1448`) has NO office-points field and NO next-election-carry anywhere — **★ NEW #341** | ✘ **delta (minted NEW)** |
+| **Pts** (col 13) — `50-100-250, neg if bungled` | graded base-point band | (partial) — the **graded/bungled** outcome band is the #340 resolution result; no shipped graded-outcome path | ✘ delta |
+| **Leads to Treaty** (col 10) — **101 events** | treaty flag | `effect.diplomacy` (`:1454`) / `postEffects.startWar\|endWar` (`:1478`) | ✔ partial |
+| **Special Rules "Game Ends"** (col 7) | terminal-branch flag | `EraEvent.triggersGameEnd` (`:1476`) — the terminal-branch flag **DOES ship** (Conciliatory-Resolution opt-B, SpaceBotUSA) | ✔ |
+| **Special Rules "if response A bungles…"** (col 7) | per-response branch consequence | (NONE) — again the graded-resolution result (#340) + conditional post-effect; no shipped hook | ✘ delta |
+
+**The effect model in one sentence.** A shipped `EraEventResponseEffect` (`:1448`) can currently touch **meters / partyPreference / enthusiasm / interestGroups / domesticStability / diplomacy / startWar / text** — the sheet needs **three more channels** on top of that: (a) a **Resolve ability + Modification** that grades the response's success/bungle (**#340**, gates the Points *sign* and the "if bungles" branch), (b) an **office-points** delta to a named office-holder plus a **10%-next-election ±1 carry** (**#341**), and (c) an explicit **Percent Chance** fire-probability + **Type** genre on the event record (folds on #221/#248). Only the first eight and `triggersGameEnd` ship today.
+
+**★ Worked example — Pullman Strike (`eraevos.csv`, Gilded Age, Domestic).** The single clearest event for both new deltas at once:
+- **`Requires` = "Labor movement has occurred"** → a `Predicate` `{ eventCompleted: <labor-movement-templateId> }` (prior-event gate; #258). ✔ representable in shape, but the interpreter is 1772-graph-only today.
+- **Response A** = "order the Att Gen to break the strike"; **`Resolve A` = "Mod for Pres (judicial), Att Gen, Interior"** → the president rolls their **judicial** skill (an override off the default `admin`), **office-scoped** to the Att Gen / Interior — **★ #340, unrepresentable** (`EraEventResponse` has no `resolveAbility`).
+- **`Immediate Office Points Lost` = "Att Gen"** → the Attorney-General office-holder loses office-points + a 10%-carry into the next election — **★ #341, unrepresentable** (`EraEventResponseEffect` has no office-points channel).
+- **`Special Rules` = "If response A bungles, then pres loses −1 party pref"** → the **bungled** branch of the #340 resolution; no shipped graded-outcome hook.
+- **`Points A` = "Gain: Law & Order, Big Corporation, Transportation. Loss: LW Populists, Labor…"; `Points B` = "Opposite of A"** → maps to `effect.interestGroups`/`enthusiasm`, but the **sign flips on bungle** (the #340 grading).
+
+Two more one-line confirmations: **Louisiana Purchase** — `Resolve A = "Mod for Pres, State, Amb to Fr"` (a **multi-office** modification: president + Sec of State + Ambassador-to-France all contribute; reinforces the office-scoped reading of #340). **SpaceBotUSA Defeats US Army** — `Immediate Office Points Lost = "Pres"` **+** `Special Rules = "Game Ends"` (an office-points dock on the president **plus** the shipped `triggersGameEnd` terminal branch; #341 + ✔).
+
+#### 30.56.2 ★★ The sheet↔forum RECONCILIATION + the chosen path forward (the user's key ask) — the RULING: the sheet = the authoritative FLAT base corpus (canonical for each event's identity + `Requires` precondition + Type + base effects; a ~24× event / 8× era superset), but the forum event threads remain ADDENDA, NOT subsumed — supplying (a) the event-CHAIN DSL topology the flat single-`Requires` string cannot express, (b) the specific modern/future events + future-SCOTUS docket the 2022-terminating sheet lacks, (c) the stateful genre mechanics — with the MERGE RULE where they overlap (#258/#169/#270/#221/#237/#248)
+
+This is the core deliverable and the answer to the user's question. The game-pm cross-referenced the sheet against the entire existing content cluster (#221/#248/#258/#206/#169/#237/#262) and every future/modern-era digest (`8f7ae0b9` b61 chain-DSL, `2bb66197` b57 speed-run, `df11a769` b58 Trump-2.0, the Biden threads, `c8d3fd84` b63 2025-29, `c54b7a9d` 2022-2072 run, the future-SCOTUS threads, `0b1adc59` b63 scripted-vs-general). **The ruling stands as the authoritative reconciliation record:**
+
+> ★ **THE SHEET IS THE AUTHORITATIVE FLAT BASE CORPUS. THE FORUM THREADS ARE ADDENDA, NOT SUBSUMED.**
+
+The sheet is a **SUPERSET on flat-event count** (2,475 vs the forum threads' hundreds of scattered ideas) and it is the **CANONICAL source for the base identity + `Requires` precondition + Type + per-response effects** of each historical event. But it is a **FLAT** file — one row per event, one `Requires` string per row — and it is **MISSING three things the forum threads uniquely supply**:
+
+| # | What the forum supplies that the flat sheet cannot | Owner | Source |
+|---|---|---|---|
+| **1** | **The event-CHAIN DSL TOPOLOGY.** `8f7ae0b9` (b61) authors the future era in a `A -> B` / AND / OR / NOT notation (green = bill node, red = president-action node) **AND a one-to-many blocker edge** ("Climate Control BLOCKS [disaster cluster]") — a first-class **negative/suppression edge** the flat sheet's single `Requires` string **cannot express** (the sheet can only NOT-gate each blocked event individually, not group-suppress). Multi-parent / blocker-group / the China-Fragments/Russia-Fragments/ideology-takeover war-chains are **forum-only**. → the sheet populates #258's predicate **DATA**; `8f7ae0b9` supplies #258's chain **STRUCTURE**. | **#258** | `8f7ae0b9` (b61); §30.51.4 |
+| **2** | **Specific modern & future events + the future-SCOTUS docket.** The sheet's dated content **STOPS at 2022** (n≈1,436 dated, last ≈ Russia-invades-Ukraine); the Near/Distant-Future rows (151) are speculative but do **NOT** include the concrete post-2022 catalogs: Trump-2.0 bills/exec-actions (`df11a769` **#329**), the Biden 2021-25 band + the elderly-president-drops-out mechanic (**#169**), the 2025-29 tariff/deportation actions (`c8d3fd84`), or the **~30-case future-SCOTUS docket** (`964b8857`/**#270** — robot-personhood / consciousness-upload / space-colony jurisdiction). The sheet has **7 Judicial events TOTAL** — the forum SC-case threads are the *whole* judicial future. | **#169 / #270 / #329** | `df11a769`, Biden threads, `c8d3fd84`, `964b8857` |
+| **3** | **The other content primitives + stateful genre mechanics.** The sheet has no genre `*-Default` baseline, no L/P/G/S mechanism prefix, no create→expand→cut program lifecycle, no graduated-intensity tiers. The sheet is scripted-**EVENTS**; the Legis-Prop / Pres-Action / Gov-Action / SC-Case **primitives** (#221/#248) and their **stateful toggles** (#237) live in the genre threads, not here. | **#221 / #237 / #248** | the policy-genre + primitive threads |
+
+**★ THE MERGE RULE (authoritative).** Where the two overlap — robot / AI / climate / China themes appear in **BOTH** the sheet's Distant-Future rows AND `8f7ae0b9`/`2bb66197`/`c54b7a9d` — resolve as:
+
+> **The SHEET is canonical for the event's EXISTENCE + PRECONDITIONS + BASE EFFECTS; the FORUM DIGEST is canonical for its CHAIN-WIRING + RESPONSE DETAIL.** Do NOT let either supersede the other.
+
+**Coexistence model (recommendation to tech-lead / roadmap-planner).** Treat the sheet as the **authoritative base era-event table** (identity + `Requires` + Type + effects + Percent-Chance), imported as the seed for the historical bands; **overlay** the forum threads as **addenda** that (a) supply the chain-DSL topology (#258 via `8f7ae0b9`), (b) add the modern/future event + SC-case content the sheet lacks (#169/#329/#270), and (c) elaborate the primitive/genre mechanics (#221/#237/#248). The historian's warning stands (`historical-context-era-events.md` §3): **do NOT assume the sheet subsumes b61's chain content** — the blocker-edge in particular is genuinely additional authoring, not re-derivable from the flat `Requires` graph.
+
+#### 30.56.3 ★ Era coverage, future eras, genre distribution, and data-quality — the 16-era coverage (Nuclear Age 304 … Independence 71; the historian's real-eventfulness match + the game-era↔real-span crosswalk incl. Neocons≈1972-99), the 151 Near/Distant-Future events populating the #206 future band, the response-count skew (548 auto/flavor with 0 responses), the genre under-use (Judicial only 7, Economics 71 — a #248/#262 authoring gap), the EventsbyHalfTerm pacing model, and the normalize-on-ingest data-quality notes
+
+**Era coverage (16 eras, normalized; the ~24× / 8× superset).** Shipped `src/data/` models **~65 (`eraEvents1772.ts`) + ~40 (`eraEvents1856.ts`) = ~105 events across 2 eras**, `Era` enum = 4 values (`:1337`). The sheet has **2,475 events across 16 eras** → **~14 of 16 eras are 0% shipped** (incl. both future bands, which have no `Era` enum slot). Per-era counts and the real-span crosswalk (source: `analysis.md` §Era + `historical-context-era-events.md` §1):
+
+| Game era | Real span | Norm. events | Density read |
+|---|---|---|---|
+| **Era of the Nuclear Age** | 1948–1971 | **304** | **Densest** — Cold War / Korea / civil rights / Cuba / Vietnam / space race |
+| Era of Ideologies | 1928–1947 | 283 | 2nd — Crash→Depression→New Deal→WWII |
+| Era of the Gilded Age | 1868–1891 | 252 | 3rd — industrialization / labor wars / machine politics |
+| Era of Progressivism | 1892–1915 | 238 | 4th — Populist surge / TR-Wilson reform / run-up to WWI |
+| Era of Nationalism | 1856–1867 | 157 | sectional crisis / Civil War / early Reconstruction |
+| **Era of the Neocons** | **≈1972–1999** | 156 | Watergate→Reagan→end-of-Cold-War→Gingrich/Clinton (⚠ HalfTerm tab **mislabels** this band as a 2nd "Era of the Ideologies") |
+| Era of Manifest Destiny | 1840–1855 | 153 | Texas / Mexican War / 1850 / Kansas-Nebraska |
+| Era of Normalcy | 1916–1927 | 145 | WWI / 1918 flu / Prohibition / Teapot Dome |
+| Era of Federalism | 1788–1799 | 134 | Washington/Adams / Quasi-War / Jay Treaty (Louisiana lives here by start-state gating) |
+| Era of Democracy | 1820–1839 | 121 | Jacksonian 2nd party system / Bank War / Trail of Tears |
+| Era of Terror | 2000–2011 | 120 | 9/11 / Iraq-Afghanistan / 2008 crash |
+| Era of Republicanism | 1800–1819 | 95 | Jeffersonian / War of 1812 / Missouri |
+| Era of Populism | 2012–2022 | 95 | Tea-Party/Occupy→Trump/Sanders (thins toward the present) |
+| **Era of the Distant Future** | speculative | 81 | ★ sentient robots / AI-human augmentation / climate coasts / new parties |
+| Era of Independence | 1772–1787 | 71 | Smallest — pre-party, pre-mass-politics; "national event menu" genuinely thin |
+| **Era of the Near Future** | ≈2023+ speculative | 70 | ★ population decline / Russia reclaims Soviet territory / cloning |
+
+**[inference] The density curve tracks real American eventfulness well** (`historical-context-era-events.md` §1): the four peaks (Nuclear Age / New-Deal-WWII / Gilded / Progressivism) are exactly the four most event-dense stretches of U.S. political history; the trough (Independence 71) is the shortest, pre-party era. This **quantifies** #206 (coarse enum + doubly-unbuilt future band) and #262 (coverage as a tracked dimension); it does not change the architecture.
+
+**★ The future bands (Near 70 / Distant 81 = 151 events; #206).** The sheet carries a **substantial speculative corpus** (Historic-Year = `alt`/`n/a`, **intentional, NOT date errors**): **Near Future** (population decline → human-cloning / Social-Security responses; Russia reclaims Soviet territory) and **Distant Future** (sentient robots — Robot Controversy/Soldiers/State-Judge/Fundamentalist-Terrorism; AI-human augmentation; cloned historical figures; climate-refugee coasts; new speculative parties — Earth/Science/Universe/Humanitarian; China-language/cloning; Antarctica nationhood; SpaceBotUSA "Game Ends"). This is the **FIRST authoritative data-source that actually populates the future bands with concrete events** (prior future coverage was all forum-idea threads) — a meaningful sharpen of #206. It **overlaps** `8f7ae0b9`/`2bb66197`/`c54b7a9d` heavily on themes but is **FLAT where they are chained** — reinforcing the §30.56.2 addenda model (sheet = existence + preconditions; forum = chain-wiring).
+
+**Response-count skew** (how many of A-F are filled; `analysis.md`): **0 responses = 548** events (auto-resolving / pure Flavor — no player choice, the effect just fires), **1 = 1,319** (a single accept/act response), **2 = 460** (the "hawk vs. dove" / "intervene vs. don't" pair), 3 = 114, 4 = 25, 5 = 7, **max 6 = 2**. The shipped `responses[]` array is unbounded so the shape holds; the 548 zero-response events are the auto/flavor tier that maps cleanly to `decider: 'auto'`.
+
+**★ Genre distribution + the under-use gap (#248/#262).** **Flavor 1,348 · Foreign-Mil 621 · Domestic 428 · Economics 71 · Judicial 7.** The **Flavor majority** = ambient cultural/scientific texture (Nike/Apple/Sears-Tower/Rocky-Horror), mostly precondition-free — exactly the FLAVOR tier #221 already models. The 5-value genre set is the **scripted-event realization of the 33-value subtype axis #248 owns** (Foreign-Mil→Military/Diplomacy/Warfare, Economics→Banking/Currency/Taxation, Judicial→Courts). **The genre skew is a concrete #248/#262 authoring-coverage datapoint, not an error:** big court/economic turning points (*Marbury*, *Dred Scott*, *Lochner*, *Brown*, *Roe*, every panic/depression) are filed as **Domestic/Flavor** — so **Judicial has only 7 events and Economics 71** despite how much U.S. politics turns on the Court and the economy. Era framing must NOT lean on a "judicial event" genre that barely exists; the forum future-SCOTUS threads (#270, §30.56.2 row 2) are the whole judicial future.
+
+**EventsbyHalfTerm pacing model** (the 2nd tab; per-half-term first-appearance counts, a density/pacing signal distinct from the deduped norm count): 1786-87 = 56, 1798-99 = 36, 1818-19 = 92, 1838-39 = 83, 1854-55 = 106, 1866-67 = 91, **1890-91 = 173** (Populist climax, densest), 1914-15 = 153. The two counts differ because the era-total column counts **first-appearance** events per half-term while the norm count is the deduped row count — treat both as density signals, not exact-equal.
+
+**Data-quality (normalize on ingest — do NOT mint standalone; fold under the ingest task):**
+
+| Issue | Detail | Action |
+|---|---|---|
+| **Era-label dupes/typos** | `Era of the Ideologies` (100) vs `Era of Ideologies` (183); singletons `Era of Neocons`×1 (vs `…the Neocons`×155), `Era of the Nationalism`×1 (vs `Era of Nationalism`×156) | normalize on import |
+| **HalfTerm mislabel** | the 1972-99 band is labeled a **2nd "Era of the Ideologies" (150)** | reconcile to **"Neocons"** (historian §1) |
+| **Header typo** | col 37 label reads `Points D` (should be `Points E`) | map by position, not label |
+| **Trailing empties** | 7 empty columns (42-48) | ignore |
+| **Embedded commas/quotes** | Description/Response cells shift naive `awk -F,` parsing | read via a real CSV parser or `sample.md`, never `awk -F,` |
+
+**→ Net (30.56):** TWO new mints carried for the tech-lead — **#340** (per-response Resolve-ABILITY: add a `resolveAbility: SkillKey` (default `admin`) + `modification` field to `EraEventResponse` and a seeded-RNG resolution step that grades success/bungle → selects the effect + Points sign; keep DISTINCT from `EraEvent.decider` the selecting OFFICE) and **#341** (office-points + 10%-next-election carry: add an office-points delta to `EraEventResponseEffect` + a durable ±1 next-election modifier wired into `calcStateVote`/the presidential general). SHARPENS **#258** (the 1,664 `Requires` clauses are the authoritative flat DATA; the forum `8f7ae0b9` chain-DSL is the STRUCTURE the flat sheet lacks — the interpreter must extend from 1772-graph-only to all bands), **#221** (Type = the scripted-event genre field; Percent Chance = the fire-probability field), **#248** (the 5-value Type ⊂ the 33-value subtype axis; the Judicial-7/Economics-71 skew), **#206** (the sheet is the first authoritative source populating the 151-event future band; both future bands still lack an `Era` enum slot), **#262** (the 2,475/16 vs ~105/2 gap quantifies the coverage dimension). *(Sources: `docs/game/sources/era-events/analysis.md` §Schema/§Coverage/§Era/§Type/§Precondition/§Response-count/§MODEL-RECONCILIATION/§RECONCILE-mandate/§Data-quality; `sample.md` (Gaspée, SpaceBotUSA, Population-Decline, Conciliatory-Resolution); `eraevos.csv` spot-reads (Pullman `Resolve A`/`Office Points Lost`/`Special Rules`; Louisiana `Resolve A`; SpaceBotUSA); `docs/game/playtest-digests/era-events-dataset.md`; `docs/game/historical-context-era-events.md` §1-5; game-context b-entries #340/#341 (and #258/#221/#248/#206/#262); codebase `types.ts:1337,1448-1482,1487-1504`, `src/engine/eraGraph.ts`, `src/data/eraEvents1772.ts` as cited.)*
+
 ### 30.4 Authority hierarchy reminder
 
 When rule sources disagree:
