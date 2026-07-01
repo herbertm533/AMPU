@@ -27956,6 +27956,202 @@ transcribed); game-context b-entries #344/#345/#346/#347 (and the corroborated
 `src/data/scenario1772.ts:69-71`, `src/data/scenario1856.ts:60-142,169-172`,
 `src/types.ts:1114-1121,1196-1208`, `src/data/expansionStates.ts` as cited.)*
 
+### 30.59 Meter-system DESIGNER SPEC + meter BOOT-SEED — from the authoritative `Meters.xlsx` ingest (23 first-class meters on ONE descriptor template on an ~8-position scale, + the 23×61 Position-by-Start-Date boot matrix): the UNIFIED meter MODEL vs the shipped 4-way split and the scale/model reconciliation (#348), the meter half of scenario-boot as a per-cycle position table PARALLEL to the officeholder seed #344 (#349), the two genuinely-unowned descriptor channels — cross-meter Restrictions + era-tiered Spending-Bill caps (#350), and the FR-position / 7-crisis / election-bonus / per-position-effect SHARPENINGS folded onto the existing owners (#107 / #88·#188 / #18 / #237·#179). Sheet = designer intent; every divergence from shipped code is FLAGGED; NO code changes this ingest.
+
+> **What this block is.** A **DATASET INGEST**, not a playtest (**playtester-name
+> scan: 0 hits** — pure mechanical data; **no forum POST numbers exist**, cite by
+> **tab**). The source is `Copy_of_Meters.xlsx` — **3 tabs**: **Meters** (102×10,
+> the per-meter DESCRIPTOR TEMPLATE), **MeterIDs** (23 rows, the canonical meters →
+> programmatic IDs), **Meter Position by Start Date** (23×61, the meter BOOT-SEED).
+> It is the authoritative **DATA/spec** version of the earlier forum discussion
+> `6801b9f4-meter-interpretation` (§30.39 / #292) — it **supersedes** that thread,
+> it does not duplicate it. Gitignored preprocess artifact under
+> `docs/game/sources/meters/` (`analysis.md` = the model + reconciliation, the three
+> CSVs = the full matrices — **NOT transcribed here**, per directive). Historian
+> grounding: `docs/game/historical-context-meter-trajectories.md`. MINTS **THREE**
+> gaps — **#348** (unified 23-meter model + scale/model reconciliation), **#349**
+> (the meter boot-seed, **parallel to officeholder seed #344**), **#350** (the two
+> unowned descriptor channels). SHARPENS four existing owners without re-minting:
+> **#107** ([§13.3.1](#1331-per-power-relations-meters--an-era-dependent-power-roster) / [§13.3.4](#1334--107-batch-39-diplomacy--the-per-country-state-model--the-diplomacy-policy-genre-content-designed-0-shipped) FR meters),
+> **#88/#188** ([§12.7](#127-forum-design-layer-crisis-bill-tag-designed-not-built) / [§22.1](#221-the-named-meter-bank--numeric-debt--crisiscascade) crises),
+> **#18** ([§15.3.8](#1538-state-of-the-meters--election-bonuses-post-266) election bonuses),
+> **#237/#179** ([§20.10](#2010--179-new-summer2021--the-cabinet-lingering-roll-meter-engine-designed-hand-rolled) per-position effects). ★ **Shipped is a
+> 4-WAY SPLIT with the rich per-position content 0% built** (§30.59.1); **NO code
+> changes this ingest.** All codebase citations verified @HEAD 2026-07-01.
+
+#### 30.59.1 ★ #348 — the UNIFIED 23-meter MODEL + the per-meter DESCRIPTOR TEMPLATE + the scale/model reconciliation (sheet = one template across 23 first-class meters; shipped = a 4-way split on a different scale)
+
+**The 23 canonical meters (MeterIDs tab).** The sheet promotes ALL 23 to
+first-class meters carrying the SAME descriptor template:
+
+| Group | Meters (→ ID stem) |
+|---|---|
+| Fiscal/economic (2) | `Revenue-Budget` → `Revenue_Budget`; `Economic Stability` → `Economic_Stability` |
+| **Foreign Relations (8)** | UK · France · Spain · Germany · Russia · China · Japan · Israel `_Foreign_Relations` |
+| Nation-state (5) | `Military Preparedness` · `Domestic Stability` · `Honest Government` · `Quality of Life` · `Planet's Health` |
+| Partisan (1) | `Party Preference` |
+| **Enthusiasm (7)** | LW_Populist · Progressive · Liberal · Moderate · Conservative · Traditionalist · RW_Populist `_Enthusiasm` |
+
+**The per-meter DESCRIPTOR TEMPLATE (Meters tab) — an ~8-position scale.** Each
+meter is defined across **positions 1–8** (foreign relations run **1–9**), neutral
+≈ **5**, low = bad/hostile/crisis. **Eight descriptor rows** per meter (the
+Revenue-Budget worked example is in `sample.md`; the full 23×8 grid is NOT
+transcribed):
+
+| Descriptor row | What it carries | Owner for the build |
+|---|---|---|
+| **Description** | per-position label (Rev-Budget: Severe Overspending → Balanced (5) → Very Underbudget) | the named-ordinal ladder — §21.8 / §22.1 |
+| **Current** | an `X` marking one position — a **WORKED EXAMPLE, NOT seed data** | — (do not seed from this row) |
+| **Effect** | per-position engine effect ("5% chance Economic Stability −1"; "60% chance ↑ national debt"; "No effect" at balanced) | **#237 / #179** (§30.59.4a) |
+| **Restrictions to other meters?** | cross-meter GATE ("Economic Meter cannot rise while overspending") | **#350** (§30.59.3a) |
+| **Spending Bill Restrictions** | **era-tiered** (3 rows) position-gated cap on non-crisis bills | **#350** (§30.59.3b) |
+| **Crisis?** | per-meter crisis threshold | **#88 / #188** (§30.59.4b) |
+| **Restrictions** | action prereq ("Req: Assume State Debt") | folds to #350 / genre prereqs |
+| **Election Bonus / Penalties** | per-position ±1 Enthusiasm by ideology | **#18** (§30.59.4c) |
+
+**★ The reconciliation — sheet UNIFIED model vs shipped 4-WAY SPLIT** (verified @HEAD):
+
+| Sheet (designer intent) | Shipped structure | Verdict |
+|---|---|---|
+| 7 of 23 (Rev-Budget, Economic, MilPrep, DomStab, HonestGov, QoL, Planet) | `NationalMeters` — 7 numeric fields (`types.ts:1399-1409`) | **1:1 map** (but scale differs — below) |
+| 8 Foreign Relations meters | `diplomacy: Record<string,number>` dict clamped −5..+5 (`types.ts:1574`; `applyEffect` `phaseRunners.ts:3221-3224`) | modeled as the #107 diplomacy subsystem, NOT 8 first-class meters (§13.3.1 / §13.3.4) |
+| Party Preference meter | `partyPreference: number` scalar clamped [-5,+5] (`types.ts:1570`, `:1093-1094`) | a scalar, not a descriptor-carrying meter |
+| 7 Enthusiasm meters | `enthusiasm: Enthusiasm` — ideology × {BLUE,RED} struct (`types.ts:1415-1418,1571`) | the #51 engine, 2-D per (ideology, party), not 7 flat meters |
+
+**★ SCALE DIVERGENCE (the headline #348 decision).** Shipped meters are an
+**11-point [-5,+5]** scale — 11 named labels per meter (`Meter.tsx:14-20`), neutral
+= **0**, index = `Math.round(value+5)` (`Meter.tsx:25`). The sheet is an
+**~8-position** scale, neutral ≈ **5**, foreign relations to **9** — *different
+granularity AND different centering*, and **internally inconsistent** (most meters
+1–8, FR 1–9). This is a spec ambiguity to **FLAG, not silently "fix."** It is the
+scale that §21.8 (named-ordinal + ±3-swing-cap) and §22.1 (banded-text ladders)
+frame the shipped model against.
+
+**★ Rich per-position content is 0% built.** `applyEffect`
+(`phaseRunners.ts:3209-3226`) only nudges values + clamps each meter independently;
+there is **no** position-triggered effect / crisis / gate / spending-cap /
+election-bonus engine. Only two crisis TRAITS exist (`Crisis Gov` / `Crisis
+Manager`, not a 7-crisis engine), and the sole shipped meter→election coupling is a
+PR5 cabinet-secretary expertise bonus — not the sheet's per-position map.
+
+**The #348 designer-decision (for the human + tech-lead — NO code this ingest):**
+adopt the unified 23-first-class-meter model (+ remap the scale, resolve the FR-to-9
+inconsistency), OR keep the shipped 4-way split and present it uniformly behind an
+adapter. Sheet = canonical intent; the split is the shipped reality.
+
+#### 30.59.2 ★ #349 — the METER BOOT-SEED (Position-by-Start-Date tab, 23×61): a boot at date *D* sets every meter to column *D* — the meter half of scenario-boot, PARALLEL to officeholder seed #344
+
+**The matrix.** 23 meters × **61 presidential-cycle columns** (1772, 1788, then
+every 4 yrs → **"Beyond"**), values **1–9**. Each cell = that meter's canonical
+position at that cycle. **A boot at date *D* sets all meters to column *D*.** This
+is the **METER half** of scenario-boot; the **officeholder half** is the
+`Start_Date_Info` matrix (§30.58, #344). **One boot consumes BOTH** — ties the
+boot cluster #86 / #92 / #115 / #186 / #344-#346.
+
+Marquee inflections (illustrative, NOT the full grid): UK-FR = 1 in 1772
+(Revolution) → recovers to 5; France-FR = 9 by 1788; MilPrep ramps 2→5→9 (WWII
+peak); Rev-Budget 2→7 by 1832 (national debt retired 1 Jan 1835); Planet monotonic
+9→1 with industrialization.
+
+**Shipped-vs-designed (boot-seed).**
+
+| | Shipped (verified) | Designed (this sheet, #349) |
+|---|---|---|
+| Meter seed | a **flat per-scenario const** `STARTING_METERS: NationalMeters` — `scenario1856.ts:8-16` (revenue 0 / economic 1 / military −1 / domestic −2 / honest 0 / quality 0 / planet 4) + `scenario1772.ts:9-16` | a **per-start-date position table** for all 23 meters at every one of the 61 cycles |
+| Coverage | 7 `NationalMeters` only, 2 windows (1772, 1856) | 23 meters × 61 cycles |
+| Scale | [-5,+5], neutral 0 | 1–9, neutral ≈ 5 (§30.59.1 divergence) |
+| diplomacy / partyPreference / enthusiasm seed | seeded **separately** (not from any per-date table) | one unified per-cycle seed covers all 23 |
+
+**The "Beyond" column (open question).** The final column is labeled **"Beyond"** —
+an open-ended future cycle, NOT a year. A boot past the last dated cycle must decide
+how to read it (#349 open Q).
+
+**★ The 5 historian divergence flags** (carry into the boot DATA; from
+`historical-context-meter-trajectories.md` — a LIGHT grounding pass, marquee
+inflections only, not all 23×61 cells verified):
+
+| # | Flag | Consequence for a boot in the window |
+|---|---|---|
+| 1 | **Germany-FR activates ~40 yrs LATE** — first non-neutral at **1912** vs unification 1871 / US-Prussia treaty 1785 / Wilhelmine friction 1889–1903 | a boot **1872–1908** shows NO German relationship; WWI-onward is correct |
+| 2 | **FR "coercive-opening" convention** — a forced opening (Japan / Perry 1853) is a **DIP to 4** (low = adversarial/coerced, NOT "no relationship"). Activation dates EXACT: China 1844, Japan 1853/54, Israel 1948 | early-contact FR reads as low/adversarial, not neutral |
+| 3 | **Panic of 1819 MISSING** from Economic Stability (1816–24 held at 8); Panic of 1907 barely registers (1908 = 5) | a **1820** boot reads as a boom, not a bust |
+| 4 | **Great Depression is ECONOMIC, not domestic** — EconStab craters to **1** at 1932 but DomStab only dips to 4 (1924 DomStab = 9 likely overstates 1920s calm) | a 1932 boot under-weights the social/unrest side |
+| 5 | **LW-Populist Enthusiasm = 1 at 1896** — counterintuitive vs the Bryan / People's-Party peak; defensible only as **post-defeat collapse** | confirm movement-momentum vs post-election-outcome reading BEFORE wiring to events |
+
+#### 30.59.3 ★ #350 — the two genuinely-UNOWNED descriptor channels: cross-meter Restrictions (a meter's position gates another meter) + era-tiered Spending-Bill caps
+
+Two descriptor rows have **NO existing owner § anywhere in this doc** — the sheet is
+their design origin, so #350 is minted for them.
+
+**(a) Cross-meter Restrictions ("Restrictions to other meters?").** A meter's
+position **GATES another meter's movement** — e.g. *"Economic Meter cannot [rise]
+while overspending"* (Rev-Budget low ⇒ EconStab is clamped from rising). This is the
+authored *spec* form of the §22.1 modern "cascade" observation ("one meter's tier
+caps or forces another") — but as an **authored per-position rule** on the
+descriptor template, not merely emergent behavior. **0% built:** `applyEffect`
+clamps each meter independently to [-5,+5]; no meter reads another's position.
+
+**(b) Era-tiered Spending-Bill limits ("Spending Bill Restrictions").** A meter's
+position **caps the number of non-crisis spending bills** — and the cap is
+**era-tiered**, three rows on the template:
+
+| Tier row | Era band |
+|---|---|
+| Tier 1 | up through **Nationalism** |
+| Tier 2 | **Gilded Age** through … |
+| Tier 3 | **Ideologies** onward |
+
+Form: *"Yes, only N non-crisis [bills]"* at a given position × era. This is the
+authored SOURCE of the caps that [§12.7](#127-forum-design-layer-crisis-bill-tag-designed-not-built)'s
+`*Crisis Bill*` exemption + [§21.6](#216-bill-typing--budget-gated-spending-cap)
+(budget-gated spending cap) already reference — **crisis bills are EXEMPT and bypass
+the cap** (§12.7). **0% built:** the spending-cap gate itself is not implemented, and
+no era-tiering exists.
+
+**#350 (designed, not built):** add (a) a position-conditional cross-meter clamp
+(`Meter.gates?: {target, direction}[]`) read during Lingering / `applyEffect`, and
+(b) an **era-tiered** `spendingBillCap(meterPosition, era)` consulted at bill
+proposal, with `*Crisis Bill*` bypassing it.
+
+#### 30.59.4 Sharpenings folded onto EXISTING owners (authoritative per-position spec; NOT re-minted, existing § headers unchanged)
+
+The remaining descriptor channels are concrete spec for systems that ALREADY have an
+owner § — recorded here as sharpenings only:
+
+**(a) Per-position Effect rows → #237 / #179 ([§20.10](#2010--179-new-summer2021--the-cabinet-lingering-roll-meter-engine-designed-hand-rolled), §11.1.z).**
+Each position carries a probabilistic meter→meter effect ("5% chance Economic
+Stability −1"; "60% chance increases national debt"; "No effect" at balanced). This
+is concrete content for the meter→effect engine (#237) and the cabinet lingering-roll
+engine (#179 — §20.10 Admin→meter odds table; §11.1.z canonical Lingering
+algorithm). It SHARPENS them with a per-position source table; it does not change the
+engine spec.
+
+**(b) The 7 CRISIS types + position thresholds → #88 / #188 ([§12.7](#127-forum-design-layer-crisis-bill-tag-designed-not-built), [§22.1](#221-the-named-meter-bank--numeric-debt--crisiscascade)).**
+The authoritative crisis-trigger spec — a crisis fires when a meter sits at/below its
+threshold:
+
+| Crisis | Fires at positions | Attaches to |
+|---|---|---|
+| Rev-Budget | 1–2 (Severe / Very Overspending) | §12.7 Budget crisis |
+| Economic | 1–5 (through Stable; none at Boom) | §22.1 EconStab→Panic cascade |
+| Defense | 1–4 | (Military Preparedness) |
+| Domestic | 1–5 | §22.1 DomStab crisis (nixon1972 #11) |
+| Corruption | 1–3 | §12.7 Honest-Gov't crisis |
+| Quality of Life | 1–2 | (Quality of Life) |
+| Climate | 1–3 | (Planet's Health) |
+
+This is the concrete threshold spec behind §12.7's meter-entered/exited crisis states
++ §22.1's crisis/cascade. **Interacts with #266** (§15.3.8): a meter pinned at floor
+still sits at/below a crisis threshold, so the floor-penalty flaw and the crisis
+trigger coincide at the bottom of the ladder.
+
+**(c) Election Bonus / Penalty rows → #18 ([§15.3.8](#1538-state-of-the-meters--election-bonuses-post-266)).**
+Per-position ±1 Enthusiasm by ideology (pos 2 "+1 for Progressives"; pos 7 "+1 for
+Conservatives"; "−1 Enthusiasm for Traditionalists"). This is the per-position source
+for the §15.3.8 "State of the Meters → election bonuses" map. **#18 owns this map;
+#266 is the SEPARATE meter-at-floor flaw, NOT the election-bonus map.** Feeds
+`calcStateVote` via the enthusiasm layer (#51).
+
 ### 30.4 Authority hierarchy reminder
 
 When rule sources disagree:
