@@ -25827,6 +25827,259 @@ single-effect today (grep `bundle|omnibus|component|rider` = 0); the rest is **m
   MATCHES `types.ts:5-22` exactly (corroboration only). (`eb573c91#POST 1/3/9/14/15/16/17`;
   `game-context.md` #92/#4/#293/#1/#114/#289.)
 
+### 30.49 Rulings folded from batch 59 — ★ the MID-GAME (crisis) Constitutional Convention (the DESIGNED trigger chain: Dom-Stab-lowest → per-state "call a ConCon" gov-action gated on 5-Gov Governor → 2/3-of-states-before-Dom-Stab-recovers → CPUs back the historical default; PLUS a scenario-boot-AT-a-ConCon variant; NEW #332, touches #20 + scenario-boot #92/#115/#186/#228 + Dom-Stab meter) + the CONTROVERSIAL/SCANDALOUS trait rework (ideology-SPLIT election math, Controversial→Scandalous ESCALATION, per-trait "When Gained" timestamp, Teflon; #189/#327/#216/#4) with ★★ 3 RECORD-FIX corrections (both traits ALREADY SHIP; Flip-Flopper→Two-Faced does NOT ship; "Controversial = opposite of Integrity" is FALSE) + FOREIGN annexation-as-conquest + the foreign-pol CONTENT model + "sell a state" fiscal↔territory lever + idealistic-legislation content tail + nuclear-apocalypse corroboration (#333/#334 NEW, #290/#60/#221/#206/#188 folds) (`5c3a92a9-midgame-constitutional-convention` / `b5e78cbd-controversial-vs-scandalous-trait` / `501a43f6-foreign-country-politicians` / `53f0759d-idealistic-legislation` / `a19001a5-nuclear-war-end-condition`)
+
+> **Batch-59 character.** FIVE threads, **all DESIGN-DISCUSSION / content-brainstorm / lore-Q&A — NONE is a
+> playthrough** (no era is *played* in any of the five). Two are **build-rich** (`5c3a92a9` mid-game ConCon;
+> `b5e78cbd` Controversial/Scandalous), three are **thinner content/lore** (`501a43f6` foreign pols;
+> `53f0759d` idealistic legislation; `a19001a5` nuclear end). Net signal: **1 net-new subsystem** (the
+> mid-game crisis Constitutional Convention, **#332 NEW**, 0% built), **1 trait-model rework** (three durable
+> unbuilt asks on top of an already-shipped split), **2 net-new content tracks** (foreign annexation-as-conquest
+> + foreign-pol roster model **#333 NEW**; "sell a state" fiscal↔territory lever **#334 NEW**), plus
+> corroborations (#188 nuclear, #206 era-band, #290 generator, #60 conquest). **★★ The load-bearing b59 output
+> is three RECORD-FIX corrections** the mechanics doc must reflect (30.49.2): both `Controversial` AND
+> `Scandalous` **already ship** as distinct traits with distinct election bands (any "rename Controversial→
+> Scandalous" framing is MOOT); the **Flip-Flopper→Two-Faced escalation does NOT ship**; and "Controversial =
+> opposite of Integrity" is **FALSE** in code. All shipped-vs-designed verified against `src/` HEAD 2026-07-01.
+> Authority class = **UNRATIFIED design input** — none of the five threads carries a tier-1 (vcczar/Ted)
+> ruling; treat as design intent, not landed rules (§30.4 tier 4/5).
+
+#### 30.49.1 ★ Mid-game (crisis) Constitutional Convention — the DESIGNED trigger chain + a scenario-boot-AT-a-ConCon variant (#332 NEW; touches #20 gov-actions, scenario-boot #92/#115/#186/#228, the Domestic-Stability meter) — Dom-Stab-lowest → per-state 5-Gov call → 2/3-of-states raced vs Dom-Stab recovery → CPU historical default (designed; SHIPPED = the FOUNDING 1787/1788 ConCon ONLY, `startConvention` is a DEAD union member)
+
+> **Source: `5c3a92a9` (pman opener + the 1930/mid-game-boot idea, POST 1/3; Vee01 "test the edge cases" POST
+> 2; Largo833 the 5-Gov-gate + 2/3-of-states + race-vs-Dom-Stab facts, POST 4/5) + codebase
+> (`constitutionalConvention.ts:6-77` `makeConvention`, single caller `phaseRunners.ts:3182-3186`;
+> `types.ts:1478` the `startConvention` union member; `phaseRunners.ts:3060,3083` the dispatcher;
+> `types.ts:1403`/`labels.ts:51` the `domestic` meter; `phases.ts:26` + `phaseRunners.ts:3382-3392` the 2.5.2
+> Governor-Actions stub; `scenario1856.ts:150-153`/`scenario1772.ts:72-73` the hardcoded boot;
+> `constitutionalConvention.ts:81-123,136-144` `autoFillCPUVotes`/`applyConvention`; `ConventionModal.tsx:22`).**
+> The clearest forum statement of the **mid-game Constitutional Convention** as a *designed* mechanic — a rare,
+> crisis-triggered path to **rewrite the government mid-scenario**. It is DISTINCT from the founding ConCon
+> (§14 / §14.5) — a second, later, meter-triggered convention. **0% of the mid-game path ships.** Authority
+> class = tier-4/5 (peer design idea; no tier-1 ruling).
+
+**★ A. The designed trigger chain (four pinned facts + one CPU behavior).**
+
+| Stage | Rule (forum) | Source |
+|---|---|---|
+| **1. Trigger (unlock)** | The "call a new Convention" path becomes available **"when Domestic Stab gets to its lowest spot"** — the Domestic-Stability meter **bottoming out** unlocks the option. | POST 1, 3 |
+| **2. Per-state call + skill gate** | Calling one is a **per-state action** ("call for a new Constitutional Convention"); an individual state's attempt **FAILS if that state's Governor lacks 5 Gov** (governing skill = 5). | POST 4 |
+| **3. Threshold** | **2/3 of the states** must *successfully* perform the action. | POST 4 |
+| **4. Race condition** | The 2/3 must succeed **BEFORE Domestic-Stability rises by even a single point** — Dom-Stab presumably recovers/ticks up, closing the window. Makes it *"really hard,"* even with all ten factions trying. | POST 4/5 |
+| **5. CPU default (outcome)** | In 1788 random testing the country usually ends up **"normal"** because **CPUs back the historical option if none of the alternatives pass** — a CPU-dominated convention reproduces the historical government by default. | POST 3 |
+| **Open (outcome)** | Convention produces a *new government* (a set of articles). Design Q: "what government would they leave with? could the new government pull the country out of crisis?" — untested. | POST 1 |
+
+**★ B. The scenario-boot-AT-a-ConCon variant (the actionable ask).** pman proposes a **NEW boot entry point**:
+start a scenario **directly inside a live mid-game Constitutional Convention** at a crisis year with the meters
+pre-set to worst. Candidate years: **1930** (pman's pick), **Reconstruction (~1865–77)**, **1968**.
+Pre-conditions to seed: **Domestic-Stability at its worst spot** AND **the Econ meter at its worst spot**.
+Purpose: stress-test whether a re-founded government can recover a nation in crisis (Vee01, POST 2). This
+requires a **start-at-a-phase / start-anywhere** capability that boots into a `pendingConvention` with hand-set
+meters — the two hardcoded scenario builders support neither. Folds onto the scenario-boot cluster (#92 / #115 /
+#186 / #228).
+
+**★ C. SHIPPED-vs-designed — the FOUNDING convention ONLY; every mid-game number is absent from code.**
+
+| Area | In `src/` today | Designed (thread) | file:line |
+|---|---|---|---|
+| **Which convention ships** | **FOUNDING 1787/1788 ONLY.** `makeConvention(year)` builds the 7-article convention (legislature/executive/judiciary/slaveCompromise/amendmentProcess/presidentialEligibility/termLimits); its **SOLE** call site is the hardcoded 1772-scenario era-event case `constitutional_convention_kickoff`, reached only via the Annapolis graph path. **No mid-game / crisis convention anywhere.** | a second, meter-triggered mid-scenario convention | `constitutionalConvention.ts:6-77`; single caller `phaseRunners.ts:3182-3186` |
+| **Dom-Stab-lowest TRIGGER** | **0% built.** `meters.domestic` is **read/written ONLY** by bill effects (`applyEffect`), cabinet-drift ticks (`phaseRunners.ts:3287,3302,3350`), and AG-expertise softening (`:2910-2947`). **Nothing reads a low/lowest `domestic` value to unlock/gate/trigger a convention** — the meter is a *scored* value with **no downstream system-trigger consumer**. | low Dom-Stab as an unlock condition | `types.ts:1403`; `labels.ts:51`; grep `src/engine` for a domestic-triggered convention = 0 |
+| **Per-state "call a ConCon" gov-action** | **0% built.** The 2.5.2 Governor-Actions phase is the flat 30%-skill-nudge stub (`runPhase_2_5_2_Governors` — 30% chance to nudge `s.bias` by governing skill; see §11.2). **No** per-state "call a convention" action; grep `callConvention`/`proposeConvention`/`reformGovernment` = 0. | a new gov-action (folds into the #20 gov-action model) | `phases.ts:26`; `phaseRunners.ts:3382-3392` |
+| **5-Gov gate + 2/3-of-states threshold** | **0% built.** Grep `governing >= 5` / `5 Gov` = 0. The `2/3` constants that DO exist are **unrelated**: (a) Articles-of-Confederation bill passage ("2/3", `continentalCongress.ts:198`; Dashboard "2/3 of states" `Dashboard.tsx:75`; framework note `eraEvents1772.ts:367`), and (b) the amendmentProcess article option value `'two_thirds'` (`constitutionalConvention.ts:46`). **Neither is a convention-call threshold.** | a 5-Gov skill-check + a 2/3-successful-states counter raced vs Dom-Stab | grep = 0; unrelated `2/3` as cited |
+| **CPU "historical default"** | **PARTIAL analog (founding only).** `autoFillCPUVotes` + `preferredOption` DO have CPU factions vote each article by party/ideology heuristic; unvoted articles fall to hardcoded **defaults** in `applyConvention` (legislature→bicameral, termLimits→no_limits …). Approximates "the historical option," matching POST 3's "1788 testing" — but there is **no mid-game convention for it to run in** and no explicit "historical option" concept. | port the auto-fill + historical-default fallback to the mid-game convention | `constitutionalConvention.ts:81-123,136-144` |
+| **★ `startConvention` postEffect** | **DEAD type-union member.** `EraEvent.postEffects` declares a `'startConvention'` type, but the dispatcher handles **ONLY `assembleCC`** (`phaseRunners.ts:3060`); every other type (`startConvention`, `startWar`, `unlockGovernors`, `unlockArticles`, `endWar`, `addPolitician`) hits the `default` branch that just logs `"Unhandled postEffect type: …"` (`:3083`). Even the *generic* event system cannot boot a convention — the founding one is reached by a **hardcoded template case**, not this hook. A mid-game convention has **no wired trigger of any kind.** | wire `startConvention` (or equivalent) as the mid-game convention's trigger | `types.ts:1478`; `phaseRunners.ts:3060,3083` |
+| **Scenario boot** | **Hardcoded literal `GameState`; no start-at-a-phase.** Both scenarios build a fixed object with fixed `startYear`/`phaseId` (1856: `year:1856, phaseId:'2.1.2'`; 1772: `phaseId:'2.1.1'`), `pendingConvention` unset, no meters-preset knob. **No** scenario boots into a `pendingConvention`, no parameterized start-year/phase. | a boot variant that starts *inside* a convention with pre-set meters at a chosen crisis year | `scenario1856.ts:150-153`; `scenario1772.ts:72-73` |
+| **Convention UI** | **EXISTS but founding-flavored.** `ConventionModal.tsx` renders article votes, hardcoded to **"Philadelphia, {year}"** — cosmetically tied to the founding, though the vote machinery is article-generic and reusable for a mid-game convention. | de-found the copy; reuse the vote machinery | `ConventionModal.tsx:22` |
+
+**→ Net (b59):** an **entirely NEW top-level subsystem** (**#332**), 0% built, that rides a **reusable
+founding-convention substrate** — `makeConvention` / `autoFillCPUVotes` / `applyConvention` / `ConventionModal`
+(founding-flavored) plus the declared-but-unwired `startConvention` postEffect. This is **wiring, not
+greenfield**: the article-voting + CPU auto-fill + historical-default machinery already ships for 1788; what is
+missing is (1) the **Dom-Stab-lowest trigger** (a NEW consumer the `domestic` meter lacks — it is scored but
+never gates a system), (2) the **per-state 5-Gov "call a convention" gov-action** (folds into #20), (3) the
+**2/3-successful-states threshold raced vs Dom-Stab recovery**, and (4) the **scenario-boot-into-a-convention**
+entry point with pre-set meters (folds into #92/#115/#186/#228). Also flags **5 OTHER dead postEffect types**
+(`startWar`/`unlockGovernors`/`unlockArticles`/`endWar`/`addPolitician` — all log "Unhandled"). Feasibility is
+UNRESOLVED in-thread (Largo833 is unsure the 2/3-before-recovery threshold is even reachable). (`5c3a92a9#POST
+1/2/3/4/5`; codebase as cited; `game-context.md` #332 NEW / #20 / #92/#115/#186/#228.)
+
+#### 30.49.2 ★ Controversial/Scandalous trait rework + ★★ 3 RECORD-FIX corrections (#189/#327/#216, #4) — the ideology-SPLIT election math + Controversial→Scandalous ESCALATION + "When Gained" timestamp + Teflon (designed; all 3 durable asks 0% built) with the corrections the mechanics doc must reflect: both traits ALREADY SHIP; Flip-Flopper→Two-Faced does NOT ship; "Controversial = opposite of Integrity" is FALSE
+
+> **Source: `b5e78cbd` (theFreezerFlame OP — the split+rework, POST 1; an agreer POST 2; the Integrity-critique
+> POST 3; the "we kind of have this" reply POST 4; Vols21 the escalation idea POST 5; the "When Gained"+Teflon
+> reply POST 6) + codebase (`types.ts:101` `Scandalous` / `:103` `Controversial` in the `Trait` union, both in
+> `NEGATIVE_TRAITS`; the election bands `types.ts:816-828` Scandalous / `:830-843` Controversial;
+> `TraitElectionRule` shape `:727-736`; `TRAIT_CONFLICTS` `:658-692`, Integrity↔Corrupt `:663-664`,
+> Two-Faced↔Predictable `:677-678`; `tryGrantTrait` `engine/traits.ts:35-59`; `flipFlopperPenalty` decay
+> `phaseRunners.ts:521-522`, increments `:791,:1107`; `Obscure` `types.ts:104`).** A trait-rework design
+> discussion — **NOT a playthrough**. The punchline: **the split + rename the thread proposes are ALREADY the
+> shipped reality**, so this Jan-2025 thread either pre-dates or is unaware of that implementation. Authority
+> class = tier-4/5 (peer discussion; **no vcczar verdict in-thread** — UNRATIFIED, unlike sibling `326c33dd`
+> where vcczar ruled).
+
+**★ A. The three DURABLE unbuilt asks (designed).**
+
+**(1) Reworked-`Controversial` ideology-SPLIT election math (NEW; POST 1)** — the load-bearing new mechanic.
+The thread would redefine `Controversial` from *scandal-laden* to *divisive-but-appealing* (archetype AOC: "a
+left-wing darling but unpopular among moderates and right-wingers"), a trait a **LW or RW activist WITHOUT
+`Obscure`** can get, with a **sign-flipping, electorate-ideology-conditional** effect:
+
+| Context | Proposed effect | Condition |
+|---|---|---|
+| **Primary (same-ideology zone)** | **+1** | electorate is Left-leaning AND pol is **LW** Controversial (and vice-versa for RW) |
+| **General election** | **−2** | always (lacks broad cross-ideology support) |
+| **Hostile primary** | **−2** | electorate ideology opposes the pol's lean |
+
+This is categorically unlike the **shipped** `Controversial`, whose bands are **uniformly negative across all six
+contexts** with **no** electorate-ideology-conditional row. `TraitElectionRule` (`types.ts:727-736`) has **no
+electorate-ideology field** — its shape is `{trait, context, magnitude, era?, opponentConditional?}`, where
+`opponentConditional` keys on an **opponent's** trait, not the **electorate's** ideology-vs-pol's-lean. Needs the
+#4 era/ideology matrix + a per-pol **LW/RW-lean** signal the build lacks. This is the sign-flipping case of the
+b58 election-trait-scoring rework (§30.48.1 RULING 3 / #189). **0% built.**
+
+**(2) Controversial → Scandalous ESCALATION / deterioration (NEW; POST 5)** — Vols21: `Scandalous` as a state a
+`Controversial` pol can **deteriorate into**, gated on the pol having accrued **OTHER negative traits** (a
+severity ramp), so a late-career scandal isn't "saddled … from the very beginning." Explicitly analogized to a
+**claimed Flip-Flopper→Two-Faced escalation** — **which does NOT ship** (see RECORD-FIX 2 below). Shipped
+`tryGrantTrait` is a conflict-aware **REPLACE** of a *conflicting* held trait (d6-arbitrated), **NOT** a
+severity-escalation ("upgrade a held negative into a worse one"): no Controversial→Scandalous path exists. Same
+"deterioration ladder" family as #327 (Scandalous/impeachment→Disgraced) — consolidate the escalation model
+across both. **0% built.**
+
+**(3) Per-trait "When Gained" acquisition-timestamp field (NEW; POST 6)** — a per-politician field recording the
+turn/year a trait was acquired, so escalation/severity can grow over time. **No trait carries any
+acquisition-year/turn field on `Politician` today** (grep `gainedYear|acquiredYear|gainedTurn|whenGained|
+traitMeta|traitHistory` = 0). `flipFlopperPenalty` is the closest analog (a *decaying* counter, decremented in
+phase 2.1.3 at `phaseRunners.ts:521-522`) but it is **NOT** a trait, does not escalate into one, and carries no
+acquisition stamp. Net-new data model; general (not Scandalous-specific). **0% built.** Sibling ask: **`Teflon`**
+(intended to **negate Scandalous**, POST 6, Trump archetype) is **ABSENT from the `Trait` union** (grep = 0 —
+also flagged missing by b58's investigations thread, §30.48.2). Adds `Teflon` to the missing-trait catalog
+(#216).
+
+**★★ B. THREE RECORD-FIX corrections the mechanics doc must reflect** (each verified against `src/` HEAD
+2026-07-01; the thread's premises are wrong about the current build, so any doc text asserting them would be
+stale — **none was found asserting them as fact**; see the "doc-audit" note under Net):
+
+| # | The (false) premise / stale framing | The CORRECTION (verified) | file:line |
+|---|---|---|---|
+| **1** | *"rename current Controversial → Scandalous"* (POST 1) — treats the split as **not yet done** | **`Controversial` AND `Scandalous` BOTH ALREADY SHIP** as **distinct** traits with **distinct** election bands. Union: `Scandalous` `:101`, `Controversial` `:103` (both in `NEGATIVE_TRAITS`); full per-context band rows `Scandalous` `:816-828`, `Controversial` `:830-843`. **The split is DONE** → any "rename Controversial→Scandalous" framing is **MOOT/closed**. What is NOT done is giving the surviving `Controversial` the *appealing-but-divisive* (+1/−2) math (ask A1). | `types.ts:101,103`; bands `:816-843` |
+| **2** | *"flip-flopper can escalate to being 2-faced"* (POST 5) — cited as an existing escalation exemplar | **Flip-Flopper→Two-Faced escalation does NOT ship.** `Two-Faced`'s **only** conflict is `Predictable` (`types.ts:677-678`, the PR4b position-stability pair) — it is gained/lost via **that pair**, not by escalating `Flip-Flopper` (which conflicts with nothing). Separately, **`flipFlopperPenalty` is a decaying counter**, not a trait upgrade. The claimed escalation is **design-only**. | `types.ts:677-678`; `flipFlopperPenalty` decay `phaseRunners.ts:521-522` |
+| **3** | *"the controversial trait is the opposite of the integrity trait"* (POST 3) — implies controversial ⇒ dishonest | **"Controversial = opposite of Integrity" is FALSE.** In `TRAIT_CONFLICTS`, `Integrity`'s **only** conflict is `Corrupt` (`:663-664`); `Controversial` appears in **NO** conflict pair (freely coexists with `Integrity` — "controversial-and-honest" is legal, per the Ron Paul / Bernie / Kucinich examples). The real link is an **electoral opponent-conditional foil** only: `Integrity` bumps SMALL→MEDIUM vs a `Scandalous`/`Controversial`/`Corrupt` opponent (`:749/753/757`); `Controversial`/`Scandalous` bump to −LARGE vs an `Integrity` opponent (`:832/836/840`, `:818/822/826`). That is a per-race foil, **not** a mutual-exclusion "opposite." | `types.ts:663-664`; foil `:749/753/757`, `:832/836/840` |
+
+*(Two further thread premises are also wrong, captured for completeness: (a) POST 5's escalation engine — there
+is **no trait-escalation/deterioration engine at all** (`tryGrantTrait` is conflict-REPLACE, `traits.ts:35-59`);
+(b) POST 4's claim that **`Disharmonious`** already covers the "rowdy partisan" flavor — `Disharmonious` is
+**ABSENT** from the `Trait` union (grep = 0; corroborates b57/b58 + `326c33dd`).)*
+
+**★ C. Doc-audit result (the RECORD-FIX obligation).** Per the batch brief, I audited §16 and every existing
+trait-touching section for a stale claim of the three corrections above. **NONE was found asserting them as
+fact** — the doc is already correct: the Flip-Flopper→Two-Faced "escalation" appears at [§21.x] only as an
+**OPEN QUESTION** ("does gaining 'Two-Faced' permanently erase 'Flip-Flopper'?", line ~18328, `dbomit#POST 72`),
+never as a shipped escalation; the "Controversial vs Integrity" relationship appears only as an **electoral
+matchup modifier** (e.g. §15 down-ballot table line ~6874; the −1 foil at line ~10196), never as an "opposite" /
+mutual-exclusion; and the trait rename-map (line ~988) is a pure **name-normalization** table, not a "not-yet-
+split" claim. **Therefore no in-place body edit was required** — these corrections are recorded here in §30.49.2
+as the authoritative statement, with no existing header reworded and no stale sentence left standing.
+
+**→ Net (b59):** the two-trait **split + rename is ALREADY SHIPPED** (RECORD-FIX 1 → retire any residual "rename
+Controversial→Scandalous" ask). Three **durable unbuilt asks** remain: **(A1)** the reworked-Controversial
+**ideology-split (+1/−2) election math** — sign-flipping on electorate-lean-vs-pol-lean, which `TraitElectionRule`
+cannot express (no electorate-ideology field, `:727-736`) and needs the #4 matrix + a pol LW/RW-lean signal
+(consolidates to #189/#292); **(A2)** the **Controversial→Scandalous escalation** — a severity ramp with no
+engine today (`tryGrantTrait` is conflict-REPLACE), same family as #327's Scandalous→Disgraced; **(A3)** the
+per-trait **"When Gained" timestamp** — net-new `Politician` field (grep = 0), general. Plus **`Teflon`** (→
+#216 missing-trait catalog). **The load-bearing output is the 3 RECORD-FIX corrections** (both traits ship;
+Flip-Flopper→Two-Faced does not ship; Controversial≠opposite-of-Integrity) — **verified, doc already correct, no
+in-place edit needed.** (`b5e78cbd#POST 1/2/3/4/5/6`; codebase as cited; `game-context.md` #189/#327/#216/#4.)
+
+#### 30.49.3 ★ Foreign annexation-as-conquest + the foreign-pol CONTENT model + "sell a state" fiscal↔territory lever + content tail (#333/#334 NEW; #290/#60/#221/#206/#188 folds) — a conquest-driven annexation path + a per-nation real+token+generated roster + a spending-cap escape valve (designed/deferred; 0% built — the map data ships, the mechanics do not)
+
+> **Source: `501a43f6` (theFreezerFlame Q&A, the foreign-pol numbers, POST 1-5) + `53f0759d` (idealistic-
+> legislation brainstorm; EYates seeds sell-a-state POST 3, OrangeP47 sharpens it POST 6; the McCarthy loyalty-
+> oath hole POST 5) + `a19001a5` (nuclear-end lore-confirmation, Joe303300 POST 6 / Arkansas Progressive POST 7)
+> + codebase (`expansionStates.ts` the annexable-nation registry, flat `electoralVotes:4` `:178`;
+> `territories.ts:8-23` add-only `admitState`; `types.ts:1256` the `altState` carpetbagger field;
+> `phaseRunners.ts:177-238` the 15-US-name draft-generator stub; `types.ts:1506-1520` `Legislation`
+> single-effect; `types.ts:1337` the 4-Era enum; `types.ts:1476,1635` the `gameEnded`/`triggersGameEnd` hook).**
+> Three thinner content/lore threads. **Keep tight — mostly designed/deferred.** Authority class = tier-4/5
+> (designer Q&A + peer brainstorm + player-side lore confirmation).
+
+**★ A. Foreign annexation-as-conquest + the foreign-pol CONTENT model (#333 NEW).** The game already ships a
+**registry of foreign nations as annexable "states"** (`expansionStates.ts` — Canada provinces, Latin America,
+Caribbean, Atlantic) but has **ZERO politicians for any of them** and no rule to populate them. The designer's
+canonical content model (POST 2-5):
+
+| Fact | Detail | Source |
+|---|---|---|
+| **Real foreign pols** | **"Less than 3 real-life politicians per country … some have zero."** (maybe Trudeau "if you've conquered Canada"; Laurier NOT confirmed) | POST 1, 3 |
+| **Majority generated** | "the **majority of alt state pols will be generated** … randomly generated instead." | POST 2, 3 |
+| **Token count** | **"about 20 token politicians for most ahistorical nations that can be annexed, and fewer if the nation is less likely to be annexed."** | POST 5 |
+| **Likelihood scales depth** | "the chance of annexing ahistorical territory is **slim**, although **Canada is more likely than, say, Brazil**" → roster depth ∝ annexation-likelihood | POST 5 |
+| **Notability = the bar** | notability is the inclusion bar for a real foreign pol, but the designer gives **no crisp threshold** (unlike the US-pol "0-9%-of-winning-office" bar, #120) — defers it | POST 4, 5 |
+| **Delivery** | more real pols added **"on demand, but only after early release"** — a deferred authoring backlog | POST 5 |
+
+**Distilled model per annexable foreign nation:** `0-2 real hand-authored (notability-gated, many zero) + ~20
+generated token pols`, scaled down for low-annexation-probability nations, real-pol depth expanded on demand
+post-release. **Annexation is framed as CONQUEST** ("if you've conquered Canada") — distinct from historical US
+westward admission, though both funnel into "the nation becomes a state and its pols become draftable."
+⚠️ **Naming collision:** the forum's **"alt state pols"** (pols *belonging to* an annexed nation) is a DIFFERENT
+concept from the shipped **`altState`** field (a pol's secondary home-state for **carpetbagger relocation**,
+`types.ts:1256`) — do NOT conflate the annexation-content gap with the relocation mechanic (#38/#55).
+
+- **SHIPPED = map data only; the conquest mechanic + the whole content model are 0% built.** `admitState`
+  (`territories.ts:8-23`) is **add-only and identical for all territories** (not-already-present → copy seed →
+  stamp `admissionYear` → push → log) — **no distinction between US-territory admission and foreign-country
+  annexation**, no conquest/war-driven wiring, no organized/unorganized status. Grep `annex|conquer` in `src/`:
+  "annex" is prose only; "conquer"/"Trudeau"/"Laurier" appear **nowhere**. The bundled dataset has **ZERO real
+  foreign politicians** (0 Trudeau/Laurier/Macdonald matches; 0 foreign home-state pols — the dataset is US-only
+  per CLAUDE.md) and **no ~20-token generated pool**; the only generator is the flat 20-rookie stub with **15
+  hardcoded US names** (`phaseRunners.ts:177-238` → #290), **not** region/nation-aware. Flat `electoralVotes:4`
+  (`expansionStates.ts:178`) encodes **no** annexation-likelihood/size signal. → **#333 = a NEW conquest-driven
+  annexation path + a foreign-pol content-authoring track** (a foreign `CURATED_ROWS`/token-table equivalent),
+  with a per-nation "annexation-likelihood/roster-depth" attribute; the **nation-aware name generation** folds
+  onto **#290** (extend the region×party lattice to `Canada`/`Caribbean`/`Latin America`/… with per-nation name
+  pools); the **conquest** dimension cross-refs **#60** (conquest/war-outcome admission) and the war cluster
+  (#45/#56). **Explicitly deferred** to post-early-release.
+
+**★ B. "Sell a state" fiscal↔territory lever (#334 NEW).** OrangeP47's sharpened lever (`53f0759d` POST 3→6):
+*"Say you get maxed out on how much you can spend, in exchange for some more spending as a one-off next turn you
+can sell a state."* → a **spending-cap escape valve** that **trades territory for a one-turn spending burst**. It
+**couples two systems the build keeps entirely separate** — the economy/spending-cap side (#42/#11) and the
+territory side (#178/#260) — and is the *intersection*, not a duplicate, of either. **UNRATIFIED, and blocked on
+TWO prerequisites the build lacks:** (1) a **shipped economy/spending model** to be "maxed out" on — none in
+`territories.ts` (no economy/spending/budget/treasury model); and (2) a **state-divest path** — grep
+`sell|cede|divest|relinquish|dispose` = 0 (territory is **admission-only**; the NW-Indian-War Ohio *cede* is a
+war-LOSS penalty, `fe15db25`, not a player-elective fiscal sale). **0% built; deferred.**
+
+**★ C. Content-tail corroborations (no new mechanics).**
+
+- **Idealistic-legislation bill ideas (`53f0759d`; folds to #221/#237/#248/#206).** Six brainstorm bills (abolish
+  the stock market, ban smoking, ban anime imports, audit/trim excess Interstate highways, + sell-a-state) —
+  more Legis-Prop **content** for the 0%-shipped catalog. **★ POST 5: a real 1950s McCarthy-era loyalty-oath law
+  is MISSING from an active McCarthy-era playtest** — a direct **#206 era-band content hole** (the 1950s era is
+  under-authored AND has no shipped era slot; build = 1772/1856 only; the `loyalty` field in `src/` is the
+  unrelated PR6 Secession-Winter cabinet-defection scalar `types.ts:1273`, **not** a McCarthy oath). Shipped bill
+  library = **8 generic `BILL_TEMPLATES`** (`phaseRunners.ts:3420-3429`), no era/genre-keyed pool; `Legislation`
+  (`types.ts:1506-1520`) has **no subtype/genre/prereq** field — so none of the six can live in the shipped type.
+- **Nuclear-apocalypse game-end (`a19001a5`; CORROBORATES #188, folds #88/#106/#221).** Independent **player-side**
+  confirmation (Joe303300 POST 6: *"there are nuclear apocalypse scenarios that will result in game ends"*;
+  re-affirmed POST 7) that a **nuclear apocalypse can END the game** — plural scenarios, each a probable
+  game-ender. Adds **no new mechanic**: corroborates #188 (the "big red button" nuclear loss is premise-only,
+  never observed firing) + #88 (apocalypse meter-floor end-state). **SHIPPED:** the generic `gameEnded` /
+  `triggersGameEnd` era-event hook exists (`types.ts:1476,1635`) but only **three terminal nodes** ship, **all in
+  `eraEvents1772.ts`**; there is **no modern scenario** (`Era` stops usefully at `'modern'` with no `scenario`
+  file) and **no nuclear/doomsday meter** (grep `nuclear|apocalypse|doomsday|endCondition` = 0; closest is the
+  `planet` meter, #88). The whole content genre is 0% reachable.
+
+**→ Net (b59):** **two NEW deferred content tracks** — **#333** (foreign annexation-**as-conquest** + the
+`0-2 real + ~20 token + generated-majority` per-nation roster model, depth ∝ annexation-likelihood; map data
+ships, conquest mechanic + content are 0% built; folds nation-aware generation onto **#290**, conquest onto
+**#60**) and **#334** (the "sell a state" spending-cap escape valve, blocked on an economy model AND a divest
+path). The rest is **corroboration/content**: idealistic-legislation bill ideas (with the **#206** McCarthy
+loyalty-oath era-band hole) and the **#188** nuclear-end second-witness. All UNRATIFIED / explicitly
+post-early-release. (`501a43f6#POST 1-5`; `53f0759d#POST 3/5/6`; `a19001a5#POST 5/6/7`; codebase as cited;
+`game-context.md` #333/#334 NEW, #290/#60/#221/#206/#188.)
+
 ### 30.4 Authority hierarchy reminder
 
 When rule sources disagree:
