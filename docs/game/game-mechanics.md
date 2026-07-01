@@ -27013,6 +27013,153 @@ tier]; cross-ref #258 [predicate-gated availability] and 30.51.4's multi-band-av
 > that **per-state bias is a live win-calc term** in `calcStateVote` (`phaseRunners.ts:3685`) — already documented;
 > no change.
 
+### 30.53 Rulings folded from batch 63 — ★ a SHARPEN-heavy batch with ONE new region-status mechanic (#337): the AUTHORITATIVE 1772 Era-of-Independence CARD distribution (three per-faction count tables + the era-keyed "Cards Held" required-count model + a prerequisite VOCAB CONFLICT; #4/#293) · the NEW Indian-Sovereignty region status — a grantable "region leaves player control / becomes foreign-like" status, the THIRD region-control-change mechanic — plus the Native-nation states as roster content (#337 NEW / #55) · the Westminster/parliamentary ConCon-choosable government form AND the ★★ code-verified finding that the ENTIRE `ConstitutionalArticles` record is STORED-BUT-NEVER-READ (#301/#159/#236) · modern 2025-2029 content (Tariff Review Act = a Congress-approval gate on executive tariffs; Alien-&-Sedition-active deportation) + the corroborated scripted-vs-general event taxonomy (#303/#169/#258/#221) — sources `09e952ae` / `4c020c50` / `29804670` / `c8d3fd84` / `0b1adc59`
+
+> **Provenance & authority for this batch.** All five threads are **designer/GM-voiced** (Vcczar owns the card-distribution spec; theFreezerFlame answers the Native-statehood/sovereignty Q&A; the Westminster and modern-content threads are designer asks). **Only #337 (Indian Sovereignty) is a genuinely NEW mechanic** this batch; everything else **SHARPENS an existing gap** (#4, #55, #159, #236, #301, #303, #169, #258, #221) or **CORROBORATES** shipped behavior with zero delta (the event taxonomy). Codebase citations below were re-verified against `src/` HEAD. Where a rule is **designed but unbuilt** it is labelled; where shipped behavior **differs** from the spec, both are given.
+
+#### 30.53.1 ★ The AUTHORITATIVE Era-of-Independence CARD distribution — the exact 1772 per-faction card counts + the era-keyed "Cards Held" required-count model + the prerequisite VOCAB CONFLICT (#4 / #293) — DESIGNER-AUTHORITATIVE spec; shipped `factions1772.ts` matches NEITHER the vocabulary NOR the counts, and the era-keyed count model + era-banded availability are UNBUILT beyond a flat cap
+
+Source `09e952ae` ("Cards for the Era of Independence", Vcczar, POST 1) is the designer's **exact 1772 starting card inventory** — the concrete 1772 instance of the **#4 per-(faction, era) ideology/card profile** (the *card* half; the *draft-ideology* half of #4 is documented elsewhere). It is a **spec, not a playthrough** (no years are played; it states the seed inventory the playtest will start from). All counts below = **# of factions holding each card**, and **one faction may hold more than one** card of a type.
+
+**★ VOCAB-CONFLICT PREREQUISITE (read this first — tech-lead).** The build has **drifted into two card vocabularies**, and reconciling them is a prerequisite before this distribution can be seeded:
+- The spec's **ideology** cards are named by the **7-point `Ideology` scale** (Conservative / Moderate / Traditionalist / Liberal / Progressive / Populist). Shipped `IdeologyCardId` are **era-flavor** names (`Independence, Republicanism, Whiggery, Tradition, StatesRights, Reformism, Compromise, Federalism, StrongCenter`, `factions1772.ts:12-23`), bucketed to LW/Center/RW via `ALIGNMENT_RULES.ideologyCardBucket` — **no** shipped 1772 faction holds a card literally named "Conservative"/"Moderate"/etc.
+- The spec's **interest/lobby** card names (Nationalist, Pacifist, Big-Ag, LW-Media, RW-Media, Protectionist, …) map to the **national `INTEREST_GROUPS` scoreboard** (`factions1856.ts:24-31`, a `Record<string, number>` national meter, init 0 in both scenarios), **NOT** the faction `interestCards`/`lobbyCards` taxonomy. Several (`Nationalists`, `Pacifists`, `BigAg`, `LWMedia`, `RWMedia`) are **absent from the `InterestCardId`/`LobbyCardId` unions entirely** (`types.ts:310-320`).
+- **Open question (OQ1):** is the "Cards Held Tab" meant to *govern* the faction cards, or is it a view over `INTEREST_GROUPS`? The names align with `INTEREST_GROUPS`, not the faction cards. Likely the same intended system, drifted into two — the designer must say which.
+
+**Table A — ideology cards (1772). Spec vs shipped.** Total spec holdings = 10 (center-right skew: Conservative + Traditionalist = 5 of 10).
+
+| Ideology card (7-point) | Spec # factions | Shipped `IdeologyCardId` tally (`factions1772.ts`) |
+|---|---|---|
+| Conservative | 3 | (era-flavor, not this name) |
+| Moderate | 2 | — |
+| Traditionalist | 2 | `Tradition` 2 |
+| Liberal | 1 | — |
+| Progressive | 1 | — |
+| Populist (LW Populist) | 1 | — |
+| RW Populist | 0 (not present in 1772) | — |
+| *(shipped, unmapped)* | — | `Republicanism` 3, `Federalism` 3, `Independence` 2, `Whiggery` 1, `StatesRights` 1, `Reformism` 1, `Compromise` 1, `StrongCenter` 1 (10 holdings / 10 factions) |
+
+**Table B — interest cards (1772).** Total spec holdings = 5. Only these **4 interest cards "exist" in 1772** (the rest are era-gated). Spec names map to `INTEREST_GROUPS`; shipped 1772 faction `interestCards` use a disjoint set.
+
+| Interest card (spec) | Spec # factions | Shipped 1772 faction `interestCards` (disjoint) |
+|---|---|---|
+| Nationalist | 2 | Manufacturers 5, Settlers 3, Reformers 2, Planters 2 |
+| Expansionist | 1 | |
+| Pacifist | 1 | |
+| Reformist | 1 | (`Reformers` is the closest proxy) |
+
+**Table C — lobby cards (1772).** Total spec holdings = 9 (8 distinct). Spec names map to `INTEREST_GROUPS` (`BigAg`, `LawAndOrder`, `LWMedia`, `RWMedia`, `MilitaryIndustrial`, `FreeTrade`, `Protectionists`); shipped 1772 faction `lobbyCards` use a disjoint set.
+
+| Lobby card (spec) | Spec # factions | Shipped 1772 faction `lobbyCards` (disjoint) |
+|---|---|---|
+| Big Agriculture | 2 | Merchants 4, Patriots 2, Planters 2, SmallFarmers 1, Reformers 1, NationalUnity 1, Lawyers 1 |
+| Big Corporations | 1 | |
+| Law & Order | 1 | |
+| LW Media | 1 | |
+| RW Media | 1 | |
+| Military-Industrial | 1 | |
+| Free Trade | 1 | |
+| Protectionist | 1 | |
+
+**★ The "Cards Held Tab" — era-keyed required-count model (DESIGNED; the count model + era-banding are UNBUILT).** The designer keeps a per-era tab storing "the number of each card required for that era." Stated rules (POST 1):
+1. **Counts are era-keyed.** Each era has its own required number of each card type; the three tables above are the **1772 row**.
+2. **Later eras have more cards** — the pool grows over time (1772 is the smallest inventory; more types and more copies unlock later).
+3. **Card availability is era-banded** — "quite a few cards are not yet possible in this era" (1772 exposes a small subset; whole card *types* are absent, e.g. only 4 interest cards, no RW-Populist).
+4. **Tie rule:** "there can be more if there is a tie at 1st." The stated count is a *baseline*; a tie for the top (1st) holding of a card can push the count above the table value — implying cards are assigned by **ranking factions per card** (ranking metric UNSPECIFIED, OQ2).
+
+**Shipped-vs-designed (verified against `src/` HEAD).**
+
+| Aspect | Spec (designed) | Shipped |
+|---|---|---|
+| Three card TYPES held per faction | ideology / interest / lobby, arrays | ✅ ships — `Faction.ideologyCards`/`lobbyCards`/`interestCards` (`types.ts:1298-1300`); the *structure* matches |
+| One faction holds >1 card of a type | required | ✅ ships — arrays; 1772 factions hold 1-2 ideology cards each |
+| Ideology-card VOCABULARY | 7-point `Ideology` names | ❌ era-flavor `IdeologyCardId` (`factions1772.ts:12-23`), bucketed LW/Center/RW |
+| Interest/lobby card NAMES | map to `INTEREST_GROUPS` | ❌ faction cards use a disjoint set; several spec names are only `INTEREST_GROUPS`, not card IDs |
+| Exact 1772 COUNTS | Tables A/B/C above | ❌ `factions1772.ts` holdings differ |
+| Era-keyed "Cards Held" required-count | per-era registry + tie-at-1st + per-card ranking | ❌ only a **flat, non-era** `ALIGNMENT_RULES.cardCapPerType: 4` soft cap (`types.ts:338`; a per-faction cap on interest/lobby, **ideology uncapped**) — no required-count, no tie rule, no ranking |
+| Era-banded card availability | modeled gate ("not yet possible in this era") | ❌ card-ID unions are **global/shared** across eras; availability implicit in which faction file loads |
+| 7-point resolution (Liberal ≠ Progressive ≠ Populist) | required | ❌ `Faction.personality` is 3-bucket `LW\|Center\|RW` (`types.ts:1297`) — cannot represent (exact **#293** gap) |
+
+**Cross-ref #293** (7-point ideology vs the 3-bucket `Faction.personality`, `types.ts:1297`): this spec is the **concrete 1772 case** #293 warns of — it resolves ideology cards on the 7-point scale (Liberal, Progressive, Populist all distinct), which `personality` cannot express. **Status:** designer spec, authoritative for the playtest; shipped 1772 factions do NOT match (vocabulary AND counts). Folds under **#4** (as the authoritative 1772 card-distribution target + the era axis: the "Cards Held" count model and era-banded availability). *(Sources: `09e952ae#POST 1`; codebase as cited.)*
+
+#### 30.53.2 ★ NEW — the Indian-Sovereignty region STATUS (a grantable "region leaves player control / becomes foreign-like" status; the THIRD region-control-change mechanic) + the Native-nation states as roster content (#337 NEW / #55) — 0% shipped: no sovereignty mechanic of any kind, and only Oklahoma stands in for the whole Indian-Territory region
+
+Source `4c020c50` ("Are there any Native American states that can be admitted?", theFreezerFlame). Two distinct, related ideas: **(a)** Native-nation *states* as roster content (a #55 sharpen), and **(b) NEW #337** — an *Indian-Sovereignty region status*.
+
+**★ (b) The NEW mechanic — Indian Sovereignty (#337).** POST 2: *"Indian Sovereignty can be granted in most regions. If that is the case those areas would be **out of the player's control** since it would essentially **act as a foreign country**."* So a region can **ENTER a status** whereby it stops being a player-owned/admittable state and behaves as a **foreign nation** (a diplomacy target outside player control). It is **grantable across "most regions"** — not just Native territory. Its place in the "region changes who controls it" triptych:
+
+| Mechanic | Direction | Player agency |
+|---|---|---|
+| **#333** annexation-as-conquest | region **JOINS** the union | player conquers it in |
+| **#334** sell/cede a state | region **LEAVES** the union | player sells it, voluntarily, for a fiscal burst |
+| **★ #337 Indian Sovereignty (NEW)** | region **LEAVES player control** while **remaining on the map** as a foreign-like NON-PLAYER entity | grantable (trigger open) |
+
+#337 is the **INVERSE of #333** (a region *joining* → a region *becoming foreign-like*) and a **sibling of #334** (both are regions *leaving player control*; #334 removes it from the map for money, #337 leaves it on the map as a foreign entity). **UNOWNED** before b63: #333/#334 cover the union gaining or a state departing under player agency; neither covers a region *becoming foreign-like / leaving player control while remaining on the map*.
+
+**★ (a) Native-nation candidate states (#55 sharpen).** First source to name these as intended roster content. Two sizing classes:
+
+| Nation (state) | Admission path (per thread) | Sizing class |
+|---|---|---|
+| **Sequoyah** | "Most notable" — petitioned for statehood **IRL ~1905** (Sequoyah Convention); the flagship, sized like a real state | full / census-sized state |
+| **Haudenosaunee** (Iroquois / Six Nations) | Could be **OFFERED statehood DURING the American Revolution** (POST 3) — a **1772-era admission branch** on the `admitState` pipeline | full / normal state |
+| **Dinétah** (Navajo) | "Would likely just be an **always-3-EV state**" (POST 3) | **fixed-EV = 3** small-state |
+| **Lakota** | Same — "always-3-EV state" (POST 3) | **fixed-EV = 3** small-state |
+
+**Shipped-vs-designed (verified against `src/` HEAD).**
+- **Roster (confirms POST 4).** `src/data/expansionStates.ts` contains **only `oklahoma`** (`{ id: 'oklahoma', … region: 'South' }`, `:97`). grep `Sequoyah|Lakota|Haudenosaunee|Dinetah|Dinétah|Navajo` in `src/` = **0** state entries. Sequoyah/Lakota/Haudenosaunee/Dinétah are **0% built**; Oklahoma stands in for the whole Indian-Territory region.
+- **★ NO Indian-Sovereignty mechanic — 0% shipped.** grep `sovereignty|native|tribal` in `src/` finds NO region-status mechanic — all hits unrelated: **"popular sovereignty"** (`eraEvents1856.ts:19` Kansas; `factions1856.ts:6` Pop-Sov Democrats), **"state sovereignty"** (`phaseRunners.ts:3403`, an ideology-card string), Treaty-of-Paris flavor (`GameOverScreen.tsx:10`). `State.region` is a **fixed closed enum** (`types.ts:1322` — `Northeast | Midwest | South | West | Border | Canada | Caribbean | Latin America | Pacific | Atlantic`) with **NO** `Native`/`Sovereign`/`Tribal`/`Foreign` category — a "this region is now a foreign-like non-player entity" status is **unrepresentable**. *(The lone KB "Indian Sovereignty" mention, #66/b55, is a cabinet-MINISTER-per-nation office — a diplomatic ministry seat, a distinct thing from this region-status.)*
+- **No "always-3-EV" small-state class.** Every expansion state is stamped flat `electoralVotes: 4, bias: 0` (`expansionStates.ts:178`, the `DEFS.map(...)` seed); `admitState` (`engine/territories.ts`) copies the seed. No per-state EV, no fixed-EV=3 class, no census-driven EV growth — the Dinétah/Lakota "always 3 EV" idea has no home (feeds #55's census/EV limb).
+- **Haudenosaunee exists only as a diplomacy nation.** The Six Nations appear as a 1772 **era-event treaty + diplomacy counterpart** — Treaty of Fort Stanwix (`eraEvents1772.ts:492-512`, `diplomacy:[{nation:'SixNations',…}]`), plus Hopewell treaties (Cherokee/Choctaw/Chickasaw, `:522+`). So Native nations are modeled **as foreign powers you negotiate with**, a `diplomacy` map keyed by nation name — **never as admittable states, and never as a region that leaves player control.** This is the closest existing shape to the thread's ideas, but it is a foreign-relations flavor layer, not statehood and not the sovereignty status.
+
+**Open questions (for the human).** What **grants** Indian Sovereignty (event / law / player choice / AI action) and is it **reversible**? Does a sovereign region reappear in the existing `diplomacy` nation registry? Is Native statehood **mutually exclusive** with Indian Sovereignty for the same region — **admit as a state OR grant sovereignty** — and does Oklahoma get split out of / replaced by Sequoyah? **Status:** #337 = NEW mechanic, 0% shipped; the Native-nation states = #55 content sharpen, 0% shipped. Pairs with #333/#334 (the region-control-change cluster) + #55 (the Native-nation states that could receive it) + the diplomacy-nation system. *(Sources: `4c020c50#POST 1-4`; codebase as cited.)*
+
+#### 30.53.3 ★ Westminster / parliamentary government structure (a ConCon-choosable FUSED-EXECUTIVE form) + ★★ the code-verified finding that the ENTIRE `ConstitutionalArticles` record is STORED-BUT-NEVER-READ (#301 / #159 / #236) — the ConCon's articles drive nothing today; making them read/enforced is the prerequisite for BOTH Westminster AND any ahistorical-Constitution consequence
+
+Source `29804670` ("Can we run a playtest to try out Parliamentary mechanics in the Constitutional Convention", jokingly "AMPUK"/"Ampuke"). SHARPENS #301 with the single most-requested alt-government form and, in verifying it, produces the batch's most significant build-state finding.
+
+**★ The Westminster rule (POST 1):** *"Only US House and Speaker of the House is de-facto president."* Two coupled parts:
+1. **No separate presidency** — the executive is **fused into the legislature**; there is no independently-elected President.
+2. **The Speaker of the House IS the executive** — whoever commands the House majority governs "as de-facto president" (a Westminster / prime-minister model).
+
+Framed by the **thread title** as a **Constitutional-Convention-choosable outcome** — a government structure the ConCon should be able to *produce*, not a hardcoded scenario. This is a **structural** government-form variant (a change to the separation-of-powers *shape*), distinct from the **regime/ideology** forms of #236 (Fascist/Communist/Theocratic) — but it belongs to the same "alt-government-form" axis (noted on #236; primary home is **#301**). The implementation idea (POST 4: "borrow the 1772 gamestate, CPU all factions as if a Westminster Congress was established") is a test-harness convenience, not a mechanic (overlaps the scenario-boot cluster #115/K4).
+
+**★★ THE BUILD-STATE FINDING (#159 sharpen; code-verified) — the ENTIRE `ConstitutionalArticles` output is STORED BUT NEVER READ.** `applyConvention` writes `snap.game.constitutionalArticles` (`constitutionalConvention.ts:145`) and **NOTHING downstream consumes ANY article** — the government shape is **hardcoded regardless of the vote**. This generalizes the earlier per-plank findings (no suffrage plank wires to `domestic`; term-limits never enforced) into: **the WHOLE ConCon product is inert.** Concretely:
+
+| ConCon article | Options offered | Enforced? | Shipped behavior |
+|---|---|---|---|
+| `executive` | `elected_president` / `congressional_president` ("President elected by Congress") / `executive_council` ("multi-member council, no single executive") (`constitutionalConvention.ts:16-24`) | ❌ NO | **None fuses the executive into the House.** `executive_council` is the closest (a plural executive) but is still a body distinct from the legislature. `snap.game.presidentId` is set **UNCONDITIONALLY** by `runPhase_2_9_4_PresidentialGeneral` (`phaseRunners.ts:3803`, `snap.game.presidentId = winner.id`) in every presidential year, independent of the article |
+| `legislature` | `bicameral` / `unicameral` (`:8-15`; field `types.ts:1391`) | ❌ NO | Legislature hardcoded **bicameral** (CC → House + Senate; 1856 hardcodes `'bicameral'`). The House-only half of any alt-structure is an inert data slot |
+| `termLimits` | `two_terms` / `no_limits` | ❌ NO | Unenforced on presidential re-eligibility |
+
+**Speaker has ZERO executive coupling.** `SpeakerOfHouse` (`types.ts:1128`) and `snap.game.speakerId` (`types.ts:1581`) are set by House-leadership logic and read only **for display** (CongressPage / Dashboard). `speakerId` and `presidentId` (`types.ts:1349/1567`) are **independent fields** — the Speaker never governs. grep `de.?facto` / Speaker-as-executive coupling = 0. No `governmentForm`/parliamentary/Westminster flag anywhere in `src/` (grep = 0, consistent with #236's finding for the fascist/communist/theocratic axis).
+
+**The prerequisite (net for tech-lead).** Because the `ConstitutionalArticles` record drives nothing, **"make the ConCon articles actually READ/ENFORCED downstream"** is the prerequisite for **BOTH** the Westminster form (#301) **AND** any ahistorical-Constitution consequence (#159). Specifically Westminster needs (1) a ConCon `executive` option that **fuses** the executive into the House, and (2) decoupling `presidentId`/`runPhase_2_9_4` from firing unconditionally so the presidency can be suppressed and the executive routed to the Speaker/House majority. **Shipped = hardcoded presidential separation-of-powers; parliamentary/Westminster = 0% built and not expressible by the current scenario/types model.**
+
+**ID-correction note (b63):** an earlier brief tagged the "radically-different governing structure" wish "#74." In the current KB **#74 is the CPU legislation-voting heuristic** (vote-by-cross-party-damage), **not** a governing-structure gap. This digest's canonical home is **#301** (primary), with #159 (the inert `ConstitutionalArticles` output) and #236 (the alt-government-form axis). *(Sources: `29804670#POST 1, 4`; codebase as cited.)*
+
+#### 30.53.4 ★ Modern 2025-2029 content (Tariff Review Act = a Congress-approval GATE on executive tariff-setting; Alien-&-Sedition-active deportation) + the corroborated scripted-vs-general event taxonomy (#303 / #169 / #258 / #221) — all content is 0% reachable (only 1772/1856 ship; `Era` ends at `modern`, no `future`); the event taxonomy is a ZERO-delta shipped-model confirmation
+
+Two thin threads, kept brief.
+
+**★ Modern content catalog `c8d3fd84` (designer, 2025-2029 window / Trump term 2).** A content-authoring stub; all of it targets an era band the build cannot reach (`Era = independence | federalism | nationalism | modern`, **no `future`**, `types.ts:1337`; the 2025-2029 window maps to the b60 start roster + the b57 future-era gap). Three items, two with named mechanics:
+
+| Item | Type | The mechanic | Maps to |
+|---|---|---|---|
+| Increase tariffs on allies/trade partners | Pres Action | flavor + wants graduated tariff rates (designer note: Trump notably has NOT tariffed Russia/N.Korea) | #303 (rate magnitude) / #169 (exec-action content) |
+| **★ Tariff Review Act** | Bill (Dem-backed, 7 GOP cosponsors) | Would **require Congress to sign on to tariffs against allies** — a **Congress-approval GATE on executive tariff-setting** — a **procedural-authority** check (who must sign off on the executive tariff lever), **DISTINCT from #303's rate-magnitude**. **Folded onto #303** as a new axis (previously UNOWNED) | #303 (new gate axis) |
+| **★ Alien-&-Sedition-active deportation** | Pres Action (predicate-gated) | POST 2: an exec action to "remove alien individuals without due process, send them to a foreign prison" whose **availability depends on the Alien & Sedition Acts being ACTIVE** in the current game — a **prior-law-active predicate INSTANCE of #258**. No "A&S active" flag ships (grep `alien\|sedition` = only a trait-comment flavor `types.ts:1041`) | #258 (a content instance of the already-owned prior-legislation-active predicate class) / #169 |
+
+**Shipped-vs-designed:** tariffs ship as **2 binary bill templates** — `Tariff Increase` / `Tariff Reduction` (`phaseRunners.ts:3421-3422`), fixed meter/interest-group deltas; **no graduated rate** (#303) and **no Congress-approval gate**. Exec actions are a **hardcoded 4-action stub** (`runPhase_2_8_1_Executive`, `phaseRunners.ts:3632+`, founding/1856-flavored, fired at 50%), **0% modern reachable** (#169). Predicate gating (`Predicate`/`evalPredicate`/`eraGraph`) exists but is wired 1772-only; **no "law X active" predicate** (#258).
+
+**★ Event taxonomy `0b1adc59` (CORROBORATION ONLY, zero delta).** The GM's own two-category model (POST 2): *"Ukrainian war is a scripted event. There are some possible responses. Hurricanes are general events that pop up regularly from time to time."* Maps **1:1** onto shipped types:
+
+| GM term | Shipped type | Shape |
+|---|---|---|
+| **Scripted event** | `EraEvent` (`types.ts:1466`) | authored, `year`-anchored, carries `responses: EraEventResponse[]` (`:1472`) + a `decider` of `president\|congress\|cabinet\|cc-president\|auto` (`:1473`); sequenced as era-graph nodes via `templateId` + `Predicate` |
+| **General / recurring event** | anytime events (`anytimeEvents.ts` per-politician `AnytimeEventTemplate`; `anytimeNationalEvents.ts` national) | `weight`-driven random pop-ups, **no response tree**, just `effects[]` |
+
+No mechanic here is missing (the hurricane national-scope pop-up is already supported by `anytimeNationalEvents.ts`). **Corroborates #221 (content primitives) / #258 (event-graph).** *(Sources: `c8d3fd84#POST 1-2`, `0b1adc59#POST 2`; codebase as cited.)*
+
 ### 30.4 Authority hierarchy reminder
 
 When rule sources disagree:
