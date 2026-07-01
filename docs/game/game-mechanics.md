@@ -26080,6 +26080,351 @@ loyalty-oath era-band hole) and the **#188** nuclear-end second-witness. All UNR
 post-early-release. (`501a43f6#POST 1-5`; `53f0759d#POST 3/5/6`; `a19001a5#POST 5/6/7`; codebase as cited;
 `game-context.md` #333/#334 NEW, #290/#60/#221/#206/#188.)
 
+### 30.50 Rulings folded from batch 60 — ★ the PRESIDENTIAL "MANDATE" governing state (NEW #335, a per-win win-quality modifier the pres general never records) + the Polk-3rd-term mechanics cluster (★ term-limits STORED-but-NEVER-ENFORCED → indefinite terms; the dropped 3rd-term trait; Kingmaker national "+1" that BREAKS on the protégé's presidency; historical-death-date + elective retirement; ★ event→REGIONAL penalty the national-only `EraEventResponseEffect` cannot express; president's-party midterm −1; #111/#128/#129/#130/#184/#292/#288) + ★ the canonical 16-window START-DATES roster (2/16 boot) + scenario-boot + the "Give a Speech" speaker-by-era rule (#92/#115/#186/#228/#206/future-era; #185/#331) + ★ the Senate-Majority-Leader office+toolset, party-platform ±5 swing, contingent-election-to-the-House, SCOTUS election-challenge, and the vacancy-fill CT-pull/House-empty/Senate-generate split (#330/#184/#62/#84/#111/#270/#66/#154/#290/#1) (`478ab80e-polk-third-term-mandate` / `0bde31bd-start-dates-roster` / `0adcd14c-speech-by-era-delegation` / `29902e8e-favorite-playtest-moments` / `cb91e00e-vacancy-filling-career-track`)
+
+> **Batch-60 character.** FIVE threads, a **richer mix than b59**: one **live 1840-antebellum playtest snapshot**
+> (`478ab80e` Polk 3rd term — a single dense paragraph naming ~seven interacting mechanics at once), one
+> **authoritative designer roster** (`0bde31bd` start-dates — the game creator answering a buyer, tier-2/3),
+> one **favorite-moments feature-witness** thread (`29902e8e` — each "favorite moment" names a SHIPPED-in-the-
+> forum system), and **two design polls** (`0adcd14c`/`cb91e00e` — speech-by-era + vacancy-fill, tier-4/5). Net
+> signal: **1 net-new governing state** (the **presidential MANDATE**, **#335 NEW**, 0% built) plus a dense
+> cluster of **designed-not-built** items the forum game clearly HAD but the single-player build never shipped —
+> **term-limits enforcement**, a **party platform**, **contingent election to the House**, a **SCOTUS
+> election-challenge**, and the **Senate Majority Leader office + its toolset**. **★ The load-bearing b60 output
+> is that the forum multiplayer game was materially LARGER than the shipped SP build** (LBJ's Senate-leader
+> toolset, platform swings, House contingent elections, SCOTUS election challenges all witnessed live) — every
+> one of those is a real designed feature, not GM flavor. Two capability WALLS are re-confirmed by concrete
+> asks: the national-only `EraEventResponseEffect` cannot do a "−1 in New England" event penalty (30.50.1),
+> and `termLimits` ships as **data that is never enforced** so Polk can run a 3rd/4th term indefinitely
+> (30.50.1). All shipped-vs-designed verified against `src/` HEAD 2026-07-01. Authority class: `0bde31bd` is
+> **designer-stated but explicitly NOT finalized** ("the start dates could change"); the rest are **UNRATIFIED
+> design input / feature-witnesses** — treat as design intent + build-gap confirmations, not landed rules.
+
+#### 30.50.1 ★ Presidential MANDATE (#335 NEW) + the Polk-3rd-term mechanics cluster — a per-win win-quality state the general never records; ★ term-limits STORED-but-NEVER-ENFORCED (indefinite terms) + the dropped 3rd-term trait; Kingmaker national "+1" that BREAKS on the protégé's presidency; historical-death-date + elective retirement; ★ the event→REGIONAL penalty wall; president's-party midterm −1 (#111/#128/#129/#130/#184/#292/#288) — the batch's richest section (designed; the MANDATE, term-enforcement, 3rd-term trait, national-+1/president-breaks-bond, historical-death-date, elective retirement, regional-penalty, and midterm −1 are ALL 0% built)
+
+> **Source: `478ab80e` (Should Polk run for a 3rd term?, a live 1840-antebellum playtest, Nov 2022) — POST 1 is
+> the single dense mechanics-snapshot paragraph; POST 3 the dropped-3rd-term-trait GM aside; POST 6 the GM
+> self-correction that the kingmaker bond broke on the presidency — + codebase (`phaseRunners.ts:3752-3814` the
+> pres general; `types.ts:1396` `termLimits` article; `constitutionalConvention.ts:60-63,120-121` the CC
+> article + AI default; `scenario1856.ts:189` default `no_limits`; `phaseRunners.ts:1372,1304,1324` the
+> kingmaker phase + assign/release; `types.ts:454` `kingmakerProtegeBonus`; `phaseRunners.ts:2341-2380` the
+> age-stochastic deaths/retirements, `frailDeathMult` `:2362`; `types.ts:1448-1457` the national-only
+> `EraEventResponseEffect`; `phaseRunners.ts:3685-3723` `calcStateVote`; `eraEvents1856.ts` the John-Brown
+> event).** The richest single b60 thread — a live snapshot of how the shipped election / relationship / event /
+> mortality systems COMPOSE in play, which corroborates several shipped systems and surfaces a governing state
+> (**MANDATE, #335 NEW**) plus a cluster of designed-not-built items. Authority class = tier-4/5 (a GM-run
+> playtest snapshot; not a tier-1 ruling).
+
+**★ A. The presidential MANDATE (#335 NEW) — a per-win win-quality state.** POST 1: Polk won two presidential
+elections "but **didn't have a mandate either time**." The forum treats **mandate / no-mandate** as an
+established per-win attribute — a governing modifier earned by a win's **margin or turnout** (a president WITH a
+mandate governs from strength; without, from weakness). It is **distinct** from `partyPreference`/`enthusiasm`
+(national election levers, #292) and from the platform swing (#184, 30.50.3) — those are pre-election levers;
+the mandate is derived FROM the win itself.
+
+- **SHIPPED: 0% — no mandate concept anywhere.** `grep -i mandate` across `src/` = **0**. No field on a
+  president, term, or `game`; no set or read path. `runPhase_2_9_4_PresidentialGeneral` (`phaseRunners.ts:3752-3814`)
+  tallies per-state EVs, declares a bare winner, and resets the cabinet — it records **NO margin / mandate /
+  win-quality state** at all; nothing captures HOW decisively the win happened. → the forum's mandate has **no
+  shipped representation and no downstream consumer**. (Requirement + OPENs — binary-vs-graded, margin/turnout
+  threshold, the full governing effects — owned on **#335 NEW**.)
+
+**★ B. Term limits are STORED but NEVER ENFORCED → indefinite terms (why Polk can run a 3rd/4th term).** POST 3
+(GM): "I remember at one time I considered adding a **trait that would allow someone to seek a 3rd term if it's
+legal**. I ended up not doing it because it's hard to determine who would have that ability." Polk's 3rd-term
+run is *legal in this game precisely because term limits aren't enforced against him*.
+
+| Fact | Detail | file:line |
+|---|---|---|
+| **`termLimits` ships as DATA** | A constitutional-convention article, values `'two_terms' \| 'no_limits'`; CC article + AI default; 1856 scenario default = `no_limits`. | `types.ts:1396`; `constitutionalConvention.ts:60-63,120-121`; `scenario1856.ts:189` |
+| **★ It is NEVER ENFORCED** | `termLimits` is referenced **only** inside `constitutionalConvention.ts` — **never** by `calcStateVote`, the primary (`runPhase_2_9_1_Primaries`, `:3725`), or the presidential general. The primary just sorts to the **top-PV eligible** candidate (age 35–80, command ≥2); an incumbent re-runs simply by winning the primary again. | grep of `src/engine/` |
+| **No `termsServed` counter** | There is **no per-president term counter** and **no re-run gate**. A `two_terms` article, even if adopted, would change nothing — indefinite terms are possible regardless. | — |
+| **No 3rd-term trait** | `grep 'third.?term\|3rd.?term'` = **0**. The trait POST 3 describes was **designed-and-explicitly-dropped**, unbuilt. | grep = 0 |
+
+→ Term limits are **built as data, unenforced**; enforcing `two_terms` needs a NEW `termsServed` counter + a
+primary/general re-run check (owned on the term-limits / constitutional-articles gap). The 3rd-term trait is
+**designed-and-dropped** (low priority — the author abandoned it).
+
+**★ C. Kingmaker "National +1" that BREAKS once the protégé becomes president (#128/#129).** POST 1: Polk "has a
+National +1 for a Kingmaker relationship." POST 6 (GM correction): "Polk doesn't have the +1 from the
+kingmaker. **That relationship broke once he became president.**"
+
+- **SHIPPED (partly):** the mentor/protégé system ships — `KINGMAKER_RULES`/`KingmakerEntry` (`types.ts:295,1710`),
+  phase `2.1.7` (`runPhase_2_1_7_Kingmakers` + `assignProtege`/`releaseProtege`, `phaseRunners.ts:1372,1304,1324`),
+  UI `pages/Kingmakers.tsx`. Graduation grants the **protégé** a Command/trait legacy (`phaseRunners.ts:1429-1474`),
+  and the mentor's Kingmaker gives a `kingmakerProtegeBonus` graduation-roll chance (`types.ts:454`).
+- **NOT SHIPPED:** the shipped bonus is a **per-protégé Command/trait development bonus**, **not** a persistent
+  **national/party-wide "+1" modifier**, and there is **no rule** dissolving the mentor bond when the protégé
+  becomes president. Both the *national "+1"* and the *breaks-on-presidency* rule are **forum-side relationship
+  semantics richer than what ships** (NEW sub-items on the kingmaker/relationships gap).
+
+**★ D. Historical death-date + elective/trait-driven retirement (#130).** POST 1: "the frail and unlikable
+James K Polk (who has **already lived past his historical death date**)." The poll's whole premise is a **GM/player
+retire-or-run decision**.
+
+- **SHIPPED:** `Frail`/`Unlikable` are real negative traits (`types.ts:94,102`; `Unlikable` election penalties
+  `:793-801`; `Frail` multiplies death odds via `frailDeathMult` `phaseRunners.ts:2362`).
+- **NOT SHIPPED:** deaths & retirements (`runPhase_2_4_1_Deaths`, `phaseRunners.ts:2345-2379`) are **pure
+  age-bracket probability rolls** — there is **no per-politician historical death date** (the mortality model is
+  stochastic by age, so "lived past his historical death date" is meaningless in-code), and retirement is
+  **age-only chance**, never a **frailty/unlikability-driven or player-elected** decision. → historical
+  death-date + elective/trait-driven retirement are **NEW sub-items** on the retirement/mortality gap.
+
+**★ E. The event→REGIONAL/state-scoped penalty WALL (#288).** POST 1: putting down John Brown's rebellion cost
+"**−1 in New England** (a Whig stronghold)."
+
+- **SHIPPED:** a John-Brown era event exists (`eraEvents1856.ts`), but its effects are **NATIONAL only** —
+  `meters`, `partyPreference`, national `enthusiasm[]`. `EraEventResponseEffect` (`types.ts:1448-1457`) has
+  **NO per-state or per-region field** (verified: `meters`, `partyPreference`, `enthusiasm[]`, `interestGroups`,
+  `domesticStability`, `diplomacy`, `startWar`, `text` — nothing state/region-scoped). `calcStateVote` reads a
+  **static `state.bias`** (`phaseRunners.ts:3697`); nothing lets an event apply a **durable −1 to a named region
+  (New England / Northeast) or state**.
+- **★ This is the SECOND distinct instance of the same national-only wall #288 identifies** (the first being the
+  missing slavery-flag WRITE channel). The requirement is a **distinct effect-channel**: a per-state/per-region
+  enthusiasm-or-bias delta field on the effect struct so region-scoped events land locally (cross-ref #247
+  event-keyed realignment / #292 per-state `preferredIdeology`).
+
+**★ F. President's-party midterm −1 (#184/#292).** POST 1: Polk "took **historical losses in the midterms of
+1858**."
+
+- **SHIPPED: 0% as a dedicated rule.** `calcStateVote` (`phaseRunners.ts:3685-3723`) score =
+  `50 + bias*5 + partyPref*5 + enthusiasm*2 + pv*0.1 + factionBias + traitBonus + rng` — **no incumbent-party /
+  midterm term**. Year predicates isolate midterms (`isElectionYear = year % 2 === 0` &&
+  `!(isPresidentialYear = year % 4 === 0)`) but attach **no president's-party handicap**. Matches the b58
+  #184/#292 flag. → **designed, not built.** (The forum "losses" may simply be normal partyPreference/enthusiasm
+  swings narrated as midterm losses.)
+
+**★ G. Corroborated-shipped (no new delta).** Enthusiasm-by-ideology + `partyPreference` ("+1 Red", "+3 Blue by
+ideology") feed `calcStateVote` directly (`partyPref*5 + enthusiasm*2`, `phaseRunners.ts:3696-3711`) — **built,
+corroborated** (#292). War + Domestic Stability ("won the 3rd Seminole War," "deep Domestic Stability crisis") —
+`startWar`/`domesticStability` (`types.ts:1453,1455`) + `revolutionaryWar.ts` are **built**; the 3rd Seminole
+War is a GM-emergent/generated war, not a scripted named one (the shipped named war is the Civil War).
+
+**★ H. Shipped-vs-designed rollup (verified against `src/` HEAD).**
+
+| Mechanic | Shipped today | Forum shows (designed) | Owner |
+|---|---|---|---|
+| **Presidential MANDATE** | **Not built** (grep `-i mandate` = 0; pres general records winner only, no margin/win-quality) | per-win governing state earned by margin/turnout | **#335 NEW** |
+| **Term-limits enforcement** | **Data only** (`termLimits` article, `types.ts:1396`) — never read in elections; no `termsServed`, no re-run gate | legal 3rd/4th term; a **`two_terms` that actually bites** | term-limits gap (NEW sub-item) |
+| **3rd-term trait** | **Not built** (grep = 0) | designed-and-explicitly-dropped by the GM | low-priority (dropped) |
+| **Kingmaker national "+1"** | **Not built** — shipped bonus is a per-protégé Command/trait dev bonus | persistent national/party "+1" | #128/#129 (NEW sub-item) |
+| **Kingmaker bond breaks on presidency** | **Not built** — no dissolve-on-presidency rule | bond breaks once the protégé is president | #128/#129 (NEW sub-item) |
+| **Historical death-date** | **Not built** — mortality is age-bracket stochastic (`phaseRunners.ts:2345-2372`) | per-pol historical death year the roll respects | #130 (NEW sub-item) |
+| **Elective/trait-driven retirement** | **Not built** — retirement is age-only chance | player/AI or Frail/Unlikable-driven retire decision | #130 (NEW sub-item) |
+| **Event → regional/state penalty** | **Not built** — `EraEventResponseEffect` is national-only (`types.ts:1448-1457`); John-Brown event is national | "−1 in New England" | **#288** (2nd instance of the national-only wall) |
+| **President's-party midterm −1** | **Not built** — absent from `calcStateVote` | "historical losses in the midterms of 1858" | #184/#292 (DESIGNED, re-confirmed) |
+| Enthusiasm/partyPreference | **Built** — feed `calcStateVote` (`:3696-3711`) | corroborated | #292 |
+| Frail / Unlikable | **Built** (`types.ts:94,102`) | corroborated | traits |
+| War + Domestic Stability | **Built** (`startWar`/`domesticStability`/`revolutionaryWar.ts`) | corroborated; 3rd Seminole War is GM-emergent | — |
+
+**→ Net (30.50.1):** **1 net-new governing state** (**#335 MANDATE**, 0% built) plus a cluster of
+designed-not-built relationship/mortality/event/election items, all confirmed absent from `src/`. The two
+capability WALLS for the tech-lead: (1) **`termLimits` is stored data that is never enforced** — a `two_terms`
+selection changes nothing without a NEW `termsServed` counter + a primary/general re-run gate; (2) the
+**national-only `EraEventResponseEffect`** cannot express a region-scoped penalty (a 2nd instance of #288's wall,
+distinct from the slavery-flag-write channel). (`478ab80e#POST 1/3/6`; codebase as cited; `game-context.md` #335
+NEW / #111 / #128/#129 / #130 / #184/#292 / #288.)
+
+#### 30.50.2 ★ The canonical 16-window START-DATES roster (2/16 boot) + scenario-boot + the "Give a Speech" speaker-by-era rule (#92; #115/#186/#228/#206/future-era; #185/#331) — the authoritative designer roster of era-anchored start windows, the era-beginnings-vs-per-term design fork, the no-1865/"Lincoln lives" ruling, and the doubly-unbuildable speech-speaker gate (designed; SHIPPED = 2 of 16 scenarios, a 4-value Era enum ending at `modern`, no era-boundary table, no `factionLeaderId`, `vicePresidentId` never set post-election)
+
+> **Source: `0bde31bd` (Start dates — the game CREATOR answering a pre-order buyer, Oct 2022; POST 2 the
+> 16-entry roster, POST 4 the era-beginnings-vs-per-term decision + the 1865 ruling) + `0adcd14c` (Presidential
+> Election Question, Apr 2024; POST 1 the speech-speaker rule, POST 2 designer-confirmed) + codebase
+> (`components/NewGameScreen.tsx:6,25` the 2 shipped scenarios + 1856 default; `types.ts:1337` the 4-value Era
+> enum; `AnytimeEventsPage.tsx:20-25` the sole coarse `eraForYear` helper; `scenario1856.ts:150-153`/
+> `scenario1772.ts:70-73` the hardcoded boot literals; `types.ts:1568` `vicePresidentId`; grep `factionLeaderId`
+> = 0).** `0bde31bd` is the **authoritative, designer-stated ground-truth roster** for the scenario-boot /
+> start-anywhere cluster — the game's creator states every scenario begins at one of these 16 windows and
+> *"they begin each era,"* so this list IS the game's era-boundary table. Authority class = **designer-stated
+> but explicitly NOT finalized** ("the start dates could change", POST 2). The speech rule is tier-4/5 with a
+> designer POST-2 confirmation.
+
+**★ A. The 16-entry start-dates roster (POST 2).** Each window "begins an era" and is anchored to an incoming
+president. The **"Era of Nationalism"** is named explicitly (POST 4) as the era Lincoln's presidency falls
+under, beginning with the 1856-1858 cycle.
+
+| # | Start window | Anchor president | Era (named / implied) | Ships? |
+|---|---|---|---|---|
+| 1 | **1772-1774** | — (pre-founding election term) | Independence / founding | **YES** (`scenario1772`, boots at 2.1.1 the inaugural draft) |
+| 2 | **1788-1790** | Washington | Federalism | no |
+| 3 | **1800-1802** | Jefferson | (Jeffersonian) | no |
+| 4 | **1820-1822** | Monroe | (Good Feelings) | no |
+| 5 | **1840-1842** | WH Harrison | (Jacksonian/Whig) | no |
+| 6 | **1856-1858** | Buchanan | **Era of Nationalism** (POST 4) | **YES** (`scenario1856`, boots at 2.1.2 — past the draft; **DEFAULT**) |
+| 7 | **1868-1870** | Grant | (Reconstruction/Gilded) | no |
+| 8 | **1896-1898** | McKinley | (Progressive/imperial) | no |
+| 9 | **1916-1918** | Wilson | (WWI/Progressive) | no |
+| 10 | **1928-1930** | Hoover | (Depression) | no |
+| 11 | **1948-1950** | Truman | (Cold War) | no |
+| 12 | **1972-1974** | Nixon | (modern) | no |
+| 13 | **2000-2002** | GW Bush | (modern) | no |
+| 14 | **2012-2014** | Obama | (modern) | no |
+| 15 | **2020-2022 OR 2024-2026** | (Trump/Biden — a FORK, not both) | **future** | no |
+| 16 | **2048-2050** (a "possibility") | (unstated) | **future** (speculative) | no |
+
+Entry 1 has **no president** (pre-constitutional). Entry 15 is a **fork** (2020 *or* 2024). Entry 16 is the
+softest ("possibility").
+
+**★ B. SHIPPED-vs-designed for the roster.** Only **2 of 16** ship (1772, 1856; **1856 is the default**,
+`NewGameScreen.tsx:25`); the other 14 are 0% shipped — no scenario file, no boot path, no UI option.
+
+| Area | In `src/` today | Designed target | file:line |
+|---|---|---|---|
+| **Scenarios shipped** | **2 of 16** — `ScenarioId = '1772' \| '1856'`; 1856 default | boot all 16 era-windows | `components/NewGameScreen.tsx:6,25` |
+| **Era enum** | **4 values, ends at `modern`, NO `future`** — `'independence' \| 'federalism' \| 'nationalism' \| 'modern'`; cannot represent 2020/2024/2048 | a `future` band (or bands) for entries 15-16 | `types.ts:1337` |
+| **Year→era boundary table** | **None.** The only year→era logic is a single coarse helper `eraForYear` (`<1789 / <1830 / <1933 / else modern`) whose cut-years do NOT match the 16 boundaries; `currentEra` is otherwise a **hardcoded literal per scenario** | a boundary table keyed to the 16 starts | `AnytimeEventsPage.tsx:20-25`; `scenario1772.ts:97`; `scenario1856.ts:177` |
+| **Scenario boot** | **Hardcoded literal `GameState`** — fixed `startYear`/`phaseId` (1856: `year:1856, phaseId:'2.1.2'` starts *past* the draft; 1772: `phaseId:'2.1.1'` starts *at* it). No generic start-at-year-N path | a parameterized boot so the other 14 dates are cheap | `scenario1856.ts:150-153`; `scenario1772.ts:70-73` |
+
+**★ C. The era-beginnings-vs-per-term FORK (POST 4).** The creator wanted a start date at the **beginning of
+every presidential term** (many dozens); the developer argued for **era beginnings only** (the 16-entry roster)
+and **won** the current design. The creator wants to **restore per-term starts IF start dates become cheap to
+author** — so the roster is a **floor, not a ceiling**. A live scenario-boot fork for the roadmap: cheap
+scenario authoring unlocks per-term starts.
+
+**★ D. No 1865 start; "Lincoln lives" is a separate ask (POST 3/4).** Buyer asked for an **1865 / "Lincoln
+lives"** Reconstruction start. Creator: "Lincoln's presidency covers the Era of Nationalism, which begins with
+the 1856-1858 cycle." → **Ruling: an 1865 start is NOT planned** — you reach Reconstruction by *playing forward*
+from the 1856 era-beginning, because starts are **era-anchored** (mid-era starts like 1865 don't exist). A
+**"Lincoln lives" alt-history divergence** is a distinct, unaddressed counterfactual ask (a branch, not a start
+year); no commitment either way.
+
+**★ E. The "Give a Speech" speaker-by-era rule (`0adcd14c`) — doubly unbuildable.** The general-election "Give a
+Speech" campaign action's **eligible speaker** flips on the **primary era**:
+
+- **Primary era → the party NOMINEE** gives the speech.
+- **Pre-primary era → the party's VP (or faction-leader)** gives it.
+- The **primary-era boundary = "≥1 state has a primary"** (POST 1, designer-confirmed POST 2) — the exact #331
+  boundary the nomination era-selector must expose (it must gate not just caucus/convention/primary NOMINATION
+  but also downstream campaign-action eligibility).
+
+**SHIPPED: unbuildable on THREE counts.** (1) `grep factionLeaderId` in `src/` = **0** — there is no
+faction-leader pointer for the pre-primary speaker. (2) `vicePresidentId` (`types.ts:1568`) is **set only at
+scenario boot** for 1856 (`scenario1856.ts:156 vp?.id`) and **nulled on vacancy** — the presidential general
+**never populates a VP** (no P+VP ticket forms; the 12A ticket is #331/§30.48.3), so there is no VP to give the
+pre-primary speech. (3) There is **no primary-era detection** — `grep 'hasPrimary'`/"≥1 state has a primary" =
+**0**; the shipped `presPrimary` phase is *unconditional*, NOT the historical primary-era boundary. → the whole
+speaker-by-era rule cannot be evaluated in the build (the speaker pointers don't exist AND the era gate isn't
+detected). Owned on **#185** (speech speaker = nominee vs VP/faction-leader) with the #331 boundary.
+
+**→ Net (30.50.2):** the **authoritative 16-window roster** (SHARPENS #92 — it lacked a definitive date list;
+this IS it), of which the build ships **2/16** on a **4-value Era enum that stops at `modern`** with **no
+`future` band** and **no era-boundary table** (just one coarse `eraForYear` + per-scenario `currentEra`
+literals). Booting the other 14 needs hand-authored literals today (the DESIGNED target of the scenario-boot
+cluster #115/#186/#228). Plus a live **era-beginnings-vs-per-term fork**, the **no-1865 ruling**, and a
+**speech-speaker-by-era rule (#185) that is unbuildable** on three missing primitives (`factionLeaderId`, a
+post-election `vicePresidentId`, primary-era detection — the #331 boundary). (`0bde31bd#POST 1-4`;
+`0adcd14c#POST 1-2`; codebase as cited; `game-context.md` #92 / #115/#186/#228 / #206 / future-era /
+#185/#331.)
+
+#### 30.50.3 ★ The forum multiplayer game was LARGER than the SP build — Senate-Majority-Leader office+toolset (#330), party-platform ±5 swing (#184), contingent-election-to-the-House (#62/#84), SCOTUS election-challenge (#66, distinct from the #270 policy court), and the vacancy-fill CT-pull / House-empty / Senate-generate split (#154/#290) + faction-vs-party sniping (#1) — five feature-witnesses + a vacancy poll (designed; SHIPPED = only Speaker+ProTem, no platform, winner-take-all general with no House fallback, an abstract-policy court, and `vacateOffice` with ZERO fill logic)
+
+> **Source: `29902e8e` (Favorite playtest moments, Nov 2022 — each "favorite moment" is a feature-witness of a
+> SHIPPED-in-the-FORUM system: POST 4 LBJ Senate Majority Leader + toolset; POST 2 party-platform +5 swing +
+> faction-vs-party; POST 3 contingent election to the House; POSTs 5/6 the SCOTUS election-challenge) +
+> `cb91e00e` (Vacancy-filling design poll, ~Jan 2022 — the CT-pull-with/without-benefits toggle + the
+> House-empty/Senate-generate chamber split) + codebase (`types.ts:1111` `OfficeType` = only `SpeakerOfHouse` +
+> `SenateProTem`; `types.ts:1581-1582` `speakerId`/`proTemId`; `phaseRunners.ts:1883` the 2.2.1 leadership
+> phase; grep `platform`/`plank` = 0; `phaseRunners.ts:3752` the winner-take-all general, grep `contingent` = 0;
+> `phaseRunners.ts:3397-3415` the abstract-policy court, `types.ts:1548` `SupremeCourtCase`;
+> `phaseRunners.ts:2446` `vacateOffice`; grep `generate*Politician`/`randomPolitician` = 0).** The load-bearing
+> b60 finding: several "favorite moments" name systems the current SP build **does not ship** — proving the
+> forum multiplayer game was materially larger. Authority class: `29902e8e` = feature-witnesses (high
+> confidence the forum HAD these); `cb91e00e` = tier-4/5 design poll.
+
+**★ A. Senate Majority Leader = a MISSING office PLUS its designed toolset (#330 — CONFIRMED + UPGRADED).**
+POST 4: "my favorite moment was having **LBJ as the iron-fisted Senate Majority Leader**. **The suite of tools
+the game makes available at that point** really adds another level to the gameplay… added pressure if you're
+dealing with multiple human players."
+
+- **SHIPPED: 0% — only Speaker + Pro Tem.** `OfficeType` (`types.ts:1111`) has **only** `SpeakerOfHouse` +
+  `SenateProTem` — **NO** `SenateMajorityLeader`/`MajorityLeader`/`MinorityLeader`/`SenateLeader`. `GameState`
+  tracks only `speakerId` + `proTemId` (`types.ts:1581-1582`). Phase 2.2.1 (`phaseRunners.ts:1883`) elects
+  **Speaker + Pro Tem only**; the Pro Tem chair grants a **+1 Legislative skill and nothing else** — no "suite
+  of tools." `grep majorityLeader` in `src/` = **0**. The "iron-fisted" flavor maps to the shipped **`Iron
+  Fist`** trait (`types.ts:89`) — a **governance/PV modifier**, NOT the office or toolset.
+- **★ This CONFIRMS b58 #330's missing-office claim AND UPGRADES it:** the forum game shipped the office **WITH
+  an active leader toolset** ("the suite of tools the game makes available at that point"), so #330's scope goes
+  from "missing OFFICE" to "missing office **+ its designed LBJ toolset**." Requirement: add Senate Majority
+  (and likely Minority) Leader offices + a leader-action toolset.
+
+**★ B. Party platform → ±5 election swing (#184).** POST 2: "**breaking the old platform rules** to swing an
+election **+5** towards the GOP was nice."
+
+- **SHIPPED: 0% — no platform system.** `grep platform`/`Platform`/`plank`/`Plank` across the repo = **0**. The
+  forum game had a **party-platform mechanic** whose rules, when leveraged, could swing an election by a **large
+  fixed magnitude (+5)** toward a party; "the **old** platform rules" implies the rules had already been revised
+  at least once — a tuned, iterated system. Nearest shipped analog is `partyPreference`/`bias` (±5-clamped
+  levers, `phaseRunners.ts:3389,3412`), but there is **no player-chosen platform** that produces a swing. A
+  player-agency election lever with no build equivalent. Owner: **#184** (platform).
+
+**★ C. Contingent election to the House (#62/#84).** POST 3: "I like how 1840 sent **two consecutive
+Presidential elections to the House**."
+
+- **SHIPPED: 0% — winner-take-all, no House fallback.** `runPhase_2_9_4_PresidentialGeneral`
+  (`phaseRunners.ts:3752`) sums per-state EV and declares `winner = blueEv > redEv ? blueCand : redCand` — a
+  **higher-EV winner-take-all with no majority threshold, no House fallback, and no tie handling** (a
+  `blueEv === redEv` tie silently resolves to RED via `>`). `grep contingent` = **0**. The build is strictly
+  two-party (`PartyId = 'BLUE' \| 'RED'`), so the usual trigger (a 3rd candidate splitting the EC) cannot even
+  arise (2.9.3 third-party check no-ops, `engine.ts:70`). → the **12th-Amendment House contingent election** is
+  a designed forum system with **no build analog**. Owner: #62/#84 (likely NEW sub-item vs #185/#331).
+
+**★ D. SCOTUS election-challenge — distinct from the #270 policy court (#66).** POSTs 5/6: "the election which
+was **brought before the Supreme Court** in the 1840s playtest… Greens voted to hold up the winner in the state,
+red means they **agreed with challenging the result**." (POST 6 calls it hand-in-hand with the contingent
+election.)
+
+- **SHIPPED: 0% as an election-challenge.** `runPhase_2_5_3_Court` (`phaseRunners.ts:3397`) generates an
+  **abstract policy case** from a fixed title list, computes a conservative-vs-liberal **ideology headcount** of
+  the justices, logs a majority ruling, and nudges `partyPreference` by ±0.1. `SupremeCourtCase` (`types.ts:1548`)
+  = `{ title, description, decided, ruling?, effect? }` — **no linkage to any `ElectionResult`, no per-justice
+  vote record, no uphold/overturn of an election**; `pendingCourtCases` seed `[]` in both scenarios. → the
+  shipped court is a **policy-ruling flavor engine**; the **per-justice uphold/challenge vote on a contested
+  election** is a distinct forum system with no build analog. **Note the co-occurrence:** contingent election +
+  SCOTUS challenge were tied together in the *same* 1840s playtest → a designed **disputed-election resolution
+  track**. The per-justice court vote is modeled under **#111** (the modern election machine); this
+  election-challenge variant is **distinct from #270** (policy cases) — cross-ref **#66**.
+
+**★ E. Vacancy-fill: CT-pull-with/without-benefits + House-empty/Senate-generate split (#154/#290).** The
+`cb91e00e` poll debates how to fill an **elected seat** when its holder dies/vacates and **no free pol exists**.
+
+- **Option A — pull a pol off the Career Track** (the winning option, POST 5 "a combination of career tracks
+  win"). Open sub-decision: does the pulled pol **keep the skills/traits accrued during track time**? **WITH**
+  (POST 3, thematic: track pols ≈ Lt-Gov-tier, "rare enough it won't be OP") vs **WITHOUT** (POST 2/6, exploit
+  worry: else park all pols on tracks and **farm the benefits**). Left **unresolved**.
+- **Option B — procedurally generate a replacement** (the Senate fallback, POST 2/4): **bare-minimum stats** +
+  a **50/50 immediate-retirement roll** (half the time the seat stays effectively unfilled that cycle).
+- **★ House-vs-Senate split (POST 4, the genuinely new nuance):** **House → leave the seat EMPTY** (an unfilled
+  special election, so deaths in a tight House matter as a lost vote); **Senate → randomly GENERATE** (Option B),
+  because "a governor won't willingly **appoint someone of the opposite party**."
+- **SHIPPED: 0% fill logic.** The death/retire path is `vacateOffice` (`phaseRunners.ts:2446`) — it only **NULLS
+  the office pointer** (president/VP/speaker/proTem/chiefJustice→null; supremeCourt/senators/representatives/
+  governor/cabinet filtered, `:2449-2477`) with **ZERO backfill**; seats refill only at the next scheduled
+  election. `CareerTrack` pols exit only by aging out (`:427`) or a CC appointment — **no path pulls a track pol
+  into a vacated seat** (with or without benefits). No procedural replacement generator anywhere
+  (`grep generate*Politician`/`randomPolitician` = **0**), no special-election / governor-appointment path. → the
+  build **coincidentally matches the poll's HOUSE answer** (leave empty) but for **every** seat, without the
+  special-election framing, and implements **none** of the CT pull, the generator, the 50/50 retire, or the
+  House/Senate split. Owner: **#154** (vacancy-fill ladder; adds the with/without-benefits toggle + chamber
+  split as sub-decisions) + **#290** (the generator's bare-min-stat + 50/50-retire design intent).
+
+**★ F. Faction-vs-party sniping (#1) — corroboration only.** POST 2: "the balancing act of doing what is best
+for my faction vs my party… when to **strike at an allied faction to snipe a Congressional seat or governor's
+mansion** and when to play nice and cede seats." Restates the game's #1 strategic axis (faction-vs-party); in
+the forum game this is **inter-player** negotiation among allied humans in the same party. The build models
+factions + a two-party frame (`factionCenter`, faction-leader challenge `phaseRunners.ts:1962`,
+`partyPreference`), but the **seat-by-seat sniping/ceding between allied players** is a **multiplayer
+negotiation layer**, not an SP mechanic. Maps to the SP-vs-MP gap (#1); **no new delta**.
+
+**→ Net (30.50.3):** **five designed forum systems the SP build does not ship** — the Senate Majority Leader
+**office + its toolset** (CONFIRMS + UPGRADES #330 from "missing office" to "missing office + toolset"), the
+**party platform ±5 swing** (#184), the **contingent election to the House** (#62/#84), the **SCOTUS
+election-challenge** (distinct from #270's policy court; #66 / per-justice vote under #111), and full
+**vacancy-fill** (#154/#290 — `vacateOffice` has ZERO fill logic; the poll adds the CT-pull-with/without-benefits
+toggle + the House-empty/Senate-generate chamber split), plus faction-vs-party sniping (#1, corroboration).
+Collectively the strongest b60 evidence that the **forum multiplayer game was larger than the shipped
+single-player build.** (`29902e8e#POST 2/3/4/5/6`; `cb91e00e#POST 2/3/4/5/6`; codebase as cited;
+`game-context.md` #330 / #184 / #62/#84 / #66/#270/#111 / #154/#290 / #1.)
+
 ### 30.4 Authority hierarchy reminder
 
 When rule sources disagree:
