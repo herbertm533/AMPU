@@ -27673,6 +27673,289 @@ codebase `types.ts:24-41,62-117,182-186,1251-1291,1395,1780-1793`,
 `src/engine/constitutionalConvention.ts:52-58`, `src/data/scenario1856.ts:188`,
 `src/engine/electionEffects.ts:16`, `src/pv.ts` as cited.)*
 
+### 30.58 Scenario-boot OFFICEHOLDER-SEED model — from the authoritative 15-window start-date SEED matrix (`start-date-info` ingest, `Start_Date_Info.xlsx`) — the DATA that defines the game state at t=0: WHO holds every modeled office at each of the 15 playable start-date windows, the era-appropriate OFFICE-SET evolution (which offices exist per window — #345), the era-appropriate STATE roster (0→13→16→24→26→31→37→44→48→50 as boot data — #346), the boot-seeding MECHANIC (each named politician starts already holding that office, resolved to a draft-roster record — #344), the inauguration-boundary window convention, the vacant-seat / single-snapshot-turnover fidelity rules (#347), and the shipped-vs-designed reconciliation (shipped: 1772 empty + 1856 partial; designed: all 15 windows fully seeded). This is the ground-truth `BootSheet` content the §26.1 / §29.1 boot procedures consume.
+
+> **What this block is.** A **DATASET INGEST**, not a playtest (references NO
+> playtester — a playtester-name scan returned **0 hits**; every name in the
+> matrix is a real historical figure). The "source" is
+> `Copy_of_Start_Date_Info.xlsx` (single **"Offices"** tab, **1022 rows × 16
+> cols** = an office-name axis × 15 election-cycle start-date windows), the
+> authoritative **scenario-boot SEED**: who really held every modeled government
+> office at each of the game's **15 playable start-date windows**. It is the
+> **data spec** for the user directive *"the game will need to have the
+> associated politicians start in those offices when starting a game on the
+> specified start date."* It is the ground-truth `BootSheet` CONTENT the
+> already-documented boot procedures — **[§26.1](#261-the-mid-government-boot-shape-general)**
+> (the mid-government boot shape; the sheet's rows ARE its "sitting government"
+> + "state roster keyed to the boot year" bullets) and
+> **[§29.1](#291--the-scenario-boot-procedure-as-practiced-gap-115)** (the boot
+> procedure as practiced, gap #115) — consume; it SHARPENS that model at the
+> DATA level rather than adding a new procedure. It corroborates the **#92**
+> era-band / start-roster model from a non-forum source (15 data windows vs the
+> forum's 16, reconciled below), and the **#86 BootSheet-owns-per-year-boot-data**
+> keystone, **#115** boot procedure, and **#186** deterministic mid/late-cycle
+> boot. **The boot cluster is #86 / #92 / #115 / #186 — NOT #228** (third-party
+> vote-drain, unrelated). MINTS **FOUR** gaps (recorded in the game-pm digest and
+> in game-context b-entries): **#344** (seed era-correct officeholders at boot —
+> the PRIMARY requirement), **#345** (era-appropriate office-SET evolution as
+> boot data), **#346** (era-appropriate STATE roster + the 2024-26 ~280-seat
+> DATA HOLE), **#347** (single-snapshot TURNOVER design question). ★ **Shipped as
+> a boot-seed pipeline: ~2/15 windows (1772 empty + 1856 partial); the general
+> seed-offices-at-boot pipeline is DESIGNED, not built. NO code changes this
+> ingest.** All codebase citations re-verified against `src/` HEAD 2026-07-01
+> (`build1772Scenario`/`build1856Scenario` `GameContext.tsx:264-267`;
+> `cabinetSeatsForYear` `types.ts:1196-1208`; `scenario1856.ts:60-142`;
+> `expansionStates.ts`).
+
+#### 30.58.1 ★ The scenario-boot officeholder-seed DATA MODEL — the 15 start-date windows × the 7-band office taxonomy: the matrix shape, what a "window" means (the inauguration-boundary convention), and how a boot at window *D* selects both an office SET and a state ROSTER
+
+The sheet is a **matrix**: one axis is ~369 labeled office/seat rows (rows
+370–1021 are trailing blanks), the other is the **15 playable start-date
+windows**. Each cell = the real historical person who held that office at that
+start date; `n/a` = office did-not-exist-yet / state-not-admitted-yet; blank =
+seat unfilled (a *vacancy*, not an error — see §30.58.4). **2,480 distinct
+officeholders** span the matrix (NOT transcribed into this doc — this section
+documents STRUCTURE, EVOLUTION, and the boot MECHANIC only).
+
+**The 15 windows** (two-year election cycles — a start date + its first cycle):
+
+`1772-74 · 1788-90 · 1800-02 · 1820-22 · 1840-42 · 1856-58 · 1868-70 · 1892-94 ·
+1916-18 · 1928-30 · 1948-50 · 1972-74 · 2000-02 · 2012-14 · 2024-26`
+
+**What a window IS — the inauguration-boundary convention.** Each column = *"the
+administration that governs the 2-year cycle,"* NOT *"who held office on Jan 1 of
+the first year."* The sheet consistently picks the **INCOMING** president elected
+into the cycle (seated ~Mar pre-1937 / ~Jan post-1937), not the Jan-1 incumbent:
+Jefferson (not Adams, 1800), Buchanan (not Pierce, 1856), Grant (not A. Johnson,
+1868), Cleveland (not B. Harrison, 1892), Hoover (not Coolidge, 1928), Bush (not
+Clinton, 2000), Trump (not Biden, 2024). This is the **correct boot semantics**
+for the #86/#186 BootSheet (folded into #344's convention note, not a separate
+gap). It reconciles the 15 data windows against the **#92** 16-window forum
+roster: the two agree on shape (the forum's separate 1896-vs-1892 / 2020-vs-2024
+forks collapse to single columns here).
+
+**The 7-band office taxonomy** (~369 labeled rows; STRUCTURE only, no names):
+
+| Band | ~Count | Contents |
+|---|---|---|
+| Federal executive | 39 | President, VP, era-varying cabinet secretaries, ambassadors (one per country), DNI, CIA/FBI/NSA chiefs, Fed Reserve Chair, Joint Chiefs, Army Chief of Staff |
+| Military flag officers | 8 | Senior General + 3 Generals, Senior Admiral + 3 Admirals (**8, not the full corps** — a compression) |
+| Supreme Court | 10 | Chief Justice (`ChJ`) + up to 9 Associate Justices (`AssocJ`); **seat count grows by era** (§30.58.2) |
+| Congressional leadership | 14 | Speaker, House/Senate Majority + Minority Leaders + Whips, President Pro Tempore (**floor-leader seats era-gated** — §30.58.2) |
+| State Governors | 50 | `AL Gov` … `WY Gov` (**populated per admitted-state roster** — §30.58.3) |
+| State Senators | 100 | 2 per state |
+| State Representatives | 148 | **compressed apportionment** (`CA Rep 1..10`, small states 1–2) — deliberately NOT the real 435 |
+
+**The core selection rule.** A boot at window *D* must select **both** (a) the
+era-appropriate office SET for *D* (§30.58.2 — which offices exist) **and** (b)
+the era-appropriate state ROSTER for *D* (§30.58.3 — which states are admitted),
+then seat each named holder from column *D* into that office (§30.58.5 — the
+boot MECHANIC). Occupancy scales with the timeline: `1772-74 = 0 filled` (empty
+founding) → `1788 = 71` → ramping to **~300 by the modern era** (the 2024-26
+exception is the §30.58.6 data hole).
+
+#### 30.58.2 ★ Era-appropriate OFFICE-SET evolution as boot data (#345) — the modeled office set itself appears/vanishes by window, tracking real US institutional history — and the shipped `cabinetSeatsForYear` PARTIAL expression
+
+The sheet is **not a flat roster**: the office SET changes by era (historian-
+verified against `historical-context-start-date-seeds.md`). A boot must therefore
+key the *set of seats to fill* to the window, not assume a fixed federal shape.
+The transitions (office → real-history anchor → first/last window it appears):
+
+| Office (in-sheet label) | Real-history anchor | In-sheet window band |
+|---|---|---|
+| **Sec of War** | War Dept 1789 → superseded by National Security Act 1947 | 1788 → 1928 |
+| **Sec of Defense** (replaces War) | Sec of Defense effective **Sep 18, 1947** (Forrestal 1st) | 1948 → 2024 |
+| **Sec of Navy** | separate Navy Dept 1798 → folded into DoD via 1949 NSA amendments | 1800 → 1928 |
+| **PM Gen** (Postmaster General) | in cabinet until USPS spun off **Jul 1, 1971** (Postal Reorg Act 1970) | 1840 → 1948, then `n/a` from 1972 |
+| **Sec of Interior** | Dept of the Interior **Mar 3, 1849** | from 1856 |
+| **Sec of Agriculture** | made a cabinet dept **Feb 9, 1889** (USDA sub-cabinet 1862) | from 1892 |
+| **Commerce & Labor** | combined 1903 → **split into Commerce + Labor 1913** | from 1916 (split; the combined `Sec of Commerce and Labor` row reserved-but-empty) |
+| **HUD + Transportation** | HUD 1965, DOT 1966 | from 1972 |
+| **Energy / Education / VA** | Energy 1977, Education 1979, VA cabinet 1989 | from 2000 |
+| **Homeland Security** (`Sec of HL Sec`) + **DNI** (`Dir of Nat Intel`) | Homeland Security Act Nov 2002; DNI 2004 (IRTPA) | from 2012 |
+| **Fed Reserve Chair** | Federal Reserve Act Dec 1913; Board operating 1914 | from 1916 |
+| **CIA / FBI / NSA / Joint Chiefs** | modern national-security apparatus | modern windows only |
+| **SCOTUS seat count** | 6 (Judiciary Act 1789) → fluctuated 5–10 → **settled at 9 by Judiciary Act 1869** | 6 (1800–1820) → 7 → 9 (1840s+) |
+| **Congressional floor leaders** (Maj/Min Leaders + Whips) | party floor-leadership formalized early 20th c. (~1910s–20s); Speaker + Pres Pro Tem from 1789 | Maj/Min Leaders + Whips **only from 1916** |
+
+**Reserved-but-empty rows are intentional**, not errors: `Sec of Commerce and
+Labor` (the 1903–1913 combined dept), `Amb to Ger/Japan/Israel` (ambassadorships
+the sheet chose not to fill) — real gaps the boot should leave unseated.
+
+**Shipped-vs-designed (office-set evolution).**
+
+| | Shipped (verified) | Designed (this sheet, #345) |
+|---|---|---|
+| Cabinet growth | ✔ **PARTIAL** — `cabinetSeatsForYear(year)` (`types.ts:1196-1208`) grows the cabinet by 4 historical transitions: `[]` <1789 → State/Treasury/War/AG (1789) → +Navy (1798) → +PostmasterGeneral (1829) → +Interior (1849), **capped at 7 seats** | ✘ the sheet's set extends through **Sec of Defense (1948, replaces War), HUD/DOT (1972), Energy/Education/VA (2000), DHS/DNI (2012)** — none exist in the shipped `OfficeType` union (`types.ts:1114-1121`, 7 cabinet values) |
+| SCOTUS size | fixed by the boot's `supremeCourtIds` array (`scenario1856.ts:138,172`) — no era-conditional seat count | ✘ era-gated **6→7→9** seat growth is unmodeled |
+| Floor leaders | `speakerId` + `proTemId` shipped (`scenario1856.ts:169-170`); no Maj/Min-Leader/Whip fields | ✘ the **1916+ floor-leadership seats** (Maj/Min Leaders + Whips) have no shipped fields |
+| Modern nat-sec offices | absent | ✘ Fed Reserve Chair / CIA / FBI / NSA / Joint Chiefs / DNI — no shipped offices |
+
+So the shipped `cabinetSeatsForYear` is the **first, partial expression** of #345
+(era-conditional office set), covering only the 1789→1849 cabinet arc; the full
+office-set evolution across all 15 windows is **designed, not built**.
+
+#### 30.58.3 ★ Era-appropriate STATE roster as boot data (#346) — states populate as admitted (0→13→16→24→26→31→37→44→48→50), corroborating the `admitState` / `expansionStates` territory system
+
+The state axis (Gov + 2 Sen + Reps per state) **populates as states are
+admitted** — the boot must key the state roster to the window, not to the era
+enum ([§26.1 item 1](#261-the-mid-government-boot-shape-general) already states
+"a state roster keyed to the boot year, NOT to the era enum"). Per-window counts,
+historian-verified against real admission order:
+
+| Window | States | Bracketing admission anchor |
+|---|---|---|
+| 1772-74 | **0** | pre-Constitution — no states yet |
+| 1788-90 | 13 | original states (RI last to ratify, May 1790) |
+| 1800-02 | 16 | + VT (14, 1791), KY (15, 1792), TN (16, 1796) |
+| 1820-22 | 24 | Maine 23rd (1820), Missouri 24th (Aug 1821) — the Compromise pair |
+| 1840-42 | 26 | + AR (25, 1836), MI (26, 1837) |
+| 1856-58 | 31 | California 31st (1850); MN 32nd not until May 1858 → 31 correct |
+| 1868-70 | 37 | Nebraska 37th (Mar 1867) |
+| 1892-94 | 44 | the 1889–90 wave (ND/SD/MT/WA 39–42; ID/WY 43–44) |
+| 1916–1948 | 48 | AZ/NM 47th/48th (Jan/Feb 1912) completed the contiguous 48 |
+| 1972–2014 | 50 | AK/HI 49th/50th (1959) |
+| 2024-26 | **0 (data hole)** | ~280-seat gap — see §30.58.6; do NOT backfill |
+
+**Shipped-vs-designed (state roster).** The shipped territory system
+(`admitState`, `expansionStates.ts`) admits states **during play** (via the
+Territories page / God Mode / a future era event) — the annexable registry
+starts empty and states become real only on admission. What is **designed, not
+built** is *pre-seeding the correct admitted-state roster at boot for each of the
+15 windows*: today only 1772 (0 states, matches) and 1856 (31 states, but its
+Gov/Sen/Rep occupants are filled **algorithmically**, not from this snapshot —
+§30.58.5). The sheet is the authoritative per-window boot state roster.
+
+#### 30.58.4 ★ The single-snapshot TURNOVER design question (#347) + vacant-seat fidelity + the government-birth boundary — the accuracy rules the boot seeder must honor
+
+The sheet must pick **ONE** holder per office per 2-year window, but real history
+sometimes changed mid-window. Four fidelity facts the boot seeder must respect:
+
+1. **Mid-window presidential turnover (#347 — the open design question).**
+   - **1840-42 Harrison/Tyler.** Sheet seeds `President = W.H. Harrison` + `VP =
+     Tyler` — a pairing real for only **31 days** (Harrison died Apr 4, 1841;
+     first VP succession). A single living-President snapshot; the real arc is a
+     death/succession *event*.
+   - **1972-74 Nixon/Agnew.** Sheet seeds `President = Nixon` + `VP = Agnew` —
+     real only through **Oct 10, 1973**. This window actually contains TWO
+     successions (Agnew→Ford Dec 1973; Nixon→Ford Aug 1974); the single seed
+     captures neither.
+   - **The design question (#347):** does the boot seat the single fixed-point
+     snapshot (deliberate simplification — the ONLY thing the sheet supports) OR
+     schedule the succession as a scripted era event shortly after boot? **Open
+     for the human.**
+2. **Vacant-seat fidelity (Reconstruction, 1868-70).** Ex-Confederate states
+   correctly show **vacant** Senate/House seats (not yet readmitted — e.g. `VA
+   Sen = vacant`; readmissions Jun 1868, VA/TX/MS/GA in 1870). **Force-filling
+   would be LESS accurate.** The boot seeder must be able to seat a **vacant**
+   office (no name), not require a holder for every seat — and (open) whether a
+   vacant boot seat then enters the normal appointment/election fill pipeline.
+   This is a boot-fidelity constraint under #344, cross-ref [§26.1](#261-the-mid-government-boot-shape-general)
+   (which already notes "some seats VACANT to be appointment-filled").
+3. **Government-birth boundary (1788-90).** In 1788 there is NO president,
+   cabinet, Supreme Court, or Attorney General — those exist only from 1789
+   (AG/DOJ Sep 1789). The sheet leaves several such offices blank for this
+   window; a 1788 boot models the *founding of the executive*, not a running
+   one (consistent with `cabinetSeatsForYear` returning `[]` for `year < 1789`).
+4. **Deliberate compression (every modern window) — NOT a historical error.**
+   148 House seats (not 435); 8 flag officers (not the full corps); one
+   ambassador per country; one snapshot per 2-year cycle. These are **game-scale
+   abstractions**; downstream roles must not "correct" them toward real
+   headcounts.
+
+#### 30.58.5 ★ THE BOOT-SEEDING MECHANIC (#344, the primary requirement) — how the era-appropriate office set + state roster + officeholder snapshot define the game state at t=0, and the officeholder→draft-roster JOIN
+
+**The requirement (user directive).** When a game begins at start date *D*, each
+politician named in column *D* must **start already holding their office** —
+President, VP, cabinet, SCOTUS, congressional leadership, and every state
+Gov/Sen/Rep — using the era-appropriate office set (§30.58.2) and state roster
+(§30.58.3) for *D*. The matrix IS the authoritative seed for that.
+
+**The mechanic, as designed (the boot ⇒ game-state-at-t=0 pipeline):**
+
+1. **Select the window** *D* from the 15 (the chosen start date).
+2. **Compute the office SET** active at *D* (§30.58.2) — which cabinet seats,
+   SCOTUS size, floor-leader seats, and modern nat-sec offices exist.
+3. **Compute the state ROSTER** admitted at *D* (§30.58.3) — which states have a
+   Gov + 2 Sen + N Reps to seat.
+4. **For each modeled seat in that set/roster**, read column *D*: seat the named
+   holder into that office in the snapshot; leave **vacant** seats unseated
+   (§30.58.4 fidelity); skip offices that read `n/a` (don't exist yet).
+5. **JOIN each named holder to a draft-roster record** — the boot seeder must
+   resolve each sheet-named officeholder to a politician record in the draft
+   dataset (**#338/#339** the ground-truth roster; **#342/#343** the intended
+   model). This sheet seeds **WHO ALREADY HOLDS OFFICE**; the politician-dataset
+   seeds **WHO EXISTS TO DRAFT** — **complementary, not overlapping**; the join
+   between them is an import-integration note under #344. **Open:** behavior on a
+   miss (generate a filler pol per #115, or hard error).
+6. The resulting snapshot (seated government + admitted states + the era's
+   faction/ideology decks per [§26.1](#261-the-mid-government-boot-shape-general))
+   IS the game state at t=0.
+
+**Shipped-vs-designed (the boot mechanic).**
+
+| Window | Shipped boot behavior | Matches the sheet? |
+|---|---|---|
+| **1772-74** | `build1772Scenario` (`GameContext.tsx:267`; `scenario1772.ts`) — **cold founding, 0 incumbents**, the party drafts the first government from scratch | ✔ **YES** — the 1772-74 column is entirely `n/a` (0 filled, 0 states); shipped empty founding is consistent |
+| **1856-58** | `build1856Scenario` (`scenario1856.ts:60-142`) — seats **President=Buchanan** + a **partial** cabinet (State + GeneralInChief from seeds; Treasury/War/Navy/AG/Interior/PMG = `null`, `:128-136`), Court from `AssociateJustice`/`ChiefJustice` seeds (`:138-139`); **senators/reps filled ALGORITHMICALLY** (region/party fillers via `Math.random`, `:76-108`) — NOT from an officeholder snapshot | ⚠ **PARTIAL** — the President=Buchanan anchor matches; the sheet additionally supplies Buchanan's **full** cabinet, 9-seat Court, congressional leadership, and 31-state Gov/Sen/Rep roster that the shipped boot only partially expresses. **This sheet IS the authoritative seed the shipped 1856 boot should build against.** |
+| **the other 13 windows** | **no code boot** — `startNewGame` accepts only `scenarioId: '1772' \| '1856'` (`GameContext.tsx:24,264`); the game literally cannot boot any other window | ✘ **DESIGNED, not built** — this matrix is their authoritative seed spec |
+
+★ **Net shipped coverage: ~2/15 windows boot, and only 1772 is a full match; 1856
+is partial; the other 13 windows and the general seed-offices-at-boot pipeline are
+DESIGNED, not built.**
+
+#### 30.58.6 The 2024-26 DATA HOLE (#346) + data quirks — the do-NOT-backfill column and the minor sheet artifacts to flag
+
+**The 2024-26 column is real-but-partial — a ~280-seat DATA HOLE.** Only ~20 of
+~1021 seats are filled (fed-executive only — President=Trump, VP=Vance, and a
+partial cabinet); **0 states, no Court, no Congress, no state Gov/Sen/Rep rows**
+(vs ~300 for other modern windows). This is a **data gap to flag, NOT to infer**
+(user directive this ingest). A 2024 boot must NOT backfill missing holders from
+another source; **open** (for the human): does a 2024 boot (a) refuse to boot
+until the column is completed, or (b) fall back to inferring modern incumbents —
+directive is neither, flag only.
+
+**Data quirks (for accuracy — not committed as game content):** `Sec of HL Sec` =
+Homeland Security; `Sec of VA` = Veterans Affairs; `PM Gen` = Postmaster General.
+Duplicate `General` / `AssocJ` / `Admiral` labels are **distinct seats** (multiple
+holders of the same rank/bench), not errors. An anomalous `PM` 2-letter state code
+is likely a stray/typo row (flag, don't block). `Meville Fuller` in-sheet =
+Melville Fuller (CJ 1888–1910), a sheet typo. **Data-quality caveat (#186 carries
+`b15af728`):** the sheet has some seat/incumbent errors — a seat-correctness pass
+is a precondition to wiring it to a boot.
+
+**→ Net (30.58):** FOUR new mints carried for the tech-lead / roadmap-planner —
+**#344** (scenario-boot must SEED era-correct officeholders at boot: for each of
+the 15 windows, seat every named holder into the era-appropriate office set +
+state roster at t=0, resolving each to a draft-roster record, honoring vacant
+seats and the inauguration-boundary convention — the PRIMARY requirement, this
+matrix is its data spec); **#345** (era-appropriate office-SET evolution as boot
+data — the shipped `cabinetSeatsForYear` `types.ts:1196-1208` is a PARTIAL
+expression capping at 7 cabinet seats/1849; the full arc adds Sec-of-Defense/
+HUD/DOT/Energy/Education/VA/DHS/DNI + SCOTUS 6→9 + 1916 floor leaders); **#346**
+(era-appropriate STATE roster 0→13→…→50 as boot data + the 2024-26 ~280-seat DATA
+HOLE, do-NOT-backfill); **#347** (single-snapshot TURNOVER design question —
+1840 Harrison/Tyler, 1972 Nixon/Agnew: fixed-point snapshot vs scheduled
+succession event). SHARPENS **#86** (this matrix is the ground-truth `BootSheet`
+content #86 specs — sharpened, not duplicated; #86 already anticipates vacant
+seats + mid-government seating), **#92** (concrete SEED DATA behind the era-band /
+start-roster model — 15 data windows reconcile with the forum's 16),
+**#115/#186** (the authoritative INPUT DATA the boot procedure/deterministic-boot
+consume; #186 carries the seat-correctness caveat), and the **#338/#339 + #342/#343**
+politician datasets (the officeholder→roster JOIN under #344 — this seeds WHO
+HOLDS OFFICE, those seed WHO EXISTS to draft). **The boot cluster is #86 / #92 /
+#115 / #186; #228 is UNRELATED (third-party vote-drain).** NO code changes this
+ingest. *(Sources: `docs/game/sources/start-date-info/analysis.md`
+§Provenance/§Windows/§Office-taxonomy/§Office-evolution/§State-roster/§Occupancy/§Requirement/§Reconciliation/§Data-quirks;
+`docs/game/playtest-digests/start-date-info.md` (#344/#345/#346/#347 mints, the 5
+divergence flags, the open questions); `docs/game/historical-context-start-date-seeds.md`
+§per-window / §office-evolution / §state-roster / §divergence-flags (verified
+anchors); full 2,480-name matrix `startdate_offices.csv` (gitignored — NOT
+transcribed); game-context b-entries #344/#345/#346/#347 (and the corroborated
+#86/#92/#115/#186); codebase `src/state/GameContext.tsx:24,264-267`,
+`src/data/scenario1772.ts:69-71`, `src/data/scenario1856.ts:60-142,169-172`,
+`src/types.ts:1114-1121,1196-1208`, `src/data/expansionStates.ts` as cited.)*
+
 ### 30.4 Authority hierarchy reminder
 
 When rule sources disagree:
