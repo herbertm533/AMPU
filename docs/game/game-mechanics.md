@@ -26425,6 +26425,379 @@ Collectively the strongest b60 evidence that the **forum multiplayer game was la
 single-player build.** (`29902e8e#POST 2/3/4/5/6`; `cb91e00e#POST 2/3/4/5/6`; codebase as cited;
 `game-context.md` #330 / #184 / #62/#84 / #66/#270/#111 / #154/#290 / #1.)
 
+### 30.51 Rulings folded from batch 61 — ★★ the AUTHORITATIVE CPU-rules changelog (the exact numeric spec for the draft off-ideology gamble + the 5-step career-track assignment + early-removal + the NEW 75%/5-pol 19-priority RELOCATION list built to manufacture kingmaker-protégé pairings; ★★ the CONTESTED relocation-cap b58-vs-b61; #232/#289/#38/#128/#323/#20) + ★★ the secession / Civil-War TRIGGER ruleset (slavery-active + reach John Brown's Raid ⇒ Southern Secession ⇒ CW; abolish-before-John-Brown ⇒ SKIP the war; the NEW #336 Nullification-Crisis SC-only secession; #58/#288/#336) + ★ SCOTUS 0%-programmed designer confirmation + the per-case outcome→effect model + 2-4-cases/half-term cadence + amendment-only reversal (#270; #66/#288) + ★ the Era-of-the-Future event-chain / predicate DSL (the `A->B` + `(other requirement)` AND/OR/NOT + green=bills/red=president-actions notation = the shipped 1772-only `Predicate`; the NEW event-BLOCKS-events one-to-many negative edge; #258/#221/#169/#206) (`b83f7fd0-cpu-rules-changelog` / `da7ffaa8-slavery-abolition-secession-trigger` / `bace280c-scotus-ahistorical-outcome` / `45601d66-scotus-case-review` / `8f7ae0b9-era-of-future-event-chains`)
+
+> **Batch-61 character.** FIVE threads, all **design-spec / mechanics-Q&A** (no eras played this batch). The
+> load-bearing one is `b83f7fd0` — an **AUTHORITATIVE CPU-rules designer changelog** authored by **@MrPotatoTed**
+> (the CPU/AI maintainer): a running tally of **ratified** changes to the CPU decision rules ("bolded in the
+> rules documents," tested in "an extended experiment, and I love them" POST 5), so these are the canonical CPU
+> behaviors the app is *meant* to implement — **tier-2** design intent, not a playtest observation. It supplies
+> the **exact numeric spec** for four core CPU decisions (draft off-ideology gamble, career-track assignment,
+> early removal, relocation) plus two forward asides (crisis-legislation votes in committee, competing-bill
+> guard). The other four are **mechanics rulings**: `da7ffaa8` (the secession/CW **trigger** chain — senior
+> playtesters + the #336 NEW nullification exception), `bace280c` + `45601d66` (the two SCOTUS threads —
+> `bace280c` owns the ahistorical-outcome / case→effect model, `45601d66` owns the case-roster curation +
+> cadence; **vcczar directly confirms SCOTUS is unprogrammed**), and `8f7ae0b9` (the Era-of-the-Future
+> event-chain / predicate DSL). **★ The load-bearing b61 output is that the shipped CPU is far simpler than the
+> changelog spec on ALL FOUR core decisions**, so `b83f7fd0` is a large **SHARPEN** of the CPU cluster, not new
+> mechanics — plus a **contested relocation-cap** (b58 `97aa3f6f` = 4 successes/half-term/alt-excluded vs b61
+> `b83f7fd0` = 5 attempts/turn/alt-included = the shipped unit) that needs a designer reconciliation. All
+> shipped-vs-designed verified against `src/` HEAD 2026-07-01. Authority class: `b83f7fd0` = **designer-ratified
+> CPU rules** (highest of the batch); `da7ffaa8`/`bace280c`/`45601d66` = **senior-playtester / GM rulings**;
+> `8f7ae0b9` = **player-authored content spec + designer refresh intent**.
+
+#### 30.51.1 ★★ The AUTHORITATIVE CPU-rules changelog — draft off-ideology gamble (25%/25-PV) + the 5-step career-track ASSIGNMENT procedure + early-removal + the NEW 75%/5-pol 19-priority RELOCATION list (built to manufacture kingmaker-protégé pairings) + ★★ the CONTESTED relocation-cap + the two committee asides (#232/#289/#38/#128/#323/#20) — the batch's richest section (designer-ratified; SHIPPED is far simpler on ALL FOUR core decisions)
+
+> **Source: `b83f7fd0` ("CPU Rule Updates", an AUTHORITATIVE CPU-rules changelog by @MrPotatoTed, 6 posts) —
+> POST 1 the draft rule + 5-step track assignment + early removal; POST 4 relocation OLD-vs-NEW + priorities
+> 1-15; POST 6 community-added priorities 16-19; POST 2/3 the two forward asides; POST 5 Ted ratifies ("I love
+> them. Much more realistic than before") + codebase (`phaseRunners.ts:33-53` `pickBestForFaction`;
+> `phaseRunners.ts:422-452` `runPhase_2_1_2_CareerTracks` + `bestAvailableTrack` `:392-399`;
+> `phaseRunners.ts:427` the 20-year-only removal; `phaseRunners.ts:623-679` `runPhase_2_1_4_Relocations`;
+> `types.ts:236,237,242,245,247` the career/relocation constants; `phaseRunners.ts:1275-1293` `protegeCandidates`
+> same-state gate `:1282`; `phaseRunners.ts:3463-3496` committee; `phaseRunners.ts:3498-3580` floor).** The single
+> most load-bearing CPU-rules document in the batch: the exact numeric spec for four CPU decisions, all of which
+> the shipped CPU implements as small greedy heuristics. Authority class = **tier-2 designer-ratified CPU rules**.
+
+**★ A. NEW DRAFT RULE (2.1) — off-ideology gamble now gated on a 25-PV gap (POST 1).** Verbatim: *"If the best
+politician on the board who meets their priority… doesn't meet their draft ideologies, CPU will attempt to draft
+them **25% of the time** if the non-ideology politician's PV is **25+ points higher** than the CPU's highest
+available politician with their draft ideology."*
+
+| Element | Designer spec (b83f7fd0 POST 1) | SHIPPED (`phaseRunners.ts:33-53`) |
+|---|---|---|
+| Trigger | best-priority pol on the board is **OFF** the CPU's draft ideologies | (no off-ideology concept post-1772) |
+| Roll to grab the off-ideology pol | **25%** | **none** — deterministic |
+| **NEW gate (the change)** | fires only if off-ideology PV is **≥ 25 points higher** than best in-ideology | **none** — no PV-gap threshold |
+| Otherwise | drafts the in-ideology pol (100%-certain) | picks the **max weighted score** |
+
+- **SHIPPED: 0% of the gamble — a deterministic score-max.** `pickBestForFaction` scores every pool pol as
+  `pvCache + (personalityIdeoMatch ? 25 : 0) + (eligIdeos.includes ? 50 : 0)` and takes the **max** (`:45-52`).
+  It **never rolls 25%** and **never checks a 25-PV gap**. The ideology influence is a **+25 flat score bonus**
+  (LW/RW/Center personality bucket, `:46-49`); the strict-eligible **+50** bonus applies **ONLY** in the 1772
+  inaugural/expansion draft (`isExpansion1772`, `:38-43,49`) — in every later draft there is **no ideology gate
+  at all**, so "off-ideology" is not even modeled. **What's new (the 25% roll + 25-PV threshold) is 0% built.**
+  (SHARPENS #232.)
+
+**★ B. CPU CAREER-TRACK ASSIGNMENT — a 5-step procedure (POST 1).** Runs when the CPU assigns its rookies to
+track slots:
+
+| Step | Designer spec (b83f7fd0 POST 1) |
+|---|---|
+| **1. Keep-off-track gate (NEW)** | any track-eligible pol with **≥ 3 in ANY skill** (Command/legislative/governing/admin/military/judicial) has a **50% chance to be kept OFF the track** (so e.g. Hamilton can serve in a cabinet). |
+| **2. First-pass fill (75% each, in order)** | roll **75%** per slot in order **Backroom → Legislative → Governing → Admin → Military → Judicial**; a failed roll leaves the slot **temporarily vacant**. |
+| **3. Private track** | place the **highest-PV** remaining eligible rookie into **Private**. |
+| **4. Retry the failed slots** | re-attempt the step-2 slots that failed, **same order**. |
+| **5. Force-fill the unfillable** | if slots remain open but no rookie is *immediately* eligible, **randomly** pick a rookie who must still pass the **50% roll**, else the slot stays vacant. |
+
+Per-slot selection: **Backroom** = a pol from the state where the faction has the **most** of its pols — **UNLESS**
+the faction already has a **kingmaker (active or otherwise) under age 60** in that state; then walk to the next
+most-populated state until one *without* such a kingmaker is found (don't stack kingmakers one-per-state).
+**Legislative/Governing/Admin/Military/Judicial** = the rookie with the **highest applicable skill**. **Private** =
+**highest-PV** unassigned. **Tie-breakers (in order): (1)** favor a pol whose state is **NOT yet a US State**;
+**(2)** favor a pol who is **NOT** the highest-skilled in another field (the dual-skilled pol takes the *other*
+slot); **(3) random**.
+
+- **SHIPPED: ~0% of the procedure — one line, "best uncapped skill."** `runPhase_2_1_2_CareerTracks` Pass 1
+  (`phaseRunners.ts:422-452`) is the **entire** CPU logic: for each track-less CPU pol **age < 50**, assign
+  `bestAvailableTrack` = the pol's **highest skill below 5** whose track isn't full (`:392-399`, ties by `SKILLS`
+  order); a pol finishing 20 years re-tracks to next-best if **age < 60**. Cap = `CAREER_TRACK_CAP = 5` per
+  faction per track (`types.ts:237`). **ABSENT:** the ≥3-skill **50% keep-off gate**, the ordered **75%-per-slot**
+  rolls, the **Private = highest-PV** rule, the retry pass, the force-fill **50%** roll, the
+  **Backroom-kingmaker-state** selection, and **all three tie-breakers**. Shipped assigns by raw skill only — no
+  PV, no state, no kingmaker awareness. (SHARPENS #289/#24; NEW-flag the ≥3-skill keep-off gate, the ordered 75%
+  fill, and the Backroom-kingmaker-state pick.)
+
+**★ C. Early CAREER-TRACK REMOVAL (before 20 years) (POST 1).**
+
+| Element | Designer spec (b83f7fd0 POST 1) | SHIPPED (`phaseRunners.ts:427`) |
+|---|---|---|
+| Removal chance | **+5% every 4 years** → 5% @4yr, 10% @8yr, 15% @12yr, … | removal **ONLY** at `careerTrackYears >= 20` (`CAREER_TRACK_MAX_YEARS`) |
+| Hard gate (NEW) | **won't remove** a pol whose home state has **not reached territory status** | **none** — no territory gate |
+| Backfill | only puts an **unqualified** rookie on a track if **no qualified** one exists | — |
+| Roll scope | **per individual politician** | — |
+
+- **SHIPPED: 0% — 20-year-only, no early roll, no territory gate.** `CAREER_ODDS` (`types.ts:229-234`) governs
+  *threshold gains* (skill 50%, themed-trait 15→75%, random 12%), **not** removal. Ted (POST 1): "This is how it
+  already worked, I just specified that you roll for each individual politician" — i.e. the +5%/4yr ladder and
+  territory gate are pre-existing *canon* here, the *per-pol* roll is the clarification. Neither the ladder nor
+  the territory gate exists in `src/`. (SHARPENS #289/#24; NEW-flag the territory-status gate.)
+
+**★ D. CPU RELOCATIONS — the NEW 75%/up-to-5-pols, 19-priority list (POST 4, extended POST 6).** OLD rule (for
+provenance): **20%** chance the AI moves **ONE** random eligible pol (eligible = not Senator/Rep/Governor). **NEW
+rule:** **75%** chance the AI attempts to move **up to FIVE** pols this phase; roll the **75% per attempt** and
+stop when one fails or all five have attempted; for each success walk the **priority list from the top** and take
+the first priority with an eligible pol+destination; ties → random. The list is a **kingmaker-pairing-manufacturing
+engine** — priorities **1-9 (the majority)** exist to move a rookie protégé into a **kingmaker's state** (a
+pairing requires **same-state** co-location; verified `protegeCandidates` gates on `c.state === k.state`,
+`phaseRunners.ts:1282`):
+
+| # | From → To (KM = creates a kingmaker-protégé pairing; OP/reg/under = over-/regular-/under-populated) |
+|---|---|
+| **1-3** | **overpopulated** → underpop-alt / regular-alt / any-alt, each **KM-pairing** |
+| **4-6** | **regular** → underpop-alt / regular-alt / any-alt, each **KM-pairing** |
+| **7-9** | **any** → underpop-alt / regular-alt / any-alt, each **KM-pairing** |
+| **10-11** | **likeable**, overpop → underpop **same-region** / any underpop |
+| **12-13** | **not-unlikeable**, overpop → underpop **same-region** / any underpop |
+| **14-15** | **unlikeable + Teflon**, overpop → underpop **same-region** / any underpop |
+| **16-17** (POST 6) | **overpopulated** → underpop-alt / any-alt (pairing NOT required) |
+| **18-19** (POST 6) | **any** → underpop-alt / any-alt (pairing NOT required; Ted flags #19 as a possible problem, keeps it "for the historical aspect") |
+
+**Hard rule (POST 4): a pol who is unlikeable and does NOT have Teflon will NOT be moved at all** (only 14/15 admit
+unlikeable pols, and only *with* Teflon).
+
+- **SHIPPED: neither the OLD nor the NEW rule — a flat gate + thin-state heuristic.**
+  `runPhase_2_1_4_Relocations` (`phaseRunners.ts:623-679`) rolls a **per-pol** gate —
+  **`cpuGate.withAltState = 0.3`** if a usable altState exists (→ move to it), else
+  **`cpuGate.withoutAltState = 0.1`** → move to a **thin state** by (same-region → fewest-residents → id)
+  (`:657-674`; `types.ts:245`). Success then rolls the band odds (`sameRegionAlt .75 / sameRegion .5 /
+  crossRegionAlt .4 / crossRegion .2`, `types.ts:242`). **NO** 19-priority list, **NO** likeable/unlikeable/Teflon
+  filter, **NO** kingmaker-pairing targeting (relocation never reads `protegeId`/`Kingmaker`). The shipped
+  0.3-per-pol-with-alt gate is closest to priorities 16-19 (move-to-alt regardless of pairing) but ungated by
+  population/pairing. (SHARPENS #38; COUPLES #38 ↔ #128/#129 — the relocation-drives-pairing coupling is unbuilt.)
+
+**★★ E. CONTESTED RELOCATION CAP — record the b58-vs-b61 conflict (needs a designer reconciliation).** The cap
+*value and unit* differ across the two designer sources and the build. **This is a real conflict to flag, not to
+silently resolve:**
+
+| Source | Cap | Unit | Alt moves | ≈ per half-term |
+|---|---|---|---|---|
+| **b58 `97aa3f6f` POST 4** (30.48.1) | **4** state-movements (**successes**) | per **HALF-TERM** | **EXCLUDED** | 4 |
+| **b61 `b83f7fd0` POST 4** (this section) | **5** (implied by "up-to-5 **attempts**") | per **PHASE / turn** | **INCLUDED** | ~10 |
+| **SHIPPED** (`RELOCATION_ATTEMPTS_PER_TURN`, `types.ts:247`) | **5** **attempts** (fails counted) | per **TURN** | **INCLUDED** | ~10 |
+
+→ b61 **agrees with SHIPPED on unit (attempts, per-turn) and nearly on value (5)** but **conflicts with b58's 4
+successes/half-term** on both unit and value. **Recommendation for tech-lead:** adopt b61's per-turn-attempt
+framing (matches the build; the b61 19-priority list is the detailed *selection* spec) and treat b58's "4
+successes/half-term" as a **separate success-cap decision to be resolved by a designer**. Both live under **#38**.
+
+**★ F. Two committee/floor asides — both 0% built (POST 2, POST 3).**
+
+| Aside | Designer spec | SHIPPED |
+|---|---|---|
+| **Crisis-legislation vote IN COMMITTEE** (POST 2) | crisis bills should be judged at the **committee** vote too, not only on the floor | `runPhase_2_6_2_Committee` (`phaseRunners.ts:3463-3496`) resolves each bill with a **single chair pass-roll** `clamp((sameParty?0.85:0.25)+cardVoteBias(chair),0,1)` — **NO crisis-bill branch**; there is **no crisis-legislation category in the data model at all** (grep — "crisis" in `src/` = the `Crisis Manager`/`Crisis Gov` trait + event copy, not a bill type). The whole crisis-bill vote path (floor **and** committee) is unbuilt. |
+| **Competing-bill / duplicate-fulfillment guard** (POST 3) | after committee, **strip** a redundant bill OR **lower** the AI's signing odds if it already signed an equivalent | `runPhase_2_6_3_Floor` (`phaseRunners.ts:3498-3580`) tallies each passed bill **independently** (faction 0.92 / party 0.6 / other 0.15 − ideology-dist − card bias); `applyEffect` runs per-bill regardless of overlap — **no cross-bill dedupe**, no post-committee strip, no reduced signing odds. |
+
+(Both SHARPEN #323 — the CPU bill-scoring gap; NEW-flag the crisis-bill category and the competing-bill guard.)
+
+**→ Net (30.51.1):** the shipped CPU is a set of small greedy heuristics — **score-max draft**, **best-skill track
+assignment** (cap 5, age-gated), **20-year-only removal**, and a **0.3/0.1 per-pol relocation gate**. This
+designer-ratified changelog replaces each with a precise multi-step ruleset: the **25%/25-PV draft gamble**, the
+**5-step track-assignment procedure** (incl. the ≥3-skill keep-off gate, ordered 75% rolls, Backroom-kingmaker-
+state pick, 3 tie-breaks), the **+5%/4yr territory-gated early removal**, and the **75%/up-to-5 19-priority
+relocation list** built to manufacture kingmaker-protégé pairings — plus two genuinely-missing systems
+(crisis-legislation committee votes, competing-bill guard). All are **wiring/replacement over existing data**
+(tracks, kingmakers, altState, seeded `chance`), not new state. The **relocation cap is contested** (#38, above).
+(`b83f7fd0#POST 1/2/3/4/5/6`; codebase as cited; CORROBORATES the #20 CPU-coherence umbrella.)
+
+#### 30.51.2 ★★ The secession / Civil-War TRIGGER ruleset (#58/#288 + the NEW #336) — slavery-active + reach John Brown's Raid ⇒ Southern Secession ⇒ CW; abolish-before-John-Brown (amendment OR compensated-emancipation) ⇒ SKIP the war; the NEW Nullification-Crisis SC-only secession (Tariff of Abominations, slavery-independent) (designed; the engine is a year-gated, slavery-AGNOSTIC script — the entire trigger chain is UNBUILT)
+
+> **Source: `da7ffaa8` ("Abolish Slavery Question", a secession/CW trigger-ruleset Q&A, 5 posts) — POST 1
+> Bushwa777 asks the trigger question + names the two abolition mechanisms; POST 2 the abolish-before-John-Brown
+> ⇒ SKIP-CW answer; POST 3-4 Arkansas Progressive's "slavery-active is the ONLY path to a Southern Secession"
+> rule + the nullification exception; POST 5 matthewyoung123's Tariff-of-Abominations SC-only detail (the NEW
+> #336) + codebase (`types.ts:1329` `isSlaveState` decl; `StatesPage.tsx:20` its SOLE reader; `phaseRunners.ts:3175`
+> `admitState` writer; `types.ts:1152-1155` `SLAVE_STATES_1856`; `phaseRunners.ts:2921-2950` John Brown modulation;
+> `eraEvents1856.ts:82,107,136` the three endgame events; `phaseRunners.ts:2980-2982` the ≥2-defection war inject;
+> `phaseRunners.ts:3240-3254` `startWar`; `types.ts:326,360` `GradualEmancipation` card; `types.ts:1394`
+> `amendmentProcess`).** The authoritative statement of **what triggers a Southern Secession / Civil War in AMPU**
+> — the missing spec for a ~0%-shipped engine. Authority class = **senior-playtester rulings** (answering
+> @vcczar's absence); #336 is a **NEW gap** (b61).
+
+**★ The canonical causal chain (as designed):**
+
+1. **Slavery-active is the ONLY path to a (main) Southern Secession** (POST 3-4, AP): *"basically the only way to
+   get a Southern Secession is slavery is active and if you abolish slavery without the war then the war does not
+   occur."* → the **`isSlaveState` / slavery-active state is the direct CAUSE** of the bloc secession. No active
+   slavery ⇒ no Southern Secession ⇒ no Civil War.
+2. **John Brown's Raid is the POINT-OF-NO-RETURN gate** (POST 2): *"If you abolish slavery… and you haven't hit
+   John Brown's Raid… You skip the civil war."* → abolishing slavery **before** the existing 1859 event
+   "John Brown's Raid on Harpers Ferry" cancels the war; abolishing **after** you have "hit" it does not (by then
+   the war is locked in).
+3. **Two named abolition mechanisms are legitimate** (POST 1): **(a)** a **constitutional amendment**, or **(b)** a
+   **compensated-emancipation law** (a bill that pays slaveholders). Either, *before* John Brown, skips the CW.
+4. **★ EXCEPTION — the NEW #336 Nullification-Crisis SC-only secession** (POST 4-5): a **SECOND, INDEPENDENT**
+   secession path, **NOT gated on slavery** — trigger = the **Nullification Crisis** driven by the **Tariff of
+   Abominations**; scope = **ONLY South Carolina** secedes (single-state, not a bloc); interaction = if the **main
+   (slavery-driven) secession also fires, SC JOINS the CSA**, otherwise SC's nullification exit can stand alone (an
+   independent SC).
+
+**Net trigger model:** `slavery active` AND reach `John Brown's Raid` ⇒ Southern Secession ⇒ **Civil War**;
+`slavery abolished` (amendment / compensated-emancipation) **before** John Brown's Raid ⇒ **no secession, no CW**;
+**separately** `Nullification Crisis (Tariff of Abominations)` ⇒ **SC-only** secession (slavery-independent) ⇒ SC
+folds into the CSA iff the main secession fires.
+
+**★ SHIPPED — the ENTIRE trigger ruleset is UNBUILT; the CW is a year-gated, slavery-AGNOSTIC script.**
+
+| Designed piece | SHIPPED reality (verified `src/` HEAD) |
+|---|---|
+| `isSlaveState` gates the secession engine | **`isSlaveState` is read by ZERO secession/CW code.** Declared `types.ts:1329`, seeded in the state data + `admitState` (`phaseRunners.ts:3175`: `isSlaveState = region==='South'\|\|'Border'`); its **only reader in all of `src/` is a display cell** — the "Slave?" column on `StatesPage.tsx:20`. It drives **nothing**: not elections, not secession, not events. (The **#288** slavery-flag wall; b61 adds the SECESSION TRIGGER as another intended consumer the flag does not feed.) |
+| slavery-active + John Brown ⇒ CW | **Secession is a YEAR-GATED SCRIPT.** `johnBrown1859` (`eraEvents1856.ts:82`, year 1859) is a plain 3-response meter/enthusiasm event — **NOT a point-of-no-return gate** (nothing keys off "have you passed it yet"). `southern-secession-threat` (`:107`, `year >= 1860`) carries `startWar` ('American Civil War' vs 'Confederate States') on response **r1** and **fires on the year gate alone** — no slavery-active / abolition check. `secession-winter` (`:136`, `year >= 1861`) is a cabinet-defection sim that decays loyalty by **(state `region` × ideology)** — **not** the slavery flag — and **force-injects `startWar` when ≥2 cabinet members defect** (`phaseRunners.ts:2980-2982`). → **the CW fires regardless of whether slavery is active or was abolished.** There is NO gate implementing rules 1-2. |
+| John Brown modulation reads the mutable flag | **The John Brown proxy uses a HARDCODED constant.** `phaseRunners.ts:2921-2950` routes pro-/anti-slavery cabinet reactions via **`SLAVE_STATES_1856`** — a frozen 15-element string array (`types.ts:1152-1155`, own comment: "a state proxy for slavery position") — NOT `state.isSlaveState`. An in-game abolition (were it possible) would **not** change John Brown's behavior. |
+| abolition mechanism flips the flag | **NO abolition mechanism exists — slavery cannot be abolished in-game.** The only slavery-adjacent artifacts are a **`GradualEmancipation` ideology card** (`types.ts:326,360`; faction flavor tag with **no legislative effect**) and the **`amendmentProcess` article** (`types.ts:1394`; sets only *how* amendments pass — 3/4 · 2/3 · unanimous — **no** slavery content). **No bill, law, or amendment can flip `isSlaveState` to false.** Both of Bushwa777's named mechanisms (POST 1) are unbuilt. |
+| the #336 Nullification / SC-only path | **NO nullification path AT ALL.** grep `nullif\|Nullif\|Tariff of Abom\|abominations` across `src/` → **0 hits.** No Nullification Crisis event, no Tariff of Abominations, no single-state secession mechanic, no tariff trigger. Rule 4 is entirely unrepresented (not even a scripted stub, unlike the main CW). |
+| a real CSA / state-secession model | **`startWar` is a BARE war record — no CSA, no state secession, no Reconstruction.** `phaseRunners.ts:3240-3254` only pushes `{ id, name, enemy, startYear, warScore:0, generals, battles:[] }` to `snap.wars`. "Confederate States" is a **string label** on a war record, not a modeled polity; **no state leaves the Union**, no EV/territory transfer, no readmission. The designed "SC joins the CSA" / 11-CSA-states outcome has no representation. |
+
+**→ Net (30.51.2):** the build has the *pieces* (a slavery flag, a John Brown event, secession/CW events with
+`startWar`) but **none of the causal wiring** — no slavery gate, no abolition mechanism, no John-Brown
+point-of-no-return, no nullification path, no CSA polity. Requirement: gate the existing secession events on the
+slavery flag (not on year), add an abolition mechanism (amendment / compensated-emancipation law) that flips the
+flag, add the John-Brown point-of-no-return, and add the #336 single-state nullification exit that the main-CW
+code can later absorb. (SHARPENS #288 [the flag's authoritative downstream consumer] + the secession-engine gap;
+**#336 is NEW** — the tariff-driven SC-only path is UNOWNED by #58/#288. Cross-ref the b55 canonical
+secession/Reconstruction ruleset in 30.45.1. `da7ffaa8#POST 1-5`; `game-context.md` #58/#288/#336.)
+
+#### 30.51.3 ★ SCOTUS — 0% programmed (designer-CONFIRMED) + the per-case outcome→effect model + the 2-4-cases/half-term cadence + the amendment-only reversal link (#270; #66/#288 cross-ref) — the case roster + effect model are pure content/spec; the shipped court is a 4-string per-turn coin-flip nudging `partyPreference ±0.1`
+
+> **Source: TWO sibling SCOTUS threads. `bace280c` ("Supreme Court Case Question", 4 posts) — POST 1 Bushwa777's
+> ahistorical 7-1 *Prigg v. PA* + does-it-flip-the-fugitive-slave-law Q; POST 2 vcczar "if the spreadsheet
+> doesn't say anything to that effect, ignore it for now"; ★ POST 3 vcczar **"I don't think Anthony has
+> programmed any Supreme Court stuff yet"**; POST 4 MrPotatoTed's per-case "would-it-change-the-game-if-flipped"
+> authoring problem. `45601d66` ("Supreme Court case review", 7 posts) — POST 1 the case roster + the **2-4-per-
+> half-term** cadence; POST 3 dkh64 "the cases don't seem to affect meters"; POST 5 the amendment-only-reversal
+> ruling; POST 6-7 the conditional Trump-v-Anderson case + codebase (`types.ts:1548-1556` `SupremeCourtCase` +
+> its dead `effect?` slot `:1555`; `types.ts:1587` `pendingCourtCases`; `scenario1856.ts:175`/`scenario1772.ts:95`
+> both seed `[]`; `phaseRunners.ts:3397-3415` `runPhase_2_5_3_Court`; `types.ts:1394` `amendmentProcess`).**
+> `bace280c` owns the ahistorical-outcome / case→effect model; `45601d66` owns the roster curation + cadence;
+> consolidation merges both under **#270**. Authority class = **GM/designer rulings** (vcczar directly confirms
+> the system is unprogrammed).
+
+**★ A. Designer confirmation — SCOTUS is UNPROGRAMMED (vcczar, `bace280c` POST 3).** *"I don't think Anthony has
+programmed any Supreme Court stuff yet, unless I'm mistaken."* **Code-verified — essentially correct.** SC exists
+only as inert scaffolding:
+
+- **`pendingCourtCases` is DEAD STATE.** Seeded `[]` in **both** scenarios (`scenario1856.ts:175`,
+  `scenario1772.ts:95`) and **never written or read** anywhere in `src/` (no producer, no UI). Zero authored cases
+  ship.
+- **`SupremeCourtCase.effect?` is a DEAD SLOT.** The type (`types.ts:1548-1556`) carries an optional
+  `effect?: EraEventResponseEffect` — the data model *can* hold a per-case consequence — **but nothing reads it.**
+  The type has **no Yea/Nay split, no `points`, no Landmark/importance tier, no legal-question field distinct from
+  `description`, and no precedent/overturn link**, so it cannot represent the curated roster's structure.
+- **The only live court logic is a 4-string coin-flip.** `runPhase_2_5_3_Court` (`phaseRunners.ts:3397-3415`)
+  fires on `chance(0.5)`, picks one of **4 hardcoded abstract strings** ('Property rights vs. federal regulation',
+  'Interstate commerce dispute', 'Free speech under wartime laws', 'State sovereignty over federal authority'),
+  rules by **ideology headcount** (Con/Trad/RW-Pop vs Lib/Prog/LW-Pop justices), logs a majority ruling, and nudges
+  **`partyPreference` by ±0.1** (conservative → −0.1, liberal → +0.1). It **never touches `pendingCourtCases`,
+  never names a real case, never applies an `effect`.** So a case *outcome* (historical vs. ahistorical) has **no
+  mechanical effect** (dkh64's "the cases don't seem to affect meters," `45601d66` POST 3 — CONFIRMED).
+
+**★ B. The ahistorical-outcome / per-case effect model (the design spec).** The player's in-game court voted
+**7-1 "Yay" on *Prigg v. Pennsylvania*** — an unhistorical outcome — and expected it to **negate the fugitive-slave
+law**. vcczar's ruling: a case carries an authored consequence **only if the source spreadsheet specifies one**;
+absent that the verdict is **cosmetic**. MrPotatoTed (POST 4) defines the unbuilt authoring pipeline **per case**:
+**(1)** research the real holding + its counterfactual → **(2)** decide whether a reversed verdict would materially
+change AMPU state (many cases may be inert/symbolic) → **(3)** author a concrete **effect** (a law/flag/meter
+change) for the non-inert ones (candidate home: the dead `SupremeCourtCase.effect`), **incl. ahistorical verdicts**
+(the 7-1 Prigg must be able to diverge in consequence from history). **★ The Prigg counterfactual has no target:**
+there is **no persistent fugitive-slave-law flag** — the nearest surface is legislative-only ("Fugitive Slave Act
+Strengthening" + "Personal Liberty Law" `BILL_TEMPLATES`, one-shot meter/IG effects), **not** a policy flag a
+court could toggle (cross-ref the **#288** slavery-flag gap).
+
+**★ C. Case roster + the 2-4-per-half-term cadence (`45601d66` — content spec).** A working **spreadsheet** (not
+in-app) holds **8 named cases** (4 from 2022: Dobbs, NFIB v. OSHA, NYSRPA v. Bruen, Thompson v. Clark; 4 staged:
+Cooley 2021, 303 Creative 2023, Kennedy v. Bremerton 2022, Rahimi 2024) plus **~11 candidate adds** (Trump v. US,
+Loper Bright, Grants Pass, Murthy, SFFA v. Harvard, Skrmetti, FSC v. Paxton, Trump v. CASA, Learning Resources,
+Mahmoud v. Taylor, Trump v. Anderson). Design **cadence target = 2-4 most impactful cases PER HALF-TERM**
+(half-term = 2-yr buckets 2021-23 / 2023-25 / 2025-now), selection bar = Wikipedia "landmark decisions."
+**★ CADENCE MISMATCH:** the shipped court is **NOT half-term-bucketed** — 2.5.3 runs on the normal governance turn
+loop and fires ~50% of the time it runs (`chance(0.5)`), with no per-half-term "2-4 cases" quota anywhere.
+
+**★ D. Conditional / branching case triggers + the amendment-only reversal link.** **Trump v. Anderson** "might
+not occur without a Trump-like presidency" (POST 6-7) — a case whose availability is **conditional on a specific
+presidency type** (tied to gov actions that "discriminate against former secessionists" for federal office). The
+dead `SupremeCourtCase` type has **no precondition/trigger field** to express this. **Reversal is amendment-only**
+(vcczar `45601d66` POST 5): *"The only one that exists are amendments, like the 16th Amendment overturning
+Pollock."* No ordinary bill can reverse a ruling — **only a constitutional amendment**. **SHIPPED:** amendments
+exist **only as a founding-convention article** (`amendmentProcess`, `types.ts:1394`; `constitutionalConvention.ts`
+picks the passage bar); there is **no post-founding amendment-proposal mechanism** and **no code linking any
+amendment to reversing a court ruling** — the reversal mechanism is **forum lore / manual GM adjudication, not a
+shipped feature**. (The amendment mechanism itself is owned by #39/#119/#64.)
+
+**→ Net (30.51.3):** SCOTUS is **~0% programmed** (designer-confirmed). The design owes: an **8-named + ~11-
+candidate case roster** to seed `pendingCourtCases`; a **per-case outcome→effect model** (each case needs a
+"what changes if flipped" effect, incl. ahistorical verdicts — the dead `effect?` slot is the candidate home, but
+it needs Yea/Nay + points + a persistent-policy-flag target the current `EraEventResponseEffect` cannot fully
+express); a **2-4-cases-per-half-term cadence** (vs the shipped per-turn coin-flip); **conditional/branching
+triggers** (Trump-v-Anderson needs a precondition field); and the **amendment-only reversal link** (needs the
+post-founding amendment mechanism, #39/#119/#64). (SHARPENS #270; CROSS-REF #66 [the abstract court already
+consumes justice ideology] + #288 [the missing fugitive-slave-law flag]. `bace280c#POST 1-4`; `45601d66#POST
+1/3/5/6/7`; codebase as cited.)
+
+#### 30.51.4 ★ Era of the Future + the event-chain / predicate DSL (#258; the future-era cluster; #221/#169/#206) — the `A->B` + `(other requirement)` AND/OR/NOT + green=bills/red=president-actions notation maps 1:1 onto the shipped 1772-only `Predicate`/`evalPredicate`; the NEW event-BLOCKS-events one-to-many NEGATIVE edge; the two future bands (Near 2024-48 / Far 2048-2100) are 0% built (no `future` Era value)
+
+> **Source: `8f7ae0b9` ("Era of the Future: additions", a content-authoring + event-chain-model thread, 7 posts)
+> — vcczar wants to refresh the Era of the Future (its AI content predates ChatGPT/Midjourney, "dated and too
+> general"); Arkansas Progressive maps the dependency chains + posts the notation. POST 2 the two bands; POST 3
+> the notation table + the Climate-Control BLOCKS pattern + fragmentation chains; POST 4/6 more AI content; POST
+> 5/7 cross-chain + deep-chained requires + codebase (`types.ts:1337` the `Era` enum [no `future`];
+> `types.ts:1487-1504` `Predicate`; `eraGraph.ts:12` `evalPredicate`; `eraGraph.ts:107-116` `selectEraGraphNode` +
+> `ERA_GRAPH_1772`; `eraGraph.ts:150-151` the president/cabinet decider ban; `eraEvents1856.ts` hardcoded
+> `if(year>=)` blocks).** The clearest player-authored spec of AMPU's **predicate-gated, event-chain content
+> model** — the exact model the code already implements **for 1772 only**. Authority class = **player-authored
+> content spec + designer refresh intent** (tier-3/4).
+
+**★ A. The event-chain / predicate NOTATION (AP, POST 3) maps 1:1 onto the shipped `Predicate`.**
+
+| Symbol (AP's DSL) | Meaning | Shipped equivalent |
+|---|---|---|
+| `A -> B` | **B fires FROM** A having occurred (directed dependency edge) | `{ eventCompleted: 'A' }` in B's `precondition` |
+| `(other requirement)` | additional conditions (meters, etc.), combinable **AND / OR / NOT** | `meterAtLeast/AtMost`, `interestAtLeast`, `diplomacyAtLeast`, `flag`, … under `all`/`any`/`not` |
+| **Green** text | node is a **bill** (legislative content primitive) | the shipped legislation system (#221) |
+| **Red** text | node is a **president action** (executive content primitive) | `decider:'president'` node — **but `validate()` FORBIDS it in the 1772 graph** (see D) |
+| "X **blocks** [list]" | X's completion **suppresses** a set of downstream events | **no first-class edge** (see C) |
+
+Concrete authored predicates confirm the mapping: compound AND-gate (`(Federal Reserve AND US on Cryptocurrency
+standard) -> …`), meter-gated node (*Great Climate Migration* requires planet-health = 1 or 2), OR-fork (*Blue
+Scare* from `ACP controls Presidency` OR `Socialist Party controls Presidency`), deep AND+NOT+historical-state
+chain (*Russia Fragments* requires `… AND (Russia has NOT fragmented) AND (Russia had been Communist at one
+time)`), and cross-chain requires (*Turkey-Japan Anti-US Pact* requires Turkey→Superpower which requires Russia's
+collapse).
+
+- **SHIPPED: the predicate/event-chain model IS shipped — but for 1772 ONLY.** `Predicate` (`types.ts:1487-1504`)
+  is a serializable AND/OR/NOT tree over `yearAtLeast/AtMost`, `eventCompleted`, `eventChose`, `meterAtLeast/AtMost`,
+  `interestAtLeast`, `diplomacyAtLeast`, `warActive`, `warOutcome`, `stateAdmitted`, `officeControlledByPlayer`,
+  `rosterHasSkill`, `flag`. `evalPredicate` (`eraGraph.ts:12`) interprets it recursively; `selectEraGraphNode`
+  (`:107-116`) walks `ERA_GRAPH_1772` filtering by `n.precondition`. **This is precisely AP's `A -> B` +
+  `(other requirement)` AND/OR/NOT notation** — `eventCompleted` = the `->` edge, meter/interest predicates =
+  `(other requirement)`, `not` = the NOT conditional. (Strong new WITNESS for **#258**.)
+
+**★ B. 1856 has NO graph.** `eraEvents1856.ts` gates purely on **hardcoded `if (year >= …)` blocks** (as this
+batch's `da7ffaa8` also shows — `:107`/`:136`) with **no** `precondition`/`Predicate`/`GraphNode` reference. So
+even the shipped modern-ish scenario doesn't use the graph model; the future era would be the graph's **third**
+home and would need it ported.
+
+**★ C. The NEW event-BLOCKS-events one-to-many NEGATIVE edge.** POST 3: **"Climate Control being invented blocks
+the following events:"** — a single completed event suppresses a *set* of later disaster events (10.0 CA quake,
+continent-sized New-Orleans hurricane, Great Climate Migration→Pro-Nationalist violence, AZ/TX 135°F). **This is a
+one-to-many negative dependency declared from the blocker's side.** SHIPPED: **not a first-class edge type.** The
+only negation is `{ not: Predicate }` combined with `{ eventCompleted: id }` — i.e. Climate-Control-blocks-disasters
+is expressible **only** by hand-adding `{ not: { eventCompleted: 'climate_control' } }` to the `precondition` of
+**each** blocked node individually; there is **no blocker-side "suppresses: [templateId…]" declaration** (grep
+`blocks\|blockedBy\|excludes\|mutex\|cancels\|preempts` in `eraEvents1772.ts` → none). An ergonomic/expressive gap
+over the current per-blocked-node negation. (NEW sub-item under **#258** — propose a blocker-side `suppresses:
+[...]` primitive or mutex/exclusion groups; flag if unowned.)
+
+**★ D. The two future bands + the red-president-action decider ban.** POST 2 names **Era of the Near Future =
+2024-2048** and **Era of the Far Future = 2048-2100**, with band membership itself a gating dimension (the Chinese
+Clone War is Far-Future-only). **SHIPPED: future era = 0% built** — `Era` (`types.ts:1337`) =
+`'independence' | 'federalism' | 'nationalism' | 'modern'`, **no `future`** ("future" appears in `src/` only in
+code comments); only two scenarios + two era-event files ship; neither band nor any 21st-century content exists.
+**★ The red-text president-action nodes need the 1772-scoped decider ban lifted:** `eraGraph.validate()`
+(`eraGraph.ts:150-151`) **throws** if a node uses `decider: 'president'` or `'cabinet'` (correct pre-1789 — no
+President), so president-action nodes are **not a general graph primitive today**; a future era would *require*
+them as a supported decider type. (This is the **#169** executive/president-action tension — the 1772-scoped
+decider ban must be lifted for post-1789 graphs.)
+
+**→ Net (30.51.4):** AP's `->` + `(other requirement)` AND/OR/NOT + green=bills/red=president-actions notation **is
+the #258 model**, which is shipped for **1772 only** (`eraGraph.ts`/`ERA_GRAPH_1772`), absent in 1856 (hardcoded
+`if(year>=)`), and nonexistent for the **future era (0% built — no `future` Era value)**. NEW: the **event-BLOCKS-
+events one-to-many negative edge** (Climate-Control-blocks-disasters), emulable today only per-blocked-node via
+`{ not: { eventCompleted } }`; plus the large future-content corpus (AI/energy-crisis/enshittification, climate,
+China/Russia fragmentation, ideology-takeover war chains) and the red-president-action decider ban that must be
+lifted (#169). (CORROBORATES the future-era cluster [#206 bands], #221 [bill/president-action primitives], #169
+[president-action nodes]; SHARPENS #258 + its NEW block-edge sub-item. `8f7ae0b9#POST 2/3/4/5/6/7`; codebase as
+cited.)
+
 ### 30.4 Authority hierarchy reminder
 
 When rule sources disagree:
