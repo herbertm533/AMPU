@@ -27507,6 +27507,172 @@ The sheet is a **SUPERSET on flat-event count** (2,475 vs the forum threads' hun
 
 **→ Net (30.56):** TWO new mints carried for the tech-lead — **#340** (per-response Resolve-ABILITY: add a `resolveAbility: SkillKey` (default `admin`) + `modification` field to `EraEventResponse` and a seeded-RNG resolution step that grades success/bungle → selects the effect + Points sign; keep DISTINCT from `EraEvent.decider` the selecting OFFICE) and **#341** (office-points + 10%-next-election carry: add an office-points delta to `EraEventResponseEffect` + a durable ±1 next-election modifier wired into `calcStateVote`/the presidential general). SHARPENS **#258** (the 1,664 `Requires` clauses are the authoritative flat DATA; the forum `8f7ae0b9` chain-DSL is the STRUCTURE the flat sheet lacks — the interpreter must extend from 1772-graph-only to all bands), **#221** (Type = the scripted-event genre field; Percent Chance = the fire-probability field), **#248** (the 5-value Type ⊂ the 33-value subtype axis; the Judicial-7/Economics-71 skew), **#206** (the sheet is the first authoritative source populating the 151-event future band; both future bands still lack an `Era` enum slot), **#262** (the 2,475/16 vs ~105/2 gap quantifies the coverage dimension). *(Sources: `docs/game/sources/era-events/analysis.md` §Schema/§Coverage/§Era/§Type/§Precondition/§Response-count/§MODEL-RECONCILIATION/§RECONCILE-mandate/§Data-quality; `sample.md` (Gaspée, SpaceBotUSA, Population-Decline, Conciliatory-Resolution); `eraevos.csv` spot-reads (Pullman `Resolve A`/`Office Points Lost`/`Special Rules`; Louisiana `Resolve A`; SpaceBotUSA); `docs/game/playtest-digests/era-events-dataset.md`; `docs/game/historical-context-era-events.md` §1-5; game-context b-entries #340/#341 (and #258/#221/#248/#206/#262); codebase `types.ts:1337,1448-1482,1487-1504`, `src/engine/eraGraph.ts`, `src/data/eraEvents1772.ts` as cited.)*
 
+### 30.57 Politician DATA MODEL v2 — the 182-column intended schema + the 2024 additions (`pol-additions-2024` ingest) — the WIP "Vstyle" TARGET model (name decomposition + family/dynasty FIELDS #194 + Historic-vs-Draft Value #339 + a three-stage temporal skill ARC #342 + full demographics with a natural-born → presidency gate #343 + per-pol scheduled party-flip/ideology-shift/relocation #4/#171/#38 + the election-point ladder #189 + bio #338) mapped field-by-field to the shipped flat static `Politician` (`types.ts:1251-1291`) and to the shipped 63-col ground-truth roster (§30.55), plus the 146-figure roster-expansion additions and their import-hygiene rules (#240)
+
+> **What this block is.** A **DATASET INGEST**, not a playtest (references NO
+> playtester — the workbook's `Playtesters` tab was dropped and 7 playtester
+> "vanity" rows were removed from Vstyle in preprocessing; also filtered: 69
+> `#VALUE!` rows). The "source" is `4b5d4ca7-Copy_of_Pol_additions_2024.xlsx`,
+> which does **two** things at once. (1) A **roster-expansion pass**: a community
+> proposal list of **146 real politician ADDITIONS** (`Pols 2024` tab; 145 of 146
+> genuinely new vs the §30.55 7,349-roster) plus **224 Vstyle figures** (221
+> genuinely new), fattening the roster's two thinnest seams — the dense-but-
+> incomplete **founding bench** (obscure 1st–5th-Congress US Reps + Revolutionary
+> officers the 1772 scenario draws from) and its **sparsest band (2001+)**, here a
+> deliberate **2024-cycle wave**. (2) A **schema R&D pass**: the `Vstyle sheet` tab
+> is the **182-column intended politician DATA MODEL (v2)** — the designer's far-
+> richer successor to both the shipped flat `Politician` type and the 63-col ground-
+> truth roster of §30.55. It is the single clearest statement in the KB of *where
+> the politician data model is meant to go*: **name decomposition, first-class
+> dynasty/family FIELDS, full demographics with a natural-born-citizen presidency
+> gate, a three-stage career skill ARC, dated party-flip/ideology-shift/relocation
+> schedules, and an election-point ladder** — almost none of which the flat shipped
+> type can express. It **SHARPENS** a large cluster of existing gaps
+> (#240/#216/#238/#239/#4/#171/#38/#189/#319/#338/#339 and — a JUDGMENT CALL —
+> #194) from the intended-DATA-MODEL side, and mints **TWO** genuinely-new gaps
+> (recorded in game-context b-entries **#342** temporal skill arc, **#343**
+> citizenship → presidency gate). ★ **This is the WIP TARGET schema — the docs
+> treat it as the INTENDED model, ~0% shipped as a data model, NOT current
+> behavior.** All codebase citations re-verified against `src/` HEAD 2026-07-01
+> (`Politician` `types.ts:1251-1291`; `SkillKey`/`Skills` `:24-41`; `Expertise`
+> `:182-186`; `ConstitutionalArticles.presidentialEligibility` `:1395`).
+
+#### 30.57.1 ★ The 182-column intended politician DATA MODEL (v2) — the full "Vstyle" TARGET schema (verified header-by-index against `vstyle_clean.csv`) mapped category-by-category to the shipped flat static `Politician` (`types.ts:1251-1291`) + the 63-col ground-truth roster (§30.55): where each dimension MATCHES / is PARTIAL / is ABSENT — the name decomposition, ★ family/dynasty FIELDS (#194), Historic-vs-Draft Value (#339), ★ the three-stage temporal skill ARC (#342, vs shipped STATIC `Skills`), full demographics + the ★ natural-born → presidency gate (#343), ★ per-pol scheduled party-flip/ideology-shift/relocation (#4/#171/#38), and the election-point ladder (#189)
+
+Each Vstyle row is a fixed-shape **182-column** authored record (cols 0–181; the
+last content column is `Bio` at index 179, then 2 trailing empties). It is a
+**relational, time-aware, demographically-tagged** characterization; the shipped
+`Politician` (`types.ts:1251-1291`) is a **flat, static stat block**; the §30.55
+ground-truth roster is a **flat 63-column** snapshot. The full schema by category,
+with the shipped mapping (S = shipped `Politician`; R = §30.55 roster):
+
+| Vstyle category (col range, #cols) | Fields | Shipped reality (S / R) | Map |
+|---|---|---|---|
+| **identity + name decomposition** (0–6, 7) | Full Name, **PoliticianID**, **First / Middle / Surname / Suffix**, Wiki | S: single `firstName`/`lastName` (`:1253-54`), `id` is a slug; R: single Full Name | **PARTIAL** — a stable `PoliticianID` + name parts are a real key for the roster's known duplicate-name problem (#240); ABSENT as decomposed fields |
+| **★ family / dynasty** (7–10, 4) | **Dynasty, Politician Father, Politician Mother, Politician Spouse** | S: NO family/parent/spouse field (grep `dynasty`/`father`/`mother`/`spouse` over `src/` = 0, excluding the unrelated Convention `fatherOfConstitution`); R: at most an implied "Dynasty" grouping | **ABSENT** — the **first-class-FIELD** form of the #194 dynasty graph (parent→child + marriage edges as columns) |
+| **values** (11–13, 3) | Special Draft, **Draft Value**, **Historic Value** | S: NO stored value — `computePV` DERIVES PV at runtime (`pv.ts`); R: single stored `Draft Value` (§30.55.3) | **PARTIAL/ABSENT** — **#339**, and NEW here: splits **Historic Value** (realized weight) from **Draft Value** (draft-time prestige) — two scores |
+| **state / team / ideology** (14–16, 3) | Initial State, Initial Team Color, Initial Ideology | S: `state`/`partyId`/`ideology` (`:1255,1265,1266`); R: same 3 | **MATCH** — Red/Blue + ideology remain **era-relative, anchored to Draft Year** (#4; see §30.55.3) |
+| **★ temporal lifecycle** (17–24, 8) | **Peak Abilities Year**, Draft Year, Historic Retirement, Age at Historic Death, Birth Year, Death Year, **Year turns 25**, **Year turns 75** | S: `birthYear`/`deathYear?`/`age`/`retiredYear?`/`draftedYear?` (`:1267-87`) | **PARTIAL** — richer than shipped; `Peak Abilities Year` + turns-25/75 exist to drive the temporal skill arc (next row) |
+| **★ temporal skills — First/Midway/Historic × 6** (25–42, 18) | {First-Year, Midway, Historic} × {Command, Legislative, Governing, Judicial, Military, Administative[sic]} | S: `skills: Skills` is **STATIC** (`:1271`; `Skills = Record<SkillKey, number>` `:41`) + separate static `command` (`:1281`); no time dimension | **ABSENT (MAJOR)** — a **three-stage career skill ARC** (entry → peak → historic ceiling): skills GROW over a career. **★ NEW #342.** ★ Same **Command + 5, NO `backroom`** as the roster (re-confirms **#319** from the intended-model side) |
+| **expertise** (43–63, 21) | INITIAL EXPERTISE + Total (Historic) Expertise + 19 axes (Agriculture … **Army**, Naval … Welfare) | S: `expertise: Expertise[]` = **19 axes** (`:182-186`), matches EXCEPT authored **"Army"** vs shipped **"Military"** (`:185`) | **MATCH (naming delta)** — reconcile authored "Army" → shipped "Military" on import (#216/#240); INITIAL-vs-Total mirrors the skill-arc idea for expertise |
+| **interests** (64–72, 9) | Total + 8 (Civil Rights, Expansionist, Nationalist, Pacifist, Left-Wing Activist, Reformist, Theocrat, Right-Wing Activist) | S: `interests: string[]` (`:1282`) | **MATCH** — the interest-card axis, authored as booleans |
+| **trait-gain years** (73–77, 5) | Obscure Removed, Year Gains Celebrity / Leadership / Military Leader / Controversial | S: no scheduled trait-acquisition field (`Politician` has no timed trait-gain) | **ABSENT** — dated trait acquisition; folds under **#342** (the temporal layer; cf. §30.55.1's unmodeled `Year Gains Celebrity`) |
+| **traits** (78–134, 57) | 57 boolean traits (superset of the roster's 55) | S: `Trait` union = **55** (`:62-117`) | **PARTIAL** — **#216**; +3 beyond even the 55-roster set: **Everyman** (col 113), **Lawful** (col 123), **Union Loyalist** (col 135) (see §30.57.1 note below) |
+| **★ demographics** (135–154, 20) | **race×6** (White/Black/Hispanic/Asian/Native American/Tribal), **religion×9** (Muslim/Mormon/Non-Religious/Buddhist/Hindu/Jewish/Catholic/Protestant + White-Protestant default), **citizenship** (Natural Born / Foreign Born), **gender** (Man/Woman), **sexuality** (Straight / Openly LGBT) | S: **NO demographic field of any kind** in `src/` (grep = 0) | **ABSENT (MAJOR)** — the representation-gate substrate: **#238** (gender→suffrage) + **#239** (the race×religion×sex tuple + curated-override flags), here **extended with sexuality + citizenship** as concrete columns |
+| **★ natural-born → presidency gate** (150–151, within demographics) | Natural Born Citizen vs Foreign Born Citizen | S: NO per-pol citizenship field; the ONLY citizenship-eligibility concept is a **scenario-wide Constitutional-Convention ARTICLE** `presidentialEligibility: 'natural_born' \| 'any_citizen'` (`types.ts:1395`; set in `constitutionalConvention.ts:52-58`, seeded in `scenario1856.ts:188`) that is **authored but NEVER read/enforced against any candidate** (grep of `src/engine` finds it only where set, never in an election check) | **ABSENT (NEW GATE)** — **★ NEW #343**, Art. II §1. Distinct from the #238 **suffrage** gate (different attribute, different office). The convention picks the RULE, but there is (a) no per-pol data attribute to test and (b) no enforcement path; the only near-mention is the succession-line Acting-President edge case (§glossary). |
+| **★ party-flip + ideology-shift + alt-states** (155–167, 13) | Can be Independent, **Can Party Flip + Flip Date Year 1/2/3**, **Ideology Shift Date 1 + New Ideology 1**, **Alternate State 1/2/3 + When Relocated to AS 1/2/3** | S: `partyId`/`ideology` (`:1265-66`), single `altState?` (`:1256`); NO flip/shift date fields, NO multi-alt, NO relocation timing | **ABSENT** — the authored **PER-POL SCHEDULED** form of the party-shift/ideology-drift (**#4/#171**; #239 owns the flip-COUNT) + multi-alt relocation TIMING (**#38**, the historical-move-date layer) |
+| **election point tiers** (168–178, 11) | Election Bonus/Penalty + a ladder **20 / 10 / 7 / 5 / 3 / −3 / −5 / −7 / −10 / −20 pts** | S: `applyTraitElectionBonus` uses deterministic BANDS (`electionEffects.ts:16`), not authored per-pol values | **PARTIAL** — **#189**, the electability-scoring point ladder as authored per-pol DATA (the values behind the trait-scoring model) |
+| **bio** (179, 1) | Bio (free-text) | S: NO bio field (`Politician`, grep = 0) — see §30.55.1 gap 2 | **ABSENT** — **#338**, re-confirmed from BOTH lists (Vstyle + Pols-2024 carry Bio) |
+
+**★ The +3 trait candidates (col-cited, #216).** Beyond the shared ~40 + the 13
+genuinely-missing that §30.55.2 already pinned from the roster, the Vstyle model
+adds **3 more columns**: **Everyman** (col 113 — the `terminology`/`yearname`
+Low-Brow→Everyman rename), **Lawful** (col 123 — the b44 Cop→Lawful rename), and
+**Union Loyalist** (col 135 — the #121 loyalty trait vs the union). So the full
+#216 reconciliation from the intended-model side = **4 renames + 13 genuinely-
+missing + these +3 + the "acquired-not-seeded" bucket** (§30.55.2(c)).
+
+**★ Worked examples (from `vstyle_clean.csv` + `historical-context-pol-additions-2024.md`):**
+- **Hezekiah L. Hosmer → father Titus Hosmer** — a real founding father→son pair,
+  **both in this batch**; the model's dynasty proof-of-concept (Politician Father
+  populated). The obvious next fills (**Matthew Lyon → Chittenden Lyon**, **Robert
+  Owen → Robert Dale Owen**) are left BLANK — coverage, not concept, is the weakness.
+- **Matthew Lyon (VT→KY)** — Alternate State = KY, relocated 1801 (he literally sat
+  for two states' delegations: VT 1797–1801, KY 1803–11). Encodes #38 as scheduled data.
+- **Bernie Moreno (OH)** — Ideology Shift Date 1 = 2021 → New Ideology 1 = RW Pop
+  (his MAGA turn), the #4/#171 dated-shift schedule; Colombian-born (a real #343 case).
+- **Silas Talbot** — Military rises First-Year→Historic as his naval career peaks
+  (the #342 arc); many `Obscure` freshmen "lose obscurity" on the `Obscure Removed` schedule.
+
+**Net-of-net (30.57.1):** the **entire 182-col model is ~0% shipped as a data
+model**. Concretely, the shipped `Politician` (`types.ts:1251-1291`) has: single
+`firstName`/`lastName`, NO dynasty/father/mother/spouse, STATIC `skills`
+(`:1271`), NO race/religion/gender/sexuality/citizenship, single `altState?`
+(`:1256`) with no flip/shift/relocation dates, NO bio, and NO stored draft/historic
+value (PV derived by `computePV`). The intended model is **unrepresentable at
+runtime today.**
+
+#### 30.57.2 ★ The 2024 additions + the roster/import model (#240) — 145 genuinely-new `Pols 2024` + 221 genuinely-new Vstyle figures as `CURATED_ROWS`/`ERA_FIGURES` candidates the `scripts/` pipeline does NOT ingest today (grep `scripts/` = 0), targeting exactly the roster's thin seams; plus the IMPORT-HYGIENE rules (exclude playtesters [done], filter `#VALUE!`, ★ fix the citizenship-flag SOURCE-DATA bug that feeds the #343 gate, refresh stale "nominee" bios, ignore negative Age-at-Death, reconcile "Army"→"Military", key on row-index, reconcile vs the 7,349-roster ground truth)
+
+**The additions (reconciled vs the §30.55 7,349-roster ground truth).** Two lists,
+leaning the same direction: **`Pols 2024`** = 146 names, 1 already in roster →
+**145 GENUINELY NEW** (fields `Name / US_Rep? / WinChanceNote / Wiki / AddedBy /
+Bio`; all 146 have a Wiki link, 10 have bios, `US_Rep` populated ~55/146); **`Vstyle`**
+= 224 names, 3 already in roster → **221 GENUINELY NEW** (after the 7-playtester +
+69-`#VALUE!` exclusions), decomposed into the 182-col model above. **131 names
+appear on BOTH lists.** They target **exactly the roster's two thinnest seams**
+(founding bench + the 2001+ tail):
+
+| Fill target | Character | Real examples |
+|---|---|---|
+| **Founding / early republic (draft ~1772–1800)** | the *single densest* cohort — obscure 1st–5th-Congress US Reps, CC delegates, Revolutionary officers who served but never made the marquee roster; many **Pro-Admin/Anti-Admin**-labeled (pre-party framing) | Silas Talbot, Thomas Truxtun, Aedanus Burke, Israel Jacobs, Matthew Lyon, Ira Allen, Titus/Hezekiah Hosmer |
+| **Antebellum → late-20th c.** | second-tier Reps, reformers, **~39 Reps-elect who died before taking office**, mayors, athletes-turned-politicians | Robert Dale Owen, Chittenden Lyon, B.H. Roberts, Harold Washington, Marion Barry, Andrew J. Campbell (1894) |
+| **Modern / 2024 cycle (draft ~2000–2024)** | the *largest deliberate theme* — 2024 Senate/House/Gov nominees, winners AND losers; a state-chief-justice run | Alsobrooks, Gallego, Slotkin, Moreno, Vince Fong, Vivek Ramaswamy, Josh Stein, Mark Robinson, Marie Gluesenkamp Perez |
+
+Fidelity is **high** (12 cross-era historian checks, no identity/attribution
+errors). Per the roster's balance rule, the marginal never-served / Reps-elect-
+who-died cohort correctly carries **sub-floor** `Draft`/`Historic Value` — do **NOT**
+"correct" them out; that low value is the balance rule working, not an error.
+
+**★ The pipeline does NOT ingest these files.** Grep of `scripts/` for
+`pol.additions`/`pols2024`/`vstyle` = **0**. `CURATED_ROWS` builds its ~143 marquee
+figures from the in-script `ROWS` array (+~23 `ERA_FIGURES`); **none** of these
+146+221 additions are present. So they are un-ingested `CURATED_ROWS`/`ERA_FIGURES`
+**candidates** — the full-strength 2024 winners are `CURATED_ROWS`-class; the
+never-served / Reps-elect-who-died cohort is sub-floor `ERA_FIGURES`-class (#240).
+
+**★ Import-hygiene rules (record these — SOURCE-DATA-quality gates on a clean
+import, NOT shipped-code defects, so NO new gap row):**
+
+| Rule | Detail | Why it matters |
+|---|---|---|
+| **Exclude playtesters** (DONE) | the `Playtesters` tab dropped + 7 playtester "vanity" rows removed from Vstyle in preprocessing | user hard-rule; already applied ("Added by" in Pols-2024 is contributor attribution, not a politician entry) |
+| **Filter `#VALUE!` rows** (DONE) | 69 spreadsheet-error rows removed | data noise |
+| **★ Fix the citizenship-flag SOURCE-DATA bug** | confirmed foreign-born figures are **mis-tagged**: **Matthew Lyon** (Irish-born) — neither flag set; **Robert Dale Owen** (Scottish-born) — `Natural Born Citizen = 1`; **Bernie Moreno** (Colombian-born) — citizenship tail reads Natural-Born | ★ this flag is the **#343 presidency-eligibility gate**; mis-setting it would wrongly model naturalized citizens as president-eligible. **Verify each foreign-born figure's flag BEFORE wiring the gate to a mechanic.** |
+| **Refresh stale "nominee" bios** | pre-Nov-2024 `Bio`/`WinChanceNote` say "candidate/nominee" for figures who then **WON**: Alsobrooks (MD Sen), Moreno (OH Sen), Gallego (AZ Sen), Slotkin (MI Sen), Fong (CA-20) | treat `Bio` as snapshot-dated; refresh before import (feeds #338) |
+| **Ignore negative Age-at-Death** | blank `Death Year` yields nonsense negatives (Alsobrooks −1971, Gloria Johnson −1962, Dean Barkley −1950) — a spreadsheet-formula artifact | not a claim; ignore |
+| **Reconcile "Army" → "Military"** | Vstyle expertise axis authored "Army" where shipped `Expertise` uses "Military" (`:185`) | same concept, one axis — normalize, don't split (#216/#240) |
+| **Verify Truxtun's state** | Vstyle lists PA; sources tie him to NY/NJ | one-off fidelity check |
+| **Key on row-index** | Full Name is NOT unique (the §30.55.3 duplicate-name problem); `PoliticianID` is the intended stable key | never key on display name |
+| **Reconcile vs the 7,349-roster ground truth** | the §30.55 roster is the master `CURATED_ROWS` superset; these are additive fills against it | avoid re-adding the 1 (Pols) / 3 (Vstyle) already present |
+
+**Sparse coverage caveat.** Dynasty + demographic fields are only PARTLY filled
+(WIP): the obvious Lyon→Lyon and Owen→Owen dynasty links are blank. **Coverage,
+not concept, is the model's weakness** — do not read absence-of-fill as absence-of-intent.
+
+**→ Net (30.57):** ZERO gap-log writes owned here (consolidation owns the log).
+**SHARPENS** — **#240** (146 Pols-2024 [145 new] + 221 Vstyle figures are
+un-ingested `CURATED_ROWS`/`ERA_FIGURES` candidates hitting the founding + 2001+
+seams; carries the import-hygiene rules incl. the citizenship-flag fix + "Army"→
+"Military" + name-decomposition as a data-model field); **#216** (+3 traits beyond
+the 55-roster set: Everyman/Lawful/Union Loyalist); **#238/#239** (full demographics
+— race×6/religion×9/sexuality/citizenship — not just gender); **#4/#171** (per-pol
+Can-Party-Flip + 3 flip dates + ideology-shift date + new ideology as SCHEDULED
+data); **#38** (3 alt-states + when-relocated = multi-alt + relocation timing);
+**#189** (the 20/10/7/5/3/−3…−20 election-point ladder as authored per-pol data);
+**#319** (Command + 5, NO backroom — re-confirmed from the intended model);
+**#338** (bio — re-confirmed from BOTH lists); **#339** (Historic-vs-Draft Value,
+two scores); and — a JUDGMENT CALL — **#194** (Dynasty + Father/Mother/Spouse are
+the first-class-FIELD form of the already-owned dynasty graph; SHARPEN not mint).
+Carries the **TWO NEW mints** for the tech-lead: **#342** (the three-stage temporal
+skill ARC — a `Skills` re-model: shipped `Skills` is STATIC; the model stores
+First/Midway/Historic × 6 + `Peak Abilities Year` + dated trait-gain years; OPEN:
+interpolate-by-year vs step-at-3-stages vs seed+growth-schedule) and **#343** (the
+natural-born-citizen PRESIDENCY-eligibility gate — the RULE exists as a Convention
+article `presidentialEligibility` `:1395` but is NEVER enforced against a candidate
+and has NO per-pol data attribute; add a per-pol citizenship field + wire Art. II
+enforcement; **fix the SOURCE-DATA flag bug first**). *(Sources:
+`docs/game/sources/pol-additions-2024/analysis.md` §182-col categorization / §schema
+reconciliation / §data-quality; `docs/game/playtest-digests/pol-additions-2024.md`
+(#342/#343 mints, the sharpens, the merge/import rulings, open questions);
+`vstyle_clean.csv` header-by-index (182 cols; Bio col 179); `pols2024.csv`;
+`docs/game/historical-context-pol-additions-2024.md` §1-5 (era spread, fidelity
+checks, the citizenship-flag bug, the designer-intent read); game-context b-entries
+#342/#343 (and the sharpened #240/#216/#238/#239/#4/#171/#38/#189/#319/#338/#339/#194);
+codebase `types.ts:24-41,62-117,182-186,1251-1291,1395,1780-1793`,
+`src/engine/constitutionalConvention.ts:52-58`, `src/data/scenario1856.ts:188`,
+`src/engine/electionEffects.ts:16`, `src/pv.ts` as cited.)*
+
 ### 30.4 Authority hierarchy reminder
 
 When rule sources disagree:
