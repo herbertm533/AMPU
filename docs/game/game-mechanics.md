@@ -27245,6 +27245,142 @@ Source `8477b37b` ("Primary question", 2 posts, 28 Apr 2026) is a **mechanics Q&
 
 **→ Net (30.54.3):** ZERO mint. The entire **primary-calendar / state-grouping layer is designed-not-built** — the shipped `2.9.1` collapses the whole staggered-primary→brokered-convention design into a **single PV+command sort**. This thread supplies the **calendar-assembly** front end (governor-scheduled 5-group calendar → serial group results → the #185/#183 withdraw/endorsement machine), which **SHARPENS #185** (the previously-unspecified "how states get INTO the groups" step) and the **primary branch of #331**. For the tech-lead: **"activating primaries" is a new GOVERNOR ACTION (#20)** — the first datum tying the governor to the nomination machine — and for CPU-run games the placement/bump must be **automated (#71/#72)**, upstream of candidate/VP selection. Open confirmations remain (exact group count/order; ≤3 per-group vs. total; whether one governor assembles the whole calendar or each state's own governor places it; and that the groups feed the #183/#185 momentum machine). *(Sources: `8477b37b#POST 1-2`; codebase as cited.)*
 
+### 30.55 Politician DATA MODEL — from the authoritative hand-authored ground-truth (`politician-dataset` ingest) — the complete per-politician record (identity + Draft Value + 6 skills + 55 traits + Draft Year + Celebrity + Bio) mapped field-by-field to the shipped `Politician` type, the trait vocabulary reconciled into shared / genuinely-missing / acquired-not-authored buckets (#216), the pre-`backroom` skill ground-truth (#319), and the 3 data-model gaps this settles: Draft Value stored-vs-derived (#339), no bio field (#338), and no `backroom` in the source (#319)
+
+> **What this block is.** A **dataset-reconciliation** ingest, not a playtest. The
+> "source" is the **authoritative hand-authored 7,349-politician ground-truth** —
+> the curated roster the designer/community actually draft from via Discord bots,
+> row-aligned across three files (`a960dbad`-AMPU_Statesmen.csv identity+skills,
+> `0ce36d10`-traitsearch.js traits, `2506843f`-biosearch.js bios) → merged into
+> `docs/game/sources/politician-dataset/merged.json` (7,349 records). It is the
+> **SOURCE-OF-TRUTH** the shipped generated dataset and the trait/skill/PV systems
+> are supposed to reconcile against, and it settles three long-open reconciliation
+> questions the KB has circled from the playtest side for dozens of batches:
+> (1) the **authoritative trait vocabulary #216 asks for** (exact 55 authored
+> names → the "13 genuinely-missing" + the starting-vs-acquired split, now pinned
+> not inferred); (2) the **pre-`backroom` skill ground-truth** (#319 — the source
+> has NO `backroom` at all); (3) the **CURATED superset** the piecemeal
+> `histpres`/`strongnevernom`/`failednoms`/VP rosters (#240) were all sampled
+> from. Plus two net-new data-model gaps the shipped `Politician` type cannot
+> hold: a **per-politician bio** (#338) and a **stored hand-ranked Draft Value /
+> prestige score** (#339). MINTS NOTHING new here — all deltas map to existing gap
+> IDs; the two NEW mints (#338/#339) were minted in the game-pm digest and are
+> recorded in game-context b-entries #338/#339. Every codebase citation was
+> re-verified against `src/` HEAD 2026-07-01.
+
+#### 30.55.1 ★ The politician DATA MODEL (ground-truth schema) — the complete per-politician authored record, field-by-field, mapped to the shipped `Politician` type (`types.ts:1251-1291`): where they MATCH (skills→`Skills`+`command`, ideology→7-point scale, team→`partyId`, `draftYear`) and where they DON'T — no `backroom` in the source (#319), no `bio`/`description` on `Politician` (#338), Draft Value STORED vs `computePV`-derived (#339)
+
+Each of the **7,349** rows is a fixed-shape authored record. The full schema and its shipped mapping:
+
+| Authored field | Type / range | Example (Washington) | Shipped `Politician` field | Match? |
+|---|---|---|---|---|
+| **Full Name** | string | "George Washington" | `firstName` + `lastName` (`:1253-1254`) | ✔ (split on import) |
+| **Initial State** | string (state, incl. foreign — Napoleon `LA`, Harper `Canada`) | `VA` | `state` (`:1255`) | ✔ |
+| **Initial Team Color** | `Red` / `Blue` (era-relative, → §30.55.3) | `Red` | `partyId: 'RED' \| 'BLUE'` (`:1265`; `PartyId` `:3`) | ✔ (token maps; polarity is era-relative) |
+| **Initial Ideology** | 7-value scale, abbreviated (`Mod`/`Cons`/`Lib`/`Trad`/`Prog`/`LW Pop`/`RW Pop`) | `Mod` | `ideology: Ideology` (`:1266`; 7-point `:5-12`) | ✔ (same 7-point scale, expand abbrevs) |
+| **Draft Value (PV)** | integer **−25…241** — hand-ranked prestige, STORED | `120` | *(none)* — `computePV` DERIVES PV (`pv.ts:67-89`), caches `pvCache` (`:1285`) | ✘ **#339** — no stored `draftValue` |
+| **6 skills** | integers **0–5**: Command, Legislative, Governing, Judicial, Military, Administative[sic] | Cmd 4 / Leg 2 / Gov 0 / Jud 0 / Mil 4 / Adm 0 | `skills: Skills` (5 keys, `:1271`) + separate `command` (`:1281`) | ⚠ 5 of 6 map; **no `backroom`** (#319) — see §30.55.2 |
+| **55 boolean traits** | starting-traits vocabulary (hand-picked characterizations) | 9 traits incl. `Charisma`, `Military Leader`, `Geostrategist` | `traits: Trait[]` (`:1272`; union `:62-117`) | ⚠ different roster — see §30.55.2 |
+| **Draft Year** | integer (the draft the figure enters, `birthYear + ~25` → nearest ×4) | `1760` | `draftedYear?` (`:1287`) / `draftYear` on `ImportedDraftee` (`:1781`) | ✔ (same formula as the shipped pipeline, CLAUDE.md) |
+| **Celebrity** | boolean (is/becomes a celebrity) | — | `traits` includes `'Celebrity'` (`:74`) as a flag | ⚠ authored as a column; shipped as a trait |
+| **Year Gains Celebrity** | integer (year the celebrity flag flips on) | — | *(none)* — no scheduled trait-acquisition field | ✘ (unmodeled; a timed trait-gain) |
+| **Bio** | prose, 7,346/7,349 non-empty (avg 265 chars, max 2,458) | "1st President… President of the Constitutional Convention… deferred to Alexander Hamilton early on" | *(none)* — grep `bio`/`biography` on the type = 0 | ✘ **#338** — no `bio`/`description` on `Politician` |
+
+**★ The three data-model GAPS (for the tech-lead):**
+
+1. **No `backroom` in the source (#319).** The authored skill set is **Command + 5** (Legislative, Governing, Judicial, Military, Administative[sic]) — the shipped `SkillKey` (`:24-30`) carries a **7th** ability, `backroom`, that the ground-truth roster has **no column for**. The authored source is the **pre-`backroom` ground-truth**: `backroom` is a *career track* (`CareerTrack` `:43-60`) everywhere except the shipped `Skills` type. Detail in §30.55.2.
+2. **No `bio` field on `Politician` (#338).** 7,346 authored prose bios have **no home** in the runtime model — `Politician` (`:1251-1291`) and `ImportedDraftee` (`:1780-1793`) carry no `bio`/`description`/`biography` (the `description` fields at `types.ts:1435/1462/1471/1510/1552` belong to legislation/era-event types, not `Politician`), and the generated pipeline (`defaultDraftClasses.ts`, `standard-draft-classes.json`) drops bio prose entirely. A per-politician biography is **unrepresentable at runtime today**. (game-context b-entry #338; OPEN human: runtime `bio?: string` field vs author-time-reference-only.)
+3. **Draft Value STORED vs DERIVED (#339).** The authored **Draft Value** is a *stored, hand-ranked* prestige number (−25…241); the shipped model has **no stored equivalent** — `computePV` (`pv.ts:67-89`) **re-derives** PV at runtime (skills×office-weights ×4 + `command`×10 + trait ±4/−5 + `Kingmaker` +6 + office prestige + faction-leader +8 + age curve − flip-flopper×5, clamped `Math.max(0, …)`). Detail in §30.55.3.
+
+**Skill distributions (0–5, from analysis.md §Skill) — the roster leans on a thin elite:**
+
+| skill | avg | 0 | 1 | 2 | 3 | 4 | 5 | note |
+|---|---|---|---|---|---|---|---|---|
+| **Command** | 0.17 | 6596 | 446 | 195 | 82 | 18 | 12 | **scarcest** — only 30 of 7,349 have Command ≥ 4; reserved for the genuine top tier |
+| Legislative | 1.03 | 1707 | 4457 | 586 | 454 | 125 | 20 | densest ability (most figures served in a legislature) |
+| Governing | 0.57 | 4303 | 2237 | 498 | 279 | 27 | 5 | |
+| Administative[sic] | 0.51 | 4814 | 1889 | 205 | 351 | 77 | 13 | → maps to shipped `admin` |
+| Military | 0.30 | 5691 | 1272 | 252 | 101 | 28 | 5 | |
+| Judicial | 0.22 | 6089 | 1014 | 177 | 53 | 15 | 1 | |
+
+Skills encode **what the person actually did** (legislators get Legislative, generals get Military/Command, administrators get Admin), not a uniform power budget — most figures are 0–1 across the board.
+
+#### 30.55.2 ★ The TRAIT VOCABULARY, reconciled (#216) — the authoritative 55-name authored vocab in three buckets vs the shipped `Trait` union (`types.ts:62-117`): (a) ~40 shared (2 renames — `Charisma`→`Charismatic`, `Military Leader`→`Leadership`, plus `Two-faced`→`Two-Faced`, `Flipflopper`→`Flip-Flopper`); (b) **★ 13 genuinely-missing** from the shipped union; (c) **★ 10 shipped-only = in-game-GAINED, not authored** — the clean starting-vs-acquired resolution #216 has been asking for since the PV revamp
+
+Both sides carry **55 trait names** — but a *substantially different roster*, verified by set-diff at `src/` HEAD. The reconciliation is **not "~15 arbitrary mismatches"** but a clean three-bucket split. This is the authoritative trait ground-truth #216 wants: the dataset holds a politician's **STARTING** traits; the shipped union carries **starting ∪ acquirable** (event-earned) traits — which explains the asymmetry cleanly.
+
+**(a) Shared (~40) — same trait; 4 are spelling-only renames (normalize on import):**
+
+| Authored name | Shipped `Trait` | Carried by (sample) |
+|---|---|---|
+| `Charisma` | **`Charismatic`** (`:63`) | Washington, Jefferson, Jackson, TR, FDR, Reagan, Napoleon |
+| `Military Leader` | **`Leadership`** (`:80`) — the general-competence positive | Washington, Napoleon |
+| `Two-faced` | **`Two-Faced`** (`:99`) | (Burr, Webster — near-zero authored use: 2 pols) |
+| `Flipflopper` | **`Flip-Flopper`** (`:98`) | (3 pols) |
+
+The remaining ~36 match by exact name (Integrity, Efficient, Orator, Debater, Propagandist, Crisis Manager, Kingmaker, Numberfudger, Harmonious, Manipulative, Magician, Egghead, Likable, Cosmopolitan, Predictable, Hale, Crisis Admin, Crisis Gov, Decisive General, Domestic Warrior, Iron Fist, Delegator, Master Kingmaker, Incompetent, Passive, Unlikable, Uncharismatic, Puritan, Domestic Apathy, Frail, Controversial, Obscure, Carpetbagger, Provincial, Naive Strategist, Micromanager, Overeager).
+
+**(b) ★ 13 genuinely-missing** (authored, NO shipped slot even after the renames above — the concrete "missing set" #216 has asked for since the PV revamp, now pinned from the ground-truth side; frequencies from analysis.md §Trait):
+
+| Missing authored trait | # pols | | Missing authored trait | # pols |
+|---|---|---|---|---|
+| **Pliable** | 363 | | **Late Bloomer** | 27 |
+| **Disharmonious** | 246 | | **Lackey** | 26 |
+| **Lowbrow** | 84 | | **Incoherent** | 21 |
+| **Bookkeeper** | 79 | | **Jurisprudence** | 16 |
+| **Cop** | 74 | | **Easily Overwhelmed** | 33 |
+| **Geostrategist** | 68 | | **Teflon** | 29 |
+| **Illicit** | 51 | | | |
+
+All 13 confirmed absent from the union by `comm -23`. **Prior playtest-side witnesses of subsets** (this dataset is the widest, most systematic witness of all 13): b57 `326c33dd` #327 (Disharmonious / Illicit + the separate `Disgraced`); b58 `1ae348bb` (Teflon −5-investigation / Easily-Overwhelmed +2 / Pliable-on-acquittal); b62 (Teflon / Illicit / Disharmonious); b49 `b9651d6d` (Cop / Pliable / Bookkeeper / Illicit / Geostrategist / Lackey on VP blocks); b55 `87c94e25` (the 15-canon-absent list = this set plus `Everyman`/`Southern-Unionist`, neither an authored column here). **Design call the PV revamp #214 needs settled:** add all 13, or cut the low-frequency ones (Incoherent 21 / Jurisprudence 16 are rare; the renamed `Two-Faced` already ships but has near-zero authored use).
+
+**(c) ★ 10 shipped-only = in-game-GAINED, NOT authored (the starting-vs-acquired resolution — a real finding, not a discrepancy):** the shipped union carries traits with **no authored column** because they are **earned during play, not seeded at draft**:
+
+> `Corrupt`, `Scandalous`, `Traitor`, `Outsider`, `Failed Bid`, `Ideologue`, `Impressionable`, `Loyal`, `Opportunist`, `Ambitious`
+
+Their absence from the dataset is **expected and correct**: corruption/scandal events grant `Corrupt`/`Scandalous`; a lost election grants `Failed Bid` (`failedBidExpiresYear` `:1289`); ideology-play grants `Ideologue`; ambition-seeding grants `Ambitious` (`ambitiousSeeded` `:1288`); etc. (Plus the four *mechanical* union entries absent as authored columns — `Celebrity` [authored as its own column, §30.55.1], `Nationalist`, `Globalist`, `Reformist`.) The dataset is the **at-draft snapshot**; the union is **at-draft ∪ acquirable**. → the true #216 reconciliation = **4 renames + 13 to-add(-or-cut) + a clean "these are acquired, don't seed them" bucket.**
+
+**Trait frequencies (top of 55, analysis.md §Trait) — traits are sparse and evocative:** `Obscure` **7305 (99.4%)** is the default "you start unknown" flag (near-universal); the *distinctive* traits are rare — `Hale` 1075, `Frail` 1037, `Integrity` 642, `Egghead` 592 (scholars), `Controversial` 513, `Pliable` 363, `Propagandist` 360, `Efficient` 321, `Likable` 251, `Disharmonious` 246, `Debater` 240, `Manipulative` 232. The rarest tier is single-digit: `Decisive General` 9, `Crisis Manager` 7, `Master Kingmaker` 7, `Crisis Gov` 5, `Flipflopper` 3, `Two-faced` 2, `Incompetent` 1, **`Carpetbagger` 0** (authored zero times). Traits are the designer's **prose-level read** of each figure, not a mechanical rollup.
+
+#### 30.55.3 ★ Draft Value = prestige/PV (STORED not derived — #339), the 7,349-roster as the master `CURATED_ROWS` ground-truth (#240), and the era-relative team/ideology labels anchored to Draft Year (#4) — plus the ingest/import-hygiene caveats (dirty values, dup names, header typo)
+
+**★ Draft Value = the curated hand-ranked prestige/PV score (→ #339).** `Draft Value` orders the draft in the source game and is the roster's **clearest editorial fingerprint** — the designer's DIRECT hand-ranking of historical weight/electability. Distribution (analysis.md §Draft Value): min **−25**, p10 3, median 13, p90 30, **max 241**, 110 negatives. The marquee tier sits far above the long tail:
+
+| Figure | DV | | Figure | DV |
+|---|---|---|---|---|
+| **Napoleon** (alt-history) | **241** | | Washington | 120 |
+| Clay | 140 | | Lincoln | 118 |
+| Franklin | 140 | | FDR | 114 |
+| TR | 139 | | Jackson | 113 |
+| — one-term relatives | 1–20 | | Jefferson | 104 |
+| — joke/nobody floor ("Duopoly Patine-Mambo") | **−25** | | Calhoun | 96 |
+
+**Maps to `computePV`/`pv.ts` but STORED not derived (#339).** `computePV` (`pv.ts:67-89`) re-derives PV at runtime and caches `pvCache` (`:1285`); `Politician`/`ImportedDraftee` carry **no `draftValue` field**. The authored DV is thus an *input the shipped model re-derives rather than stores* — and the two coexist awkwardly (a marquee figure's authored DV and its computed PV need not agree; note the authored floor is **negative** while the shipped floor is `Math.max(0, …)`). OPEN (game-context #339): (a) import DV as a stored `draftValue?` and let `computePV` SEED/CLAMP toward it, or (b) keep deriving and use DV only as the draft-ORDERING key at import time.
+
+**★ The 7,349-roster is the master `CURATED_ROWS` ground-truth (→ #240).** The authored set is a **superset source** the shipped ~18.5k generated `standard-draft-classes.json` (built from `unitedstates/congress-legislators` + MEDSL by `scripts/legislatorsToDataset.mjs`) should reconcile against. The piecemeal `histpres` (47 presidents), `strongnevernom` (~18), `failednoms` (~36), `kiaofficers`, `b9651d6d`-VP rosters that #240 tracks as `CURATED_ROWS`/`ERA_FIGURES` fills are all **samples of this same authored corpus** (same fixed-shape record: name / DV / ideology / 6 abilities / traits / bio). The full authored file is the **master** source, superseding the thread-by-thread fills. **The pipeline does NOT ingest this authoritative set today** — grep confirms no script references `AMPU_Statesmen` / Draft-Value / bio; it re-derives figures and hand-fills a small `ROWS` array (143 marquee + 23 `ERA_FIGURES` at runtime). Reconciling the generated superset against the 7,349-row ground-truth (import DV + bios + authored skills/traits/team/ideology, **key on row index**) is the #240 pipeline task at full scale.
+
+**★ Team & ideology labels are ERA-RELATIVE, anchored to Draft Year (→ corroborates #4).** `Initial Team Color` (Red 3,694 / Blue 3,653) and `Initial Ideology` (Mod 46% / Cons 26% / Lib 15% / Trad/Prog/LW-Pop/RW-Pop tails) are **era-relative tokens assigned by each figure's alignment in their draft-era** — NOT modern GOP-red / Dem-blue. The roster breaks *within-party* consistency in ways playtests cannot — the strongest available evidence for #4:
+
+- **Two Republican presidents on opposite TEAMS (the crispest single proof):** Reagan = **Blue** (drafted **1936**, a real FDR-era Democrat) vs Nixon = **Red** (drafted **1940**). Team tracks era-of-entry alignment, not lifetime party.
+- **Modern opposites share a team:** Trump (Blue / RW-Pop) + Pelosi (Blue / Lib) both **Blue**; McCarthy **Red**. Blue ≠ "the Democrats" across the file.
+- **The 1856 flip is baked into `Initial Team Color`:** antislavery figures **Red** (Lincoln, Grant, Douglass, Sumner, Chase, Stevens); pro-slavery/Southern-Democratic **Blue** (Calhoun, Jefferson Davis, Douglas) — the reverse of modern polarity, matching `scenario1856.ts`.
+- **Founding pole:** Federalists **Red** (Washington/Hamilton/Franklin); Jeffersonians **Blue** (Jefferson/Madison).
+
+Every skill/trait/ideology read **must anchor to `draftYear`** (Wilson/TR "Lib" = Progressive-era reform liberalism ≠ FDR New-Deal "Lib" ≠ modern "Lib"). See §30.55-companion `historical-context-politician-roster.md` for the full era grounding. Era distribution by Draft Year (analysis.md §Era; span **1716→2020**, far beyond the two shipping scenarios): densest = Progressive 1,046 / antebellum 992 / CW 854; thinnest = New-Deal/WWII 352 / 2001+ 110 — authoring effort tracks the game's real play surface (dense where 1772 / 1856 ship).
+
+**★ Ingest / import-hygiene caveats (normalize on import — do NOT mint standalone; fold under #240 / #216):**
+
+| Caveat | Detail | Action |
+|---|---|---|
+| **Name is NOT a unique key** | 40 shared names across eras/people (Daniel Webster×2, John McLean×2, James Wilson×2, John Bell×2, John Page×2, Richard Stockton×2); **"John Kennedy" LA/1976 = Sen. John Neely Kennedy, NOT JFK** | **key on row index**, never name |
+| **Dirty ideology values** (team/typo leak) | `"Red"` (×2), `"LIb"` (×1) | normalize / correct |
+| **Dirty team values** (ideology leak) | `"RW Pop"` (×1), `"Trad"` (×1) | normalize / correct |
+| **CSV header typo** | `"Administative"` (missing 'r') | map to `admin` on import |
+| **Empty bios** | 3 of 7,349 | tolerate (data-quality, not intent) |
+| **Intentional non-historical content — do NOT "fix"** | Napoleon (alt-history, DV 241, "what if… New Orleans"); "Duopoly Patine-Mambo" (fictional, DV −25 floor); imported foreigners (Stephen Harper et al., `state:"Canada"`) | game content per the historian's grounding, not errors |
+
+**→ Net (30.55):** ZERO new mints in this doc. Records the authoritative politician DATA MODEL and settles the reconciliations: **#216** (4 renames + 13 genuinely-missing + 10 acquired-not-seeded — the complete trait map), **#319** (the source omits `backroom` — the pre-`backroom` ground-truth), **#240** (the 7,349 roster is the master `CURATED_ROWS` source the pipeline should reconcile against), **#4** (Red/Blue + ideology are era-relative, anchored to `draftYear` — Reagan=Blue-1936 vs Nixon=Red-1940). Carries the two game-pm mints for the tech-lead: **#339** (Draft Value stored-vs-derived) and **#338** (per-politician bio, unrepresentable at runtime). *(Sources: `docs/game/sources/politician-dataset/analysis.md` §Schema/§Skill/§Trait/§Ideology/§Team/§Era/§Draft-Value; `sample.md` decoded marquee; `docs/game/playtest-digests/politician-dataset.md`; game-context b-entries #338/#339 (and #216/#319/#240/#4); `historical-context-politician-roster.md`; codebase `types.ts:3,5-12,24-30,43-60,62-117,1251-1291,1780-1793`, `pv.ts:67-89` as cited.)*
+
 ### 30.4 Authority hierarchy reminder
 
 When rule sources disagree:
